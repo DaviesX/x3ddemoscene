@@ -1,0 +1,8 @@
+#ifndef X3DKDTREESPATIAL_H_INCLUDED
+#define X3DKDTREESPATIAL_H_INCLUDED
+
+struct kd_spatial {
+};
+
+
+#endif // X3DKDTREESPATIAL_H_INCLUDED

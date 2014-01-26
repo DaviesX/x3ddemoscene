@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="x3dcore" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="build/X3dCore_dbg" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="build" />
+				<Option object_output="build/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="build/X3dCore" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="build" />
+				<Option object_output="build/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-w" />
+					<Add option="-Ofast" />
+					<Add option="-flto" />
+				</Compiler>
+				<Linker>
+					<Add option="-Ofast" />
+					<Add option="-flto" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`pkg-config gtk+-2.0 --cflags`" />
+			<Add directory="lib" />
+			<Add directory="include" />
+		</Compiler>
+		<Linker>
+			<Add option="`pkg-config gtk+-2.0 --libs`" />
+			<Add library="build/libusr.so" />
+		</Linker>
+		<Unit filename="drivers/editor/gui.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/editor/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/editor/render_procedure.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/editor/render_procedure.h" />
+		<Unit filename="drivers/renderer/geometry/bvh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/bvh.h" />
+		<Unit filename="drivers/renderer/geometry/cone_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/cone_shape.h" />
+		<Unit filename="drivers/renderer/geometry/cylinder_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/cylinder_shape.h" />
+		<Unit filename="drivers/renderer/geometry/disk_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/disk_shape.h" />
+		<Unit filename="drivers/renderer/geometry/geocache.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/geometry.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/grid.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/grid.h" />
+		<Unit filename="drivers/renderer/geometry/hyperboloid_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/hyperboloid_shape.h" />
+		<Unit filename="drivers/renderer/geometry/kdtree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/kdtree.h" />
+		<Unit filename="drivers/renderer/geometry/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/main.h" />
+		<Unit filename="drivers/renderer/geometry/octree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/octree.h" />
+		<Unit filename="drivers/renderer/geometry/paraboloid_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/paraboloid_shape.h" />
+		<Unit filename="drivers/renderer/geometry/primitive_parition.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/shape_common.h" />
+		<Unit filename="drivers/renderer/geometry/sphere_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/sphere_shape.h" />
+		<Unit filename="drivers/renderer/geometry/trimesh_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/trimesh_shape.h" />
+		<Unit filename="drivers/renderer/geometry/trimesh_subdivide.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/geometry/trimesh_subdivide.h" />
+		<Unit filename="drivers/renderer/light/light.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/light/light.h" />
+		<Unit filename="drivers/renderer/loader/fbx_model.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/fbx_model.h" />
+		<Unit filename="drivers/renderer/loader/image_loader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/image_loader.h" />
+		<Unit filename="drivers/renderer/loader/loader.h" />
+		<Unit filename="drivers/renderer/loader/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/main.h" />
+		<Unit filename="drivers/renderer/loader/model_loader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/model_loader.h" />
+		<Unit filename="drivers/renderer/loader/obj_model.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/obj_model.h" />
+		<Unit filename="drivers/renderer/loader/pbrt_model.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/pbrt_model.h" />
+		<Unit filename="drivers/renderer/loader/renderer_loader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/renderer_loader.h" />
+		<Unit filename="drivers/renderer/loader/x3d_scene.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/loader/x3d_scene.h" />
+		<Unit filename="drivers/renderer/material/material.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/material/material.h" />
+		<Unit filename="drivers/renderer/misc/volume.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/out/gl_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/out/gl_out.h" />
+		<Unit filename="drivers/renderer/out/gtk_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/out/gtk_out.h" />
+		<Unit filename="drivers/renderer/out/image_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/out/image_out.h" />
+		<Unit filename="drivers/renderer/out/out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/out/out.h" />
+		<Unit filename="drivers/renderer/probe/fisheye.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/probe/fisheye.h" />
+		<Unit filename="drivers/renderer/probe/obj_probe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/probe/orthogonal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/probe/orthogonal.h" />
+		<Unit filename="drivers/renderer/probe/perspective.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/probe/perspective.h" />
+		<Unit filename="drivers/renderer/probe/proj_probe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/probe/spatial_probe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/probe/spherical.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/probe/spherical.h" />
+		<Unit filename="drivers/renderer/renderer/colorspectrum.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/colorspectrum.h" />
+		<Unit filename="drivers/renderer/renderer/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/main.h" />
+		<Unit filename="drivers/renderer/renderer/pm_renderer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/pm_renderer.h" />
+		<Unit filename="drivers/renderer/renderer/pt_renderer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/pt_renderer.h" />
+		<Unit filename="drivers/renderer/renderer/rasterization.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/rasterization.h" />
+		<Unit filename="drivers/renderer/renderer/rasterizer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/rasterizer.h" />
+		<Unit filename="drivers/renderer/renderer/raytracer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/raytracer.h" />
+		<Unit filename="drivers/renderer/renderer/renderer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/rt_batch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/rt_batch.h" />
+		<Unit filename="drivers/renderer/renderer/rt_renderer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/rt_renderer.h" />
+		<Unit filename="drivers/renderer/renderer/surface.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/surface.h" />
+		<Unit filename="drivers/renderer/renderer/vertprocessor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/vertprocessor.h" />
+		<Unit filename="drivers/renderer/renderer/vibuffer.h" />
+		<Unit filename="drivers/renderer/shader/rt_shader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/shader/rt_shader.h" />
+		<Unit filename="drivers/renderer/shader/shader.h" />
+		<Unit filename="include/editor/gui.h" />
+		<Unit filename="include/renderer/geocache.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="include/renderer/geometry.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="include/renderer/obj_probe.h" />
+		<Unit filename="include/renderer/proj_probe.h" />
+		<Unit filename="include/renderer/renderer.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="include/renderer/spatial_probe.h" />
+		<Unit filename="include/renderer/volume.h" />
+		<Unit filename="include/x3d/common.h" />
+		<Unit filename="include/x3d/editor.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="include/x3d/kernel.h" />
+		<Unit filename="include/x3d/object_entity.h" />
+		<Unit filename="include/x3d/renderer.h" />
+		<Unit filename="include/x3d/resource_loader.h" />
+		<Unit filename="include/x3d/runtime_debug.h" />
+		<Unit filename="include/x3d/scene.h" />
+		<Unit filename="kernel/editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/kernel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/panic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/renderable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/renderer_context.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/resource_loader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/scene.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/algorithm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/algorithm.h" />
+		<Unit filename="lib/compiler/compiler.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/compiler/compiler.h" />
+		<Unit filename="lib/compiler/emitter.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/compiler/emitter.h" />
+		<Unit filename="lib/compiler/error.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/compiler/error.h" />
+		<Unit filename="lib/compiler/lexer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/compiler/lexer.h" />
+		<Unit filename="lib/compiler/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/compiler/main.h" />
+		<Unit filename="lib/compiler/parser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/compiler/parser.h" />
+		<Unit filename="lib/compiler/symbol.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/compiler/symbol.h" />
+		<Unit filename="lib/logout.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/logout.h" />
+		<Unit filename="lib/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/main.h" />
+		<Unit filename="lib/math/decimal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/decimal.h" />
+		<Unit filename="lib/math/func.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/func.h" />
+		<Unit filename="lib/math/geometry.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/geometry.h" />
+		<Unit filename="lib/math/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/main.h" />
+		<Unit filename="lib/math/math.h" />
+		<Unit filename="lib/math/matrix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/matrix.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/quat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/quat.h" />
+		<Unit filename="lib/math/vector.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/math/vector.h" />
+		<Unit filename="lib/memory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/memory.h" />
+		<Unit filename="lib/staging.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/staging.h" />
+		<Unit filename="lib/thread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/thread.h" />
+		<Unit filename="lib/timing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/timing.h" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
