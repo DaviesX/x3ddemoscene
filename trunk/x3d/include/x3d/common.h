@@ -46,9 +46,6 @@
 #define __cdecl				__attribute__((cdecl))
 #define __fastcall			__attribute__((fastcall))
 
-typedef char untyped;
-
-
 /*
  * Include relative headers
  */
@@ -70,6 +67,8 @@ typedef char untyped;
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+
+typedef uint8_t untyped;
 
 
 #endif // COMMON_H_INCLUDED

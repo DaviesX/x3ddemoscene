@@ -5,6 +5,9 @@
 /*
  * Functions' declaration
  */
+void dbg_renderer_add_all ( void );
+void dbg_vertprocessor_add_all ( void );
+void dbg_rasterizer_add_all ( void );
 
 // Test to draw things onto the frame surface
 void DrawFrameSurfaceTest ( void );

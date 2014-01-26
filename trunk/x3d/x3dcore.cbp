@@ -161,14 +161,10 @@
 		<Unit filename="drivers/renderer/misc/volume.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/out/gl_out.c">
+		<Unit filename="drivers/renderer/out/binary_out.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/out/gl_out.h" />
-		<Unit filename="drivers/renderer/out/gtk_out.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/renderer/out/gtk_out.h" />
+		<Unit filename="drivers/renderer/out/binary_out.h" />
 		<Unit filename="drivers/renderer/out/image_out.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -176,7 +172,14 @@
 		<Unit filename="drivers/renderer/out/out.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/out/out.h" />
+		<Unit filename="drivers/renderer/out/screen_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/out/screen_out.h" />
+		<Unit filename="drivers/renderer/out/stream_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/out/stream_out.h" />
 		<Unit filename="drivers/renderer/probe/fisheye.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -263,6 +266,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="include/renderer/obj_probe.h" />
+		<Unit filename="include/renderer/out.h" />
 		<Unit filename="include/renderer/proj_probe.h" />
 		<Unit filename="include/renderer/renderer.h">
 			<Option compilerVar="CC" />
@@ -344,10 +348,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/math/decimal.h" />
-		<Unit filename="lib/math/func.c">
+		<Unit filename="lib/math/fx.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/math/func.h" />
+		<Unit filename="lib/math/fx.h" />
 		<Unit filename="lib/math/geometry.c">
 			<Option compilerVar="CC" />
 		</Unit>

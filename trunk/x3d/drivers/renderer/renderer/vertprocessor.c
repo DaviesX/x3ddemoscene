@@ -4,8 +4,11 @@
 #include "rasterization.h"
 #include "vibuffer.h"
 #include "vertprocessor.h"
+#include "main.h"
 
-/* TODO (davis#1#): <vertprocessor> implement all following functions */
+
+/* TODO (davis#3#): <vertprocessor> write unit test for all vertprocessor code */
+
 
 #define INIT_VB_COUNT			1024
 #define INIT_IB_COUNT			3*1024
@@ -285,7 +288,7 @@ static void float128_interpolator ( float *s, float *e, float t, int do_int, flo
 }
 
 typedef void (*f_Interpolator) ( void *s, void *e, float t, int do_int, void *r );
-const f_Interpolator VertIntOps[] = {
+static const f_Interpolator VertIntOps[] = {
 	[VERTEX_DEFN_NULL] = nullptr,
 	[VERTEX_DEFN_INT8] = (f_Interpolator)		int8_interpolator,
 	[VERTEX_DEFN_INT16] = (f_Interpolator)		int16_interpolator,
@@ -675,4 +678,8 @@ int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_ty
 	}
 	*vo = vert_out;
 	return i;
+}
+
+void dbg_vertprocessor_lib ( void )
+{
 }

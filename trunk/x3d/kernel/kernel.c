@@ -16,6 +16,10 @@ struct runtime_debug {
 	struct alg_named_params dbg_info;
 };
 
+struct global_lib {
+	struct alg_list lib_func;
+};
+
 struct kernel {
 	int argc;
 	char **argv;
@@ -23,6 +27,7 @@ struct kernel {
 	struct renderer_context *rend_con;
 	struct scene *scene;
 	struct runtime_debug rt_debug;
+	struct global_lib gb_lib;
 };
 
 static struct kernel g_kernel;
@@ -141,4 +146,12 @@ static void gen_debug_info ( void )
 void kernel_unit_test_add ( struct unit_test *ut )
 {
 	add_element_alg_list ( ut, &g_kernel.rt_debug.test_case );
+}
+
+void kernel_global_lib_add ( struct global_lib *lib )
+{
+}
+
+void kernel_lib_func_retrieve ( char *func_name, struct lib_func *func )
+{
 }

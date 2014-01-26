@@ -3,7 +3,7 @@
 
 /* TODO (davis#2#): implement <rt_shader> */
 
-SHADER_FUNC shader_get_func ( struct shader *shader )
+f_Shader_Func shader_get_func ( struct shader *shader )
 {
 	return nullptr;
 }

@@ -1,5 +1,5 @@
-#ifndef X3DELEMENTARY_H_INCLUDED
-#define X3DELEMENTARY_H_INCLUDED
+#ifndef FX_H_INCLUDED
+#define FX_H_INCLUDED
 
 
 
@@ -24,4 +24,4 @@ int fast_log2 ( int x );
 float arctan2f ( float y, float x );
 
 
-#endif // X3DELEMENTARY_H_INCLUDED
+#endif // FX_H_INCLUDED

@@ -29,12 +29,12 @@ struct fragment_cache {
 struct shader {
 };
 
-typedef void *(*SHADER_FUNC) ( void );
+typedef void *(*f_Shader_Func) ( void );
 
 /*
  * functions' declaration
  */
-SHADER_FUNC shader_get_func ( struct shader *shader );
+f_Shader_Func shader_get_func ( struct shader *shader );
 
 
 #endif // X3DRASTERSHADING_H_INCLUDED

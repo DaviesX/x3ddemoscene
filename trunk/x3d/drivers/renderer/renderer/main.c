@@ -1,5 +1,37 @@
 /* main.c: Unit tests to all rendering functions go here */
+#include <x3d/runtime_debug.h>
 #include "main.h"
+
+
+/* entry */
+void dbg_renderer_add_all ( void )
+{
+	dbg_vertprocessor_add_all ();
+	dbg_rasterizer_add_all ();
+}
+
+/* vertex prcessor's */		#include "vertprocessor.h"
+
+static void vert_clipping ( struct alg_named_params *global_params );
+
+void dbg_vertprocessor_add_all ( void )
+{
+	dbg_vertprocessor_lib ();
+	struct unit_test ut;
+	ut.test_name = "vert_clipping";
+	ut.test = vert_clipping;
+	ut.pos = DBG_KERNEL_START;
+	kernel_unit_test_add ( &ut );
+}
+
+static void vert_clipping ( struct alg_named_params *global_params )
+{
+}
+
+/* rasterizer's */		#include "rasterizer.h"
+void dbg_rasterizer_add_all ( void )
+{
+}
 
 #if 0
 // Test to draw things onto the frame surface

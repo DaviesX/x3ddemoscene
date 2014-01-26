@@ -1,6 +1,6 @@
 /* func.c: All utility math functions go here */
 #include "math.h"
-#include "func.h"
+#include "fx.h"
 
 
 /* Global variables */

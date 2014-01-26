@@ -99,7 +99,7 @@
 #include "quat.h"
 #include "geometry.h"
 #include "decimal.h"
-#include "func.h"
+#include "fx.h"
 
 
 #define init_math_lib() \
