@@ -36,8 +36,6 @@ struct render_region {
 struct edit_ops {
 	bool (*init_editor) ( int *argc, char ***argv, enum EDIT_MODE mode );
 	void (*editor_main_loop) ( void );
-	void *(*get_first_render_region) ( struct render_region *rr );
-	void *(*get_next_render_region) ( void *ptr, struct render_region *rr );
 };
 
 /*
@@ -54,10 +52,10 @@ void update_editor ( void );
  * RI interface
  */
 struct info_bridge *get_info_bridge ( void );
-void add_render_region ( struct render_region *rr );
-struct render_region *find_render_region ( struct render_region *rr );
-void remove_render_region ( struct render_region *rr );
-void flush_render_region ( void );
+void render_region_add ( struct render_region *rr );
+struct render_region *render_region_find ( struct render_region *rr );
+void render_region_remove ( struct render_region *rr );
+void render_region_flush ( void );
 
 
 #endif // EDITOR_MEDIA_H_INCLUDED

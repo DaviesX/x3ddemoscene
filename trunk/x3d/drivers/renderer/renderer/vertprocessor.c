@@ -680,6 +680,6 @@ int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_ty
 	return i;
 }
 
-void dbg_vertprocessor_lib ( void )
+void vertprocessor_symbol_lib ( void )
 {
 }

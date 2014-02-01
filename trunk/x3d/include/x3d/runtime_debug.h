@@ -22,8 +22,6 @@ struct lib_func {
 };
 
 void kernel_unit_test_add ( struct unit_test *ut );
-void kernel_lib_func_add ( struct lib_func *lib );
-void kernel_lib_func_retrieve ( char *func_name, struct lib_func *func );
 
 
 #endif // RUNTIME_DEBUG_H_INCLUDED

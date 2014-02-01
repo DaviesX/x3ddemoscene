@@ -1,30 +1,39 @@
 /* main.c: Unit tests to all rendering functions go here */
+#include <x3d/common.h>
 #include <x3d/runtime_debug.h>
 #include "main.h"
 
 
+static void dbg_vertprocessor_add_all ( void );
+static void dbg_rasterizer_add_all ( void );
+
 /* entry */
 void dbg_renderer_add_all ( void )
 {
-	dbg_vertprocessor_add_all ();
-	dbg_rasterizer_add_all ();
+	static bool first_time = true;
+	if ( first_time ) {
+		dbg_vertprocessor_add_all ();
+		dbg_rasterizer_add_all ();
+		first_time = false;
+	}
 }
 
 /* vertex prcessor's */		#include "vertprocessor.h"
+#include "dbg_vertprocessor.h"
 
-static void vert_clipping ( struct alg_named_params *global_params );
+static void vert_post_process ( struct alg_named_params *global_params );
 
 void dbg_vertprocessor_add_all ( void )
 {
-	dbg_vertprocessor_lib ();
+	vertprocessor_symbol_lib ();
 	struct unit_test ut;
-	ut.test_name = "vert_clipping";
-	ut.test = vert_clipping;
+	ut.test_name = "vert_post_process";
+	ut.test = vert_post_process;
 	ut.pos = DBG_KERNEL_START;
 	kernel_unit_test_add ( &ut );
 }
 
-static void vert_clipping ( struct alg_named_params *global_params )
+static void vert_post_process ( struct alg_named_params *global_params )
 {
 }
 

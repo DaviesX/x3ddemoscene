@@ -471,3 +471,20 @@ void swap_alg_list ( struct alg_list *list0, struct alg_list *list1 )
 	list0->list = list1->list;
 	list1->list = t;
 }
+
+void create_alg_llist ( struct alg_llist *llist, int init_count )
+{
+}
+
+void free_alg_llist ( struct alg_llist *llist )
+{
+}
+
+int alg_llist_add ( struct alg_llist *llist )
+{
+	return 0;
+}
+
+void alg_llist_flush ( struct alg_llist *list )
+{
+}

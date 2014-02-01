@@ -152,8 +152,7 @@ void renderer_context_import_renderer ( struct renderer_ops *ops );
 void renderer_context_import_geocache ( struct geocache_ops *ops );
 void renderer_context_import_geometry ( struct geometry_ops *ops );
 void renderer_context_import_probe ( struct probe_ops *ops );
-renderer_handle_t renderer_context_add ( enum RENDERER_IDR render_method,
-		struct renderer_context *rend_con );
+renderer_handle_t renderer_context_add ( enum RENDERER_IDR render_method );
 void renderer_context_remove ( renderer_handle_t rh );
 struct renderer_context *renderer_context_find_first ( renderer_handle_t *rh );
 struct renderer_context *renderer_context_find_next ( renderer_handle_t *rh );

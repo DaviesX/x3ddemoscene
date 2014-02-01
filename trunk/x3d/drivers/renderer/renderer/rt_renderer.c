@@ -2,6 +2,8 @@
 #include <memory.h>
 #include <renderer/renderer.h>
 #include <renderer/proj_probe.h>
+#include <renderer/geocache.h>
+#include <renderer/out.h>
 #include "rt_renderer.h"
 
 
@@ -14,10 +16,10 @@ struct rt_renderer *create_rt_renderer ( struct renderer *parent )
 	rt_rend->parent = parent;
 	parent->probe =
 		alloc_fix ( sizeof ( struct proj_probe ), 1 );
+	parent->ro = alloc_fix ( sizeof ( struct render_out ), 1 );
 	parent->gc =
 		alloc_fix ( sizeof ( struct geocache ), 1 );
 	init_geocache ( parent->gc );
-	/* TODO (davis#2#): add <struct rend_out> initialization */
 	return rt_rend;
 }
 

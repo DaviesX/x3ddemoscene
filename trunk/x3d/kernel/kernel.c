@@ -4,6 +4,7 @@
 #include <logout.h>
 #include <x3d/kernel.h>
 #include <x3d/runtime_debug.h>
+#include <x3d/symbol_lib.h>
 #include <x3d/resource_loader.h>
 #include <x3d/renderer.h>
 #include <x3d/scene.h>
@@ -11,13 +12,15 @@
 
 
 struct runtime_debug {
+	bool finalized;
 	struct alg_list test_case;
 	struct alg_list case_name;
 	struct alg_named_params dbg_info;
 };
 
-struct global_lib {
-	struct alg_list lib_func;
+struct global_symbol {
+	bool finalized;
+	struct alg_list symbol[3];
 };
 
 struct kernel {
@@ -27,20 +30,28 @@ struct kernel {
 	struct renderer_context *rend_con;
 	struct scene *scene;
 	struct runtime_debug rt_debug;
-	struct global_lib gb_lib;
+	struct global_symbol sym_lib;
 };
 
 static struct kernel g_kernel;
 
 static void rest_init ( void );
 static void kernel_loop ( void );
+
 static void init_test_case ( void );
+static void finalize_test_case ( void );
 static void invoke_test_case ( enum DBG_POSITION pos );
 static void gen_debug_info ( void );
+
+static void init_symlib ( void );
+static void free_symlib ( void );
+static void finalize_symlib ( void );
+
 
 void start_kernel ( void )
 {
 	init_test_case ();
+	init_symlib ();
 	init_math_lib ();
 	init_log_output ( true );
 	init_res_loader ();
@@ -49,6 +60,8 @@ void start_kernel ( void )
 	init_editor ( &g_kernel.argc, &g_kernel.argv );
 	g_kernel.edit = export_editor ();
 
+	finalize_test_case ();
+	finalize_symlib ();
 	rest_init ();
 }
 
@@ -59,6 +72,7 @@ void shutdown_kernel ( void )
 static void rest_init ( void )
 {
 	invoke_test_case ( DBG_KERNEL_START );
+	edit_main_loop ();
 }
 
 static void kernel_loop ( void )
@@ -69,6 +83,7 @@ void init_startup_param ( int argc, char **argv )
 {
 	g_kernel.argc = argc;
 	g_kernel.argv = alloc_var ( sizeof ( char * ), argc );
+	g_kernel.argv = expand_var ( g_kernel.argv, argc );
 	int i;
 	for ( i = 0; i < argc; i ++ ) {
 		g_kernel.argv[i] = argv[i];
@@ -77,7 +92,7 @@ void init_startup_param ( int argc, char **argv )
 
 void add_startup_param ( char *option, char *param )
 {
-	add_var ( g_kernel.argv, 2 );
+	g_kernel.argv = add_var ( g_kernel.argv, 2 );
 	int n = g_kernel.argc;
 	g_kernel.argv[n + 0] =
 		alloc_fix ( sizeof ( char ), strlen ( option ) + 1 );
@@ -88,6 +103,7 @@ void add_startup_param ( char *option, char *param )
 	g_kernel.argc += 2;
 }
 
+/* unit test */
 static void init_test_case ( void )
 {
 	struct runtime_debug *dbg = &g_kernel.rt_debug;
@@ -97,11 +113,18 @@ static void init_test_case ( void )
 	for ( i = 0; i < g_kernel.argc - 1; i ++ ) {
 		if ( !strcmp ( "--test", g_kernel.argv[i] ) ) {
 			char *curr = g_kernel.argv[i + 1];
-			char *casename = alloc_fix ( sizeof casename, strlen ( curr ) + 1 );
+			char *casename =
+				alloc_fix ( sizeof casename, strlen ( curr ) + 1 );
 			strcpy ( casename, curr );
 			add_element_alg_list ( casename, &dbg->case_name );
 		}
 	}
+	init_named_params ( &dbg->dbg_info );
+}
+
+static void finalize_test_case ( void )
+{
+	g_kernel.rt_debug.finalized = true;
 }
 
 static void invoke_test_case ( enum DBG_POSITION pos )
@@ -121,7 +144,7 @@ static void invoke_test_case ( enum DBG_POSITION pos )
 #define cmp( _info, _elm )	(((struct unit_test *) _elm)->pos & (_info)->pos && \
 				 !strcmp ( (_info)->name, ((struct unit_test *) _elm)->test_name ))
 		int i_case;
-		find_elm_alg_list ( &dbg->test_case, &info, &i_case, cmp )
+		find_elm_alg_list ( &dbg->test_case, &info, &i_case, cmp );
 #undef cmp
 		if ( i_case != -1 ) {
 			struct unit_test *test = alg_list_i ( &dbg->test_case, i_case );
@@ -145,13 +168,65 @@ static void gen_debug_info ( void )
 
 void kernel_unit_test_add ( struct unit_test *ut )
 {
+	if ( g_kernel.rt_debug.finalized ) {
+		log_critical_err_dbg ( "runtime debug has been finalized. error in adding new test case" );
+	}
 	add_element_alg_list ( ut, &g_kernel.rt_debug.test_case );
 }
 
-void kernel_global_lib_add ( struct global_lib *lib )
+/* symbol library */
+static void init_symlib ( void )
 {
+	memset ( &g_kernel.sym_lib, 0, sizeof ( struct global_symbol ) );
+	g_kernel.sym_lib.finalized = false;
+	int i;
+	for ( i = 0; i < 3; i ++ ) {
+		create_alg_list ( &g_kernel.sym_lib.symbol[i],
+				  sizeof ( struct symbol_lib ), 0 );
+	}
 }
 
-void kernel_lib_func_retrieve ( char *func_name, struct lib_func *func )
+static void free_symlib ( void )
 {
+	int i;
+	for ( i = 0; i < 3; i ++ ) {
+		free_alg_list ( &g_kernel.sym_lib.symbol[i] );
+	}
+	memset ( &g_kernel.sym_lib, 0, sizeof ( struct global_symbol ) );
+}
+
+static void finalize_symlib ( void )
+{
+	g_kernel.sym_lib.finalized = true;
+}
+
+void kernel_symlib_add ( struct symbol_lib *symbol )
+{
+	if ( g_kernel.sym_lib.finalized ) {
+		log_critical_err_dbg ( "symbol library has been finalized. error in adding new symbol" );
+	}
+	enum SYMBOL_IDR type = symbol->idr;
+	add_element_alg_list ( symbol, &g_kernel.sym_lib.symbol[type] );
+}
+
+bool kernel_symlib_retrieve ( enum SYMBOL_IDR type, char *sym_name,
+			      struct symbol_lib *symbol )
+{
+	struct alg_list *sym_list = &g_kernel.sym_lib.symbol[type];
+	struct {
+		char *name;
+	} info;
+	info.name = sym_name;
+#define cmp( _info, _elm )	(!strcmp ( _info->name, \
+				 ((struct symbol_lib *) (_elm))->sym_name ))
+	int i_sym;
+	find_elm_alg_list ( sym_list, &info, &i_sym, cmp );
+#undef cmp
+	if ( i_sym != -1 ) {
+		struct symbol_lib *sym_found = alg_list_i ( sym_list, i_sym );
+		memcpy ( symbol, sym_found, sizeof *sym_found );
+		return true;
+	} else {
+		return false;
+	}
 }

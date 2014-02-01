@@ -267,6 +267,10 @@ struct alg_hash_table {
 
 /* linked list */
 struct alg_llist {
+	int n_elm;
+	int *link;
+	int ilast;
+	int icurr;
 };
 
 /* Provides a balance tree container and
@@ -409,6 +413,14 @@ void create_ptr_list ( struct alg_list *list, struct alg_pointer_list **ptrs );
 void free_ptr_list ( struct alg_pointer_list *ptrs );
 pseudo_def ( void process_ptr_list ( struct alg_pointer_list *ptrs, struct alg_list *new_list ) )
 
+void create_alg_llist ( struct alg_llist *llist, int init_count );
+void free_alg_llist ( struct alg_llist *llist );
+int alg_llist_add ( struct alg_llist *llist );
+pseudo_def ( void alg_llist_find ( struct alg_llist *llist, void *info,
+				   bool (*compare_func) ( void *info, void *elm ) ); )
+pseudo_def ( void alg_llist_remove ( struct alg_llist *llist, void *info,
+				     bool (*compare_func) ( void *info, void *elm ) ); )
+void alg_llist_flush ( struct alg_llist *list );
 
 #include <algorithm>
 

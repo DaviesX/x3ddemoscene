@@ -46,8 +46,8 @@ void vertprocessor_finalize ( struct rtcontext *cont, struct vertprocessor *vp )
 int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_type,
 			int count, rt_vertex **vo );
 
-/* debug */
-void dbg_vertprocessor_lib ( void );
+/* symbol library */
+void vertprocessor_symbol_lib ( void );
 
 
 #endif // RT_VERTEXPROCESS_INCLUDED

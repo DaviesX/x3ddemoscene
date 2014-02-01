@@ -4,7 +4,143 @@
 #include <logout.h>
 #include <algorithm.h>
 #include <x3d/editor.h>
-#include <editor/gui.h>
+#include <editor/editor.h>
+#include "gui.h"
+#include "main_editor.h"
+#include "object_editor.h"
+#include "renderable_editor.h"
+
+
+struct common_data g_comm_data;
+
+bool load_editor ( int *argc, char ***argv, enum EDIT_MODE mode )
+{
+	memset ( &g_comm_data, 0, sizeof g_comm_data );
+
+	gtk_init ( argc, argv );
+	GtkBuilder *builder = nullptr;
+	if ( !(builder = gtk_builder_new () ) ) {
+		log_severe_err_dbg ( "cannot create gtk-glade builder" );
+		return false;
+	}
+	/* load in glade file */
+	GError *error = nullptr;
+	if ( !(gtk_builder_add_from_file ( builder,
+					   g_path_res.glade_file, &error )) ) {
+		if ( error ) {
+			log_severe_err_dbg ( "builder fail to load: %s\n%s",
+					     g_path_res.glade_file,
+					     error->message );
+			g_free ( error );
+		} else {
+			log_severe_err_dbg ( "builder fail to load: %s, unknown error",
+					     g_path_res.glade_file );
+		}
+		return false;
+	}
+	GdkPixbuf *pix_buf =
+		gdk_pixbuf_new_from_file ( g_path_res.logo_file, &error );
+	if ( !pix_buf ) {
+		log_severe_err_dbg ( "fail to load logo image: %s\n%s",
+				     g_path_res.logo_file,
+				     error->message );
+		g_free ( error );
+		return false;
+	}
+	g_comm_data.builder = builder;
+	g_comm_data.logo_pix_buf = pix_buf;
+	g_comm_data.mode = mode;
+	if ( !main_editor_load () ) {
+		return false;
+	}
+	if ( !object_editor_load () ) {
+		return false;
+	}
+	if ( !renderable_editor_load () ) {
+		return false;
+	}
+	gtk_builder_connect_signals ( builder, nullptr );
+	g_object_unref ( G_OBJECT ( builder ) );
+	return true;
+}
+
+char *file_chooser_open ( char *default_dir )
+{
+}
+
+char *file_chooser_save ( char *default_dir )
+{
+}
+
+void message_box_info ( char *title, char *message )
+{
+	GtkWidget *dialog = nullptr;
+	dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
+					  GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
+					  "%s", message );
+	gtk_window_set_position ( GTK_WINDOW ( dialog ), GTK_WIN_POS_CENTER );
+	gtk_window_set_title ( GTK_WINDOW(dialog), title );
+	gtk_dialog_run ( GTK_DIALOG ( dialog ) );
+	gtk_widget_destroy ( dialog );
+}
+
+void message_box_warning ( char *title, char *message )
+{
+	GtkWidget *dialog = nullptr;
+	dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
+					  GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
+					  "%s", message );
+	gtk_window_set_position ( GTK_WINDOW ( dialog ), GTK_WIN_POS_CENTER );
+	gtk_window_set_title ( GTK_WINDOW(dialog), title );
+	gtk_dialog_run ( GTK_DIALOG ( dialog ) );
+	gtk_widget_destroy ( dialog );
+}
+
+void message_box_error ( char *title, char *message )
+{
+	GtkWidget *dialog = nullptr;
+	dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
+					  GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+					  "%s", message );
+	gtk_window_set_position ( GTK_WINDOW ( dialog ), GTK_WIN_POS_CENTER );
+	gtk_window_set_title ( GTK_WINDOW(dialog), title );
+	gtk_dialog_run ( GTK_DIALOG ( dialog ) );
+	gtk_widget_destroy ( dialog );
+}
+
+bool message_box_question ( char *title, char *message )
+{
+	GtkWidget *dialog = nullptr;
+	dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
+					  GTK_MESSAGE_QUESTION, GTK_BUTTONS_CLOSE,
+					  "%s", message );
+	gtk_window_set_position ( GTK_WINDOW ( dialog ), GTK_WIN_POS_CENTER );
+	gtk_window_set_title ( GTK_WINDOW(dialog), title );
+	gint result = gtk_dialog_run ( GTK_DIALOG ( dialog ) );
+	gtk_widget_destroy ( dialog );
+	switch ( result ) {
+	default:
+	case GTK_RESPONSE_DELETE_EVENT:
+	case GTK_RESPONSE_NO: {
+		return false;
+	}
+	case GTK_RESPONSE_YES: {
+		return true;
+	}
+	}
+}
+
+void widget_get_size ( GtkWidget *parent, GtkWidget *widget,
+		       int *x, int *y, int *width, int *height )
+{
+	GtkAllocation *allocation = g_new0 ( GtkAllocation, 1 );
+	gtk_widget_get_allocation ( widget, allocation );
+	*width = allocation->width;
+	*height = allocation->height;
+	g_free ( allocation );
+	gtk_widget_translate_coordinates ( widget, parent,
+					   0, 0, x, y );
+}
 
 /** TEMP **/
 enum RP_SCENE_ERR {
@@ -28,20 +164,7 @@ struct main_window {
 	GdkPixbuf *logo_pix_buf;
 };
 
-struct path_resource {
-	char *glade_file;
-	char *logo_file;
-	char *scene_path;
-	char *renderer_path;
-};
 
-
-const struct path_resource g_path_res = {
-	.glade_file = "./etc/editor/RenderWindow.glade",
-	.logo_file = "./etc/editor/X3d Render Library Logo 3.png",
-	.scene_path = "./etc/scene/",
-	.renderer_path = "./etc/renderer/"
-};
 
 static struct main_window g_main_win;
 static struct info_bridge *g_info_bridge;
@@ -166,7 +289,7 @@ bool load_main_window ( int *argc, char ***argv, enum EDIT_MODE mode )
 	rr.rect.y0 = y;
 	rr.rect.x1 = width;
 	rr.rect.y1 = height;
-	add_render_region ( &rr );
+	render_region_add ( &rr );
 	return true;
 }
 
@@ -187,7 +310,7 @@ void open_scene_menu_callback ( GtkWidget *file_chooser )
 {
 	/* Set default path for scenes */
 	gtk_file_chooser_set_current_folder ( GTK_FILE_CHOOSER ( file_chooser ),
-					      g_path_res.scene_path );
+					      g_path_res.raw_media_dir );
 	gtk_dialog_run ( GTK_DIALOG ( file_chooser ) );
 	gtk_widget_hide ( file_chooser );
 }

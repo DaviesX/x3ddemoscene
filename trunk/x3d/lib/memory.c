@@ -167,8 +167,8 @@ void *call_expand_var ( void *ptr, uint32_t n )
 	struct var_head *vh = &((struct var_head *) ptr)[-1];
 	if ( n*vh->elm_size > vh->total ) {
 		vh = change_size_var ( vh, n*vh->elm_size, 1 );
-		vh->used = vh->total;
 	}
+	vh->used = n*vh->elm_size;
 	return &vh[1];
 }
 
@@ -177,8 +177,8 @@ void *call_expand2_var ( void *ptr, uint32_t n )
 	struct var_head *vh = &((struct var_head *) ptr)[-1];
 	if ( n*vh->elm_size > vh->total ) {
 		vh = change_size_var ( vh, n*vh->elm_size, 2 );
-		vh->used = vh->total;
 	}
+	vh->used = 2*n*vh->elm_size;
 	return &vh[1];
 }
 

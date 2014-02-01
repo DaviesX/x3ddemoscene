@@ -2,6 +2,7 @@
 #include <x3d/renderer.h>
 #include <renderer/geocache.h>
 #include <renderer/renderer.h>
+#include "main.h"
 #include "rt_renderer.h"
 
 
@@ -25,12 +26,12 @@ const struct renderer_operations RendOps[] = {
 
 struct renderer *create_renderer ( enum RENDERER_IDR method )
 {
-	struct renderer *r = alloc_fix ( sizeof r, 1 );
+	struct renderer *r = alloc_fix ( sizeof *r, 1 );
 	r->idr = method;
 	r->thr_state = RENDERER_THREAD_MUTUAL | RENDERER_THREAD_SINGLE;
 	r->spec = RENDER_SPEC_SW_BUILTIN;
-	init_geocache ( &r->gc );
 	r->rend = RendOps[r->idr].create ( r );
+	dbg_renderer_add_all ();
 	return r;
 }
 

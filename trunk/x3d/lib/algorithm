@@ -819,5 +819,12 @@ struct PARTITION_BOUNDARY {
 	} \
 }
 
+#define alg_llist_find( _llist, _info, _f_Compare ) \
+{ \
+}
+
+#define alg_llist_remove ( _llist, _info, _f_Compare ) \
+{ \
+}
 
 #endif // ALGORITHM_H_INCLUDED

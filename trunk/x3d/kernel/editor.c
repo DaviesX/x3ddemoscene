@@ -1,12 +1,13 @@
+#include <logout.h>
 #include <algorithm.h>
 #include <x3d/kernel.h>
-#include <editor/gui.h>
+#include <editor/editor.h>
 #include <x3d/renderer.h>
 #include <x3d/editor.h>
 
 struct editor {
 	enum EDIT_MODE mode;
-	struct render_region *rr;
+	struct alg_list rend_region;
 	struct alg_llist llist;
 };
 
@@ -14,7 +15,7 @@ static struct info_bridge g_info_bridge = {0};
 static struct editor g_edit = {0};
 
 static struct edit_ops g_edit_ops = {
-	.init_editor = load_main_window,
+	.init_editor = load_editor,
 	.editor_main_loop = edit_main_loop
 };
 
@@ -34,15 +35,18 @@ bool init_editor ( int *argc, char ***argv )
 			break;
 		}
 	}
+	create_alg_list ( &g_edit.rend_region, sizeof ( struct render_region ),
+			  MAX_RENDER_REGIONS );
+	create_alg_llist ( &g_edit.llist, MAX_RENDER_REGIONS );
+	init_named_params ( &g_info_bridge.params );
+
 	if ( !g_edit_ops.init_editor ( argc, argv, mode ) ) {
 		goto fail;
 	}
-	free_fix ( g_edit.rr );
-	g_edit.rr = alloc_fix ( sizeof *g_edit.rr, MAX_RENDER_REGIONS );
-	init_named_params ( &g_info_bridge.params )
 	return true;
 fail:
 	kernel_panic ();
+	return false;
 }
 
 struct render_region *get_first_render_region ( int32_t *pos )
@@ -72,18 +76,27 @@ struct info_bridge *get_info_bridge ( void )
 	return &g_info_bridge;
 }
 
-void add_render_region ( struct render_region *rr )
+void render_region_add ( struct render_region *rr )
+{
+	if ( alg_list_len ( &g_edit.rend_region ) >= MAX_RENDER_REGIONS ) {
+		log_severe_err_dbg ( "render region slot has been full" );
+		memset ( rr, 0, sizeof *rr );
+	}
+	rr->rend_bind = renderer_context_add ( RENDERER_IDR_RASTERIZER );
+	int pos = alg_llist_add ( &g_edit.llist );
+	expand_alg_list ( pos + 1, &g_edit.rend_region );
+	struct render_region *dst_rr = alg_list_i ( &g_edit.rend_region, pos );
+	memcpy ( dst_rr, rr, sizeof *rr );
+}
+
+struct render_region *render_region_find ( struct render_region *rr )
 {
 }
 
-struct render_region *find_render_region ( struct render_region *rr )
+void render_region_remove ( struct render_region *rr )
 {
 }
 
-void remove_render_region ( struct render_region *rr )
-{
-}
-
-void flush_render_region ( void )
+void render_region_flush ( void )
 {
 }

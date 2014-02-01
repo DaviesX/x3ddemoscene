@@ -1,12 +1,16 @@
 # depslib dependency file v1.0
-1389680919 source:/home/davis/Projects/x3d/drivers/editor/gui.c
+1391239657 source:/home/davis/Projects/x3d/drivers/editor/gui.c
 	<gtk/gtk.h>
 	<gdk/gdk.h>
 	<cairo.h>
 	<logout.h>
 	<algorithm.h>
 	<x3d/editor.h>
-	<editor/gui.h>
+	<editor/editor.h>
+	"gui.h"
+	"main_editor.h"
+	"object_editor.h"
+	"renderable_editor.h"
 
 1373281738 /usr/include/gtk-2.0/gtk/gtk.h
 	<gdk/gdk.h>
@@ -2447,7 +2451,7 @@
 1373281738 /usr/include/gtk-2.0/gtk/gtktipsquery.h
 	<gtk/gtk.h>
 
-1390110777 /home/davis/Projects/x3d/lib/algorithm.h
+1391237109 /home/davis/Projects/x3d/lib/algorithm.h
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm>
@@ -2475,20 +2479,20 @@
 1388683088 /home/davis/Projects/x3d/lib/memory.h
 	<x3d/common.h>
 
-1389680785 /home/davis/Projects/x3d/lib/algorithm
+1391197248 /home/davis/Projects/x3d/lib/algorithm
 
-1388796144 /home/davis/Projects/x3d/include/x3d/editor.h
+1391239270 /home/davis/Projects/x3d/include/x3d/editor.h
 	<math/math.h>
 	<algorithm.h>
 	<x3d/renderer.h>
 
-1390007420 /home/davis/Projects/x3d/lib/math/math.h
+1390714955 /home/davis/Projects/x3d/lib/math/math.h
 	"vector.h"
 	"matrix.h"
 	"quat.h"
 	"geometry.h"
 	"decimal.h"
-	"func.h"
+	"fx.h"
 
 1390431276 /home/davis/Projects/x3d/lib/math/vector.h
 
@@ -2503,7 +2507,7 @@
 
 1388879413 /home/davis/Projects/x3d/lib/math/func.h
 
-1389658356 /home/davis/Projects/x3d/include/x3d/renderer.h
+1391194347 /home/davis/Projects/x3d/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<algorithm.h>
@@ -2706,7 +2710,7 @@
 1389668744 /home/davis/Projects/x3d/drivers/renderer/renderer/surface.h
 	<x3d/common.h>
 
-1390714168 source:/home/davis/Projects/x3d/drivers/renderer/out/out.c
+1390714503 source:/home/davis/Projects/x3d/drivers/renderer/out/out.c
 	<renderer/out.h>
 	"screen_out.h"
 	"image_out.h"
@@ -2752,11 +2756,13 @@
 1389670877 /home/davis/Projects/x3d/drivers/renderer/renderer/colorspectrum.h
 	<math/math.h>
 
-1390610037 source:/home/davis/Projects/x3d/drivers/renderer/renderer/main.c
+1391237109 source:/home/davis/Projects/x3d/drivers/renderer/renderer/main.c
+	<x3d/common.h>
 	<x3d/runtime_debug.h>
 	"main.h"
+	"dbg_vertprocessor.h"
 
-1390608020 /home/davis/Projects/x3d/drivers/renderer/renderer/main.h
+1391019942 /home/davis/Projects/x3d/drivers/renderer/renderer/main.h
 
 1385670362 source:/home/davis/Projects/x3d/drivers/renderer/renderer/pm_renderer.c
 
@@ -2780,10 +2786,11 @@
 1389660773 /home/davis/Projects/x3d/include/renderer/trimesh_shape.h
 	"shape_common.h"
 
-1390091339 source:/home/davis/Projects/x3d/drivers/renderer/renderer/renderer.c
+1391240764 source:/home/davis/Projects/x3d/drivers/renderer/renderer/renderer.c
 	<x3d/renderer.h>
 	<renderer/geocache.h>
 	<renderer/renderer.h>
+	"main.h"
 	"rt_renderer.h"
 
 1390091197 /home/davis/Projects/x3d/include/renderer/renderer.h
@@ -2810,10 +2817,12 @@
 1389680919 /home/davis/Projects/x3d/drivers/renderer/renderer/rt_pass.h
 	"../probe/probe.h"
 
-1390115599 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rt_renderer.c
+1391240648 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rt_renderer.c
 	<memory.h>
 	<renderer/renderer.h>
 	<renderer/proj_probe.h>
+	<renderer/geocache.h>
+	<renderer/out.h>
 	"rt_renderer.h"
 
 1389678098 source:/home/davis/Projects/x3d/drivers/renderer/renderer/surface.c
@@ -2826,20 +2835,22 @@
 1389678304 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vibuffer.c
 	"vibuffer.h"
 
-1389681967 source:/home/davis/Projects/x3d/kernel/editor.c
+1391240851 source:/home/davis/Projects/x3d/kernel/editor.c
+	<logout.h>
 	<algorithm.h>
 	<x3d/kernel.h>
-	<editor/gui.h>
+	<editor/editor.h>
 	<x3d/renderer.h>
 	<x3d/editor.h>
 
-1390609328 source:/home/davis/Projects/x3d/kernel/kernel.c
+1391239728 source:/home/davis/Projects/x3d/kernel/kernel.c
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm.h>
 	<logout.h>
 	<x3d/kernel.h>
 	<x3d/runtime_debug.h>
+	<x3d/symbol_lib.h>
 	<x3d/resource_loader.h>
 	<x3d/renderer.h>
 	<x3d/scene.h>
@@ -2847,17 +2858,19 @@
 
 1389424362 /home/davis/Projects/x3d/include/x3d/kernel.h
 
-1390609804 /home/davis/Projects/x3d/include/x3d/runtime_debug.h
+1391014732 /home/davis/Projects/x3d/include/x3d/runtime_debug.h
 
 1389411972 /home/davis/Projects/x3d/include/x3d/scene.h
 
-1389679810 source:/home/davis/Projects/x3d/kernel/panic.c
+1391194993 source:/home/davis/Projects/x3d/kernel/panic.c
 	<x3d/kernel.h>
 
 1389398163 source:/home/davis/Projects/x3d/kernel/renderable.c
 	<x3d/renderer.h>
 
-1389679884 source:/home/davis/Projects/x3d/kernel/renderer_context.c
+1391240139 source:/home/davis/Projects/x3d/kernel/renderer_context.c
+	<logout.h>
+	<algorithm.h>
 	<x3d/renderer.h>
 	<renderer/renderer.h>
 	<renderer/geocache.h>
@@ -2869,7 +2882,7 @@
 
 1386806407 source:/home/davis/Projects/x3d/kernel/scene.c
 
-1389681593 source:/home/davis/Projects/x3d/lib/algorithm.c
+1391239915 source:/home/davis/Projects/x3d/lib/algorithm.c
 	<algorithm.h>
 	<math/math.h>
 
@@ -2979,7 +2992,7 @@
 	<math.h>
 	"vector.h"
 
-1389681705 source:/home/davis/Projects/x3d/lib/memory.c
+1391238674 source:/home/davis/Projects/x3d/lib/memory.c
 	<logout.h>
 	<memory.h>
 
@@ -3003,7 +3016,7 @@
 
 1363271212 source:/home/davis/Projects/x3d/drivers/renderer/renderer/raytracer.c
 
-1390629286 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vertprocessor.c
+1391020476 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vertprocessor.c
 	<logout.h>
 	<algorithm.h>
 	"rasterization.h"
@@ -3011,7 +3024,7 @@
 	"vertprocessor.h"
 	"main.h"
 
-1390608342 /home/davis/Projects/x3d/drivers/renderer/renderer/vertprocessor.h
+1391020422 /home/davis/Projects/x3d/drivers/renderer/renderer/vertprocessor.h
 	<x3d/common.h>
 	<algorithm.h>
 	<math/math.h>
@@ -3044,7 +3057,7 @@
 
 1390699181 source:/home/davis/Projects/x3d/drivers/renderer/out/binary_out.c
 
-1390699026 /home/davis/Projects/x3d/include/renderer/out.h
+1390714503 /home/davis/Projects/x3d/include/renderer/out.h
 
 1390712349 /home/davis/Projects/x3d/drivers/renderer/out/screen_out.h
 
@@ -3053,4 +3066,1240 @@
 1390713785 /home/davis/Projects/x3d/drivers/renderer/out/binary_out.h
 
 1390699150 source:/home/davis/Projects/x3d/drivers/renderer/out/stream_out.c
+
+1390714932 /home/davis/Projects/x3d/lib/math/fx.h
+
+1390714503 source:/home/davis/Projects/x3d/drivers/renderer/out/screen_out.c
+	<logout.h>
+	<math/math.h>
+	<renderer/out.h>
+	"screen_out.h"
+	<gtk/gtk.h>
+
+1390714915 source:/home/davis/Projects/x3d/lib/math/fx.c
+	"math.h"
+	"fx.h"
+
+1391237110 /home/davis/Projects/x3d/include/x3d/symbol_lib.h
+	<x3d/common.h>
+
+1391020462 /home/davis/Projects/x3d/drivers/renderer/renderer/dbg_vertprocessor.h
+
+1391239692 source:/home/davis/Projects/x3d/drivers/editor/main_editor.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	<x3d/editor.h>
+	"gui.h"
+	"main_editor.h"
+
+1391236991 source:/home/davis/Projects/x3d/drivers/editor/object_editor.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	"gui.h"
+	"object_editor.h"
+
+1391236981 source:/home/davis/Projects/x3d/drivers/editor/renderable_editor.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	"gui.h"
+	"renderable_editor.h"
+
+1386694645 /usr/include/gtk-3.0/gtk/gtk.h
+	<gdk/gdk.h>
+	<gtk/gtkaboutdialog.h>
+	<gtk/gtkaccelgroup.h>
+	<gtk/gtkaccellabel.h>
+	<gtk/gtkaccelmap.h>
+	<gtk/gtkaccessible.h>
+	<gtk/gtkaction.h>
+	<gtk/gtkactionable.h>
+	<gtk/gtkactiongroup.h>
+	<gtk/gtkactivatable.h>
+	<gtk/gtkadjustment.h>
+	<gtk/gtkalignment.h>
+	<gtk/gtkappchooser.h>
+	<gtk/gtkappchooserdialog.h>
+	<gtk/gtkappchooserwidget.h>
+	<gtk/gtkappchooserbutton.h>
+	<gtk/gtkapplication.h>
+	<gtk/gtkapplicationwindow.h>
+	<gtk/gtkarrow.h>
+	<gtk/gtkaspectframe.h>
+	<gtk/gtkassistant.h>
+	<gtk/gtkbbox.h>
+	<gtk/gtkbin.h>
+	<gtk/gtkbindings.h>
+	<gtk/gtkborder.h>
+	<gtk/gtkbox.h>
+	<gtk/gtkbuildable.h>
+	<gtk/gtkbuilder.h>
+	<gtk/gtkbutton.h>
+	<gtk/gtkcalendar.h>
+	<gtk/gtkcellarea.h>
+	<gtk/gtkcellareabox.h>
+	<gtk/gtkcellareacontext.h>
+	<gtk/gtkcelleditable.h>
+	<gtk/gtkcelllayout.h>
+	<gtk/gtkcellrenderer.h>
+	<gtk/gtkcellrendereraccel.h>
+	<gtk/gtkcellrenderercombo.h>
+	<gtk/gtkcellrendererpixbuf.h>
+	<gtk/gtkcellrendererprogress.h>
+	<gtk/gtkcellrendererspin.h>
+	<gtk/gtkcellrendererspinner.h>
+	<gtk/gtkcellrenderertext.h>
+	<gtk/gtkcellrenderertoggle.h>
+	<gtk/gtkcellview.h>
+	<gtk/gtkcheckbutton.h>
+	<gtk/gtkcheckmenuitem.h>
+	<gtk/gtkclipboard.h>
+	<gtk/gtkcolorbutton.h>
+	<gtk/gtkcolorchooser.h>
+	<gtk/gtkcolorchooserdialog.h>
+	<gtk/gtkcolorchooserwidget.h>
+	<gtk/gtkcolorutils.h>
+	<gtk/gtkcombobox.h>
+	<gtk/gtkcomboboxtext.h>
+	<gtk/gtkcontainer.h>
+	<gtk/gtkcssprovider.h>
+	<gtk/gtkcsssection.h>
+	<gtk/gtkdebug.h>
+	<gtk/gtkdialog.h>
+	<gtk/gtkdnd.h>
+	<gtk/gtkdrawingarea.h>
+	<gtk/gtkeditable.h>
+	<gtk/gtkentry.h>
+	<gtk/gtkentrybuffer.h>
+	<gtk/gtkentrycompletion.h>
+	<gtk/gtkenums.h>
+	<gtk/gtkeventbox.h>
+	<gtk/gtkexpander.h>
+	<gtk/gtkfixed.h>
+	<gtk/gtkfilechooser.h>
+	<gtk/gtkfilechooserbutton.h>
+	<gtk/gtkfilechooserdialog.h>
+	<gtk/gtkfilechooserwidget.h>
+	<gtk/gtkfilefilter.h>
+	<gtk/gtkfontbutton.h>
+	<gtk/gtkfontchooser.h>
+	<gtk/gtkfontchooserdialog.h>
+	<gtk/gtkfontchooserwidget.h>
+	<gtk/gtkframe.h>
+	<gtk/gtkgrid.h>
+	<gtk/gtkiconfactory.h>
+	<gtk/gtkicontheme.h>
+	<gtk/gtkiconview.h>
+	<gtk/gtkimage.h>
+	<gtk/gtkimagemenuitem.h>
+	<gtk/gtkimcontext.h>
+	<gtk/gtkimcontextinfo.h>
+	<gtk/gtkimcontextsimple.h>
+	<gtk/gtkimmulticontext.h>
+	<gtk/gtkinfobar.h>
+	<gtk/gtkinvisible.h>
+	<gtk/gtklabel.h>
+	<gtk/gtklayout.h>
+	<gtk/gtklevelbar.h>
+	<gtk/gtklinkbutton.h>
+	<gtk/gtkliststore.h>
+	<gtk/gtklockbutton.h>
+	<gtk/gtkmain.h>
+	<gtk/gtkmenu.h>
+	<gtk/gtkmenubar.h>
+	<gtk/gtkmenubutton.h>
+	<gtk/gtkmenuitem.h>
+	<gtk/gtkmenushell.h>
+	<gtk/gtkmenutoolbutton.h>
+	<gtk/gtkmessagedialog.h>
+	<gtk/gtkmisc.h>
+	<gtk/gtkmodules.h>
+	<gtk/gtkmountoperation.h>
+	<gtk/gtknotebook.h>
+	<gtk/gtknumerableicon.h>
+	<gtk/gtkoffscreenwindow.h>
+	<gtk/gtkorientable.h>
+	<gtk/gtkoverlay.h>
+	<gtk/gtkpagesetup.h>
+	<gtk/gtkpapersize.h>
+	<gtk/gtkpaned.h>
+	<gtk/gtkprintcontext.h>
+	<gtk/gtkprintoperation.h>
+	<gtk/gtkprintoperationpreview.h>
+	<gtk/gtkprintsettings.h>
+	<gtk/gtkprogressbar.h>
+	<gtk/gtkradioaction.h>
+	<gtk/gtkradiobutton.h>
+	<gtk/gtkradiomenuitem.h>
+	<gtk/gtkradiotoolbutton.h>
+	<gtk/gtkrange.h>
+	<gtk/gtkrecentaction.h>
+	<gtk/gtkrecentchooser.h>
+	<gtk/gtkrecentchooserdialog.h>
+	<gtk/gtkrecentchoosermenu.h>
+	<gtk/gtkrecentchooserwidget.h>
+	<gtk/gtkrecentfilter.h>
+	<gtk/gtkrecentmanager.h>
+	<gtk/gtkscale.h>
+	<gtk/gtkscalebutton.h>
+	<gtk/gtkscrollable.h>
+	<gtk/gtkscrollbar.h>
+	<gtk/gtkscrolledwindow.h>
+	<gtk/gtksearchentry.h>
+	<gtk/gtkselection.h>
+	<gtk/gtkseparator.h>
+	<gtk/gtkseparatormenuitem.h>
+	<gtk/gtkseparatortoolitem.h>
+	<gtk/gtksettings.h>
+	<gtk/gtkshow.h>
+	<gtk/gtksizegroup.h>
+	<gtk/gtksizerequest.h>
+	<gtk/gtkspinbutton.h>
+	<gtk/gtkspinner.h>
+	<gtk/gtkstatusbar.h>
+	<gtk/gtkstatusicon.h>
+	<gtk/gtkstock.h>
+	<gtk/gtkstylecontext.h>
+	<gtk/gtkstyleproperties.h>
+	<gtk/gtkstyleprovider.h>
+	<gtk/gtkswitch.h>
+	<gtk/gtktextattributes.h>
+	<gtk/gtktextbuffer.h>
+	<gtk/gtktextbufferrichtext.h>
+	<gtk/gtktextchild.h>
+	<gtk/gtktextiter.h>
+	<gtk/gtktextmark.h>
+	<gtk/gtktexttag.h>
+	<gtk/gtktexttagtable.h>
+	<gtk/gtktextview.h>
+	<gtk/gtkthemingengine.h>
+	<gtk/gtktoggleaction.h>
+	<gtk/gtktogglebutton.h>
+	<gtk/gtktoggletoolbutton.h>
+	<gtk/gtktoolbar.h>
+	<gtk/gtktoolbutton.h>
+	<gtk/gtktoolitem.h>
+	<gtk/gtktoolitemgroup.h>
+	<gtk/gtktoolpalette.h>
+	<gtk/gtktoolshell.h>
+	<gtk/gtktooltip.h>
+	<gtk/gtktestutils.h>
+	<gtk/gtktreednd.h>
+	<gtk/gtktreemodel.h>
+	<gtk/gtktreemodelfilter.h>
+	<gtk/gtktreemodelsort.h>
+	<gtk/gtktreeselection.h>
+	<gtk/gtktreesortable.h>
+	<gtk/gtktreestore.h>
+	<gtk/gtktreeview.h>
+	<gtk/gtktreeviewcolumn.h>
+	<gtk/gtktypebuiltins.h>
+	<gtk/gtktypes.h>
+	<gtk/gtkuimanager.h>
+	<gtk/gtkversion.h>
+	<gtk/gtkviewport.h>
+	<gtk/gtkvolumebutton.h>
+	<gtk/gtkwidget.h>
+	<gtk/gtkwidgetpath.h>
+	<gtk/gtkwindow.h>
+	<gtk/deprecated/gtkcolorsel.h>
+	<gtk/deprecated/gtkcolorseldialog.h>
+	<gtk/deprecated/gtkfontsel.h>
+	<gtk/deprecated/gtkgradient.h>
+	<gtk/deprecated/gtkhandlebox.h>
+	<gtk/deprecated/gtkhbbox.h>
+	<gtk/deprecated/gtkhbox.h>
+	<gtk/deprecated/gtkhpaned.h>
+	<gtk/deprecated/gtkhsv.h>
+	<gtk/deprecated/gtkhscale.h>
+	<gtk/deprecated/gtkhscrollbar.h>
+	<gtk/deprecated/gtkhseparator.h>
+	<gtk/deprecated/gtkrc.h>
+	<gtk/deprecated/gtkstyle.h>
+	<gtk/deprecated/gtksymboliccolor.h>
+	<gtk/deprecated/gtktable.h>
+	<gtk/deprecated/gtktearoffmenuitem.h>
+	<gtk/deprecated/gtkvbbox.h>
+	<gtk/deprecated/gtkvbox.h>
+	<gtk/deprecated/gtkvpaned.h>
+	<gtk/deprecated/gtkvscale.h>
+	<gtk/deprecated/gtkvscrollbar.h>
+	<gtk/deprecated/gtkvseparator.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdk.h
+	<gdk/gdkconfig.h>
+	<gdk/gdkversionmacros.h>
+	<gdk/gdkapplaunchcontext.h>
+	<gdk/gdkcairo.h>
+	<gdk/gdkcolor.h>
+	<gdk/gdkcursor.h>
+	<gdk/gdkdevice.h>
+	<gdk/gdkdevicemanager.h>
+	<gdk/gdkdisplay.h>
+	<gdk/gdkdisplaymanager.h>
+	<gdk/gdkdnd.h>
+	<gdk/gdkenumtypes.h>
+	<gdk/gdkevents.h>
+	<gdk/gdkframeclock.h>
+	<gdk/gdkframetimings.h>
+	<gdk/gdkkeys.h>
+	<gdk/gdkkeysyms.h>
+	<gdk/gdkmain.h>
+	<gdk/gdkpango.h>
+	<gdk/gdkpixbuf.h>
+	<gdk/gdkproperty.h>
+	<gdk/gdkrectangle.h>
+	<gdk/gdkrgba.h>
+	<gdk/gdkscreen.h>
+	<gdk/gdkselection.h>
+	<gdk/gdktestutils.h>
+	<gdk/gdkthreads.h>
+	<gdk/gdktypes.h>
+	<gdk/gdkvisual.h>
+	<gdk/gdkwindow.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkconfig.h
+	<glib.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkversionmacros.h
+	<glib.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h
+	<gio/gio.h>
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+	<gdk/gdkscreen.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdktypes.h
+	<glib.h>
+	<pango/pango.h>
+	<glib-object.h>
+	<cairo.h>
+	<gdk/gdkconfig.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkscreen.h
+	<cairo.h>
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+	<gdk/gdkdisplay.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkdisplay.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+	<gdk/gdkevents.h>
+	<gdk/gdkdevicemanager.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkevents.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdkcolor.h>
+	<gdk/gdktypes.h>
+	<gdk/gdkdnd.h>
+	<gdk/gdkdevice.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkcolor.h
+	<cairo.h>
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkdnd.h
+	<gdk/gdktypes.h>
+	<gdk/gdkdevice.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkdevice.h
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkdevicemanager.h
+	<gdk/gdktypes.h>
+	<gdk/gdkdevice.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkcairo.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdkcolor.h>
+	<gdk/gdkrgba.h>
+	<gdk/gdkpixbuf.h>
+	<pango/pangocairo.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkrgba.h
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkpixbuf.h
+	<cairo.h>
+	<gdk/gdktypes.h>
+	<gdk-pixbuf/gdk-pixbuf.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkcursor.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+	<gdk-pixbuf/gdk-pixbuf.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkdisplaymanager.h
+	<gdk/gdktypes.h>
+	<gdk/gdkdisplay.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkenumtypes.h
+	<glib-object.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkframeclock.h
+	<gdk/gdkframetimings.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkframetimings.h
+	<glib-object.h>
+	<gdk/gdkversionmacros.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkkeys.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkkeysyms.h
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkmain.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkpango.h
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkproperty.h
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkrectangle.h
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkselection.h
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdktestutils.h
+	<gdk/gdkwindow.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkwindow.h
+	<gdk/gdkversionmacros.h>
+	<gdk/gdktypes.h>
+	<gdk/gdkevents.h>
+	<gdk/gdkframeclock.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkthreads.h
+	<gdk/gdktypes.h>
+
+1386694644 /usr/include/gtk-3.0/gdk/gdkvisual.h
+	<gdk/gdktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkaboutdialog.h
+	<gtk/gtkdialog.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkdialog.h
+	<gtk/gtkwindow.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkwindow.h
+	<gtk/gtkapplication.h>
+	<gtk/gtkaccelgroup.h>
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkapplication.h
+	<gtk/gtkwidget.h>
+	<gio/gio.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkwidget.h
+	<gdk/gdk.h>
+	<gtk/gtkaccelgroup.h>
+	<gtk/gtkborder.h>
+	<gtk/gtktypes.h>
+	<atk/atk.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkaccelgroup.h
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkenums.h
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkborder.h
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktypes.h
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkbin.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcontainer.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkaccellabel.h
+	<gtk/gtklabel.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtklabel.h
+	<gtk/gtkmisc.h>
+	<gtk/gtkwindow.h>
+	<gtk/gtkmenu.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmisc.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmenu.h
+	<gtk/gtkaccelgroup.h>
+	<gtk/gtkmenushell.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmenushell.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkaccelmap.h
+	<gtk/gtkaccelgroup.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkaccessible.h
+	<atk/atk.h>
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkaction.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkactionable.h
+	<glib-object.h>
+	<gdk/gdk.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkactiongroup.h
+	<gtk/gtkaction.h>
+	<gtk/gtkstock.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkstock.h
+	<gdk/gdk.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkactivatable.h
+	<gtk/gtkaction.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkadjustment.h
+	<gdk/gdk.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkalignment.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkappchooser.h
+	<glib.h>
+	<gio/gio.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkappchooserdialog.h
+	<gtk/gtkdialog.h>
+	<gio/gio.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkappchooserwidget.h
+	<gtk/gtkbox.h>
+	<gtk/gtkmenu.h>
+	<gio/gio.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkbox.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h
+	<gtk/gtkcombobox.h>
+	<gio/gio.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcombobox.h
+	<gtk/gtkbin.h>
+	<gtk/gtktreemodel.h>
+	<gtk/gtktreeview.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreemodel.h
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreeview.h
+	<gtk/gtkcontainer.h>
+	<gtk/gtktreemodel.h>
+	<gtk/gtktreeviewcolumn.h>
+	<gtk/gtkdnd.h>
+	<gtk/gtkentry.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreeviewcolumn.h
+	<gtk/gtkcellrenderer.h>
+	<gtk/gtktreemodel.h>
+	<gtk/gtktreesortable.h>
+	<gtk/gtkcellarea.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrenderer.h
+	<gtk/gtkcelleditable.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcelleditable.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreesortable.h
+	<gtk/gtkenums.h>
+	<gtk/gtktreemodel.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellarea.h
+	<gtk/gtkcellrenderer.h>
+	<gtk/gtkwidget.h>
+	<gtk/gtktreemodel.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkdnd.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkselection.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkselection.h
+	<gtk/gtkwidget.h>
+	<gtk/gtktextiter.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktextiter.h
+	<gtk/gtktextattributes.h>
+	<gtk/gtktextchild.h>
+	<gtk/gtktexttag.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktextattributes.h
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktextchild.h
+	<gdk/gdk.h>
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktexttag.h
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkentry.h
+	<gtk/gtkeditable.h>
+	<gtk/gtkimcontext.h>
+	<gtk/gtkmenu.h>
+	<gtk/gtkentrybuffer.h>
+	<gtk/gtkentrycompletion.h>
+	<gtk/gtkimage.h>
+	<gtk/gtkselection.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkeditable.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkimcontext.h
+	<gdk/gdk.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkentrybuffer.h
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkentrycompletion.h
+	<gtk/gtktreemodel.h>
+	<gtk/gtkliststore.h>
+	<gtk/gtkcellarea.h>
+	<gtk/gtktreeviewcolumn.h>
+	<gtk/gtktreemodelfilter.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkliststore.h
+	<gtk/gtktreemodel.h>
+	<gtk/gtktreesortable.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreemodelfilter.h
+	<gtk/gtktreemodel.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkimage.h
+	<gio/gio.h>
+	<gtk/gtkmisc.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkapplicationwindow.h
+	<gtk/gtkwindow.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkarrow.h
+	<gtk/gtkmisc.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkaspectframe.h
+	<gtk/gtkframe.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkframe.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkassistant.h
+	<gtk/gtkwindow.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkbbox.h
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkbindings.h
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkbuildable.h
+	<gtk/gtkbuilder.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkbuilder.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkbutton.h
+	<gtk/gtkbin.h>
+	<gtk/gtkimage.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcalendar.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellareabox.h
+	<gtk/gtkcellarea.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellareacontext.h
+	<gtk/gtkcellarea.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcelllayout.h
+	<gtk/gtkcellrenderer.h>
+	<gtk/gtkcellarea.h>
+	<gtk/gtkbuildable.h>
+	<gtk/gtkbuilder.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrendereraccel.h
+	<gtk/gtkcellrenderertext.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrenderertext.h
+	<gtk/gtkcellrenderer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrenderercombo.h
+	<gtk/gtktreemodel.h>
+	<gtk/gtkcellrenderertext.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrendererpixbuf.h
+	<gtk/gtkcellrenderer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrendererprogress.h
+	<gtk/gtkcellrenderer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrendererspin.h
+	<gtk/gtkcellrenderertext.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrendererspinner.h
+	<gtk/gtkcellrenderer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellrenderertoggle.h
+	<gtk/gtkcellrenderer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcellview.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkcellrenderer.h>
+	<gtk/gtkcellarea.h>
+	<gtk/gtkcellareacontext.h>
+	<gtk/gtktreemodel.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcheckbutton.h
+	<gtk/gtktogglebutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktogglebutton.h
+	<gtk/gtkbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcheckmenuitem.h
+	<gtk/gtkmenuitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmenuitem.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkclipboard.h
+	<gtk/gtkselection.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcolorbutton.h
+	<gtk/gtkbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcolorchooser.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcolorchooserdialog.h
+	<gtk/gtkdialog.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcolorchooserwidget.h
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcolorutils.h
+	<glib.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcomboboxtext.h
+	<gtk/gtkcombobox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcssprovider.h
+	<gio/gio.h>
+	<gtk/gtkcsssection.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkcsssection.h
+	<gio/gio.h>
+	<gdk/gdk.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkdebug.h
+	<glib.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkdrawingarea.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkeventbox.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkexpander.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfixed.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfilechooser.h
+	<gtk/gtkfilefilter.h>
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfilefilter.h
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfilechooserbutton.h
+	<gtk/gtkbox.h>
+	<gtk/gtkfilechooser.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfilechooserdialog.h
+	<gtk/gtkdialog.h>
+	<gtk/gtkfilechooser.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfilechooserwidget.h
+	<gtk/gtkfilechooser.h>
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfontbutton.h
+	<gtk/gtkbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfontchooser.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfontchooserdialog.h
+	<gtk/gtkdialog.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkfontchooserwidget.h
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkgrid.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkiconfactory.h
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkicontheme.h
+	<gdk-pixbuf/gdk-pixbuf.h>
+	<gdk/gdk.h>
+	<gtk/gtkstylecontext.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkstylecontext.h
+	<gtk/gtkborder.h>
+	<gtk/gtkcsssection.h>
+	<gtk/gtkstyleprovider.h>
+	<gtk/gtktypes.h>
+	<atk/atk.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkstyleprovider.h
+	<glib-object.h>
+	<gtk/gtkenums.h>
+	<gtk/gtkiconfactory.h>
+	<gtk/gtkstyleproperties.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkstyleproperties.h
+	<glib-object.h>
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkiconview.h
+	<gtk/gtkcontainer.h>
+	<gtk/gtktreemodel.h>
+	<gtk/gtkcellrenderer.h>
+	<gtk/gtkcellarea.h>
+	<gtk/gtkselection.h>
+	<gtk/gtktooltip.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktooltip.h
+	<gtk/gtkwindow.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkimagemenuitem.h
+	<gtk/gtkmenuitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkimcontextinfo.h
+	<glib.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkimcontextsimple.h
+	<gtk/gtkimcontext.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkimmulticontext.h
+	<gtk/gtkimcontext.h>
+	<gtk/gtkmenushell.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkinfobar.h
+	<gtk/gtkbox.h>
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkinvisible.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtklayout.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtklevelbar.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtklinkbutton.h
+	<gtk/gtkbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtklockbutton.h
+	<gtk/gtkbutton.h>
+	<gio/gio.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmain.h
+	<gdk/gdk.h>
+	<gtk/gtkwidget.h>
+	<gtk/gtkbox.h>
+	<gtk/gtkwindow.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmenubar.h
+	<gtk/gtkmenushell.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmenubutton.h
+	<gtk/gtktogglebutton.h>
+	<gtk/gtkmenu.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmenutoolbutton.h
+	<gtk/gtkmenu.h>
+	<gtk/gtktoolbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoolbutton.h
+	<gtk/gtktoolitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoolitem.h
+	<gtk/gtkbin.h>
+	<gtk/gtkmenuitem.h>
+	<gtk/gtksizegroup.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtksizegroup.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmessagedialog.h
+	<gtk/gtkdialog.h>
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmodules.h
+	<gdk/gdk.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkmountoperation.h
+
+1386694645 /usr/include/gtk-3.0/gtk/gtknotebook.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtknumerableicon.h
+	<gio/gio.h>
+	<gtk/gtkstylecontext.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkoffscreenwindow.h
+	<gtk/gtkwindow.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkorientable.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkoverlay.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkpagesetup.h
+	<gtk/gtkpapersize.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkpapersize.h
+	<gtk/gtkenums.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkpaned.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkprintcontext.h
+	<pango/pango.h>
+	<gtk/gtkpagesetup.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkprintoperation.h
+	<cairo.h>
+	<gtk/gtkmain.h>
+	<gtk/gtkwindow.h>
+	<gtk/gtkpagesetup.h>
+	<gtk/gtkprintsettings.h>
+	<gtk/gtkprintcontext.h>
+	<gtk/gtkprintoperationpreview.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkprintsettings.h
+	<gtk/gtkpapersize.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkprintoperationpreview.h
+	<cairo.h>
+	<gtk/gtkprintcontext.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkprogressbar.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkradioaction.h
+	<gtk/gtktoggleaction.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoggleaction.h
+	<gtk/gtkaction.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkradiobutton.h
+	<gtk/gtkcheckbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkradiomenuitem.h
+	<gtk/gtkcheckmenuitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkradiotoolbutton.h
+	<gtk/gtktoggletoolbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoggletoolbutton.h
+	<gtk/gtktoolbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrange.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrecentaction.h
+	<gtk/gtkaction.h>
+	<gtk/gtkrecentmanager.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrecentmanager.h
+	<gdk-pixbuf/gdk-pixbuf.h>
+	<gdk/gdk.h>
+	<time.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrecentchooser.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkrecentmanager.h>
+	<gtk/gtkrecentfilter.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrecentfilter.h
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrecentchooserdialog.h
+	<gtk/gtkdialog.h>
+	<gtk/gtkrecentchooser.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrecentchoosermenu.h
+	<gtk/gtkmenu.h>
+	<gtk/gtkrecentchooser.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkrecentchooserwidget.h
+	<gtk/gtkrecentchooser.h>
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkscale.h
+	<gtk/gtkrange.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkscalebutton.h
+	<gtk/gtkbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkscrollable.h
+	<gtk/gtkenums.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkscrollbar.h
+	<gtk/gtkrange.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkscrolledwindow.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtksearchentry.h
+	<gtk/gtkentry.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkseparator.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkseparatormenuitem.h
+	<gtk/gtkmenuitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkseparatortoolitem.h
+	<gtk/gtktoolitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtksettings.h
+	<gdk/gdk.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkshow.h
+
+1386694645 /usr/include/gtk-3.0/gtk/gtksizerequest.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkspinbutton.h
+	<gtk/gtkentry.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkspinner.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkstatusbar.h
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkstatusicon.h
+	<gtk/gtkimage.h>
+	<gtk/gtkmenu.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkswitch.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktextbuffer.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkclipboard.h>
+	<gtk/gtktexttagtable.h>
+	<gtk/gtktextiter.h>
+	<gtk/gtktextmark.h>
+	<gtk/gtktextchild.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktexttagtable.h
+	<gtk/gtktexttag.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktextmark.h
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktextbufferrichtext.h
+	<gtk/gtktextbuffer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktextview.h
+	<gtk/gtkcontainer.h>
+	<gtk/gtkimcontext.h>
+	<gtk/gtktextbuffer.h>
+	<gtk/gtkmenu.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkthemingengine.h
+	<glib-object.h>
+	<cairo.h>
+	<gtk/gtkborder.h>
+	<gtk/gtkenums.h>
+	<gtk/gtkstyleproperties.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoolbar.h
+	<gtk/gtkcontainer.h>
+	<gtk/gtktoolitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoolitemgroup.h
+	<gtk/gtkcontainer.h>
+	<gtk/gtktoolitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoolpalette.h
+	<gtk/gtkcontainer.h>
+	<gtk/gtkdnd.h>
+	<gtk/gtktoolitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktoolshell.h
+	<gtk/gtkenums.h>
+	<pango/pango.h>
+	<gtk/gtksizegroup.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktestutils.h
+	<gtk/gtkwidget.h>
+	<gtk/gtkspinbutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreednd.h
+	<gtk/gtktreemodel.h>
+	<gtk/gtkdnd.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreemodelsort.h
+	<gdk/gdk.h>
+	<gtk/gtktreemodel.h>
+	<gtk/gtktreesortable.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreeselection.h
+	<gtk/gtktreeview.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktreestore.h
+	<gdk/gdk.h>
+	<gtk/gtktreemodel.h>
+	<gtk/gtktreesortable.h>
+	<stdarg.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtktypebuiltins.h
+	<glib-object.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkuimanager.h
+	<gtk/gtkaccelgroup.h>
+	<gtk/gtkwidget.h>
+	<gtk/gtkaction.h>
+	<gtk/gtkactiongroup.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkversion.h
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkviewport.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkvolumebutton.h
+	<gtk/gtkscalebutton.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/gtkwidgetpath.h
+	<glib-object.h>
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkcolorsel.h
+	<gtk/gtkdialog.h>
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkcolorseldialog.h
+	<gtk/gtkdialog.h>
+	<gtk/deprecated/gtkcolorsel.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkfontsel.h
+	<gtk/gtkdialog.h>
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkgradient.h
+	<gdk/gdk.h>
+	<gtk/gtkstylecontext.h>
+	<gtk/gtkstyleproperties.h>
+	<gtk/deprecated/gtksymboliccolor.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtksymboliccolor.h
+	<gdk/gdk.h>
+	<gtk/gtkstyleproperties.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhandlebox.h
+	<gtk/gtkbin.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhbbox.h
+	<gtk/gtkbbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhbox.h
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhpaned.h
+	<gtk/gtkpaned.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhsv.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhscale.h
+	<gtk/gtkscale.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhscrollbar.h
+	<gtk/gtkscrollbar.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkhseparator.h
+	<gtk/gtkseparator.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkrc.h
+	<gtk/gtkwidget.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkstyle.h
+	<gdk/gdk.h>
+	<gtk/gtkenums.h>
+	<gtk/gtktypes.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtktable.h
+	<gtk/gtkcontainer.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtktearoffmenuitem.h
+	<gtk/gtkmenuitem.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkvbbox.h
+	<gtk/gtkbbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkvbox.h
+	<gtk/gtkbox.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkvpaned.h
+	<gtk/gtkpaned.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkvscale.h
+	<gtk/gtkscale.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkvscrollbar.h
+	<gtk/gtkscrollbar.h>
+
+1386694645 /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h
+	<gtk/gtkseparator.h>
+
+1391236427 /home/davis/Projects/x3d/include/editor/editor.h
+	<x3d/editor.h>
+
+1391239657 /home/davis/Projects/x3d/drivers/editor/gui.h
+	<gtk/gtk.h>
+
+1391226581 /home/davis/Projects/x3d/drivers/editor/main_editor.h
+
+1391230628 /home/davis/Projects/x3d/drivers/editor/object_editor.h
+
+1391230635 /home/davis/Projects/x3d/drivers/editor/renderable_editor.h
 
