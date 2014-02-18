@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1391237822 source:/home/davis/Projects/x3d/external/sample_entry/main.c
+1391485115 source:/home/davis/Projects/x3d/external/sample_entry/main.c
 	<stdio.h>
 	<x3d/kernel.h>
 

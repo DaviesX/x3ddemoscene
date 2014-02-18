@@ -4,7 +4,8 @@
 #include "rasterization.h"
 #include "vibuffer.h"
 #include "vertprocessor.h"
-#include "main.h"
+#include "vertattri_lerp.h"
+#include "dbg_vertprocessor.h"
 
 
 /* TODO (davis#3#): <vertprocessor> write unit test for all vertprocessor code */
@@ -201,108 +202,6 @@ void vertprocessor_finalize ( struct rtcontext *cont, struct vertprocessor *vp )
 	/* TODO (davis#3#): generate vertex processor and set up vertex shader */
 }
 
-/* interpolators*/
-static void int8_interpolator ( uint8_t *s, uint8_t *e, float t, int do_int, uint8_t *r )
-{
-	*r = (do_int) ? (uint8_t) ((float) *s + (float) (*e - *s)*t) : (*s);
-}
-
-static void int16_interpolator ( uint16_t *s, uint16_t *e, float t, int do_int, uint16_t *r )
-{
-	*r = (do_int) ? (uint16_t) ((float) *s + (float) (*e - *s)*t) : (*s);
-}
-
-static void int32_interpolator ( uint32_t *s, uint32_t *e, float t, int do_int, uint32_t *r )
-{
-	*r = (do_int) ? (uint32_t) ((float) *s + (float) (*e - *s)*t) : (*s);
-}
-
-static void int64_interpolator ( uint32_t *s, uint32_t *e, float t, int do_int, uint32_t *r )
-{
-	int i;
-	for ( i = 0; i < 2; i ++ ) {
-		r[i] = (do_int) ?
-		       (uint32_t) ((float) s[i] + (float) (e[i] - s[i])*t) :
-		       (s[i]);
-	}
-}
-
-static void int96_interpolator ( uint32_t *s, uint32_t *e, float t, int do_int, uint32_t *r )
-{
-	int i;
-	for ( i = 0; i < 3; i ++ ) {
-		r[i] = (do_int) ?
-		       (uint32_t) ((float) s[i] + (float) (e[i] - s[i])*t) :
-		       (s[i]);
-	}
-}
-
-static void int128_interpolator ( uint32_t *s, uint32_t *e, float t, int do_int, uint32_t *r )
-{
-	int i;
-	for ( i = 0; i < 4; i ++ ) {
-		r[i] = (do_int) ?
-		       (uint32_t) ((float) s[i] + (float) (e[i] - s[i])*t) :
-		       (s[i]);
-	}
-}
-
-static void float32_interpolator ( float *s, float *e, float t, int do_int, float *r )
-{
-	int i;
-	for ( i = 0; i < 1; i ++ ) {
-		r[i] = (do_int) ?
-		       (s[i] + (e[i] - s[i])*t) :
-		       (s[i]);
-	}
-}
-
-static void float64_interpolator ( float *s, float *e, float t, int do_int, float *r )
-{
-	int i;
-	for ( i = 0; i < 2; i ++ ) {
-		r[i] = (do_int) ?
-		       (s[i] + (e[i] - s[i])*t) :
-		       (s[i]);
-	}
-}
-
-static void float96_interpolator ( float *s, float *e, float t, int do_int, float *r )
-{
-	int i;
-	for ( i = 0; i < 3; i ++ ) {
-		r[i] = (do_int) ?
-		       (s[i] + (e[i] - s[i])*t) :
-		       (s[i]);
-	}
-}
-
-static void float128_interpolator ( float *s, float *e, float t, int do_int, float *r )
-{
-	int i;
-	for ( i = 0; i < 4; i ++ ) {
-		r[i] = (do_int) ?
-		       (s[i] + (e[i] - s[i])*t) :
-		       (s[i]);
-	}
-}
-
-typedef void (*f_Interpolator) ( void *s, void *e, float t, int do_int, void *r );
-static const f_Interpolator VertIntOps[] = {
-	[VERTEX_DEFN_NULL] = nullptr,
-	[VERTEX_DEFN_INT8] = (f_Interpolator)		int8_interpolator,
-	[VERTEX_DEFN_INT16] = (f_Interpolator)		int16_interpolator,
-	[VERTEX_DEFN_INT32] = (f_Interpolator)		int32_interpolator,
-	[VERTEX_DEFN_INT64] = (f_Interpolator)		int64_interpolator,
-	[VERTEX_DEFN_INT96] = (f_Interpolator)		int96_interpolator,
-	[VERTEX_DEFN_INT128] = (f_Interpolator)		int128_interpolator,
-	[VERTEX_DEFN_FLOAT32] = (f_Interpolator)	float32_interpolator,
-	[VERTEX_DEFN_FLOAT64] = (f_Interpolator)	float64_interpolator,
-	[VERTEX_DEFN_FLOAT96] = (f_Interpolator)	float96_interpolator,
-	[VERTEX_DEFN_FLOAT128] = (f_Interpolator)	float128_interpolator
-
-};
-
 static int process_point ( rt_vertex *vi,
 			   struct matrix4x4 *t_all, int vert_size,
 			   rt_vertex *vo )
@@ -348,22 +247,7 @@ static int process_line ( rt_vertex *vi,
 	struct point3d bc[2];
 	set_point3d ( v_pos[0]->x*inv_pw[0], v_pos[0]->y*inv_pw[0], v_pos[0]->z*inv_pw[0], &bc[0] );
 	set_point3d ( v_pos[1]->x*inv_pw[1], v_pos[1]->y*inv_pw[1], v_pos[1]->z*inv_pw[1], &bc[1] );
-	const bool tr_accept =
-		bc[0].x >= -1.0f && bc[1].x >= -1.0f &&
-		bc[0].x <= 1.0f && bc[1].x <= 1.0f &&
-		bc[0].y >= -1.0f && bc[1].y >= -1.0f &&
-		bc[0].y <= 1.0f && bc[1].y <= 1.0f &&
-		bc[0].z >= -1.0f && bc[1].z >= -1.0f &&
-		bc[0].z <= 1.0f && bc[1].z <= 1.0f;
-	if ( tr_accept ) {
-		/* trivial accept, when all points are inside of all planes */
-		/* to ndc */
-		div_w_point4d_p ( v_pos[0] );
-		div_w_point4d_p ( v_pos[1] );
-		memcpy ( vaddro[0], vaddr[0], vert_size );
-		memcpy ( vaddro[1], vaddr[1], vert_size );
-		return 2;
-	}
+
 	const bool tr_reject =
 		(bc[0].x < -1.0f && bc[1].x < -1.0f) ||
 		(bc[0].x > 1.0f && bc[1].x > 1.0f) ||
@@ -375,52 +259,49 @@ static int process_line ( rt_vertex *vi,
 		/* trivial reject, when all points are outside of the same plane */
 		return 0;
 	}
-	/* clipping */
-	float tmin = -FLOAT_INFINITE;
-	float tmax = FLOAT_INFINITE;
-	int i;
-	for ( i = 0; i < 3; i ++ ) {
-		/* (P0 + V*t)/(P0w + Vw*t) = +1, and
-		 * (P0 + V*t)/(P0w + Vw*t) = -1 for plane-pair intersection,
-		 * where V = P1 - P0, Vw = P1w - P0w */
-		float t0 = (v_pos[0]->w - v_pos[0]->p[i])/
-			   ((v_pos[0]->w - v_pos[0]->p[i]) -
-			    (v_pos[1]->w - v_pos[1]->p[i]));
-		float t1 = (v_pos[0]->w + v_pos[0]->p[i])/
-			   ((v_pos[0]->p[i] - v_pos[0]->w) +
-			    (v_pos[1]->p[i] - v_pos[1]->w));
-		if ( t0 > t1 ) {
-			swap ( t0, t1 );
-		}
-		/* marching toward the middle of the line */
-		tmin = max ( t0, tmin );
-		tmax = min ( t1, tmax );
-		if ( tmin > tmax ) {
-			/* out of the corner, no valid intersection */
-			return 0;
-		}
+	/* NOTE (davis#4#): /** don't know if this would help, needs further profiling **/
+#if 1
+	/*	const bool tr_accept =
+			bc[0].x >= -1.0f && bc[1].x >= -1.0f &&
+			bc[0].x <= 1.0f && bc[1].x <= 1.0f &&
+			bc[0].y >= -1.0f && bc[1].y >= -1.0f &&
+			bc[0].y <= 1.0f && bc[1].y <= 1.0f &&
+			bc[0].z >= -1.0f && bc[1].z >= -1.0f &&
+			bc[0].z <= 1.0f && bc[1].z <= 1.0f; */
+	const bool tr_accept =
+		bc[0].z >= -1.0f && bc[1].z >= 1.0f;
+	if ( tr_accept ) {
+		/* trivial accept, when all points are inside of all planes */
+		/* to ndc */
+		div_w_point4d_p ( v_pos[0] );
+		div_w_point4d_p ( v_pos[1] );
+		memcpy ( vaddro[0], vaddr[0], vert_size );
+		memcpy ( vaddro[1], vaddr[1], vert_size );
+		return 2;
 	}
-	tmin = clamp ( tmin, 0.0f, 1.0f );
-	tmax = clamp ( tmax, 0.0f, 1.0f );
-	/* Interpolation */
-	int k;
-	for ( k = 0; k < n_comp; k ++ ) {
-		/* interpolates from original point0 to new point0 */
-		VertIntOps[vertdefn_mask(comp_format[k])] (
-			vaddr[0] + comp_offset[k],
-			vaddr[1] + comp_offset[k],
-			tmin, vertdefn_int(comp_format[k]),
-			vaddro[0] + comp_offset[k] );
-		/* interpolates from original point0 to new point1 */
-		VertIntOps[vertdefn_mask(comp_format[k])] (
-			vaddr[0] + comp_offset[k],
-			vaddr[1] + comp_offset[k],
-			tmax, vertdefn_int(comp_format[k]),
-			vaddro[1] + comp_offset[k] );
+#endif
+	/* uses near plane clipping only
+	 * (P0 + V*t)/(P0w + Vw*t) = +1, and
+	 * (P0 + V*t)/(P0w + Vw*t) = -1
+	 * and when z = -1 */
+	float t = -(v_pos[0]->w + v_pos[0]->z)/
+		  ((v_pos[1]->z - v_pos[0]->z) + (v_pos[1]->w - v_pos[0]->w));
+	/* checks that if p0 is inside */
+	if ( bc[0].z >= -1.0f ) {
+		memcpy ( vaddro[0], vaddr[0], vert_size );
+		div_w_point4d_p ( to_4d(vaddro[0]) );
+		/* interpolate p1 toward p0 */
+		lerp_attri ( comp_format, comp_offset, n_comp,
+			     vaddr[0], vaddr[1], t, vaddro[1] );
+		div_w_point4d_p ( to_4d(vaddro[1]) );
+	} else {
+		/* interpolate p0 toward p1 */
+		lerp_attri ( comp_format, comp_offset, n_comp,
+			     vaddr[0], vaddr[1], t, vaddro[0] );
+		div_w_point4d_p ( to_4d(vaddro[0]) );
+		memcpy ( vaddro[1], vaddr[1], vert_size );
+		div_w_point4d_p ( to_4d(vaddro[1]) );
 	}
-	/* to ndc */
-	div_w_point4d_p ( to_4d(vaddro[0]) );
-	div_w_point4d_p ( to_4d(vaddro[1]) );
 	return 2;
 }
 
@@ -431,7 +312,7 @@ static int process_triangle ( rt_vertex *vi,
 			      int vert_size, rt_vertex *cache, rt_vertex *vo )
 {
 	rt_vertex *vaddr[3];
-	rt_vertex *vaddro[3];
+	rt_vertex *vaddro[6];
 	struct point4d *v_pos[3];
 	int v;
 	for ( v = 0; v < 3; v ++ ) {
@@ -467,24 +348,7 @@ static int process_triangle ( rt_vertex *vi,
 	set_point3d ( v_pos[0]->x*inv_pw[0], v_pos[0]->y*inv_pw[0], v_pos[0]->z*inv_pw[0], &bc[0] );
 	set_point3d ( v_pos[1]->x*inv_pw[1], v_pos[1]->y*inv_pw[1], v_pos[1]->z*inv_pw[1], &bc[1] );
 	set_point3d ( v_pos[2]->x*inv_pw[2], v_pos[2]->y*inv_pw[2], v_pos[2]->z*inv_pw[2], &bc[2] );
-	const bool tr_accept =
-		bc[0].x >= -1.0f && bc[1].x >= -1.0f && bc[2].z >= -1.0f &&
-		bc[0].x <= 1.0f && bc[1].x <= 1.0f && bc[2].x <= 1.0f &&
-		bc[0].y >= -1.0f && bc[1].y >= -1.0f && bc[2].y >= -1.0f &&
-		bc[0].y <= 1.0f && bc[1].y <= 1.0f && bc[2].y <= 1.0f &&
-		bc[0].z >= -1.0f && bc[1].z >= -1.0f && bc[2].z >= -1.0f &&
-		bc[0].z <= 1.0f && bc[1].z <= 1.0f && bc[2].z <= 1.0f;
-	if ( tr_accept ) {
-		/* trivial accept, when all points are inside of all planes */
-		/* to ndc */
-		div_w_point4d_p ( v_pos[0] );
-		div_w_point4d_p ( v_pos[1] );
-		div_w_point4d_p ( v_pos[2] );
-		memcpy ( vaddro[0], vaddr[0], vert_size );
-		memcpy ( vaddro[1], vaddr[1], vert_size );
-		memcpy ( vaddro[2], vaddr[2], vert_size );
-		return 3;
-	}
+
 	const bool tr_reject =
 		(bc[0].x < -1.0f && bc[1].x < -1.0f && bc[2].x < -1.0f) ||
 		(bc[0].x > 1.0f && bc[1].x > 1.0f && bc[2].x > 1.0f) ||
@@ -496,94 +360,99 @@ static int process_triangle ( rt_vertex *vi,
 		/* trivial reject, when all points are outside of the same plane */
 		return 0;
 	}
-	struct point4d *vlist[2][8];
-	vlist[0][0] = v_pos[0];
-	vlist[0][2] = v_pos[1];
-	vlist[0][4] = v_pos[2];
-	int n_vert = 3;
-	int i_list = 0;
-	rt_vertex *curr_cache = cache;
-	int i;
-	for ( i = 0; i < 3; i ++ ) {
-		int j;
-		int k = 0;	/* new vertices (output list index) */
-		for ( j = 0; j < n_vert; j ++ ) {
-			/* (P0 + V*t)/(P0w + Vw*t) = +1, and
-			 * (P0 + V*t)/(P0w + Vw*t) = -1 for plane-pair intersection,
-			 * where V = P1 - P0, Vw = P1w - P0w */
-			struct point4d *p0 = vlist[i_list&1][j + 0];
-			struct point4d *p1 = vlist[i_list&1][(j + 1)%n_vert];
-			float t0 = (p0->w - p0->p[i])/
-				   ((p0->w - p0->p[i]) - (p1->w - p1->p[i]));
-			float t1 = (p0->w + p0->p[i])/
-				   ((p0->p[i] - p0->w) + (p1->p[i] - p1->w));
-			if ( t0 > t1 ) {
-				swap ( t0, t1 );
-			}
-			t0 = clamp ( t0, 0.0f, 1.0f );
-			t1 = clamp ( t1, 0.0f, 1.0f );
-			/* save p0 to output list when the original input is visible */
-			float inv_pw = 1.0f/p0->w;
-			if ( p0->p[i]*inv_pw >= -1.0f && p0->p[i]*inv_pw <= 1.0f ) {
-				vlist[(i_list + 1)&1][k ++] = p0;
-			}
-			/* interpolates to new p0 when the new point is visible */
-			float new_pi = p0->p[i] + t0*(p1->p[i] - p0->p[i]);
-			inv_pw = 1.0f/(p0->w + t0*(p1->w - p0->w));
-			if ( new_pi*inv_pw >= -1.0f && new_pi*inv_pw <= 1.0f ) {
-				curr_cache += k*vert_size;
-				int c;
-				for ( c = 0; c < n_comp; c ++ ) {
-					/* Lerp */
-					VertIntOps[vertdefn_mask(comp_format[c])] (
-						(untyped *) p0 + comp_offset[c],
-						(untyped *) p1 + comp_offset[c],
-						t0, vertdefn_int(comp_format[c]),
-						curr_cache + comp_offset[c] );
-				}
-				vlist[(i_list + 1)&1][k ++] = to_4d(curr_cache);
-			}
-			/* interpolates to new p1 when the new point is visible */
-			new_pi = p0->p[i] + t1*(p1->p[i] - p0->p[i]);
-			inv_pw = 1.0f/(p0->w + t1*(p1->w - p0->w));
-			if ( new_pi*inv_pw >= -1.0f && new_pi*inv_pw <= 1.0f ) {
-				curr_cache += k*vert_size;
-				int c;
-				for ( c = 0; c < n_comp; c ++ ) {
-					/* Lerp */
-					VertIntOps[vertdefn_mask(comp_format[c])] (
-						(untyped *) p0 + comp_offset[c],
-						(untyped *) p1 + comp_offset[c],
-						t1, vertdefn_int(comp_format[c]),
-						curr_cache + comp_offset[c] );
-				}
-				vlist[(i_list + 1)&1][k ++] = to_4d(curr_cache);
-			}
-			/* save p1 to output list when the original input is visible */
-			inv_pw = 1.0f/p1->w;
-			if ( p1->p[i]*inv_pw >= -1.0f && p1->p[i]*inv_pw <= 1.0f ) {
-				vlist[(i_list + 1)&1][k ++] = p1;
-			}
-		}
-		n_vert = k;
-		i_list ++;
-	}
-	/* contruct the new triangles and send them out to vo */
-	int n_tri = 0;		/* number of triangles constructed */
-	struct point4d **new_list = vlist[(i_list + 1)&1];	/* Avoid negative wrap: (i - 1)%2 = (i + 1)%2*/
-	div_w_point4d_p ( new_list[0] );	/* transform the first point to ndc to save redundant division */
-	int n;
-	for ( n = 1; n + 1 < n_vert; n ++ ) {
-		rt_vertex *curr_addr = vo + n_tri*3;
-		memcpy ( curr_addr + 0, new_list[0], vert_size );
-		memcpy ( curr_addr + 1, new_list[n], vert_size );
-		memcpy ( curr_addr + 2, new_list[n + 1], vert_size );
+	/* NOTE (davis#4#): /** don't know if this would help, needs further profiling **/
+#if 1
+	/*	const bool tr_accept =
+			bc[0].x >= -1.0f && bc[1].x >= -1.0f && bc[2].z >= -1.0f &&
+			bc[0].x <= 1.0f && bc[1].x <= 1.0f && bc[2].x <= 1.0f &&
+			bc[0].y >= -1.0f && bc[1].y >= -1.0f && bc[2].y >= -1.0f &&
+			bc[0].y <= 1.0f && bc[1].y <= 1.0f && bc[2].y <= 1.0f &&
+			bc[0].z >= -1.0f && bc[1].z >= -1.0f && bc[2].z >= -1.0f &&
+			bc[0].z <= 1.0f && bc[1].z <= 1.0f && bc[2].z <= 1.0f;*/
+	const bool tr_accept =
+		bc[0].z >= -1.0f && bc[1].z >= -1.0f && bc[2].z >= -1.0f;
+	if ( tr_accept ) {
+		/* trivial accept, when all points are inside of all planes */
 		/* to ndc */
-		div_w_point4d_p ( to_4d(curr_addr + 1) );
-		div_w_point4d_p ( to_4d(curr_addr + 2) );
-		n_tri ++;
+		div_w_point4d_p ( v_pos[0] );
+		div_w_point4d_p ( v_pos[1] );
+		div_w_point4d_p ( v_pos[2] );
+		memcpy ( vaddro[0], vaddr[0], vert_size );
+		memcpy ( vaddro[1], vaddr[1], vert_size );
+		memcpy ( vaddro[2], vaddr[2], vert_size );
+		return 3;
 	}
-	return n_tri*3;
+#endif
+	/* uses near plane clipping only
+	 * case 1: two in, one out, two triangles produced
+	 * case 2: one in, two out, one triangle produced */
+	struct point4d *p_in[2];
+	struct point4d *p_out[2];
+	int j = 0, k = 0;
+	for ( v = 0; v < 3; v ++ ) {
+		if ( v_pos[v]->z >= -1.0f ) {
+			p_in[k] = &v_pos[v];
+			k ++;
+		} else {
+			p_out[j] = &v_pos[v];
+			j ++;
+		}
+	}
+	/* (P0 + V*t)/(P0w + Vw*t) = -1 and when z = -1 */
+	if ( k == 2 ) {
+		/* producing two triangles */
+		for ( v = 3; v < 6; v ++ ) {
+			vaddro[v] = vo + v*vert_size;
+		}
+		float t0 = -(p_in[0]->w + p_in[0]->z)/
+			   ((p_out[0]->z - p_in[0]->z) +
+			    (p_out[0]->w - p_in[0]->w));
+		float t1 = -(p_in[1]->w + p_in[1]->z)/
+			   ((p_out[0]->z - p_in[1]->z) +
+			    (p_out[0]->w - p_in[1]->w));
+		/* p0, p0', p2 | p2 p0' p2' */
+		/* p0 */
+		memcpy ( vaddro[0], p_in[0], vert_size );
+		div_w_point4d_p ( to_4d(vaddro[0]) );
+		/* p0' */
+		lerp_attri ( comp_format, comp_offset, n_comp,
+			     p_in[0], p_out[0], t0, vaddro[1] );
+		div_w_point4d_p ( to_4d(vaddro[1]) );
+		/* p2 */
+		memcpy ( vaddro[2], p_in[1], vert_size );
+		div_w_point4d_p ( to_4d(vaddro[2]) );
+		/* next triangle */
+		/* p2 */
+		memcpy ( vaddro[3], vaddro[2], vert_size );
+		/* p0' */
+		memcpy ( vaddro[4], vaddro[1], vert_size );
+		/* p2' */
+		lerp_attri ( comp_format, comp_offset, n_comp,
+			     p_in[1], p_out[0], t1, vaddro[5] );
+		div_w_point4d_p ( to_4d(vaddro[5]) );
+		return 2*3;
+	} else {
+		/* producing one triangle (k = 1) */
+		float t0 = -(p_in[0]->w + p_in[0]->z)/
+			   ((p_out[0]->z - p_in[0]->z) +
+			    (p_out[0]->w - p_in[0]->w));
+		float t1 = -(p_in[0]->w + p_in[0]->z)/
+			   ((p_out[1]->z - p_in[0]->z) +
+			    (p_out[1]->w - p_in[0]->w));
+		/* p0, p0', p2' */
+		/* p0 */
+		memcpy ( vaddro[0], p_in[0], vert_size );
+		div_w_point4d_p ( to_4d(vaddro[0]) );
+		/* p0' */
+		lerp_attri ( comp_format, comp_offset, n_comp,
+			     p_in[0], p_out[0], t0, vaddro[1] );
+		div_w_point4d_p ( to_4d(vaddro[1]) );
+		/* p2' */
+		lerp_attri ( comp_format, comp_offset, n_comp,
+			     p_in[0], p_out[1], t1, vaddro[2] );
+		div_w_point4d_p ( to_4d(vaddro[2]) );
+		return 3;
+	}
 }
 
 int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_type,
@@ -661,9 +530,9 @@ int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_ty
 	}
 	case TRIANGLE_PRIMITIVE: {
 		/* splitting may increase the number of triangle output
-		 * worse case would result in 6 times more vertices */
+		 * worse case would result in 2 times more vertices */
 		flush_var ( vert_out );
-		vert_out = expand_var ( vert_out, 6*count );
+		vert_out = expand_var ( vert_out, 2*count );
 		while ( j < count ) {
 			int n = process_triangle ( &vert_in[j*vp->v_out_size],
 						   &vp->t_view, &vp->t_proj, vp->cull_factor,
@@ -682,4 +551,7 @@ int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_ty
 
 void vertprocessor_symbol_lib ( void )
 {
+	dbg_process_point = process_point;
+	dbg_process_line = process_line;
+	dbg_process_triangle = process_triangle;
 }

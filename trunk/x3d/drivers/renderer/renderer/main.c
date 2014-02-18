@@ -1,5 +1,6 @@
 /* main.c: Unit tests to all rendering functions go here */
 #include <x3d/common.h>
+#include <logout.h>
 #include <x3d/runtime_debug.h>
 #include "main.h"
 
@@ -20,6 +21,7 @@ void dbg_renderer_add_all ( void )
 
 /* vertex prcessor's */		#include "vertprocessor.h"
 #include "dbg_vertprocessor.h"
+#include "rasterization.h"
 
 static void vert_post_process ( struct alg_named_params *global_params );
 
@@ -35,6 +37,66 @@ void dbg_vertprocessor_add_all ( void )
 
 static void vert_post_process ( struct alg_named_params *global_params )
 {
+	struct dbg_vertex {
+		struct point4d v;
+		int p;
+	};
+	struct dbg_vertex v[3];
+	struct dbg_vertex vo[3];
+	struct dbg_vertex tmp_cache[20];
+	/* a volume with fov = 90 degree, w/h = 4/3, n = 1.0, f = 100.0 */
+	struct matrix4x4 t_all;
+	struct matrix4x4 t_view;
+	set_matrix4x4 ( &t_all,
+			1.0, 0.0, 0.0, 0.0,
+			0.0, 1.0*4.0/3.0, 0.0, 0.0,
+			0.0, 0.0, (100.0 + 1.0)/(100.0 - 1.0), 1.0,
+			0.0, 0.0, 2.0*100.0*1.0/(1.0 - 100.0), 0.0 );
+	identity_matrix4x4 ( &t_view );
+	/* point test */
+	set_point4d ( 100.0f, 20.0f, 50.0f, 1.0f, &v[0].v );
+	v[0].p = 0;
+	set_point4d ( 50.0f, 20.0f, 50.0f, 1.0f, &v[1].v );
+	v[1].p = 1;
+	set_point4d ( 10.0f, 20.0f, 100.0f, 1.0f, &v[2].v );
+	v[2].p = 2;
+	int n;
+	int i;
+	for ( i = 0; i < 3; i ++ ) {
+		n = dbg_process_point ( &v[i], &t_all, sizeof v[0], &vo[i] );
+		log_normal_dbg ( "v%d: %f, %f, %f, %f, %d point inside",
+				 vo[i].p, vo[i].v.x, vo[i].v.y, vo[i].v.z, vo[i].v.w, n );
+	}
+	/* line test */
+	set_point4d ( 100.0f, 0.0f, 80.0f, 1.0f, &v[0].v );
+	v[0].p = 0;
+	set_point4d ( 100.0f, 20.0f, 120.0f, 1.0f, &v[1].v );
+	v[1].p = 1;
+	int comp_offset[2] = {0, sizeof v[0].v};
+	int comp_format[2] = {
+		VERTEX_DEFN_FLOAT4 | VERTEX_DEFN_INTERPOLATE,
+		VERTEX_DEFN_INT
+	};
+	n = dbg_process_line ( v, &t_all, comp_offset, comp_format, 2, sizeof v[0], vo );
+	log_normal_dbg ( "v%d: %f, %f, %f, %f",
+			 vo[0].p, vo[0].v.x, vo[0].v.y, vo[0].v.z, vo[0].v.w );
+	log_normal_dbg ( "v%d: %f, %f, %f, %f, %d point inside",
+			 vo[1].p, vo[1].v.x, vo[1].v.y, vo[1].v.z, vo[1].v.w, n );
+	/* triangle test */
+	set_point4d ( 100.0f, -10.0f, 80.0f, 1.0f, &v[0].v );
+	v[0].p = 0;
+	set_point4d ( 100.0f, 40.0f, 120.0f, 1.0f, &v[1].v );
+	v[1].p = 1;
+	set_point4d ( 150.0f, 0.0f, 120.0f, 1.0f, &v[2].v );
+	v[2].p = 2;
+	n = dbg_process_triangle ( v, &t_view, &t_all, 1.0f, comp_offset, comp_format,
+				   2, sizeof v[0], tmp_cache, vo );
+	log_normal_dbg ( "v%d: %f, %f, %f, %f",
+			 vo[0].p, vo[0].v.x, vo[0].v.y, vo[0].v.z, vo[0].v.w );
+	log_normal_dbg ( "v%d: %f, %f, %f, %f",
+			 vo[1].p, vo[1].v.x, vo[1].v.y, vo[1].v.z, vo[1].v.w, n );
+	log_normal_dbg ( "v%d: %f, %f, %f, %f, %d point inside",
+			 vo[2].p, vo[2].v.x, vo[2].v.y, vo[2].v.z, vo[22].v.w, n );
 }
 
 /* rasterizer's */		#include "rasterizer.h"

@@ -264,16 +264,31 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/surface.h" />
+		<Unit filename="drivers/renderer/renderer/vertattri_lerp.h" />
 		<Unit filename="drivers/renderer/renderer/vertprocessor.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/vertprocessor.h" />
 		<Unit filename="drivers/renderer/renderer/vibuffer.h" />
-		<Unit filename="drivers/renderer/shader/rt_shader.c">
+		<Unit filename="drivers/renderer/shader/basic_rt_shader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/shader/rt_shader.h" />
-		<Unit filename="drivers/renderer/shader/shader.h" />
+		<Unit filename="drivers/renderer/shader/basic_rt_shader_a.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/shader/basic_rt_shader_so.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/shader/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/shader/main.h" />
+		<Unit filename="drivers/renderer/shader/rtshader.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/shader/shader.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="include/editor/editor.h" />
 		<Unit filename="include/renderer/geocache.h">
 			<Option compilerVar="CC" />
@@ -287,6 +302,8 @@
 		<Unit filename="include/renderer/renderer.h">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="include/renderer/shader.h" />
+		<Unit filename="include/renderer/shader_lib.h" />
 		<Unit filename="include/renderer/spatial_probe.h" />
 		<Unit filename="include/renderer/volume.h" />
 		<Unit filename="include/x3d/common.h" />
@@ -325,6 +342,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/algorithm.h" />
+		<Unit filename="lib/algorithm.inc">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="lib/compiler/compiler.c">
 			<Option compilerVar="CC" />
 		</Unit>

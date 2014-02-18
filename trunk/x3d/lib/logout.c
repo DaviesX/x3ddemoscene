@@ -5,11 +5,11 @@
 
 #define MAX_MESSAGE_LENGTH		1024
 
-const char *FileName = "X3dLog";
-const char *NormalPrefix = "X3dLog:";
-const char *MildErrPrefix = "X3dMildError:";
-const char *SevereErrPrefix = "X3dSevereError:";
-const char *CritiErrPrefix = "X3dCriticalTerminate:";
+const char *FileName = "x3d_log";
+const char *NormalPrefix = "x3d_log:";
+const char *MildErrPrefix = "x3d_mild: *";
+const char *SevereErrPrefix = "x3d_severe: **";
+const char *CritiErrPrefix = "x3d_critical: ***";
 
 struct log_output {
 	FILE *file;
@@ -41,7 +41,7 @@ int init_log_output ( int to_terminate )
 	time ( &timeT );
 	struct tm *gmtTime = gmtime ( &timeT );
 
-	printf ( "X3d Render Library - %s\nX3d log start recording\t%d:%d:%d\n\n",
+	printf ( "x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n",
 		 RENDER_LIB_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
 	if ( (g_log_inst.normal_bhv | g_log_inst.mild_err_bhv |
 	      g_log_inst.severe_err_bhv | g_log_inst.criti_err_bhv) &
@@ -49,7 +49,7 @@ int init_log_output ( int to_terminate )
 		if ( !(g_log_inst.file = fopen ( FileName, "w" )) ) {
 			return 0;
 		}
-		fprintf ( g_log_inst.file, "X3d Render Library - %s\nX3d log start recording\t%d:%d:%d\n\n",
+		fprintf ( g_log_inst.file, "x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n",
 			  RENDER_LIB_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
 	}
 	g_is_init = 1;
@@ -60,10 +60,10 @@ int init_log_output ( int to_terminate )
 void free_log_output ( void )
 {
 	if ( g_log_inst.file ) {
-		fprintf ( g_log_inst.file, "X3d log stop recording\n\n" );
+		fprintf ( g_log_inst.file, "x3d log stop recording\n\n" );
 		fclose ( g_log_inst.file );
 	}
-	printf ( "X3d log stop recording\n\n" );
+	printf ( "x3d log stop recording\n\n" );
 	memset ( &g_log_inst, 0, sizeof ( g_log_inst ) );
 	g_is_init = 0;
 }

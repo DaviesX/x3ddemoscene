@@ -8,6 +8,7 @@
 
 struct geocache;
 struct probe;
+struct rend_out;
 
 /*
  * Structures

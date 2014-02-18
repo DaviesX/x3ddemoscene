@@ -227,6 +227,8 @@ do { \
 	_a = *(typeof (_a) *) (_stack)->stack_ptr; \
 }
 
+#define stack_is_empty( _stack )	((_stack)->stack_ptr == (_stack)->stack)
+
 #define get_stack_last( _stack, _a ) \
 { \
 	untyped *t = (_stack)->stack_ptr - sizeof ( _a ); \
@@ -422,7 +424,7 @@ pseudo_def ( void alg_llist_remove ( struct alg_llist *llist, void *info,
 				     bool (*compare_func) ( void *info, void *elm ) ); )
 void alg_llist_flush ( struct alg_llist *list );
 
-#include <algorithm>
+#include <algorithm.inc>
 
 
 #endif // X3DALGORITHM_H_INCLUDED

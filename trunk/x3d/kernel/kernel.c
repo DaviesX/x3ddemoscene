@@ -108,7 +108,7 @@ static void init_test_case ( void )
 {
 	struct runtime_debug *dbg = &g_kernel.rt_debug;
 	create_alg_list ( &dbg->test_case, sizeof ( struct unit_test ), 0 );
-	create_alg_list ( &dbg->test_case, sizeof ( char* ), 0 );
+	create_alg_list ( &dbg->case_name, sizeof ( char* ), 0 );
 	int i;
 	for ( i = 0; i < g_kernel.argc - 1; i ++ ) {
 		if ( !strcmp ( "--test", g_kernel.argv[i] ) ) {
@@ -116,7 +116,7 @@ static void init_test_case ( void )
 			char *casename =
 				alloc_fix ( sizeof casename, strlen ( curr ) + 1 );
 			strcpy ( casename, curr );
-			add_element_alg_list ( casename, &dbg->case_name );
+			add_element_alg_list ( &casename, &dbg->case_name );
 		}
 	}
 	init_named_params ( &dbg->dbg_info );
@@ -132,14 +132,14 @@ static void invoke_test_case ( enum DBG_POSITION pos )
 	gen_debug_info ();
 
 	struct runtime_debug *dbg = &g_kernel.rt_debug;
-	char *curr = alg_list_first ( &dbg->case_name );
+	char **curr = alg_list_first ( &dbg->case_name );
 	struct {
 		char *name;
 		enum DBG_POSITION pos;
 	} info;
 	int i;
 	for ( i = 0; i < alg_list_len ( &dbg->case_name ); i ++ ) {
-		info.name = curr;
+		info.name = *curr;
 		info.pos = pos;
 #define cmp( _info, _elm )	(((struct unit_test *) _elm)->pos & (_info)->pos && \
 				 !strcmp ( (_info)->name, ((struct unit_test *) _elm)->test_name ))
@@ -152,6 +152,7 @@ static void invoke_test_case ( enum DBG_POSITION pos )
 		} else {
 			log_normal_dbg ( "current case: not involve in %x", curr, pos );
 		}
+		curr ++;
 	}
 }
 

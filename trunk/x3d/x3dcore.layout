@@ -1,62 +1,415 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
-	<File name="drivers/renderer/renderer/rasterizer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<ActiveTarget name="Debug" />
+	<File name="drivers/editor/renderable_editor.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="715" topLine="0" />
+			<Cursor1 position="115" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="35" />
+			<Collapse line="8" />
+			<Collapse line="16" />
+			<Collapse line="28" />
 		</Folding>
 	</File>
-	<File name="lib/math/math.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/compiler/lexer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3452" topLine="74" />
+			<Cursor1 position="802" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/shader/shader.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7465" topLine="16" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="20" />
+			<Collapse line="52" />
+			<Collapse line="62" />
+			<Collapse line="80" />
+			<Collapse line="87" />
+			<Collapse line="97" />
+			<Collapse line="115" />
+			<Collapse line="141" />
+			<Collapse line="150" />
+			<Collapse line="155" />
+			<Collapse line="164" />
+			<Collapse line="169" />
+			<Collapse line="174" />
+			<Collapse line="180" />
+			<Collapse line="185" />
+			<Collapse line="191" />
+			<Collapse line="196" />
+			<Collapse line="200" />
+			<Collapse line="204" />
+			<Collapse line="208" />
+			<Collapse line="212" />
+			<Collapse line="216" />
+			<Collapse line="222" />
+			<Collapse line="234" />
+			<Collapse line="246" />
+			<Collapse line="268" />
+			<Collapse line="272" />
+			<Collapse line="285" />
+			<Collapse line="289" />
+			<Collapse line="318" />
+		</Folding>
+	</File>
+	<File name="lib/compiler/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="23" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="5" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/vertprocessor.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10767" topLine="361" />
+		</Cursor>
+	</File>
+	<File name="lib/math/decimal.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1942" topLine="26" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="50" />
+			<Collapse line="58" />
+		</Folding>
+	</File>
+	<File name="lib/math/decimal.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="80" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="33" />
+		</Folding>
+	</File>
+	<File name="kernel/resource_loader.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3902" topLine="48" />
+		</Cursor>
+	</File>
+	<File name="include/x3d/editor.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="644" topLine="4" />
+		</Cursor>
+		<Folding>
+			<Collapse line="8" />
+			<Collapse line="13" />
+			<Collapse line="50" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/rasterizer.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2088" topLine="40" />
+		</Cursor>
+		<Folding>
+			<Collapse line="10" />
+			<Collapse line="17" />
+			<Collapse line="21" />
+			<Collapse line="25" />
+			<Collapse line="33" />
+			<Collapse line="134" />
+			<Collapse line="142" />
+			<Collapse line="146" />
+			<Collapse line="150" />
+			<Collapse line="175" />
+		</Folding>
+	</File>
+	<File name="lib/algorithm.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8826" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="15" />
+			<Collapse line="483" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/geocache.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="318" topLine="8" />
+		</Cursor>
+		<Folding>
+			<Collapse line="15" />
+			<Collapse line="26" />
+			<Collapse line="35" />
+			<Collapse line="55" />
+			<Collapse line="70" />
+			<Collapse line="90" />
+			<Collapse line="95" />
+			<Collapse line="99" />
+			<Collapse line="104" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/surface.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5160" topLine="91" />
+		</Cursor>
+		<Folding>
+			<Collapse line="115" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/shader/basic_rt_shader.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="182" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="15" />
+			<Collapse line="21" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/loader/model_loader.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1184" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="6" />
+			<Collapse line="15" />
+			<Collapse line="53" />
+			<Collapse line="63" />
+			<Collapse line="70" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/rt_renderer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="390" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="12" />
+			<Collapse line="16" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/out/screen_out.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3582" topLine="25" />
+		</Cursor>
+		<Folding>
+			<Collapse line="21" />
+			<Collapse line="29" />
+			<Collapse line="38" />
+			<Collapse line="43" />
+			<Collapse line="48" />
+			<Collapse line="53" />
+			<Collapse line="131" />
+			<Collapse line="141" />
+			<Collapse line="146" />
+			<Collapse line="155" />
+		</Folding>
+	</File>
+	<File name="lib/compiler/emitter.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="406" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="3" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/probe/proj_probe.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1332" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="26" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/loader/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3974" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="64" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/shader/basic_rt_shader_a.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="567" topLine="3" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/renderer/dbg_vertprocessor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="626" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/renderer/vertattri_lerp.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6947" topLine="212" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/loader/obj_model.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13417" topLine="108" />
+		</Cursor>
+		<Folding>
+			<Collapse line="214" />
+			<Collapse line="328" />
+			<Collapse line="461" />
+			<Collapse line="480" />
+		</Folding>
+	</File>
+	<File name="drivers/editor/gui.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1638" topLine="55" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/probe/perspective.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3030" topLine="17" />
+		</Cursor>
+		<Folding>
+			<Collapse line="8" />
+			<Collapse line="31" />
+			<Collapse line="38" />
+			<Collapse line="44" />
+			<Collapse line="64" />
+			<Collapse line="70" />
+			<Collapse line="78" />
+			<Collapse line="140" />
+			<Collapse line="149" />
+			<Collapse line="166" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/rt_batch.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="684" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="9" />
+			<Collapse line="14" />
+			<Collapse line="19" />
+			<Collapse line="29" />
+			<Collapse line="34" />
+		</Folding>
+	</File>
+	<File name="lib/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="93" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="12" />
+			<Collapse line="25" />
+			<Collapse line="65" />
+			<Collapse line="87" />
+			<Collapse line="91" />
+			<Collapse line="100" />
+			<Collapse line="165" />
+			<Collapse line="170" />
+			<Collapse line="177" />
+			<Collapse line="261" />
+			<Collapse line="324" />
+			<Collapse line="384" />
+			<Collapse line="413" />
+			<Collapse line="421" />
+		</Folding>
+	</File>
+	<File name="drivers/editor/render_procedure.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="294" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="5" />
+			<Collapse line="16" />
+			<Collapse line="28" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/primitive_parition.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1682" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="8" />
+			<Collapse line="16" />
+			<Collapse line="35" />
+			<Collapse line="42" />
+			<Collapse line="47" />
+			<Collapse line="59" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/colorspectrum.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="24884" topLine="47" />
+		</Cursor>
+	</File>
+	<File name="kernel/panic.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="159" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="4" />
 		</Folding>
 	</File>
-	<File name="include/x3d/renderer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/geometry/grid.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2597" topLine="44" />
+			<Cursor1 position="452" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="32" />
-			<Collapse line="38" />
-			<Collapse line="43" />
-			<Collapse line="49" />
-			<Collapse line="60" />
-			<Collapse line="65" />
-			<Collapse line="121" />
-			<Collapse line="132" />
+			<Collapse line="9" />
+			<Collapse line="14" />
 		</Folding>
 	</File>
-	<File name="kernel/kernel.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/math/geometry.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2474" topLine="48" />
+			<Cursor1 position="16612" topLine="135" />
 		</Cursor>
 		<Folding>
-			<Collapse line="13" />
-			<Collapse line="20" />
-			<Collapse line="25" />
-			<Collapse line="51" />
-			<Collapse line="68" />
-			<Collapse line="72" />
-			<Collapse line="78" />
-			<Collapse line="82" />
-			<Collapse line="93" />
-			<Collapse line="107" />
-			<Collapse line="125" />
-			<Collapse line="130" />
-			<Collapse line="158" />
-			<Collapse line="169" />
-			<Collapse line="178" />
-			<Collapse line="189" />
-			<Collapse line="198" />
-			<Collapse line="203" />
-			<Collapse line="213" />
+			<Collapse line="577" />
 		</Folding>
+	</File>
+	<File name="lib/thread.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="91" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/paraboloid_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="235" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+		</Folding>
+	</File>
+	<File name="lib/math/matrix.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3983" topLine="78" />
+		</Cursor>
+		<Folding>
+			<Collapse line="10" />
+			<Collapse line="21" />
+			<Collapse line="46" />
+			<Collapse line="56" />
+			<Collapse line="66" />
+			<Collapse line="76" />
+			<Collapse line="89" />
+			<Collapse line="103" />
+			<Collapse line="140" />
+			<Collapse line="170" />
+		</Folding>
+	</File>
+	<File name="drivers/editor/render_procedure.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1291" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="74" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/shape_common.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="775" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="29" />
+		</Folding>
+	</File>
+	<File name="include/renderer/proj_probe.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="311" topLine="0" />
+		</Cursor>
 	</File>
 	<File name="drivers/renderer/loader/pbrt_model.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -66,18 +419,113 @@
 			<Collapse line="9" />
 		</Folding>
 	</File>
-	<File name="drivers/editor/main_editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/compiler/error.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="100" topLine="0" />
+			<Cursor1 position="19" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="drivers/renderer/geometry/grid.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/renderer/renderer.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="452" topLine="0" />
+			<Cursor1 position="155" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="9" />
-			<Collapse line="14" />
+			<Collapse line="18" />
+			<Collapse line="40" />
+			<Collapse line="46" />
+			<Collapse line="51" />
+			<Collapse line="56" />
+			<Collapse line="61" />
+			<Collapse line="66" />
+			<Collapse line="71" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/loader/model_loader.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="17" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="20" />
+			<Collapse line="64" />
+			<Collapse line="70" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/vibuffer.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="654" topLine="8" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="17" />
+			<Collapse line="21" />
+			<Collapse line="29" />
+			<Collapse line="37" />
+			<Collapse line="43" />
+			<Collapse line="51" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/shader/basic_rt_shader_so.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="85" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/math/fx.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="79" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="92" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/trimesh_shape.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1074" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="drivers/editor/gui.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1029" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="5" />
+			<Collapse line="11" />
+			<Collapse line="17" />
+			<Collapse line="25" />
+			<Collapse line="33" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/pt_renderer.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="88" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/compiler/compiler.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="438" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/renderer/renderer.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="670" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="12" />
+			<Collapse line="25" />
+		</Folding>
+	</File>
+	<File name="kernel/renderable.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="26" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/compiler/symbol.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="144" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="5" />
+			<Collapse line="13" />
+			<Collapse line="17" />
 		</Folding>
 	</File>
 	<File name="include/renderer/geometry.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -95,6 +543,41 @@
 			<Collapse line="67" />
 		</Folding>
 	</File>
+	<File name="include/x3d/scene.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="50" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/math/matrix.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="82" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="614" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/loader/pbrt_model.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="88" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="5" />
+		</Folding>
+	</File>
+	<File name="lib/logout.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1428" topLine="11" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/renderer/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="156" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="9" />
+		</Folding>
+	</File>
 	<File name="drivers/renderer/renderer/rt_batch.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2929" topLine="0" />
@@ -104,197 +587,76 @@
 			<Collapse line="11" />
 		</Folding>
 	</File>
-	<File name="lib/memory.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/geometry/hyperboloid_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1156" topLine="57" />
+			<Cursor1 position="239" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="9" />
-			<Collapse line="14" />
-			<Collapse line="21" />
-			<Collapse line="24" />
-			<Collapse line="52" />
-			<Collapse line="70" />
-			<Collapse line="81" />
-			<Collapse line="102" />
-			<Collapse line="130" />
-			<Collapse line="144" />
-			<Collapse line="156" />
-			<Collapse line="175" />
-			<Collapse line="185" />
-			<Collapse line="194" />
-			<Collapse line="201" />
-			<Collapse line="208" />
-			<Collapse line="214" />
-			<Collapse line="222" />
-			<Collapse line="227" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/renderer/vertprocessor.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/staging.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="20467" topLine="94" />
+			<Cursor1 position="1120" topLine="24" />
 		</Cursor>
 		<Folding>
-			<Collapse line="683" />
+			<Collapse line="8" />
+			<Collapse line="13" />
 		</Folding>
 	</File>
-	<File name="lib/thread.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/loader/obj_model.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="91" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-		</Folding>
-	</File>
-	<File name="lib/compiler/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="23" topLine="0" />
+			<Cursor1 position="85" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="5" />
 		</Folding>
 	</File>
-	<File name="lib/memory.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/x3d/runtime_debug.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="676" topLine="15" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/renderer/rasterizer.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7575" topLine="58" />
-		</Cursor>
-	</File>
-	<File name="lib/compiler/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="102" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/renderer/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="156" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/geometry/bvh.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="150" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/shader/rt_shader.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="532" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-		</Folding>
-	</File>
-	<File name="lib/math/vector.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6395" topLine="172" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-			<Collapse line="13" />
-			<Collapse line="18" />
-			<Collapse line="30" />
-			<Collapse line="42" />
-			<Collapse line="55" />
-			<Collapse line="82" />
-			<Collapse line="103" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/renderer/renderer.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1039" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-			<Collapse line="17" />
-			<Collapse line="27" />
-			<Collapse line="38" />
-			<Collapse line="44" />
-			<Collapse line="49" />
-			<Collapse line="54" />
-			<Collapse line="59" />
-			<Collapse line="64" />
-			<Collapse line="69" />
-		</Folding>
-	</File>
-	<File name="drivers/editor/main.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="412" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/math/vector.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="194" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="313" />
-			<Collapse line="321" />
-			<Collapse line="328" />
-			<Collapse line="343" />
-			<Collapse line="349" />
-			<Collapse line="391" />
-			<Collapse line="398" />
-			<Collapse line="406" />
-			<Collapse line="421" />
-			<Collapse line="425" />
-			<Collapse line="442" />
-		</Folding>
-	</File>
-	<File name="lib/math/quat.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="297" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="15" />
-			<Collapse line="23" />
-			<Collapse line="31" />
-			<Collapse line="39" />
-			<Collapse line="47" />
-			<Collapse line="55" />
-			<Collapse line="63" />
-			<Collapse line="67" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="103" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/renderer/rasterization.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1314" topLine="15" />
-		</Cursor>
-		<Folding>
-			<Collapse line="29" />
-			<Collapse line="37" />
-			<Collapse line="43" />
-			<Collapse line="100" />
-			<Collapse line="114" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/out/screen_out.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="134" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/renderer/rt_renderer.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="578" topLine="0" />
+			<Cursor1 position="452" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="11" />
-			<Collapse line="26" />
-			<Collapse line="36" />
-			<Collapse line="40" />
-			<Collapse line="45" />
-			<Collapse line="49" />
+			<Collapse line="17" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/probe/perspective.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/renderer/shader.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="85" topLine="0" />
+			<Cursor1 position="1290" topLine="65" />
+		</Cursor>
+	</File>
+	<File name="lib/algorithm.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13370" topLine="367" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="66" />
+			<Collapse line="71" />
+			<Collapse line="76" />
+			<Collapse line="81" />
+			<Collapse line="87" />
+			<Collapse line="91" />
+			<Collapse line="95" />
+			<Collapse line="101" />
+			<Collapse line="206" />
+			<Collapse line="240" />
+			<Collapse line="245" />
+			<Collapse line="247" />
+			<Collapse line="254" />
+			<Collapse line="256" />
+			<Collapse line="264" />
+			<Collapse line="270" />
+			<Collapse line="277" />
+			<Collapse line="279" />
+			<Collapse line="282" />
+			<Collapse line="288" />
+		</Folding>
+	</File>
+	<File name="kernel/renderer_context.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="227" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="drivers/renderer/geometry/disk_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -303,6 +665,14 @@
 		</Cursor>
 		<Folding>
 			<Collapse line="10" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/surface.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="84" topLine="21" />
+		</Cursor>
+		<Folding>
+			<Collapse line="12" />
 		</Folding>
 	</File>
 	<File name="drivers/renderer/renderer/colorspectrum.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -329,90 +699,58 @@
 			<Collapse line="136" />
 		</Folding>
 	</File>
-	<File name="drivers/editor/render_procedure.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/renderer/rasterizer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1291" topLine="0" />
+			<Cursor1 position="715" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="74" />
-		</Folding>
-	</File>
-	<File name="kernel/renderable.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="26" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include/x3d/editor.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="644" topLine="4" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-			<Collapse line="13" />
-			<Collapse line="50" />
-		</Folding>
-	</File>
-	<File name="include/x3d/resource_loader.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="699" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="12" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/renderer/dbg_vertprocessor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="617" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="kernel/editor.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1960" topLine="13" />
-		</Cursor>
-		<Folding>
-			<Collapse line="7" />
-			<Collapse line="16" />
-			<Collapse line="25" />
-			<Collapse line="52" />
-			<Collapse line="56" />
-			<Collapse line="79" />
-			<Collapse line="92" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/pbrt_model.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="88" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="5" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/primitive_parition.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1682" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-			<Collapse line="16" />
 			<Collapse line="35" />
-			<Collapse line="42" />
-			<Collapse line="47" />
-			<Collapse line="59" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/bvh.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="150" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/geometry/cone_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="82" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="10" />
 		</Folding>
 	</File>
 	<File name="drivers/renderer/renderer/rasterization.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4117" topLine="55" />
+			<Cursor1 position="3037" topLine="55" />
 		</Cursor>
 		<Folding>
+			<Collapse line="9" />
+			<Collapse line="17" />
+			<Collapse line="21" />
+			<Collapse line="38" />
+			<Collapse line="45" />
+			<Collapse line="51" />
+			<Collapse line="56" />
+			<Collapse line="61" />
+			<Collapse line="66" />
+			<Collapse line="71" />
+			<Collapse line="76" />
+			<Collapse line="81" />
+			<Collapse line="86" />
+			<Collapse line="91" />
+			<Collapse line="97" />
+			<Collapse line="103" />
+			<Collapse line="108" />
+			<Collapse line="114" />
+			<Collapse line="119" />
+			<Collapse line="125" />
 			<Collapse line="130" />
-			<Collapse line="151" />
+			<Collapse line="143" />
+			<Collapse line="147" />
+			<Collapse line="183" />
+			<Collapse line="204" />
 		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="149" topLine="0" />
-		</Cursor>
 	</File>
 	<File name="lib/compiler/emitter.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -426,269 +764,75 @@
 			<Collapse line="34" />
 		</Folding>
 	</File>
-	<File name="include/editor/editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/loader/fbx_model.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="106" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/geometry/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="63" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/editor/object_editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="68" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/logout.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1428" topLine="11" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-			<Collapse line="14" />
-			<Collapse line="33" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/model_loader.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1184" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-			<Collapse line="15" />
-			<Collapse line="53" />
-			<Collapse line="63" />
-			<Collapse line="70" />
-		</Folding>
-	</File>
-	<File name="lib/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="93" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="12" />
-			<Collapse line="25" />
-			<Collapse line="65" />
-			<Collapse line="87" />
-			<Collapse line="91" />
-			<Collapse line="100" />
-			<Collapse line="165" />
-			<Collapse line="170" />
-			<Collapse line="177" />
-			<Collapse line="261" />
-			<Collapse line="324" />
-			<Collapse line="384" />
-			<Collapse line="413" />
-			<Collapse line="421" />
-		</Folding>
-	</File>
-	<File name="lib/math/matrix.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3983" topLine="78" />
-		</Cursor>
-		<Folding>
-			<Collapse line="10" />
-			<Collapse line="21" />
-			<Collapse line="46" />
-			<Collapse line="56" />
-			<Collapse line="66" />
-			<Collapse line="76" />
-			<Collapse line="89" />
-			<Collapse line="103" />
-			<Collapse line="140" />
-			<Collapse line="170" />
-		</Folding>
-	</File>
-	<File name="drivers/editor/renderable_editor.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="115" topLine="0" />
+			<Cursor1 position="104" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="8" />
-			<Collapse line="16" />
-			<Collapse line="28" />
 		</Folding>
 	</File>
-	<File name="lib/compiler/lexer.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/math/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1424" topLine="0" />
+			<Cursor1 position="194" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="8" />
-			<Collapse line="20" />
-			<Collapse line="28" />
-			<Collapse line="34" />
-			<Collapse line="104" />
-			<Collapse line="109" />
+			<Collapse line="4" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/geometry/grid.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/math/geometry.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1282" topLine="0" />
+			<Cursor1 position="673" topLine="26" />
 		</Cursor>
 		<Folding>
-			<Collapse line="12" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/renderer/rt_batch.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="684" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="24" />
+			<Collapse line="146" />
 		</Folding>
 	</File>
 	<File name="lib/logout.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="70" topLine="0" />
+			<Cursor1 position="1891" topLine="51" />
 		</Cursor>
 		<Folding>
-			<Collapse line="28" />
-			<Collapse line="119" />
-			<Collapse line="134" />
-		</Folding>
-	</File>
-	<File name="include/x3d/kernel.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="87" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/renderer/surface.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5160" topLine="91" />
-		</Cursor>
-		<Folding>
-			<Collapse line="115" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/out/screen_out.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3582" topLine="25" />
-		</Cursor>
-		<Folding>
-			<Collapse line="21" />
-			<Collapse line="29" />
-			<Collapse line="38" />
-			<Collapse line="43" />
-			<Collapse line="48" />
-			<Collapse line="53" />
-			<Collapse line="131" />
-			<Collapse line="141" />
-			<Collapse line="146" />
-			<Collapse line="155" />
-		</Folding>
-	</File>
-	<File name="drivers/editor/render_procedure.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="294" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="5" />
-			<Collapse line="16" />
-			<Collapse line="28" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/obj_model.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="85" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="5" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/renderer/rt_renderer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="390" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="12" />
-			<Collapse line="16" />
-		</Folding>
-	</File>
-	<File name="lib/math/matrix.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="82" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="614" />
-		</Folding>
-	</File>
-	<File name="lib/compiler/compiler.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="438" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/renderer/colorspectrum.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="24884" topLine="47" />
-		</Cursor>
-	</File>
-	<File name="lib/math/fx.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="639" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/compiler/symbol.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="144" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="5" />
 			<Collapse line="13" />
-			<Collapse line="17" />
+			<Collapse line="124" />
+			<Collapse line="129" />
+			<Collapse line="146" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/geometry/hyperboloid_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/loader/image_loader.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="239" topLine="0" />
+			<Cursor1 position="51" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/out/screen_out.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="134" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/editor/renderable_editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="108" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/editor/main_editor.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3750" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="9" />
+			<Collapse line="30" />
+			<Collapse line="34" />
+			<Collapse line="39" />
+			<Collapse line="49" />
+			<Collapse line="135" />
 		</Folding>
 	</File>
-	<File name="lib/compiler/lexer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/probe/perspective.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="802" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/geometry/sphere_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="238" topLine="0" />
+			<Cursor1 position="748" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="5" />
-			<Collapse line="9" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/geometry.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="90" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="27" />
-			<Collapse line="52" />
-			<Collapse line="56" />
-		</Folding>
-	</File>
-	<File name="kernel/panic.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="159" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-		</Folding>
-	</File>
-	<File name="lib/math/decimal.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="80" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="33" />
+			<Collapse line="7" />
 		</Folding>
 	</File>
 	<File name="drivers/renderer/renderer/vertprocessor.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -701,115 +845,6 @@
 			<Collapse line="39" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/shader/rt_shader.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="138" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-		</Folding>
-	</File>
-	<File name="drivers/editor/object_editor.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="107" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-			<Collapse line="16" />
-			<Collapse line="28" />
-		</Folding>
-	</File>
-	<File name="lib/compiler/error.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="19" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/compiler/emitter.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="406" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="3" />
-		</Folding>
-	</File>
-	<File name="include/x3d/scene.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="50" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/math/geometry.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="673" topLine="26" />
-		</Cursor>
-		<Folding>
-			<Collapse line="146" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/geocache.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="318" topLine="8" />
-		</Cursor>
-		<Folding>
-			<Collapse line="15" />
-			<Collapse line="26" />
-			<Collapse line="35" />
-			<Collapse line="55" />
-			<Collapse line="70" />
-			<Collapse line="90" />
-			<Collapse line="95" />
-			<Collapse line="99" />
-			<Collapse line="104" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/renderer/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="350" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/renderer/vibuffer.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="654" topLine="8" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-			<Collapse line="17" />
-			<Collapse line="21" />
-			<Collapse line="29" />
-			<Collapse line="37" />
-			<Collapse line="43" />
-			<Collapse line="51" />
-		</Folding>
-	</File>
-	<File name="lib/compiler/parser.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="125" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-			<Collapse line="16" />
-			<Collapse line="23" />
-			<Collapse line="29" />
-			<Collapse line="48" />
-			<Collapse line="103" />
-			<Collapse line="106" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/probe/proj_probe.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1332" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="26" />
-		</Folding>
-	</File>
-	<File name="lib/math/fx.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="79" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="92" />
-		</Folding>
-	</File>
 	<File name="drivers/renderer/renderer/pt_renderer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="132" topLine="0" />
@@ -818,353 +853,35 @@
 			<Collapse line="4" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/probe/perspective.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/memory.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="748" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="7" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/image_loader.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="51" topLine="0" />
+			<Cursor1 position="1138" topLine="28" />
 		</Cursor>
 	</File>
-	<File name="include/x3d/common.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/x3d/resource_loader.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1692" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/geometry/trimesh_subdivide.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="30064" topLine="156" />
-		</Cursor>
-		<Folding>
-			<Collapse line="15" />
-			<Collapse line="25" />
-			<Collapse line="32" />
-			<Collapse line="156" />
-			<Collapse line="963" />
-		</Folding>
-	</File>
-	<File name="drivers/editor/gui.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1029" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="5" />
-			<Collapse line="11" />
-			<Collapse line="17" />
-			<Collapse line="25" />
-			<Collapse line="33" />
-		</Folding>
-	</File>
-	<File name="drivers/editor/renderable_editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="108" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="drivers/editor/gui.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1689" topLine="59" />
-		</Cursor>
-		<Folding>
-			<Collapse line="16" />
-			<Collapse line="67" />
-			<Collapse line="71" />
-			<Collapse line="75" />
-			<Collapse line="87" />
-			<Collapse line="99" />
-			<Collapse line="111" />
-			<Collapse line="134" />
-			<Collapse line="145" />
-			<Collapse line="153" />
-			<Collapse line="187" />
-			<Collapse line="296" />
-			<Collapse line="302" />
-			<Collapse line="309" />
-			<Collapse line="319" />
-			<Collapse line="339" />
-			<Collapse line="355" />
-			<Collapse line="359" />
-			<Collapse line="366" />
-			<Collapse line="373" />
-			<Collapse line="380" />
-			<Collapse line="387" />
-			<Collapse line="397" />
-			<Collapse line="434" />
-			<Collapse line="442" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/paraboloid_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="235" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-		</Folding>
-	</File>
-	<File name="include/renderer/geocache.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="702" topLine="8" />
-		</Cursor>
-		<Folding>
-			<Collapse line="16" />
-			<Collapse line="20" />
-			<Collapse line="25" />
-			<Collapse line="34" />
-			<Collapse line="39" />
-			<Collapse line="44" />
-		</Folding>
-	</File>
-	<File name="include/renderer/proj_probe.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="311" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/staging.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1120" topLine="24" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-			<Collapse line="13" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/renderer/surface.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="84" topLine="21" />
+			<Cursor1 position="699" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="12" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/loader/fbx_model.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="104" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-		</Folding>
-	</File>
-	<File name="drivers/editor/main_editor.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3750" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="61" />
-		</Folding>
-	</File>
-	<File name="include/x3d/symbol_lib.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="205" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/math/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="310" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="7" />
-			<Collapse line="19" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/cylinder_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="99" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-			<Collapse line="12" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/model_loader.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="17" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="20" />
-			<Collapse line="64" />
-			<Collapse line="70" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3974" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="64" />
-		</Folding>
-	</File>
-	<File name="kernel/renderer_context.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1850" topLine="32" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-			<Collapse line="18" />
-			<Collapse line="28" />
-			<Collapse line="37" />
-			<Collapse line="45" />
-			<Collapse line="50" />
-			<Collapse line="54" />
-			<Collapse line="58" />
-			<Collapse line="62" />
-			<Collapse line="66" />
-			<Collapse line="81" />
-			<Collapse line="85" />
-			<Collapse line="89" />
-			<Collapse line="93" />
-			<Collapse line="98" />
-			<Collapse line="102" />
-			<Collapse line="107" />
-			<Collapse line="111" />
-			<Collapse line="115" />
-		</Folding>
-	</File>
-	<File name="lib/math/geometry.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="16612" topLine="135" />
-		</Cursor>
-		<Folding>
-			<Collapse line="577" />
-		</Folding>
-	</File>
-	<File name="lib/algorithm.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="947" topLine="17" />
-		</Cursor>
-	</File>
-	<File name="lib/compiler/symbol.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="229" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib/math/quat.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="747" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="3" />
-			<Collapse line="7" />
-			<Collapse line="23" />
-		</Folding>
-	</File>
-	<File name="lib/algorithm.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="9110" topLine="80" />
-		</Cursor>
-		<Folding>
-			<Collapse line="31" />
-			<Collapse line="49" />
-			<Collapse line="64" />
-			<Collapse line="94" />
-			<Collapse line="179" />
-			<Collapse line="275" />
-			<Collapse line="285" />
-			<Collapse line="300" />
-			<Collapse line="311" />
-			<Collapse line="321" />
-			<Collapse line="333" />
-			<Collapse line="356" />
-			<Collapse line="361" />
-			<Collapse line="366" />
-			<Collapse line="381" />
-			<Collapse line="399" />
-			<Collapse line="406" />
-			<Collapse line="422" />
-			<Collapse line="436" />
-			<Collapse line="446" />
-			<Collapse line="451" />
-			<Collapse line="458" />
-			<Collapse line="468" />
-			<Collapse line="475" />
-			<Collapse line="479" />
-			<Collapse line="488" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/loader/obj_model.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="13417" topLine="108" />
-		</Cursor>
-		<Folding>
-			<Collapse line="214" />
-			<Collapse line="328" />
-			<Collapse line="461" />
-			<Collapse line="480" />
-		</Folding>
-	</File>
-	<File name="kernel/resource_loader.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3902" topLine="47" />
-		</Cursor>
-	</File>
-	<File name="drivers/renderer/out/out.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="202" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-			<Collapse line="15" />
-			<Collapse line="23" />
-			<Collapse line="30" />
-			<Collapse line="36" />
-			<Collapse line="41" />
-		</Folding>
-	</File>
-	<File name="include/x3d/runtime_debug.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="452" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="11" />
-			<Collapse line="17" />
-		</Folding>
-	</File>
-	<File name="include/renderer/renderer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="485" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="11" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/cone_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="82" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="10" />
-		</Folding>
-	</File>
-	<File name="lib/math/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lib/math/vector.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="194" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="4" />
-		</Folding>
-	</File>
-	<File name="include/renderer/out.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="78" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-			<Collapse line="11" />
-			<Collapse line="18" />
-			<Collapse line="25" />
-			<Collapse line="37" />
-			<Collapse line="55" />
-		</Folding>
-	</File>
-	<File name="drivers/renderer/geometry/shape_common.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="775" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="29" />
+			<Collapse line="313" />
+			<Collapse line="321" />
+			<Collapse line="328" />
+			<Collapse line="343" />
+			<Collapse line="349" />
+			<Collapse line="391" />
+			<Collapse line="398" />
+			<Collapse line="406" />
+			<Collapse line="421" />
+			<Collapse line="425" />
+			<Collapse line="442" />
 		</Folding>
 	</File>
 	<File name="lib/staging.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -1200,24 +917,372 @@
 			<Collapse line="450" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/renderer/pt_renderer.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/loader/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="88" topLine="0" />
+			<Cursor1 position="149" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="lib/math/decimal.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="drivers/renderer/geometry/cylinder_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1942" topLine="26" />
+			<Cursor1 position="99" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="12" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="63" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/memory.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2874" topLine="57" />
+		</Cursor>
+		<Folding>
+			<Collapse line="112" />
+			<Collapse line="165" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/main.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="299" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="38" />
+			<Collapse line="103" />
+			<Collapse line="109" />
+			<Collapse line="155" />
+			<Collapse line="189" />
+		</Folding>
+	</File>
+	<File name="lib/math/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="310" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="7" />
+			<Collapse line="19" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/grid.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1282" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="12" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/renderer/rt_renderer.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1100" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="11" />
+			<Collapse line="26" />
+			<Collapse line="36" />
+			<Collapse line="40" />
+			<Collapse line="45" />
+			<Collapse line="49" />
+		</Folding>
+	</File>
+	<File name="include/x3d/kernel.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="87" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="4" />
-			<Collapse line="50" />
-			<Collapse line="58" />
 		</Folding>
 	</File>
-	<File name="drivers/renderer/geometry/trimesh_shape.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/editor/editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1074" topLine="6" />
+			<Cursor1 position="106" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/compiler/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="102" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/renderer/shader_lib.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="317" topLine="16" />
+		</Cursor>
+	</File>
+	<File name="include/renderer/geocache.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="702" topLine="8" />
+		</Cursor>
+		<Folding>
+			<Collapse line="16" />
+			<Collapse line="20" />
+			<Collapse line="25" />
+			<Collapse line="34" />
+			<Collapse line="39" />
+			<Collapse line="44" />
+		</Folding>
+	</File>
+	<File name="kernel/kernel.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2958" topLine="48" />
+		</Cursor>
+		<Folding>
+			<Collapse line="13" />
+			<Collapse line="20" />
+			<Collapse line="25" />
+			<Collapse line="68" />
+			<Collapse line="78" />
+			<Collapse line="82" />
+			<Collapse line="93" />
+			<Collapse line="125" />
+			<Collapse line="130" />
+			<Collapse line="159" />
+			<Collapse line="170" />
+			<Collapse line="179" />
+			<Collapse line="190" />
+			<Collapse line="199" />
+			<Collapse line="204" />
+			<Collapse line="214" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/sphere_shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="238" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="5" />
+			<Collapse line="9" />
+		</Folding>
+	</File>
+	<File name="kernel/editor.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1069" topLine="13" />
+		</Cursor>
+		<Folding>
+			<Collapse line="7" />
+			<Collapse line="16" />
+			<Collapse line="25" />
+			<Collapse line="52" />
+			<Collapse line="56" />
+			<Collapse line="79" />
+			<Collapse line="92" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/geometry.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="90" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="27" />
+			<Collapse line="52" />
+			<Collapse line="56" />
+		</Folding>
+	</File>
+	<File name="include/renderer/out.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="78" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="11" />
+			<Collapse line="18" />
+			<Collapse line="25" />
+			<Collapse line="37" />
+			<Collapse line="55" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/out/out.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="202" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="15" />
+			<Collapse line="23" />
+			<Collapse line="30" />
+			<Collapse line="36" />
+			<Collapse line="41" />
+		</Folding>
+	</File>
+	<File name="drivers/editor/object_editor.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="107" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="8" />
+			<Collapse line="16" />
+			<Collapse line="28" />
+		</Folding>
+	</File>
+	<File name="lib/math/math.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3452" topLine="74" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/shader/rtshader.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="128" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+		</Folding>
+	</File>
+	<File name="drivers/editor/main_editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="100" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/shader/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="114" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="6" />
+		</Folding>
+	</File>
+	<File name="lib/compiler/lexer.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1424" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="8" />
+			<Collapse line="20" />
+			<Collapse line="28" />
+			<Collapse line="34" />
+			<Collapse line="104" />
+			<Collapse line="109" />
+		</Folding>
+	</File>
+	<File name="include/x3d/common.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1692" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/compiler/symbol.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="229" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/renderer/renderer/rasterization.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1371" topLine="16" />
+		</Cursor>
+		<Folding>
+			<Collapse line="29" />
+			<Collapse line="37" />
+			<Collapse line="65" />
+			<Collapse line="85" />
+			<Collapse line="100" />
+			<Collapse line="114" />
+		</Folding>
+	</File>
+	<File name="lib/compiler/parser.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="125" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="16" />
+			<Collapse line="23" />
+			<Collapse line="29" />
+			<Collapse line="48" />
+			<Collapse line="103" />
+			<Collapse line="106" />
+		</Folding>
+	</File>
+	<File name="lib/math/quat.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="747" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="3" />
+			<Collapse line="7" />
+			<Collapse line="23" />
+		</Folding>
+	</File>
+	<File name="drivers/editor/main.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="412" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/math/quat.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="297" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="15" />
+			<Collapse line="23" />
+			<Collapse line="31" />
+			<Collapse line="39" />
+			<Collapse line="47" />
+			<Collapse line="55" />
+			<Collapse line="63" />
+			<Collapse line="67" />
+		</Folding>
+	</File>
+	<File name="lib/math/fx.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="639" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="drivers/editor/object_editor.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="68" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/x3d/renderer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2597" topLine="44" />
+		</Cursor>
+		<Folding>
+			<Collapse line="32" />
+			<Collapse line="38" />
+			<Collapse line="43" />
+			<Collapse line="49" />
+			<Collapse line="60" />
+			<Collapse line="65" />
+			<Collapse line="132" />
+		</Folding>
+	</File>
+	<File name="lib/math/vector.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6395" topLine="172" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="13" />
+			<Collapse line="18" />
+			<Collapse line="30" />
+			<Collapse line="42" />
+			<Collapse line="55" />
+			<Collapse line="82" />
+			<Collapse line="103" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/trimesh_subdivide.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="30064" topLine="156" />
+		</Cursor>
+		<Folding>
+			<Collapse line="15" />
+			<Collapse line="25" />
+			<Collapse line="32" />
+			<Collapse line="156" />
+			<Collapse line="963" />
+		</Folding>
+	</File>
+	<File name="drivers/renderer/geometry/main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="103" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/x3d/symbol_lib.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="205" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

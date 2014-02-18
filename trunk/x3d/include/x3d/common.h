@@ -69,6 +69,7 @@
 #include <sys/wait.h>
 
 typedef uint8_t untyped;
+typedef void (*f_Generic) ( void );
 
 
 #endif // COMMON_H_INCLUDED

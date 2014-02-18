@@ -2,7 +2,8 @@
 #include <x3d/renderer.h>
 #include <renderer/geocache.h>
 #include <renderer/renderer.h>
-#include "main.h"
+#include "../renderer/main.h"
+#include "../shader/main.h"
 #include "rt_renderer.h"
 
 
@@ -32,6 +33,7 @@ struct renderer *create_renderer ( enum RENDERER_IDR method )
 	r->spec = RENDER_SPEC_SW_BUILTIN;
 	r->rend = RendOps[r->idr].create ( r );
 	dbg_renderer_add_all ();
+	dbg_shader_add_all ();
 	return r;
 }
 

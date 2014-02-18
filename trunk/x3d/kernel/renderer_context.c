@@ -94,7 +94,10 @@ void update_renderer_context ( void )
 {
 }
 
-/* These drawing function will feed renderable data to the renderer's corresponding cache */
+/*
+ * These drawing function will feed renderable data to
+ * the renderer's corresponding cache
+ */
 void renderer_context_draw_scene ( renderer_handle_t rh, struct scene *scene )
 {
 }

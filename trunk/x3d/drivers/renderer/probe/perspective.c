@@ -105,7 +105,7 @@ static void update ( struct persp_probe *probe )
 	 * x' = nx/z * 1/R (R = 1/2*len)
 	 * y' = ny/z * r/R (r = len/height)
 	 * z' = 1/z * [(f + n)/(f - n)z + 2fn/(n - f)] */
-	const float inv_R = 2.0f;	/* R = 1.0f/2.0f */
+	const float inv_R = 1.0f;	/* R = 1.0f/2.0f*2.0f */
 	float nl = probe->nz * inv_R;
 	float nt = probe->nz * probe->plate_ratio*inv_R;
 	float a = (probe->nz + probe->fz)/(probe->fz - probe->nz);
