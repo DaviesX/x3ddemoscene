@@ -103,6 +103,8 @@ struct geocache;
 struct volume;
 struct alg_list;
 struct cull_shape;
+struct probe;
+struct render_out;
 
 
 /*
@@ -125,7 +127,7 @@ struct renderer_ops {
 	void (*free) ( struct renderer *r );
 	void (*update) ( struct alg_named_params *params, struct renderer *r );
 	void (*begin) ( struct renderer *r );
-	void (*render) ( struct renderer *r );
+	void (*render) ( struct probe *probe, struct render_out *ro, struct renderer *r );
 	void (*end) ( struct renderer *r );
 	struct geocache *(*export_geocache) ( struct renderer *r );
 };

@@ -11,6 +11,8 @@ struct renderer_context {
 	renderer_handle_t rh;
 	struct renderer *rend;
 	struct geocache *gc;
+	struct render_out *ro;
+	struct probe *probe;
 };
 
 static struct alg_list g_rend_con;

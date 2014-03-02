@@ -25,8 +25,16 @@ enum RT_DRAWMODE_IDR {
 	RT_SOLID_MODE
 };
 
-#define RT_BUFFER_NUM		5
+enum RT_EQUALITY {
+	RT_EQUALITY_FALSE,
+	RT_EQUALITY_G,
+	RT_EQUALITY_GEQ,
+	RT_EQUALITY_EQ,
+	RT_EQUALITY_LEQ,
+	RT_EQUALITY_L
+};
 
+#define RT_BUFFER_NUM		5
 enum RT_BUFFER_IDR {
 	RT_VERTEX_BUFFER,
 	RT_INDEX_BUFFER,
@@ -128,6 +136,8 @@ struct rtcontext {
 	struct surface *stencil_buffer;
 	enum RT_PRIMITIVE_TYPE prim_type;
 	enum RT_DRAWMODE_IDR draw_mode;
+	enum RT_EQUALITY depth_func;
+	enum RT_EQUALITY stencil_func;
 	struct vertprocessor *vpr;
 	struct rasterizer *rtr;
 };
@@ -148,6 +158,7 @@ void rtcontext_bind_depth_buffer ( struct surface *db, struct rtcontext *rc );
 void rtcontext_bind_stencil_buffer ( struct surface *sb, struct rtcontext *rc );
 void rtcontext_cull ( enum RT_CULL_IDR idr, struct rtcontext *rc );
 void rtcontext_draw_mode ( enum RT_DRAWMODE_IDR draw_mode, struct rtcontext *rc );
+void rtcontext_set_primitive_type ( enum RT_PRIMITIVE_TYPE type, struct rtcontext *rc );
 void rtcontext_set_buffer ( enum RT_BUFFER_IDR idr, enum RT_BUFFER_STATE state,
 			    struct rtcontext *rc );
 void rtcontext_bind_shader ( struct shader *shader, enum RT_SHADER_STAGE stage,

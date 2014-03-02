@@ -135,3 +135,8 @@ bool main_editor_load ( void )
 void main_editor_set ( int state )
 {
 }
+
+GtkWidget *main_editor_get_region ( void )
+{
+	return g_main_edit.curr_draw_area;
+}

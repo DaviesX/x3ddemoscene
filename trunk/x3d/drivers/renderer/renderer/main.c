@@ -1,5 +1,6 @@
 /* main.c: Unit tests to all rendering functions go here */
 #include <x3d/common.h>
+#include <algorithm.h>
 #include <logout.h>
 #include <x3d/runtime_debug.h>
 #include "main.h"
@@ -7,6 +8,7 @@
 
 static void dbg_vertprocessor_add_all ( void );
 static void dbg_rasterizer_add_all ( void );
+static void dbg_rtcontext_add_all ( void );
 
 /* entry */
 void dbg_renderer_add_all ( void )
@@ -15,22 +17,25 @@ void dbg_renderer_add_all ( void )
 	if ( first_time ) {
 		dbg_vertprocessor_add_all ();
 		dbg_rasterizer_add_all ();
+		dbg_rtcontext_add_all ();
 		first_time = false;
 	}
 }
 
-/* vertex prcessor's */		#include "vertprocessor.h"
-#include "dbg_vertprocessor.h"
+/* vertex prcessor's */		#include "vertex_processor.h"
+#include "dbg_vertex_processor.h"
 #include "rasterization.h"
 
 static void vert_post_process ( struct alg_named_params *global_params );
 
-void dbg_vertprocessor_add_all ( void )
+static void dbg_vertprocessor_add_all ( void )
 {
 	vertprocessor_symbol_lib ();
 	struct unit_test ut;
 	ut.test_name = "vert_post_process";
+	ut.init = nullptr;
 	ut.test = vert_post_process;
+	ut.free = nullptr;
 	ut.pos = DBG_KERNEL_START;
 	kernel_unit_test_add ( &ut );
 }
@@ -90,7 +95,7 @@ static void vert_post_process ( struct alg_named_params *global_params )
 	set_point4d ( 150.0f, 0.0f, 120.0f, 1.0f, &v[2].v );
 	v[2].p = 2;
 	n = dbg_process_triangle ( v, &t_view, &t_all, 1.0f, comp_offset, comp_format,
-				   2, sizeof v[0], tmp_cache, vo );
+				   2, sizeof v[0], vo );
 	log_normal_dbg ( "v%d: %f, %f, %f, %f",
 			 vo[0].p, vo[0].v.x, vo[0].v.y, vo[0].v.z, vo[0].v.w );
 	log_normal_dbg ( "v%d: %f, %f, %f, %f",
@@ -100,8 +105,160 @@ static void vert_post_process ( struct alg_named_params *global_params )
 }
 
 /* rasterizer's */		#include "rasterizer.h"
-void dbg_rasterizer_add_all ( void )
+static void dbg_rasterizer_add_all ( void )
 {
+}
+
+/* rtcontext's */
+#include "rasterization.h"
+#include <math/math.h>
+#include <editor/editor.h>
+#include "vibuffer.h"
+#include "surface.h"
+#include <renderer/shader.h>
+#include <renderer/out.h>
+
+
+static void simple_rt_pipeline_init ( struct alg_named_params *global_params );
+static void simple_rt_pipeline ( struct alg_named_params *global_params );
+static void simple_rt_pipeline_free ( struct alg_named_params *global_params );
+
+static void dbg_rtcontext_add_all ( void )
+{
+	struct unit_test ut;
+	ut.test_name = "simple_rt_pipeline";
+	ut.init = simple_rt_pipeline_init;
+	ut.test = simple_rt_pipeline;
+	ut.free = simple_rt_pipeline_free;
+	ut.pos = DBG_KERNEL_START;
+	kernel_unit_test_add ( &ut );
+}
+
+static struct rtcontext g_rtctx;
+static struct matrix4x4 g_view, g_proj;
+static struct surface *g_color_surf;
+static struct surface *g_depth_surf;
+static struct vertex_buffer *g_vb;
+static struct index_buffer *g_ib;
+static struct shader *g_vs;
+static struct shader *g_fs;
+static struct render_out g_ro;
+
+static void make_cube_vibuffer ( float x, float y, float z, float s,
+				 struct vertex_buffer *vb, struct index_buffer *ib )
+{
+	struct point3d v[6] = {
+		{ 1.0*s + x,  1.0*s + y,  1.0*s + z},
+		{ 1.0*s + x, -1.0*s + y,  1.0*s + z},
+		{ 1.0*s + x, -1.0*s + y, -1.0*s + z},
+		{ 1.0*s + x,  1.0*s + y, -1.0*s + z},
+		{-1.0*s + x,  1.0*s + y, -1.0*s + z},
+		{-1.0*s + x, -1.0*s + y, -1.0*s + z},
+		{-1.0*s + x, -1.0*s + y,  1.0*s + z},
+		{-1.0*s + x,  1.0*s + y,  1.0*s + z},
+	};
+	struct point3d *a;
+	int i;
+	for ( i = 0; i < 6; i ++ ) {
+		vbuffer_add_vertex ( vb );
+		vibuffer_add_element ( &v[i], vb );
+	}
+	int index[12*3] = {
+		0, 1, 2,
+		0, 2, 3,
+		3, 2, 5,
+		3, 5, 4,
+		4, 5, 7,
+		4, 7, 6,
+		6, 7, 1,
+		6, 1, 0,
+		6, 0, 3,
+		6, 3, 4,
+		1, 7, 5,
+		1, 5, 2
+	};
+	for ( i = 0; i < 12*3; i ++ ) {
+		ibuffer_add_index ( ib );
+		vibuffer_add_element ( &index[i], ib );
+	}
+}
+
+static void simple_rt_pipeline_init ( struct alg_named_params *global_params )
+{
+	init_rtcontext ( &g_rtctx );
+
+	/* a volume with fov = 90 degree, w/h = 4/3, n = 1.0, f = 100.0 */
+	identity_matrix4x4 ( &g_view );
+	set_matrix4x4 ( &g_proj,
+			1.0, 0.0, 0.0, 0.0,
+			0.0, 1.0*4.0/3.0, 0.0, 0.0,
+			0.0, 0.0, (100.0 + 1.0)/(100.0 - 1.0), 1.0,
+			0.0, 0.0, 2.0*100.0*1.0/(1.0 - 100.0), 0.0 );
+	rtcontext_set_view ( &g_view, &g_rtctx );
+	rtcontext_set_proj ( &g_proj, &g_rtctx );
+
+	rtcontext_set_buffer ( RT_COLOR_BUFFER,
+			       RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
+	rtcontext_set_buffer ( RT_DEPTH_BUFFER,
+			       RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
+	rtcontext_set_buffer ( RT_VERTEX_BUFFER,
+			       RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
+	rtcontext_set_buffer ( RT_INDEX_BUFFER,
+			       RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
+
+	g_color_surf = create_surface ( 800, 600, SF_IDR_IA8R8G8B8 );
+	rtcontext_bind_color_buffer ( g_color_surf, &g_rtctx );
+	g_depth_surf = create_surface ( 800, 600, SF_IDR_F32 );
+	rtcontext_bind_depth_buffer ( g_depth_surf, &g_rtctx );
+
+	g_vb = create_vbuffer ( false );
+	g_ib = create_ibuffer ( false );
+	struct vertattri vattri;
+	vertattri_init ( &vattri );
+	vertattri_set ( 0, VERTEX_ELM_FLOAT, 3, &vattri );
+	vbuffer_bind_vertattri ( &vattri, g_vb );
+	ibuffer_set_format ( INDEX_ELEMENT_INT32, g_ib );
+	make_cube_vibuffer ( 0.0, 0.0, 0.0, 5.0f, g_vb, g_ib );
+	rtcontext_bind_vertex_buffer ( g_vb, &g_rtctx );
+	rtcontext_bind_index_buffer ( g_ib, &g_rtctx );
+
+	struct vertdefn vdefn;
+	vertdefn_init ( &vdefn );
+	vertdefn_set ( 0, VERTEX_DEFN_FLOAT4 | VERTEX_DEFN_INTERPOLATE, &vdefn );
+	vertdefn_fix ( &vdefn );
+	rtcontext_bind_vertdefn ( &vdefn, &g_rtctx );
+
+	g_vs = create_shader ( VERTEX_SHADER, false, SHADER_SPEC_BUILTIN );
+	g_fs = create_shader ( FRAGMENT_SHADER, false, SHADER_SPEC_BUILTIN );
+	shader_add_function ( "vs_to_modelview_a", g_vs );
+	shader_add_function ( "fs_pure_color_a", g_fs );
+	shader_finalize ( g_vs );
+	shader_finalize ( g_fs );
+	struct matrix4x4 t_world;
+	identity_matrix4x4 ( &t_world );
+	shader_set_uniform ( SHADER_UNI_MODELVIEW, &t_world,
+			sizeof t_world, g_fs );
+	rtcontext_bind_shader ( g_vs, RT_VERTEX_SHADER, &g_rtctx );
+	rtcontext_bind_shader ( g_fs, RT_FRAGMENT_SHADER, &g_rtctx );
+
+	rtcontext_draw_mode ( RT_WIREFRAME_MODE, &g_rtctx );
+	rtcontext_set_primitive_type ( TRIANGLE_PRIMITIVE, &g_rtctx );
+	rtcontext_set_spec ( RT_BUILTIN_SW, &g_rtctx );
+	rtcontext_cull ( CULL_IDR_BACKFACE, &g_rtctx );
+	rtcontext_finalize_pipeline ( &g_rtctx );
+
+	init_render_out ( OUT_IDR_SCREEN, OUT_GTK_IMPL, &g_ro );
+	void *widget = dbg_get_render_region ();
+	ro_create_screen ( widget, 0, 0, 800, 600, OUT_SCREEN_ARGB32, &g_ro );
+}
+
+static void simple_rt_pipeline_free ( struct alg_named_params *global_params )
+{
+}
+
+static void simple_rt_pipeline ( struct alg_named_params *global_params )
+{
+	rasterization_run_pipeline ( &g_rtctx, false );
 }
 
 #if 0

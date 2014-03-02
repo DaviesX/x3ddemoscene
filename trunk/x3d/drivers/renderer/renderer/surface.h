@@ -78,6 +78,9 @@ typedef struct {
 
 /* typedef struct pixf_f256 pixf_generic; */
 
+struct float_color3;
+struct float_color4;
+
 
 /*
  * Structures
@@ -98,11 +101,24 @@ struct surface {
  * Functions' declaration
  */
 
-void create_surface ( uint32_t width, uint32_t height, enum SURFACE_IDR idr, struct surface *s );
+struct surface *create_surface ( uint32_t width, uint32_t height, enum SURFACE_IDR idr );
 void free_surface ( struct surface *s );
-void fill_surface ( pixf_generic *value, struct surface *s );
-void fill_pixel ( int x, int y, void *value, struct surface *s );
-void gen_pixel_surface ( void *value, pixf_generic *pix, struct surface *s );
+void surface_fill_color ( struct float_color3 *color, struct surface *s );
+void surface_fill_float ( float value, struct surface *s );
+void surface_fill_ubyte ( uint8_t value, struct surface *s );
+void surface_get_dimension ( struct surface *s, int *w, int *h );
+void *surface_get_addr ( struct surface *s );
+int surface_get_pixel_size ( struct surface *s );
+
+void rgb_to_ir5g6b5 ( struct float_color3 *c3, pixf_ir5g6b5 *c_out );
+void rgb_to_ir8g8b8 ( struct float_color3 *c3, pixf_ir8g8b8 *c_out );
+void rgb_to_ir8g8b8a8 ( struct float_color4 *c4, pixf_ir8g8b8a8 *c_out );
+void rgb_to_ia8r8g8b8 ( struct float_color4 *c4, pixf_ia8r8g8b8 *c_out );
+void rgb_to_fr32g32b32 ( struct float_color3 *c3, pixf_fr32g32b32 *c_out );
+void rgb_to_fr32g32b32a32 ( struct float_color4 *c4, pixf_fr32g32b32a32 *c_out );
+void float_to_f24 ( float *f, pixf_f24 *v );
+void float_to_f32 ( float *f, pixf_f32 *v );
+void float_to_f64 ( double *f, pixf_f64 *v );
 
 
 #endif // X3DSURFACE_H_INCLUDED

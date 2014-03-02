@@ -142,6 +142,11 @@ void widget_get_size ( GtkWidget *parent, GtkWidget *widget,
 					   0, 0, x, y );
 }
 
+void *dbg_get_render_region ( void )
+{
+	return main_editor_get_region ();
+}
+
 /** TEMP **/
 enum RP_SCENE_ERR {
 	RP_SCENE_NORMAL,

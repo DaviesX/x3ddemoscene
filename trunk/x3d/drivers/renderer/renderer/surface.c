@@ -55,6 +55,9 @@ void float_to_f24 ( float *f, pixf_f24 *v );
 void float_to_f32 ( float *f, pixf_f32 *v );
 void float_to_f64 ( double *f, pixf_f64 *v );
 
+static void fill_surface ( pixf_generic *pix, struct surface *s );
+static void gen_pixel_surface ( void *value, pixf_generic *pix, struct surface *s );
+
 
 const struct surface_operations SurfOps[] = {
 	[SF_IDR_I8].fill_pix = cast(SurfOps->fill_pix) fill_pix_i8,
@@ -89,8 +92,9 @@ const struct surface_operations SurfOps[] = {
 	[SF_IDR_FR32G32B32A32].gen_pix = cast(SurfOps->gen_pix) rgb_to_fr32g32b32a32
 };
 
-void create_surface ( uint32_t width, uint32_t height, enum SURFACE_IDR idr, struct surface *s )
+struct surface *create_surface ( uint32_t width, uint32_t height, enum SURFACE_IDR idr )
 {
+	struct surface *s = alloc_fix ( sizeof *s, 1 );
 	s->w = width;
 	s->h = height;
 	s->idr = idr;
@@ -99,6 +103,7 @@ void create_surface ( uint32_t width, uint32_t height, enum SURFACE_IDR idr, str
 	s->s = alloc_fix ( SizeOfPixel[idr], width*height );
 	s->ops = &SurfOps[idr];
 	s->state = SURFACE_INUSE;
+	return s;
 }
 
 void free_surface ( struct surface *s )
@@ -107,7 +112,7 @@ void free_surface ( struct surface *s )
 	memset ( s, 0, sizeof ( *s ) );
 }
 
-void gen_pixel_surface ( void *value, pixf_generic *pix, struct surface *s )
+static void gen_pixel_surface ( void *value, pixf_generic *pix, struct surface *s )
 {
 	s->ops->gen_pix ( value, pix );
 }
@@ -178,7 +183,39 @@ void float_to_f64 ( double *f, pixf_f64 *v )
 	} \
 }
 
-void fill_surface ( pixf_generic *pix, struct surface *s )
+void surface_fill_color ( struct float_color3 *color, struct surface *s )
+{
+	pixf_generic value;
+	gen_pixel_surface ( color, &value, s );
+	fill_surface ( &value, s );
+}
+
+void surface_fill_float ( float value, struct surface *s )
+{
+	fill_surface ( &value, s );
+}
+
+void surface_fill_ubyte ( uint8_t value, struct surface *s )
+{
+	fill_surface ( &value, s );
+}
+
+void surface_get_dimension ( struct surface *s, int *w, int *h )
+{
+	*w = s->w;
+	*h = s->h;
+}
+void *surface_get_addr ( struct surface *s )
+{
+	return s->s;
+}
+
+int surface_get_pixel_size ( struct surface *s )
+{
+	return SizeOfPixel[s->idr];
+}
+
+static void fill_surface ( pixf_generic *pix, struct surface *s )
 {
 	s->ops->fill_surface ( pix, s );
 }

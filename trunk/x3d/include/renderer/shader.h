@@ -93,7 +93,7 @@ struct shader {
  */
 void init_shader_library ( void );
 void free_shader_library ( void );
-void create_shader ( int stage, bool is_dynamic, int spec, struct shader *shader );
+struct shader *create_shader ( int stage, bool is_dynamic, int spec );
 void free_shader ( struct shader *shader );
 void shader_add_function ( char *function, struct shader *shader );
 void shader_finalize ( struct shader *shader );

@@ -4,7 +4,7 @@
 #include <renderer/renderer.h>
 #include "../renderer/main.h"
 #include "../shader/main.h"
-#include "rt_renderer.h"
+#include "rtrenderer.h"
 
 
 struct renderer_operations {
@@ -12,7 +12,7 @@ struct renderer_operations {
 	void (*free) ( void *r );
 	void (*update) ( struct alg_named_params *params, void *r );
 	void (*begin) ( void *r );
-	void (*render) ( void *r );
+	void (*render) ( struct probe *probe, struct rend_out *ro, void *r );
 	void (*end) ( void *r );
 };
 
@@ -53,9 +53,9 @@ void renderer_begin ( struct renderer *r )
 	RendOps[r->idr].begin ( r->rend );
 }
 
-void renderer_render ( struct renderer *r )
+void renderer_render ( struct probe *probe, struct rend_out *ro, struct renderer *r )
 {
-	RendOps[r->idr].render ( r->rend );
+	RendOps[r->idr].render ( probe, ro, r->rend );
 }
 
 void renderer_end ( struct renderer *r )

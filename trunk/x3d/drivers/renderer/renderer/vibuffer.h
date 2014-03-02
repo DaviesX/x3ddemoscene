@@ -67,8 +67,8 @@ void ibuffer_add_index ( struct index_buffer *ibuffer );
 
 #define vibuffer_add_element( _elm, _vibuffer ) \
 { \
-	*(typeof(_elm) (_vibuffer)->curr) = *(_elm); \
-	(_vibuffer)->curr += sizeof _elm; \
+	*((typeof(_elm)) (_vibuffer)->curr) = *(_elm); \
+	(_vibuffer)->curr += sizeof *(_elm); \
 }
 
 

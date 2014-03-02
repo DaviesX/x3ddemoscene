@@ -16,6 +16,8 @@ void basic_rtshader_a_load ( void )
 {
 	auto_fill_static ( &lib_vs_to_modelview );
 	shaderlib_load ( lib_vs_to_modelview.name, &lib_vs_to_modelview );
+	auto_fill_static ( &lib_fs_pure_color );
+	shaderlib_load ( lib_fs_pure_color.name, &lib_fs_pure_color );
 }
 
 void basic_rtshader_so_load ( void )

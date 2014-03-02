@@ -140,7 +140,7 @@ static void free_gtk_out ( struct gtk_out *out )
 
 static void gtk_out_retrieve ( void *data, int size, struct gtk_out *out )
 {
-	memcpy ( out->src_surface, data, size );
+	memcpy ( &out->src_surface, data, size );
 }
 
 static void gtk_out_run ( struct gtk_out *out )

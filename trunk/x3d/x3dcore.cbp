@@ -224,19 +224,19 @@
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/colorspectrum.h" />
 		<Unit filename="drivers/renderer/renderer/dbg_rasterizer.h" />
-		<Unit filename="drivers/renderer/renderer/dbg_vertprocessor.h" />
+		<Unit filename="drivers/renderer/renderer/dbg_vertex_processor.h" />
 		<Unit filename="drivers/renderer/renderer/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/main.h" />
-		<Unit filename="drivers/renderer/renderer/pm_renderer.c">
+		<Unit filename="drivers/renderer/renderer/pmrenderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/pm_renderer.h" />
-		<Unit filename="drivers/renderer/renderer/pt_renderer.c">
+		<Unit filename="drivers/renderer/renderer/pmrenderer.h" />
+		<Unit filename="drivers/renderer/renderer/ptrenderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/pt_renderer.h" />
+		<Unit filename="drivers/renderer/renderer/ptrenderer.h" />
 		<Unit filename="drivers/renderer/renderer/rasterization.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -252,23 +252,23 @@
 		<Unit filename="drivers/renderer/renderer/renderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/rt_batch.c">
+		<Unit filename="drivers/renderer/renderer/rtpass.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/rt_batch.h" />
-		<Unit filename="drivers/renderer/renderer/rt_renderer.c">
+		<Unit filename="drivers/renderer/renderer/rtpass.h" />
+		<Unit filename="drivers/renderer/renderer/rtrenderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/rt_renderer.h" />
+		<Unit filename="drivers/renderer/renderer/rtrenderer.h" />
 		<Unit filename="drivers/renderer/renderer/surface.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/surface.h" />
 		<Unit filename="drivers/renderer/renderer/vertattri_lerp.h" />
-		<Unit filename="drivers/renderer/renderer/vertprocessor.c">
+		<Unit filename="drivers/renderer/renderer/vertex_processor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/vertprocessor.h" />
+		<Unit filename="drivers/renderer/renderer/vertex_processor.h" />
 		<Unit filename="drivers/renderer/renderer/vibuffer.h" />
 		<Unit filename="drivers/renderer/shader/basic_rt_shader.c">
 			<Option compilerVar="CC" />

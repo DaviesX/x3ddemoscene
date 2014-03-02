@@ -59,14 +59,15 @@ void free_shader_library ( void )
 	g_nlibfunc = 0;
 }
 
-void create_shader ( int stage, bool is_dynamic, int spec, struct shader *shader )
+struct shader *create_shader ( int stage, bool is_dynamic, int spec )
 {
+	struct shader *shader = alloc_fix ( sizeof *shader, 1 );
 	memset ( shader, 0, sizeof *shader );
 	shader->stage = stage;
 	shader->spec = spec;
 	shader->is_dynamic = is_dynamic;
-	shader->src_lib = alloc_var ( sizeof shader->src_lib, 0 );
-	shader->uni_buf = alloc_var ( sizeof shader->uni_buf, 0 );
+	shader->src_lib = alloc_var ( sizeof *shader->src_lib, 0 );
+	shader->uni_buf = alloc_var ( sizeof *shader->uni_buf, 0 );
 	int i;
 	for ( i = 0; i < SHADER_MAX_VAR; i ++ ) {
 		shader->in_var_loc[i] = -1;
@@ -75,6 +76,7 @@ void create_shader ( int stage, bool is_dynamic, int spec, struct shader *shader
 	for ( i = 0; i < SHADER_MAX_UNI; i ++ ) {
 		shader->uniform_loc[i] = -1;
 	}
+	return shader;
 }
 
 void free_shader ( struct shader *shader )
@@ -82,6 +84,7 @@ void free_shader ( struct shader *shader )
 	free_var ( shader->src_lib );
 	free_var ( shader->uni_buf );
 	memset ( shader, 0, sizeof *shader );
+	free_fix ( shader );
 }
 
 void shader_add_function ( char *function, struct shader *shader )
@@ -91,7 +94,7 @@ void shader_add_function ( char *function, struct shader *shader )
 		log_critical_err_dbg ( "no such shader library function: %s", function );
 		return ;
 	}
-	shader->src_lib = push_var ( lib, shader->src_lib );
+	shader->src_lib = push_var ( &lib, shader->src_lib );
 }
 
 void shader_finalize ( struct shader *shader )
@@ -118,8 +121,11 @@ static void builtin_finalize ( struct shader *shader )
 		/* dynamic shader */
 	} else {
 		/* static shader */
-		if ( get_var_len ( shader->src_lib ) ) {
+		if ( get_var_len ( shader->src_lib ) > 1 ) {
 			log_critical_err_dbg ( "must not have multiple library functions in a static shader" );
+			return ;
+		} else if ( get_var_len ( shader->src_lib ) == 0 ) {
+			log_critical_err_dbg ( "no library function is added to this the currect shader" );
 			return ;
 		}
 		struct shader_func *curr = shader->src_lib[0];
@@ -173,7 +179,7 @@ int shader_get_outvar_loc ( int type, struct shader *shader )
 
 void shader_set_uniform_buffer ( struct uniform_buffer *uni, struct shader *shader )
 {
-	shader->uni_buf = push_var ( uni, shader->uni_buf );
+	shader->uni_buf = push_var ( &uni, shader->uni_buf );
 }
 
 /* RI Interface */

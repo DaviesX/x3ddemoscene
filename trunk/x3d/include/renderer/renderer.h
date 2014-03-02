@@ -30,7 +30,7 @@ struct renderer *create_renderer (  enum RENDERER_IDR method );
 void free_renderer ( struct renderer *r );
 void update_renderer ( struct alg_named_params *params, struct renderer *r );
 void renderer_begin ( struct renderer *r );
-void renderer_render ( struct renderer *r );
+void renderer_render ( struct probe *probe, struct rend_out *ro, struct renderer *r );
 void renderer_end ( struct renderer *r );
 struct geocache *renderer_export_geocache ( struct renderer *r );
 struct probe *renderer_export_probe ( struct renderer *r );

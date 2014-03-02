@@ -12,6 +12,7 @@ enum {
 struct common_data {
 	GtkBuilder *builder;
 	GdkPixbuf *logo_pix_buf;
+	GtkWidget *test_region;		/* for debuging */
 	int mode;
 };
 

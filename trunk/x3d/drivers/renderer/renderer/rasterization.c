@@ -3,7 +3,7 @@
 #include <logout.h>
 #include <memory.h>
 #include "rasterization.h"
-#include "vertprocessor.h"
+#include "vertex_processor.h"
 #include "rasterizer.h"
 
 
@@ -93,6 +93,11 @@ void rtcontext_draw_mode ( enum RT_DRAWMODE_IDR draw_mode, struct rtcontext *rc 
 	rc->draw_mode = draw_mode;
 }
 
+void rtcontext_set_primitive_type ( enum RT_PRIMITIVE_TYPE type, struct rtcontext *rc )
+{
+	rc->prim_type = type;
+}
+
 void rtcontext_set_buffer ( enum RT_BUFFER_IDR idr, enum RT_BUFFER_STATE state,
 			    struct rtcontext *rc )
 {
@@ -103,6 +108,11 @@ void rtcontext_bind_shader ( struct shader *shader, enum RT_SHADER_STAGE stage,
 			     struct rtcontext *rc )
 {
 	rc->shader[stage] = shader;
+}
+
+void rtcontext_set_spec ( enum RT_SPEC_IDR spec, struct rtcontext *rc )
+{
+	rc->spec = spec;
 }
 
 void rtcontext_finalize_pipeline ( struct rtcontext *rc )
@@ -185,16 +195,19 @@ static void *builtin_rt_run ( struct rt_info *info )
 	struct rtcontext *rc = &info->rc;
 	enum RT_PRIMITIVE_TYPE type = info->type;
 	uint32_t vert_size = vertdefn_query_size ( &rc->vert_defn );
+	vertprocessor_reset_progress ( rc->vpr );
+	rt_vertex *vert_list = alloc_fix ( vert_size, VERT_CACHE_SIZE );
+	rt_vertex *tmp_vlist = vert_list;
 	int i;
-	rt_vertex *vert_list = nullptr;
 	do {
-		int nvert = vertprocessor_run ( rc->vpr, type, VERT_CACHE_SIZE, &vert_list );
+		int nvert = vertprocessor_run ( rc->vpr, type, VERT_CACHE_SIZE,
+						vert_list );
 		for ( i = 0; i < nvert; i += type*1 ) {
 			rasterizer_run ( rc->rtr, vert_list, type, 1 );
 			vert_list += type*vert_size;
 		}
 	} while ( i != 0 );
-	free_var ( vert_list );
+	free_fix ( tmp_vlist );
 	free_fix ( info );
 	return nullptr;
 }

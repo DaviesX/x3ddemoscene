@@ -26,6 +26,7 @@ struct global_symbol {
 struct kernel {
 	int argc;
 	char **argv;
+	bool to_run;
 	struct editor *edit;
 	struct renderer_context *rend_con;
 	struct scene *scene;
@@ -62,21 +63,35 @@ void start_kernel ( void )
 
 	finalize_test_case ();
 	finalize_symlib ();
+	g_kernel.to_run = true;
+	invoke_test_case ( DBG_KERNEL_START );
 	rest_init ();
 }
 
 void shutdown_kernel ( void )
 {
+	g_kernel.to_run = false;
+	invoke_test_case ( DBG_KERNEL_HALT );
 }
 
 static void rest_init ( void )
 {
-	invoke_test_case ( DBG_KERNEL_START );
+#include <editor/editor.h>
 	edit_main_loop ();
+	kernel_loop ();
 }
 
 static void kernel_loop ( void )
 {
+	while ( g_kernel.to_run ) {
+		static bool first_time = true;
+		if ( first_time ) {
+			invoke_test_case ( DBG_KERNEL_LOOP_ONCE );
+			first_time = false;
+		} else {
+			invoke_test_case ( DBG_KERNEL_LOOP );
+		}
+	}
 }
 
 void init_startup_param ( int argc, char **argv )
@@ -130,9 +145,30 @@ static void finalize_test_case ( void )
 static void invoke_test_case ( enum DBG_POSITION pos )
 {
 	gen_debug_info ();
-
 	struct runtime_debug *dbg = &g_kernel.rt_debug;
 	char **curr = alg_list_first ( &dbg->case_name );
+	if ( pos == DBG_KERNEL_START ) {
+		/* do initialization for all test cases */
+		int i;
+		for ( i = 0; i < alg_list_len ( &dbg->case_name ); i ++ ) {
+			struct unit_test *test =
+				alg_list_i ( &dbg->test_case, i );
+			if ( test->init ) {
+				test->init ( &dbg->dbg_info );
+			}
+		}
+	} else if ( pos == DBG_KERNEL_HALT ) {
+		/* do deconstruction for all test cases */
+		int i;
+		for ( i = 0; i < alg_list_len ( &dbg->case_name ); i ++ ) {
+			struct unit_test *test =
+				alg_list_i ( &dbg->test_case, i );
+			if ( test->free ) {
+				test->free ( &dbg->dbg_info );
+			}
+		}
+	}
+
 	struct {
 		char *name;
 		enum DBG_POSITION pos;

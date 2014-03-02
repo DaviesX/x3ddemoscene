@@ -46,25 +46,23 @@
 	(_b) = _t; \
 }
 
-#define clamp( _x, _a, _b )				((_x) > (_a) ? ((_x) < (_b) ? (_x) : (_b)) : (_a))
-#define rad_to_deg( _r )				((_r)*180.0f/PI)
-#define deg_to_rad( _d )				((_d)*PI/180.0f)
-#define rand_range( _min, _max )			((_min) + (rand ()%((_max) - (_min) + 1)))
-#define fcmp_abs( _a, _b )				((fabs ( (_a) - (_b) ) < DEFAULT_PRECISION) ? 1 : 0)
-#define fcmp_rel_l( _a, _b )				((fabs ( (_a) - (_b) )/(_a) < DEFAULT_PRECISION || \
-							  fabs ( (_a) - (_b))/(_b) < DEFAULT_PRECISION) ? 1 : 0)
-#define fcmp_rel_s( _a, _b )				((fabs ( (_a) - (_b) )/(_a) < DEFAULT_PRECISION && \
-							  fabs ( (_a) - (_b) )/(_b) < DEFAULT_PRECISION) ? 1 : 0)
-#define fcmp_one( _a, _b )				((fabs ( (_a) - (_b) ) < 1.0f) ? 1 : 0)
-#define fcmp_abs_c( _a, _b, _c )			((fabs ( (_a) - (_b) ) < (_c)) ? 1 : 0)
-#define fcmp_rel_lc( _a, _b, _c )			((fabs ( (_a) - (_b) )/a < (_c) || \
-							  fabs ( (_a) - (_b))/(_b) < (_c)) ? 1 : 0)
-#define fcmp_rel_sc( _a, _b, _c )			((fabs ( (_a) - (_b) )/(_a) < (_c) && \
-							  fabs ( (_a) - (_b) )/(_b) < (_c)) ? 1 : 0)
-#define set_bit( _a, _b )				((_a) = (_a) | (_b))
-#define free_bit( _a, _b )				((_a) = (_a) & (~(_b)))
+#define clamp( _x, _a, _b )		((_x) > (_a) ? ((_x) < (_b) ? (_x) : (_b)) : (_a))
+#define rad_to_deg( _r )		((_r)*180.0f/PI)
+#define deg_to_rad( _d )		((_d)*PI/180.0f)
+#define rand_range( _min, _max )	((_min) + (rand ()%((_max) - (_min) + 1)))
+#define fcmp_abs( _a, _b )		((fabs ( (_a) - (_b) ) < DEFAULT_PRECISION) ? 1 : 0)
+#define fcmp_rel_l( _a, _b )		((fabs ( (_a) - (_b) )/(_a) < DEFAULT_PRECISION || fabs ( (_a) - (_b))/(_b) < DEFAULT_PRECISION) ? 1 : 0)
+#define fcmp_rel_s( _a, _b )		((fabs ( (_a) - (_b) )/(_a) < DEFAULT_PRECISION && fabs ( (_a) - (_b) )/(_b) < DEFAULT_PRECISION) ? 1 : 0)
+#define fcmp_one( _a, _b )		((fabs ( (_a) - (_b) ) < 1.0f) ? 1 : 0)
+#define fcmp_abs_c( _a, _b, _c )	((fabs ( (_a) - (_b) ) < (_c)) ? 1 : 0)
+#define fcmp_rel_lc( _a, _b, _c )	((fabs ( (_a) - (_b) )/a < (_c) || \
+					fabs ( (_a) - (_b))/(_b) < (_c)) ? 1 : 0)
+#define fcmp_rel_sc( _a, _b, _c )	((fabs ( (_a) - (_b) )/(_a) < (_c) && \
+					fabs ( (_a) - (_b) )/(_b) < (_c)) ? 1 : 0)
+#define set_bit( _a, _b )		((_a) = (_a) | (_b))
+#define free_bit( _a, _b )		((_a) = (_a) & (~(_b)))
 
-#define in_interval( _x, _i0, _i1 )			((_x) >= (_i0) && (_x) <= (_i1))
+#define in_interval( _x, _i0, _i1 )	((_x) >= (_i0) && (_x) <= (_i1))
 #define uni_interval( _i0, _i1, _j0, _j1, _k0, _k1) \
 { \
 	(_k0) = min ( _i0, _j0 ); \
@@ -75,6 +73,8 @@
 	(_k0) = max ( _i0, _j0 ); \
 	(_k1) = min ( _i1, _j1 ); \
 }
+#define lerp( _x0, _x1, t )		((_x0) + ((_x1) - (_x0))*(t))
+#define lerpd( _x0, d, t )		((_x0) + (d)*(t))
 
 #define fsqr( _x )			((_x)*(_x))
 #define fcube( _x )			((_x)*(_x)*(_x))
