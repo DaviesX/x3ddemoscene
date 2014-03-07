@@ -64,12 +64,15 @@ bool load_editor ( int *argc, char ***argv, enum EDIT_MODE mode )
         return true;
 }
 
+/* @todo (davis#1#): implement file chooser */
 char *file_chooser_open ( char *default_dir )
 {
+        return nullptr;
 }
 
 char *file_chooser_save ( char *default_dir )
 {
+        return nullptr;
 }
 
 void message_box_info ( char *title, char *message )
@@ -145,6 +148,14 @@ void widget_get_size ( GtkWidget *parent, GtkWidget *widget,
 void *dbg_get_render_region ( void )
 {
         return main_editor_get_region ();
+}
+
+void dbg_hand_image_to_display ( void *ptr, int w, int h )
+{
+        g_comm_data.tmp_image = ptr;
+        g_comm_data.tmp_image_w = w;
+        g_comm_data.tmp_image_h = h;
+        main_editor_draw_tmp_image ();
 }
 
 /** TEMP **/
@@ -393,7 +404,7 @@ void pop_msg_box ( char *content, GtkWidget *window, GtkMessageType type )
 {
         GtkWidget *dialog = nullptr;
         dialog = gtk_message_dialog_new ( GTK_WINDOW ( window ), GTK_DIALOG_MODAL,
-                                          type, GTK_BUTTONS_CLOSE, content );
+                                          type, GTK_BUTTONS_CLOSE, "%s", content );
         gtk_window_set_position ( GTK_WINDOW ( dialog ), GTK_WIN_POS_CENTER );
         gtk_dialog_run ( GTK_DIALOG ( dialog ) );
         gtk_widget_destroy ( dialog );

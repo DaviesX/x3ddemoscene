@@ -184,6 +184,10 @@ void reflect_cos_vector3d ( float cos, struct vector3d *normal,
 void reflect_cos_vector4d ( float cos, struct vector4d *normal,
                             struct vector4d *incident, struct vector4d *vec_refl );
 
+void print_vector2d ( struct vector2d *v );
+void print_vector3d ( struct vector3d *v );
+void print_vector4d ( struct vector4d *v );
+
 
 /*
  * Definitions

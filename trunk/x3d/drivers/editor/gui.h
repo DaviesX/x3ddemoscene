@@ -13,6 +13,9 @@ struct common_data {
         GtkBuilder *builder;
         GdkPixbuf *logo_pix_buf;
         GtkWidget *test_region;		/* for debuging */
+        void *tmp_image;
+        int tmp_image_w;
+        int tmp_image_h;
         int mode;
 };
 

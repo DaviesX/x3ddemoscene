@@ -3,6 +3,7 @@
 #include <algorithm.h>
 #include <logout.h>
 #include <x3d/runtime_debug.h>
+#include <math/math.h>
 #include "main.h"
 
 
@@ -20,6 +21,27 @@ void dbg_renderer_add_all ( void )
                 dbg_rtcontext_add_all ();
                 first_time = false;
         }
+}
+
+/* utility functions */
+static void print_point4d ( struct point4d *p )
+{
+        log_normal ( "p(%f, %f, %f, %f)", p->x, p->y, p->z, p->w );
+}
+
+static void print_line4d ( struct point4d *p0, struct point4d *p1 )
+{
+        log_normal ( "p0(%f, %f, %f, %f) --> p1(%f, %f, %f, %f)",
+                    p0->x, p0->y, p0->z, p0->w,
+                    p1->x, p1->y, p1->z, p1->w );
+}
+
+static void print_triangle4d ( struct point4d *p0, struct point4d *p1, struct point4d *p2 )
+{
+        log_normal ( "T:\n\tV0(%f, %f, %f, %f)\n\tV1(%f, %f, %f, %f)\n\tV2(%f, %f, %f, %f)",
+                    p0->x, p0->y, p0->z, p0->w,
+                    p1->x, p1->y, p1->z, p1->w,
+                    p2->x, p2->y, p2->z, p2->w );
 }
 
 /* vertex prcessor's */		#include "vertex_processor.h"
@@ -48,7 +70,7 @@ static void vert_post_process ( struct alg_named_params *global_params )
         };
         struct dbg_vertex v[3];
         struct dbg_vertex vo[3];
-        struct dbg_vertex tmp_cache[20];
+        // struct dbg_vertex tmp_cache[20];
         /* a volume with fov = 90 degree, w/h = 4/3, n = 1.0, f = 100.0 */
         struct matrix4x4 t_all;
         struct matrix4x4 t_view;
@@ -68,9 +90,13 @@ static void vert_post_process ( struct alg_named_params *global_params )
         int n;
         int i;
         for ( i = 0; i < 3; i ++ ) {
-                n = dbg_process_point ( &v[i], &t_all, sizeof v[0], &vo[i] );
-                log_normal_dbg ( "v%d: %f, %f, %f, %f, %d point inside",
-                                 vo[i].p, vo[i].v.x, vo[i].v.y, vo[i].v.z, vo[i].v.w, n );
+                n = dbg_process_point (
+                        (rt_vertex *) &v[i], &t_all, sizeof v[0], (rt_vertex *) &vo[i] );
+                if ( n > 0 ) {
+                        print_point4d ( &vo[i].v );
+                } else {
+                        log_normal_dbg ( "p%d: out", i );
+                }
         }
         /* line test */
         set_point4d ( 100.0f, 0.0f, 80.0f, 1.0f, &v[0].v );
@@ -82,11 +108,15 @@ static void vert_post_process ( struct alg_named_params *global_params )
                 VERTEX_DEFN_FLOAT4 | VERTEX_DEFN_INTERPOLATE,
                 VERTEX_DEFN_INT
         };
-        n = dbg_process_line ( v, &t_all, comp_offset, comp_format, 2, sizeof v[0], vo );
-        log_normal_dbg ( "v%d: %f, %f, %f, %f",
-                         vo[0].p, vo[0].v.x, vo[0].v.y, vo[0].v.z, vo[0].v.w );
-        log_normal_dbg ( "v%d: %f, %f, %f, %f, %d point inside",
-                         vo[1].p, vo[1].v.x, vo[1].v.y, vo[1].v.z, vo[1].v.w, n );
+        n = dbg_process_line (
+                (rt_vertex *) v, &t_all,
+                comp_offset, comp_format, 2, sizeof v[0],
+                (rt_vertex *) vo );
+        if ( n > 0 ) {
+                print_line4d ( &vo[0].v, &vo[1].v );
+        } else {
+                log_normal_dbg ( "line out" );
+        }
         /* triangle test */
         set_point4d ( 100.0f, -10.0f, 80.0f, 1.0f, &v[0].v );
         v[0].p = 0;
@@ -94,14 +124,15 @@ static void vert_post_process ( struct alg_named_params *global_params )
         v[1].p = 1;
         set_point4d ( 150.0f, 0.0f, 120.0f, 1.0f, &v[2].v );
         v[2].p = 2;
-        n = dbg_process_triangle ( v, &t_view, &t_all, 1.0f, comp_offset, comp_format,
-                                   2, sizeof v[0], vo );
-        log_normal_dbg ( "v%d: %f, %f, %f, %f",
-                         vo[0].p, vo[0].v.x, vo[0].v.y, vo[0].v.z, vo[0].v.w );
-        log_normal_dbg ( "v%d: %f, %f, %f, %f",
-                         vo[1].p, vo[1].v.x, vo[1].v.y, vo[1].v.z, vo[1].v.w, n );
-        log_normal_dbg ( "v%d: %f, %f, %f, %f, %d point inside",
-                         vo[2].p, vo[2].v.x, vo[2].v.y, vo[2].v.z, vo[22].v.w, n );
+        n = dbg_process_triangle (
+                (rt_vertex *) v, &t_view, &t_all, 1.0f,
+                comp_offset, comp_format, 2, sizeof v[0],
+                (rt_vertex *) vo );
+        if ( n > 0 ) {
+                print_triangle4d ( &vo[0].v, &vo[1].v, &vo[2].v );
+        } else {
+                log_normal_dbg ( "triangle out" );
+        }
 }
 
 /* rasterizer's */		#include "rasterizer.h"
@@ -147,19 +178,18 @@ static struct render_out g_ro;
 static void make_cube_vibuffer ( float x, float y, float z, float s,
                                  struct vertex_buffer *vb, struct index_buffer *ib )
 {
-        struct point3d v[6] = {
-                { 1.0*s + x,  1.0*s + y,  1.0*s + z},
-                { 1.0*s + x, -1.0*s + y,  1.0*s + z},
-                { 1.0*s + x, -1.0*s + y, -1.0*s + z},
-                { 1.0*s + x,  1.0*s + y, -1.0*s + z},
-                {-1.0*s + x,  1.0*s + y, -1.0*s + z},
-                {-1.0*s + x, -1.0*s + y, -1.0*s + z},
-                {-1.0*s + x, -1.0*s + y,  1.0*s + z},
-                {-1.0*s + x,  1.0*s + y,  1.0*s + z},
+        struct point3d v[8] = {
+                [0].p = { 1.0*s + x,  1.0*s + y,  1.0*s + z},
+                [1].p = { 1.0*s + x, -1.0*s + y,  1.0*s + z},
+                [2].p = { 1.0*s + x, -1.0*s + y, -1.0*s + z},
+                [3].p = { 1.0*s + x,  1.0*s + y, -1.0*s + z},
+                [4].p = {-1.0*s + x,  1.0*s + y, -1.0*s + z},
+                [5].p = {-1.0*s + x, -1.0*s + y, -1.0*s + z},
+                [6].p = {-1.0*s + x, -1.0*s + y,  1.0*s + z},
+                [7].p = {-1.0*s + x,  1.0*s + y,  1.0*s + z},
         };
-        struct point3d *a;
         int i;
-        for ( i = 0; i < 6; i ++ ) {
+        for ( i = 0; i < 8; i ++ ) {
                 vbuffer_add_vertex ( vb );
                 vibuffer_add_element ( &v[i], vb );
         }
@@ -205,11 +235,18 @@ static void simple_rt_pipeline_init ( struct alg_named_params *global_params )
                                RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
         rtcontext_set_buffer ( RT_INDEX_BUFFER,
                                RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
-
+#include "colorspectrum.h"
         g_color_surf = create_surface ( 800, 600, SF_IDR_IA8R8G8B8 );
+        struct float_color4 c;
+        c.r = 1.0f;
+        c.g = 1.0f;
+        c.b = 1.0f;
+        c.a = 0.0f;
+        surface_fill_color ( &c, g_color_surf );
         rtcontext_bind_color_buffer ( g_color_surf, &g_rtctx );
         g_depth_surf = create_surface ( 800, 600, SF_IDR_F32 );
         rtcontext_bind_depth_buffer ( g_depth_surf, &g_rtctx );
+        rtcontext_set_depth_func ( RT_EQUALITY_TRUE, &g_rtctx );
 
         g_vb = create_vbuffer ( false );
         g_ib = create_ibuffer ( false );
@@ -218,7 +255,7 @@ static void simple_rt_pipeline_init ( struct alg_named_params *global_params )
         vertattri_set ( 0, VERTEX_ELM_FLOAT, 3, &vattri );
         vbuffer_bind_vertattri ( &vattri, g_vb );
         ibuffer_set_format ( INDEX_ELEMENT_INT32, g_ib );
-        make_cube_vibuffer ( 0.0, 0.0, 0.0, 5.0f, g_vb, g_ib );
+        make_cube_vibuffer ( 0.0, 0.0, 50.0, 5.0f, g_vb, g_ib );
         rtcontext_bind_vertex_buffer ( g_vb, &g_rtctx );
         rtcontext_bind_index_buffer ( g_ib, &g_rtctx );
 
@@ -259,6 +296,9 @@ static void simple_rt_pipeline_free ( struct alg_named_params *global_params )
 static void simple_rt_pipeline ( struct alg_named_params *global_params )
 {
         rasterization_run_pipeline ( &g_rtctx, false );
+//        render_out_retrieve ( surface_get_addr ( g_color_surf ), 4, &g_ro );
+//        render_out_run ( &g_ro );
+        dbg_hand_image_to_display ( surface_get_addr ( g_color_surf ), 800, 600 );
 }
 
 #if 0

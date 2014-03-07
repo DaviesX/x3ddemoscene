@@ -17,7 +17,9 @@ struct main_editor {
         GtkWidget *element_tree_view;
         GtkWidget *new_assist_dialog;
 
+        bool draw_signal_busy;
         int logo_draw_signal;
+        int tmp_draw_signal;
 };
 
 static struct main_editor g_main_edit;
@@ -48,7 +50,7 @@ static gboolean display_logo_callback ( GtkWidget *draw_region,
 
 static void display_logo_image ( GtkWidget *draw_area, bool to_display )
 {
-        if ( to_display ) {
+        if ( to_display && !g_main_edit.draw_signal_busy ) {
                 g_main_edit.logo_draw_signal =
                         g_signal_connect ( draw_area, "draw",
                                            G_CALLBACK ( display_logo_callback ), nullptr );
@@ -56,6 +58,41 @@ static void display_logo_image ( GtkWidget *draw_area, bool to_display )
                 g_signal_handler_disconnect ( draw_area,
                                               g_main_edit.logo_draw_signal );
         }
+}
+
+/* temporary functions */
+static gboolean display_tmp_image_callback ( GtkWidget *draw_region,
+                                        cairo_t *cairo, gpointer data )
+{
+        int stride = cairo_format_stride_for_width (
+                        CAIRO_FORMAT_ARGB32, g_comm_data.tmp_image_w);
+        struct _cairo_surface *co_surface = cairo_image_surface_create_for_data (
+                g_comm_data.tmp_image, CAIRO_FORMAT_ARGB32,
+                g_comm_data.tmp_image_w, g_comm_data.tmp_image_h, stride );
+        cairo_set_source_surface ( cairo, co_surface, 0.0, 0.0 );
+        cairo_paint ( cairo );
+        cairo_surface_destroy ( co_surface );
+        return 0;
+}
+
+static void display_tmp_image ( GtkWidget *draw_area, bool to_display )
+{
+        if ( to_display ) {
+                g_main_edit.tmp_draw_signal = g_signal_connect (
+                        draw_area, "draw",
+                        G_CALLBACK ( display_tmp_image_callback ), nullptr );
+                g_main_edit.draw_signal_busy = true;
+        } else {
+                g_signal_handler_disconnect ( draw_area,
+                                              g_main_edit.tmp_draw_signal );
+                g_main_edit.draw_signal_busy = false;
+        }
+}
+
+void main_editor_draw_tmp_image ( void )
+{
+        display_logo_image ( g_main_edit.curr_draw_area, false );
+        display_tmp_image ( g_main_edit.curr_draw_area, true );
 }
 
 bool main_editor_load ( void )
@@ -127,7 +164,6 @@ bool main_editor_load ( void )
         rr.rect.x1 = width;
         rr.rect.y1 = height;
         render_region_add ( &rr );
-
         display_logo_image ( g_main_edit.curr_draw_area, true );
         return true;
 }

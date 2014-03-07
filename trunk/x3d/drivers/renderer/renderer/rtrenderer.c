@@ -29,8 +29,8 @@ void free_rt_renderer ( struct rt_renderer *r )
 {
         struct renderer *parent = r->parent;
         free_proj_probe ( (struct proj_probe *) parent->probe );
-        free_geocache ( parent->gc );
-        free_render_out ( parent->ro );
+        free_geocache ( (struct geocache *) parent->gc );
+        free_render_out ( (struct render_out *) parent->ro );
         free_fix ( parent->probe );
         free_fix ( parent->gc );
         free_fix ( parent->ro );

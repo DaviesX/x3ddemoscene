@@ -26,6 +26,7 @@ enum RT_DRAWMODE_IDR {
 };
 
 enum RT_EQUALITY {
+        RT_EQUALITY_TRUE,
         RT_EQUALITY_FALSE,
         RT_EQUALITY_G,
         RT_EQUALITY_GEQ,
@@ -161,6 +162,8 @@ void rtcontext_draw_mode ( enum RT_DRAWMODE_IDR draw_mode, struct rtcontext *rc 
 void rtcontext_set_primitive_type ( enum RT_PRIMITIVE_TYPE type, struct rtcontext *rc );
 void rtcontext_set_buffer ( enum RT_BUFFER_IDR idr, enum RT_BUFFER_STATE state,
                             struct rtcontext *rc );
+void rtcontext_set_depth_func ( enum RT_EQUALITY func, struct rtcontext *rc );
+void rtcontext_set_stencil_func ( enum RT_EQUALITY func, struct rtcontext *rc );
 void rtcontext_bind_shader ( struct shader *shader, enum RT_SHADER_STAGE stage,
                              struct rtcontext *rc );
 void rtcontext_set_spec ( enum RT_SPEC_IDR spec, struct rtcontext *rc );

@@ -33,11 +33,8 @@
 
 #ifdef X3D_DEBUG_MODE
 #define RENDER_LIB_VERSION_STRING	"v 1.0 debug"
-/*#pragma GCC diagnostic ignored "-Wwrite-strings"
-#pragma GCC diagnostic ignored "-Wformat-security"
-#pragma GCC diagnostic ignored "-Wmissing-declarations" */
-#pragma GCC diagnostic ignored "-Wformat-security"
-#pragma GCC diagnostic ignored "-Wmissing-braces"
+#pragma GCC diagnostic ignored "-Wunused-function"
+// #pragma GCC diagnostic ignored "-Wmissing-braces"
 #else
 #define RENDER_LIB_VERSION_STRING	"v 1.0"
 #endif

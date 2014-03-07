@@ -103,7 +103,7 @@ struct surface {
 
 struct surface *create_surface ( uint32_t width, uint32_t height, enum SURFACE_IDR idr );
 void free_surface ( struct surface *s );
-void surface_fill_color ( struct float_color3 *color, struct surface *s );
+void surface_fill_color ( struct float_color4 *color, struct surface *s );
 void surface_fill_float ( float value, struct surface *s );
 void surface_fill_ubyte ( uint8_t value, struct surface *s );
 void surface_get_dimension ( struct surface *s, int *w, int *h );

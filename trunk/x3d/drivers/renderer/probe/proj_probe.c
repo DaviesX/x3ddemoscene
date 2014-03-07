@@ -7,21 +7,20 @@
 #include "spherical.h"
 
 
-struct probe;
 struct probe_ops {
-        struct probe *(*create) ( void );
-        void (*free) ( struct probe *probe );
-        void (*set_pos) ( struct point3d *pos, struct probe *probe );
+        struct proj_probe *(*create) ( void );
+        void (*free) ( struct proj_probe *probe );
+        void (*set_pos) ( struct point3d *pos, struct proj_probe *probe );
         void (*set_base) ( struct vector3d *u, struct vector3d *v, struct vector3d *n,
-                           struct probe *probe );
+                           struct proj_probe *probe );
         void (*set_dir) ( struct vector3d *up, struct vector3d *target,
-                          struct probe *probe );
+                          struct proj_probe *probe );
         void (*set_optics) ( float focal_len, float v_dist, float apert,
-                             struct probe *probe );
-        void (*set_range) ( float x, float y, float z0, struct probe *probe );
-        void (*get_transform) ( struct probe *probe,
+                             struct proj_probe *probe );
+        void (*set_range) ( float x, float y, float z0, struct proj_probe *probe );
+        void (*get_transform) ( struct proj_probe *probe,
                                 struct matrix4x4 *view, struct matrix4x4 *proj );
-        void (*emit_ray) ( float ndc_x, float ndc_y, struct probe *probe, struct line3d *ray );
+        void (*emit_ray) ( float ndc_x, float ndc_y, struct proj_probe *probe, struct line3d *ray );
 };
 
 const struct probe_ops ProbeOps[] = {

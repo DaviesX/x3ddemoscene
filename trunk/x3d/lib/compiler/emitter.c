@@ -53,6 +53,8 @@ void print_postfix_emitter ( struct code_emitter *e, struct sym_entry *sym_tbl )
                         printf ( " %s ", get_symbol ( tok[i].tok_attr, sym_tbl ) );
                         break;
                 }
+                default:
+                        break;
                 }
         }
 }

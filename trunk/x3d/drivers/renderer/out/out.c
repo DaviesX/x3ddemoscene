@@ -1,4 +1,5 @@
 /* out.c: render output interface */
+#include <x3d/common.h>
 #include <renderer/out.h>
 #include "screen_out.h"
 #include "image_out.h"

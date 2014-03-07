@@ -1,6 +1,6 @@
-// X3dVector.c: All vector functions go here
-// Include the local relative headers
+// vector.c: All vector functions go here
 #include <math.h>
+#include <logout.h>
 #include "vector.h"
 
 
@@ -445,4 +445,19 @@ void reflect_cos_vector4d ( float cos, struct vector4d *normal,
         vec_refl->x = normal->x*cos - incident->x;
         vec_refl->y = normal->y*cos - incident->y;
         vec_refl->z = normal->z*cos - incident->z;
+}
+
+void print_vector2d ( struct vector2d *v )
+{
+        log_normal ( "V<%f, %f>", v->x, v->y );
+}
+
+void print_vector3d ( struct vector3d *v )
+{
+        log_normal ( "V<%f, %f, %f>", v->x, v->y, v->z );
+}
+
+void print_vector4d ( struct vector4d *v )
+{
+        log_normal ( "V<%f, %f, %f, %f>", v->x, v->y, v->z, v->w );
 }

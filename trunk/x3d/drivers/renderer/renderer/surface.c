@@ -74,7 +74,7 @@ const struct surface_operations SurfOps[] = {
         [SF_IDR_IR5G6B5].fill_surface = cast(SurfOps->fill_surface) fill_surface_ir5g6b5,
         [SF_IDR_IR8G8B8].fill_surface = cast(SurfOps->fill_surface) fill_surface_ir8g8b8,
         [SF_IDR_IR8G8B8A8].fill_surface = cast(SurfOps->fill_surface) fill_surface_ir8g8b8a8,
-        [SF_IDR_IR8G8B8A8].fill_surface = cast(SurfOps->fill_surface) fill_surface_ia8r8g8b8,
+        [SF_IDR_IA8R8G8B8].fill_surface = cast(SurfOps->fill_surface) fill_surface_ia8r8g8b8,
         [SF_IDR_F24].fill_surface = cast(SurfOps->fill_surface) fill_surface_f24,
         [SF_IDR_F32].fill_surface = cast(SurfOps->fill_surface) fill_surface_f32,
         [SF_IDR_FR32G32B32].fill_surface = cast(SurfOps->fill_surface) fill_surface_fr32g32b32,
@@ -84,6 +84,7 @@ const struct surface_operations SurfOps[] = {
         [SF_IDR_IR5G6B5].gen_pix = cast(SurfOps->gen_pix) rgb_to_ir5g6b5,
         [SF_IDR_IR8G8B8].gen_pix = cast(SurfOps->gen_pix) rgb_to_ir8g8b8,
         [SF_IDR_IR8G8B8A8].gen_pix = cast(SurfOps->gen_pix) rgb_to_ir8g8b8a8,
+        [SF_IDR_IA8R8G8B8].gen_pix = cast(SurfOps->gen_pix) rgb_to_ia8r8g8b8,
         [SF_IDR_F24].gen_pix = cast(SurfOps->gen_pix) float_to_f24,
         [SF_IDR_F32].gen_pix = cast(SurfOps->gen_pix) float_to_f32,
         [SF_IDR_FR10G11B10].gen_pix = cast(SurfOps->gen_pix) nullptr,
@@ -101,7 +102,7 @@ struct surface *create_surface ( uint32_t width, uint32_t height, enum SURFACE_I
         s->num_byte = width*height*SizeOfPixel[idr];
         s->p = width*SizeOfPixel[idr];
         s->s = alloc_fix ( SizeOfPixel[idr], width*height );
-        s->ops = &SurfOps[idr];
+        s->ops = cast(s->ops) &SurfOps[idr];
         s->state = SURFACE_INUSE;
         return s;
 }
@@ -183,7 +184,7 @@ void float_to_f64 ( double *f, pixf_f64 *v )
 	} \
 }
 
-void surface_fill_color ( struct float_color3 *color, struct surface *s )
+void surface_fill_color ( struct float_color4 *color, struct surface *s )
 {
         pixf_generic value;
         gen_pixel_surface ( color, &value, s );
@@ -192,12 +193,12 @@ void surface_fill_color ( struct float_color3 *color, struct surface *s )
 
 void surface_fill_float ( float value, struct surface *s )
 {
-        fill_surface ( &value, s );
+        fill_surface ( (pixf_generic *) &value, s );
 }
 
 void surface_fill_ubyte ( uint8_t value, struct surface *s )
 {
-        fill_surface ( &value, s );
+        fill_surface ( (pixf_generic *) &value, s );
 }
 
 void surface_get_dimension ( struct surface *s, int *w, int *h )
@@ -217,7 +218,8 @@ int surface_get_pixel_size ( struct surface *s )
 
 static void fill_surface ( pixf_generic *pix, struct surface *s )
 {
-        s->ops->fill_surface ( pix, s );
+        SurfOps[s->idr].fill_surface ( pix, s );
+//        s->ops->fill_surface ( pix, s );
 }
 
 void fill_surface_i8 ( pixf_generic *pix, struct surface *s )

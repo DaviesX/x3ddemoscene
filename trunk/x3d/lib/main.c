@@ -34,7 +34,7 @@ void variable_memory_test1 ( struct alg_named_params *param )
                 array = add_var ( array, 1 );
                 array[i] = i;
 
-                int *curr = get_var_last ( array );
+//                int *curr = get_var_last ( array );
                 set_log_behavior ( LOG_OUTPUT_TO_FILE );
                 log_normal ( "%d", array[i] );
         }

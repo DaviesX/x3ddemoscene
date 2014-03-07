@@ -104,6 +104,16 @@ void rtcontext_set_buffer ( enum RT_BUFFER_IDR idr, enum RT_BUFFER_STATE state,
         rc->buffer_state[idr] = state;
 }
 
+void rtcontext_set_depth_func ( enum RT_EQUALITY func, struct rtcontext *rc )
+{
+        rc->depth_func = func;
+}
+
+void rtcontext_set_stencil_func ( enum RT_EQUALITY func, struct rtcontext *rc )
+{
+        rc->stencil_func = func;
+}
+
 void rtcontext_bind_shader ( struct shader *shader, enum RT_SHADER_STAGE stage,
                              struct rtcontext *rc )
 {

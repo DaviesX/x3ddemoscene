@@ -39,7 +39,6 @@ struct intn_vformat {
 struct intn_rtctx {
         struct shader *shader;
         untyped *clip_cache;
-        int frag_size;
         int draw_mode;
         f_Generic compiled_rasterizer;
 };
@@ -57,6 +56,9 @@ static bool depth_func ( int x, int y, float inv_w,
                          struct intn_buffers *buf )
 {
         switch ( func->dt_func ) {
+        case RT_EQUALITY_TRUE: {
+                return true;
+        }
         case RT_EQUALITY_FALSE: {
                 return false;
         }
@@ -82,8 +84,8 @@ static bool depth_func ( int x, int y, float inv_w,
 static void ndc_to_scc ( struct point4d *ndc, struct ipoint2d *scc,
                          struct intn_buffers *buf )
 {
-        scc->x = (int) ((ndc->x + 1.0f)*0.5f*buf->buf_x);
-        scc->y = (int) ((1.0 - ndc->y)*0.5f*buf->buf_y);
+        scc->x = (int) ((ndc->x + 1.0f)*0.5f*(buf->buf_x - 1));
+        scc->y = (int) ((1.0 - ndc->y)*0.5f*(buf->buf_y - 1));
 }
 
 static void ndc_to_fragc ( struct point4d *ndc, struct point4d *fragc )
@@ -115,7 +117,7 @@ void rasterizer_finalize ( struct rtcontext *cont, struct rasterizer *rt )
         memcpy ( vformat->offset, vdefn->offset, MAX_VERT_COMP );
         vformat->size = vdefn->vertsize;
         vformat->n_comp = vdefn->n_comp;
-        /* surfaces */
+        /* surface buffers */
         struct intn_buffers *buffers = &rt->buf;
         if ( !(cont->buffer_state[RT_COLOR_BUFFER] & RT_BUFFER_ENABLE) ) {
                 log_critical_err_dbg ( "color buffer has to be enabled" );
@@ -157,6 +159,8 @@ void rasterizer_finalize ( struct rtcontext *cont, struct rasterizer *rt )
         } else {
                 ctx->clip_cache = expand2_var ( ctx->clip_cache, vformat->size*3*3 );
         }
+        ctx->draw_mode = cont->draw_mode;
+        ctx->shader = cont->shader[RT_FRAGMENT_SHADER];
 }
 
 static int clip_line ( untyped *v0, untyped *v1, struct intn_vformat *vformat )
@@ -207,9 +211,10 @@ static int clip_line ( untyped *v0, untyped *v1, struct intn_vformat *vformat )
         const float inv_sw = 1.0f/v[0]->w;
         const float inv_ew = 1.0f/v[1]->w;
         if ( tmin > 0.0f && tmin < 1.0f ) {
+                float inv_rw = lerp ( inv_sw, inv_ew, tmin );
                 v[0]->x = lerp ( v[0]->x, v[1]->x, tmin );
                 v[0]->y = lerp ( v[0]->y, v[1]->y, tmin );
-                float inv_rw = lerp ( inv_sw, inv_ew, tmin );
+                v[0]->w = 1.0f/inv_rw;
                 lerp_attri_c ( &vformat->format[1], vformat->n_comp - 1,
                                &vformat->offset[1],
                                vaddr[0] + vformat->offset[0], inv_sw,
@@ -217,9 +222,10 @@ static int clip_line ( untyped *v0, untyped *v1, struct intn_vformat *vformat )
                                tmin, vaddr[0] + vformat->offset[0], inv_rw );
         }
         if ( tmax > 0.0f && tmax < 1.0f ) {
+                float inv_rw = lerp ( inv_sw, inv_ew, tmax );
                 v[1]->x = lerp ( v[0]->x, v[1]->x, tmax );
                 v[1]->y = lerp ( v[0]->y, v[1]->y, tmax );
-                float inv_rw = lerp ( inv_sw, inv_ew, tmax );
+                v[1]->w = 1.0f/inv_rw;
                 lerp_attri_c ( &vformat->format[1], vformat->n_comp - 1,
                                &vformat->offset[1],
                                vaddr[0] + vformat->offset[0], inv_sw,
@@ -248,24 +254,28 @@ static void *clip_cache_new ( struct clip_cache *cache )
 }
 
 #define line(_i)                ((_i)/2)
-#define is_in_region(_val, _i)  (((_i) & 1) ? (_val) >= -1.0f : (_val) <= 1.0f)
-#define ref_val(_i)             (((_i) & 1) ? (-1.0f) : (1.0f))
+#define is_in_region(_val, _i)  (((_i) & 1) ? (_val) <= 1.0f : (_val) >= -1.0f)
+#define ref_val(_i)             (((_i) & 1) ? (1.0f) : (-1.0f))
 
-static void clip_compute_intersection ( struct point4d *p0, struct point4d *p1,
-                                        struct point4d *p_out, int axis,
-                                        struct intn_vformat *vformat )
+static inline void clip_compute_intersection (
+        const struct point4d *p0,
+        const struct point4d *p1,
+        struct point4d *p_out, const int axis,
+        const struct intn_vformat *vformat )
 {
         untyped *vaddr0     = (untyped *) p0;
         untyped *vaddr1     = (untyped *) p1;
         untyped *dest_vaddr = (untyped *) p_out;
-        float t = (p0->p[axis] - ref_val(axis))/
-                  (p0->p[axis] - p1->p[axis]);
+        int bl = line ( axis );
+        float t = (p0->p[bl] - ref_val(axis))/
+                  (p0->p[bl] - p1->p[bl]);
         const float inv_sw = 1.0f/p0->w;
         const float inv_ew = 1.0f/p1->w;
         /* p(x, y) should be lerp without depth correction */
+        float inv_rw = lerp ( inv_sw, inv_ew, t );
         p_out->x = lerp ( p0->x, p1->x, t );
         p_out->y = lerp ( p0->y, p1->y, t );
-        float inv_rw = lerp ( inv_sw, inv_ew, t );
+        p_out->w = 1.0f/inv_rw;
         lerp_attri_c ( &vformat->format[1], vformat->n_comp - 1, &vformat->offset[1],
                        vaddr0 + vformat->offset[0], inv_sw,
                        vaddr1 + vformat->offset[0], inv_ew,
@@ -281,7 +291,7 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
         if ( (v[0]->x < -1.0f && v[1]->x < -1.0f && v[2]->x < -1.0f) ||
              (v[0]->x >  1.0f && v[1]->x >  1.0f && v[2]->x >  1.0f) ||
              (v[0]->y < -1.0f && v[1]->y < -1.0f && v[2]->y < -1.0f) ||
-             (v[0]->y >  1.0f && v[1]->y >  1.0f && v[2]->x >  1.0f) ) {
+             (v[0]->y >  1.0f && v[1]->y >  1.0f && v[2]->y >  1.0f) ) {
                 /* trivial reject */
                 return 0;
         }
@@ -292,6 +302,7 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
              v[2]->x >= -1.0f && v[2]->x <= 1.0f &&
              v[2]->y >= -1.0f && v[2]->y <= 1.0f ) {
                 /* trivial accept */
+                memcpy ( ref, v, 3*sizeof(untyped*) );
                 return 1;
         }
         /* clip triangle */
@@ -301,6 +312,7 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
                 [0][2] = to_4d(v2),
                 [0][3] = to_4d(v0)
         };
+        int r = 0;      /* for switching between the ring buffer */
         int n_in = 3;
         int n_out = 0;
 
@@ -312,10 +324,9 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
         for ( i = 0; i < 4; i ++ ) {
 #define curr_input( _r )        (_r)
 #define next_output( _r )       ((_r) = ((_r) + 1) & 1)
-                struct point4d **in_ref  = &ring_ref[curr_input(i)][0];
-                struct point4d **out_ref = &ring_ref[next_output(i)][0];
-#undef curr_input
-#undef next_output
+                struct point4d **in_ref  = &ring_ref[curr_input(r)][0];
+                struct point4d **out_ref = &ring_ref[next_output(r)][0];
+
                 int k;
                 for ( k = 0; k < n_in; k ++ ) {
                         int bl = line ( i );     /* boundary line */
@@ -331,7 +342,7 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
                                         out_ref[n_out ++] = new_p;
                                         clip_compute_intersection (
                                                 in_ref[k + 0], in_ref[k + 1], new_p,
-                                                k, vformat );
+                                                i, vformat );
                                 }
                         } else {
                                 /* do not send to output list */
@@ -345,22 +356,37 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
                                         out_ref[n_out ++] = new_p;
                                         clip_compute_intersection (
                                                 in_ref[k + 0], in_ref[k + 1], new_p,
-                                                k, vformat );
+                                                i, vformat );
                                 }
                         }
                 }
                 n_in = n_out;
                 /* wrap [n + 1] element back to [0] */
                 out_ref[n_out ++] = out_ref[0];
+/*                int a;
+                for ( a = 0; a < n_out; a ++ ) {
+                        print_vector4d ( out_ref[a] );
+                }
+                log_normal ( "" );*/
                 n_out = 0;
         }
         int n_out_total = n_in;         /* total number of output vertices */
         if ( n_out_total == 0 ) {
                 return 0;
         }
-        return 0;
+        assert ( n_out_total >= 3 );
+        untyped **out_list = (untyped **) &ring_ref[curr_input(r)][0];
+        int n, j;
+        for ( n = 1, j = 0; n < n_out_total - 2; n ++ ) {
+                ref[j ++] = out_list[0];
+                ref[j ++] = out_list[n];
+                ref[j ++] = out_list[n + 1];
+        }
+        return n_out_total - 2;
 }
 
+#undef curr_input
+#undef next_output
 #undef line
 #undef is_in_region
 #undef ref_val
@@ -525,9 +551,9 @@ void rasterizer_run ( struct rasterizer *rt, rt_vertex *vert_list,
                         int j;
                         for ( j = 0; j < n; j ++ ) {
                                 if ( rt->ctx.draw_mode == RT_SOLID_MODE ) {
-                                        draw_wireframe_triangle ( rt, ref, j );
-                                } else {
                                         draw_solid_triangle ( rt, ref, j );
+                                } else {
+                                        draw_wireframe_triangle ( rt, ref, j );
                                 }
                         }
                         vert_list += 3*rt->vf.size;

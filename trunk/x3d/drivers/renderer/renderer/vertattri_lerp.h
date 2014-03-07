@@ -233,7 +233,7 @@ static inline void lerp_attri ( int *type, int *offset, int n_comp,
 }
 
 /* with perspective correction */
-static inline void lerp_attri_c ( int *type, int n_comp, int *offset,
+static inline void lerp_attri_c ( const int *type, const int n_comp, const int *offset,
                                   void *s, float s_invw, void *e, float e_invw,
                                   float t, void *r, float r_invw )
 {
