@@ -8,11 +8,11 @@ struct index_buffer;
 
 
 enum VERTEX_ELM_FORMAT {
-	VERTEX_ELM_INT8,
-	VERTEX_ELM_INT16,
-	VERTEX_ELM_INT32,
-	VERTEX_ELM_FLOAT,
-	VERTEX_ELM_DOUBLE
+        VERTEX_ELM_INT8,
+        VERTEX_ELM_INT16,
+        VERTEX_ELM_INT32,
+        VERTEX_ELM_FLOAT,
+        VERTEX_ELM_DOUBLE
 };
 
 /*
@@ -20,33 +20,33 @@ enum VERTEX_ELM_FORMAT {
  */
 #define MAX_VERT_ATTRI		10
 struct vertattri {
-	enum VERTEX_ELM_FORMAT format[MAX_VERT_ATTRI];
-	int n_elm[MAX_VERT_ATTRI];
-	int offset[MAX_VERT_ATTRI];
-	int n_attri;
-	int vertsize;
+        enum VERTEX_ELM_FORMAT format[MAX_VERT_ATTRI];
+        int n_elm[MAX_VERT_ATTRI];
+        int offset[MAX_VERT_ATTRI];
+        int n_attri;
+        int vertsize;
 };
 
 struct vertex_buffer {
-	void *buffer;
-	untyped *curr;
-	struct vertattri attri;
-	bool is_static;
-	int elm_cnt;
+        void *buffer;
+        untyped *curr;
+        struct vertattri attri;
+        bool is_static;
+        int elm_cnt;
 };
 
 enum INDEX_ELEMENT_FORMAT {
-	INDEX_ELEMENT_INT8,
-	INDEX_ELEMENT_INT16,
-	INDEX_ELEMENT_INT32,
+        INDEX_ELEMENT_INT8,
+        INDEX_ELEMENT_INT16,
+        INDEX_ELEMENT_INT32,
 };
 
 struct index_buffer {
-	void *buffer;
-	untyped *curr;
-	enum INDEX_ELEMENT_FORMAT format;
-	bool is_static;
-	int elm_cnt;
+        void *buffer;
+        untyped *curr;
+        enum INDEX_ELEMENT_FORMAT format;
+        bool is_static;
+        int elm_cnt;
 };
 
 /*

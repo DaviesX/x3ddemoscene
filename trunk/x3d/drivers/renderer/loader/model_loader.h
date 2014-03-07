@@ -14,23 +14,23 @@
 
 
 enum RESOURCE_ELM_IDR {
-	/* Scene elements */
-	RES_IDR_TRIANGLE_MESH,
-	RES_IDR_TRIANGLE,
-	RES_IDR_SPHERE,
-	RES_IDR_CONE,
-	RES_IDR_CYLINDER,
-	RES_IDR_DISK,
-	RES_IDR_PARABOLOID,
-	RES_IDR_HYPERBOLOID,
-	RES_IDR_PRIMITIVE,
+        /* Scene elements */
+        RES_IDR_TRIANGLE_MESH,
+        RES_IDR_TRIANGLE,
+        RES_IDR_SPHERE,
+        RES_IDR_CONE,
+        RES_IDR_CYLINDER,
+        RES_IDR_DISK,
+        RES_IDR_PARABOLOID,
+        RES_IDR_HYPERBOLOID,
+        RES_IDR_PRIMITIVE,
 
-	RES_IDR_VERTEX,
-	RES_IDR_NORMAL,
-	RES_IDR_TANGENT,
-	RES_IDR_UV,
+        RES_IDR_VERTEX,
+        RES_IDR_NORMAL,
+        RES_IDR_TANGENT,
+        RES_IDR_UV,
 
-	RES_IDR_TEXTURE
+        RES_IDR_TEXTURE
 };
 
 /* Utility macro functions */
@@ -57,8 +57,8 @@ enum RESOURCE_ELM_IDR {
 
 /* Fixed length header information for any lists */
 struct resource_header {
-	enum RESOURCE_ELM_IDR elm_idr;
-	int num_elm;
+        enum RESOURCE_ELM_IDR elm_idr;
+        int num_elm;
 };
 
 /*

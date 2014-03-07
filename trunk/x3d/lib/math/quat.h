@@ -6,17 +6,17 @@
  */
 
 struct quat {
-	union {
-		float m[4];
-		struct {
-			float  qr;			/* the real part */
-			struct vector3d qi;		/* the imaginary part i*x + j*y + k*z */
-		};
-		struct {
-			float w;
-			float x, y, z;
-		};
-	};
+        union {
+                float m[4];
+                struct {
+                        float  qr;			/* the real part */
+                        struct vector3d qi;		/* the imaginary part i*x + j*y + k*z */
+                };
+                struct {
+                        float w;
+                        float x, y, z;
+                };
+        };
 };
 
 

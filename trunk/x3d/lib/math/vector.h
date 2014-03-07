@@ -17,81 +17,81 @@
 
 /* Points and vectors under cartesian coordinate or homogenuous coordinate */
 struct vector2d {
-	union {
-		float v[2];
-		float p[2];
+        union {
+                float v[2];
+                float p[2];
 
-		struct {
-			float x;	// coordinate x
-			float y;	// coordinate y
-		};
-	};
+                struct {
+                        float x;	// coordinate x
+                        float y;	// coordinate y
+                };
+        };
 };
 
 struct ivector2d {
-	union {
-		int v[2];
-		int p[2];
+        union {
+                int v[2];
+                int p[2];
 
-		struct {
-			int x;	// coordinate x
-			int y;	// coordinate y
-		};
-	};
+                struct {
+                        int x;	// coordinate x
+                        int y;	// coordinate y
+                };
+        };
 };
 
 struct vector3d {
-	union {
-		float v[3];
-		float p[3];
+        union {
+                float v[3];
+                float p[3];
 
-		struct {
-			float x;	// coordinate x
-			float y;	// coordinate y
-			float z;	// coordinate z
-		};
-	};
+                struct {
+                        float x;	// coordinate x
+                        float y;	// coordinate y
+                        float z;	// coordinate z
+                };
+        };
 };
 
 struct ivector3d {
-	union {
-		int v[3];
-		int p[3];
+        union {
+                int v[3];
+                int p[3];
 
-		struct {
-			int x;	// coordinate x
-			int y;	// coordinate y
-			int z;	// coordinate z
-		};
-	};
+                struct {
+                        int x;	// coordinate x
+                        int y;	// coordinate y
+                        int z;	// coordinate z
+                };
+        };
 };
 
 struct vector4d {
-	union {
-		float v[4];
-		float p[4];
+        union {
+                float v[4];
+                float p[4];
 
-		struct {
-			float x;	// coordinate x
-			float y;	// coordinate y
-			float z;	// coordinate z
-			float w;	// homogeneous coordinate
-		};
-	};
+                struct {
+                        float x;	// coordinate x
+                        float y;	// coordinate y
+                        float z;	// coordinate z
+                        float w;	// homogeneous coordinate
+                };
+        };
 };
 
 struct ivector4d {
-	union {
-		int v[4];
-		int p[4];
+        union {
+                int v[4];
+                int p[4];
 
-		struct {
-			int x;	// coordinate x
-			int y;	// coordinate y
-			int z;	// coordinate z
-			int w;	/* !homogeneous coordinate still in float point */
-		};
-	};
+                struct {
+                        int x;	// coordinate x
+                        int y;	// coordinate y
+                        int z;	// coordinate z
+                        int w;	/* !homogeneous coordinate still in float point */
+                };
+        };
 };
 
 #define point2d 	vector2d
@@ -178,11 +178,11 @@ void reflect_vector2d ( struct vector2d *normal, struct vector2d *incident, stru
 void reflect_vector3d ( struct vector3d *normal, struct vector3d *incident, struct vector3d *vec_refl );
 void reflect_vector4d ( struct vector4d *normal, struct vector4d *incident, struct vector4d *vec_refl );
 void reflect_cos_vector2d ( float cos, struct vector2d *normal,
-			    struct vector2d *incident, struct vector2d *vec_refl );
+                            struct vector2d *incident, struct vector2d *vec_refl );
 void reflect_cos_vector3d ( float cos, struct vector3d *normal,
-			    struct vector3d *incident, struct vector3d * vec_refl );
+                            struct vector3d *incident, struct vector3d * vec_refl );
 void reflect_cos_vector4d ( float cos, struct vector4d *normal,
-			    struct vector4d *incident, struct vector4d *vec_refl );
+                            struct vector4d *incident, struct vector4d *vec_refl );
 
 
 /*

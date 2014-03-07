@@ -70,13 +70,13 @@
 
 // Index List, which uses subscript pointing to the data list
 typedef struct ALG_INDEX_LIST_TYP {
-	int index;
+        int index;
 } ALG_INDEX_LIST, *ALG_INDEX_LIST_PTR;
 
 // Index list that has a reference which points to its original place
 typedef struct ALG_BIINDEX_LIST_TYP {
-	int index;
-	int origin;
+        int index;
+        int origin;
 } ALG_BIINDEX_LIST, *ALG_BIINDEX_LIST_PTR;
 
 /* Sometimes we need to put the pointers of
@@ -86,7 +86,7 @@ typedef struct ALG_BIINDEX_LIST_TYP {
  * with a new copy of array, while alg_double_pointer_list does not
  * both restoring process are O(n) */
 struct alg_pointer_list {
-	void *ptr;
+        void *ptr;
 };
 
 struct alg_double_pointer_list {
@@ -94,19 +94,19 @@ struct alg_double_pointer_list {
 
 /* Defines a small stack for cdecl-like pushes */
 struct alg_cdecl_stack {
-	untyped tmp_stack[256];
-	untyped *stack_ptr;
+        untyped tmp_stack[256];
+        untyped *stack_ptr;
 };
 
 /* A small parameters lookup table */
 struct alg_named_params {
-	int pop_state;
-	char **str;
-	int *ref;
-	int n_ref;
-	int size;
-	untyped *buff;
-	int curr_pos;
+        int pop_state;
+        char **str;
+        int *ref;
+        int n_ref;
+        int size;
+        untyped *buff;
+        int curr_pos;
 };
 
 #define init_named_params( _p ) \
@@ -239,40 +239,40 @@ do { \
 
 #pragma pack(4)
 struct container_operations {
-	void (*init_callback) ( void *elm );
-	void (*destroy_callback) ( void *elm );
+        void (*init_callback) ( void *elm );
+        void (*destroy_callback) ( void *elm );
 };
 
 /* Provides a list container and
  * some common O(n) operations below */
 struct alg_list {
-	struct container_operations ops;
-	untyped *list;
-	int elm_size;
-	int num_elm;
+        struct container_operations ops;
+        untyped *list;
+        int elm_size;
+        int num_elm;
 };
 
 /* Provides a linked list hash table container
  * Some common O(1) operations are defined below */
 struct alg_hash_link_list {
-	int *hash_table;	/* Table header and the follow data linked list */
-	int header_len;
-	int link_list_len;
-	int shift_bits;
-	int size_bits;
+        int *hash_table;	/* Table header and the follow data linked list */
+        int header_len;
+        int link_list_len;
+        int shift_bits;
+        int size_bits;
 };
 
 struct alg_hash_table {
-	int *hash_table;
-	int len;
+        int *hash_table;
+        int len;
 };
 
 /* linked list */
 struct alg_llist {
-	int n_elm;
-	int *link;
-	int ilast;
-	int icurr;
+        int n_elm;
+        int *link;
+        int ilast;
+        int icurr;
 };
 
 /* Provides a balance tree container and
@@ -308,8 +308,8 @@ pseudo_def ( SortArrayQuick( _list, _length, _TYPE, _info, _CompareFunction ) )
 // Partition an array list in-place according to the given mid-value
 pseudo_def ( PartitionArrayMidValue( _list, _length, _TYPE, _midValue, _CompareFunction, _midIndex ) )
 pseudo_def ( void partition_alg ( void *array, int length, void *info,
-				  int (*compare) ( void *current, void *info ),
-				  int *imiddle ); )
+                                  int (*compare) ( void *current, void *info ),
+                                  int *imiddle ); )
 
 // Partition an array list in-place without a given mid-value
 pseudo_def ( PartitionArray( _list, _length, _TYPE, _info, _CompareFunction, _midIndex ) )
@@ -317,7 +317,7 @@ pseudo_def ( PartitionArray( _list, _length, _TYPE, _info, _CompareFunction, _mi
 // Find the nth element in the array list
 pseudo_def ( FindNthElementArray( _list, _length, _nthPos, _TYPE, _info, _CompareFunction ) )
 pseudo_def ( split_i_alg ( void *array, int length, int i, void *info,
-			   int (*compare) ( void *elm0, void *elm1, void *info ) ) )
+                           int (*compare) ( void *elm0, void *elm1, void *info ) ) )
 
 // Create a indirect index list for different list-series algorithm
 pseudo_def ( CreateIndexList( _indexList, _length ) )
@@ -395,8 +395,8 @@ char *UIntToStrTens ( unsigned int n, char *str, int len );
 char *UIntToStrHex ( unsigned int n, char *str, int len );
 
 void set_container_operations ( void *container,
-				void (*init_callback) ( void *elm ),
-				void (*destroy_callback) ( void *elm ) );
+                                void (*init_callback) ( void *elm ),
+                                void (*destroy_callback) ( void *elm ) );
 
 void create_alg_list ( struct alg_list *list, int elm_size, int init_count );
 void free_alg_list ( struct alg_list *list );
@@ -404,9 +404,9 @@ void add_element_alg_list ( void *elm, struct alg_list *list );
 void expand_alg_list ( int count, struct alg_list *list );
 void flush_alg_list ( struct alg_list * list );
 pseudo_def ( void find_elm_alg_list ( struct alg_list *list, void *info, void **elm_data,
-				      uint8_t (*compare_func) ( void *info, void *elm ) ); )
+                                      uint8_t (*compare_func) ( void *info, void *elm ) ); )
 pseudo_def ( void remove_elm_alg_list ( struct alg_list *list, void *info,
-					uint8_t (*compare_func) ( void *info, void *elm ) ); )
+                                        uint8_t (*compare_func) ( void *info, void *elm ) ); )
 pseudo_def ( int alg_list_len ( struct alg_list *list ); )
 void copy_alg_list ( struct alg_list *list0, struct alg_list *list1 );
 void swap_alg_list ( struct alg_list *list0, struct alg_list *list1 );
@@ -419,9 +419,9 @@ void create_alg_llist ( struct alg_llist *llist, int init_count );
 void free_alg_llist ( struct alg_llist *llist );
 int alg_llist_add ( struct alg_llist *llist );
 pseudo_def ( void alg_llist_find ( struct alg_llist *llist, void *info,
-				   bool (*compare_func) ( void *info, void *elm ) ); )
+                                   bool (*compare_func) ( void *info, void *elm ) ); )
 pseudo_def ( void alg_llist_remove ( struct alg_llist *llist, void *info,
-				     bool (*compare_func) ( void *info, void *elm ) ); )
+                                     bool (*compare_func) ( void *info, void *elm ) ); )
 void alg_llist_flush ( struct alg_llist *list );
 
 #include <algorithm.inc>

@@ -3,8 +3,8 @@
 
 
 struct sym_entry {
-	int sym_pos;
-	int token;
+        int sym_pos;
+        int token;
 };
 
 void init_keyword_symbol ( struct sym_entry *sym_tbl );

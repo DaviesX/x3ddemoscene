@@ -7,15 +7,15 @@
 
 
 enum EDIT_MODE {
-	EDIT_RUN_EDITOR,
-	EDIT_RUN_DEMO
+        EDIT_RUN_EDITOR,
+        EDIT_RUN_DEMO
 };
 
 enum PLATFORM_HANDLE {
-	PLAT_HANDLE_NULL,
-	PLAT_HANDLE_GTK,
-	PLAT_HANDLE_WIN32,
-	PLAT_HANDLE_QT
+        PLAT_HANDLE_NULL,
+        PLAT_HANDLE_GTK,
+        PLAT_HANDLE_WIN32,
+        PLAT_HANDLE_QT
 };
 
 
@@ -23,19 +23,19 @@ struct alg_named_params;
 struct editor;
 
 struct info_bridge {
-	struct alg_named_params params;
+        struct alg_named_params params;
 };
 
 struct render_region {
-	enum PLATFORM_HANDLE type;
-	void *handle;
-	struct irectangle2d rect;
-	renderer_handle_t rend_bind;
+        enum PLATFORM_HANDLE type;
+        void *handle;
+        struct irectangle2d rect;
+        renderer_handle_t rend_bind;
 };
 
 struct edit_ops {
-	bool (*init_editor) ( int *argc, char ***argv, enum EDIT_MODE mode );
-	void (*editor_main_loop) ( void );
+        bool (*init_editor) ( int *argc, char ***argv, enum EDIT_MODE mode );
+        void (*editor_main_loop) ( void );
 };
 
 /*

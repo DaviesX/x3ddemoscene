@@ -18,10 +18,10 @@
 /* it's a tree node */
 #pragma pack(4)
 struct bvh_tree {
-	struct box3d bound;	/* A union bound of all sub-primitive */
-	uint32_t start_prim;	/* Starting position */
-	uint8_t axis;		/* Which axis is choosen to subdivide */
-	uint8_t num_prim;	/* Number of primitives are under the current node */
+        struct box3d bound;	/* A union bound of all sub-primitive */
+        uint32_t start_prim;	/* Starting position */
+        uint8_t axis;		/* Which axis is choosen to subdivide */
+        uint8_t num_prim;	/* Number of primitives are under the current node */
 };
 #pragma pack()
 
@@ -31,10 +31,10 @@ struct bvh_tree {
  * objects are divide to 2 child branch for each node, currently
  */
 struct bvh_subdivide {
-	struct alg_list *prim_list;
-	struct bvh_tree *bvh_tree;	/* The actual tree structure, unlike a common tree,
+        struct alg_list *prim_list;
+        struct bvh_tree *bvh_tree;	/* The actual tree structure, unlike a common tree,
 	                                   the primitives inside is linearly placed */
-	int num_nodes;
+        int num_nodes;
 };
 
 

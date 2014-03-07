@@ -11,11 +11,11 @@
 #define stdshape	triangle_mesh_shape
 
 enum PRIMPART_IDR {
-	PRIMITIVE_PART_NULL,
-	PRIMITIVE_PART_GRID,
-	PRIMITIVE_PART_BVH,
-	PRIMITIVE_PART_KD,
-	PRIMITIVE_PART_OCT
+        PRIMITIVE_PART_NULL,
+        PRIMITIVE_PART_GRID,
+        PRIMITIVE_PART_BVH,
+        PRIMITIVE_PART_KD,
+        PRIMITIVE_PART_OCT
 };
 
 struct frustum3d;
@@ -30,38 +30,38 @@ struct prim_part;
  */
 /* primitive partition */
 struct prim_part {
-	enum PRIMPART_IDR idr;
-	struct alg_list *prim;
-	void *parter;
+        enum PRIMPART_IDR idr;
+        struct alg_list *prim;
+        void *parter;
 };
 
 struct primpart_iterator {
-	uint32_t pos;
+        uint32_t pos;
 };
 
 /* shape */
 enum SHAPE_IDR {
-	SHAPE_IDR_SPHERE,
-	SHAPE_IDR_CONE,
-	SHAPE_IDR_CYLINDER,
-	SHAPE_IDR_DISK,
-	SHAPE_IDR_PARABOLOID,
-	SHAPE_IDR_HYPERBOLOID,
-	SHAPE_IDR_NURB,
-	SHAPE_IDR_TRIANGLEMESH
+        SHAPE_IDR_SPHERE,
+        SHAPE_IDR_CONE,
+        SHAPE_IDR_CYLINDER,
+        SHAPE_IDR_DISK,
+        SHAPE_IDR_PARABOLOID,
+        SHAPE_IDR_HYPERBOLOID,
+        SHAPE_IDR_NURB,
+        SHAPE_IDR_TRIANGLEMESH
 };
 
 struct shape {
-	enum SHAPE_IDR idr;
-	struct prim_part parter;
-	void *shape;
+        enum SHAPE_IDR idr;
+        struct prim_part parter;
+        void *shape;
 };
 
 /* geometry */
 struct geometry {
-	res_handle_t shape;	/* stdshape */
-	res_handle_t mat;	/* material */
-	struct matrix4x4 trans;
+        res_handle_t shape;	/* stdshape */
+        res_handle_t mat;	/* material */
+        struct matrix4x4 trans;
 };
 
 
@@ -73,16 +73,16 @@ void free_shape ( struct shape *shape );
 struct stdshape *shape_to_stdshape ( struct shape *shape );
 void shape_get_primitives ( struct shape *shape, struct alg_list *prim );
 void shape_get_primitives_frustum ( struct shape *shape, struct frustum3d *f,
-				    struct alg_list *prim );
+                                    struct alg_list *prim );
 void shape_get_primitives_box ( struct shape *shape, struct box3d *b,
-				struct alg_list *prim );
+                                struct alg_list *prim );
 void primitive_get_bound ( struct primitive *prim, struct box3d *bound );
 
 /*
  * geometry's declaration
  */
 void create_geometry ( res_handle_t shape, res_handle_t mater,
-		       res_handle_t shader, struct geometry *geo );
+                       res_handle_t shader, struct geometry *geo );
 void free_geometry ( struct geometry *geo );
 void geometry_get_shape ( struct geometry *geo, struct shape *shape );
 void geometry_set_transform ( struct matrix4x4 *trans, struct geometry *geo );
@@ -91,13 +91,13 @@ void geometry_set_transform ( struct matrix4x4 *trans, struct geometry *geo );
  * primitive partition's declaration
  */
 void build_primitive_partition ( struct alg_list *prim, enum PRIMPART_IDR idr, int extra_params,
-				 struct prim_part *pp );
+                                 struct prim_part *pp );
 void free_primitive_partition ( struct prim_part *pp );
 
 bool prim_part_null_first ( struct prim_part *pp, struct primpart_iterator *iter,
-			    struct primitive *prim );
+                            struct primitive *prim );
 bool prim_part_null_next ( bool positivity, struct primpart_iterator *iter,
-			   struct primitive *prim );
+                           struct primitive *prim );
 
 /* #include "cone_shape.h"
 #include "cylinder_shape.h"

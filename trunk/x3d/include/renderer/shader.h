@@ -5,14 +5,14 @@
 #include <x3d/common.h>
 
 enum SHADER_STAGE {
-	VERTEX_SHADER,
-	FRAGMENT_SHADER,
-	COMPUTE_SHADER
+        VERTEX_SHADER,
+        FRAGMENT_SHADER,
+        COMPUTE_SHADER
 };
 
 enum SHADER_SPEC {
-	SHADER_SPEC_BUILTIN,
-	SHADER_SPEC_OPENGL
+        SHADER_SPEC_BUILTIN,
+        SHADER_SPEC_OPENGL
 };
 
 struct shader_func;
@@ -22,69 +22,69 @@ typedef void (*f_Shader_Func) ( void );
 #define SHADER_MAX_UNI		20
 
 enum SHADER_VAR_TYPE {
-	SHADER_VAR_POSITION,
-	SHADER_VAR_INSTANCEID,
-	SHADER_VAR_VERTEXID,
-	SHADER_VAR_FRAGCOORD,
-	SHADER_VAR_NORMAL,
-	SHADER_VAR_TANGENT,
-	SHADER_VAR_BINORMAL,
-	SHADER_VAR_MODELVIEW
+        SHADER_VAR_POSITION,
+        SHADER_VAR_INSTANCEID,
+        SHADER_VAR_VERTEXID,
+        SHADER_VAR_FRAGCOORD,
+        SHADER_VAR_NORMAL,
+        SHADER_VAR_TANGENT,
+        SHADER_VAR_BINORMAL,
+        SHADER_VAR_MODELVIEW
 };
 
 enum SHADER_UNIFORM_TYPE {
-	SHADER_UNI_WORLD,
-	SHADER_UNI_MODELVIEW,
-	SHADER_UNI_DIFFUSEMAP,
-	SHADER_UNI_SPECULARMAP,
-	SHADER_UNI_NORMALMAP,
-	SHADER_UNI_OCCLUSIONMAP,
-	SHADER_UNI_ROUGHNESSMAP,
-	SHADER_UNI_WORLD_ARRAY,
-	SHADER_UNI_MODELVIEW_ARRAY
+        SHADER_UNI_WORLD,
+        SHADER_UNI_MODELVIEW,
+        SHADER_UNI_DIFFUSEMAP,
+        SHADER_UNI_SPECULARMAP,
+        SHADER_UNI_NORMALMAP,
+        SHADER_UNI_OCCLUSIONMAP,
+        SHADER_UNI_ROUGHNESSMAP,
+        SHADER_UNI_WORLD_ARRAY,
+        SHADER_UNI_MODELVIEW_ARRAY
 };
 
 /*
  * structures
  */
 struct uniform_buffer {
-	bool finalized;
-	int id;
-	int loc[SHADER_MAX_UNI];
-	int size[SHADER_MAX_UNI];
-	void *buf_addr[SHADER_MAX_UNI];
+        bool finalized;
+        int id;
+        int loc[SHADER_MAX_UNI];
+        int size[SHADER_MAX_UNI];
+        void *buf_addr[SHADER_MAX_UNI];
 };
 
 struct uni_buffer_group {
-	int curr_loc;
-	struct uniform_buffer *uni_bufs;
-	int n_buffer;
+        int curr_loc;
+        struct uniform_buffer *uni_bufs;
+        int n_buffer;
 };
 
 struct shader {
-	f_Shader_Func func;
-	int spec;
-	int id;
-	bool is_dynamic;
-	bool is_finalized;
-	int stage;
+        f_Shader_Func func;
+        int spec;
+        int id;
+        bool is_dynamic;
+        bool is_finalized;
+        int stage;
 
-	struct shader_func **src_lib;
+        struct shader_func **src_lib;
 
-	int in_var_loc[SHADER_MAX_VAR];
-	void **in_var[SHADER_MAX_VAR];
-	int n_in;
+        int in_var_loc[SHADER_MAX_VAR];
+        void **in_var[SHADER_MAX_VAR];
+        int n_in;
 
-	int out_var_loc[SHADER_MAX_VAR];
-	void **out_var[SHADER_MAX_VAR];
-	int n_out;
+        int out_var_loc[SHADER_MAX_VAR];
+        void **out_var[SHADER_MAX_VAR];
+        int n_out;
 
-	struct uniform_buffer **uni_buf;
-	int uniform_loc[SHADER_MAX_UNI];
-	void *uni_addr[SHADER_MAX_UNI];
-	int n_uniform;
+        struct uniform_buffer **uni_buf;
+        int uniform_loc[SHADER_MAX_UNI];
+        void *uni_addr[SHADER_MAX_UNI];
+        int n_uniform;
 
-	char *body_code;
+        char *body_code;
 };
 
 

@@ -3,51 +3,51 @@
 
 
 enum TOKEN_IDR {
-	TOK_IDR_NULL,
-	TOK_IDR_NUMBER,
-	TOK_IDR_IDENTIFIER,
-	TOK_IDR_END_STAT,
-	TOK_IDR_BEGIN_BLOCK,
-	TOK_IDR_END_BLOCK,
-	TOK_IDR_BEGIN_PARENT,
-	TOK_IDR_END_PARENT,
-	TOK_IDR_ADD,
-	TOK_IDR_SUB,
-	TOK_IDR_MUL,
-	TOK_IDR_DIV,
-	TOK_IDR_MOD,
-	TOK_IDR_ASSIGN,
-	TOK_IDR_BIT_OR,
-	TOK_IDR_BIT_AND,
-	TOK_IDR_BIT_XOR,
-	TOK_IDR_BIT_INV,
-	TOK_IDR_BIT_LSH,
-	TOK_IDR_BIT_RSH,
-	TOK_IDR_LOG_OR,
-	TOK_IDR_LOG_AND,
-	TOK_IDR_LOG_INV,
-	TOK_IDR_LOG_EQL,
-	TOK_IDR_LOG_LEQ,
-	TOK_IDR_LOG_GEQ,
-	TOK_IDR_LOG_NEQ,
+        TOK_IDR_NULL,
+        TOK_IDR_NUMBER,
+        TOK_IDR_IDENTIFIER,
+        TOK_IDR_END_STAT,
+        TOK_IDR_BEGIN_BLOCK,
+        TOK_IDR_END_BLOCK,
+        TOK_IDR_BEGIN_PARENT,
+        TOK_IDR_END_PARENT,
+        TOK_IDR_ADD,
+        TOK_IDR_SUB,
+        TOK_IDR_MUL,
+        TOK_IDR_DIV,
+        TOK_IDR_MOD,
+        TOK_IDR_ASSIGN,
+        TOK_IDR_BIT_OR,
+        TOK_IDR_BIT_AND,
+        TOK_IDR_BIT_XOR,
+        TOK_IDR_BIT_INV,
+        TOK_IDR_BIT_LSH,
+        TOK_IDR_BIT_RSH,
+        TOK_IDR_LOG_OR,
+        TOK_IDR_LOG_AND,
+        TOK_IDR_LOG_INV,
+        TOK_IDR_LOG_EQL,
+        TOK_IDR_LOG_LEQ,
+        TOK_IDR_LOG_GEQ,
+        TOK_IDR_LOG_NEQ,
 };
 
 struct token_info {
-	enum TOKEN_IDR token;
-	int tok_attr;
+        enum TOKEN_IDR token;
+        int tok_attr;
 };
 
 struct op_info {
-	int prio;
-	int asso;
+        int prio;
+        int asso;
 };
 
 struct code_lexer {
-	int iline;
-	struct token_info tok_info;
-	char *tok_buf;
-	char *code;
-	char *ptr;
+        int iline;
+        struct token_info tok_info;
+        char *tok_buf;
+        char *code;
+        char *ptr;
 };
 
 struct sym_entry;

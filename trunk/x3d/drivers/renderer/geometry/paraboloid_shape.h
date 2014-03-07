@@ -8,10 +8,10 @@
  */
 
 struct paraboloid_shape {
-	struct shape_common prop;
-	struct paraboloid3d pa;
-	float phi1;
-	struct shape_preserve pres;
+        struct shape_common prop;
+        struct paraboloid3d pa;
+        float phi1;
+        struct shape_preserve pres;
 };
 
 

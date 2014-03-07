@@ -11,10 +11,10 @@
  * Structures
  */
 struct cylinder_shape {
-	struct shape_common common;
-	struct cylinder3d *cy;
-	float phi1;
-	struct shape_preserve pres;
+        struct shape_common common;
+        struct cylinder3d *cy;
+        float phi1;
+        struct shape_preserve pres;
 };
 
 

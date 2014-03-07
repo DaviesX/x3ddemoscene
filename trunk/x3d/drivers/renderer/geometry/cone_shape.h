@@ -9,10 +9,10 @@
  */
 
 struct cone_shape {
-	struct shape_common common;
-	struct cone3d c;
-	float phi1;
-	struct shape_preserve *pres;
+        struct shape_common common;
+        struct cone3d c;
+        float phi1;
+        struct shape_preserve *pres;
 };
 
 

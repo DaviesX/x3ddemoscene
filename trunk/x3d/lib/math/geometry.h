@@ -5,10 +5,10 @@
 
 /* Intersection status */
 enum INTERSECT_STATE {
-	NO_INTERSECT,
-	IN_SEGMENT,
-	OUT_SEGMENT,
-	INTERSECT_EVERYWHERE
+        NO_INTERSECT,
+        IN_SEGMENT,
+        OUT_SEGMENT,
+        INTERSECT_EVERYWHERE
 };
 
 /*
@@ -17,46 +17,46 @@ enum INTERSECT_STATE {
 
 /* Pt = P0 + Vt, t∈[0, |P1 - P0|]∩[min, max], |v| = 1 */
 struct line2d {
-	struct point2d p0;			/* p0 : start point, p1 : end point */
-	struct point2d p1;
-	struct vector2d v;			/* direction vector of the line segment */
-	float t0, t1;
+        struct point2d p0;			/* p0 : start point, p1 : end point */
+        struct point2d p1;
+        struct vector2d v;			/* direction vector of the line segment */
+        float t0, t1;
 };
 
 struct line3d {
-	struct point3d p0;
-	struct point3d p1;
-	struct vector3d v;
-	float t0, t1;
+        struct point3d p0;
+        struct point3d p1;
+        struct vector3d v;
+        float t0, t1;
 };
 
 struct rectangle2d {
-	union {
-		float v[4];
-		struct point2d p[2];
-		struct {
-			float x0, y0;
-			float x1, y1;
-		};
-	};
+        union {
+                float v[4];
+                struct point2d p[2];
+                struct {
+                        float x0, y0;
+                        float x1, y1;
+                };
+        };
 };
 
 struct irectangle2d {
-	union {
-		int v[4];
-		struct ipoint2d p[2];
-		struct {
-			int x0, y0;
-			int x1, y1;
-		};
-	};
+        union {
+                int v[4];
+                struct ipoint2d p[2];
+                struct {
+                        int x0, y0;
+                        int x1, y1;
+                };
+        };
 };
 
 /* n (nx, ny, nz), p0 (x0, y0, z0), p (x, y, z)
  * nx*(x - x0) + ny*(y - y0) + nz*(z - z0) = 0 */
 struct plane3d {
-	struct point3d p0;
-	struct vector3d n;
+        struct point3d p0;
+        struct vector3d n;
 };
 
 
@@ -65,89 +65,89 @@ struct plane3d {
  * y = sin(theta)sin(phi)
  * z = cos(theta) */
 struct sphere3d {
-	float r;			/* radius */
-	float z0, z1;		/* horizontal clip */
+        float r;			/* radius */
+        float z0, z1;		/* horizontal clip */
 };
 
 /* f(x, y) = x^2 + x^y - r^2 = 0 */
 struct cylinder3d {
-	float r;
-	float z0, z1;
+        float r;
+        float z0, z1;
 };
 
 /* f(x, y, z) = h */
 struct disk3d {
-	float ir;		/* inner radius */
-	float r;		/* outer radius */
-	float h;		/* height */
+        float ir;		/* inner radius */
+        float r;		/* outer radius */
+        float h;		/* height */
 };
 
 /* f(x, y, z) = (hx)^2/r^2 + (hy)^2/r^2 - (z - h) = 0 */
 struct cone3d {
-	float a;
-	float r;
-	float h;
+        float a;
+        float r;
+        float h;
 };
 
 /* f(x, y, z) = (h1/r^2)*(x^2 + y^2) - z = 0 */
 struct paraboloid3d {
-	float a;
-	float r;
-	float h0;
-	float h1;
+        float a;
+        float r;
+        float h0;
+        float h1;
 };
 
 /* f(x, y, z) = x^2/a^2 + y^2/a^2 - z^2/c^2 = 1 */
 struct hyperboloid3d {
-	float r;
-	float a2, c2;		/* It's actually the reciprocal of a^2 and c^2 */
-	float z0, z1;
-	struct point3d p0;
-	struct point3d p1;
+        float r;
+        float a2, c2;		/* It's actually the reciprocal of a^2 and c^2 */
+        float z0, z1;
+        struct point3d p0;
+        struct point3d p1;
 };
 
 struct box3d {
-	struct point3d min;
-	struct point3d max;
+        struct point3d min;
+        struct point3d max;
 };
 
 
 /* polar coordinate system
  * P(r, θ )*/
 struct poloar2d {
-	float r;
-	float the;
+        float r;
+        float the;
 };
 
 
 /* cylindrical coordinate system
  * P(r, θ , z) */
 struct cylindrical3d {
-	float r;
-	float the;
-	float z;
+        float r;
+        float the;
+        float z;
 };
 
 /* spherical coordinate system
  * P(r, θ, φ), θ∈[0,π], φ∈[0,2π] */
 struct spherical3d {
-	float r;
-	float the;
-	float phi;
+        float r;
+        float the;
+        float phi;
 };
 
 struct triangle3d {
-	struct point3d v[3];
+        struct point3d v[3];
 };
 
 struct triangle4d {
-	struct point4d v[3];
+        struct point4d v[3];
 };
 
 struct frustum3d {
-	float z0, z1;
-	float delx, dely;
-	float a;
+        float z0, z1;
+        float delx, dely;
+        float a;
 };
 
 
@@ -181,26 +181,26 @@ void build_disk3d ( float ir, float r, float h, struct disk3d *d );
 void build_cone3d ( float r, float h, struct cone3d *c );
 void build_paraboloid3d ( float r, float h0, float h1, struct paraboloid3d *pa );
 void build_hyperboloid3d ( struct point3d *p0, struct point3d *p1, float z0, float z1,
-			   struct hyperboloid3d *hy );
+                           struct hyperboloid3d *hy );
 
 void build_triangle3d ( struct point3d *p0, struct point3d *p1, struct point3d *p2, struct triangle3d *tri );
 void build_triangle4d ( struct point3d *p0, struct point3d *p1, struct point3d *p2, struct triangle4d *tri );
 void build_triangle4d_w ( struct point4d *p0, struct point4d *p1, struct point4d *p2, struct triangle4d *tri );
 
 int intersect_line_sphere3d ( struct line3d *l, struct sphere3d *sp,
-			      float *t, struct point3d *p, float *bias );
+                              float *t, struct point3d *p, float *bias );
 int intersect_line_cylinder3d ( struct line3d *l, struct cylinder3d *cy,
-				float *t, struct point3d *p, float *bias );
+                                float *t, struct point3d *p, float *bias );
 int intersect_line_disk3d ( struct line3d *l, struct disk3d *d,
-			    float *t, struct point3d *p, float *bias );
+                            float *t, struct point3d *p, float *bias );
 int intersect_line_cone3d ( struct line3d *l, struct cone3d *cn,
-			    float *t, struct point3d *p, float *bias );
+                            float *t, struct point3d *p, float *bias );
 int intersect_line_paraboloid3d ( struct line3d *l, struct paraboloid3d *pa,
-				  float *t, struct point3d *p, float *bias );
+                                  float *t, struct point3d *p, float *bias );
 int intersect_line_hyperboloid3d ( struct line3d *l, struct hyperboloid3d *hy,
-				   float *t, struct point3d *p, float *bias );
+                                   float *t, struct point3d *p, float *bias );
 int intersect_line_triangle3d ( struct line3d *l, struct triangle3d *tri,
-				float *t, struct point3d *p, float *bias );
+                                float *t, struct point3d *p, float *bias );
 int intersect_line_box3d ( struct line3d *l, struct box3d *b, float *t0, float *t1 );
 
 void build_box3d ( struct point3d *p0, struct point3d *p1, struct box3d *b );
@@ -233,11 +233,11 @@ void box_triangle3d ( struct triangle3d *tri, struct box3d *b );
 void spherical_to_vector3d_n ( struct spherical3d *s, struct vector3d *v );
 void spherical_to_vector3d ( struct spherical3d *s, struct vector3d *v );
 void spherical_to_vector3d_na ( struct spherical3d *s,
-				struct vector3d *u, struct vector3d *v, struct vector3d *n,
-				struct vector3d *v_out );
+                                struct vector3d *u, struct vector3d *v, struct vector3d *n,
+                                struct vector3d *v_out );
 void spherical_to_vector3d_a ( struct spherical3d *s,
-			       struct vector3d *u, struct vector3d *v, struct vector3d *n,
-			       struct vector3d *v_out );
+                               struct vector3d *u, struct vector3d *v, struct vector3d *n,
+                               struct vector3d *v_out );
 void vector_to_spherical3d_n ( struct vector3d *v, struct spherical3d *s );
 void vector_to_spherical3d ( struct vector3d *v, struct spherical3d *s );
 

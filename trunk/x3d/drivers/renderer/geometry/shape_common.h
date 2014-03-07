@@ -9,13 +9,13 @@
  */
 /* Shared data that stores in each shape implementation */
 struct shape_common {
-	struct matrix4x4 t_world;
-	struct matrix4x4 t_object;
-	struct box3d bound;
+        struct matrix4x4 t_world;
+        struct matrix4x4 t_object;
+        struct box3d bound;
 };
 
 struct shape_preserve {
-	int pres[4];
+        int pres[4];
 };
 
 
@@ -28,8 +28,8 @@ struct shape_preserve {
 #define get_obj_preserve( _pres, _TYPE, i )			((_TYPE *)_pres + i)
 
 struct object_operations {
-	void (*get_object_bound) ( void *obj, struct box3d *bound );
-	void (*get_object_world_bound) ( void *obj, struct box3d *bound );
+        void (*get_object_bound) ( void *obj, struct box3d *bound );
+        void (*get_object_world_bound) ( void *obj, struct box3d *bound );
 };
 
 #include "trimesh_shape.h"

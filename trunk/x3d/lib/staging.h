@@ -12,19 +12,19 @@ struct alg_list;
 
 /* Defines a structure for resource staging */
 struct stager {
-	int state;
-	struct alg_hash_link_list lookup;
-	struct alg_list entry;
-	int byte_used;
-	int num_entry;
+        int state;
+        struct alg_hash_link_list lookup;
+        struct alg_list entry;
+        int byte_used;
+        int num_entry;
 };
 
 typedef struct res_record res_record_t;
 
 enum RES_ERROR {
-	RES_ERR_INVALID,
-	RES_ERR_READ_BLOCKED,
-	RES_ERR_NORMAL
+        RES_ERR_INVALID,
+        RES_ERR_READ_BLOCKED,
+        RES_ERR_NORMAL
 };
 
 /*

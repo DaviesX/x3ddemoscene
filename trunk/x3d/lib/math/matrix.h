@@ -9,94 +9,94 @@
  */
 
 struct matrix2x2 {
-	union {
-		float m[2][2];	// array type;
+        union {
+                float m[2][2];	// array type;
 
-		struct {
-			float m00, m01;	// variable type
-			float m10, m11;
-		};
-	};
+                struct {
+                        float m00, m01;	// variable type
+                        float m10, m11;
+                };
+        };
 };
 
 struct matrix3x3 {
-	union {
-		float m[3][3];	// array type
+        union {
+                float m[3][3];	// array type
 
-		struct {
-			float m00, m01, m02;	// variable type
-			float m10, m11, m12;
-			float m20, m21, m22;
-		};
-	};
+                struct {
+                        float m00, m01, m02;	// variable type
+                        float m10, m11, m12;
+                        float m20, m21, m22;
+                };
+        };
 };
 
 struct matrix4x4 {
-	union {
-		float m[4][4];	// array type
+        union {
+                float m[4][4];	// array type
 
-		struct {
-			float m00, m01, m02, m03;	// variable type
-			float m10, m11, m12, m13;
-			float m20, m21, m22, m23;
-			float m30, m31, m32, m33;
-		};
-	};
+                struct {
+                        float m00, m01, m02, m03;	// variable type
+                        float m10, m11, m12, m13;
+                        float m20, m21, m22, m23;
+                        float m30, m31, m32, m33;
+                };
+        };
 };
 
 struct matrix1x2 {
-	union {
-		float m[2];	// array type
+        union {
+                float m[2];	// array type
 
-		struct {
-			float m00, m01;	// variable type
-		};
-	};
+                struct {
+                        float m00, m01;	// variable type
+                };
+        };
 };
 
 struct matrix1x3 {
-	union {
-		float m[3];	// array type
+        union {
+                float m[3];	// array type
 
-		struct {
-			float m00, m01, m02;	// variable type
-		};
-	};
+                struct {
+                        float m00, m01, m02;	// variable type
+                };
+        };
 };
 
 struct matrix1x4 {
-	union {
-		float m[4];	// array type
+        union {
+                float m[4];	// array type
 
-		struct {
-			float m00, m01, m02, m03;	// variable type
-		};
-	};
+                struct {
+                        float m00, m01, m02, m03;	// variable type
+                };
+        };
 };
 
 struct matrix4x3 {
-	union {
-		float m[4][3];	// array indexed type
+        union {
+                float m[4][3];	// array indexed type
 
-		struct {
-			float m00, m01, m02;	// variable type
-			float m10, m11, m12;
-			float m20, m21, m22;
-			float m30, m31, m32;
-		};
-	};
+                struct {
+                        float m00, m01, m02;	// variable type
+                        float m10, m11, m12;
+                        float m20, m21, m22;
+                        float m30, m31, m32;
+                };
+        };
 };
 
 struct matrix3x2 {
-	union {
-		float m[3][2]; // array indexed data storage
+        union {
+                float m[3][2]; // array indexed data storage
 
-		struct {
-			float m00, m01;	// variable type
-			float m10, m11;
-			float m20, m21;
-		};
-	};
+                struct {
+                        float m00, m01;	// variable type
+                        float m10, m11;
+                        float m20, m21;
+                };
+        };
 };
 
 
@@ -106,34 +106,34 @@ struct matrix3x2 {
  */
 // constants of identity matrix
 static const struct matrix4x4 IdentityMatrix4x4 = {
-	1, 0, 0, 0,
-	0, 1, 0, 0,
-	0, 0, 1, 0,
-	0, 0, 0, 1
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
 };
 
 static const struct matrix4x3 IdentityMatrix4x3 = {
-	1, 0, 0,
-	0, 1, 0,
-	0, 0, 1,
-	0, 0, 0
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1,
+        0, 0, 0
 };
 
 static const struct matrix3x3 IdentityMatrix3x3 = {
-	1, 0, 0,
-	0, 1, 0,
-	0, 0, 1
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1
 };
 
 static const struct matrix3x2 IdentityMatrix3x2 = {
-	1, 0,
-	0, 1,
-	0, 0
+        1, 0,
+        0, 1,
+        0, 0
 };
 
 static const struct matrix2x2 IdentityMatrix2x2 = {
-	1, 0,
-	0, 1
+        1, 0,
+        0, 1
 };
 
 
@@ -173,26 +173,26 @@ static const struct matrix2x2 IdentityMatrix2x2 = {
  */
 
 void set_matrix2x2 ( struct matrix2x2 *matrix,
-		     float m00, float m01,
-		     float m10, float m11 );
+                     float m00, float m01,
+                     float m10, float m11 );
 void set_matrix3x3 ( struct matrix3x3 *matrix,
-		     float m00, float m01, float m02,
-		     float m10, float m11, float m12,
-		     float m20, float m21, float m22 );
+                     float m00, float m01, float m02,
+                     float m10, float m11, float m12,
+                     float m20, float m21, float m22 );
 void set_matrix3x2 ( struct matrix3x2 *matrix,
-		     float m00, float m01,
-		     float m10, float m11,
-		     float m20, float m21 );
+                     float m00, float m01,
+                     float m10, float m11,
+                     float m20, float m21 );
 void set_matrix4x4 ( struct matrix4x4 * matrix,
-		     float m00, float m01, float m02, float m03,
-		     float m10, float m11, float m12, float m13,
-		     float m20, float m21, float m22, float m23,
-		     float m30, float m31, float m32, float m33 );
+                     float m00, float m01, float m02, float m03,
+                     float m10, float m11, float m12, float m13,
+                     float m20, float m21, float m22, float m23,
+                     float m30, float m31, float m32, float m33 );
 void set_matrix4x3 ( struct matrix4x3 * matrix,
-		     float m00, float m01, float m02,
-		     float m10, float m11, float m12,
-		     float m20, float m21, float m22,
-		     float m30, float m31, float m32 );
+                     float m00, float m01, float m02,
+                     float m10, float m11, float m12,
+                     float m20, float m21, float m22,
+                     float m30, float m31, float m32 );
 
 void transpose_matrix2x2 ( struct matrix2x2 *m_in, struct matrix2x2 *m_out );
 void transpose_matrix3x3 ( struct matrix3x3 *m_in, struct matrix3x3 *m_out );
@@ -239,7 +239,7 @@ void get_rotate_y_matrix4x4 ( float euler_y, struct matrix4x4 *m_out );
 void get_rotate_z_matrix4x4 ( float euler_z, struct matrix4x4 *m_out );
 void get_rotate_xyz_matrix4x4 ( float euler_x, float euler_y, float euler_z, struct matrix4x4 *m_out );
 void get_rotate_to_uvn_matrix4x4 ( struct vector3d *u, struct vector3d *v, struct vector3d *n,
-				   struct matrix4x4 *m_out );
+                                   struct matrix4x4 *m_out );
 void get_scale_matrix4x4 ( float x, float y, float z, struct matrix4x4 *m_out );
 
 /* Unary operations */

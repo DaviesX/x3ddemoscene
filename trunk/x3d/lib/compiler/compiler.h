@@ -9,9 +9,9 @@
 
 
 struct compiler {
-	struct string_pool *str;
-	struct code_parser parser;
-	struct sym_entry *sym_tbl;
+        struct string_pool *str;
+        struct code_parser parser;
+        struct sym_entry *sym_tbl;
 };
 
 void init_compiler ( struct compiler *c );

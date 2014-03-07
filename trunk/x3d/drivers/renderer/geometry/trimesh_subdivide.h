@@ -8,7 +8,7 @@
 
 // Tesselate triangle faces and store the tesselated one to a new mesh
 struct triangle_mesh_shape *LoopTesselateTriangleMesh ( struct triangle_mesh_shape *triangleMesh,
-		int numberSubdivision );
+                int numberSubdivision );
 
 
 #endif // X3DREFINEMENT_H_INCLUDED

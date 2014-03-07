@@ -3,9 +3,9 @@
 
 
 struct code_parser {
-	struct code_lexer lexer;
-	struct code_emitter em;
-	struct internal_data *data;
+        struct code_lexer lexer;
+        struct code_emitter em;
+        struct internal_data *data;
 };
 
 void init_parser ( struct code_parser *parser );

@@ -7,9 +7,9 @@
 #define SHDLIB_MAX_UNI		32
 
 enum SHADER_LIB_FORM {
-	SHADER_FUNC_STATIC,
-	SHADER_FUNC_DYNAMIC,
-	SHADER_FUNC_VARIADIC
+        SHADER_FUNC_STATIC,
+        SHADER_FUNC_DYNAMIC,
+        SHADER_FUNC_VARIADIC
 };
 
 typedef uint32_t shaderlib_t;
@@ -21,24 +21,24 @@ struct shader_tmpl {
 };
 
 struct shader_func {
-	char *name;
-	int id;
-	int lib_form;
-	struct shader_tmpl tmpl; /* avaible when library form is variadic */
-	f_Shader_Func func;	/* available when it is a static library function */
+        char *name;
+        int id;
+        int lib_form;
+        struct shader_tmpl tmpl; /* avaible when library form is variadic */
+        f_Shader_Func func;	/* available when it is a static library function */
 
-	int in_var_loc[SHDLIB_MAX_VAR];
-	void **in_var[SHDLIB_MAX_VAR];
-	int n_in;
+        int in_var_loc[SHDLIB_MAX_VAR];
+        void **in_var[SHDLIB_MAX_VAR];
+        int n_in;
 
-	int out_var_loc[SHDLIB_MAX_VAR];
-	void **out_var[SHDLIB_MAX_VAR];
-	int n_out;
+        int out_var_loc[SHDLIB_MAX_VAR];
+        void **out_var[SHDLIB_MAX_VAR];
+        int n_out;
 
-	int uniform_loc[SHDLIB_MAX_UNI];
-	void *uni_addr[SHDLIB_MAX_UNI];
-	int n_uniform;
-	char *body_code;
+        int uniform_loc[SHDLIB_MAX_UNI];
+        void *uni_addr[SHDLIB_MAX_UNI];
+        int n_uniform;
+        char *body_code;
 };
 
 /*
@@ -47,7 +47,7 @@ struct shader_func {
 shaderlib_t shaderlib_get ( char *name );
 shaderlib_t shaderlib_create_from ( shaderlib_t lib0, char *name, int lib_form );
 void shaderlib_define_function ( shaderlib_t lib, char *func_name,
-				 struct shader_func *func );
+                                 struct shader_func *func );
 void shaderlib_set_array_size ( shaderlib_t lib, char *name, int count );
 
 /*

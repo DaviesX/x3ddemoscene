@@ -2,7 +2,7 @@
 #define EMITTER_H_INCLUDED
 
 struct code_emitter {
-	struct postfix_exp *post_exp;
+        struct postfix_exp *post_exp;
 };
 
 struct token_info;

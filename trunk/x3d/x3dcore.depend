@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1393211196 source:/home/davis/Projects/x3d/drivers/editor/gui.c
+1393902016 source:/home/davis/Projects/x3d/drivers/editor/gui.c
 	<gtk/gtk.h>
 	<gdk/gdk.h>
 	<cairo.h>
@@ -2451,7 +2451,7 @@
 1373281738 /usr/include/gtk-2.0/gtk/gtktipsquery.h
 	<gtk/gtk.h>
 
-1392704126 /home/davis/Projects/x3d/lib/algorithm.h
+1393902016 /home/davis/Projects/x3d/lib/algorithm.h
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm.inc>
@@ -2481,7 +2481,7 @@
 
 1391197248 /home/davis/Projects/x3d/lib/algorithm
 
-1391239270 /home/davis/Projects/x3d/include/x3d/editor.h
+1393902015 /home/davis/Projects/x3d/include/x3d/editor.h
 	<math/math.h>
 	<algorithm.h>
 	<x3d/renderer.h>
@@ -2494,31 +2494,31 @@
 	"decimal.h"
 	"fx.h"
 
-1390431276 /home/davis/Projects/x3d/lib/math/vector.h
+1393902015 /home/davis/Projects/x3d/lib/math/vector.h
 
-1389659225 /home/davis/Projects/x3d/lib/math/matrix.h
+1393902015 /home/davis/Projects/x3d/lib/math/matrix.h
 	<x3d/common.h>
 
-1386735953 /home/davis/Projects/x3d/lib/math/quat.h
+1393902016 /home/davis/Projects/x3d/lib/math/quat.h
 
-1384367237 /home/davis/Projects/x3d/lib/math/geometry.h
+1393902015 /home/davis/Projects/x3d/lib/math/geometry.h
 
 1388682850 /home/davis/Projects/x3d/lib/math/decimal.h
 
 1388879413 /home/davis/Projects/x3d/lib/math/func.h
 
-1393203816 /home/davis/Projects/x3d/include/x3d/renderer.h
+1393902016 /home/davis/Projects/x3d/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<algorithm.h>
 
-1389667363 /home/davis/Projects/x3d/lib/staging.h
+1393902016 /home/davis/Projects/x3d/lib/staging.h
 	<algorithm.h>
 
 1389679613 /home/davis/Projects/x3d/include/editor/gui.h
 	<x3d/editor.h>
 
-1388882231 /home/davis/Projects/x3d/drivers/editor/render_procedure.h
+1393902015 /home/davis/Projects/x3d/drivers/editor/render_procedure.h
 	<stdio.h>
 	<stdlib.h>
 	<memory.h>
@@ -2527,12 +2527,12 @@
 	<sys/types.h>
 	<sys/wait.h>
 
-1389659649 source:/home/davis/Projects/x3d/drivers/editor/main.c
+1393902016 source:/home/davis/Projects/x3d/drivers/editor/main.c
 	<x3d/common.h>
 	<x3d/editor.h>
 	<editor/gui.h>
 
-1389976727 source:/home/davis/Projects/x3d/drivers/editor/render_procedure.c
+1393902016 source:/home/davis/Projects/x3d/drivers/editor/render_procedure.c
 	"render_procedure.h"
 
 1389659336 /home/davis/Projects/x3d/lib/logout.h
@@ -2544,14 +2544,14 @@
 
 1373844198 source:/home/davis/Projects/x3d/drivers/renderer/geometry/disk_shape.c
 
-1389680919 source:/home/davis/Projects/x3d/drivers/renderer/geometry/bvh.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/geometry/bvh.c
 	<algorithm.h>
 	<math/math.h>
 	<renderer/geometry.h>
 	"shape_common.h"
 	"bvh.h"
 
-1389673735 /home/davis/Projects/x3d/include/renderer/geometry.h
+1393902016 /home/davis/Projects/x3d/include/renderer/geometry.h
 	<x3d/common.h>
 	<x3d/resource_loader.h>
 	<math/math.h>
@@ -2561,33 +2561,33 @@
 	"paraboloid_shape.h"
 	"sphere_shape.h"
 
-1389659814 /home/davis/Projects/x3d/include/x3d/resource_loader.h
+1393902015 /home/davis/Projects/x3d/include/x3d/resource_loader.h
 
-1388945474 /home/davis/Projects/x3d/drivers/renderer/geometry/bvh.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/geometry/bvh.h
 
-1389673870 source:/home/davis/Projects/x3d/drivers/renderer/geometry/geocache.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/geometry/geocache.c
 	<algorithm.h>
 	<logout.h>
 	<renderer/geometry.h>
 	<renderer/geocache.h>
 	"shape_common.h"
 
-1389425961 /home/davis/Projects/x3d/include/renderer/geocache.h
+1393902015 /home/davis/Projects/x3d/include/renderer/geocache.h
 	<algorithm.h>
 	<x3d/common.h>
 	<renderer/geometry.h>
 	<x3d/renderer.h>
 
-1389661767 source:/home/davis/Projects/x3d/drivers/renderer/geometry/geometry.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/geometry/geometry.c
 	<renderer/geometry.h>
 
-1390007685 source:/home/davis/Projects/x3d/drivers/renderer/geometry/grid.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/geometry/grid.c
 	<algorithm.h>
 	<math/math.h>
 	<renderer/geometry.h>
 	"grid.h"
 
-1389661576 /home/davis/Projects/x3d/drivers/renderer/geometry/grid.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/geometry/grid.h
 	<math/math.h>
 
 1373845730 source:/home/davis/Projects/x3d/drivers/renderer/geometry/hyperboloid_shape.c
@@ -2605,7 +2605,7 @@
 
 1373827222 source:/home/davis/Projects/x3d/drivers/renderer/geometry/sphere_shape.c
 
-1389661920 source:/home/davis/Projects/x3d/drivers/renderer/geometry/primitive_parition.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/geometry/primitive_parition.c
 	<renderer/geometry.h>
 	"bvh.h"
 	"grid.h"
@@ -2616,27 +2616,27 @@
 
 1378173844 /home/davis/Projects/x3d/drivers/renderer/geometry/kdtree.h
 
-1389660771 source:/home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_shape.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_shape.c
 	"trimesh_shape.h"
 
-1389660773 /home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_shape.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_shape.h
 	"shape_common.h"
 
-1389673850 /home/davis/Projects/x3d/drivers/renderer/geometry/shape_common.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/geometry/shape_common.h
 	<math/math.h>
 	"trimesh_shape.h"
 
-1389673909 source:/home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_subdivide.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_subdivide.c
 	<math/math.h>
 	<renderer/geometry.h>
 	"shape_common.h"
 	"trimesh_subdivide.h"
 
-1380995967 /home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_subdivide.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/geometry/trimesh_subdivide.h
 
 1356009332 source:/home/davis/Projects/x3d/drivers/renderer/light/light.c
 
-1389667303 source:/home/davis/Projects/x3d/drivers/renderer/loader/fbx_model.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/loader/fbx_model.c
 	<staging.h>
 	<logout.h>
 	"fbx_model.h"
@@ -2648,12 +2648,12 @@
 
 1355650452 /home/davis/Projects/x3d/drivers/renderer/loader/image_loader.h
 
-1389683490 source:/home/davis/Projects/x3d/drivers/renderer/loader/main.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/loader/main.c
 	"main.h"
 
 1389669552 /home/davis/Projects/x3d/drivers/renderer/loader/main.h
 
-1389683579 source:/home/davis/Projects/x3d/drivers/renderer/loader/obj_model.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/loader/obj_model.c
 	<math/math.h>
 	<staging.h>
 	<logout.h>
@@ -2665,7 +2665,7 @@
 1389667756 /home/davis/Projects/x3d/drivers/renderer/loader/obj_model.h
 	<staging.h>
 
-1389669464 source:/home/davis/Projects/x3d/drivers/renderer/loader/pbrt_model.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/loader/pbrt_model.c
 	<staging.h>
 	<logout.h>
 	"pbrt_model.h"
@@ -2675,7 +2675,7 @@
 
 1376177658 source:/home/davis/Projects/x3d/drivers/renderer/loader/renderer_loader.c
 
-1389668188 /home/davis/Projects/x3d/drivers/renderer/loader/model_loader.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/loader/model_loader.h
 	<staging.h>
 
 1385669525 source:/home/davis/Projects/x3d/drivers/renderer/loader/x3d_scene.c
@@ -2684,7 +2684,7 @@
 
 1389410629 source:/home/davis/Projects/x3d/drivers/renderer/misc/volume.c
 
-1389669574 source:/home/davis/Projects/x3d/drivers/renderer/loader/model_loader.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/loader/model_loader.c
 	<staging.h>
 	<logout.h>
 	"model_loader.h"
@@ -2707,10 +2707,10 @@
 	<gtk/gtk.h>
 	"../renderer/surface.h"
 
-1393734751 /home/davis/Projects/x3d/drivers/renderer/renderer/surface.h
+1393902015 /home/davis/Projects/x3d/drivers/renderer/renderer/surface.h
 	<x3d/common.h>
 
-1390714503 source:/home/davis/Projects/x3d/drivers/renderer/out/out.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/out/out.c
 	<renderer/out.h>
 	"screen_out.h"
 	"image_out.h"
@@ -2729,7 +2729,7 @@
 
 1372302856 source:/home/davis/Projects/x3d/drivers/renderer/probe/orthogonal.c
 
-1391487421 source:/home/davis/Projects/x3d/drivers/renderer/probe/perspective.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/probe/perspective.c
 	<algorithm.h>
 	<renderer/proj_probe.h>
 	<math/math.h>
@@ -2739,7 +2739,7 @@
 	<math/math.h>
 	<algorithm.h>
 
-1390116358 /home/davis/Projects/x3d/drivers/renderer/probe/perspective.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/probe/perspective.h
 	<math/math.h>
 
 1385668936 source:/home/davis/Projects/x3d/drivers/renderer/probe/spherical.c
@@ -2748,15 +2748,15 @@
 	"probe.h"
 	"perspective.h"
 
-1389670857 source:/home/davis/Projects/x3d/drivers/renderer/renderer/colorspectrum.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/colorspectrum.c
 	<math.h>
 	<math/math.h>
 	"colorspectrum.h"
 
-1389670877 /home/davis/Projects/x3d/drivers/renderer/renderer/colorspectrum.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/colorspectrum.h
 	<math/math.h>
 
-1393746851 source:/home/davis/Projects/x3d/drivers/renderer/renderer/main.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/main.c
 	<x3d/common.h>
 	<algorithm.h>
 	<logout.h>
@@ -2783,7 +2783,7 @@
 
 1363271212 source:/home/davis/Projects/x3d/drivers/renderer/renderer/raytrace.c
 
-1393747223 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterizer.c
+1394150006 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterizer.c
 	<x3d/common.h>
 	<math.h>
 	<algorithm.h>
@@ -2795,13 +2795,13 @@
 	"vertattri_lerp.h"
 	"surface.h"
 
-1393733703 /home/davis/Projects/x3d/drivers/renderer/renderer/rasterizer.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/rasterizer.h
 	"rasterization.h"
 
 1389660773 /home/davis/Projects/x3d/include/renderer/trimesh_shape.h
 	"shape_common.h"
 
-1393203297 source:/home/davis/Projects/x3d/drivers/renderer/renderer/renderer.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/renderer.c
 	<x3d/renderer.h>
 	<renderer/geocache.h>
 	<renderer/renderer.h>
@@ -2809,7 +2809,7 @@
 	"../shader/main.h"
 	"rtrenderer.h"
 
-1393203290 /home/davis/Projects/x3d/include/renderer/renderer.h
+1393902015 /home/davis/Projects/x3d/include/renderer/renderer.h
 	<x3d/renderer.h>
 	<renderer/geocache.h>
 
@@ -2828,7 +2828,7 @@
 	"rasterizer.h"
 	"rt_pass.h"
 
-1393222706 /home/davis/Projects/x3d/drivers/renderer/renderer/vibuffer.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/vibuffer.h
 
 1389680919 /home/davis/Projects/x3d/drivers/renderer/renderer/rt_pass.h
 	"../probe/probe.h"
@@ -2841,7 +2841,7 @@
 	<renderer/out.h>
 	"rt_renderer.h"
 
-1393734798 source:/home/davis/Projects/x3d/drivers/renderer/renderer/surface.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/surface.c
 	"surface.h"
 	"colorspectrum.h"
 
@@ -2851,7 +2851,7 @@
 1389678304 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vibuffer.c
 	"vibuffer.h"
 
-1391240851 source:/home/davis/Projects/x3d/kernel/editor.c
+1393902016 source:/home/davis/Projects/x3d/kernel/editor.c
 	<logout.h>
 	<algorithm.h>
 	<x3d/kernel.h>
@@ -2859,7 +2859,7 @@
 	<x3d/renderer.h>
 	<x3d/editor.h>
 
-1393211728 source:/home/davis/Projects/x3d/kernel/kernel.c
+1393902015 source:/home/davis/Projects/x3d/kernel/kernel.c
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm.h>
@@ -2875,56 +2875,56 @@
 
 1389424362 /home/davis/Projects/x3d/include/x3d/kernel.h
 
-1393131625 /home/davis/Projects/x3d/include/x3d/runtime_debug.h
+1393902016 /home/davis/Projects/x3d/include/x3d/runtime_debug.h
 
 1389411972 /home/davis/Projects/x3d/include/x3d/scene.h
 
-1391194993 source:/home/davis/Projects/x3d/kernel/panic.c
+1393902016 source:/home/davis/Projects/x3d/kernel/panic.c
 	<x3d/kernel.h>
 
 1389398163 source:/home/davis/Projects/x3d/kernel/renderable.c
 	<x3d/renderer.h>
 
-1393203839 source:/home/davis/Projects/x3d/kernel/renderer_context.c
+1393902016 source:/home/davis/Projects/x3d/kernel/renderer_context.c
 	<logout.h>
 	<algorithm.h>
 	<x3d/renderer.h>
 	<renderer/renderer.h>
 	<renderer/geocache.h>
 
-1389680919 source:/home/davis/Projects/x3d/kernel/resource_loader.c
+1393902015 source:/home/davis/Projects/x3d/kernel/resource_loader.c
 	<algorithm.h>
 	<staging.h>
 	<x3d/resource_loader.h>
 
 1386806407 source:/home/davis/Projects/x3d/kernel/scene.c
 
-1391239915 source:/home/davis/Projects/x3d/lib/algorithm.c
+1393902015 source:/home/davis/Projects/x3d/lib/algorithm.c
 	<algorithm.h>
 	<math/math.h>
 
-1389683673 source:/home/davis/Projects/x3d/lib/compiler/compiler.c
+1393902016 source:/home/davis/Projects/x3d/lib/compiler/compiler.c
 	<memory.h>
 	<compiler/compiler.h>
 
-1386780500 /home/davis/Projects/x3d/lib/compiler/compiler.h
+1393902016 /home/davis/Projects/x3d/lib/compiler/compiler.h
 	"symbol.h"
 	"error.h"
 	"emitter.h"
 	"lexer.h"
 	"parser.h"
 
-1383260970 /home/davis/Projects/x3d/lib/compiler/symbol.h
+1393902015 /home/davis/Projects/x3d/lib/compiler/symbol.h
 
 1383069681 /home/davis/Projects/x3d/lib/compiler/error.h
 
-1386780509 /home/davis/Projects/x3d/lib/compiler/emitter.h
+1393902016 /home/davis/Projects/x3d/lib/compiler/emitter.h
 
-1389680234 /home/davis/Projects/x3d/lib/compiler/lexer.h
+1393902016 /home/davis/Projects/x3d/lib/compiler/lexer.h
 
-1383795384 /home/davis/Projects/x3d/lib/compiler/parser.h
+1393902015 /home/davis/Projects/x3d/lib/compiler/parser.h
 
-1386780623 source:/home/davis/Projects/x3d/lib/compiler/emitter.c
+1393902016 source:/home/davis/Projects/x3d/lib/compiler/emitter.c
 	<x3d/common.h>
 	<algorithm.h>
 	"symbol.h"
@@ -2934,17 +2934,17 @@
 1386780312 source:/home/davis/Projects/x3d/lib/compiler/error.c
 	"error.h"
 
-1390550943 source:/home/davis/Projects/x3d/lib/compiler/lexer.c
+1393902016 source:/home/davis/Projects/x3d/lib/compiler/lexer.c
 	<x3d/common.h>
 	<memory.h>
 	"symbol.h"
 	"lexer.h"
 
-1386780659 source:/home/davis/Projects/x3d/lib/compiler/main.c
+1393902016 source:/home/davis/Projects/x3d/lib/compiler/main.c
 	<x3d/common.h>
 	<compiler/compiler.h>
 
-1386780596 source:/home/davis/Projects/x3d/lib/compiler/parser.c
+1393902016 source:/home/davis/Projects/x3d/lib/compiler/parser.c
 	<x3d/common.h>
 	<algorithm.h>
 	"symbol.h"
@@ -2956,11 +2956,11 @@
 1386780675 source:/home/davis/Projects/x3d/lib/compiler/symbol.c
 	"symbol.h"
 
-1391711216 source:/home/davis/Projects/x3d/lib/logout.c
+1393902016 source:/home/davis/Projects/x3d/lib/logout.c
 	<x3d/common.h>
 	<logout.h>
 
-1389683451 source:/home/davis/Projects/x3d/lib/main.c
+1393902016 source:/home/davis/Projects/x3d/lib/main.c
 	<logout.h>
 	<algorithm.h>
 	<memory.h>
@@ -2975,7 +2975,7 @@
 
 1382308288 /home/davis/Projects/x3d/lib/main.h
 
-1390550784 source:/home/davis/Projects/x3d/lib/math/decimal.c
+1393902015 source:/home/davis/Projects/x3d/lib/math/decimal.c
 	<math.h>
 	<stdlib.h>
 	"decimal.h"
@@ -2984,32 +2984,32 @@
 	"math.h"
 	"func.h"
 
-1390436716 source:/home/davis/Projects/x3d/lib/math/geometry.c
+1393902016 source:/home/davis/Projects/x3d/lib/math/geometry.c
 	"math.h"
 	"vector.h"
 	"matrix.h"
 	"geometry.h"
 
-1389683418 source:/home/davis/Projects/x3d/lib/math/main.c
+1393902016 source:/home/davis/Projects/x3d/lib/math/main.c
 	<math/math.h>
 	"main.h"
 
 1386780481 /home/davis/Projects/x3d/lib/math/main.h
 
-1389680693 source:/home/davis/Projects/x3d/lib/math/matrix.c
+1393902016 source:/home/davis/Projects/x3d/lib/math/matrix.c
 	"math.h"
 	"vector.h"
 	"matrix.h"
 
-1389680711 source:/home/davis/Projects/x3d/lib/math/quat.c
+1393902016 source:/home/davis/Projects/x3d/lib/math/quat.c
 	"vector.h"
 	"quat.h"
 
-1390431270 source:/home/davis/Projects/x3d/lib/math/vector.c
+1393902015 source:/home/davis/Projects/x3d/lib/math/vector.c
 	<math.h>
 	"vector.h"
 
-1391238674 source:/home/davis/Projects/x3d/lib/memory.c
+1393902015 source:/home/davis/Projects/x3d/lib/memory.c
 	<logout.h>
 	<memory.h>
 
@@ -3017,10 +3017,10 @@
 
 1364353210 source:/home/davis/Projects/x3d/lib/timing.c
 
-1389683811 source:/home/davis/Projects/x3d/lib/staging.c
+1393902016 source:/home/davis/Projects/x3d/lib/staging.c
 	<staging.h>
 
-1393747338 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.c
 	<algorithm.h>
 	<logout.h>
 	<memory.h>
@@ -3028,7 +3028,7 @@
 	"vertex_processor.h"
 	"rasterizer.h"
 
-1393736873 /home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.h
 	<math/math.h>
 
 1363271212 source:/home/davis/Projects/x3d/drivers/renderer/renderer/raytracer.c
@@ -3052,7 +3052,7 @@
 
 1390070852 source:/home/davis/Projects/x3d/drivers/renderer/probe/obj_probe.c
 
-1390115669 source:/home/davis/Projects/x3d/drivers/renderer/probe/proj_probe.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/probe/proj_probe.c
 	<math/math.h>
 	<renderer/proj_probe.h>
 	"perspective.h"
@@ -3068,7 +3068,7 @@
 
 1385668993 source:/home/davis/Projects/x3d/drivers/renderer/probe/spatial_probe.c
 
-1390077784 /home/davis/Projects/x3d/include/renderer/proj_probe.h
+1393902016 /home/davis/Projects/x3d/include/renderer/proj_probe.h
 	<math/math.h>
 
 1390629329 /home/davis/Projects/x3d/drivers/renderer/shader/rt_shader.h
@@ -3076,7 +3076,7 @@
 
 1390699181 source:/home/davis/Projects/x3d/drivers/renderer/out/binary_out.c
 
-1390714503 /home/davis/Projects/x3d/include/renderer/out.h
+1393902015 /home/davis/Projects/x3d/include/renderer/out.h
 
 1390712349 /home/davis/Projects/x3d/drivers/renderer/out/screen_out.h
 
@@ -3088,23 +3088,23 @@
 
 1390714932 /home/davis/Projects/x3d/lib/math/fx.h
 
-1393203968 source:/home/davis/Projects/x3d/drivers/renderer/out/screen_out.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/out/screen_out.c
 	<logout.h>
 	<math/math.h>
 	<renderer/out.h>
 	"screen_out.h"
 	<gtk/gtk.h>
 
-1390714915 source:/home/davis/Projects/x3d/lib/math/fx.c
+1393902015 source:/home/davis/Projects/x3d/lib/math/fx.c
 	"math.h"
 	"fx.h"
 
-1391237110 /home/davis/Projects/x3d/include/x3d/symbol_lib.h
+1393902016 /home/davis/Projects/x3d/include/x3d/symbol_lib.h
 	<x3d/common.h>
 
 1393392833 /home/davis/Projects/x3d/drivers/renderer/renderer/dbg_vertprocessor.h
 
-1393210885 source:/home/davis/Projects/x3d/drivers/editor/main_editor.c
+1393902015 source:/home/davis/Projects/x3d/drivers/editor/main_editor.c
 	<gtk/gtk.h>
 	<logout.h>
 	<x3d/common.h>
@@ -3112,14 +3112,14 @@
 	"gui.h"
 	"main_editor.h"
 
-1391236991 source:/home/davis/Projects/x3d/drivers/editor/object_editor.c
+1393902015 source:/home/davis/Projects/x3d/drivers/editor/object_editor.c
 	<gtk/gtk.h>
 	<logout.h>
 	<x3d/common.h>
 	"gui.h"
 	"object_editor.h"
 
-1391236981 source:/home/davis/Projects/x3d/drivers/editor/renderable_editor.c
+1393902016 source:/home/davis/Projects/x3d/drivers/editor/renderable_editor.c
 	<gtk/gtk.h>
 	<logout.h>
 	<x3d/common.h>
@@ -4313,7 +4313,7 @@
 1393210674 /home/davis/Projects/x3d/include/editor/editor.h
 	<x3d/editor.h>
 
-1393210638 /home/davis/Projects/x3d/drivers/editor/gui.h
+1393902016 /home/davis/Projects/x3d/drivers/editor/gui.h
 	<gtk/gtk.h>
 
 1393210822 /home/davis/Projects/x3d/drivers/editor/main_editor.h
@@ -4322,33 +4322,33 @@
 
 1391230635 /home/davis/Projects/x3d/drivers/editor/renderable_editor.h
 
-1392705707 /home/davis/Projects/x3d/drivers/renderer/renderer/vertattri_lerp.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/vertattri_lerp.h
 
 1391197248 /home/davis/Projects/x3d/lib/algorithm.inc
 
-1393212603 source:/home/davis/Projects/x3d/drivers/renderer/shader/basic_rt_shader.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/shader/basic_rt_shader.c
 	<renderer/shader.h>
 	<renderer/shader_lib.h>
 	"rtshader.h"
 	"basic_rt_shader_a.h"
 	"basic_rt_shader_so.h"
 
-1393201274 /home/davis/Projects/x3d/include/renderer/shader.h
+1393902016 /home/davis/Projects/x3d/include/renderer/shader.h
 	<x3d/common.h>
 
-1392704499 /home/davis/Projects/x3d/include/renderer/shader_lib.h
+1393902016 /home/davis/Projects/x3d/include/renderer/shader_lib.h
 	<x3d/common.h>
 
 1392700265 /home/davis/Projects/x3d/drivers/renderer/shader/rtshader.h
 
-1393212641 /home/davis/Projects/x3d/drivers/renderer/shader/basic_rt_shader_a.h
+1393902015 /home/davis/Projects/x3d/drivers/renderer/shader/basic_rt_shader_a.h
 	<math/math.h>
 	"../renderer/colorspectrum.h"
 	"../renderer/surface.h"
 
 1392700263 /home/davis/Projects/x3d/drivers/renderer/shader/basic_rt_shader_so.h
 
-1393220051 source:/home/davis/Projects/x3d/drivers/renderer/shader/shader.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/shader/shader.c
 	<math/math.h>
 	<logout.h>
 	<memory.h>
@@ -4358,7 +4358,7 @@
 
 1392706135 /home/davis/Projects/x3d/drivers/renderer/shader/main.h
 
-1392706060 source:/home/davis/Projects/x3d/drivers/renderer/shader/main.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/shader/main.c
 	"main.h"
 	<renderer/shader.h>
 
@@ -4369,16 +4369,16 @@
 
 1389670971 /home/davis/Projects/x3d/drivers/renderer/renderer/ptrenderer.h
 
-1390091161 /home/davis/Projects/x3d/drivers/renderer/renderer/rtrenderer.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/rtrenderer.h
 	<algorithm.h>
 	<renderer/renderer.h>
 
-1393203307 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rtpass.c
+1393902015 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rtpass.c
 	"rtpass.h"
 
-1389675086 /home/davis/Projects/x3d/drivers/renderer/renderer/rtpass.h
+1393902015 /home/davis/Projects/x3d/drivers/renderer/renderer/rtpass.h
 
-1393203384 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rtrenderer.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rtrenderer.c
 	<memory.h>
 	<renderer/renderer.h>
 	<renderer/proj_probe.h>
@@ -4386,16 +4386,16 @@
 	<renderer/out.h>
 	"rtrenderer.h"
 
-1393392833 /home/davis/Projects/x3d/drivers/renderer/renderer/dbg_vertex_processor.h
+1393902015 /home/davis/Projects/x3d/drivers/renderer/renderer/dbg_vertex_processor.h
 
-1393547419 /home/davis/Projects/x3d/drivers/renderer/renderer/vertex_processor.h
+1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/vertex_processor.h
 	<x3d/common.h>
 	<algorithm.h>
 	<math/math.h>
 	"rasterization.h"
 	"vibuffer.h"
 
-1393547449 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vertex_processor.c
+1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vertex_processor.c
 	<logout.h>
 	<algorithm.h>
 	<renderer/shader.h>

@@ -13,14 +13,14 @@ struct voxel;
 
 /* Defines a grid spatial accelerating structure */
 struct grid_spatial {
-	struct alg_list *prim_list;
-	struct box3d scale;
-	struct voxel *voxel;
-	struct vector3d span;
-	int nvoxel;
-	int n_axis[3];
-	struct vector3d vw;
-	struct vector3d inv_vw;
+        struct alg_list *prim_list;
+        struct box3d scale;
+        struct voxel *voxel;
+        struct vector3d span;
+        int nvoxel;
+        int n_axis[3];
+        struct vector3d vw;
+        struct vector3d inv_vw;
 };
 
 

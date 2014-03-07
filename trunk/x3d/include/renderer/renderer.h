@@ -14,13 +14,13 @@ struct rend_out;
  * Structures
  */
 struct renderer {
-	enum RENDERER_IDR idr;
-	enum RENDERER_THREAD_STATE_IDR thr_state;
-	enum RENDER_SPEC_IDR spec;
-	void *rend;
-	struct geocache *gc;
-	struct probe *probe;
-	struct rend_out *ro;
+        enum RENDERER_IDR idr;
+        enum RENDERER_THREAD_STATE_IDR thr_state;
+        enum RENDER_SPEC_IDR spec;
+        void *rend;
+        struct geocache *gc;
+        struct probe *probe;
+        struct rend_out *ro;
 };
 
 /*

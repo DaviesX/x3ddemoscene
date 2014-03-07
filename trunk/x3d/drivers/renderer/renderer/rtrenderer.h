@@ -15,7 +15,7 @@ struct render_out;
  */
 
 struct rt_renderer {
-	struct renderer *parent;
+        struct renderer *parent;
 };
 
 /*
@@ -27,7 +27,7 @@ void free_rt_renderer ( struct rt_renderer *r );
 void update_rt_renderer ( struct alg_named_params *params, struct rt_renderer *r );
 void rt_renderer_begin ( struct rt_renderer *r );
 void rt_renderer_render ( struct proj_probe *probe, struct render_out *ro,
-			  struct rt_renderer *r );
+                          struct rt_renderer *r );
 void rt_renderer_end ( struct rt_renderer *r );
 
 

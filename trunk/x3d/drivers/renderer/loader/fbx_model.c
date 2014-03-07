@@ -7,7 +7,7 @@
 // Load a model from .fbx format file
 int LoadModelFileFbx ( char *fileName, res_record_t *rec )
 {
-	log_severe_err_dbg ( "LoadModelFileFbx",
-			     "This block is not implemented yet" );
-	return 0;
+        log_severe_err_dbg ( "LoadModelFileFbx",
+                             "This block is not implemented yet" );
+        return 0;
 }

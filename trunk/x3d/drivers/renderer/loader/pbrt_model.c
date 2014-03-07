@@ -8,7 +8,7 @@
 // Load a model from pbrt format geomtry file
 int LoadModelFilePbrt ( char *fileName, res_record_t *rec )
 {
-	log_severe_err_dbg ( "LoadModelFilePbrt",
-			     "This block is not implemented yet" );
-	return 0;
+        log_severe_err_dbg ( "LoadModelFilePbrt",
+                             "This block is not implemented yet" );
+        return 0;
 }
