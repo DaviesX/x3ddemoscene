@@ -62,13 +62,13 @@ static void display_logo_image ( GtkWidget *draw_area, bool to_display )
 
 /* temporary functions */
 static gboolean display_tmp_image_callback ( GtkWidget *draw_region,
-                                        cairo_t *cairo, gpointer data )
+                cairo_t *cairo, gpointer data )
 {
         int stride = cairo_format_stride_for_width (
-                        CAIRO_FORMAT_ARGB32, g_comm_data.tmp_image_w);
+                             CAIRO_FORMAT_ARGB32, g_comm_data.tmp_image_w);
         struct _cairo_surface *co_surface = cairo_image_surface_create_for_data (
-                g_comm_data.tmp_image, CAIRO_FORMAT_ARGB32,
-                g_comm_data.tmp_image_w, g_comm_data.tmp_image_h, stride );
+                        g_comm_data.tmp_image, CAIRO_FORMAT_ARGB32,
+                        g_comm_data.tmp_image_w, g_comm_data.tmp_image_h, stride );
         cairo_set_source_surface ( cairo, co_surface, 0.0, 0.0 );
         cairo_paint ( cairo );
         cairo_surface_destroy ( co_surface );
@@ -79,8 +79,8 @@ static void display_tmp_image ( GtkWidget *draw_area, bool to_display )
 {
         if ( to_display ) {
                 g_main_edit.tmp_draw_signal = g_signal_connect (
-                        draw_area, "draw",
-                        G_CALLBACK ( display_tmp_image_callback ), nullptr );
+                                                      draw_area, "draw",
+                                                      G_CALLBACK ( display_tmp_image_callback ), nullptr );
                 g_main_edit.draw_signal_busy = true;
         } else {
                 g_signal_handler_disconnect ( draw_area,

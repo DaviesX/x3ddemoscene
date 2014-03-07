@@ -32,16 +32,16 @@ static void print_point4d ( struct point4d *p )
 static void print_line4d ( struct point4d *p0, struct point4d *p1 )
 {
         log_normal ( "p0(%f, %f, %f, %f) --> p1(%f, %f, %f, %f)",
-                    p0->x, p0->y, p0->z, p0->w,
-                    p1->x, p1->y, p1->z, p1->w );
+                     p0->x, p0->y, p0->z, p0->w,
+                     p1->x, p1->y, p1->z, p1->w );
 }
 
 static void print_triangle4d ( struct point4d *p0, struct point4d *p1, struct point4d *p2 )
 {
         log_normal ( "T:\n\tV0(%f, %f, %f, %f)\n\tV1(%f, %f, %f, %f)\n\tV2(%f, %f, %f, %f)",
-                    p0->x, p0->y, p0->z, p0->w,
-                    p1->x, p1->y, p1->z, p1->w,
-                    p2->x, p2->y, p2->z, p2->w );
+                     p0->x, p0->y, p0->z, p0->w,
+                     p1->x, p1->y, p1->z, p1->w,
+                     p2->x, p2->y, p2->z, p2->w );
 }
 
 /* vertex prcessor's */		#include "vertex_processor.h"
@@ -91,7 +91,7 @@ static void vert_post_process ( struct alg_named_params *global_params )
         int i;
         for ( i = 0; i < 3; i ++ ) {
                 n = dbg_process_point (
-                        (rt_vertex *) &v[i], &t_all, sizeof v[0], (rt_vertex *) &vo[i] );
+                            (rt_vertex *) &v[i], &t_all, sizeof v[0], (rt_vertex *) &vo[i] );
                 if ( n > 0 ) {
                         print_point4d ( &vo[i].v );
                 } else {
@@ -109,9 +109,9 @@ static void vert_post_process ( struct alg_named_params *global_params )
                 VERTEX_DEFN_INT
         };
         n = dbg_process_line (
-                (rt_vertex *) v, &t_all,
-                comp_offset, comp_format, 2, sizeof v[0],
-                (rt_vertex *) vo );
+                    (rt_vertex *) v, &t_all,
+                    comp_offset, comp_format, 2, sizeof v[0],
+                    (rt_vertex *) vo );
         if ( n > 0 ) {
                 print_line4d ( &vo[0].v, &vo[1].v );
         } else {
@@ -125,9 +125,9 @@ static void vert_post_process ( struct alg_named_params *global_params )
         set_point4d ( 150.0f, 0.0f, 120.0f, 1.0f, &v[2].v );
         v[2].p = 2;
         n = dbg_process_triangle (
-                (rt_vertex *) v, &t_view, &t_all, 1.0f,
-                comp_offset, comp_format, 2, sizeof v[0],
-                (rt_vertex *) vo );
+                    (rt_vertex *) v, &t_view, &t_all, 1.0f,
+                    comp_offset, comp_format, 2, sizeof v[0],
+                    (rt_vertex *) vo );
         if ( n > 0 ) {
                 print_triangle4d ( &vo[0].v, &vo[1].v, &vo[2].v );
         } else {
@@ -179,14 +179,14 @@ static void make_cube_vibuffer ( float x, float y, float z, float s,
                                  struct vertex_buffer *vb, struct index_buffer *ib )
 {
         struct point3d v[8] = {
-                [0].p = { 1.0*s + x,  1.0*s + y,  1.0*s + z},
-                [1].p = { 1.0*s + x, -1.0*s + y,  1.0*s + z},
-                [2].p = { 1.0*s + x, -1.0*s + y, -1.0*s + z},
-                [3].p = { 1.0*s + x,  1.0*s + y, -1.0*s + z},
-                [4].p = {-1.0*s + x,  1.0*s + y, -1.0*s + z},
-                [5].p = {-1.0*s + x, -1.0*s + y, -1.0*s + z},
-                [6].p = {-1.0*s + x, -1.0*s + y,  1.0*s + z},
-                [7].p = {-1.0*s + x,  1.0*s + y,  1.0*s + z},
+                [0].p = { 1.0*s + x,  1.0*s + y, -1.0*s + z},
+                [1].p = { 1.0*s + x, -1.0*s + y, -1.0*s + z},
+                [2].p = { 1.0*s + x, -1.0*s + y,  1.0*s + z},
+                [3].p = { 1.0*s + x,  1.0*s + y,  1.0*s + z},
+                [4].p = {-1.0*s + x,  1.0*s + y,  1.0*s + z},
+                [5].p = {-1.0*s + x, -1.0*s + y,  1.0*s + z},
+                [6].p = {-1.0*s + x, -1.0*s + y, -1.0*s + z},
+                [7].p = {-1.0*s + x,  1.0*s + y, -1.0*s + z},
         };
         int i;
         for ( i = 0; i < 8; i ++ ) {
@@ -194,18 +194,18 @@ static void make_cube_vibuffer ( float x, float y, float z, float s,
                 vibuffer_add_element ( &v[i], vb );
         }
         int index[12*3] = {
-                0, 1, 2,
-                0, 2, 3,
-                3, 2, 5,
-                3, 5, 4,
-                4, 5, 7,
+                0, 2, 1,
+                0, 3, 2,
+                3, 5, 2,
+                3, 4, 5,
+                4, 6, 5,
                 4, 7, 6,
-                6, 7, 1,
-                6, 1, 0,
-                6, 0, 3,
-                6, 3, 4,
-                1, 7, 5,
-                1, 5, 2
+                7, 1, 6,
+                7, 0, 1,
+                7, 3, 0,
+                7, 4, 3,
+                6, 1, 2,
+                6, 2, 5
         };
         for ( i = 0; i < 12*3; i ++ ) {
                 ibuffer_add_index ( ib );
@@ -255,7 +255,7 @@ static void simple_rt_pipeline_init ( struct alg_named_params *global_params )
         vertattri_set ( 0, VERTEX_ELM_FLOAT, 3, &vattri );
         vbuffer_bind_vertattri ( &vattri, g_vb );
         ibuffer_set_format ( INDEX_ELEMENT_INT32, g_ib );
-        make_cube_vibuffer ( 0.0, 0.0, 50.0, 5.0f, g_vb, g_ib );
+        make_cube_vibuffer ( -42.0, 0.0, 50.0, 5.0f, g_vb, g_ib );
         rtcontext_bind_vertex_buffer ( g_vb, &g_rtctx );
         rtcontext_bind_index_buffer ( g_ib, &g_rtctx );
 

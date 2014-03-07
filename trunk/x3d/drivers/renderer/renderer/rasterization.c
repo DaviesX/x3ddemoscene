@@ -213,6 +213,11 @@ static void *builtin_rt_run ( struct rt_info *info )
                 int nvert = vertprocessor_run ( rc->vpr, type, VERT_CACHE_SIZE,
                                                 vert_list );
                 for ( i = 0; i < nvert; i += type*1 ) {
+                        int a;
+                        for ( a = 0; a < type; a ++ ) {
+                                log_normal ( "%d", i + a );
+                                print_vector4d ( vert_list + a*vert_size );
+                        }
                         rasterizer_run ( rc->rtr, vert_list, type, 1 );
                         vert_list += type*vert_size;
                 }

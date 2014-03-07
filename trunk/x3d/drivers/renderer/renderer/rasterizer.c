@@ -363,11 +363,11 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
                 n_in = n_out;
                 /* wrap [n + 1] element back to [0] */
                 out_ref[n_out ++] = out_ref[0];
-/*                int a;
+                int a;
                 for ( a = 0; a < n_out; a ++ ) {
                         print_vector4d ( out_ref[a] );
                 }
-                log_normal ( "" );*/
+                log_normal ( "" );
                 n_out = 0;
         }
         int n_out_total = n_in;         /* total number of output vertices */
@@ -377,7 +377,7 @@ static int clip_triangle ( untyped *v0, untyped *v1, untyped *v2,
         assert ( n_out_total >= 3 );
         untyped **out_list = (untyped **) &ring_ref[curr_input(r)][0];
         int n, j;
-        for ( n = 1, j = 0; n < n_out_total - 2; n ++ ) {
+        for ( n = 1, j = 0; n <= n_out_total - 2; n ++ ) {
                 ref[j ++] = out_list[0];
                 ref[j ++] = out_list[n];
                 ref[j ++] = out_list[n + 1];
@@ -423,26 +423,37 @@ static void draw_line ( untyped *v0, untyped *v1, struct rasterizer *rt )
                                    rt->ctx.shader );
         }
         /* to screen coordinate */
-        untyped *vaddr[2] = {v0, v1};	/* ndc */
+        const untyped *vaddr[2] = {v0, v1};	/* ndc */
+        struct point4d t[2];
         struct point4d *fragc[2];	/* fragment coordinate */
         struct ipoint2d scc[2];		/* screen coordinate */
         int v;
         for ( v = 0; v < 2; v ++ ) {
-                fragc[v] = to_4d(vaddr[v]);
+                fragc[v] = &t[v]; /* to_4d(vaddr[v]); */
                 ndc_to_scc ( to_4d(vaddr[v]), &scc[v], buf );
                 ndc_to_fragc ( to_4d(vaddr[v]), fragc[v] );
         }
         float dydx = (fragc[1]->y - fragc[0]->y)/(fragc[1]->x - fragc[0]->x);
         if ( fabsf ( dydx ) <= 1.0f ) {
                 /* go with x axis */
-                int i = scc[0].x;
-                float j = (float) scc[0].y;
+                int i;
+                float j;
+                int i_end;
+                if ( scc[0].x > scc[1].x ) {
+                        i = scc[1].x;
+                        j = (float) scc[1].y;
+                        i_end = scc[0].x;
+                } else {
+                        i = scc[0].x;
+                        j = (float) scc[0].y;
+                        i_end = scc[1].x;
+                }
                 float sdydx = (float) (scc[1].y - scc[0].y)/(scc[1].x - scc[0].x);
 
                 float inv_dx = 1.0f/(fragc[1]->x - fragc[0]->x);
                 float dw = fragc[1]->w - fragc[0]->w;
                 float t = 0.0f;		/* parameter for interpolation */
-                while ( i <= scc[1].x ) {
+                while ( i <= i_end ) {
                         float tx = t*inv_dx;
                         float inv_w = lerpd ( fragc[0]->w, dw, tx );
                         if ( depth_func ( i, (int) j, inv_w, &rt->func, buf ) ) {
@@ -462,14 +473,24 @@ static void draw_line ( untyped *v0, untyped *v1, struct rasterizer *rt )
                 }
         } else {
                 /* go with y axis */
-                float i = (float) scc[0].x;
-                int j = scc[0].y;
+                float i;
+                int j;
+                int j_end;
+                if ( scc[0].y > scc[1].y ) {
+                        i = (float) scc[1].x;
+                        j = scc[1].y;
+                        j_end = scc[0].y;
+                } else {
+                        i = (float) scc[0].x;
+                        j = scc[0].y;
+                        j_end = scc[1].y;
+                }
                 float sdxdy = (float) (scc[1].x - scc[0].x)/(scc[1].y - scc[0].y);
 
                 float inv_dy = 1.0f/(fragc[1]->y - fragc[0]->y);
                 float dw = fragc[1]->w - fragc[0]->w;
                 float t = 0.0f;		/* parameter for interpolation */
-                while ( j <= scc[1].y ) {
+                while ( j <= j_end ) {
                         float ty = t*inv_dy;
                         float inv_w = lerpd ( fragc[0]->w, dw, ty );
                         if ( depth_func ( (int) i, j, inv_w, &rt->func, buf ) ) {
@@ -553,7 +574,7 @@ void rasterizer_run ( struct rasterizer *rt, rt_vertex *vert_list,
                                 if ( rt->ctx.draw_mode == RT_SOLID_MODE ) {
                                         draw_solid_triangle ( rt, ref, j );
                                 } else {
-                                        draw_wireframe_triangle ( rt, ref, j );
+                                        draw_wireframe_triangle ( rt, ref, j*3 );
                                 }
                         }
                         vert_list += 3*rt->vf.size;

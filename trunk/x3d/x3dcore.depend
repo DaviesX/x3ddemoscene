@@ -2757,7 +2757,7 @@
 1393902016 /home/davis/Projects/x3d/drivers/renderer/renderer/colorspectrum.h
 	<math/math.h>
 
-1394178348 source:/home/davis/Projects/x3d/drivers/renderer/renderer/main.c
+1394224428 source:/home/davis/Projects/x3d/drivers/renderer/renderer/main.c
 	<x3d/common.h>
 	<algorithm.h>
 	<logout.h>
@@ -2786,7 +2786,7 @@
 
 1363271212 source:/home/davis/Projects/x3d/drivers/renderer/renderer/raytrace.c
 
-1394178313 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterizer.c
+1394223961 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterizer.c
 	<x3d/common.h>
 	<math.h>
 	<algorithm.h>
@@ -3024,7 +3024,7 @@
 1393902016 source:/home/davis/Projects/x3d/lib/staging.c
 	<staging.h>
 
-1394177213 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.c
+1394221135 source:/home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.c
 	<algorithm.h>
 	<logout.h>
 	<memory.h>
@@ -3032,7 +3032,7 @@
 	"vertex_processor.h"
 	"rasterizer.h"
 
-1394177174 /home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.h
+1394219356 /home/davis/Projects/x3d/drivers/renderer/renderer/rasterization.h
 	<math/math.h>
 
 1363271212 source:/home/davis/Projects/x3d/drivers/renderer/renderer/raytracer.c
@@ -3108,7 +3108,7 @@
 
 1393392833 /home/davis/Projects/x3d/drivers/renderer/renderer/dbg_vertprocessor.h
 
-1394174896 source:/home/davis/Projects/x3d/drivers/editor/main_editor.c
+1394222023 source:/home/davis/Projects/x3d/drivers/editor/main_editor.c
 	<gtk/gtk.h>
 	<logout.h>
 	<x3d/common.h>
@@ -4326,7 +4326,7 @@
 
 1391230635 /home/davis/Projects/x3d/drivers/editor/renderable_editor.h
 
-1394165975 /home/davis/Projects/x3d/drivers/renderer/renderer/vertattri_lerp.h
+1394221728 /home/davis/Projects/x3d/drivers/renderer/renderer/vertattri_lerp.h
 
 1391197248 /home/davis/Projects/x3d/lib/algorithm.inc
 
@@ -4399,7 +4399,7 @@
 	"rasterization.h"
 	"vibuffer.h"
 
-1393902016 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vertex_processor.c
+1394219371 source:/home/davis/Projects/x3d/drivers/renderer/renderer/vertex_processor.c
 	<logout.h>
 	<algorithm.h>
 	<renderer/shader.h>

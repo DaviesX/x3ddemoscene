@@ -193,7 +193,7 @@ void vertprocessor_finalize ( struct rtcontext *cont, struct vertprocessor *vp )
                 vp->cull_factor = 1.0f;
                 break;
         }
-        case CULL_IDR_FONTFACE: {
+        case CULL_IDR_FRONTFACE: {
                 vp->cull_factor = -1.0f;
                 break;
         }
@@ -475,13 +475,13 @@ static uint32_t get_index ( int i, untyped *index_stream, int size )
 {
         switch ( size ) {
         case 1: {
-                return *((uint8_t *) index_stream + i*size);
+                return *((uint8_t *) index_stream + i);
         }
         case 2: {
-                return *((uint16_t *) index_stream + i*size);
+                return *((uint16_t *) index_stream + i);
         }
         case 4: {
-                return *((uint32_t *) index_stream + i*size);
+                return *((uint32_t *) index_stream + i);
         }
         default: {
                 log_critical_err_dbg ( "no such index format whose size is: %d", size );

@@ -15,26 +15,26 @@ static int SampleFunction2();
 
 int main ( int argc, char *argv[] )
 {
-	SampleFunction2 ();
-	return 0;
+        SampleFunction2 ();
+        return 0;
 }
 
 // A function adding two integers and returning the result
 static int SampleAddInt(int i1, int i2)
 {
-	return i1 + i2;
+        return i1 + i2;
 }
 
 // A function doing nothing ;)
 static void SampleFunction1()
 {
-	// insert code here
+        // insert code here
 }
 
 // A function always returning zero
 static int SampleFunction2()
 {
-	// insert code here
-	printf ( "hello world\n" );
-	return 0;
+        // insert code here
+        printf ( "hello world\n" );
+        return 0;
 }

@@ -12,7 +12,7 @@
 enum RT_CULL_IDR {
         CULL_IDR_NULL,
         CULL_IDR_BACKFACE,
-        CULL_IDR_FONTFACE
+        CULL_IDR_FRONTFACE
 };
 
 enum RT_CLIP_IDR {
