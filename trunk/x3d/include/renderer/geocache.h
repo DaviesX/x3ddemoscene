@@ -25,7 +25,7 @@ struct geopass_desc {
 
 struct geopass {
         int state;
-        pass_id_t id;
+        uuid_t id;
         struct geopass_desc desc;
         struct alg_list geo;
         struct alg_list prim;
@@ -48,14 +48,14 @@ struct geopass_iterator {
 
 void init_geocache ( struct geocache *gc );
 void free_geocache ( struct geocache *gc );
-void geocache_add_pass ( pass_id_t id, struct geopass_desc *desc, struct geocache *gc );
-void geocache_remove_pass ( pass_id_t id, struct geocache *gc );
-void geocache_build_pass ( pass_id_t id, enum PRIMPART_IDR part_method,
+void geocache_add_pass ( uuid_t id, struct geopass_desc *desc, struct geocache *gc );
+void geocache_remove_pass ( uuid_t id, struct geocache *gc );
+void geocache_build_pass ( uuid_t id, enum PRIMPART_IDR part_method,
                            int extra_params, struct geocache *gc );
-void geocache_add_geometry ( struct geometry *geo, pass_id_t id, struct geocache *gc );
-void geocache_add_from_pass ( pass_id_t src_id, pass_id_t dest_id, struct geocache *gc );
-void geocache_flush ( pass_id_t id, struct geocache *gc );
-struct prim_part *geocache_get_pass_prim ( pass_id_t id, struct geocache *gc );
+void geocache_add_geometry ( struct geometry *geo, uuid_t id, struct geocache *gc );
+void geocache_add_from_pass ( uuid_t src_id, uuid_t dest_id, struct geocache *gc );
+void geocache_flush ( uuid_t id, struct geocache *gc );
+struct prim_part *geocache_get_pass_prim ( uuid_t id, struct geocache *gc );
 
 void geocache_send_passes_desc ( struct geocache *gc, struct alg_list *descs );
 

@@ -1,5 +1,5 @@
-#ifndef X3DALGORITHM_H_INCLUDED
-#define X3DALGORITHM_H_INCLUDED
+#ifndef ALGORITHM_H_INCLUDED
+#define ALGORITHM_H_INCLUDED
 
 
 /*
@@ -30,10 +30,10 @@
 }
 #define end_cdecl_stack				init_cdecl_stack
 
-#define alg_list_len( _list )			((_list)->num_elm)
+#define alg_list_n( _list )			((_list)->num_elm)
 #define alg_list_first( _list )			((void *) (_list)->list)
 #define alg_list_next( _list_elm )		((_list_elm) ++)
-#define alg_list_i( _list, _i )			((void *) &(_list)->list[(_i)*(_list)->elm_size])
+#define alg_list_i( _list, _k, _ptr )           (*(_ptr) = &((typeof(*(_ptr))) (_list)->list)[_k])
 #define get_alg_cont_header( _container )	((untyped *) (_container) + sizeof ( struct container_operations ))
 #define set_alg_cont_header( _ptr, _container )	\
 	(memcpy ( (untyped *) (_container) + sizeof ( struct container_operations ), (_ptr), sizeof ( _ptr ) ))
@@ -108,6 +108,8 @@ struct alg_named_params {
         untyped *buff;
         int curr_pos;
 };
+
+typedef uint64_t uuid_t;
 
 #define init_named_params( _p ) \
 { \
@@ -269,10 +271,13 @@ struct alg_hash_table {
 
 /* linked list */
 struct alg_llist {
-        int n_elm;
-        int *link;
+        int *llist;
+        int ifirst;
         int ilast;
         int icurr;
+        int elm_size;
+        int num_elm;
+        void *content;
 };
 
 /* Provides a balance tree container and
@@ -290,12 +295,6 @@ struct alg_llist_btree {
  * Functions' declaration
  */
 
-// Swap any type of variables
-pseudo_def ( SwapVariableType( _a, _b, _TYPE ) )
-
-// Copy any type of variables
-pseudo_def ( CopyVariableType( _a, _b, _TYPE ) )
-
 // Sorting an array list with bubble sort algorithm
 pseudo_def ( SortArrayBubble( _list, _length, _TYPE, _info, _CompareFunction ) )
 
@@ -307,17 +306,17 @@ pseudo_def ( SortArrayQuick( _list, _length, _TYPE, _info, _CompareFunction ) )
 
 // Partition an array list in-place according to the given mid-value
 pseudo_def ( PartitionArrayMidValue( _list, _length, _TYPE, _midValue, _CompareFunction, _midIndex ) )
-pseudo_def ( void partition_alg ( void *array, int length, void *info,
-                                  int (*compare) ( void *current, void *info ),
-                                  int *imiddle ); )
+pseudo_def ( void alg_divide_array ( void *array, int length, void *info,
+                                     int (*compare) ( void *current, void *info ),
+                                     int *imiddle ); )
 
 // Partition an array list in-place without a given mid-value
 pseudo_def ( PartitionArray( _list, _length, _TYPE, _info, _CompareFunction, _midIndex ) )
 
 // Find the nth element in the array list
 pseudo_def ( FindNthElementArray( _list, _length, _nthPos, _TYPE, _info, _CompareFunction ) )
-pseudo_def ( split_i_alg ( void *array, int length, int i, void *info,
-                           int (*compare) ( void *elm0, void *elm1, void *info ) ) )
+pseudo_def ( alg_split_array ( void *array, int length, int i, void *info,
+                               int (*compare) ( void *elm0, void *elm1, void *info ) ) )
 
 // Create a indirect index list for different list-series algorithm
 pseudo_def ( CreateIndexList( _indexList, _length ) )
@@ -364,35 +363,24 @@ pseudo_def ( FindAddElementHashStatic( _hashTable, _dataIndex, _hashKey, _foundP
 // Look up if the data has been inserted into the table, if not, inserts it, if so, it tries to keep records with it
 pseudo_def ( FindAddElementHashStaticX( _hashTable, _dataIndex, _hashKey, _foundPos, _info, _CompareFunction ) )
 
-// Compute value of a c string according to the format template
-int GetPatternValue ( const char *cString, const char *format, ... );
+int alg_match_pattern ( const char *cstr, const char *format, ... );
 
-// Convert c string to integer
-int StrNToInt ( const char *str, int *iValue, int n );
+int strn_to_int ( const char *str, int *iValue, int n );
+int strn_to_float ( const char *str, float *fValue, int n );
 
-// Convert c string to float
-int StrNToFloat ( const char *str, float *fValue, int n );
+uint32_t alg_hash_str0 ( char *str );
+uint32_t alg_hash_str1 ( char *str );
+uint32_t alg_hash_str2 ( char *str );
+uint32_t alg_hash_str3 ( char *str );
+uint32_t alg_hash_str4 ( char *str );
+uuid_t alg_hash_str_uuid ( char *str );
 
-uint32_t hash_str0 ( char *str );
-uint32_t hash_str1 ( char *str );
-uint32_t hash_str2 ( char *str );
-uint32_t hash_str3 ( char *str );
-uint32_t hash_str4 ( char *str );
+int alg_match_substring ( char *str, char *sub );
+void alg_init_kmp_substring ( char *sub, char *kmp_array[] );
+int alg_match_substring_kmp ( char *str, char *sub, char *kmp_array[] );
 
-// Check if the main string has a substring of subStr
-int MatchSubStr ( char *str, char *subStr );
-
-// Pre-process the substring's next array
-void GetKmpNextArr ( char *subStr, char *nextArr[] );
-
-// Check if the main string has a substring of subStr using kmp algorithm
-int MatchSubStrKmp ( char *str, char *subStr, char *nextArr[] );
-
-// Converts an integer to string in tens
-char *UIntToStrTens ( unsigned int n, char *str, int len );
-
-// Converts an integer to string in hexidecimal
-char *UIntToStrHex ( unsigned int n, char *str, int len );
+char *uint_to_str_tens ( unsigned int n, char *str, int len );
+char *uint_to_str_hex ( unsigned int n, char *str, int len );
 
 void set_container_operations ( void *container,
                                 void (*init_callback) ( void *elm ),
@@ -400,31 +388,39 @@ void set_container_operations ( void *container,
 
 void create_alg_list ( struct alg_list *list, int elm_size, int init_count );
 void free_alg_list ( struct alg_list *list );
-void add_element_alg_list ( void *elm, struct alg_list *list );
-void expand_alg_list ( int count, struct alg_list *list );
-void flush_alg_list ( struct alg_list * list );
-pseudo_def ( void find_elm_alg_list ( struct alg_list *list, void *info, void **elm_data,
-                                      uint8_t (*compare_func) ( void *info, void *elm ) ); )
-pseudo_def ( void remove_elm_alg_list ( struct alg_list *list, void *info,
-                                        uint8_t (*compare_func) ( void *info, void *elm ) ); )
-pseudo_def ( int alg_list_len ( struct alg_list *list ); )
-void copy_alg_list ( struct alg_list *list0, struct alg_list *list1 );
-void swap_alg_list ( struct alg_list *list0, struct alg_list *list1 );
+void alg_list_add ( void *elm, struct alg_list *list );
+void alg_list_expand ( int count, struct alg_list *list );
+void alg_list_flush ( struct alg_list * list );
+pseudo_def ( void alg_list_find ( struct alg_list *list, void *info, void **elm_data,
+                                  uint8_t (*compare_func) ( void *info, void *elm ) ); )
+pseudo_def ( void alg_list_remove ( struct alg_list *list, void *info,
+                                    uint8_t (*compare_func) ( void *info, void *elm ) ); )
+pseudo_def ( int alg_list_n ( struct alg_list *list ); )
+void alg_list_copy ( struct alg_list *list0, struct alg_list *list1 );
+void alg_list_swap ( struct alg_list *list0, struct alg_list *list1 );
 
 void create_ptr_list ( struct alg_list *list, struct alg_pointer_list **ptrs );
 void free_ptr_list ( struct alg_pointer_list *ptrs );
 pseudo_def ( void process_ptr_list ( struct alg_pointer_list *ptrs, struct alg_list *new_list ) )
 
-void create_alg_llist ( struct alg_llist *llist, int init_count );
+void create_alg_llist ( struct alg_llist *llist, int elm_size );
 void free_alg_llist ( struct alg_llist *llist );
-int alg_llist_add ( struct alg_llist *llist );
-pseudo_def ( void alg_llist_find ( struct alg_llist *llist, void *info,
+pseudo_def ( void alg_llist_add_t ( void *elm, struct alg_llist *llist ); )
+pseudo_def ( void alg_llist_find ( struct alg_llist *llist, void *info, void **elm_data,
                                    bool (*compare_func) ( void *info, void *elm ) ); )
-pseudo_def ( void alg_llist_remove ( struct alg_llist *llist, void *info,
+pseudo_def ( void alg_llist_remove ( struct alg_llist *llist, void *info, void **elm_data,
                                      bool (*compare_func) ( void *info, void *elm ) ); )
+pseudo_def ( void alg_llist_remove_ptr ( struct alg_llist *llist, void *elm ); )
+void *alg_llist_first ( struct alg_llist *llist, int *it );
+void *alg_llist_next ( struct alg_llist *llist, int *it );
+void *alg_llist_new ( struct alg_llist *llist );
 void alg_llist_flush ( struct alg_llist *list );
+
+uuid_t alg_gen_uuid ( void );
+void alg_use_uuid ( uuid_t id );
+
 
 #include <algorithm.inc>
 
 
-#endif // X3DALGORITHM_H_INCLUDED
+#endif // ALGORITHM_H_INCLUDED

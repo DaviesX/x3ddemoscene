@@ -1,3 +1,4 @@
+#include <x3d/common.h>
 #include <x3d/kernel.h>
 
 

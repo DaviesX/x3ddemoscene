@@ -4,71 +4,80 @@
 #include <renderer/renderer.h>
 #include "../renderer/main.h"
 #include "../shader/main.h"
+#include "irenderer.h"
 #include "rtrenderer.h"
 
 
-struct renderer_operations {
-        void *(*create) ( struct renderer *r );
+struct irenderer_ops {
+        void *(*create) ( void );
         void (*free) ( void *r );
-        void (*update) ( struct alg_named_params *params, void *r );
+        void (*update) ( struct alg_llist *command, void *r );
         void (*begin) ( void *r );
-        void (*render) ( struct probe *probe, struct rend_out *ro, void *r );
+        void (*render) ( struct probe *probe, struct render_out *ro, void *r );
         void (*end) ( void *r );
 };
 
-const struct renderer_operations RendOps[] = {
-        [RENDERER_IDR_RASTERIZER].create = cast(RendOps->create) 	create_rt_renderer,
-        [RENDERER_IDR_RASTERIZER].free = cast(RendOps->free) 		free_rt_renderer,
-        [RENDERER_IDR_RASTERIZER].update = cast(RendOps->update) 	update_rt_renderer,
-        [RENDERER_IDR_RASTERIZER].begin = cast(RendOps->begin) 		rt_renderer_begin,
-        [RENDERER_IDR_RASTERIZER].render = cast(RendOps->render) 	rt_renderer_render,
-        [RENDERER_IDR_RASTERIZER].end = cast(RendOps->end) 		rt_renderer_end
+const struct irenderer_ops RendOps[] = {
+        [RENDERER_RASTERIZER].create = cast(RendOps->create) 	create_rt_renderer,
+        [RENDERER_RASTERIZER].free = cast(RendOps->free) 	free_rt_renderer,
+        [RENDERER_RASTERIZER].update = cast(RendOps->update) 	update_rt_renderer,
+        [RENDERER_RASTERIZER].begin = cast(RendOps->begin) 	rt_renderer_begin,
+        [RENDERER_RASTERIZER].render = cast(RendOps->render) 	rt_renderer_render,
+        [RENDERER_RASTERIZER].end = cast(RendOps->end) 		rt_renderer_end
 };
 
-struct renderer *create_renderer ( enum RENDERER_IDR method )
+void init_irenderer (
+        enum RENDERER_IDR idr, enum RENDERER_THREAD_STATE_IDR thr_state,
+        enum RENDER_SPEC_IDR spec,void *_rend )
 {
-        struct renderer *r = alloc_fix ( sizeof *r, 1 );
-        r->idr = method;
-        r->thr_state = RENDERER_THREAD_MUTUAL | RENDERER_THREAD_SINGLE;
-        r->spec = RENDER_SPEC_SW_BUILTIN;
-        r->rend = RendOps[r->idr].create ( r );
+        struct irenderer *rend = _rend;
+        rend->idr = idr;
+        rend->thr_state = thr_state;
+        rend->spec = spec;
         dbg_renderer_add_all ();
         dbg_shader_add_all ();
-        return r;
 }
 
-void free_renderer ( struct renderer *r )
+void free_irenderer ( void *_rend )
 {
-        RendOps[r->idr].free ( r->rend );
-        free_fix ( r );
 }
 
-void update_renderer ( struct alg_named_params *params, struct renderer *r )
+struct irenderer *icreate_renderer ( enum RENDERER_IDR method )
 {
-        RendOps[r->idr].update ( params, r->rend );
+        return RendOps[method].create ();
 }
 
-void renderer_begin ( struct renderer *r )
+void ifree_renderer ( struct irenderer *r )
 {
-        RendOps[r->idr].begin ( r->rend );
+        RendOps[r->idr].free ( r );
 }
 
-void renderer_render ( struct probe *probe, struct rend_out *ro, struct renderer *r )
+void iupdate_renderer ( struct alg_llist *command, struct irenderer *r )
 {
-        RendOps[r->idr].render ( probe, ro, r->rend );
+        RendOps[r->idr].update ( command, r );
 }
 
-void renderer_end ( struct renderer *r )
+void irenderer_begin ( struct irenderer *r )
 {
-        RendOps[r->idr].end ( r->rend );
+        RendOps[r->idr].begin ( r );
 }
 
-struct geocache *renderer_export_geocache ( struct renderer *r )
+void irenderer_render ( struct probe *probe, struct render_out *ro, struct irenderer *r )
 {
-        return r->gc;
+        RendOps[r->idr].render ( probe, ro, r );
 }
 
-struct probe *renderer_export_probe ( struct renderer *r )
+void irenderer_end ( struct irenderer *r )
 {
-        return r->probe;
+        RendOps[r->idr].end ( r );
+}
+
+struct geocache *irenderer_export_geocache ( struct irenderer *r )
+{
+        return nullptr;
+}
+
+struct probe *irenderer_export_probe ( struct irenderer *r )
+{
+        return nullptr;
 }

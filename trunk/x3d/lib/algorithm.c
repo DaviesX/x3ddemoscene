@@ -3,7 +3,7 @@
 #include <math/math.h>
 
 
-// Definitions for GetPatternValue function
+// Definitions for alg_match_pattern function
 #define PATTERN_FORMAT_PREFIX		'['
 #define PATTERN_FORMAT_LENGTH		3
 #define PATTERN_FORMAT_INT		'i'
@@ -12,7 +12,9 @@
 #define PATTERN_TYPE_INIT		0X7F
 #define PATTERN_MAX_COUNTS		16
 
-// A structure that contains translated pattern
+uuid_t g_uuid = 0;
+
+/* contains translated pattern */
 typedef struct PATTERN_DATA_TYP {
         struct {
                 int type;
@@ -23,12 +25,12 @@ typedef struct PATTERN_DATA_TYP {
 } PATTERN_DATA, *PATTERN_DATA_PTR;
 
 
-int GetNPrefix ( const char *str, const char **prefix, int *n );
-void GetNSuffix ( const char *str, const char **suffix, int *n );
+static int GetNPrefix ( const char *str, const char **prefix, int *n );
+static void GetNSuffix ( const char *str, const char **suffix, int *n );
 
 
-// Compute prefix string ( string before PATTERN_FORMAT_PREFIX occurs )
-int GetNPrefix ( const char *str, const char **prefix, int *n )
+/* Compute prefix string ( string before PATTERN_FORMAT_PREFIX occurs ) */
+static int GetNPrefix ( const char *str, const char **prefix, int *n )
 {
         int pos = 0;
         while ( str[pos] != 0 ) {
@@ -42,11 +44,10 @@ int GetNPrefix ( const char *str, const char **prefix, int *n )
         }// End While
 
         return 0;
+}
 
-}// End Function GetNPrefix
-
-// Compute suffix string ( string before next PATTERN_FORMAT_PREFIX occurs )
-void GetNSuffix ( const char *str, const char **suffix, int *n )
+/* Compute suffix string ( string before next PATTERN_FORMAT_PREFIX occurs ) */
+static void GetNSuffix ( const char *str, const char **suffix, int *n )
 {
         int pos = 0;
         while ( str[pos] != 0 ) {
@@ -57,11 +58,10 @@ void GetNSuffix ( const char *str, const char **suffix, int *n )
         }// End While
         *n = pos;
         *suffix = str;
+}
 
-}// End Function GetNSuffix
-
-// Convert c string to integer
-int StrNToInt ( const char *str, int *iValue, int n )
+/* Convert c string to integer */
+int strn_to_int ( const char *str, int *iValue, int n )
 {
         int temp = 0;
         int pos;
@@ -87,11 +87,10 @@ int StrNToInt ( const char *str, int *iValue, int n )
 
         *iValue = sign*temp;
         return 1;
+}
 
-}// End Function StrNToInt
-
-// Convert c string to float
-int StrNToFloat ( const char *str, float *fValue, int n )
+/* Convert c string to float */
+int strn_to_float ( const char *str, float *fValue, int n )
 {
         unsigned int iTemp = 0;
         unsigned int fTemp = 0;
@@ -173,10 +172,10 @@ int StrNToFloat ( const char *str, float *fValue, int n )
         *fValue = (float) iTemp + (float)fTemp/(float)floatCount;
         return 1;
 
-}// End Function StrNToFloat
+}
 
-// Compute value of a c string according to the format template
-int GetPatternValue ( const char *cString, const char *format, ... )
+/* Compute value of a c string according to the format template */
+int alg_match_pattern ( const char *cstr, const char *format, ... )
 {
         va_list argList;
         va_start ( argList, format );
@@ -193,9 +192,9 @@ int GetPatternValue ( const char *cString, const char *format, ... )
         }
         currentPos += n + PATTERN_FORMAT_LENGTH;
         while ( 1 ) {
-                assert ( cString[cStrPos] == 0 &&
+                assert ( cstr[cStrPos] == 0 &&
                          n != 0 );
-                if ( !strncmp ( &cString[cStrPos], temp, n ) ||
+                if ( !strncmp ( &cstr[cStrPos], temp, n ) ||
                      n == 0 ) {
                         switch ( type ) {
                         case PATTERN_FORMAT_INT: {
@@ -207,7 +206,7 @@ int GetPatternValue ( const char *cString, const char *format, ... )
                                 }
                                 int *iDest = va_arg ( argList, int* );
                                 assert ( !iDest );
-                                if ( !StrNToInt ( &cString[startPos], iDest, diff ) ) {
+                                if ( !strn_to_int ( &cstr[startPos], iDest, diff ) ) {
                                         goto FUNCTION_FAILED;
                                 }
                                 break;
@@ -222,7 +221,7 @@ int GetPatternValue ( const char *cString, const char *format, ... )
                                 }
                                 float *fDest = va_arg ( argList, float* );
                                 assert ( !fDest );
-                                if ( !StrNToFloat ( &cString[startPos], fDest, diff ) ) {
+                                if ( !strn_to_float ( &cstr[startPos], fDest, diff ) ) {
                                         goto FUNCTION_FAILED;
                                 }
                                 break;
@@ -232,9 +231,9 @@ int GetPatternValue ( const char *cString, const char *format, ... )
                                 char *sDest = va_arg ( argList, char* );
                                 assert ( !sDest );
                                 if ( n != 0 ) {
-                                        strncpy ( sDest, &cString[startPos], cStrPos - startPos );
+                                        strncpy ( sDest, &cstr[startPos], cStrPos - startPos );
                                 } else {
-                                        strcpy ( sDest, &cString[startPos] );
+                                        strcpy ( sDest, &cstr[startPos] );
                                 }
                                 break;
                         }// End Case
@@ -270,11 +269,12 @@ FUNCTION_FAILED:
         va_end ( argList );
         return 0;
 
-}// End Function GetPatternValue
+}
 
-uint32_t hash_str0 ( char *str )
+/* a series of string hashing functions */
+uint32_t alg_hash_str0 ( char *str )
 {
-        int hash = 0;
+        uint32_t hash = 0;
         while ( *str != 0 ) {
                 hash += 33*(*str);
                 str ++;
@@ -282,7 +282,7 @@ uint32_t hash_str0 ( char *str )
         return hash;
 }
 
-uint32_t hash_str1 ( char *str )
+uint32_t alg_hash_str1 ( char *str )
 {
         uint32_t hash = 0;
         while ( *str ) {
@@ -297,7 +297,7 @@ uint32_t hash_str1 ( char *str )
         return hash;
 }
 
-uint32_t hash_str2 ( char *str )
+uint32_t alg_hash_str2 ( char *str )
 {
         uint64_t hash = 0xcbf29ce484222325;
         while ( *str != 0 ) {
@@ -305,10 +305,10 @@ uint32_t hash_str2 ( char *str )
                 hash *= 0x100000001b3;
                 str ++;
         }
-        return hash;
+        return (uint32_t) ((hash >> 32) ^ hash);
 }
 
-uint32_t hash_str3 ( char *str )
+uint32_t alg_hash_str3 ( char *str )
 {
         uint32_t hash = 0;
         while ( *str ) {
@@ -318,7 +318,7 @@ uint32_t hash_str3 ( char *str )
         return hash;
 }
 
-uint32_t hash_str4 ( char *str )
+uint32_t alg_hash_str4 ( char *str )
 {
         uint32_t seed = 131; // 31 131 1313 13131 131313 etc..
         uint32_t hash = 0;
@@ -329,56 +329,63 @@ uint32_t hash_str4 ( char *str )
         return hash;
 }
 
-// Check if the main string has a substring of subStr
-int MatchSubStr ( char *str, char *subStr )
+uuid_t alg_hash_str_uuid ( char *str )
 {
-        char *oriStr = str;
-        char *strBt = str;
-        char *subStrBt = subStr;
-        while ( *str && *subStr ) {
-                if ( *str != *subStr ) {
-                        subStr = subStrBt;
+        uint64_t hash = 0xcbf29ce484222325;
+        while ( *str != 0 ) {
+                hash ^= *str;
+                hash *= 0x100000001b3;
+                str ++;
+        }
+        return (uuid_t) hash;
+}
+
+// Check if the main string has a substring of sub
+int alg_match_substring ( char *str, char *sub )
+{
+        char *ori = str;
+        char *restart = sub;
+        while ( *str && *sub ) {
+                if ( *str != *sub ) {
+                        sub = restart;
                 } else {
-                        subStr ++;
+                        sub ++;
                 }
                 str ++;
-        }// End While
-
-        if ( *subStr == 0 ) {
-                return str - oriStr;
+        }
+        if ( *sub == 0 ) {
+                return str - ori;
         } else {
                 return -1;
-        }// End If
+        }
+}
 
-}// End Function MatchSubStr
-
-// Pre-process the substring's next array
-void GetKmpNextArr ( char *subStr, char *nextArr[] )
+/* Pre-process the substring's next array */
+void alg_init_kmp_substring ( char *sub, char *kmp_array[] )
 {
-}// End Function GetKmpNextArr
+}
 
-// Check if the main string has a substring of subStr using kmp algorithm
-int MatchSubStrKmp ( char *str, char *subStr, char *nextArr[] )
+/* Check if the main string has a substring of subStr using kmp algorithm */
+int alg_match_substring_kmp ( char *str, char *sub, char *kmp_array[] )
 {
-}// End Function MatchSubStrKmp
+        return -1;
+}
 
-// Converts an integer to string in tens
-char *UIntToStrTens ( unsigned int n, char *str, int len )
+/* Converts an integer to string in tens */
+char *uint_to_str_tens ( unsigned int n, char *str, int len )
 {
-        char *strBack = &str[len - 1];
-        *strBack = 0;
+        char *back = &str[len - 1];
+        *back = 0;
         while ( n != 0 ) {
-                strBack --;
-                *strBack = '0' + n%10;
+                back --;
+                *back = '0' + n%10;
                 n /= 10;
-        }// End While
-
-        return strBack;
-
-}// End Function IntToStrTens
+        }
+        return back;
+}
 
 // Converts an unsigned integer to string in hexidecimal
-char *UIntToStrHex ( unsigned int n, char *str, int len )
+char *uint_to_str_hex ( unsigned int n, char *str, int len )
 {
         char *strBack = &str[len - 1];
         *strBack = 0;
@@ -391,8 +398,7 @@ char *UIntToStrHex ( unsigned int n, char *str, int len )
         *(-- strBack) = 'X';
         *(-- strBack) = '0';
         return strBack;
-
-}// End Function IntToStrHex
+}
 
 void set_container_operations ( void *container,
                                 void (*init_callback) ( void *elm ),
@@ -433,7 +439,7 @@ void free_alg_list ( struct alg_list *list )
         memset ( list, 0, sizeof ( *list ) );
 }
 
-void add_element_alg_list ( void *elm, struct alg_list *list )
+void alg_list_add ( void *elm, struct alg_list *list )
 {
         list->list = add_var ( list->list, list->elm_size );
         if ( list->ops.init_callback ) {
@@ -443,19 +449,19 @@ void add_element_alg_list ( void *elm, struct alg_list *list )
         list->num_elm ++;
 }
 
-void expand_alg_list ( int count, struct alg_list *list )
+void alg_list_expand ( int count, struct alg_list *list )
 {
         list->list = expand2_var ( list->list, count );
 }
 
-void flush_alg_list ( struct alg_list *list )
+void alg_list_flush ( struct alg_list *list )
 {
         flush_var ( list->list );
         list->num_elm = 0;
 }
 
 /* Both lists must have the same element type */
-void copy_alg_list ( struct alg_list *list0, struct alg_list *list1 )
+void alg_list_copy ( struct alg_list *list0, struct alg_list *list1 )
 {
         untyped *t = list1->list;
         memcpy ( list1, list0, sizeof ( *list1 ) );
@@ -465,26 +471,92 @@ void copy_alg_list ( struct alg_list *list0, struct alg_list *list1 )
 }
 
 /* swaps the list's pointer respectively */
-void swap_alg_list ( struct alg_list *list0, struct alg_list *list1 )
+void alg_list_swap ( struct alg_list *list0, struct alg_list *list1 )
 {
         untyped *t =list0->list;
         list0->list = list1->list;
         list1->list = t;
 }
 
-void create_alg_llist ( struct alg_llist *llist, int init_count )
+void create_alg_llist ( struct alg_llist *llist, int elm_size )
 {
+        memset ( llist, 0, sizeof *llist );
+        llist->content = alloc_var ( elm_size, 0 );
+        llist->llist = alloc_var ( sizeof ( int ), 0 );
+        llist->elm_size = elm_size;
 }
 
 void free_alg_llist ( struct alg_llist *llist )
 {
+        free_var ( llist->llist );
+        free_var ( llist->content );
+        memset ( llist, 0, sizeof *llist );
 }
 
-int alg_llist_add ( struct alg_llist *llist )
+void *alg_llist_first ( struct alg_llist *llist, int *it )
 {
-        return 0;
+        *it = llist->ifirst;
+        if ( *it != llist->icurr ) {
+                return (untyped *) llist->content + (*it)*llist->elm_size;
+        } else {
+                return nullptr;
+        }
 }
 
-void alg_llist_flush ( struct alg_llist *list )
+void *alg_llist_next ( struct alg_llist *llist, int *it )
 {
+        *it = llist->llist[*it];
+        if ( *it != llist->icurr ) {
+                return (untyped *) llist->content + (*it)*llist->elm_size;
+        } else {
+                return nullptr;
+        }
+}
+
+#if 0
+void alg_llist_add ( void *elm, struct alg_llist *llist )
+{
+        int i = llist->icurr;
+        llist->llist = add_var ( llist->llist, 1 );
+        llist->content = add_var ( llist->content, 1 );
+        void *dest = llist->content + i*llist->elm_size;
+        memcpy ( dest, elm, llist->elm_size );
+        llist->llist[i] = (llist->icurr == llist->ilast) ?
+                          (++ llist->ilast) : (llist->llist[i]);
+        llist->icurr = llist->llist[i];
+        llist->num_elm ++;
+}
+#endif // 0
+
+void *alg_llist_new ( struct alg_llist *llist )
+{
+        const int i = llist->icurr;
+        llist->llist = add_var ( llist->llist, 1 );
+        llist->content = add_var ( llist->content, 1 );
+        llist->llist[i] = (llist->icurr == llist->ilast) ?
+                          ++ llist->ilast : llist->llist[i];
+        llist->icurr = llist->llist[i];
+        llist->num_elm ++;
+        return llist->content + i*llist->elm_size;
+}
+
+
+void alg_llist_flush ( struct alg_llist *llist )
+{
+        flush_var ( llist->content );
+        flush_var ( llist->llist );
+        llist->icurr = 0;
+        llist->ilast = 0;
+        llist->ifirst = 0;
+        llist->num_elm = 0;
+}
+
+uuid_t alg_gen_uuid ( void )
+{
+        return g_uuid ++;
+}
+
+void alg_use_uuid ( uuid_t id )
+{
+        g_uuid = max ( id, g_uuid );
 }

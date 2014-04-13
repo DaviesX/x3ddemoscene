@@ -17,6 +17,8 @@ struct main_editor {
         GtkWidget *element_tree_view;
         GtkWidget *new_assist_dialog;
 
+        uuid_t editor_id;
+        struct editor *editor;
         bool draw_signal_busy;
         int logo_draw_signal;
         int tmp_draw_signal;
@@ -136,12 +138,16 @@ bool main_editor_load ( void )
                 return false;
         }
         /* set current control window */
-        if ( g_comm_data.mode == EDIT_RUN_EDITOR ) {
+        if ( g_comm_data.ed_mode == X_EDITOR_DEMO_MODE ) {
+demo_mode:
                 g_main_edit.curr_window = g_main_edit.edit_window;
                 g_main_edit.curr_draw_area = g_main_edit.draw_area;
-        } else {
+        } else if ( g_comm_data.ed_mode == X_EDITOR_EDIT_MODE ) {
                 g_main_edit.curr_window = g_main_edit.pure_window;
                 g_main_edit.curr_draw_area = g_main_edit.pure_draw_area;
+        } else {
+                log_mild_err_dbg ( "mode is not specified corrected. selected mode: %d. running into demo mode...", g_comm_data.ed_mode );
+                goto demo_mode;
         }
         /* change background color to black */
         GdkColor color;
@@ -151,19 +157,16 @@ bool main_editor_load ( void )
         gtk_widget_modify_bg ( g_main_edit.curr_draw_area, GTK_STATE_NORMAL, &color );
         /* show window */
         gtk_widget_show_all ( g_main_edit.curr_window );
-        /* upload render region */
+        /* create editor and upload render region */
+        g_main_edit.editor_id = editor_add ( "main-window-editor" );
+        g_main_edit.editor = editor_get_byid ( g_main_edit.editor_id );
         int x, y;
         int width, height;
         widget_get_size ( g_main_edit.curr_window, g_main_edit.curr_draw_area,
                           &x, &y, &width, &height );
-        struct render_region rr;
-        rr.type = PLAT_HANDLE_GTK;
-        rr.handle = g_main_edit.curr_draw_area;
-        rr.rect.x0 = x;
-        rr.rect.y0 = y;
-        rr.rect.x1 = width;
-        rr.rect.y1 = height;
-        render_region_add ( &rr );
+        struct activex_render_region *render_region = create_activex_render_region (
+                                PLATFORM_GTK, g_main_edit.curr_draw_area, x, y, width, height );
+        editor_add_activex ( "main-window-render-region", render_region, g_main_edit.editor );
         display_logo_image ( g_main_edit.curr_draw_area, true );
         return true;
 }

@@ -8,32 +8,20 @@
 
 struct geocache;
 struct probe;
-struct rend_out;
-
-/*
- * Structures
- */
-struct renderer {
-        enum RENDERER_IDR idr;
-        enum RENDERER_THREAD_STATE_IDR thr_state;
-        enum RENDER_SPEC_IDR spec;
-        void *rend;
-        struct geocache *gc;
-        struct probe *probe;
-        struct rend_out *ro;
-};
+struct render_out;
+struct irenderer;
 
 /*
  * Functions' declaration
  */
-struct renderer *create_renderer (  enum RENDERER_IDR method );
-void free_renderer ( struct renderer *r );
-void update_renderer ( struct alg_named_params *params, struct renderer *r );
-void renderer_begin ( struct renderer *r );
-void renderer_render ( struct probe *probe, struct rend_out *ro, struct renderer *r );
-void renderer_end ( struct renderer *r );
-struct geocache *renderer_export_geocache ( struct renderer *r );
-struct probe *renderer_export_probe ( struct renderer *r );
+struct irenderer *icreate_renderer ( enum RENDERER_IDR method );
+void ifree_renderer ( struct irenderer *r );
+void iupdate_renderer ( struct alg_llist *command, struct irenderer *r );
+void irenderer_begin ( struct irenderer *r );
+void irenderer_render ( struct probe *probe, struct render_out *ro, struct irenderer *r );
+void irenderer_end ( struct irenderer *r );
+struct geocache *irenderer_export_geocache ( struct irenderer *r );
+struct probe *irenderer_export_probe ( struct irenderer *r );
 
 
 #endif // X3DRENDERING_H_INCLUDED

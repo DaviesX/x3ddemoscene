@@ -157,11 +157,13 @@ void free_resource ( struct res_header *header )
 
 enum RES_STATE checkout_resource ( res_ptr_t *res )
 {
+        return 0;
 }
 
 enum RES_STATE checkout_res_from_loader ( struct res_loader *loader, int i,
                 struct res_header **header )
 {
+        return 0;
 }
 
 void free_loader_resource ( res_loader_t loader )

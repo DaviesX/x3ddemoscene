@@ -10,7 +10,7 @@ void get_pass_context ( int passType, struct pass_context *pc )
 void push_prim_list_to_vibuffer ( struct alg_list *prim_list, struct pass_context *pc,
                                   struct vertex_buffer *vb, struct index_buffer *ib )
 {
-        set_ibuffer_size ( alg_list_len ( prim_list )*3, ib );
+        set_ibuffer_size ( alg_list_n ( prim_list )*3, ib );
         struct triangle_mesh_shape **tmp_mesh =
                 alloc_var ( sizeof ( struct triangle_mesh_shape* ), 0 );
 
@@ -19,7 +19,7 @@ void push_prim_list_to_vibuffer ( struct alg_list *prim_list, struct pass_contex
          * primitive to find out all first-seen meshes and put them to a temporary array tmp_mesh
          * A new index space is given each time we see a new mesh*/
         int i;
-        for ( i = 0; i < alg_list_len ( prim_list ); i ++ ) {
+        for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
                 struct primitive *p = alg_list_i ( prim_list, i );
                 struct triangle_mesh_shape *mesh = p->tri_prim.mesh;
                 int *mark = get_obj_preserve ( &mesh->preserve, int, 0 );
@@ -28,7 +28,7 @@ void push_prim_list_to_vibuffer ( struct alg_list *prim_list, struct pass_contex
 
         int start_off = 0;
         int nmesh = 0;
-        for ( i = 0; i < alg_list_len ( prim_list ); i ++ ) {
+        for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
                 struct primitive *p = alg_list_i ( prim_list, i );
                 struct triangle_mesh_shape *mesh = p->tri_prim.mesh;
                 int *mark = get_obj_preserve ( &mesh->preserve, int, 0 );
@@ -44,7 +44,7 @@ void push_prim_list_to_vibuffer ( struct alg_list *prim_list, struct pass_contex
         }
 
         /* Push vertices into the index buffer and add the offset just found accordingly */
-        for ( i = 0; i < alg_list_len ( prim_list ); i ++ ) {
+        for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
                 struct primitive *p = alg_list_i ( prim_list, i );
                 struct triangle_mesh_shape *mesh = p->tri_prim.mesh;
                 int *offset = get_obj_preserve ( &mesh->preserve, int, 0 );

@@ -1,3 +1,6 @@
+/*! \file include/x3d/renderer.h
+    \brief all kernel renderer classes and enumerations go here. */
+
 #ifndef RENDERER_H_INCLUDED
 #define RENDERER_H_INCLUDED
 
@@ -8,14 +11,17 @@
 
 
 /* The following rendering method is expected to engage in the renderer */
+/** \brief availble renderer type
+ */
 enum RENDERER_IDR {
-        RENDERER_IDR_RASTERIZER,
-        RENDERER_IDR_PATH_TRACER,
-        RENDERER_IDR_PHOTON_TRACER,
-        RENDERER_IDR_PHOTON_MAP,
-        RENDERER_IDR_RADIOSITY,
-        RENDERER_IDR_RADIANCE_CACHE,
-        RENDERER_IDR_PRT
+        RENDERER_RASTERIZER,            /**< rasterization renderer */
+        RENDERER_PATH_TRACER,           /**< path tracing renderer */
+        RENDERER_PHOTON_TRACER,         /**< photon tracing renderer */
+        RENDERER_PHOTON_MAP,            /**< photon light map generation renderer */
+        RENDERER_RADIOSITY,             /**< radiosity light map generation renderer */
+        RENDERER_RADIANCE_CACHE,        /**< radiance cache generation renderer */
+        RENDERER_PRT,                   /**< precomputed radiance transfer renderer */
+        RENDERER_SELECTION              /**< object selection renderer */
 };
 
 enum RENDERER_THREAD_STATE_IDR {
@@ -41,68 +47,31 @@ enum DRAW_MODE_IDR {
         DRAW_MODE_SOLID
 };
 
-enum LIGHTING_IDR {
-        LIGHTING_IDR_DIRECT = 0X1,
-        LIGHTING_IDR_INDIRECT = 0X2,
-        LIGHTING_IDR_SHADOW = 0X4
+enum LIGHT_MODEL_IDR {
+        LIGHT_MODE_DIRECT     = 0X1,
+        LIGHT_MODE_SHADOW     = 0X2,
+        LIGHT_MODE_INDIRECT0  = 0X4,
+        LIGHT_MODE_INDIRECT1  = 0X8,
+        LIGHT_MODE_INDIRECT2  = 0X10
 };
 
-enum RENDER_CONFIG {
-        RENDER_CONFIG_SPEC,
-        RENDER_CONFIG_DRAW_MODE,
-        RENDER_CONFIG_CROP,
-        RENDER_CONFIG_BLEND_LAYER,
-        RENDER_CONFIG_THREAD,
-        RENDER_CONFIG_LIGHTING,
-        RENDER_CONFIG_ANTIALIAS,
-        RENDER_CONFIG_FILTERING
+enum RENDER_COMMAND {
+        RENDER_COMMAND_SPEC,
+        RENDER_COMMAND_DRAW_MODE,
+        RENDER_COMMAND_CROP,
+        RENDER_COMMAND_RENDER_LAYER,
+        RENDER_COMMAND_THREAD,
+        RENDER_COMMAND_LIGHTING,
+        RENDER_COMMAND_ANTIALIAS,
+        RENDER_COMMAND_FILTERING,
+        RENDER_COMMAND_HDR,
+        RENDER_COMMAND_LEN_FLARE,
+        RENDER_COMMAND_DOF
 };
 
-struct rc_params {
-        int n_params;
-        const char *type;
-};
-
-static const struct rc_params RenderConfig[] = {
-        [RENDER_CONFIG_SPEC].n_params = 1,
-        [RENDER_CONFIG_SPEC].type = "d",
-        [RENDER_CONFIG_DRAW_MODE].n_params = 1,
-        [RENDER_CONFIG_DRAW_MODE].type = "d",
-        [RENDER_CONFIG_CROP].n_params = 4,
-        [RENDER_CONFIG_CROP].type = "ffff",
-        [RENDER_CONFIG_BLEND_LAYER].n_params = 2,
-        [RENDER_CONFIG_BLEND_LAYER].type = "df",
-        [RENDER_CONFIG_THREAD].n_params = 1,
-        [RENDER_CONFIG_THREAD].type = "d",
-        [RENDER_CONFIG_LIGHTING].n_params = 2,
-        [RENDER_CONFIG_LIGHTING].type = "dd",
-        [RENDER_CONFIG_ANTIALIAS].n_params = 1,
-        [RENDER_CONFIG_ANTIALIAS].type = "d",
-        [RENDER_CONFIG_FILTERING].n_params = 2,
-        [RENDER_CONFIG_FILTERING].type = "dd"
-};
-
-enum PASS_CULLING_IDR {
-        PASS_UNCULL = 0X0,
-        PASS_CUBIC_CULL = 0X1,
-        PASS_FRUSTUM_CULL = 0X2,
-        PASS_OCCLUSION_CULL = 0X4
-};
-
-enum RENDERABLE_IDR {
-        RENDERABLE_IDR_GEOMETRY,
-        RENDERABLE_IDR_VOLUME
-};
-
-typedef uint32_t renderer_handle_t;
-typedef uint32_t pass_id_t;
+struct lcrenderer;
 struct renderer;
-struct scene;
-struct geometry;
-struct geocache;
-struct volume;
-struct alg_list;
-struct cull_shape;
+struct renderable_ctx;
 struct probe;
 struct render_out;
 
@@ -110,67 +79,62 @@ struct render_out;
 /*
  * structures
  */
-struct pass_desc {
-        pass_id_t id;
-        enum PASS_CULLING_IDR cull_idr;
-        struct cull_shape *cull_shape;
-};
-
-struct renderable {
-        enum RENDERABLE_IDR idr;
-        void *entity;
+struct rend_coomand {
+        enum RENDER_COMMAND type;
+        struct alg_named_params params;
 };
 
 struct renderer_ops {
-        struct renderer *(*create) ( enum RENDERER_IDR method );
-        /* void (*build) ( struct stager *stg, res_record_t *rec, void *r ); */
-        void (*free) ( struct renderer *r );
-        void (*update) ( struct alg_named_params *params, struct renderer *r );
-        void (*begin) ( struct renderer *r );
-        void (*render) ( struct probe *probe, struct render_out *ro, struct renderer *r );
-        void (*end) ( struct renderer *r );
-        struct geocache *(*export_geocache) ( struct renderer *r );
+        struct lcrenderer *(*create) ( enum RENDERER_IDR method );
+        void (*free) ( struct lcrenderer *r );
+        void (*update) ( struct alg_llist *command, struct lcrenderer *r );
+        void (*render) ( struct probe *probe, struct render_out *ro, struct lcrenderer *r );
 };
 
-struct geocache_ops {
-        void (*get_pass_desc) ( struct alg_list *desc, struct geocache *gc );
-        void (*add) ( struct geometry *geo, pass_id_t id, struct geocache *gc );
-        void (*add_from_pass) ( pass_id_t src, pass_id_t dest, struct geocache *gc );
-        void (*flush) ( pass_id_t id, struct geocache *gc );
-};
-
-struct geometry_ops {
-};
-
-struct probe_ops {
+struct render_out_ops {
+        void (*output) ( struct render_out *ro );
 };
 
 /*
- * render context's declaration
+ * functions' declaration
  */
-bool init_renderer_context ( void );
-struct renderer_context *export_renderer_context ( void );
-void renderer_context_import_renderer ( struct renderer_ops *ops );
-void renderer_context_import_geocache ( struct geocache_ops *ops );
-void renderer_context_import_geometry ( struct geometry_ops *ops );
-void renderer_context_import_probe ( struct probe_ops *ops );
-renderer_handle_t renderer_context_add ( enum RENDERER_IDR render_method );
-void renderer_context_remove ( renderer_handle_t rh );
-struct renderer_context *renderer_context_find_first ( renderer_handle_t *rh );
-struct renderer_context *renderer_context_find_next ( renderer_handle_t *rh );
+/* container's */
+void init_renderer_container ( void );
+void free_renderer_container ( void );
+uuid_t renderer_container_add ( struct renderer *rend );
+void renderer_container_remove ( uuid_t id );
+struct renderer *renderer_container_find ( uuid_t id );
+struct renderer *renderer_container_i ( int i );
 
-void update_renderer_context ( void );
+/* registrations */
+void renderer_import_renderer ( struct renderer_ops *ops );
+void renderer_import_render_out ( struct render_out_ops *ops );
 
-void renderer_context_draw_scene ( renderer_handle_t rh, struct scene *scene );
-void renderer_context_draw_geobatch ( renderer_handle_t rh, struct geometry *geo, int n );
-void renderer_context_render ( renderer_handle_t rh );
+/* renderer's */
+struct renderer *create_renderer ( enum RENDERER_IDR type );
+void free_renderer ( struct renderer *rend );
 
-void renderer_context_render_config ( renderer_handle_t rh, enum RENDER_CONFIG config );
-void renderer_context_set_value ( renderer_handle_t rh, ... );
+void renderer_bind_renderable_context ( void *ctx, struct renderer *rend );
+struct probe *renderer_get_probe ( struct renderer *rend );
+struct render_out *renderer_get_render_out ( struct renderer *rend );
 
-/*
- * rendergeo's declaration
- */
+void renderer_set_spec ( enum RENDER_SPEC_IDR spec, struct renderer *rend );
+void renderer_set_draw_mode ( enum DRAW_MODE_IDR draw_mode, struct renderer *rend );
+void renderer_set_crop (
+        bool to_crop, float x0, float x1, float y0, float y1, struct renderer *rend );
+void renderer_new_render_layer ( int importance, float alpha, struct renderer *rend );
+void renderer_set_thread ( enum RENDERER_THREAD_STATE_IDR state, struct renderer *rend );
+void renderer_set_light_model ( enum LIGHT_MODEL_IDR model, struct renderer *rend );
+void renderer_set_antialias ( float level, struct renderer *rend );
+void renderer_set_filter ( float level, struct renderer *rend );
+void renderer_set_hdr ( bool to_apply, struct renderer *rend );
+void renderer_set_len_flare ( bool to_apply, struct renderer *rend );
+void renderer_set_dof ( bool to_apply, struct renderer *rend );
+void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend );
+
+void renderer_update ( struct renderer *rend );
+void renderer_render ( struct renderer *rend );
+void renderer_commit ( struct renderer *rend );
 
 
 #endif // RENDERER_H_INCLUDED

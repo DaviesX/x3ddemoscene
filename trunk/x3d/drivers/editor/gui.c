@@ -13,17 +13,17 @@
 
 struct common_data g_comm_data;
 
-bool load_editor ( int *argc, char ***argv, enum EDIT_MODE mode )
+bool load_editor ( int *argc, char ***argv )
 {
         memset ( &g_comm_data, 0, sizeof g_comm_data );
 
+        /* load in glade file */
         gtk_init ( argc, argv );
         GtkBuilder *builder = nullptr;
         if ( !(builder = gtk_builder_new () ) ) {
                 log_severe_err_dbg ( "cannot create gtk-glade builder" );
                 return false;
         }
-        /* load in glade file */
         GError *error = nullptr;
         if ( !(gtk_builder_add_from_file ( builder,
                                            g_path_res.glade_file, &error )) ) {
@@ -38,6 +38,7 @@ bool load_editor ( int *argc, char ***argv, enum EDIT_MODE mode )
                 }
                 return false;
         }
+        /* create logo */
         GdkPixbuf *pix_buf =
                 gdk_pixbuf_new_from_file ( g_path_res.logo_file, &error );
         if ( !pix_buf ) {
@@ -47,9 +48,21 @@ bool load_editor ( int *argc, char ***argv, enum EDIT_MODE mode )
                 g_free ( error );
                 return false;
         }
+        /* determine the running mode from command line argument */
+        int n = *argc;
+        char **params = *argv;
+        enum X_EDITOR_MODE mode = X_EDITOR_DEMO_MODE;
+        int i;
+        for ( i = 0; i < n; i ++ ) {
+                char *buff = params[i];
+                if ( !strcmp ( buff, "--edit-mode" ) ) {
+                        mode = X_EDITOR_EDIT_MODE;
+                        break;
+                }
+        }
+        g_comm_data.ed_mode = mode;
         g_comm_data.builder = builder;
         g_comm_data.logo_pix_buf = pix_buf;
-        g_comm_data.mode = mode;
         if ( !main_editor_load () ) {
                 return false;
         }
@@ -183,7 +196,6 @@ struct main_window {
 
 
 static struct main_window g_main_win;
-static struct info_bridge *g_info_bridge;
 
 gboolean display_logo_callback ( GtkWidget *draw_region, cairo_t *cairo, gpointer data );
 gboolean quit_callback ( GtkWidget *window );
@@ -200,7 +212,7 @@ void pop_msg_box ( char *content, GtkWidget *window, GtkMessageType type );
 void update_current_info_bridge ( void );
 
 
-bool load_main_window ( int *argc, char ***argv, enum EDIT_MODE mode )
+bool load_main_window ( int *argc, char ***argv )
 {
         gtk_init ( argc, argv );
         GtkBuilder *builder = nullptr;
@@ -286,7 +298,7 @@ bool load_main_window ( int *argc, char ***argv, enum EDIT_MODE mode )
                            G_CALLBACK ( quit_callback ), nullptr );
         free ( error );
         /* create named parameters set and update it with current info */
-        g_info_bridge = get_info_bridge ();
+//        g_info_bridge = get_info_bridge ();
         update_current_info_bridge ();
         /* add main render region */
         /* draw region size and position */
@@ -298,14 +310,12 @@ bool load_main_window ( int *argc, char ***argv, enum EDIT_MODE mode )
         gint x, y;
         gtk_widget_translate_coordinates ( g_main_win.draw_region,
                                            g_main_win.win_box, 0, 0, &x, &y );
-        struct render_region rr;
-        rr.type = PLAT_HANDLE_GTK;
-        rr.handle = g_main_win.draw_region;
-        rr.rect.x0 = x;
-        rr.rect.y0 = y;
-        rr.rect.x1 = width;
-        rr.rect.y1 = height;
-        render_region_add ( &rr );
+
+        struct activex_render_region *render_region = create_activex_render_region (
+                                PLATFORM_GTK, g_main_win.draw_region, x, y, width, height );
+        uuid_t editor = editor_add ( "main-window-editor" );
+        editor_add_activex ( "main-window-render-region", render_region,
+                             editor_get_byid ( editor ) );
         return true;
 }
 
@@ -412,6 +422,7 @@ void pop_msg_box ( char *content, GtkWidget *window, GtkMessageType type )
 
 void update_current_info_bridge ( void )
 {
+#if 0
         struct alg_named_params *pa = &g_info_bridge->params;
 
         /* widgets: window, draw region */
@@ -441,10 +452,11 @@ void update_current_info_bridge ( void )
         static int use_preset = 1;
         if ( use_preset ) {
                 /* First run */
-                push_named_params ( RENDERER_IDR_RASTERIZER, "Renderer-Type", pa );
+                push_named_params ( RENDERER_RASTERIZER, "Renderer-Type", pa );
                 use_preset = 0;
         } else {
         }
+#endif
 }
 
 gboolean display_logo_callback ( GtkWidget *draw_region, cairo_t *cairo, gpointer data )

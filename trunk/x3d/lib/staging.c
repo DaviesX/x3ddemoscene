@@ -141,7 +141,7 @@ char *gen_layer_name ( struct res_name *name )
 
 uint32_t gen_layer_name_hash ( char *name )
 {
-        return hash_str4 ( name );
+        return alg_hash_str4 ( name );
 }
 
 uint32_t gen_layer_hash ( struct res_name *name )
@@ -149,10 +149,10 @@ uint32_t gen_layer_hash ( struct res_name *name )
         uint32_t hash = 0;
         typedef uint32_t (*hash_func) ( char *str );
         const hash_func str_hash[4] = {
-                hash_str0,
-                hash_str1,
-                hash_str2,
-                hash_str3
+                alg_hash_str0,
+                alg_hash_str1,
+                alg_hash_str2,
+                alg_hash_str3
         };
         int i;
         int i_func = 0;
@@ -165,7 +165,7 @@ uint32_t gen_layer_hash ( struct res_name *name )
 uint32_t gen_root_hash ( struct res_name *name )
 {
         assert ( name->layer[0] );
-        return hash_str0 ( name->layer[0] );
+        return alg_hash_str0 ( name->layer[0] );
 }
 
 /* extract root name and layer depth */
@@ -187,8 +187,9 @@ void free_stager ( struct stager *stg )
 {
         ReleaseHashTable ( &stg->lookup );
         int i;
-        for ( i = 0; i < alg_list_len ( &stg->entry ); i ++ ) {
-                struct res_entry *e = alg_list_i ( &stg->entry, i );
+        for ( i = 0; i < alg_list_n ( &stg->entry ); i ++ ) {
+                struct res_entry *e;
+                alg_list_i ( &stg->entry, i, &e );
                 free_fix ( e->name );
                 free_var ( e->buff );
         }
@@ -200,12 +201,13 @@ void flush_stager ( struct stager *stg )
 {
         FlushHashTable ( &stg->lookup );
         int i;
-        for ( i = 0; i < alg_list_len ( &stg->entry ); i ++ ) {
-                struct res_entry *e = alg_list_i ( &stg->entry, i );
+        for ( i = 0; i < alg_list_n ( &stg->entry ); i ++ ) {
+                struct res_entry *e;
+                alg_list_i ( &stg->entry, i, &e );
                 free_fix ( e->name );
                 free_var ( e->buff );
         }
-        flush_alg_list ( &stg->entry );
+        alg_list_flush ( &stg->entry );
         stg->byte_used = 0;
 }
 
@@ -257,8 +259,8 @@ int begin_entry_stager ( char *name, struct res_record *rec )
         entry.name_hash = gen_layer_name_hash ( entry.name );
         entry.buff = alloc_var ( sizeof ( untyped ), 0 );
         entry.uid = layer_uid;
-        int i = alg_list_len ( &stg->entry );
-        add_element_alg_list ( &entry, &stg->entry );
+        int i = alg_list_n ( &stg->entry );
+        alg_list_add ( &entry, &stg->entry );
         stg->num_entry ++;
 
         /* Insert the current position to the hash linked list */
@@ -284,7 +286,8 @@ void end_entry_stager ( int rdepth, struct res_record *rec )
 
         int ientry;
         pop_stack ( &rec->rec_stack, ientry );
-        struct res_entry *entry = alg_list_i ( &stg->entry, ientry );
+        struct res_entry *entry;
+        alg_list_i ( &stg->entry, ientry, &entry );
         entry->state = RESOURCE_LOADED;
         pop_res_name ( &rec->layer );
         uint16_t root_uid = rec->uid;
@@ -298,7 +301,8 @@ void push_data_stager ( void *data, int size, struct res_record *rec )
 {
         assert ( rec->rdepth > 0 );
         struct stager *stg = rec->stg;
-        struct res_entry *entry = alg_list_i ( &stg->entry, rec->ientry );
+        struct res_entry *entry;
+        alg_list_i ( &stg->entry, rec->ientry, &entry );
         entry->buff = add_var ( entry->buff, size );
         untyped *curr_byte = get_var_last ( entry->buff ) - (size - 1);
         memcpy ( curr_byte, data, size );
@@ -359,7 +363,8 @@ enum RES_ERROR set_layer_first_stager ( struct res_record *rec )
         if ( info.ifound == ALG_HASH_INVALID ) {
                 return RES_ERR_INVALID;
         }
-        struct res_entry *entry = alg_list_i ( &stg->entry, info.ifound );
+        struct res_entry *entry;
+        alg_list_i ( &stg->entry, info.ifound, &entry );
         uint16_t root_uid = entry->uid;
         uint16_t layer_uid = root_uid + d;
 
@@ -381,7 +386,7 @@ enum RES_ERROR set_layer_first_stager ( struct res_record *rec )
         rec->ientry = info.ifound;
         free_fix ( slayer );
         /* Retrieve the entry */
-        entry = alg_list_i ( &stg->entry, info.ifound );
+        alg_list_i ( &stg->entry, info.ifound, &entry );
         assert ( entry->state != RESOURCE_INVALID );
         if ( entry->state == RESOURCE_LOADING ) {
                 return RES_ERR_READ_BLOCKED;
@@ -401,7 +406,7 @@ enum RES_ERROR set_layer_next_stager ( struct res_record *rec )
 {
         struct stager *stg = rec->stg;
         int d;
-        char *sroot = root_layer ( &rec->layer, &d );
+        /*char *sroot = */ root_layer ( &rec->layer, &d );
         char *slayer = gen_layer_name ( &rec->layer );
         struct entry_info info = {
                 .entry = alg_list_first ( &stg->entry ),
@@ -417,7 +422,8 @@ enum RES_ERROR set_layer_next_stager ( struct res_record *rec )
         }
         rec->ientry = info.ifound;
         /* Retrieve the entry */
-        struct res_entry *entry = alg_list_i ( &stg->entry, info.ifound );
+        struct res_entry *entry;
+        alg_list_i ( &stg->entry, info.ifound, &entry );
         assert ( entry->state != RESOURCE_INVALID );
         if ( entry->state == RESOURCE_LOADING ) {
                 return RES_ERR_READ_BLOCKED;
@@ -433,7 +439,8 @@ enum RES_ERROR reset_layer_stager ( struct res_record *rec )
 {
         /* Retrieve the entry */
         struct stager *stg = rec->stg;
-        struct res_entry *entry = alg_list_i ( &stg->entry, rec->ientry );
+        struct res_entry *entry;
+        alg_list_i ( &stg->entry, rec->ientry, &entry );
         assert ( entry->state != RESOURCE_INVALID );
         if ( entry->state == RESOURCE_LOADING ) {
                 return RES_ERR_READ_BLOCKED;
@@ -445,6 +452,7 @@ enum RES_ERROR reset_layer_stager ( struct res_record *rec )
 
 enum RES_ERROR delete_node_stager ( struct res_record *rec )
 {
+        return -1;
 }
 
 void reset_data_stager ( struct res_record *rec )
@@ -458,7 +466,8 @@ void *pop_data_stager ( int size, struct res_record *rec )
         untyped *curr = rec->byte_curr;
         DEBUG_SESSION (
                 struct stager *stg = rec->stg;
-                struct res_entry *entry = alg_list_i ( &stg->entry, rec->ientry );
+                struct res_entry *entry;
+                alg_list_i ( &stg->entry, rec->ientry, &entry );
                 assert ( entry->state != RESOURCE_LOADING );
                 assert ( curr >= rec->byte_ori && curr < rec->byte_end );
         )

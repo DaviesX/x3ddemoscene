@@ -9,6 +9,11 @@ enum {
         X_EDITOR_DESTROY
 };
 
+enum X_EDITOR_MODE {
+        X_EDITOR_DEMO_MODE,
+        X_EDITOR_EDIT_MODE
+};
+
 struct common_data {
         GtkBuilder *builder;
         GdkPixbuf *logo_pix_buf;
@@ -16,7 +21,7 @@ struct common_data {
         void *tmp_image;
         int tmp_image_w;
         int tmp_image_h;
-        int mode;
+        enum X_EDITOR_MODE ed_mode;
 };
 
 struct path_resource {

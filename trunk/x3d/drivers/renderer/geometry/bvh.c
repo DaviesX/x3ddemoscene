@@ -77,11 +77,11 @@ struct bvh_subdivide *build_bvh_subdivide ( struct alg_list *prim_list, int buil
 
         /* Recursively build Bvh tree for primitives */
         struct alg_list new_prim_list;
-        create_alg_list ( &new_prim_list, sizeof ( struct primitive ), alg_list_len ( prim_list ) );
+        create_alg_list ( &new_prim_list, sizeof ( struct primitive ), alg_list_n ( prim_list ) );
         int num_nodes;
         struct initial_tree *initial =
                 build_initial_tree ( prim_list, build_method, &new_prim_list, &num_nodes );
-        swap_alg_list ( &new_prim_list, prim_list );
+        alg_list_swap ( &new_prim_list, prim_list );
         free_alg_list ( &new_prim_list );
         bvh->prim_list = prim_list;
 
@@ -136,17 +136,19 @@ struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int part_m
                 struct alg_list *new_prim_list, int *num_nodes )
 {
         /* Create bound information for each primitive */
-        struct bound_data *bounds = alloc_fix ( sizeof ( *bounds ), alg_list_len ( prim_list ) );
+        struct bound_data *bounds = alloc_fix ( sizeof ( *bounds ), alg_list_n ( prim_list ) );
         int i;
-        for ( i = 0; i < alg_list_len ( prim_list ); i ++ ) {
-                primitive_get_bound ( alg_list_i ( prim_list, i ), &bounds[i].bound );
+        for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
+                struct primitive *prim;
+                alg_list_i ( prim_list, i, &prim );
+                primitive_get_bound ( prim, &bounds[i].bound );
                 get_centroid ( &bounds[i].bound, &bounds[i].centroid );
-                bounds[i].prim = alg_list_i ( prim_list, i );
+                bounds[i].prim = prim;
         }
 
         int start_pos = 0;
         int split_pos = start_pos;
-        int end_pos = alg_list_len ( prim_list );
+        int end_pos = alg_list_n ( prim_list );
         *num_nodes = 0;
         declare_stack ( stack, TREE_DEPTH*4*sizeof (int) );
 
@@ -212,8 +214,8 @@ struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int part_m
                 struct mid_point vol_mid;
                 vol_mid.axis = axis;
                 vol_mid.mid = mid;
-                partition_alg ( &bounds[start_pos], end_pos - start_pos, &vol_mid,
-                                part_by_mid_point, &split_pos );
+                alg_divide_array ( &bounds[start_pos], end_pos - start_pos, &vol_mid,
+                                   part_by_mid_point, &split_pos );
                 enter_tree_branch (
                         push_stack ( &stack, curr_node );
                         push_stack ( &stack, ichild );
@@ -230,8 +232,8 @@ struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int part_m
                 split_pos = (start_pos + end_pos) >> 1;
                 struct mid_point vol_mid;
                 vol_mid.axis = axis;
-                split_i_alg ( &bounds[start_pos], end_pos - start_pos, split_pos,
-                              &vol_mid, part_by_mid_prim );
+                alg_split_array ( &bounds[start_pos], end_pos - start_pos, split_pos,
+                                  &vol_mid, part_by_mid_prim );
                 enter_tree_branch (
                         push_stack ( &stack, curr_node );
                         push_stack ( &stack, ichild );
@@ -251,8 +253,8 @@ struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int part_m
                         split_pos = (start_pos + end_pos) >> 1;
                         struct mid_point vol_mid;
                         vol_mid.axis = axis;
-                        split_i_alg ( &bounds[start_pos], end_pos - start_pos, split_pos,
-                                      &vol_mid, part_by_mid_prim );
+                        alg_split_array ( &bounds[start_pos], end_pos - start_pos, split_pos,
+                                          &vol_mid, part_by_mid_prim );
                         enter_tree_branch (
                                 push_stack ( &stack, curr_node );
                                 push_stack ( &stack, ichild );
@@ -354,8 +356,8 @@ struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int part_m
                                 struct mid_point vol_mid;
                                 vol_mid.axis = axis;
                                 vol_mid.mid = best_point;
-                                partition_alg ( &bounds[start_pos], end_pos - start_pos, &vol_mid,
-                                                part_by_mid_point, &split_pos );
+                                alg_divide_array ( &bounds[start_pos], end_pos - start_pos, &vol_mid,
+                                                   part_by_mid_point, &split_pos );
                                 enter_tree_branch (
                                         push_stack ( &stack, curr_node );
                                         push_stack ( &stack, ichild );
@@ -390,8 +392,8 @@ struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int part_m
         /** END TRAVERSAL **/
         end_tree_traversal ( TT0 );
 
-        for ( i = 0; i < alg_list_len ( prim_list ); i ++ ) {
-                add_element_alg_list ( bounds[i].prim, new_prim_list );
+        for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
+                alg_list_add ( bounds[i].prim, new_prim_list );
         }
         free_fix ( bounds );
         return tree;

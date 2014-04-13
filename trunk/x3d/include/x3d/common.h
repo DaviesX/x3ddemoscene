@@ -34,7 +34,7 @@
 #ifdef X3D_DEBUG_MODE
 #define RENDER_LIB_VERSION_STRING	"v 1.0 debug"
 #pragma GCC diagnostic ignored "-Wunused-function"
-// #pragma GCC diagnostic ignored "-Wmissing-braces"
+#pragma GCC diagnostic ignored "-Wmissing-braces"
 #else
 #define RENDER_LIB_VERSION_STRING	"v 1.0"
 #endif
@@ -46,6 +46,7 @@
 /*
  * Include relative headers
  */
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>

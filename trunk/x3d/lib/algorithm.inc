@@ -1,7 +1,7 @@
 /* algorithm: Some commonly used algorithm which is implemented in the header
  * to avoid function pointer */
-#ifndef ALGORITHM_H_INCLUDED
-#define ALGORITHM_H_INCLUDED
+#ifndef ALGORITHM_INC_INCLUDED
+#define ALGORITHM_INC_INCLUDED
 
 // Swap any type of variables
 #define SwapVariableType(_a, _b, _TYPE)	\
@@ -101,8 +101,8 @@
 
 // Storage for stack information of QuickSort function
 struct PARTITION_BOUNDARY {
-	int right;
-	int pivotIndex;
+        int right;
+        int pivotIndex;
 };
 
 // Helper functions for SortArrayListQuick
@@ -190,7 +190,7 @@ struct PARTITION_BOUNDARY {
     (_midIndex) = _newPivotIndex;\
 }// End Function PartitionArrayMidValue
 
-#define partition_alg( _array, _length, _info, _compare, _imiddle )	\
+#define alg_divide_array( _array, _length, _info, _compare, _imiddle )	\
 {\
 	int _pivot = 0;\
 	int _i;\
@@ -264,7 +264,7 @@ struct PARTITION_BOUNDARY {
 	}\
 }// End Function FindNthElementArray
 
-#define split_i_alg( _array, _length, _i, _info, _compare )	\
+#define alg_split_array( _array, _length, _i, _info, _compare )	\
 {\
 	int _left = 0,\
 		_right = (_length) - 1;\
@@ -789,7 +789,7 @@ struct PARTITION_BOUNDARY {
 /** list containers **/
 #define list_elm( _list, _i )			(&(_list)->list[(_i)*(_list)->elm_size])
 
-#define find_elm_alg_list( _list, _info, _ret_pos, _compare_func )	\
+#define alg_list_find( _list, _info, _ret_pos, _compare_func )	\
 {\
 	*(_ret_pos) = -1; \
 	int _i; \
@@ -801,7 +801,7 @@ struct PARTITION_BOUNDARY {
 	} \
 }
 
-#define remove_elm_alg_list( _list, _info, _compare_func ) \
+#define alg_list_remove( _list, _info, _compare_func ) \
 { \
 	int _i; \
 	for ( _i = 0; _i < (_list)->num_elm; _i ++ ) { \
@@ -819,12 +819,71 @@ struct PARTITION_BOUNDARY {
 	} \
 }
 
-#define alg_llist_find( _llist, _info, _f_Compare ) \
+#define alg_llist_add( _elm, _llist ) \
 { \
+        int _i = (_llist)->icurr; \
+        typeof(_elm) _dest = (typeof(_elm)) (_llist)->content + _i; \
+        (_llist)->llist = add_var ( (_llist)->llist, 1 ); \
+        (_llist)->content = add_var ( (_llist)->content, 1 ); \
+        memcpy ( _dest, _elm, sizeof(*(_elm)) ); \
+        (_llist)->llist[_i] = ((_llist)->icurr == (_llist)->ilast) ? \
+                               (++ (_llist)->ilast) : ((_llist)->llist[_i]); \
+        (_llist)->icurr = (_llist)->llist[_i]; \
+        (_llist)->num_elm ++; \
 }
 
-#define alg_llist_remove ( _llist, _info, _f_Compare ) \
+#define alg_llist_find( _llist, _info, _elm, _f_Compare ) \
 { \
+        *(_elm) = nullptr; \
+        int _curr = (_llist)->ifirst; \
+        typeof(*(_elm)) _ptr = (_llist)->content; \
+        while ( _curr != (_llist)->icurr ) { \
+                if ( _f_Compare ( _info, &_ptr[_curr] ) ) { \
+                        *(_elm) = &_ptr[_curr]; \
+                        break; \
+                } \
+                _curr = (_llist)->llist[_curr]; \
+        } \
 }
 
-#endif // ALGORITHM_H_INCLUDED
+#define alg_llist_remove( _llist, _info, _elm, _f_Compare ) \
+{ \
+        *(_elm) = nullptr; \
+        int _curr = (_llist)->ifirst; \
+        typeof(*(_elm)) _ptr = (_llist)->content; \
+        while ( _curr != (_llist)->icurr ) \
+        { \
+                if ( _f_Compare ( _info, &_ptr[_curr] ) ) { \
+                        *(_elm) = &_ptr[_curr]; \
+                        (_llist)->ifirst = (_curr == (_llist)->ifirst) ? \
+                                           (_llist)->llist[_curr] : (_llist)->ifirst; \
+                        int _t = (_llist)->llist[(_llist)->icurr]; \
+                        (_llist)->llist[(_llist)->icurr] = _curr; \
+                        (_llist)->llist[_curr] = _t; \
+                        (_llist)->num_elm --; \
+                        break; \
+                } \
+                _curr = (_llist)->llist[_curr]; \
+        } \
+}
+
+#define alg_llist_remove_ptr( _llist, _elm ) \
+{ \
+        int _curr = (_llist)->ifirst; \
+        typeof(*(_elm)) _ptr = (_llist)->content; \
+        while ( _curr != (_llist)->icurr ) \
+        { \
+                if ( (_elm) == &_ptr[_curr] ) ) { \
+                        (_llist)->ifirst = (_curr == (_llist)->ifirst) ? \
+                                           (_llist)->llist[_curr] : (_llist)->ifirst; \
+                        int _t = (_llist)->llist[(_llist)->icurr]; \
+                        (_llist)->llist[(_llist)->icurr] = _curr; \
+                        (_llist)->llist[_curr] = _t; \
+                        (_llist)->num_elm --; \
+                        break; \
+                } \
+                _curr = (_llist)->llist[_curr]; \
+        } \
+}
+
+#endif // ALGORITHM_INC_INCLUDED

@@ -7,7 +7,7 @@
 /*
  * Functions' declarations
  */
-bool load_editor ( int *argc, char ***argv, enum EDIT_MODE mode );
+bool load_editor ( int *argc, char ***argv );
 void edit_main_loop ( void );
 
 void *dbg_get_render_region ( void );

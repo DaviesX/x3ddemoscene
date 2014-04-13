@@ -191,7 +191,7 @@ void PutVertAttrIndex ( char *faceLine, int nAttrs, int *vIndices )
         GetNextStr2 ( cLineSave, '/', ' ', 0, len );
         int iAttr;
         for ( iAttr = 0; iAttr < nAttrs; iAttr ++ ) {
-                StrNToInt ( faceLine, &vIndices[iAttr], len );
+                strn_to_int ( faceLine, &vIndices[iAttr], len );
                 vIndices[iAttr] -= 1;	// Stupid obj index starts from 1
                 faceLine += len;
                 GetNextStr2 ( faceLine, '/', ' ', 0, len );
@@ -347,7 +347,7 @@ int MakeAttribute ( char *vLine, void *attribute )
         int len;
         GetNextStr ( vLine, ' ', 0, len );
         while ( len != 0 ) {
-                StrNToFloat ( vLine, attrComp, len );
+                strn_to_float ( vLine, attrComp, len );
                 attrComp ++;
                 vLine += len;
                 GetNextStr ( vLine, ' ', 0, len );

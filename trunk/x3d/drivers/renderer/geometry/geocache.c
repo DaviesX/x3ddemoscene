@@ -32,7 +32,7 @@ void free_geocache ( struct geocache *gc )
         memset ( gc, 0, sizeof ( *gc ) );
 }
 
-void geocache_add_pass ( pass_id_t id, struct geopass_desc *desc, struct geocache *gc )
+void geocache_add_pass ( uuid_t id, struct geopass_desc *desc, struct geocache *gc )
 {
         if ( gc->pass[id].id != -1 ) {
                 log_severe_err_dbg ( "overriding existing pass <%d> with <%d>",
@@ -52,7 +52,7 @@ void geocache_add_pass ( pass_id_t id, struct geopass_desc *desc, struct geocach
         gc->n_pass ++;
 }
 
-void geocache_remove_pass ( pass_id_t id, struct geocache *gc )
+void geocache_remove_pass ( uuid_t id, struct geocache *gc )
 {
         if ( gc->pass[id].id == -1 ) {
                 log_normal_dbg ( "pass: %d had already been removed", id );
@@ -66,7 +66,7 @@ void geocache_remove_pass ( pass_id_t id, struct geocache *gc )
         gc->n_pass --;
 }
 
-void geocache_build_pass ( pass_id_t id, enum PRIMPART_IDR part_method,
+void geocache_build_pass ( uuid_t id, enum PRIMPART_IDR part_method,
                            int extra_params, struct geocache *gc )
 {
         if ( gc->pass[id].desc.state != GEOPASS_HAS_DESC ) {
@@ -77,9 +77,9 @@ void geocache_build_pass ( pass_id_t id, enum PRIMPART_IDR part_method,
                                     &gc->pass[id].primpart );
 }
 
-void geocache_add_geometry ( struct geometry *geo, pass_id_t id, struct geocache *gc )
+void geocache_add_geometry ( struct geometry *geo, uuid_t id, struct geocache *gc )
 {
-        add_element_alg_list ( geo, &gc->pass[id].geo );
+        alg_list_add ( geo, &gc->pass[id].geo );
         if ( gc->pass[id].desc.copy_primitve ) {
                 struct shape geo_shape;
                 geometry_get_shape ( geo, &geo_shape );
@@ -87,16 +87,16 @@ void geocache_add_geometry ( struct geometry *geo, pass_id_t id, struct geocache
         }
 }
 
-void geocache_add_from_pass ( pass_id_t src_id, pass_id_t dest_id, struct geocache *gc )
+void geocache_add_from_pass ( uuid_t src_id, uuid_t dest_id, struct geocache *gc )
 {
         memcpy ( &gc->pass[dest_id], &gc->pass[src_id], sizeof ( struct geopass ) );
 }
 
-void geocache_flush ( pass_id_t id, struct geocache *gc )
+void geocache_flush ( uuid_t id, struct geocache *gc )
 {
 }
 
-struct prim_part *geocache_get_pass_prim ( pass_id_t id, struct geocache *gc )
+struct prim_part *geocache_get_pass_prim ( uuid_t id, struct geocache *gc )
 {
         return &gc->pass[id].primpart;
 }

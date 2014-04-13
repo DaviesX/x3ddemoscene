@@ -2,6 +2,7 @@
 #include <algorithm.h>
 #include <math/math.h>
 #include <renderer/geometry.h>
+#include "trimesh_shape.h"
 #include "grid.h"
 
 #define MIN_VOXELS		1
@@ -28,8 +29,9 @@ struct grid_spatial *build_grid_spatial ( struct alg_list *prim_list, int extra_
         /* Find out the scene scale to determine grid resolution */
         init_box3d ( &grid->scale );
         int i;
-        for ( i = 0; i < alg_list_len ( prim_list ); i ++ ) {
-                struct primitive *p = alg_list_i ( prim_list, i );
+        for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
+                struct primitive *p;
+                alg_list_i ( prim_list, i, &p );
                 struct box3d b;
                 primitive_get_bound ( p, &b );
                 union_box3d_u ( &grid->scale, &b );
@@ -53,7 +55,7 @@ struct grid_spatial *build_grid_spatial ( struct alg_list *prim_list, int extra_
         copy_vector3d ( &span, &grid->span );
 
         /* Estimate grid resolution, nvoxel = 3*N^(1/3) */
-        float n = 3.0f*powf ( alg_list_len ( prim_list ), 1.0f/3.0f );
+        float n = 3.0f*powf ( alg_list_n ( prim_list ), 1.0f/3.0f );
         float dnds = n/maxs;
 
         for ( i = 0; i < 3; i ++ ) {
@@ -80,8 +82,9 @@ struct grid_spatial *build_grid_spatial ( struct alg_list *prim_list, int extra_
         }
 
         /* Add primitives to grid voxels */
-        for ( i = 0; i < alg_list_len ( prim_list ); i ++ ) {
-                struct primitive *p = alg_list_i ( prim_list, i );
+        for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
+                struct primitive *p;
+                alg_list_i ( prim_list, i, &p );
 
                 /*  */
                 struct box3d b;

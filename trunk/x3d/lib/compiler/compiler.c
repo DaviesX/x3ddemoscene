@@ -20,4 +20,5 @@ int comile_c_to_native ( char *code, struct compiler *c )
         struct code_emitter em;
         get_emitter_parser ( &c->parser, &em );
         print_postfix_emitter ( &em, c->sym_tbl );
+        return 1;
 }

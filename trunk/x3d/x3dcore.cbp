@@ -225,6 +225,7 @@
 		<Unit filename="drivers/renderer/renderer/colorspectrum.h" />
 		<Unit filename="drivers/renderer/renderer/dbg_rasterizer.h" />
 		<Unit filename="drivers/renderer/renderer/dbg_vertex_processor.h" />
+		<Unit filename="drivers/renderer/renderer/irenderer.h" />
 		<Unit filename="drivers/renderer/renderer/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -306,17 +307,22 @@
 		<Unit filename="include/renderer/shader_lib.h" />
 		<Unit filename="include/renderer/spatial_probe.h" />
 		<Unit filename="include/renderer/volume.h" />
+		<Unit filename="include/x3d/camera.h" />
 		<Unit filename="include/x3d/common.h" />
 		<Unit filename="include/x3d/editor.h">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="include/x3d/kernel.h" />
 		<Unit filename="include/x3d/object_entity.h" />
+		<Unit filename="include/x3d/renderable.h" />
 		<Unit filename="include/x3d/renderer.h" />
 		<Unit filename="include/x3d/resource_loader.h" />
 		<Unit filename="include/x3d/runtime_debug.h" />
 		<Unit filename="include/x3d/scene.h" />
 		<Unit filename="include/x3d/symbol_lib.h" />
+		<Unit filename="kernel/camera.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="kernel/editor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -329,7 +335,7 @@
 		<Unit filename="kernel/renderable.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="kernel/renderer_context.c">
+		<Unit filename="kernel/renderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/resource_loader.c">
@@ -435,8 +441,8 @@
 			<lib_finder disable_auto="1" />
 			<DoxyBlocks>
 				<comment_style block="0" line="0" />
-				<doxyfile_project />
-				<doxyfile_build />
+				<doxyfile_project output_directory="docs/x3dcore" />
+				<doxyfile_build extract_all="1" />
 				<doxyfile_warnings />
 				<doxyfile_output />
 				<doxyfile_dot />

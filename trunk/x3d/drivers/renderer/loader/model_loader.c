@@ -20,9 +20,9 @@ int load_model_file ( char *filename, res_record_t *rec );
 int load_scene_from_file ( char *filename, struct stager *stg )
 {
         int scene_id;
-        if ( MatchSubStr ( filename, ".X3dScene" ) ) {
+        if ( alg_match_substring ( filename, ".X3dScene" ) ) {
                 scene_id = load_scene_from_x3dscene ( filename, stg );
-        } else if ( MatchSubStr ( filename, ".pbrt" ) ) {
+        } else if ( alg_match_substring ( filename, ".pbrt" ) ) {
                 scene_id = load_scene_from_pbrt ( filename, stg );
         } else {
                 log_severe_err_dbg ( "LoadSceneFromFile",
@@ -71,11 +71,11 @@ int load_model_file ( char *filename, res_record_t *rec )
 {
         int err;
 //	struct stager *stg = nullptr;
-        if ( MatchSubStr ( filename, ".obj" ) ) {
+        if ( alg_match_substring ( filename, ".obj" ) ) {
                 err = LoadModelFileObj ( filename, rec );
-        } else if ( MatchSubStr ( filename, ".pbrt" ) ) {
+        } else if ( alg_match_substring ( filename, ".pbrt" ) ) {
                 err = LoadModelFilePbrt ( filename, rec );
-        } else if ( MatchSubStr ( filename, ".fbx" ) ) {
+        } else if ( alg_match_substring ( filename, ".fbx" ) ) {
                 err = LoadModelFileFbx ( filename, rec );
         }
         return err;

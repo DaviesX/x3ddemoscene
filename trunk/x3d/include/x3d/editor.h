@@ -6,56 +6,49 @@
 #include <x3d/renderer.h>
 
 
-enum EDIT_MODE {
-        EDIT_RUN_EDITOR,
-        EDIT_RUN_DEMO
+enum PLATFORM_IDR {
+        PLATFORM_DEFAULT,
+        PLATFORM_GTK,
+        PLATFORM_WIN32,
+        PLATFORM_QT
 };
 
-enum PLATFORM_HANDLE {
-        PLAT_HANDLE_NULL,
-        PLAT_HANDLE_GTK,
-        PLAT_HANDLE_WIN32,
-        PLAT_HANDLE_QT
-};
-
-
-struct alg_named_params;
 struct editor;
+struct editor_container;
+struct edit_activex;
+struct activex_render_region;
+struct activex_enity_list;
 
-struct info_bridge {
-        struct alg_named_params params;
-};
-
-struct render_region {
-        enum PLATFORM_HANDLE type;
-        void *handle;
-        struct irectangle2d rect;
-        renderer_handle_t rend_bind;
+enum EDIT_ACTIVEX_IDR {
+        EDIT_ACTIVEX_RENDER_REGION,
+        EDIT_ACTIVEX_ENTITY_LIST,
+        EDIT_ACTIVEX_FILE_LOADER
 };
 
 struct edit_ops {
-        bool (*init_editor) ( int *argc, char ***argv, enum EDIT_MODE mode );
+        bool (*init_editor) ( int *argc, char ***argv );
         void (*editor_main_loop) ( void );
 };
 
 /*
  * functions' declaration
  */
-bool init_editor ( int *argc, char ***argv );
-void import_editor ( struct edit_ops *ops );
-struct editor *export_editor ( void );
-struct render_region *get_first_render_region ( int32_t *pos );
-struct render_region *get_next_render_region ( int32_t *pos );
-void update_editor ( void );
+bool init_editor_container ( int *argc, char ***argv );
+void editor_import ( struct edit_ops *ops );
+struct editor_container *editor_container_export ( void );
+uuid_t editor_add ( char *name );
+struct editor *editor_get_byname ( char *name );
+struct editor *editor_get_byid ( uuid_t edit );
+void editor_remove ( struct editor *editor );
+void editor_update ( struct editor *editor );
+void editor_update_all ( void );
+void editor_add_activex ( char *name, void *_activex, struct editor *editor );
+void editor_remove_activex ( enum EDIT_ACTIVEX_IDR type, char *name, struct editor *editor );
+struct edit_activex *editor_find_activex (
+        enum EDIT_ACTIVEX_IDR type, char *name, struct editor *editor );
 
-/*
- * RI interface
- */
-struct info_bridge *get_info_bridge ( void );
-void render_region_add ( struct render_region *rr );
-struct render_region *render_region_find ( struct render_region *rr );
-void render_region_remove ( struct render_region *rr );
-void render_region_flush ( void );
+struct activex_render_region *create_activex_render_region (
+        enum PLATFORM_IDR type, void *handle, int x, int y, int w, int h );
 
 
 #endif // EDITOR_MEDIA_H_INCLUDED
