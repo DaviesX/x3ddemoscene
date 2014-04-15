@@ -271,10 +271,9 @@ struct alg_hash_table {
 
 /* linked list */
 struct alg_llist {
-        int *llist;
-        int ifirst;
-        int ilast;
-        int icurr;
+        int *head;
+        int *prev, *next;
+        int ilast, icurr;
         int elm_size;
         int num_elm;
         void *content;
@@ -405,15 +404,19 @@ pseudo_def ( void process_ptr_list ( struct alg_pointer_list *ptrs, struct alg_l
 
 void create_alg_llist ( struct alg_llist *llist, int elm_size );
 void free_alg_llist ( struct alg_llist *llist );
-pseudo_def ( void alg_llist_add_t ( void *elm, struct alg_llist *llist ); )
+pseudo_def ( void alg_llist_i ( struct alg_llist *llist, int i, void **elm ); )
+pseudo_def ( void alg_llist_add ( void *elm, struct alg_llist *llist ); )
+pseudo_def ( void alg_llist_push ( void *elm, struct alg_llist *llist ); )
+pseudo_def ( void alg_llist_pop ( struct alg_llist *llist, void **elm ); )
 pseudo_def ( void alg_llist_find ( struct alg_llist *llist, void *info, void **elm_data,
                                    bool (*compare_func) ( void *info, void *elm ) ); )
 pseudo_def ( void alg_llist_remove ( struct alg_llist *llist, void *info, void **elm_data,
                                      bool (*compare_func) ( void *info, void *elm ) ); )
-pseudo_def ( void alg_llist_remove_ptr ( struct alg_llist *llist, void *elm ); )
+pseudo_def ( void alg_llist_remove_ptr ( void *elm, struct alg_llist *llist ); )
 void *alg_llist_first ( struct alg_llist *llist, int *it );
 void *alg_llist_next ( struct alg_llist *llist, int *it );
 void *alg_llist_new ( struct alg_llist *llist );
+void *alg_llist_recycle ( struct alg_llist *llist );
 void alg_llist_flush ( struct alg_llist *list );
 
 uuid_t alg_gen_uuid ( void );

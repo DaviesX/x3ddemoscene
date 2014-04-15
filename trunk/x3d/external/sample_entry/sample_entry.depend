@@ -1,1 +1,74 @@
 # depslib dependency file v1.0
+1397423715 source:/home/davis/Projects/x3d/external/sample_entry/main.c
+	<stdio.h>
+	<x3d/init.h>
+	<x3d/editor.h>
+
+1397403342 /home/davis/Projects/x3d/include/x3d/init.h
+	<x3d/common.h>
+
+1397603043 /home/davis/Projects/x3d/include/x3d/common.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdint.h>
+	<stdbool.h>
+	<unistd.h>
+	<memory.h>
+	<string.h>
+	<ctype.h>
+	<assert.h>
+	<math.h>
+	<pthread.h>
+	<semaphore.h>
+	<limits.h>
+	<time.h>
+	<errno.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1397431304 /home/davis/Projects/x3d/lib/memory.h
+	<x3d/common.h>
+
+1397404389 /home/davis/Projects/x3d/include/x3d/editor.h
+	<math/math.h>
+	<algorithm.h>
+	<x3d/renderer.h>
+
+1393743192 /home/davis/Projects/x3d/lib/math/math.h
+	"vector.h"
+	"matrix.h"
+	"quat.h"
+	"geometry.h"
+	"decimal.h"
+	"fx.h"
+
+1394164930 /home/davis/Projects/x3d/lib/math/vector.h
+
+1394154072 /home/davis/Projects/x3d/lib/math/matrix.h
+	<x3d/common.h>
+
+1393902016 /home/davis/Projects/x3d/lib/math/quat.h
+
+1393902015 /home/davis/Projects/x3d/lib/math/geometry.h
+
+1388682850 /home/davis/Projects/x3d/lib/math/decimal.h
+
+1390714932 /home/davis/Projects/x3d/lib/math/fx.h
+
+1397514075 /home/davis/Projects/x3d/lib/algorithm.h
+	<x3d/common.h>
+	<math/math.h>
+	<algorithm.inc>
+
+1397530333 /home/davis/Projects/x3d/lib/algorithm.inc
+
+1397424044 /home/davis/Projects/x3d/include/x3d/renderer.h
+	<math/math.h>
+	<staging.h>
+	<algorithm.h>
+
+1393902016 /home/davis/Projects/x3d/lib/staging.h
+	<algorithm.h>
+

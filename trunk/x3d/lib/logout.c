@@ -42,7 +42,7 @@ int init_log_output ( int to_terminate )
         struct tm *gmtTime = gmtime ( &timeT );
 
         printf ( "x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n",
-                 RENDER_LIB_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
+                 X3D_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
         if ( (g_log_inst.normal_bhv | g_log_inst.mild_err_bhv |
               g_log_inst.severe_err_bhv | g_log_inst.criti_err_bhv) &
              LOG_OUTPUT_TO_FILE ) {
@@ -50,7 +50,7 @@ int init_log_output ( int to_terminate )
                         return 0;
                 }
                 fprintf ( g_log_inst.file, "x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n",
-                          RENDER_LIB_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
+                          X3D_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
         }
         g_is_init = 1;
         return 1;

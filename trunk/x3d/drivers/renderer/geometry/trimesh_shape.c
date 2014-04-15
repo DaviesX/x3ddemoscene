@@ -10,8 +10,8 @@ int convex_poly_to_triangles ( int *poly_index, int num_vert, int **tri_index );
 int convex_poly_to_triangles ( int *poly_index, int num_vert, int **tri_index )
 {
         flush_var ( tri_index );
-        int i;
-        int j = 0;
+        uint32_t i;
+        uint32_t j = 0;
         for ( i = 1; i < i - 1; i ++ ) {
                 tri_index = push_var ( &poly_index[0], &tri_index );
                 tri_index = push_var ( &poly_index[i], &tri_index );

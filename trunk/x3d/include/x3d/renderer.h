@@ -14,6 +14,7 @@
 /** \brief availble renderer type
  */
 enum RENDERER_IDR {
+        RENDERER_UNDETERMINATE,         /**< a memory block with undefined renderer */
         RENDERER_RASTERIZER,            /**< rasterization renderer */
         RENDERER_PATH_TRACER,           /**< path tracing renderer */
         RENDERER_PHOTON_TRACER,         /**< photon tracing renderer */

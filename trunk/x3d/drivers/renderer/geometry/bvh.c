@@ -402,6 +402,7 @@ struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int part_m
 void free_initial_tree ( struct initial_tree *tree )
 {
         declare_stack ( stack, TREE_DEPTH*4*sizeof (int) );
+        init_stack ( &stack );
         struct initial_tree *curr_node = tree;
         int ichild = 0;
 

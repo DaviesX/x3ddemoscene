@@ -37,6 +37,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
+			<Add option="-Werror" />
 			<Add directory="../../include" />
 			<Add directory="../../lib" />
 		</Compiler>

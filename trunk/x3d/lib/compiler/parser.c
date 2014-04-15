@@ -70,7 +70,7 @@ void parse_exp ( struct code_parser *parser, struct sym_entry *sym_tbl )
                                 struct op_info curr_opr;
                                 struct token_info top_tok;
                                 get_stack_last ( &opr_stack, top_tok );
-                                get_op_info_lexer ( &data->next_tok.token, &curr_opr );
+                                get_op_info_lexer ( &data->next_tok, &curr_opr );
                                 get_op_info_lexer ( &top_tok, &top_opr );
                                 if ( curr_opr.prio <= top_opr.prio ) {
                                         pop_stack ( &opr_stack, top_tok );

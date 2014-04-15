@@ -823,67 +823,81 @@ struct PARTITION_BOUNDARY {
 { \
         int _i = (_llist)->icurr; \
         typeof(_elm) _dest = (typeof(_elm)) (_llist)->content + _i; \
-        (_llist)->llist = add_var ( (_llist)->llist, 1 ); \
-        (_llist)->content = add_var ( (_llist)->content, 1 ); \
+        (_llist)->prev = expand2_var ( (_llist)->prev, (_llist)->num_elm ); \
+        (_llist)->next = expand2_var ( (_llist)->next, (_llist)->num_elm ); \
+        (_llist)->content = expand2_var ( (_llist)->content, (_llist)->num_elm ); \
         memcpy ( _dest, _elm, sizeof(*(_elm)) ); \
-        (_llist)->llist[_i] = ((_llist)->icurr == (_llist)->ilast) ? \
-                               (++ (_llist)->ilast) : ((_llist)->llist[_i]); \
-        (_llist)->icurr = (_llist)->llist[_i]; \
+        if ( (_llist)->icurr == (_llist)->ilast ) { \
+                (_llist)->next[_i] = ++ (_llist)->ilast; \
+                (_llist)->prev[(_llist)->next[_i]] = _i; \
+                (_llist)->icurr = (_llist)->next[_i]; \
+        } \
         (_llist)->num_elm ++; \
 }
 
 #define alg_llist_find( _llist, _info, _elm, _f_Compare ) \
 { \
         *(_elm) = nullptr; \
-        int _curr = (_llist)->ifirst; \
+        int _curr = (_llist)->head[0]; \
         typeof(*(_elm)) _ptr = (_llist)->content; \
         while ( _curr != (_llist)->icurr ) { \
                 if ( _f_Compare ( _info, &_ptr[_curr] ) ) { \
                         *(_elm) = &_ptr[_curr]; \
                         break; \
                 } \
-                _curr = (_llist)->llist[_curr]; \
+                _curr = (_llist)->next[_curr]; \
         } \
+}
+
+#define alg_llist_remove_i( _i, _llist ) \
+{ \
+        (_llist)->prev[(_llist)->next[(_i)]] = (_llist)->prev[(_i)]; \
+        (_llist)->next[(_llist)->prev[(_i)]] = (_llist)->next[(_i)]; \
+        (_llist)->prev[(_llist)->next[(_llist)->icurr]] = (_i); \
+        (_llist)->next[(_llist)->icurr] = (_i); \
+        (_llist)->num_elm --; \
 }
 
 #define alg_llist_remove( _llist, _info, _elm, _f_Compare ) \
 { \
         *(_elm) = nullptr; \
-        int _curr = (_llist)->ifirst; \
+        int _curr = (_llist)->head[0]; \
         typeof(*(_elm)) _ptr = (_llist)->content; \
         while ( _curr != (_llist)->icurr ) \
         { \
                 if ( _f_Compare ( _info, &_ptr[_curr] ) ) { \
                         *(_elm) = &_ptr[_curr]; \
-                        (_llist)->ifirst = (_curr == (_llist)->ifirst) ? \
-                                           (_llist)->llist[_curr] : (_llist)->ifirst; \
-                        int _t = (_llist)->llist[(_llist)->icurr]; \
-                        (_llist)->llist[(_llist)->icurr] = _curr; \
-                        (_llist)->llist[_curr] = _t; \
-                        (_llist)->num_elm --; \
+                        alg_llist_remove_i ( _curr, _llist ); \
                         break; \
                 } \
-                _curr = (_llist)->llist[_curr]; \
+                _curr = (_llist)->next[_curr]; \
         } \
 }
 
-#define alg_llist_remove_ptr( _llist, _elm ) \
+#define alg_llist_remove_ptr( _elm, _llist ) \
 { \
-        int _curr = (_llist)->ifirst; \
-        typeof(*(_elm)) _ptr = (_llist)->content; \
-        while ( _curr != (_llist)->icurr ) \
-        { \
-                if ( (_elm) == &_ptr[_curr] ) ) { \
-                        (_llist)->ifirst = (_curr == (_llist)->ifirst) ? \
-                                           (_llist)->llist[_curr] : (_llist)->ifirst; \
-                        int _t = (_llist)->llist[(_llist)->icurr]; \
-                        (_llist)->llist[(_llist)->icurr] = _curr; \
-                        (_llist)->llist[_curr] = _t; \
-                        (_llist)->num_elm --; \
-                        break; \
-                } \
-                _curr = (_llist)->llist[_curr]; \
+        typeof(_elm) _ptr = (_llist)->content; \
+        int _i = (_elm) - _ptr; \
+        alg_llist_remove_i ( _i, _llist ); \
+}
+
+#define alg_llist_i( _llist, _i, _elm ) \
+{ \
+        *(_elm) = (typeof(*(_elm))) (_llist)->content + (_i); \
+}
+
+#define alg_llist_push                  alg_llist_add
+
+#define alg_llist_pop( _llist, _elm ) \
+{ \
+        *(_elm) = nullptr; \
+        if ( (_llist)->icurr != (_llist)->head[0] ) { \
+                int _i = (_llist)->prev[(_llist)->icurr]; \
+                typeof(*(_elm)) _ptr = (_llist)->content; \
+                *(_elm) = _ptr + _i; \
+                alg_llist_remove_i ( _i, _llist ); \
         } \
 }
+
 
 #endif // ALGORITHM_INC_INCLUDED

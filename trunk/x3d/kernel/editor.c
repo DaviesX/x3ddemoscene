@@ -1,6 +1,7 @@
 #include <logout.h>
 #include <algorithm.h>
-#include <x3d/kernel.h>
+#include <thread.h>
+#include <x3d/init.h>
 #include <editor/editor.h>
 #include <x3d/renderer.h>
 #include <x3d/editor.h>
@@ -52,9 +53,12 @@ static const struct edit_activex_ops c_activex_ops[] = {
 };
 static struct editor_container g_edit_cont = {0};
 static struct edit_ops g_edit_ops = {
-        .init_editor = load_editor,
-        .editor_main_loop = edit_main_loop
+        .init_editor = cast(g_edit_ops.init_editor)             load_editor,
+        .editor_main_loop = cast(g_edit_ops.editor_main_loop)   edit_main_loop
 };
+static struct thr_task *g_main_loop_task = nullptr;
+static f_Editor_Loop g_loop_func = nullptr;
+static void *g_info_ptr = nullptr;
 
 static void init_editor ( char *name, struct editor *edit );
 static void free_editor ( struct editor *edit );
@@ -268,6 +272,24 @@ struct edit_activex *editor_find_activex (
         return curr_ax;
 }
 #undef cmp_activex
+
+void editor_reg_custum_loop ( f_Editor_Loop func, void *info_ptr )
+{
+        g_loop_func = func;
+        g_info_ptr = info_ptr;
+}
+
+void editor_enter_loop ( bool use_custom )
+{
+        if ( use_custom ) {
+                g_main_loop_task = thr_run_task (
+                                           (f_Thread_Handler) g_loop_func, g_info_ptr, nullptr );
+        } else {
+                g_main_loop_task = thr_run_task (
+                                           (f_Thread_Handler) g_edit_ops.editor_main_loop,
+                                           nullptr, nullptr );
+        }
+}
 
 struct activex_render_region *create_activex_render_region (
         enum PLATFORM_IDR type, void *handle, int x, int y, int w, int h )

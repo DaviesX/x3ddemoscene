@@ -27,8 +27,10 @@ enum EDIT_ACTIVEX_IDR {
 
 struct edit_ops {
         bool (*init_editor) ( int *argc, char ***argv );
-        void (*editor_main_loop) ( void );
+        bool (*editor_main_loop) ( void *info );
 };
+
+typedef bool (*f_Editor_Loop) ( void *info );
 
 /*
  * functions' declaration
@@ -46,6 +48,8 @@ void editor_add_activex ( char *name, void *_activex, struct editor *editor );
 void editor_remove_activex ( enum EDIT_ACTIVEX_IDR type, char *name, struct editor *editor );
 struct edit_activex *editor_find_activex (
         enum EDIT_ACTIVEX_IDR type, char *name, struct editor *editor );
+void editor_reg_custum_loop ( f_Editor_Loop func, void *info_ptr );
+void editor_enter_loop ( bool use_custum );
 
 struct activex_render_region *create_activex_render_region (
         enum PLATFORM_IDR type, void *handle, int x, int y, int w, int h );

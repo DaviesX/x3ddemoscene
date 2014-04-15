@@ -22,6 +22,7 @@ var x3d_2renderer_8h =
       [ "RENDER_SPEC_SW_BUILTIN", "x3d_2renderer_8h.html#ab12501da40d026e2897a771535b98b6ea83a0b6af8a7fa3fc1d49ce862bb8bf62", null ],
       [ "RENDER_SPEC_HW_OPENGL", "x3d_2renderer_8h.html#ab12501da40d026e2897a771535b98b6ea0e5b2305e4a026077004d8116636d1b2", null ],
       [ "RENDER_SPEC_HW_DIRECTX", "x3d_2renderer_8h.html#ab12501da40d026e2897a771535b98b6ea9e4ff24bdc9800caabbeabac50ef3673", null ],
+      [ "RENDERER_UNDETERMINATE", "x3d_2renderer_8h.html#a1b6c250767ce4b1f76f25ffc15b2a80ba0beb2ece4a144ca9671dbd82a0fce5d6", null ],
       [ "RENDERER_RASTERIZER", "x3d_2renderer_8h.html#a1b6c250767ce4b1f76f25ffc15b2a80ba1b6edae3200d757a7e9d810691fc7c89", null ],
       [ "RENDERER_PATH_TRACER", "x3d_2renderer_8h.html#a1b6c250767ce4b1f76f25ffc15b2a80badca1a06be066693c4ff23914737e6197", null ],
       [ "RENDERER_PHOTON_TRACER", "x3d_2renderer_8h.html#a1b6c250767ce4b1f76f25ffc15b2a80ba28b25a194b8ae75cb5710b951fc86c72", null ],

@@ -1,8 +1,8 @@
 /* decimal.c: Handling decimal fraction */
+#include <x3d/common.h>
 #include <math.h>
 #include <stdlib.h>
 #include "decimal.h"
-
 
 
 fp16_16_t mul_fp16_16 ( fp16_16_t f0, fp16_16_t f1 )
@@ -15,6 +15,7 @@ fp16_16_t mul_fp16_16 ( fp16_16_t f0, fp16_16_t f1 )
                 : /* no output */
                 : "r"(f0), "r"(f1)
         );
+        asm_return (0);
 }
 
 fp16_16_t div_fp16_16 ( fp16_16_t f0, fp16_16_t f1 )
@@ -28,6 +29,7 @@ fp16_16_t div_fp16_16 ( fp16_16_t f0, fp16_16_t f1 )
                 : /* no output */
                 : "r"(f0), "r"(f1)
         );
+        asm_return (0);
 }
 
 float sci_to_float ( float b, int exp )

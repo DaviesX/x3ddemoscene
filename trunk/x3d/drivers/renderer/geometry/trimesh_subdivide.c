@@ -51,6 +51,7 @@ void DeleteEdge ( struct tesselate_edge *sEdge, struct tesselate_edge *tessEdges
 #define NextVert(vert)		(((vert) + 1)%3)
 #define PrevVert(vert)		(((vert) + 2)%3)
 
+
 #define GetNextFaceCCW(face, nextFace, edgeIndex)	\
 {\
 	struct tesselate_face * startFace = (face);\
@@ -848,12 +849,12 @@ void InitTesselateGeometry ( struct triangle_mesh_shape *triangleMesh,
                 // Loop through all neighboring faces
                 int valence = 0;
                 struct tesselate_face *face = currTessVertex->startFace;
-                struct tesselate_face *nextFace;
+                struct tesselate_face *nextFace = nullptr;
                 const struct tesselate_face *lastFace = nextFace;
 
                 // Loop faces counterclockwise
+                int edgeIndex;
                 while ( 1 ) {
-                        int edgeIndex;
                         GetNextFaceCCW ( face, nextFace, edgeIndex );
                         valence ++;
 
@@ -863,6 +864,7 @@ void InitTesselateGeometry ( struct triangle_mesh_shape *triangleMesh,
                         }
 
                 }// End While
+                edgeIndex = edgeIndex;
 
                 if ( !lastFace ) {
                         // Handle boundry vertex
@@ -872,8 +874,8 @@ void InitTesselateGeometry ( struct triangle_mesh_shape *triangleMesh,
                         face = currTessVertex->startFace;
 
                         // Loop faces clockwise
+                        int edgeIndex;
                         while ( 1 ) {
-                                int edgeIndex;
                                 GetNextFaceCW ( face, nextFace, edgeIndex );
                                 valence ++;
 
@@ -884,6 +886,7 @@ void InitTesselateGeometry ( struct triangle_mesh_shape *triangleMesh,
 
                         }// End While
 
+                        edgeIndex = edgeIndex;
                         currTessVertex->valence = valence - 1;
 
                         if ( valence - 1 == REGULAR_VALENCE_BOUNDRY ) {

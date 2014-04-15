@@ -481,23 +481,33 @@ void alg_list_swap ( struct alg_list *list0, struct alg_list *list1 )
 void create_alg_llist ( struct alg_llist *llist, int elm_size )
 {
         memset ( llist, 0, sizeof *llist );
-        llist->content = alloc_var ( elm_size, 0 );
-        llist->llist = alloc_var ( sizeof ( int ), 0 );
+        llist->content = alloc_var ( elm_size, 1 );
+        llist->prev = alloc_var ( sizeof (int), 2 );
+        llist->next = alloc_var ( sizeof (int), 2 );
+        llist->icurr = 1;
+        llist->ilast = 1;
+        llist->head = llist->prev;
+        llist->head[0] = llist->icurr;
+        llist->prev[llist->icurr] = 0;
+        llist->next[llist->icurr] = -1;
+        llist->num_elm = 1;
         llist->elm_size = elm_size;
 }
 
 void free_alg_llist ( struct alg_llist *llist )
 {
-        free_var ( llist->llist );
+        free_var ( llist->prev );
+        free_var ( llist->next );
         free_var ( llist->content );
         memset ( llist, 0, sizeof *llist );
 }
 
 void *alg_llist_first ( struct alg_llist *llist, int *it )
 {
-        *it = llist->ifirst;
-        if ( *it != llist->icurr ) {
-                return (untyped *) llist->content + (*it)*llist->elm_size;
+        int i;
+        *it = i = llist->head[0];
+        if ( i != llist->icurr ) {
+                return (untyped *) llist->content + i*llist->elm_size;
         } else {
                 return nullptr;
         }
@@ -505,50 +515,48 @@ void *alg_llist_first ( struct alg_llist *llist, int *it )
 
 void *alg_llist_next ( struct alg_llist *llist, int *it )
 {
-        *it = llist->llist[*it];
-        if ( *it != llist->icurr ) {
-                return (untyped *) llist->content + (*it)*llist->elm_size;
+        int i;
+        *it = i = llist->next[*it];
+        if ( i != llist->icurr ) {
+                return (untyped *) llist->content + i*llist->elm_size;
         } else {
                 return nullptr;
         }
 }
 
-#if 0
-void alg_llist_add ( void *elm, struct alg_llist *llist )
-{
-        int i = llist->icurr;
-        llist->llist = add_var ( llist->llist, 1 );
-        llist->content = add_var ( llist->content, 1 );
-        void *dest = llist->content + i*llist->elm_size;
-        memcpy ( dest, elm, llist->elm_size );
-        llist->llist[i] = (llist->icurr == llist->ilast) ?
-                          (++ llist->ilast) : (llist->llist[i]);
-        llist->icurr = llist->llist[i];
-        llist->num_elm ++;
-}
-#endif // 0
-
 void *alg_llist_new ( struct alg_llist *llist )
 {
         const int i = llist->icurr;
-        llist->llist = add_var ( llist->llist, 1 );
-        llist->content = add_var ( llist->content, 1 );
-        llist->llist[i] = (llist->icurr == llist->ilast) ?
-                          ++ llist->ilast : llist->llist[i];
-        llist->icurr = llist->llist[i];
+        llist->prev = expand2_var ( llist->prev, llist->num_elm );
+        llist->next = expand2_var ( llist->next, llist->num_elm );
+        llist->content = expand2_var ( llist->content, llist->num_elm );
+        if ( llist->icurr == llist->ilast ) {
+                llist->next[i] = ++ llist->ilast;
+                llist->prev[llist->next[i]] = i;
+                llist->icurr = llist->next[i];
+        }
         llist->num_elm ++;
         return llist->content + i*llist->elm_size;
 }
 
+void *alg_llist_recycle ( struct alg_llist *llist )
+{
+        if ( llist->icurr != llist->ilast ) {
+                return alg_llist_new ( llist );
+        } else {
+                return nullptr;
+        }
+}
 
 void alg_llist_flush ( struct alg_llist *llist )
 {
         flush_var ( llist->content );
-        flush_var ( llist->llist );
-        llist->icurr = 0;
-        llist->ilast = 0;
-        llist->ifirst = 0;
-        llist->num_elm = 0;
+        flush_var ( llist->next );
+        flush_var ( llist->prev );
+        llist->icurr = 1;
+        llist->ilast = 1;
+        llist->head[0] = llist->icurr;
+        llist->num_elm = 1;
 }
 
 uuid_t alg_gen_uuid ( void )

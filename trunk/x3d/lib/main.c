@@ -452,13 +452,14 @@ void HashLookupTest ( void )
         InitHashTable ( 1 << 15, 1, &hashTable );
         int begin = clock ();
         int k;
+        int iFound;
         for ( k = 0; k < 10000; k ++ ) {
                 for ( i = 0; i < n; i ++ ) {
                         infoPack.currentData = array[i];
-                        int iFound;
                         FindInsertHash ( &hashTable, i, array[i], iFound, &infoPack, cmp_find_nth, DynamicHash );
                 }
         }
+        iFound = iFound;
         int end = clock ();
         log_normal ( "%f", (float) (end - begin)/CLOCKS_PER_SEC );
         ReleaseHashTable ( &hashTable );

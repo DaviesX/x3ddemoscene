@@ -13,7 +13,6 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-Wall" />
 					<Add option="-g" />
 				</Compiler>
 			</Target>
@@ -37,7 +36,9 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
+			<Add option="-Werror" />
 			<Add directory="lib" />
 			<Add directory="include" />
 		</Compiler>
@@ -312,7 +313,7 @@
 		<Unit filename="include/x3d/editor.h">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="include/x3d/kernel.h" />
+		<Unit filename="include/x3d/init.h" />
 		<Unit filename="include/x3d/object_entity.h" />
 		<Unit filename="include/x3d/renderable.h" />
 		<Unit filename="include/x3d/renderer.h" />
@@ -326,7 +327,7 @@
 		<Unit filename="kernel/editor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="kernel/kernel.c">
+		<Unit filename="kernel/init.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/panic.c">

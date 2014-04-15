@@ -8,12 +8,12 @@
  */
 
 #ifdef X3D_DEBUG_MODE
-#define MEMORY_INITIAL_COUNT			0
+#  define MEMORY_INITIAL_COUNT			0
 #else
-#define MEMORY_INITIAL_COUNT			64
+#  define MEMORY_INITIAL_COUNT			64
 #endif
-#define MEMORY_LOCK_MASK			0X7FFFFFFF
 
+#define MEMORY_LOCK_MASK			0X7FFFFFFF
 #define MEM_NUM_UNKNOWN				0
 
 
@@ -49,7 +49,7 @@
 #define set_double( _data, _dest )	(*(uint64_t *) (_dest) = *(uint64_t *) (_data))
 #define set_quad( _data, _dest )
 
-#define memsetb( _dest, _data, _count )		(memset ( _dest, _data, _count )
+#define memsetb( _dest, _data, _count )		(memset ( _dest, _data, _count ))
 
 /* Fill memory in word, notice that count is not equal to size in byte */
 #define memsetw( _dest, _data, _count )		\

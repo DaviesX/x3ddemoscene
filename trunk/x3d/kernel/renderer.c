@@ -74,6 +74,9 @@ void free_renderer_container ( void )
 uuid_t renderer_container_add ( struct renderer *rend )
 {
         struct alg_llist *rend_cont = &g_rend_cont.renderer;
+        if ( rend == nullptr ) {
+                rend = create_renderer ( RENDERER_UNDETERMINATE );
+        }
         alg_llist_add ( &rend, rend_cont );
         rend->rend_id = alg_gen_uuid ();
         return rend->rend_id;
@@ -133,7 +136,9 @@ struct renderer *create_renderer ( enum RENDERER_IDR type )
 {
         struct renderer *rend = alloc_fix ( sizeof *rend, 1 );
         memset ( rend, 0, sizeof *rend );
-        rend->rend = g_rend_ops.create ( type );
+        if ( type != RENDERER_UNDETERMINATE ) {
+                rend->rend = g_rend_ops.create ( type );
+        }
         return rend;
 }
 

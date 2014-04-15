@@ -145,6 +145,7 @@ static void dbg_rasterizer_add_all ( void )
 #include <math/math.h>
 #include <editor/editor.h>
 #include "vibuffer.h"
+#include "colorspectrum.h"
 #include "surface.h"
 #include <renderer/shader.h>
 #include <renderer/out.h>
@@ -235,7 +236,7 @@ static void simple_rt_pipeline_init ( struct alg_named_params *global_params )
                                RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
         rtcontext_set_buffer ( RT_INDEX_BUFFER,
                                RT_BUFFER_ENABLE | RT_BUFFER_WRITE, &g_rtctx );
-#include "colorspectrum.h"
+
         g_color_surf = create_surface ( 800, 600, SF_IDR_IA8R8G8B8 );
         struct float_color4 c;
         c.r = 1.0f;

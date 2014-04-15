@@ -1,5 +1,5 @@
 #include <x3d/common.h>
-#include <x3d/kernel.h>
+#include <x3d/init.h>
 
 
 void kernel_panic ( void )

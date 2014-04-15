@@ -20,19 +20,19 @@ int main ( int argc, char *argv[] )
 }
 
 // A function adding two integers and returning the result
-static int SampleAddInt(int i1, int i2)
+int SampleAddInt(int i1, int i2)
 {
         return i1 + i2;
 }
 
 // A function doing nothing ;)
-static void SampleFunction1()
+void SampleFunction1()
 {
         // insert code here
 }
 
 // A function always returning zero
-static int SampleFunction2()
+int SampleFunction2()
 {
         // insert code here
         printf ( "hello world\n" );

@@ -55,8 +55,8 @@ static struct res_ops g_res_ops[] = {
 };
 
 static struct handle_list *g_handle_list = nullptr;
-static int g_curr_handle = 0;		/* pointer to the current handle and the recycled handle */
-static int g_rec_handle = 0;
+// static int g_curr_handle = 0;		/* pointer to the current handle and the recycled handle */
+// static int g_rec_handle = 0;
 
 static struct stager g_loader;
 
@@ -116,7 +116,7 @@ void free_res_loader ( void )
                 free_stager ( &g_res_line[i].name );
         }
         free_var ( g_handle_list );
-        free_loader ( &g_loader );
+//        free_loader ( &g_loader );
 }
 
 enum RES_STATE load_resource ( char *filename, bool is_sync, struct res_loader **loader )
@@ -127,7 +127,7 @@ enum RES_STATE load_resource ( char *filename, bool is_sync, struct res_loader *
         /* check if the resource had been certified */
         /* open an new entry and fill in header */
 
-        enum RES_TYPE type;
+        enum RES_TYPE type = 0;
         switch ( type ) {
         case RES_TYPE_GEOMETRY: {
                 if ( is_sync ) {
