@@ -423,7 +423,7 @@ uuid_t alg_gen_uuid ( void );
 void alg_use_uuid ( uuid_t id );
 
 
-#include <algorithm.inc>
+#include <algorithm_inl.h>
 
 
 #endif // ALGORITHM_H_INCLUDED
