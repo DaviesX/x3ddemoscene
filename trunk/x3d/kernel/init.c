@@ -3,6 +3,7 @@
 #include <algorithm.h>
 #include <thread.h>
 #include <logout.h>
+#include <lib.h>
 #include <x3d/init.h>
 #include <x3d/runtime_debug.h>
 #include <x3d/symbol_lib.h>
@@ -56,6 +57,7 @@ void kernel_start ( void )
         init_math_lib ();
         init_log_output ( true );
         init_thread_lib ();
+        init_lib ();
         init_res_loader ();
         init_renderer_container ();
         init_editor_container ( &g_kernel.argc, &g_kernel.argv );

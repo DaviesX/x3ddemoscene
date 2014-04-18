@@ -1,790 +1,502 @@
 /* algorithm: Some commonly used algorithm which is implemented in the header
- * to avoid function pointer */
-#ifndef ALGORITHM_INC_INCLUDED
-#define ALGORITHM_INC_INCLUDED
+ * to avoid function pointer also to take advantage of generic type */
+// #ifndef ALGORITHM_INC_INCLUDED
+// #define ALGORITHM_INC_INCLUDED
 
-// Swap any type of variables
-#define SwapVariableType(_a, _b, _TYPE)	\
-{\
-	_TYPE _t;\
-	memcpy ( &(_t), (_a), sizeof ( _TYPE ) );\
-	memcpy ( (_a), (_b), sizeof ( _TYPE ) );\
-	memcpy ( (_b), &(_t), sizeof ( _TYPE ) );\
+
+#define alg_bubble_sort( list_, len_, info_, _f_Cmp ) \
+{ \
+        int i_ = (len_) - 1; \
+        while ( i_ > 0 ) { \
+                int last_ = 0; \
+                int j_; \
+                for ( j_ = 0; j_ < _i; j_ ++ ) { \
+                        if ( _f_Cmp ( &(list_)[j_ + 1], &(list_)[j_] ), (info_) ) { \
+                                typeof (*(list_)) t_ =  (list_)[j_]; \
+                                (list_)[j_] = (list_)[j_ + 1]; \
+                                (list_)[j_ + 1] = t_; \
+                                last_ = j_; \
+                        } \
+                } \
+                i_ = last_; \
+        } \
 }
 
-
-
-// Copy any type of variables
-#define CopyVariableType(_a, _b, _TYPE )	\
-{\
-	memcpy ( (_b), (_a), sizeof ( _TYPE ) );\
+#define alg_insert_sort( list_, len_, info_, _f_Cmp ) \
+{ \
+        int i_; \
+        for ( i_ = 0; i_ < (len_); i_ ++ ) { \
+                if ( _f_Cmp ( &(list_)[i_], &(list_)[i_ - 1], info_ ) ) { \
+                        typeof (*(list_)) ex_ = (list_)[i_]; \
+                        int j_; \
+                        for ( j_ = i_; j_ > 0; j_ -- ) { \
+                                if ( _f_Cmp ( &ex_, &(list_)[j_ - 1], info_ ) ) { \
+                                        (list_)[j_] = (list_)[j_ - 1]; \
+                                } else { \
+                                        break; \
+                                } \
+                        } \
+                        (list_)[j_] = ex_; \
+                } \
+        } \
 }
 
+#define pivot( list_, left_, right_, pivot_, info_, _f_Cmp ) \
+{ \
+        int mid_ = ((left_) + (right_)) >> 1; \
+        /* if ( left_ > mid_ ) */ \
+        if ( _f_Cmp ( &(list_)[mid_], &(list_)[left_], info_ ) ) { \
+                /* if ( mid_ > right_ ) */ \
+                if ( _f_Cmp ( &(list_)[right_], &(list_)[mid_], info_ ) ) { \
+                        (pivot_) = mid_; \
+                /* else if ( left_ > right_ ) */ \
+                } else if ( _f_Cmp ( &(list_)[right_], &(list_)[left_], info_ ) ) { \
+                        (pivot_) = right_; \
+                } else { \
+                        (pivot_) = left_; \
+                } \
+        } else { \
+                /* if ( left_ > right_ ) */ \
+                if ( _f_Cmp ( &(list_)[right_], &(list_)[left_], info_ ) ) { \
+                        (pivot_) = left_; \
+                /* else if ( mid_ > right_ ) */ \
+                } else if ( _f_Cmp ( &(list_)[right_], &(list_)[mid_], info_ ) ) { \
+                        (pivot_) = (right_); \
+                } else { \
+                        (pivot_) = (mid_); \
+                } \
+        } \
+}
 
-
-// Swap integer index
-#define SwapIndex(_a, _b)	\
-{\
-	int _t = (_a)->index;\
-	(_a)->index = (_b)->index;\
-	(_b)->index = (_t);\
-}// End Function SwapIndex
-
-
-// Copy index list element
-#define CopyIndex( _a, _b )		((_b)->index = (_a)->index)
-
-// Access list through index list
-#define GetListIndex( _indexList, _index )		((_indexList)[(_index)].index)
-
-
-// Sorting an array list with bubble sort algorithm
-#define SortArrayBubble( _list, _length, _TYPE, _info, _CompareFunction )	\
-{\
-	int _i = (_length) - 1;\
-    while ( _i > 0 ) {\
-        int _last = 0;\
-        for ( int _j = 0; _j < _i; _j ++ ) {\
-            if ( _CompareFunction ( &(_list)[_j + 1], &(_list)[_j] ), (_info) ) {\
-                SwapVariableType ( &(_list)[_j], &(_list)[_j + 1], _TYPE );\
-                _last = _j;\
-            }\
-        }\
-        _i = _last;\
-    }\
-}// End Function SortArrayBubble
-
-
-
-// Sorting an array list with insertion sort algorithm
-#define SortArrayInsertion( _list, _length, _TYPE, _info, _CompareFunction )	\
-{\
-	int _iSample;\
-	for ( _iSample = 0; _iSample < (_length); _iSample ++ ) {\
-		if ( _CompareFunction ( &(_list)[_iSample], &(_list)[_iSample - 1], (_info) ) ) {\
-			_TYPE _exception;\
-			CopyVariableType ( &(_list)[_iSample], &_exception, _TYPE );\
-			int _iCurr;\
-			for ( _iCurr = _iSample; _iCurr > 0; _iCurr -- ) {\
-				if ( _CompareFunction ( &_exception, &(_list)[_iCurr - 1], (_info) ) ) {\
-					CopyVariableType ( &(_list)[_iCurr - 1], &(_list)[_iCurr], _TYPE );\
-				} else {\
-					break;\
-				}\
-			}\
-			CopyVariableType ( &_exception, &(_list)[_iCurr], _TYPE );\
-		}\
-	}\
-}// End Function SortArrayInsertion
-
-
-
-// Select a number cloest to the middle value
-#define SelectPivotVariable( _list, _left, _right, _pivot, _info, _CompareFunction)	\
-{\
-	int _mid = ((_left) + (_right)) >> 1;\
-	if ( !_CompareFunction ( &(_list)[(_left)], &(_list)[_mid], (_info) ) ) {\
-		if ( !_CompareFunction ( &(_list)[_mid], &(_list)[(_right)], (_info) ) ) {\
-			(_pivot) = _mid;\
-		} else {\
-			(_pivot) = (_left);\
-		}\
-	} else {\
-		if ( _CompareFunction ( &(_list)[_mid], &(_list)[(_right)], (_info) ) ) {\
-			(_pivot) = _mid;\
-		} else {\
-			(_pivot) = (_right);\
-		}\
-	}\
-}// End Function SelectPivotVariable
-
-
-// Storage for stack information of QuickSort function
-struct PARTITION_BOUNDARY {
+/* constitute the right part of the array of currect hierachy */
+struct qsort_part {
         int right;
-        int pivotIndex;
+        int mid_pivot;
 };
 
-// Helper functions for SortArrayListQuick
-#define PushStackSortArrayQuick( _stack, _index, _right, _pivot )	\
-{\
-    (_stack)[(_index)].right = (_right);\
-    (_stack)[(_index)].pivotIndex = (_pivot);\
-    (_index) ++;\
-}// End Function PushStackSortArrayQuick
+#define qsort_push( _stack, _iframe, _right, _pivot ) \
+{ \
+        (_stack)[_iframe].right = (_right); \
+        (_stack)[_iframe].mid_pivot = (_pivot); \
+        (_iframe) ++; \
+}
 
-
-
-#define PopStackSortArrayQuick( _stack, _index, _left, _right )	\
-{\
-    (_index) --;\
-    (_left) = (_stack)[(_index)].pivotIndex + 1;\
-    (_right) = (_stack)[(_index)].right;\
-}// End Function PopStackSortArrayQuick
-
+#define qsort_pop( _stack, _iframe, _left, _right ) \
+{ \
+        (_iframe) --; \
+        (_left)  = (_stack)[_iframe].mid_pivot + 1; \
+        (_right) = (_stack)[_iframe].right; \
+}
 
 #define MAX_ITERATIONS		64
 #define CUT_OFF_SIZE		16
 
-
-// Sorting an array list with quick sort algorithm
-#define SortArrayQuick( _list, _length, _TYPE, _info, _CompareFunction )	\
+/* generic quick sort algorithm */
+#define alg_quick_sort( _list, _length, _info, _f_Cmp ) \
 {\
-	struct PARTITION_BOUNDARY partBoundary[MAX_ITERATIONS];\
+        struct qsort_part _stack[MAX_ITERATIONS];\
 \
-    int _stackIndex = 0;\
-    int _left = 0,\
-        _right = (_length) - 1;\
-    const int _boundary = _right;\
-    int _pivotIndex;\
-	SelectPivotVariable ( (_list), 0, _right, _pivotIndex, (_info), _CompareFunction );\
+        int _iframe = 0; /* stack frame */\
+        int _left = 0, \
+            _right = (_length) - 1;\
+        const int _boundary = _right;\
+        int _i_pivot;\
+        pivot ( _list, 0, _right, _i_pivot, _info, _f_Cmp );\
 \
-    while ( 1 ) {\
-		if ( _right - _left < CUT_OFF_SIZE ) {\
-			if ( _boundary - _left < CUT_OFF_SIZE ) {\
-				SortArrayInsertion ( &(_list)[_left], _boundary - _left + 1,\
-									_TYPE, (_info), _CompareFunction );\
-                break;\
-            }\
-            SortArrayInsertion ( &(_list)[_left], _right - _left + 1,\
-							_TYPE, (_info), _CompareFunction );\
-            PopStackSortArrayQuick ( partBoundary, _stackIndex, _left, _right );\
-            SelectPivotVariable ( (_list), _left, _right, _pivotIndex, (_info), _CompareFunction );\
-            continue;\
-		} else {\
-            _TYPE _pivotValue;\
-            CopyVariableType ( &(_list)[_pivotIndex], &_pivotValue, _TYPE );\
-            SwapVariableType ( &(_list)[_pivotIndex], &(_list)[_right], _TYPE );\
-            int _newPivotIndex = _left;\
+        while ( true ) {\
+                if ( _right - _left < CUT_OFF_SIZE ) {\
+                        if ( _boundary - _left < CUT_OFF_SIZE ) { \
+                                alg_insert_sort ( &(_list)[_left], \
+                                                  _boundary - _left + 1, \
+                                                  _info, _f_Cmp ); \
+                                break;\
+                        }\
+                        alg_insert_sort ( &(_list)[_left], \
+                                          _right - _left + 1,\
+                                          _info, _f_Cmp );\
+                        qsort_pop ( _stack, _iframe, _left, _right );\
+                        pivot ( _list, _left, _right, _i_pivot, _info, _f_Cmp );\
+                        continue;\
+                } else {\
+                        typeof (*(_list)) _pivot_value = (_list)[_i_pivot]; \
+                        typeof (*(_list)) _t = (_list)[_i_pivot]; \
+                        (_list)[_i_pivot] = (_list)[_right]; \
+                        (_list)[_right] = _t; \
+                        int _new_i_pivot = _left;\
 \
-		int _i;\
-            for ( _i = _left; _i < _right; _i ++ ) {\
-                if ( _CompareFunction ( &(_list)[_i], &_pivotValue, _info ) ) {\
-                    SwapVariableType ( &(_list)[_newPivotIndex], &(_list)[_i], _TYPE );\
-                    _newPivotIndex ++;\
+                        int _i;\
+                        for ( _i = _left; _i < _right; _i ++ ) {\
+                                if ( _f_Cmp ( &(_list)[_i], &_pivot_value, _info ) ) {\
+                                        typeof (*(_list)) _t = (_list)[_new_i_pivot]; \
+                                        (_list)[_new_i_pivot] = (_list)[_i]; \
+                                        (_list)[_i] = _t; \
+                                        _new_i_pivot ++;\
+                                }\
+                        }\
+\
+                        _t = (_list)[_new_i_pivot]; \
+                        (_list)[_new_i_pivot] = (_list)[_right]; \
+                        (_list)[_right] = _t; \
+\
+                        qsort_push ( _stack, _iframe, _right, _new_i_pivot );\
+                        _right = _new_i_pivot;\
+                        pivot ( _list, _left, _right, _i_pivot, _info, _f_Cmp );\
                 }\
-            }\
-\
-            SwapVariableType ( &(_list)[_newPivotIndex], &(_list)[_right], _TYPE );\
-\
-            PushStackSortArrayQuick ( partBoundary, _stackIndex, _right, _newPivotIndex );\
-            _right = _newPivotIndex;\
-            SelectPivotVariable ( (_list), _left, _right, _pivotIndex, (_info), _CompareFunction );\
-		}\
-    }\
-}// End Function SortArrayQuick
-
-
-
-// Partition an array list in-place according to the given mid-value
-#define PartitionArrayMidValue( _list, _length, _TYPE, _midValue, _CompareFunction, _midIndex )	\
-{\
-	int _newPivotIndex = 0;\
-	int _i;\
-    for ( _i = 0; _i < (_length); _i ++ ) {\
-        if ( _CompareFunction ( &(_list)[_i], (_midValue) ) ) {\
-            SwapVariableType ( &(_list)[_newPivotIndex], &(_list)[_i], _TYPE );\
-            _newPivotIndex ++;\
         }\
-    }\
-    (_midIndex) = _newPivotIndex;\
-}// End Function PartitionArrayMidValue
-
-#define alg_divide_array( _array, _length, _info, _compare, _imiddle )	\
-{\
-	int _pivot = 0;\
-	int _i;\
-	for ( _i = 0; _i < (_length); _i ++ ) {\
-		if ( _compare ( &(_array)[_i], _info ) ) {\
-			/* Swap */\
-			typeof (*(_array)) t = (_array)[_i];\
-			(_array)[_i] = (_array)[_pivot];\
-			(_array)[_pivot] = t;\
-			_pivot ++;\
-		}\
-	}\
-	*(_imiddle) = _pivot;\
 }
 
-// Partition an array list in-place without a given mid-value
-#define PartitionArray( _list, _length, _TYPE, _info, _CompareFunction, midIndex )	\
-{\
-	int _newPivotIndex = 0;\
-    for ( int _i = 0; _i < (_length); _i ++ ) {\
-        if ( _CompareFunction ( &(_list)[_i], (_info) ) ) {\
-            SwapVariableType ( &(_list)[_newPivotIndex], &(_list)[_i], _TYPE );\
-            _newPivotIndex ++;\
-        }\
-    }\
-    (_midIndex) = _newPivotIndex;\
-}// End Function PartitionArray
-
-
-
-// Find the nth element in the array list
-#define FindNthElementArray( _list, _length, _nthPos, _TYPE, _info, _CompareFunction )	\
-{\
-	int _left = 0,\
-		_right = (_length) - 1;\
-	_TYPE _pivotValue;\
-	int _pivotIndex = 0;\
-	SelectPivotVariable ( (_list), 0, _right, _pivotIndex, (_info), _CompareFunction );\
-	CopyVariableType ( &(_list)[_pivotIndex], &_pivotValue, _TYPE );\
-\
-	while ( 1 ) {\
-		int _partPos = _left;\
-\
-		SwapVariableType ( &(_list)[_pivotIndex], &(_list)[_right], _TYPE );\
-		int _index;\
-		for ( _index = _left; _index < _right; _index ++ ) {\
-			if ( _CompareFunction ( &(_list)[_index], &_pivotValue, (_info) ) ) {\
-				SwapVariableType ( &(_list)[_partPos], &(_list)[_index], _TYPE );\
-				_partPos ++;\
-			}\
-		}\
-		SwapVariableType ( &(_list)[_right], &(_list)[_partPos], _TYPE );\
-\
-		if ( _partPos > _nthPos ) {\
-			_right = _partPos - 1;\
-		} else if ( _partPos < _nthPos ) {\
-			_left = _partPos + 1;\
-			_pivotIndex = _left;\
-		} else {\
-			break;\
-		}\
-\
-		if ( _right - _left <= CUT_OFF_SIZE ) {\
-			SortArrayInsertion ( &(_list)[_left], _right - _left + 1,\
-								_TYPE, (_info), _CompareFunction );\
-			break;\
-		}\
-\
-		SelectPivotVariable ( (_list), _left, _right, _pivotIndex, (_info), _CompareFunction );\
-		CopyVariableType ( &(_list)[_pivotIndex], &_pivotValue, _TYPE );\
-	}\
-}// End Function FindNthElementArray
-
-#define alg_split_array( _array, _length, _i, _info, _compare )	\
-{\
-	int _left = 0,\
-		_right = (_length) - 1;\
-	typeof (*(_array)) _pivotValue;\
-	int _pivotIndex = 0;\
-	SelectPivotVariable ( (_array), 0, _right, _pivotIndex, (_info), _compare );\
-	_pivotValue = (_array)[_pivotIndex];\
-\
-	while ( 1 ) {\
-		int _partPos = _left;\
-\
-		typeof (*(_array)) _t;\
-		_t = (_array)[_pivotIndex];\
-		(_array)[_pivotIndex] = (_array)[_right];\
-		(_array)[_right] = _t;\
-\
-		int _index;\
-		for ( _index = _left; _index < _right; _index ++ ) {\
-			if ( _compare ( &(_array)[_index], &_pivotValue, (_info) ) ) {\
-				_t = (_array)[_partPos];\
-				(_array)[_partPos] = (_array)[_index];\
-				(_array)[_index] = _t;\
-				_partPos ++;\
-			}\
-		}\
-		_t = (_array)[_right];\
-		(_array)[_right] = (_array)[_partPos];\
-		(_array)[_partPos] = _t;\
-\
-		if ( _partPos > _i ) {\
-			_right = _partPos - 1;\
-		} else if ( _partPos < _i ) {\
-			_left = _partPos + 1;\
-			_pivotIndex = _left;\
-		} else {\
-			break;\
-		}\
-\
-		if ( _right - _left <= CUT_OFF_SIZE ) {/** FIXEME, NO TYPE ! **/\
-			SortArrayInsertion ( &(_array)[_left], _right - _left + 1,\
-								typeof (*(_array)), (_info), _compare );\
-			break;\
-		}\
-\
-		SelectPivotVariable ( (_array), _left, _right, _pivotIndex, (_info), _compare );\
-		_pivotValue = (_array)[_pivotIndex];\
-	}\
+/* partition an array list in-place according to the given mid-value */
+#define alg_split_bymidvalue( _list, _len, _mval, _f_Cmp, _i_result ) \
+{ \
+        int _new_i_pivot = 0; \
+        int _i; \
+        for ( _i = 0; _i < (_len); _i ++ ) { \
+                if ( _f_Cmp ( (_mval), &(_list)[_i] ) ) { \
+                        typeof (*(_list)) _t = (_list)[_new_i_pivot]; \
+                        (_list)[_new_i_pivot] = (_list)[_i]; \
+                        (_list)[_i] = _t; \
+                        _new_i_pivot ++; \
+                } \
+        } \
+        *(_i_result) = _new_i_pivot; \
 }
 
-// Create a indirect index list for different list-series algorithm
-#define CreateIndexList( _indexList, _length )	\
-{\
-	*(_indexList) = alloc_fix ( sizeof ( ALG_INDEX_LIST ), (_length) );\
-	int _i;\
-	for ( _i = 0; _i < (_length); _i ++ ) {\
-		(*(_indexList))[_i].index = _i;\
-	}\
-}// End Function CreateIndexList
-
-
-
-// Rearrage the whole array list according to the ordered index list
-#define ProcessIndexListToArray( _list, _indexList, _length, _TYPE, _newList )	\
-{\
-	int _i;\
-	for ( _i = 0; _i < (_length); _i ++ ) {\
-		CopyVariableType ( &(_list)[GetListIndex ( (_indexList), _i )],\
-							&(_newList)[_i], _TYPE );\
-	}\
-	free_fix ( (_indexList) );\
-}// End Function ProcessArrayIndexList
-
-
-
-// Create a indirect bi-index list for different list-series algorithm
-#define CreateBiindexList( _indexList, _length )	\
-{\
-	*(_indexList) = alloc_fix ( sizeof ( ALG_BIINDEX_LIST ), (_length) );\
-	int _i;\
-	for ( _i = 0; _i < (_length); _i ++ ) {\
-		(*(_indexList))[_i].index = _i;\
-	}\
-}// End Function CreateBiindexList
-
-
-
-// Rearrage the whole array list according to the ordered bi-index list
-#define ProcessBiindexList( _list, _indexList, _length, _TYPE )	\
-{\
-	int _i;\
-	for ( _i = 0; _i < (_length); _i ++ ) {\
-		(_indexList)[(_indexList)[_i].index].origin = _i;\
-	}\
-	_TYPE temp[2];\
-	CopyVariableType ( &(_list)[0], &temp[0], _TYPE );\
-	int _iterIndex = 0;\
-	int _iElement = 0, _switcher = 0;\
-	while ( _iElement < (_length) ) {\
-		if ( _iterIndex != (_indexList)[_iterIndex].index ) {\
-			(_indexList)[_iterIndex].index = _iterIndex;\
-			_iterIndex = (_indexList)[_iterIndex].origin;\
-			CopyVariableType ( &(_list)[_iterIndex], &temp[(_switcher + 1) & 1], _TYPE );\
-			CopyVariableType ( &temp[_switcher & 1], &(_list)[_iterIndex], _TYPE );\
-			_switcher ++;\
-		} else {\
-			do {\
-				_iterIndex ++;\
-				_iElement ++;\
-			} while ( _iterIndex == (_indexList)[_iterIndex].index );\
-			CopyVariableType ( &(_list)[_iterIndex], &temp[_switcher & 1], _TYPE );\
-		}\
-	}\
-	free_fix ( (_indexList) );\
-}// End Function ProcessBiindexList
-
-
-
-// Sorting an index list with bubble sort algorithm
-#define SortIndexBubble( _list, _indexList, _length, _TYPE, _info, _CompareFunction )	\
-{\
-	int _i = (_length) - 1;\
-    while ( _i > 0 ) {\
-        int _last = 0;\
-        for ( int _j = 0; _j < _i; _j ++ ) {\
-            if ( _CompareFunction ( &(_list)[(_indexList)[_j + 1]], \
-									  &(_list)[(_indexList)[_j]], (_info) ) ) {\
-				SwapIndex ( &(_indexList)[_j], &(_indexList)[_j + 1] );\
-                _last = _j;\
-            }\
-        }\
-        _i = _last;\
-    }\
-}// End Function SortIndexBubble
-
-
-
-// Sorting an index list with insertion sort algorithm
-#define SortIndexInsertion( _list, _indexList, _length, _TYPE, _info, _CompareFunction )	\
-{\
-	int _iSample;\
-	for ( _iSample = 0; _iSample < (_length); _iSample ++ ) {\
-		if ( _CompareFunction ( &(_list)[GetListIndex ( (_indexList), _iSample )],\
-								&(_list)[GetListIndex ( (_indexList), _iSample - 1 )], (_info) ) ) {\
-			ALG_BIINDEX_LIST _exception;\
-			CopyIndex ( &(_indexList)[_iSample], &_exception );\
-			int _iCurr;\
-			for ( _iCurr = _iSample; _iCurr > 0; _iCurr -- ) {\
-				if ( _CompareFunction ( &(_list)[GetListIndex ( &_exception, 0 )],\
-										&(_list)[GetListIndex ( (_indexList), _iCurr - 1 )], (_info) ) ) {\
-					CopyIndex ( &(_indexList)[_iCurr - 1], &(_indexList)[_iCurr] );\
-				} else {\
-					break;\
-				}\
-			}\
-			CopyIndex ( &_exception, &(_indexList)[_iCurr] );\
-		}\
-	}\
-}// End Function SortIndexInsertion
-
-
-
-// Select a number cloest to the middle value
-#define SelectPivotIndex( _list, _indexList, _left, _right, _pivot, _info, _CompareFunction )	\
-{\
-	int _mid = ((_left) + (_right)) >> 1;\
-	if ( !_CompareFunction ( &(_list)[GetListIndex ( (_indexList), (_left) )],\
-							 &(_list)[GetListIndex ( (_indexList), _mid )], (_info) ) ) {\
-		if ( !_CompareFunction ( &(_list)[GetListIndex ( (_indexList), _mid )],\
-								 &(_list)[GetListIndex ( (_indexList), (_right) )], (_info) ) ) {\
-			(_pivot) = _mid;\
-		} else {\
-			(_pivot) = (_left);\
-		}\
-	} else {\
-		if ( _CompareFunction ( &(_list)[GetListIndex ( (_indexList), _mid )],\
-								&(_list)[GetListIndex ( (_indexList), (_right) )], (_info) ) ) {\
-			(_pivot) = _mid;\
-		} else {\
-			(_pivot) = (_right);\
-		}\
-	}\
-}// End Function SelectPivotIndex
-
-
-
-// Sorting an index list with quick sort algorithm
-#define SortIndexQuick( _list, _indexList, _length, _TYPE, _info, _CompareFunction )	\
-{\
-	struct PARTITION_BOUNDARY partBoundary[MAX_ITERATIONS];\
-\
-    int _stackIndex = 0;\
-    int _left = 0,\
-        _right = (_length) - 1;\
-    const int _boundary = _right;\
-    int _pivotIndex;\
-	SelectPivotIndex ( (_list), (_indexList),\
-					0, _right, _pivotIndex, (_info), _CompareFunction );\
-\
-    while ( 1 ) {\
-		if ( _right - _left < CUT_OFF_SIZE ) {\
-			if ( _boundary - _left < CUT_OFF_SIZE ) {\
-				SortIndexInsertion ( (_list), &(_indexList)[_left],\
-								_boundary - _left + 1, _TYPE,\
-								(_info), _CompareFunction );\
-                break;\
-            }\
-            SortIndexInsertion ( (_list), &(_indexList)[_left],\
-								_right - _left + 1, _TYPE,\
-								(_info), _CompareFunction );\
-            PopStackSortArrayQuick ( partBoundary, _stackIndex, _left, _right );\
-            SelectPivotIndex ( (_list), (_indexList),\
-							_left, _right, _pivotIndex, (_info), _CompareFunction );\
-            continue;\
-		} else {\
-            _TYPE *_pivotValue = &(_list)[GetListIndex ( (_indexList), _pivotIndex )];\
-            SwapIndex ( &(_indexList)[_pivotIndex], &(_indexList)[_right] );\
-            int _newPivotIndex = _left;\
-\
-		int _i;\
-            for ( _i = _left; _i < _right; _i ++ ) {\
-                if ( _CompareFunction ( &(_list)[GetListIndex ( (_indexList), _i )],\
-									_pivotValue, (_info) ) ) {\
-                    SwapIndex ( &_indexList[_newPivotIndex], &_indexList[_i] );\
-                    _newPivotIndex ++;\
+/* partition an array list in-place according to the custum mid-value */
+#define alg_split_byvalue( _array, _len, _info, _f_Cmp, _i_result ) \
+{ \
+        int _pivot = 0; \
+        int _i; \
+        for ( _i = 0; _i < (_len); _i ++ ) { \
+                if ( _f_Cmp ( _info, &(_array)[_i] ) ) { \
+                        /* Swap */ \
+                        typeof (*(_array)) _t = (_array)[_i]; \
+                        (_array)[_i] = (_array)[_pivot]; \
+                        (_array)[_pivot] = _t; \
+			_pivot ++; \
                 }\
-            }\
-\
-			SwapIndex ( &_indexList[_newPivotIndex], &_indexList[_right] );\
-\
-            PushStackSortArrayQuick ( partBoundary, _stackIndex, _right, _newPivotIndex );\
-            _right = _newPivotIndex;\
-            SelectPivotIndex ( (_list), (_indexList),\
-							_left, _right, _pivotIndex, (_info), _CompareFunction );\
-		}\
-    }\
-}// End Function SortIndexQuick
-
-
-
-// Partition an index list in-place according to the given mid-value
-#define PartitionIndexMidValue( _list, _indexList, _length, _midValue, _CompareFunction, _midIndex )	\
-{\
-	int _newPivotIndex = 0;\
-    for ( int _i = 0; _i < (_length); _i ++ ) {\
-        if ( _CompareFunction ( &(_list)[GetListIndex ( (_indexList), _i )],\
-							(_midValue) ) ) {\
-            SwapIndex ( &(_indexList)[_newPivotIndex], &(_indexList)[_i] );\
-            _newPivotIndex ++;\
         }\
-    }\
-    (_midIndex) = _newPivotIndex;\
-}// End Function PartitionIndexMidValue
+	*(_i_result) = _pivot;\
+}
 
-
-
-// Partition an index list in-place without a given mid-value
-#define PartitionIndex( _list, _indexList, _length, _TYPE, _info, _CompareFunction, _midIndex )	\
-{\
-	int _newPivotIndex = 0;\
-    for ( int _i = 0; _i < (_length); _i ++ ) {\
-        if ( _CompareFunction ( &(_list)[GetListIndex ( (_indexList), _i)], (_info) ) ) {\
-            SwapIndex ( &(_indexList)[_newPivotIndex], &(_indexList)[_i] );\
-            _newPivotIndex ++;\
-        }\
-    }\
-    (_midIndex) = _newPivotIndex;\
-}// End Function PartitionIndex
-
-
-
-// Find the nth element in a index list
-#define FindNthElementIndex( _list, _indexList, _length, _nthPos, _TYPE, _info, _CompareFunction )	\
-{\
-	int _left = 0,\
-		_right = (_length) - 1;\
-	_TYPE *_pivotValue;\
-	int _pivotIndex = 0;\
-	SelectPivotIndex ( (_list), (_indexList), 0, _right, _pivotIndex, _info, _CompareFunction );\
-	_pivotValue = &(_list)[GetListIndex ( (_indexList), _pivotIndex )];\
+/* split an array into two part with middle at the ith position */
+#define alg_split_byindex( _array, _len, _i_mid, _info, _f_Cmp )	\
+{ \
+        int _left = 0, \
+            _right = (_len) - 1; \
+        typeof (*(_array)) _pivot_value; \
+        int _i_pivot = 0; \
+        pivot ( _array, 0, _right, _i_pivot, _info, _f_Cmp ); \
+        _pivot_value = (_array)[_i_pivot]; \
 \
-	while ( 1 ) {\
-		int _partPos = _left;\
+        while ( true ) { \
+                int _part_pos = _left; \
 \
-		SwapIndex ( &(_indexList)[_pivotIndex], &(_indexList)[_right] );\
-		int _index;\
-		for ( _index = _left; _index < _right; _index ++ ) {\
-			if ( _CompareFunction ( &(_list)[GetListIndex ( (_indexList), _index )],\
-									_pivotValue, (_info) ) ) {\
-				SwapIndex ( &(_indexList)[_partPos], &(_indexList)[_index] );\
-				_partPos ++;\
-			}\
-		}\
-		SwapIndex ( &(_indexList)[_right], &(_indexList)[_partPos] );\
+                typeof (*(_array)) _t; \
+                _t = (_array)[_i_pivot]; \
+                (_array)[_i_pivot] = (_array)[_right]; \
+                (_array)[_right] = _t; \
 \
-		if ( _partPos > _nthPos ) {\
-			_right = _partPos - 1;\
-		} else if ( _partPos < _nthPos ) {\
-			_left = _partPos + 1;\
-			_pivotIndex = _left;\
-		} else {\
-			break;\
-		}\
+                int _i; \
+                for ( _i = _left; _i < _right; _i ++ ) { \
+                        if ( _f_Cmp ( &(_array)[_i], &_pivot_value, _info ) ) { \
+                                _t = (_array)[_part_pos]; \
+                                (_array)[_part_pos] = (_array)[_i]; \
+                                (_array)[_i] = _t; \
+                                _part_pos ++; \
+                        } \
+                } \
 \
-		if ( _right - _left <= CUT_OFF_SIZE ) {\
-			SortIndexInsertion ( (_list), &(_indexList)[_left], _right - _left + 1,\
-								_TYPE, _info, _CompareFunction );\
-			break;\
-		}\
+                _t = (_array)[_right]; \
+                (_array)[_right] = (_array)[_part_pos]; \
+                (_array)[_part_pos] = _t; \
 \
-		SelectPivotIndex ( (_list), (_indexList), _left, _right, _pivotIndex, (_info), _CompareFunction );\
-		_pivotValue = &(_list)[GetListIndex ( (_indexList), _pivotIndex )];\
-	}\
-}// End Function FindNthElementIndex
+                if ( _part_pos > _i_mid ) { \
+                        _right = _part_pos - 1; \
+                } else if ( _part_pos < _i_mid ) { \
+                        _left = _part_pos + 1; \
+                        _i_pivot = _left; \
+                } else { \
+                        break; \
+                } \
+\
+                if ( _right - _left <= CUT_OFF_SIZE ) { \
+                        alg_insert_sort ( &(_array)[_left], \
+                                           _right - _left + 1, \
+                                           (_info), _f_Cmp ); \
+                        break; \
+                } \
+\
+                pivot ( _array, _left, _right, _i_pivot, _info, _f_Cmp ); \
+                _pivot_value = (_array)[_i_pivot]; \
+        } \
+}
 
+#define create_alg_ptr_list( _list, _len, _is_inplace, _ptrs ) \
+{ \
+        int _ptr_len = (_len)*(_is_inplace + 1); \
+        (_ptrs)->ptr = alloc_fix ( sizeof *(_ptrs), _ptr_len );\
+        int _i; \
+        for ( _i = 0; _i < (_len); _i ++ ) { \
+                (_ptrs)[_i].ptr = &(_list)[_i]; \
+        } \
+}
 
-// Generate a 32 bit hash key for 32 and 64 bits value
-#define GenHash32( _value )				((*(unsigned int *) &(_value))*0x9e370001UL)
-#define GenHash64( _value )				((*(uint64_t *) &(_value))*0x9e37fffffffc0001UL)
+#define free_alg_ptr_list( _ptrs )         (free_fix ( _ptrs ))
+
+#define alg_ptr_list_tonew( _ptrs, _len, _new_list ) \
+{ \
+        int _i; \
+        for ( _i = 0; _i < (_len); _i ++ ) { \
+                _new_list[_i] = *(cast(_new_list) (_ptrs)[_i].ptr); \
+        } \
+}
+
+#define alg_ptr_list_inplace( _ptr_list, _len, _list ) \
+{ \
+        typeof(&_list) _ori_ptrs = cast(&_list) &(_ptr_list)[_len]; \
+        typeof(&_list) _ptrs = cast(&_list) &(_ptr_list)[0]; \
+        int _i; \
+        for ( _i = 0; _i < (_len); _i ++ ) { \
+                _ori_ptrs[(_ptrs)[_i] - (_list)] = &_list[_i]; \
+        } \
+        typeof (*(_list)) _temp[2]; \
+        _temp[0] = (_list)[0]; \
+\
+        int _i_iter = 0; \
+        int _i_elm = 0; \
+        int _switcher = 0; \
+        while ( _i_elm < (_len) ) { \
+                if (  (_ptrs)[_i_iter] != &(_list)[_i_iter] ) { \
+                        (_ptrs)[_i_iter] = &(_list)[_i_iter]; \
+                        _i_iter = (_ptrs)[_i_iter] - (_list); \
+                        _temp[(_switcher + 1) & 1] = (_list)[_i_iter]; \
+                        (_list)[_i_iter] = _temp[_switcher & 1]; \
+                        _switcher ++; \
+                } else { \
+                        do { \
+                                _i_iter ++; \
+                                _i_elm ++; \
+                        } while ( &(_list)[_i_iter] == (_ptrs)[_i_iter] ); \
+                        _temp[_switcher & 1] = (_list)[_i_iter]; \
+                } \
+        } \
+        free_fix ( _ptrs ); \
+}
+
+/* Generate a 32 bit hash key for 32 and 64 bits value */
+#define gen_hash32( _value )				((*(unsigned int *) &(_value))*0x9e370001UL)
+#define gen_hash64( _value )				((*(uint64_t *) &(_value))*0x9e37fffffffc0001UL)
 
 #define HASH_NULL_KEY		-1
 
 
-// Initialize and create the hash table
-#define InitHashTable( _header_len, _link_list_len, _hash_table )	\
-{\
-	int _power = log2_int_c ( (_header_len) );\
-	int _table_len = 1 << _power;\
-	(_hash_table)->hash_table = alloc_var ( sizeof(int), _table_len + (_link_list_len) );\
-	(_hash_table)->shift_bits = 32 - (_power);\
-	(_hash_table)->size_bits = (_power) - 1; \
-	(_hash_table)->header_len = _table_len;\
-	(_hash_table)->link_list_len = (_link_list_len);\
-	int _i;\
-	for ( _i = 0; _i < _table_len + (_link_list_len); _i ++ ) {\
-		(_hash_table)->hash_table[_i] = HASH_NULL_KEY;\
-	}\
-}
-
-
-
-// Release allocated memory in the hash table
-#define ReleaseHashTable( _hash_table )	\
-{\
-	free_var ( (_hash_table)->hash_table );\
-	memset ( (_hash_table), 0, sizeof ( *(_hash_table) ) );\
-\
-}// End Function ReleaseHashTableStatic
-
-
-
-// Empty all the elements from hash table
-#define FlushHashTable( _hash_table )	\
+/* create and initialize the hash linked list */
+#define create_alg_hash_llist( _header_len, _n_elm, _elm_size, _hash_llist ) \
 { \
-	flush_var ( (_hash_table)->hash_table ); \
-	int totalCount = (_hash_table)->header_len + \
-			 (_hash_table)->link_list_len; \
+	int _power = log2_int_c ( (_header_len) ); \
+	int _table_len = 1 << _power; \
+	(_hash_llist)->hash_prev = alloc_var ( \
+                sizeof *(_hash_llist)->hash_prev, _table_len + (_n_elm) + 1 ); \
+        (_hash_llist)->hash_prev = &(_hash_llist)->hash_prev[1]; /* so that even (_hash_llist)->hash_prev[HASH_NULL_KEY] memory address will be available */ \
+        (_hash_llist)->next      = alloc_var ( \
+                sizeof *(_hash_llist)->hash_prev, _table_len + (_n_elm) ); \
+        (_hash_llist)->icurr = _table_len + _n_elm; \
+        (_hash_llist)->content = alloc_var ( _elm_size, _n_elm ); \
+	(_hash_llist)->shift_bits = 32 - (_power); \
+	(_hash_llist)->size_bits = _table_len - 1; \
+	(_hash_llist)->header_len = _table_len; \
+	(_hash_llist)->n_elm = (_n_elm); \
 	int _i; \
-	for ( _i = 0; _i < totalCount; _i ++ ) { \
-		(_hash_table)->hash_table[_i] = HASH_NULL_KEY; \
+	for ( _i = 0; _i < _table_len + (_n_elm); _i ++ ) { \
+		(_hash_llist)->hash_prev[_i] = HASH_NULL_KEY; \
+		(_hash_llist)->next[_i] = HASH_NULL_KEY; \
 	} \
-}// End Function FlushHashTableStatic
-
-
-// Expand the memory if needs a dynamic hash table
-#define StaticHash( _hash_table, _dataIndex )
-#define DynamicHash( _hash_table, _dataIndex )	{\
-	const int _newCount = (_dataIndex) + 1;\
-	if ( _newCount > (_hash_table)->link_list_len ) {\
-		(_hash_table)->hash_table = expand2_var ( (_hash_table)->hash_table, \
-							  (_hash_table)->header_len + _newCount );\
-		int *tempHash = &(_hash_table)->hash_table[(_hash_table)->header_len];\
-		for ( ; (_hash_table)->link_list_len < _newCount;\
-				(_hash_table)->link_list_len ++ ) {\
-			tempHash[(_hash_table)->link_list_len] = HASH_NULL_KEY;\
-		}\
-	}\
 }
 
-// Insert an element to the dynamic hash table
-#define InsertHash( _hash_table, _dataIndex, _hashKey, _UpdateFunction )	\
-{\
-	int _keyPosition = (unsigned int) _hashKey & (_hash_table)->size_bits;\
-	if ( (_hash_table)->hash_table[_keyPosition] == HASH_NULL_KEY ) {\
-		(_hash_table)->hash_table[_keyPosition] = (_dataIndex);\
-		_UpdateFunction ( _hash_table, _dataIndex );\
-	} else {\
-		int _currentIndex = (_hash_table)->hash_table[_keyPosition];\
-		int *_dataZone = &(_hash_table)->hash_table[(_hash_table)->header_len];\
-		while ( _dataZone[_currentIndex] != HASH_NULL_KEY ) {\
-			_currentIndex = _dataZone[_currentIndex];\
-		}/* End While */\
-		_dataZone[_currentIndex] = (_dataIndex);\
-		_UpdateFunction ( _hash_table, _dataIndex );\
-	}/* End If ( Key exists ? ) */\
+#define free_alg_hash_llist( _hash_llist ) \
+{ \
+        (_hash_llist)->hash_prev = &(_hash_llist)->hash_prev[-1]; \
+	free_var ( (_hash_llist)->hash_prev ); \
+	free_var ( (_hash_llist)->next ); \
+	free_var ( (_hash_llist)->content ); \
+	memset ( _hash_llist, 0, sizeof *(_hash_llist) ); \
+}
+
+#define alg_hash_llist_flush( _hash_llist ) \
+{ \
+	flush_var ( (_hash_llist)->hash_prev ); \
+	flush_var ( (_hash_llist)->next ); \
+	flush_var ( (_hash_llist)->content ); \
 \
-}// End Function InsertHashVar
+	int _n_elm = (_hash_llist)->header_len + \
+		     (_hash_llist)->n_elm; \
+	int _i; \
+	for ( _i = 0; _i < _n_elm; _i ++ ) { \
+		(_hash_llist)->hash_prev[_i] = HASH_NULL_KEY; \
+		(_hash_llist)->next[_i] = HASH_NULL_KEY; \
+	} \
+}
 
+/* expand the memory if needs a dynamic hash table */
+#define f_No_Update( _hash_llist, _i )
 
-
-// Find first occurred matched element position from hash table
-#define FindFirstHash( _hash_table, _hashKey, _foundPos, _info, _CompareFunction )	\
-{\
-	int _keyPosition = (unsigned int) _hashKey & (_hash_table)->size_bits;\
-    if ( (_hash_table)->hash_table[_keyPosition] == HASH_NULL_KEY ) {\
-        (_foundPos) = HASH_NULL_KEY;\
-    } else {\
-        int _currentIndex = (_hash_table)->hash_table[_keyPosition];\
-        const int *_dataZone = &(_hash_table)->hash_table[(_hash_table)->header_len];\
-        while ( 1 ) {\
-            if ( _CompareFunction ( _currentIndex, (_info) ) ) {\
-                (_foundPos) = _currentIndex;\
-                break;\
-            } else {\
-				if ( _dataZone[_currentIndex] != HASH_NULL_KEY ) {\
-					/* Go on to the next element */\
-					_currentIndex = _dataZone[_currentIndex];\
-				} else {\
-					(_foundPos) = HASH_NULL_KEY;\
-					break;\
-				}/* End If ( End of the list ? ) */\
-            }/* End If ( Matches ? ) */\
-        }/* End While */\
-    }/* End If ( Key exists ? ) */\
+#define f_Dym_Update( _hash_llist, _i ) \
+{ \
+        const int _new_cnt = (_i) + 1; \
+        if ( _new_cnt > 2*(_hash_llist)->n_elm ) { \
+                /* used up all the space, we needs to expand and partially \
+                 * initialize those new spaces */ \
+                int _len = (_hash_llist)->header_len + _new_cnt; \
+                (_hash_llist)->hash_prev = expand2_var ( (_hash_llist)->hash_prev, _len ); \
+                (_hash_llist)->next      = expand2_var ( (_hash_llist)->next, _len ); \
+                (_hash_llist)->content = expand2_var ( (_hash_llist)->content, _new_cnt ); \
 \
-}// End Function FindFirstHash
+                int *_hash_prev = &(_hash_llist)->hash_prev[(_hash_llist)->header_len]; \
+                int *_next = &(_hash_llist)->next[(_hash_llist)->header_len]; \
+                for ( ; (_hash_llist)->n_elm < 2*_new_cnt; \
+                        (_hash_llist)->n_elm ++ ) { \
+                        _hash_prev[(_hash_llist)->n_elm] = HASH_NULL_KEY; \
+                        _next[(_hash_llist)->n_elm] = HASH_NULL_KEY; \
+                } \
+        } \
+}
 
+#define hash_update_icurr( _hash_llist ) \
+{ \
+        (_hash_llist)->icurr = \
+                ((_hash_llist)->next[(_hash_llist)->icurr] == HASH_NULL_KEY ? \
+                 (_hash_llist)->icurr + 1 : \
+                 (_hash_llist)->next[(_hash_llist)->icurr]); \
+}
 
+/* add an element to the hash linked list (Note that: addition is different from insertion) */
+#define alg_hash_llist_add( _hash_llist, _elm, _key, _f_Update ) \
+{ \
+        int _head_pos = (uint64_t) _key & (_hash_llist)->size_bits; \
+        if ( (_hash_llist)->next[_head_pos] == HASH_NULL_KEY ) { \
+                /* insert new entry into the hash table */ \
+                (_hash_llist)->next[_head_pos] = (_hash_llist)->icurr; \
+                (_hash_llist)->hash_prev[(_hash_llist)->icurr] = _head_pos; \
+                typeof (_elm) dest = cast(_elm) (_hash_llist)->content + \
+                                     ((_hash_llist)->icurr - (_hash_llist)->header_len); \
+                *dest = *(_elm); \
+                hash_update_icurr ( _hash_llist ); \
+                _f_Update ( _hash_llist, (_hash_llist)->icurr ); \
+        } else { \
+                /* append new entry into the linked list */ \
+                int _icurr = (_hash_llist)->next[_head_pos]; \
+                int *_next = (_hash_llist)->next; \
+                while ( _next[_icurr] != HASH_NULL_KEY ) { \
+                        _icurr = _next[_icurr]; \
+                } \
+                (_hash_llist)->next[_icurr] = (_hash_llist)->icurr; \
+                (_hash_llist)->hash_prev[(_hash_llist)->icurr] = _icurr; \
+                typeof (_elm) dest = cast(_elm) (_hash_llist)->content + \
+                                     ((_hash_llist)->icurr - (_hash_llist)->header_len); \
+                *dest = *(_elm); \
+                hash_update_icurr ( _hash_llist ); \
+                _f_Update ( _hash_llist, (_hash_llist)->icurr ); \
+        } \
+}
 
-// Find next matched element position from hash table
-#define FindNextHash( _hash_table, _foundPos, _info, _CompareFunction )	\
-{\
-	const int *_dataZone = &(_hash_table)->hash_table[(_hash_table)->header_len];\
-	int _currentIndex = (_foundPos);\
-	while ( 1 ) {\
-		if ( _dataZone[_currentIndex] != HASH_NULL_KEY ) {\
-			/* Go on to the next element */\
-			_currentIndex = _dataZone[_currentIndex];\
-			if ( _CompareFunction ( _currentIndex, (_info) ) ) {\
-				(_foundPos) = _currentIndex;\
-				break;\
-			}/* End If ( Matches ? ) */\
-		} else {\
-			(_foundPos) = HASH_NULL_KEY;\
-			break;\
-		}/* End If ( End of the list ? ) */\
-	}/* End While */\
+/* find the first matched occurrence from hash linked list
+ * and return the pointer to that element, nullptr is guaranteed
+ * if we can't find a matching element at all */
+#define alg_hash_llist_first( _hash_llist, _key, _rfound, _info, _f_Cmp ) \
+{ \
+        int _head_pos = (uint64_t) _key & (_hash_llist)->size_bits; \
+        if ( (_hash_llist)->next[_head_pos] == HASH_NULL_KEY ) { \
+                *(_rfound) = nullptr; \
+        } else { \
+                int _curr = (_hash_llist)->next[_head_pos]; \
+                const int *_next = (_hash_llist)->next; \
+                typeof (*(_rfound)) _ptr = (_hash_llist)->content; \
+                _ptr -= (_hash_llist)->header_len; \
 \
-}// End Function FindNextHash
+                while ( true ) { \
+                        if ( _f_Cmp ( _info, &_ptr[_curr] ) ) { \
+                                /* matched */ \
+                                *(_rfound) = &_ptr[_curr]; \
+                                break; \
+                        } else { \
+                                if ( _next[_curr] != HASH_NULL_KEY ) { \
+                                        /* Go on to the next element */ \
+                                        _curr = _next[_curr]; \
+                                } else { \
+                                        *(_rfound) = nullptr; \
+                                        break; \
+                                } \
+                        } \
+                } \
+        } \
+}
 
-
-
-// Look up if the data has been inserted into the table, if not, inserts it
-#define FindInsertHash( _hash_table, _dataIndex, _hashKey, _foundPos, _info, _CompareFunction, _UpdateFunction )	\
-{\
-    int _keyPosition = (unsigned int) _hashKey & (_hash_table)->size_bits;\
-    if ( (_hash_table)->hash_table[_keyPosition] == HASH_NULL_KEY ) {\
-		(_hash_table)->hash_table[_keyPosition] = (_dataIndex);\
-		_UpdateFunction ( _hash_table, _dataIndex );\
-        (_foundPos) = HASH_NULL_KEY;\
-    } else {\
-        int _currentIndex = (_hash_table)->hash_table[_keyPosition];\
-        int *_dataZone = &(_hash_table)->hash_table[(_hash_table)->header_len];\
-        while ( 1 ) {\
-            if ( _CompareFunction ( _currentIndex, (_info) ) ) {\
-				(_foundPos) = _currentIndex;\
-				_UpdateFunction ( _hash_table, _dataIndex );\
-                break;\
-            } else {\
-                if ( _dataZone[_currentIndex] == HASH_NULL_KEY ) {\
-					_dataZone[_currentIndex] = (_dataIndex);\
-					_UpdateFunction ( _hash_table, _dataIndex );\
-					(_foundPos) = HASH_NULL_KEY;\
-                    break;\
-                } else {\
-                    _currentIndex = _dataZone[_currentIndex];\
-                }/* End If ( No more element ? ) */\
-            }/* End If ( Matches ? ) */\
-        }/* End While */\
-    }/* End If ( Key exists ? ) */\
+/* find the next matched occurrence from hash linked list
+ * and return the pointer to that element, nullptr is guaranteed
+ * if we can't find a matching element at all */
+#define alg_hash_llist_next( _hash_llist, _rfound, _info, _f_Cmp ) \
+{ \
+	const int *_next = (_hash_llist)->next; \
+	typeof (*(_rfound)) _ptr = (_hash_llist)->content; \
+	_ptr -= (_hash_llist)->header_len; \
+	int _curr = *(_rfound) - _ptr; \
 \
-}// End Function FindInsertHash
+	while ( true ) { \
+		if ( _next[_curr] != HASH_NULL_KEY ) { \
+			/* Go on to the next element */ \
+			_curr = _next[_curr]; \
+			if ( _f_Cmp ( _info, &_ptr[_curr] ) ) { \
+				*(_rfound) = &_ptr[_curr]; \
+				break; \
+			} \
+		} else { \
+			*(_rfound) = nullptr; \
+			break; \
+		} \
+	} \
+}
 
-
-
-// Look up if the data has been inserted into the table, if not, inserts it,
-// if so, it replace the one that has equal comparing result
-#define FindInsertHashReplace( _hashTable, _dataIndex, _hashKey, _foundPos, _info, _CompareFunction, _UpdateFunction )	\
-{\
-    int _keyPosition = (unsigned int) (_hashKey) & (_hashTable)->size_bits;\
-    if ( (_hashTable)->hash_table[_keyPosition] == HASH_NULL_KEY ) {\
-        (_hashTable)->hash_table[_keyPosition] = (_dataIndex);\
-        (_foundPos) = HASH_NULL_KEY;\
-    } else {\
-	int _lastIndex = -((_hashTable)->header_len - _keyPosition);\
-        int _currentIndex = (_hashTable)->hash_table[_keyPosition];\
-        int *_dataZone = &(_hashTable)->hash_table[(_hashTable)->header_len];\
-        while ( 1 ) {\
-            if ( _CompareFunction ( _currentIndex, (_info) ) ) {\
-				_UpdateFunction ( _hashTable, _dataIndex );\
-				_dataZone = &(_hashTable)->hash_table[(_hashTable)->header_len];\
-				/* Modify the pointer to make higher cache performance */\
-				_dataZone[_lastIndex] = _dataIndex;\
-				_dataZone[_dataIndex] = _dataZone[_currentIndex];\
-                (_foundPos) = _currentIndex;\
-                break;\
-            } else {\
-                if ( _dataZone[_currentIndex] == HASH_NULL_KEY ) {\
-					_dataZone[_currentIndex] = (_dataIndex);\
-					_UpdateFunction ( _hashTable, _dataIndex );\
-					(_foundPos) = HASH_NULL_KEY;\
-                    break;\
-                } else {\
-					_lastIndex = _currentIndex;\
-                    _currentIndex = _dataZone[_currentIndex];\
-                }/* End If ( No more element ? ) */\
-            }/* End If ( Matches ? ) */\
-        }/* End While */\
-    }/* End If ( Key exists ? ) */\
+/* insert an element to the position obtained from
+ *alg_hash_llist_first/alg_hash_llist_next */
+#define alg_hash_llist_insert( _hash_llist, _elm, _rfound ) \
+{ \
+        typeof (*(_rfound)) _ptr = (_hash_llist)->content; \
+	_ptr -= (_hash_llist)->header_len; \
+	int _curr = *(_rfound) - _ptr; \
 \
-}// End Function FindAddElementHashStatic
+	/* force the found element to use a new position \
+	 * but keep the linkage valid */ \
+        int *_prev = (_hash_llist)->hash_prev; \
+	int *_next = (_hash_llist)->next; \
+	int _new_pos = (_hash_llist)->icurr; \
+	hash_update_icurr ( _hash_llist ); \
+	_prev[_next[_curr]] = _new_pos; \
+	_next[_curr] = _new_pos; \
+	_ptr[_new_pos] = _ptr[_curr]; \
+	/* copy the element into this position */ \
+	_ptr[_curr] = *(_elm); \
+}
+
+/* delete an element obtained from alg_hash_llist_first/alg_hash_llist_next */
+#define alg_hash_llist_remove( _hash_llist, _rfound ) \
+{ \
+        typeof (*(_rfound)) _ptr = (_hash_llist)->content; \
+	_ptr -= (_hash_llist)->header_len; \
+	int _curr = *(_rfound) - _ptr; \
+\
+        /* remove the current, also to fix the linkage of \
+         * the previous and the next element */ \
+	int *_prev = (_hash_llist)->hash_prev; \
+	int *_next = (_hash_llist)->next; \
+        _next[_prev[_curr]] = _next[_curr]; \
+        _prev[_next[_curr]] = _prev[_curr]; \
+        /* append itself behind the icurr position */ \
+        int _icurr = (_hash_llist)->icurr; \
+        _prev[_next[_icurr]] = _curr; \
+        _next[_curr] = _next[_icurr]; \
+        _next[_icurr] = _curr; \
+        _prev[_curr] = _icurr; \
+}
 
 /** list containers **/
 #define list_elm( _list, _i )			(&(_list)->list[(_i)*(_list)->elm_size])
@@ -819,19 +531,26 @@ struct PARTITION_BOUNDARY {
 	} \
 }
 
+#define alg_list_n( _list )			((_list)->num_elm)
+#define alg_list_first( _list )			((void *) (_list)->list)
+#define alg_list_next( _list_elm )		((_list_elm) ++)
+#define alg_list_i( _list, _k, _ptr )           (*(_ptr) = &((typeof(*(_ptr))) (_list)->list)[_k])
+#define alg_list_locate( _elm, _list )          ((_elm) - (cast(_elm) (_list)->list))
+
 #define alg_llist_add( _elm, _llist ) \
 { \
         int _i = (_llist)->icurr; \
-        typeof(_elm) _dest = (typeof(_elm)) (_llist)->content + _i; \
         (_llist)->prev = expand2_var ( (_llist)->prev, (_llist)->num_elm ); \
+        (_llist)->head = (_llist)->prev; \
         (_llist)->next = expand2_var ( (_llist)->next, (_llist)->num_elm ); \
         (_llist)->content = expand2_var ( (_llist)->content, (_llist)->num_elm ); \
+        typeof(_elm) _dest = (typeof(_elm)) (_llist)->content + _i; \
         memcpy ( _dest, _elm, sizeof(*(_elm)) ); \
         if ( (_llist)->icurr == (_llist)->ilast ) { \
                 (_llist)->next[_i] = ++ (_llist)->ilast; \
                 (_llist)->prev[(_llist)->next[_i]] = _i; \
-                (_llist)->icurr = (_llist)->next[_i]; \
         } \
+        (_llist)->icurr = (_llist)->next[_i]; \
         (_llist)->num_elm ++; \
 }
 
@@ -853,7 +572,8 @@ struct PARTITION_BOUNDARY {
 { \
         (_llist)->prev[(_llist)->next[(_i)]] = (_llist)->prev[(_i)]; \
         (_llist)->next[(_llist)->prev[(_i)]] = (_llist)->next[(_i)]; \
-        (_llist)->prev[(_llist)->next[(_llist)->icurr]] = (_i); \
+        if ( (_llist)->icurr != (_llist)->ilast ) \
+                (_llist)->prev[(_llist)->next[(_llist)->icurr]] = (_i); \
         (_llist)->next[(_llist)->icurr] = (_i); \
         (_llist)->num_elm --; \
 }
@@ -886,6 +606,8 @@ struct PARTITION_BOUNDARY {
         *(_elm) = (typeof(*(_elm))) (_llist)->content + (_i); \
 }
 
+#define alg_llist_locate( _elm, _llist )                ((_elm) - cast(_elm) (_llist)->content)
+
 #define alg_llist_push                  alg_llist_add
 
 #define alg_llist_pop( _llist, _elm ) \
@@ -894,10 +616,10 @@ struct PARTITION_BOUNDARY {
         if ( (_llist)->icurr != (_llist)->head[0] ) { \
                 int _i = (_llist)->prev[(_llist)->icurr]; \
                 typeof(*(_elm)) _ptr = (_llist)->content; \
-                *(_elm) = _ptr + _i; \
+                *(_elm) = &_ptr[_i]; \
                 alg_llist_remove_i ( _i, _llist ); \
         } \
 }
 
 
-#endif // ALGORITHM_INC_INCLUDED
+// #endif // ALGORITHM_INC_INCLUDED

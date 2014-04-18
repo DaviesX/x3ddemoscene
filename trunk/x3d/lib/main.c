@@ -5,9 +5,123 @@
 #include <staging.h>
 #include <thread.h>
 #include <timing.h>
+#include <x3d/runtime_debug.h>
 #include "main.h"
 
 
+static void variable_memory_test0 ( struct alg_named_params *param );
+static void variable_memory_test1 ( struct alg_named_params *param );
+
+static void error_report ( struct alg_named_params *param );
+static void quick_sort_c ( struct alg_named_params *param );
+static void quick_sort_p ( struct alg_named_params *param );
+
+static void split_by_midvalue_c ( struct alg_named_params *param );
+static void split_by_midvalue_p ( struct alg_named_params *param );
+static void split_by_index_c ( struct alg_named_params *param );
+static void split_by_index_p ( struct alg_named_params *param );
+
+static void ptr_list_c ( struct alg_named_params *param );
+
+static void hash_container_c ( struct alg_named_params *param );
+static void hash_container_p ( struct alg_named_params *param );
+
+static void llist_container_c ( struct alg_named_params *param );
+
+void dbg_lib_add_all ( void )
+{
+        struct unit_test ut;
+        ut.test_name = "variable_memory_test0";
+        ut.init = nullptr;
+        ut.test = variable_memory_test0;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "variable_memory_test1";
+        ut.init = nullptr;
+        ut.test = variable_memory_test0;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "error_report";
+        ut.init = nullptr;
+        ut.test = error_report;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "quick_sort_c";
+        ut.init = nullptr;
+        ut.test = quick_sort_c;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "quick_sort_p";
+        ut.init = nullptr;
+        ut.test = quick_sort_p;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "split_by_midvalue_c";
+        ut.init = nullptr;
+        ut.test = split_by_midvalue_c;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "split_by_midvalue_p";
+        ut.init = nullptr;
+        ut.test = split_by_midvalue_p;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "split_by_index_c";
+        ut.init = nullptr;
+        ut.test = split_by_index_c;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "split_by_index_p";
+        ut.init = nullptr;
+        ut.test = split_by_index_p;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "ptr_list_c";
+        ut.init = nullptr;
+        ut.test = ptr_list_c;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "hash_container_c";
+        ut.init = nullptr;
+        ut.test = hash_container_c;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "hash_container_p";
+        ut.init = nullptr;
+        ut.test = hash_container_p;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+
+        ut.test_name = "llist_container_c";
+        ut.init = nullptr;
+        ut.test = llist_container_c;
+        ut.free = nullptr;
+        ut.pos = DBG_KERNEL_START;
+        kernel_unit_test_add ( &ut );
+}
 
 void variable_memory_test0 ( struct alg_named_params *param )
 {
@@ -60,10 +174,9 @@ void variable_memory_test1 ( struct alg_named_params *param )
 //	dbg_finish ();
 }
 
-
-// Test the error report code in X3dLogOutput
-void ReportErrorTest ( void )
+static void error_report ( struct alg_named_params *param )
 {
+        /* Test the error report code in logout.h/c */
         init_log_output ( 0 );
         log_normal ( "This is a normal message" );
         log_mild_err ( "This is a mild error message" );
@@ -72,34 +185,33 @@ void ReportErrorTest ( void )
         int para = 10, para1 = 15;
         set_log_behavior ( LOG_OUTPUT_TO_FILE );
         log_normal ( "There are two numbers: %d %d", para, para1 );
-//	free_log_output ();
-
-}// End Function ReportErrorTest
-
-
-// #include <algorithm>
-
-#define PERFORMANCE_TEST
-// #define CORRECTNESS_TEST
-// #define COMPARISON_TEST
-int CompareValue ( int *v0, int *v1, void *p );
-
-int CompareValue ( int *v0, int *v1, void *p )
-{
-        return *v0 < *v1;
 }
 
-/*
-int cmp ( const int &v0, const int &v1 );
+#define cmp_int( _n0, _n1, _info )    ((_n0) < (_n1))
 
-int cmp ( const int &v0, const int &v1 )
+/* alg_quick_sort algorithm correctness test */
+static void quick_sort_c ( struct alg_named_params *param )
 {
-	return v0 < v1;
-}*/
-// Test the SortArrayListQuick function in X3dAlgorithm
-void SortArrayQuickTest ( void )
+        const int n = 100;
+        int list[n];
+        int i;
+        for ( i = 0; i < n; i ++ ) {
+                list[i] = rand ()%n + 1;
+                log_normal ( "%d", list[i] );
+        }
+        alg_quick_sort ( list, n, nullptr, cmp_int );
+        log_normal ( "" );
+        for ( i = 0; i < n - 1; i ++ ) {
+                if ( list[i + 1] < list[i] ) {
+                        log_normal ( "Failed" );
+                }
+        }
+
+}
+
+/* alg_quick_sort algorithm performance test */
+static void quick_sort_p ( struct alg_named_params *param )
 {
-#ifdef PERFORMANCE_TEST	// Performance test
         const int n = 10000000;
         int *list = alloc_fix ( sizeof ( int ), n );
         int begin = clock ();
@@ -109,91 +221,17 @@ void SortArrayQuickTest ( void )
                 for ( i = 0; i < n; i ++ ) {
                         list[i] = rand ();
                 }
-                SortArrayQuick ( list, n, int, nullptr, CompareValue );
+                alg_quick_sort ( list, n, nullptr, cmp_int );
         }
         int end = clock ();
         log_normal ( "%f", (float) (end - begin)/CLOCKS_PER_SEC );
         free_fix ( list );
-#endif // PERFORMANCE_TEST
-
-#ifdef CORRECTNESS_TEST	// Correctness test
-        const int n = 100;
-        int list[n];
-
-        for ( int i = 0; i < n; i ++ ) {
-                list[i] = rand ()%n + 1;
-                log_normal ( "%d", list[i] );
-        }
-
-        SortArrayQuick ( list, n, int, nullptr, CompareValue );
-        puts ( "\n" );
-        for ( int i = 0; i < n - 1; i ++ ) {
-                if ( list[i + 1] < list[i] ) {
-                        log_normal ( "Failed" );
-                }
-        }
-#endif	// CORRECTNESS_TEST
-
-#ifdef COMPARISON_TEST	// Speed comparison test
-        const int n = 10000000;
-        int *list = new int[n];
-        int begin = clock ();
-        for ( int k = 0; k < 5; k ++ ) {
-                for ( int i = 0; i < n; i ++ ) {
-                        //		list[i] = rand ()%n + 1;
-                        list[i] = rand ();
-                }
-                std::sort ( list, list + n, cmp );
-        }
-        int end = clock ();
-        log_normal ( "%f", (float) (end - begin)/CLOCKS_PER_SEC );
-        delete list;
-#endif	// COMPARISON_TEST
-
-}// End Function SortArrayListQuickTest
-#undef PERFORMANCE_TEST
-#undef CORRECTNESS_TEST
-#undef COMPARISON_TEST
-
-
-
-// #define PERFORMANCE_TEST
-#define CORRECTNESS_TEST
-// #define COMPARISON_TEST
-// Test the PartitionArrayList function in X3dAlgorithm
-int Comparator ( int *listElement, int *midValue );
-int Comparator ( int *listElement, int *midValue )
-{
-        return *listElement < *midValue;
 }
 
-int xmidValue = 0;
-/*int predicate ( const int &n );
-int predicate ( const int &n )
+#define cmp_mid( _mval, _elm )          (*(_mval) > *(_elm))
+/* alg_split_bymidvalue algorithm correctness test */
+static void split_by_midvalue_c ( struct alg_named_params *param )
 {
-	return n < xmidValue;
-}*/
-
-void PartitionArrayTest ( void )
-{
-#ifdef PERFORMANCE_TEST	// Performance test
-        const int n = 10000000;
-        int *list = new int[n];
-        int begin = clock ();
-        for ( int k = 0; k < 20; k ++ ) {
-                for ( int i = 0; i < n; i ++ ) {
-                        list[i] = rand ()%n + 1;
-                }
-                int midIndex;
-                int midValue = n >> 1;
-                PartitionArrayMidValue ( list, n, int, midValue, nullptr, Comparator, midIndex );
-        }
-        int end = clock ();
-        log_normal ( "%f", (float) (end - begin)/CLOCKS_PER_SEC );
-        delete list;
-#endif	// PERFORMANCE_TEST
-
-#ifdef CORRECTNESS_TEST	// Correctness test
         const int n = 100;
         int *list = alloc_fix ( sizeof ( int ), n );
         srand ( time ( nullptr ) );
@@ -201,25 +239,25 @@ void PartitionArrayTest ( void )
         for ( i = 0; i < n; i ++ ) {
                 list[i] = rand ()%n + 1;
         }
-        int midValue = n >> 1;
-        int midIndex;
-        PartitionArrayMidValue ( list, n, int, &midValue, Comparator, midIndex );
+        int mid_value = n >> 1;
+        int mid_pos;
+        alg_split_bymidvalue ( list, n, &mid_value, cmp_mid, &mid_pos );
         for ( i = 0; i < n; i ++ ) {
                 log_normal ( "%d: %d", i, list[i] );
         }
-        log_normal ( "midValue: %d", midValue );
-        log_normal ( "midIndex: %d, %d", midIndex, list[midIndex] );
+        log_normal ( "mid_value: %d", mid_value );
+        log_normal ( "mid_pos: %d, %d", mid_pos, list[mid_pos] );
 
         int failed = 0;
-        for ( i = 0; i < midIndex; i ++ ) {
-                if ( list[i] >= midValue ) {
+        for ( i = 0; i < mid_pos; i ++ ) {
+                if ( list[i] >= mid_value ) {
                         log_normal ( "Lower half FAILED !" );
                         log_normal ( "%d %d", i, list[i] );
                         failed = 1;
                 }
         }
-        for ( i = midIndex; i < n; i ++ ) {
-                if ( list[i] < midValue ) {
+        for ( i = mid_pos; i < n; i ++ ) {
+                if ( list[i] < mid_value ) {
                         log_normal ( "Greater half FAILED !" );
                         log_normal ( "%d: %d", i, list[i] );
                         failed = 1;
@@ -229,40 +267,74 @@ void PartitionArrayTest ( void )
                 log_normal ( "ALL CORRECT" );
         }
         free_fix ( list );
-#endif	// CORRECTNESS_TEST
+}
 
-#ifdef COMPARISON_TEST	// Speed comparison test
+/* alg_split_bymidvalue algorithm performance test */
+static void split_by_midvalue_p ( struct alg_named_params *param )
+{
         const int n = 10000000;
-        int *list = new int[n];
-        xmidValue = n >> 1;
+        int *list = alloc_fix ( sizeof ( int ), n );
         int begin = clock ();
-        for ( int k = 0; k < 20; k ++ ) {
-                for ( int i = 0; i < n; i ++ ) {
+        int k;
+        for ( k = 0; k < 20; k ++ ) {
+                int i;
+                for ( i = 0; i < n; i ++ ) {
                         list[i] = rand ()%n + 1;
                 }
-                std::partition ( list, list + n, predicate );
+                int mid_pos;
+                int mid_value = n >> 1;
+                alg_split_bymidvalue ( list, n, &mid_value, cmp_mid, &mid_pos );
         }
         int end = clock ();
         log_normal ( "%f", (float) (end - begin)/CLOCKS_PER_SEC );
-        delete list;
-#endif	// COMPARISON_TEST
+        free_fix ( list );
+}
+#undef cmp_mid
 
-}// End Function PartitionArrayListTest
-#undef PERFORMANCE_TEST
-#undef CORRECTNESS_TEST
-#undef COMPARISON_TEST
-
-
-
-// #define PERFORMANCE_TEST
-#define CORRECTNESS_TEST
-// #define COMPARISON_TEST
-// Test the SortListQuick function in X3dAlgorithm
-void SortListQuickTest ( void )
+/* alg_split_byindex algorithm correctness test */
+static void split_by_index_c ( struct alg_named_params *param )
 {
-#ifdef CORRECTNESS_TEST
-        int biindexListTest = 1;
-        int failed = 0;
+        const int n = 1000;
+        int *list = alloc_fix ( sizeof ( int ), n );
+        srand ( time ( nullptr ) );
+        int index;
+        for ( index = 0; index < n; index ++ ) {
+                list[index] = rand ()%n + 1;
+        }
+        alg_split_byindex ( list, n, 1000, nullptr, cmp_int );
+        log_normal ( "Nth is: %d, %d\n", 1000, list[n >> 1] );
+//        std::nth_element ( list, list + 1000, list + n );
+//        log_normal ( "Nth is: %d, %d\n", 1000, list[n >> 1] );
+        free_fix ( list );
+}
+
+/* alg_split_byindex algorithm performance test */
+static void split_by_index_p ( struct alg_named_params *param )
+{
+        const int n = 10000000;
+        int *list = alloc_fix ( sizeof ( int ), n );
+        int begin = clock ();
+        int k;
+        for ( k = 0; k < 20; k ++ ) {
+                int index;
+                for ( index = 0; index < n; index ++ ) {
+                        list[index] = rand ()%n + 1;
+                }
+                alg_split_byindex ( list, n, n >> 1, nullptr, cmp_int );
+        }
+        int end = clock ();
+        log_normal ( "Nth is: %d, %d\n", n >> 1, list[n >> 1] );
+        log_normal ( "Time: %f\n", (float) (end - begin)/CLOCKS_PER_SEC );
+        free_fix ( list );
+}
+
+/* alg_ptr_list algorithm correctness test */
+static void ptr_list_c ( struct alg_named_params *param )
+{
+#define cmp_ptrs( _n0, _n1, _info )             (*(int *) ((_n0)->ptr) < *(int *) ((_n1)->ptr))
+        bool is_inplace = true;
+        bool failed = false;
+
         const int n = 1000;
         int *list = alloc_fix ( sizeof ( int ), n );
         int i;
@@ -271,200 +343,167 @@ void SortListQuickTest ( void )
                 log_normal ( "%d", list[i] );
         }
 
-        if ( biindexListTest ) {
-                ALG_BIINDEX_LIST_PTR orderList;
-                CreateBiindexList ( &orderList, n );
-                SortIndexQuick ( list, orderList, n, int, nullptr, CompareValue );
-                ProcessBiindexList ( list, orderList, n, int );
+        if ( is_inplace ) {
+                struct alg_ptr_list ptrs;
+                create_alg_ptr_list ( list, n, is_inplace, &ptrs );
+                alg_quick_sort ( &ptrs, n, nullptr, cmp_ptrs );
+                alg_ptr_list_inplace ( &ptrs, n, list );
 
-                puts ( "\n" );
+                log_normal ( "in-place result: " );
                 for ( i = 0; i < n - 1; i ++ ) {
                         log_normal ( "%d", list[i] );
                         if ( list[i + 1] < list [i] ) {
-                                failed = 1;
+                                failed = true;
                         }
                 }
                 free_fix ( list );
         } else {
-                int *newList = alloc_fix ( sizeof ( int ), n );
-                ALG_INDEX_LIST_PTR orderList;
-                CreateIndexList ( &orderList, n );
-                SortIndexQuick ( list, orderList, n, int, nullptr, CompareValue );
-                ProcessIndexListToArray ( list, orderList, n, int, newList );
+                int *new_list = alloc_fix ( sizeof ( int ), n );
+                struct alg_ptr_list ptrs;
+                create_alg_ptr_list ( list, n, is_inplace, &ptrs );
+                struct alg_ptr_list *list = &ptrs;
+                alg_quick_sort ( list, n, nullptr, cmp_ptrs );
+                alg_ptr_list_tonew ( &ptrs, n, new_list );
 
-                puts ( "\n" );
+                puts ( "non-in-place result: " );
                 for ( i = 0; i < n - 1; i ++ ) {
-                        log_normal ( "%d", newList[i] );
-                        if ( newList[i + 1] < newList [i] ) {
-                                failed = 1;
+                        log_normal ( "%d", new_list[i] );
+                        if ( new_list[i + 1] < new_list [i] ) {
+                                failed = true;
                         }
                 }
-                free_fix ( newList );
+                free_fix ( new_list );
                 free_fix ( list );
         }
         if ( failed ) {
                 log_normal ( "FAILED" );
         }
-#endif // CORRECTNESS_TEST
-
-}// End Function SortListQuickTest
-#undef PERFORMANCE_TEST
-#undef CORRECTNESS_TEST
-#undef COMPARISON_TEST
-
-
-
-// #define PERFORMANCE_TEST
-// #define CORRECTNESS_TEST
-// #define COMPARISON_TEST
-// Test the FindNthElementArray function in X3dAlgorithm
-#define cmp_find_nth_arr( a, b, p )	(*(a) < *(b))
-
-
-void FindNthElementArrayTest ( void )
-{
-#ifdef PERFORMANCE_TEST
-        const int n = 10000000;
-        int *list = alloc_fix ( sizeof ( int ), n );
-        int begin = clock ();
-        for ( int k = 0; k < 20; k ++ ) {
-                for ( int index = 0; index < n; index ++ ) {
-                        list[index] = rand ()%n + 1;
-                }
-                FindNthElementArray ( list, n, n >> 1, int, nullptr, cmp_find_nth_arr );
-        }
-        int end = clock ();
-        log_normal ( "Nth is: %d, %d\n", n >> 1, list[n >> 1] );
-        log_normal ( "Time: %f\n", (float) (end - begin)/CLOCKS_PER_SEC );
-        free_fix ( list );
-#endif // PERFORMANCE_TEST
-
-#ifdef CORRECTNESS_TEST
-        const int n = 1000;
-        int *list = alloc_fix ( sizeof ( int ), n );
-        srand ( time ( nullptr ) );
-        int index;
-        for ( index = 0; index < n; index ++ ) {
-                list[index] = rand ()%n + 1;
-        }
-        FindNthElementArray ( list, n, 1000, int, nullptr, cmp_find_nth_arr );
-        log_normal ( "Nth is: %d, %d\n", 1000, list[n >> 1] );
-        std::nth_element ( list, list + 1000, list + n );
-        log_normal ( "Nth is: %d, %d\n", 1000, list[n >> 1] );
-        free_fix ( list );
-#endif
-
-#ifdef COMPARISON_TEST
-        const int n = 10000000;
-        int *list = alloc_fix ( sizeof ( int ), n );
-        int begin = clock ();
-        for ( int k = 0; k < 20; k ++ ) {
-                for ( int index = 0; index < n; index ++ ) {
-                        list[index] = rand ()%n + 1;
-                }
-                std::nth_element ( list, list + (n >> 1), list + n );
-        }
-        int end = clock ();
-        log_normal ( "Nth is: %d, %d\n", n >> 1, list[n >> 1] );
-        log_normal ( "Time: %f\n", (float) (end - begin)/CLOCKS_PER_SEC );
-        free_fix ( list );
-#endif // COMPARISON_TEST
+#undef cmp_ptrs
 }
-#undef PERFORMANCE_TEST
-#undef CORRECTNESS_TEST
-#undef COMPARISON_TEST
 
+#undef cmp_int
 
-
-// #define PERFORMANCE_TEST
-// #define CORRECTNESS_TEST
-// #define COMPARISON_TEST
-// Test the FindNthElementIndex function in X3dAlgorithm
-
-void FindNthElementIndexTest ( void )
+#define hash_cmp_val( _info, _elm )             (*(_info) == *(_elm))
+static void hash_container_c ( struct alg_named_params *param )
 {
-#ifdef CORRECTNESS_TEST
-        const int n = 1000;
-        int *list = alloc_fix ( sizeof ( int ), n );
-        srand ( time ( nullptr ) );
-        struct ALG_BIINDEX_LIST_TYP *biindexList;
-        CreateBiindexList ( &biindexList, n );
-        int index;
-        for ( index = 0; index < n; index ++ ) {
-                list[index] = rand ()%n + 1;
-        }
-        FindNthElementIndex ( list, biindexList, n, n >> 1, int, nullptr, Compare );
-        ProcessBiindexList ( list, biindexList, n, int );
-        log_normal ( "Nth is: %d, %d\n", n >> 1, list[n >> 1] );
-//	std::nth_element ( list, list + (n >> 1), list + n );
-        log_normal ( "Nth is: %d, %d\n", n >> 1, list[n >> 1] );
-        free_fix ( list );
-#endif
-}
-#undef PERFORMANCE_TEST
-#undef CORRECTNESS_TEST
-#undef COMPARISON_TEST
-
-
-
-#define PERFORMANCE_TEST
-// #define CORRECTNESS_TEST
-// #define COMPARISON_TEST
-// Test the FindAddElementHashStatic in X3dAlgorithm
-struct INFO_PACK {
-        int *array;
-        int currentData;
-};
-
-#define cmp_find_nth( _i, _info )	((_info)->array[_i] == (_info)->currentData)
-
-void HashLookupTest ( void )
-{
-#ifdef CORRECTNESS_TEST
         int array[11] = {0, 4, 2, 3, 4, 5, 10, 2, 0, 3, 5};
-        struct INFO_PACK infoPack;
-        infoPack.array = array;
-        struct alg_hash_link_list hashTable;
-        InitHashTable ( 1 << 8, 0, &hashTable );
-        for ( int i = 0; i < 11; i ++ ) {
-                puts ( "Looking" );
-                infoPack.currentData = array[i];
-                int iFound;
-                FindInsertHash ( &hashTable, i, array[i], iFound, &infoPack, cmp_find_nth, DynamicHash );
-                if ( iFound != ALG_HASH_INVALID ) {
+
+        struct alg_hash_llist hash_llist;
+        create_alg_hash_llist ( 1 << 8, 0, sizeof (int), &hash_llist );
+        int i;
+        for ( i = 0; i < 11; i ++ ) {
+                log_normal ( "Looking up..." );
+                int *rfound = nullptr;
+                alg_hash_llist_first ( &hash_llist, i, &rfound, &array[i], hash_cmp_val );
+
+                if ( rfound != nullptr ) {
                         log_normal ( "index(%d), data(%d)\nindex(%d), data(%d)\n",
-                                     iFound, array[iFound], i, array[i] );
+                                     rfound - array, *rfound, i, array[i] );
+                } else {
+                        log_normal ( "couldn't find such element: index(%d), data(%d). it is now inserted.", i, array[i] );
+                        alg_hash_llist_add ( &hash_llist, &array[i], i, f_Dym_Update );
                 }
         }
-        ReleaseHashTable ( &hashTable );
-#endif // CORRECTNESS_TEST
+        free_alg_hash_llist ( &hash_llist );
 
-#ifdef PERFORMANCE_TEST
+}
+
+static void hash_container_p ( struct alg_named_params *param )
+{
         const int n = 20000;
         int array[n];
         int i;
         for ( i = 0; i < n; i ++ ) {
                 array[i] = rand ()%n;
         }
-        struct INFO_PACK infoPack;
-        infoPack.array = array;
-        struct alg_hash_link_list hashTable;
-        InitHashTable ( 1 << 15, 1, &hashTable );
+
+        struct alg_hash_llist hash_llist;
+        create_alg_hash_llist ( 1 << 15, 1, sizeof (int), &hash_llist );
         int begin = clock ();
         int k;
-        int iFound;
         for ( k = 0; k < 10000; k ++ ) {
                 for ( i = 0; i < n; i ++ ) {
-                        infoPack.currentData = array[i];
-                        FindInsertHash ( &hashTable, i, array[i], iFound, &infoPack, cmp_find_nth, DynamicHash );
+                        int *rfound = nullptr;
+                        alg_hash_llist_first (
+                                &hash_llist, gen_hash32 (array[i]), &rfound,
+                                &array[i], hash_cmp_val );
+
+                        if ( rfound == nullptr ) {
+                                alg_hash_llist_add ( &hash_llist, &array[i],
+                                                     gen_hash32 (array[i]), f_Dym_Update );
+                        }
                 }
         }
-        iFound = iFound;
         int end = clock ();
         log_normal ( "%f", (float) (end - begin)/CLOCKS_PER_SEC );
-        ReleaseHashTable ( &hashTable );
-#endif // PERFORMANCE_TEST
-}// End Function HashLookupStaticTest
-#undef PERFORMANCE_TEST
-#undef CORRECTNESS_TEST
-#undef COMPARISON_TEST
+        free_alg_hash_llist ( &hash_llist );
+}
+
+static void llist_container_c ( struct alg_named_params *param )
+{
+        bool failed = false;
+        struct alg_llist llist;
+        create_alg_llist ( &llist, sizeof (int) );
+
+        const int n = 10;
+        int array[n];
+        int i;
+        for ( i = 0; i < n; i ++ ) {
+                array[i] = rand() % n;
+        }
+
+        for ( i = 0; i < n; i ++ ) {
+                alg_llist_add ( &array[i], &llist );
+        }
+
+#define cmp_llist( _info, _elm )                (*(_info) == *(_elm))
+        for ( i = 0; i < n; i ++ ) {
+                int *x;
+                alg_llist_find ( &llist, &array[i], &x, cmp_llist );
+                if ( x != nullptr ) {
+                        if ( *x != array[i] ) {
+                                log_normal ( "x != array[i]" );
+                                failed = true;
+                        }
+                } else {
+                        log_normal ( "content couldn't find" );
+                        failed = true;
+                }
+        }
+#undef cmp_llist
+        free_alg_llist ( &llist );
+        if ( !failed ) {
+                log_normal ( "llist_container_c stage 1 passed" );
+        } else {
+                log_normal ( "llist_container_c stage 1 failed" );
+        }
+
+        failed = false;
+        create_alg_llist ( &llist, sizeof (int) );
+        for ( i = 0; i < n; i ++ ) {
+                alg_llist_push ( &array[i], &llist );
+        }
+
+        for ( i = 0; i < n; i ++ ) {
+                int *x;
+                alg_llist_pop ( &llist, &x );
+                if ( x != nullptr ) {
+                        if ( *x != array[n - i - 1] ) {
+                                log_normal ( "x != array[n - i]" );
+                                failed = true;
+                        }
+                } else {
+                        log_normal ( "over popped" );
+                        failed = true;
+                }
+        }
+        free_alg_llist ( &llist );
+
+        if ( !failed ) {
+                log_normal ( "llist_container_c stage 2 passed" );
+        } else {
+                log_normal ( "llist_container_c stage 2 failed" );
+        }
+}
+
+#undef hash_cmp_val

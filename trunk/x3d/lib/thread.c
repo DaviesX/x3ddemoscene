@@ -73,7 +73,7 @@ static struct thread_ctx *workgroup_addthread ( struct work_group *group );
 static void workgroup_removethread ( struct thread_ctx *thread, struct work_group *group );
 static void workgroup_removeallthread ( struct work_group *group );
 
-static struct work_group *workgroup_new ( struct work_group *group );
+static struct work_group *workgroup_new ( int n_thread, struct work_group *group );
 static void workgroup_remove ( struct work_group *group );
 static void workgroup_abandon ( struct work_group *group );
 
@@ -177,7 +177,9 @@ static bool retrieve_task ( struct work_group *group, struct thread_ctx *thread,
         bool active = group->is_active && thread->is_active;
         if ( active ) {
                 /* fetch new task and mark the new task as not being processed */
-                alg_llist_pop ( &group->tasks, task );
+                struct thr_task **fetch;
+                alg_llist_pop ( &group->tasks, &fetch );
+                *task = *fetch;
                 (*task)->is_waiting = false;
                 (*task)->binded_thr = thread;
         }
@@ -202,8 +204,9 @@ static void workgroup_make_inactive ( struct work_group *group )
 {
         group->is_active = false;
         init_trap ( &group->idler );
-        init_trap ( &group->lock[0] );
-        init_trap ( &group->lock[1] );
+        init_trap ( &group->lock[LOCK_SHARED] );
+        init_trap ( &group->lock[LOCK_TASK] );
+        init_trap ( &group->lock[LOCK_THREAD] );
         group->n_tasks = 0;
         group->n_threads = 0;
         create_alg_llist ( &group->tasks, sizeof (struct thr_task *) );
@@ -317,7 +320,7 @@ static void workgroup_removeallthread ( struct work_group *group )
         remove_thread_trap ( &group->lock[LOCK_THREAD] );
 }
 
-static struct work_group *workgroup_new ( struct work_group *group )
+static struct work_group *workgroup_new ( int n_thread, struct work_group *group )
 {
         if ( group->next == nullptr ) {
                 group->next = alloc_fix ( sizeof *group, 1 );
@@ -326,7 +329,7 @@ static struct work_group *workgroup_new ( struct work_group *group )
                 workgroup_make_inactive ( group->next );
         }
         if ( !group->is_active ) {
-                workgroup_make_active ( g_ncores, group );
+                workgroup_make_active ( n_thread, group );
         }
         return group;
 }
@@ -459,14 +462,14 @@ void init_thread_lib ( void )
         g_thrpool.grouped = g_thrpool.grouped_head;
         int i;
         for ( i = 0; i < INIT_GROUP_COUNT; i ++ ) {
-                workgroup_new ( g_thrpool.grouped );
+                workgroup_new ( g_ncores, g_thrpool.grouped );
                 g_thrpool.grouped = g_thrpool.grouped->next;
         }
         g_thrpool.grouped = g_thrpool.grouped_head;
 
         /* for occupied tasks, threads are to be created on the fly */
         g_thrpool.occupied = create_workgroup ();
-        g_thrpool.occupied = workgroup_new ( g_thrpool.occupied );
+        g_thrpool.occupied = workgroup_new ( 0, g_thrpool.occupied );
 
         remove_thread_trap ( &g_thrpool.self_lock );
 }
@@ -484,7 +487,8 @@ void free_thread_lib ( void )
 struct work_group *thr_new_workgroup ( void )
 {
         trap_on_thread ( &g_thrpool.self_lock );
-        struct work_group *new_group = workgroup_new ( g_thrpool.grouped );
+        struct work_group *new_group =
+                workgroup_new ( g_ncores, g_thrpool.grouped );
         g_thrpool.grouped = g_thrpool.grouped->next;
         remove_thread_trap ( &g_thrpool.self_lock );
         return new_group;
@@ -513,7 +517,11 @@ struct thr_task *thr_run_task (
         f_Thread_Handler task_func, void *info, struct work_group *group )
 {
         struct thr_task *task = alloc_fix ( sizeof (struct thr_task), 1 );
-        group = (group == nullptr) ? g_thrpool.occupied : group;
+        if ( group == nullptr ) {
+                /* using the global work group */
+                group = g_thrpool.occupied;
+                workgroup_addthread ( group );
+        }
         task->binded_group = group;
         task->addr_id = nullptr;
         task->binded_thr = nullptr;
@@ -586,3 +594,4 @@ void thr_untrap_task ( struct thr_trap *trap )
 {
         remove_thread_trap ( trap );
 }
+

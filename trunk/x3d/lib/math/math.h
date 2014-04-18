@@ -31,6 +31,10 @@
 #define max( _x0, _x1 )			(((_x0) > (_x1)) ? (_x0) : (_x1))
 #define max_triple( _a, _b, _c )	(((_a) > (_b) && (_a) > (_c)) ? (_a) : ((_b) > (_c) ? (_b) : (_c))
 #define min_triple( _a, _b, _c )	(((_a) < (_b) && (_a) < (_c)) ? (_a) : ((_b) < (_c) ? (_b) : (_c))
+#define mid_triple( a_, b_, c_ ) \
+	(((a_) <= (b_)) ? \
+	(((b_) <= (c_)) ? ((b_) : (((a_) < (c_)) ? (c_) : (a_))) : \
+	(((a_) <= (c_)) ? (a_) : (((b_) < (c_)) ? (c_) : (b_))))
 #define sort_triple( _a, _b, _c ) \
 { \
 	typeof (_a) _t; \

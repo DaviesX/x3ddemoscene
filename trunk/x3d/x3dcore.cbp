@@ -349,7 +349,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/algorithm.h" />
-		<Unit filename="lib/algorithm.inc">
+		<Unit filename="lib/algorithm_inl.h">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/compiler/compiler.c">
@@ -380,6 +380,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/compiler/symbol.h" />
+		<Unit filename="lib/lib.h" />
 		<Unit filename="lib/logout.c">
 			<Option compilerVar="CC" />
 		</Unit>

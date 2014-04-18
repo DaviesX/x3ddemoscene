@@ -178,7 +178,7 @@ void *call_expand2_var ( void *ptr, uint32_t n )
         if ( n*vh->elm_size > vh->total ) {
                 vh = change_size_var ( vh, n*vh->elm_size, 2 );
         }
-        vh->used = 2*n*vh->elm_size;
+        vh->used = n*vh->elm_size;
         return &vh[1];
 }
 

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1397423715 source:/home/davis/Projects/x3d/external/sample_entry/main.c
+1397762986 source:/home/davis/Projects/x3d/external/sample_entry/main.c
 	<stdio.h>
 	<x3d/init.h>
 	<x3d/editor.h>
@@ -36,7 +36,7 @@
 	<algorithm.h>
 	<x3d/renderer.h>
 
-1393743192 /home/davis/Projects/x3d/lib/math/math.h
+1397619189 /home/davis/Projects/x3d/lib/math/math.h
 	"vector.h"
 	"matrix.h"
 	"quat.h"
@@ -57,10 +57,10 @@
 
 1390714932 /home/davis/Projects/x3d/lib/math/fx.h
 
-1397514075 /home/davis/Projects/x3d/lib/algorithm.h
+1397701223 /home/davis/Projects/x3d/lib/algorithm.h
 	<x3d/common.h>
 	<math/math.h>
-	<algorithm.inc>
+	<algorithm_inl.h>
 
 1397530333 /home/davis/Projects/x3d/lib/algorithm.inc
 
@@ -69,6 +69,8 @@
 	<staging.h>
 	<algorithm.h>
 
-1393902016 /home/davis/Projects/x3d/lib/staging.h
+1397705011 /home/davis/Projects/x3d/lib/staging.h
 	<algorithm.h>
+
+1397763686 /home/davis/Projects/x3d/lib/algorithm_inl.h
 

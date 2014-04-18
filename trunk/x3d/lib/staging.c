@@ -53,17 +53,17 @@ struct entry_info {
 };
 
 /* predicate for hash lookup */
-#define cmp_name( _current, _info ) \
-	(!(((_info)->name_hash ^ (_info)->entry[_current].name_hash) | \
-	(strcmp ( (_info)->name, (_info)->entry[_current].name ))))
+#define cmp_name( _info, _current ) \
+	(!(((_info)->name_hash ^ (_current)->name_hash) | \
+	(strcmp ( (_info)->name, (_current)->name ))))
 
-#define cmp_uid( _current, _info )	\
+#define cmp_uid( _info, _current )	\
 	((_info)->entry[_current].uid == (_info)->uid)
 
-#define cmp_uid_name( _current, _info ) \
-	(!(((_info)->name_hash ^ (_info)->entry[_current].name_hash) | \
-	((_info)->entry[_current].uid ^ (_info)->uid) | \
-	(strcmp ( (_info)->name, (_info)->entry[_current].name ))))
+#define cmp_uid_name( _info, _current ) \
+	(!(((_info)->name_hash ^ (_current)->name_hash) | \
+	((_current)->uid ^ (_info)->uid) | \
+	(strcmp ( (_info)->name, (_current)->name ))))
 
 
 uint16_t alloc_uid ( void );
@@ -179,13 +179,13 @@ char *root_layer ( struct res_name *name, int *rdepth )
 void init_stager ( struct stager *stg )
 {
         memset ( stg, 0, sizeof ( *stg ) );
-        InitHashTable ( HASH_SIZE, INIT_COUNT, &stg->lookup );
+        create_alg_hash_llist ( HASH_SIZE, INIT_COUNT, sizeof (struct res_entry), &stg->lookup );
         create_alg_list ( &stg->entry, sizeof ( struct res_entry ), INIT_COUNT );
 }
 
 void free_stager ( struct stager *stg )
 {
-        ReleaseHashTable ( &stg->lookup );
+        free_alg_hash_llist ( &stg->lookup );
         int i;
         for ( i = 0; i < alg_list_n ( &stg->entry ); i ++ ) {
                 struct res_entry *e;
@@ -199,7 +199,7 @@ void free_stager ( struct stager *stg )
 
 void flush_stager ( struct stager *stg )
 {
-        FlushHashTable ( &stg->lookup );
+        alg_hash_llist_flush ( &stg->lookup );
         int i;
         for ( i = 0; i < alg_list_n ( &stg->entry ); i ++ ) {
                 struct res_entry *e;
@@ -237,13 +237,14 @@ int begin_entry_stager ( char *name, struct res_record *rec )
                         .entry = alg_list_first ( &stg->entry ),
                         .name = lroot,
                         .name_hash = gen_layer_name_hash ( lroot ),
-                        .ifound = ALG_HASH_INVALID
+                        .ifound = HASH_NULL_KEY
                 };
                 DEBUG_SESSION (
                         assert ( d == 0 );
                         int hash = gen_layer_hash ( &rec->layer );
-                        FindFirstHash ( &stg->lookup, hash, root_info.ifound, &root_info, cmp_name );
-                        assert ( root_info.ifound == ALG_HASH_INVALID );
+                        struct res_entry *entry;
+                        alg_hash_llist_first ( &stg->lookup, hash, &entry, &root_info, cmp_name );
+                        assert ( entry != nullptr );
                 );
                 root_uid = alloc_uid ();
         } else {
@@ -265,7 +266,7 @@ int begin_entry_stager ( char *name, struct res_record *rec )
 
         /* Insert the current position to the hash linked list */
         int hash = gen_layer_hash ( &rec->layer );
-        InsertHash ( &stg->lookup, i, hash, DynamicHash );
+        alg_hash_llist_add ( &stg->lookup, &entry, hash, f_Dym_Update );
 
         rec->uid = root_uid;
         rec->ientry = i;
@@ -356,14 +357,14 @@ enum RES_ERROR set_layer_first_stager ( struct res_record *rec )
                 .entry = alg_list_first ( &stg->entry ),
                 .name = sroot,
                 .name_hash = gen_layer_name_hash ( sroot ),
-                .ifound = ALG_HASH_INVALID
+                .ifound = HASH_NULL_KEY
         };
         uint32_t hash = gen_root_hash ( &rec->layer );
-        FindFirstHash ( &stg->lookup, hash, info.ifound, &info, cmp_name );
-        if ( info.ifound == ALG_HASH_INVALID ) {
+        struct res_entry *entry;
+        alg_hash_llist_first ( &stg->lookup, hash, &entry, &info, cmp_name );
+        if ( entry == nullptr ) {
                 return RES_ERR_INVALID;
         }
-        struct res_entry *entry;
         alg_list_i ( &stg->entry, info.ifound, &entry );
         uint16_t root_uid = entry->uid;
         uint16_t layer_uid = root_uid + d;
@@ -373,12 +374,12 @@ enum RES_ERROR set_layer_first_stager ( struct res_record *rec )
                 info.entry = alg_list_first ( &stg->entry );
                 info.name = slayer;
                 info.name_hash = gen_layer_name_hash ( slayer );
-                info.ifound = ALG_HASH_INVALID;
+                info.ifound = HASH_NULL_KEY;
                 info.uid = layer_uid;
 
                 hash = gen_layer_hash ( &rec->layer );
-                FindFirstHash ( &stg->lookup, hash, info.ifound, &info, cmp_uid_name );
-                if ( info.ifound == ALG_HASH_INVALID ) {
+                alg_hash_llist_first ( &stg->lookup, hash, &entry, &info, cmp_uid_name );
+                if ( entry == nullptr ) {
                         free_fix ( slayer );
                         return RES_ERR_INVALID;
                 }
@@ -415,14 +416,14 @@ enum RES_ERROR set_layer_next_stager ( struct res_record *rec )
                 .ifound = rec->ientry,
                 .uid = rec->uid + d
         };
-        FindNextHash ( &stg->lookup, info.ifound, &info, cmp_uid_name );
+        /* Retrieve the entry */
+        struct res_entry *entry;
+        alg_hash_llist_next ( &stg->lookup, &entry, &info, cmp_uid_name );
         free_fix ( slayer );
-        if ( info.ifound == ALG_HASH_INVALID ) {
+        if ( entry == nullptr ) {
                 return RES_ERR_INVALID;
         }
         rec->ientry = info.ifound;
-        /* Retrieve the entry */
-        struct res_entry *entry;
         alg_list_i ( &stg->entry, info.ifound, &entry );
         assert ( entry->state != RESOURCE_INVALID );
         if ( entry->state == RESOURCE_LOADING ) {

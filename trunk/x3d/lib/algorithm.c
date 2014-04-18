@@ -400,15 +400,6 @@ char *uint_to_str_hex ( unsigned int n, char *str, int len )
         return strBack;
 }
 
-void set_container_operations ( void *container,
-                                void (*init_callback) ( void *elm ),
-                                void (*destroy_callback) ( void *elm ) )
-{
-        struct container_operations *cont_ops = container;
-        cont_ops->init_callback = init_callback;
-        cont_ops->destroy_callback = destroy_callback;
-}
-
 void create_alg_list ( struct alg_list *list, int elm_size, int init_count )
 {
         memset ( list, 0, sizeof ( *list ) );
@@ -419,22 +410,10 @@ void create_alg_list ( struct alg_list *list, int elm_size, int init_count )
         }
         list->elm_size = elm_size;
         list->num_elm = 0;
-
-        if ( list->ops.init_callback ) {
-                list->ops.init_callback ( list );
-        }
 }
 
 void free_alg_list ( struct alg_list *list )
 {
-        if ( list->ops.destroy_callback ) {
-                int i;
-                untyped *t = list->list;
-                for ( i = 0; i < list->num_elm; i ++ ) {
-                        list->ops.destroy_callback ( t );
-                        t += list->elm_size;
-                }
-        }
         free_var ( list->list );
         memset ( list, 0, sizeof ( *list ) );
 }
@@ -442,9 +421,6 @@ void free_alg_list ( struct alg_list *list )
 void alg_list_add ( void *elm, struct alg_list *list )
 {
         list->list = add_var ( list->list, list->elm_size );
-        if ( list->ops.init_callback ) {
-                list->ops.init_callback ( elm );
-        }
         memcpy ( &list->list[list->num_elm*list->elm_size], elm, list->elm_size );
         list->num_elm ++;
 }
@@ -484,13 +460,15 @@ void create_alg_llist ( struct alg_llist *llist, int elm_size )
         llist->content = alloc_var ( elm_size, 1 );
         llist->prev = alloc_var ( sizeof (int), 2 );
         llist->next = alloc_var ( sizeof (int), 2 );
+        llist->prev = expand2_var ( llist->prev, 2 );
+        llist->next = expand2_var ( llist->next, 2 );
         llist->icurr = 1;
         llist->ilast = 1;
         llist->head = llist->prev;
         llist->head[0] = llist->icurr;
         llist->prev[llist->icurr] = 0;
         llist->next[llist->icurr] = -1;
-        llist->num_elm = 1;
+        llist->num_elm = 2 + 1;
         llist->elm_size = elm_size;
 }
 
@@ -528,13 +506,14 @@ void *alg_llist_new ( struct alg_llist *llist )
 {
         const int i = llist->icurr;
         llist->prev = expand2_var ( llist->prev, llist->num_elm );
+        llist->head = llist->prev;
         llist->next = expand2_var ( llist->next, llist->num_elm );
         llist->content = expand2_var ( llist->content, llist->num_elm );
         if ( llist->icurr == llist->ilast ) {
                 llist->next[i] = ++ llist->ilast;
                 llist->prev[llist->next[i]] = i;
-                llist->icurr = llist->next[i];
         }
+        llist->icurr = llist->next[i];
         llist->num_elm ++;
         return llist->content + i*llist->elm_size;
 }

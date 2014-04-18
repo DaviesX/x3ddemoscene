@@ -13,7 +13,7 @@ struct alg_list;
 /* Defines a structure for resource staging */
 struct stager {
         int state;
-        struct alg_hash_link_list lookup;
+        struct alg_hash_llist lookup;
         struct alg_list entry;
         int byte_used;
         int num_entry;
