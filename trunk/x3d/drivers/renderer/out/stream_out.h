@@ -1,6 +1,0 @@
-#ifndef STREAM_OUT_H_INCLUDED
-#define STREAM_OUT_H_INCLUDED
-
-
-
-#endif // STREAM_OUT_H_INCLUDED

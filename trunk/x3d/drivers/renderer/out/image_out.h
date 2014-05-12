@@ -1,4 +1,0 @@
-#ifndef IMAGE_OUT_H_INCLUDED
-#define IMAGE_OUT_H_INCLUDED
-
-#endif // IMAGE_OUT_H_INCLUDED
