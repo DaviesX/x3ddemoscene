@@ -1,0 +1,2 @@
+warning: source ../usr_editor.h is not a readable file or directory... skipping.
+/home/davis/Projects/x3d/usr/usr_editor.c:7: warning: argument 'void' of command @param is not found in the argument list of usr_editor_setup_default(void)

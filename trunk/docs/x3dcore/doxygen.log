@@ -1,0 +1,15 @@
+Warning: source ../../kernel/kernel.c is not a readable file or directory... skipping.
+Warning: source ../../include/x3d/kernel.h is not a readable file or directory... skipping.
+/home/davis/Projects/x3d/drivers/renderer/renderer/colorspectrum.h:5: Warning: include file math/math.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/Projects/x3d/lib/algorithm.h:337: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) pseudo_def _length _length Copier(SortIndexInsertion(_list, _indexList, _length, _TYPE, _info, _CompareFunction)) pseudo_def(SortIndexQuick(_list' was not declared or defined.
+/home/davis/Projects/x3d/lib/algorithm.h:340: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) _indexList _length _length Copier' was not declared or defined.
+/home/davis/Projects/x3d/lib/algorithm.h:340: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) _length _length _length Copier' was not declared or defined.
+/home/davis/Projects/x3d/lib/algorithm.h:340: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) _TYPE _length _length Copier' was not declared or defined.
+/home/davis/Projects/x3d/lib/algorithm.h:340: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) _info _length _length Copier' was not declared or defined.
+/home/davis/Projects/x3d/lib/algorithm.h:349: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) pseudo_def _length _length Copier _CompareFunction _midIndex(FindNthElementIndex(_list, _indexList, _length, _nthPos, _TYPE, _info, _CompareFunction)) pseudo_def(InitHashTableStatic(_tablePowerCount' was not declared or defined.
+/home/davis/Projects/x3d/lib/algorithm.h:355: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) pseudo_def _length _length Copier _CompareFunction _midIndex _hashTable(ReleaseHashTableStatic(_hashTable)) pseudo_def(FlushHashTableStatic(_hashTable)) pseudo_def(FindAddElementHashStatic(_hashTable' was not declared or defined.
+/home/davis/Projects/x3d/lib/algorithm.h:361: Warning: documented symbol `_CompareFunction _midIndex _midIndex int int void int(*) _info _length _length Copier _CompareFunction _midIndex _hashTable' was not declared or defined.
+/home/davis/Projects/x3d/kernel/renderer.c:50: Warning: argument 'void' of command @param is not found in the argument list of free_renderer_container(void)
+/home/davis/Projects/x3d/kernel/renderer.c:39: Warning: argument 'void' of command @param is not found in the argument list of init_renderer_container(void)
+/home/davis/Projects/x3d/kernel/renderer.c:50: Warning: argument 'void' of command @param is not found in the argument list of free_renderer_container(void)
+/home/davis/Projects/x3d/kernel/renderer.c:39: Warning: argument 'void' of command @param is not found in the argument list of init_renderer_container(void)
