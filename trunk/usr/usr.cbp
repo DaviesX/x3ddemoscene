@@ -43,10 +43,18 @@
 			<Add directory="../lib" />
 		</Compiler>
 		<Unit filename="../include/usr/usr_editor.h" />
+		<Unit filename="../include/usr/usr_entityprogs.h" />
+		<Unit filename="../include/usr/usr_missionprogs.h" />
 		<Unit filename="test.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="usr_editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="usr_entityprogs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="usr_missionprogs.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

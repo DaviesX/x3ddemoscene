@@ -97,10 +97,18 @@ void main_editor_draw_tmp_image ( void )
         display_tmp_image ( g_main_edit.curr_draw_area, true );
 }
 
-bool main_editor_load ( void )
+bool main_editor_load ( char *glade_path )
 {
         memset ( &g_main_edit, 0, sizeof g_main_edit );
-        GtkBuilder *builder = g_comm_data.builder;
+
+        char file[256];
+        strcpy ( file, glade_path );
+        strcat ( file, "main_editor_window.glade" );
+        GtkBuilder *builder = builder_load ( file );
+        if ( builder == nullptr ) {
+                return false;
+        }
+
         g_main_edit.edit_window =
                 GTK_WIDGET(gtk_builder_get_object ( builder, "main-editor" ));
         if ( !g_main_edit.edit_window ) {
@@ -149,14 +157,19 @@ demo_mode:
                 log_mild_err_dbg ( "mode is not specified corrected. selected mode: %d. running into demo mode...", g_comm_data.ed_mode );
                 goto demo_mode;
         }
+        /* done using glade builder */
+        builder_all_set ( builder );
+
         /* change background color to black */
         GdkColor color;
         color.red   = 0X0;
         color.blue  = 0X0;
         color.green = 0X0;
         gtk_widget_modify_bg ( g_main_edit.curr_draw_area, GTK_STATE_NORMAL, &color );
+
         /* show window */
         gtk_widget_show_all ( g_main_edit.curr_window );
+
         /* create editor and upload render region */
         g_main_edit.editor_id = editor_add ( "main-window-editor" );
         g_main_edit.editor = editor_get_byid ( g_main_edit.editor_id );
@@ -167,6 +180,7 @@ demo_mode:
         struct activex_render_region *render_region = create_activex_render_region (
                                 PLATFORM_GTK, g_main_edit.curr_draw_area, x, y, width, height );
         editor_add_activex ( "main-window-render-region", render_region, g_main_edit.editor );
+
         display_logo_image ( g_main_edit.curr_draw_area, true );
         return true;
 }

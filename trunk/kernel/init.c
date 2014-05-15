@@ -52,6 +52,7 @@ static void finalize_symlib ( void );
 
 __dlexport void kernel_start ( void )
 {
+        editor_kernel_preinit ( &g_kernel.argc, &g_kernel.argv );
         init_test_case ();
         init_symlib ();
         init_math_lib ();
@@ -59,14 +60,15 @@ __dlexport void kernel_start ( void )
         init_thread_lib ();
         init_lib ();
 //        init_res_loader ();
-        init_renderer_container ();
-        init_editor_container ( &g_kernel.argc, &g_kernel.argv );
+        renderer_kernel_init ();
+        editor_kernel_init ();
         g_kernel.editor = editor_container_export ();
 
         finalize_test_case ();
         finalize_symlib ();
         g_kernel.to_run = true;
         invoke_test_case ( DBG_KERNEL_START );
+        editor_kernel_done_init ();
         rest_init ();
 }
 

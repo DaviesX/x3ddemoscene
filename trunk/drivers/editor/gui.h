@@ -15,7 +15,6 @@ enum X_EDITOR_MODE {
 };
 
 struct common_data {
-        GtkBuilder *builder;
         GdkPixbuf *logo_pix_buf;
         GtkWidget *test_region;		/* for debuging */
         void *tmp_image;
@@ -25,7 +24,7 @@ struct common_data {
 };
 
 struct path_resource {
-        char *glade_file;
+        char *glade_path;
         char *logo_file;
         char *raw_media_dir;
         char *config_dir;
@@ -33,7 +32,7 @@ struct path_resource {
 
 
 static const struct path_resource g_path_res = {
-        .glade_file = "./etc/editor/editor_layout.glade",
+        .glade_path= "./etc/editor/",
         .logo_file = "./etc/editor/x3d_logo.png",
         .raw_media_dir = "./etc/media/",
         .config_dir = "./etc/config/"
@@ -52,6 +51,8 @@ bool message_box_question ( char *title, char *message );
 
 void widget_get_size ( GtkWidget *parent, GtkWidget *widget,
                        int *x, int *y, int *width, int *height );
+GtkBuilder *builder_load ( char *filename );
+void builder_all_set ( GtkBuilder *builder );
 
 
 #endif // GUI_H_INCLUDED

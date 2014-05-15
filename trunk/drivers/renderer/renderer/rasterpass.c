@@ -1,5 +1,5 @@
-/* rtpass.c: Pack up data required for a raster pass */
-#include "rtpass.h"
+/* rasterpass.c: Pack up data required for a raster pass */
+#include "rasterpass.h"
 
 
 #if 0

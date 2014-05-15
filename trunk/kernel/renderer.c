@@ -42,7 +42,7 @@ static struct renderer_container g_rend_cont;
  * \param void
  * \return void
  */
-void init_renderer_container ( void )
+void renderer_kernel_init ( void )
 {
         create_alg_llist ( &g_rend_cont.renderer, sizeof ( p_renderer_t ) );
 }
@@ -51,7 +51,7 @@ void init_renderer_container ( void )
  * \param void
  * \return void
  */
-void free_renderer_container ( void )
+void renderer_kernel_free ( void )
 {
         int i;
         struct alg_llist *rend = &g_rend_cont.renderer;

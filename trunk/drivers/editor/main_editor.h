@@ -4,7 +4,7 @@
 /*
  * functions' declaration
  */
-bool main_editor_load ( void );
+bool main_editor_load ( char *glade_path );
 void main_editor_set ( int state );
 
 GtkWidget *main_editor_get_region ( void );

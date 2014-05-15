@@ -5,7 +5,7 @@
 /*
  * functions' declaration
  */
-bool renderable_editor_load ( void );
+bool renderable_editor_load ( char *glade_path );
 void renderable_editor_set ( int state );
 
 

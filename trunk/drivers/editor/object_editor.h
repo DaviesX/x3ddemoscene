@@ -5,8 +5,8 @@
 /*
  * functions' declaration
  */
-bool object_editor_load ( void );
-void object_editor_set ( int state );
+bool entity_editor_load ( char *glade_path );
+void entity_editor_set ( int state );
 
 
 #endif // OBJECT_EDITOR_H_INCLUDED

@@ -4,7 +4,7 @@
 #include <renderer/shader.h>
 #include "rasterization.h"
 #include "vibuffer.h"
-#include "vertex_processor.h"
+#include "vertexprocessor.h"
 #include "vertattri_lerp.h"
 #include "dbg_vertex_processor.h"
 

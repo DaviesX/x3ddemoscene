@@ -517,7 +517,7 @@ void GatherOutput ( struct OBJ_INTER_FILE *objInterFile, struct res_task *task )
                 if ( currMesh->vertAttr & VERT_ATTR_POSITION ) {
                         /* push non-repeat vertices into the allocated array */
                         struct point4d *vert_arr = res_comp_alloc_vertex (
-                                sizeof (struct point4d), nVerts, mesh_comp );
+                                                           sizeof (struct point4d), nVerts, mesh_comp );
                         int i, j;
                         for ( i = 0, j = 0; i < vertLen; i ++ ) {
                                 if ( filter[i*currMesh->nVertAttrs + iAttr] ) {
@@ -529,7 +529,7 @@ void GatherOutput ( struct OBJ_INTER_FILE *objInterFile, struct res_task *task )
                 if ( currMesh->vertAttr & VERT_ATTR_NORMAL ) {
                         /* push non-repeat normals into the allocated array */
                         struct vector4d *norm_arr = res_comp_alloc_normal (
-                                sizeof (struct vector4d), nVerts, mesh_comp );
+                                                            sizeof (struct vector4d), nVerts, mesh_comp );
                         int i, j;
                         for ( i = 0, j = 0; i < vertLen; i ++ ) {
                                 if ( filter[i*currMesh->nVertAttrs + iAttr] ) {
@@ -541,7 +541,7 @@ void GatherOutput ( struct OBJ_INTER_FILE *objInterFile, struct res_task *task )
                 if ( currMesh->vertAttr & VERT_ATTR_UV ) {
                         /* push non-repeat uvs into the allocated array */
                         struct vector3d *uv_arr = res_comp_alloc_uv (
-                                sizeof (struct vector3d), nVerts, mesh_comp );
+                                                          sizeof (struct vector3d), nVerts, mesh_comp );
                         int i, j;
                         for ( i = 0, j = 0; i < vertLen; i ++ ) {
                                 if ( filter[i*currMesh->nVertAttrs + iAttr] ) {

@@ -4688,3 +4688,796 @@
 1399867833 source:/home/davis/Projects/x3d/kernel/modelentity.c
 	<x3d/modelentity.h>
 
+1400128633 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/gui.c
+	<gtk/gtk.h>
+	<gdk/gdk.h>
+	<cairo.h>
+	<logout.h>
+	<algorithm.h>
+	<x3d/editor.h>
+	<editor/editor.h>
+	"gui.h"
+	"main_editor.h"
+	"object_editor.h"
+	"renderable_editor.h"
+	"splash_screen.h"
+
+1389659336 /home/davis/x3drenderlib-code/trunk/lib/logout.h
+	<x3d/common.h>
+
+1399870974 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdint.h>
+	<stdbool.h>
+	<unistd.h>
+	<memory.h>
+	<string.h>
+	<ctype.h>
+	<assert.h>
+	<math.h>
+	<pthread.h>
+	<semaphore.h>
+	<limits.h>
+	<time.h>
+	<errno.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1399329302 /home/davis/x3drenderlib-code/trunk/lib/memory.h
+	<x3d/common.h>
+
+1397701223 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
+	<x3d/common.h>
+	<math/math.h>
+	<algorithm_inl.h>
+
+1397619189 /home/davis/x3drenderlib-code/trunk/lib/math/math.h
+	"vector.h"
+	"matrix.h"
+	"quat.h"
+	"geometry.h"
+	"decimal.h"
+	"fx.h"
+
+1394164930 /home/davis/x3drenderlib-code/trunk/lib/math/vector.h
+
+1394154072 /home/davis/x3drenderlib-code/trunk/lib/math/matrix.h
+	<x3d/common.h>
+
+1393902016 /home/davis/x3drenderlib-code/trunk/lib/math/quat.h
+
+1393902015 /home/davis/x3drenderlib-code/trunk/lib/math/geometry.h
+
+1388682850 /home/davis/x3drenderlib-code/trunk/lib/math/decimal.h
+
+1390714932 /home/davis/x3drenderlib-code/trunk/lib/math/fx.h
+
+1397763686 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
+
+1400131684 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
+	<math/math.h>
+	<algorithm.h>
+	<x3d/renderer.h>
+
+1400128922 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+	<math/math.h>
+	<staging.h>
+	<algorithm.h>
+
+1399824290 /home/davis/x3drenderlib-code/trunk/lib/staging.h
+	<algorithm.h>
+	<memory.h>
+
+1400128622 /home/davis/x3drenderlib-code/trunk/include/editor/editor.h
+	<x3d/editor.h>
+
+1400128121 /home/davis/x3drenderlib-code/trunk/drivers/editor/gui.h
+	<gtk/gtk.h>
+
+1399962707 /home/davis/x3drenderlib-code/trunk/drivers/editor/main_editor.h
+
+1399963860 /home/davis/x3drenderlib-code/trunk/drivers/editor/object_editor.h
+
+1400128490 /home/davis/x3drenderlib-code/trunk/drivers/editor/renderable_editor.h
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/main.c
+	<x3d/common.h>
+	<x3d/editor.h>
+	<editor/gui.h>
+
+1400128457 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/main_editor.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	<x3d/editor.h>
+	"gui.h"
+	"main_editor.h"
+
+1400128462 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/object_editor.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	"gui.h"
+	"object_editor.h"
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/render_procedure.c
+	"render_procedure.h"
+
+1393902015 /home/davis/x3drenderlib-code/trunk/drivers/editor/render_procedure.h
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	<time.h>
+	<pthread.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1400128474 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/renderable_editor.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	"gui.h"
+	"renderable_editor.h"
+
+1399186419 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/fbxmodel.c
+	<staging.h>
+	<logout.h>
+	"fbxmodel.h"
+
+1399186582 /home/davis/x3drenderlib-code/trunk/drivers/loader/fbxmodel.h
+	<x3d/resloader.h>
+
+1399876052 /home/davis/x3drenderlib-code/trunk/include/x3d/resloader.h
+	<staging.h>
+
+1399170769 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/imageloader.c
+	"imageloader.h"
+
+1355650452 /home/davis/x3drenderlib-code/trunk/drivers/loader/imageloader.h
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/main.c
+	"main.h"
+
+1389669552 /home/davis/x3drenderlib-code/trunk/drivers/loader/main.h
+
+1399876263 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/modelloader.c
+	<staging.h>
+	<logout.h>
+	<x3d/resloader.h>
+	<loader/modelloader.h>
+	"modelloader.h"
+	"objmodel.h"
+	"pbrtmodel.h"
+	"fbxmodel.h"
+
+1399867885 /home/davis/x3drenderlib-code/trunk/include/loader/modelloader.h
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/loader/modelloader.h
+	<staging.h>
+
+1399172405 /home/davis/x3drenderlib-code/trunk/drivers/loader/objmodel.h
+	<x3d/resloader.h>
+
+1399186591 /home/davis/x3drenderlib-code/trunk/drivers/loader/pbrtmodel.h
+	<x3d/resloader.h>
+
+1399876263 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/objmodel.c
+	<math/math.h>
+	<staging.h>
+	<logout.h>
+	<x3d/resloader.h>
+	"modelloader.h"
+	"objmodel.h"
+
+1399186522 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/pbrtmodel.c
+	<staging.h>
+	<logout.h>
+	"pbrtmodel.h"
+
+1376177658 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/rendererconf.c
+
+1385669525 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/x3dscene.c
+
+1397705740 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/bvh.c
+	<algorithm.h>
+	<math/math.h>
+	<renderer/geometry.h>
+	"shape_common.h"
+	"bvh.h"
+
+1398552702 /home/davis/x3drenderlib-code/trunk/include/renderer/geometry.h
+	<x3d/common.h>
+	<renderer/shader.h>
+	<math/math.h>
+	"cylinder_shape.h"
+	"disk_shape.h"
+	"hyperboloid_shape.h"
+	"paraboloid_shape.h"
+	"sphere_shape.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/include/renderer/shader.h
+	<x3d/common.h>
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/shape_common.h
+	<math/math.h>
+	"trimesh_shape.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_shape.h
+	"shape_common.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/bvh.h
+
+1373844514 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/cone_shape.c
+
+1373844168 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/cylinder_shape.c
+
+1373844198 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/disk_shape.c
+
+1394577574 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/geocache.c
+	<algorithm.h>
+	<logout.h>
+	<renderer/geometry.h>
+	<renderer/geocache.h>
+	"shape_common.h"
+
+1394512719 /home/davis/x3drenderlib-code/trunk/include/renderer/geocache.h
+	<algorithm.h>
+	<x3d/common.h>
+	<renderer/geometry.h>
+	<x3d/renderer.h>
+
+1398552646 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/geometry.c
+	<renderer/geometry.h>
+
+1394582277 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/grid.c
+	<algorithm.h>
+	<math/math.h>
+	<renderer/geometry.h>
+	"trimesh_shape.h"
+	"grid.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/grid.h
+	<math/math.h>
+
+1373845730 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/hyperboloid_shape.c
+
+1355930670 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/kdtree.c
+
+1389661604 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/main.c
+	"main.h"
+
+1386781271 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/main.h
+
+1360489780 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/octree.c
+
+1373844976 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/paraboloid_shape.c
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/primitive_parition.c
+	<renderer/geometry.h>
+	"bvh.h"
+	"grid.h"
+	"octree.h"
+	"kdtree.h"
+
+1378173959 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/octree.h
+
+1378173844 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/kdtree.h
+
+1373827222 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/sphere_shape.c
+
+1397603917 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_shape.c
+	"trimesh_shape.h"
+
+1397602867 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_subdivide.c
+	<math/math.h>
+	<renderer/geometry.h>
+	"shape_common.h"
+	"trimesh_subdivide.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_subdivide.h
+
+1356009332 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/light/light.c
+
+1385669632 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/material/material.c
+
+1389410629 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/misc/volume.c
+
+1390699181 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/out/binary_out.c
+
+1385670001 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/out/image_out.c
+
+1394154196 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/out/out.c
+	<x3d/common.h>
+	<renderer/out.h>
+	"screen_out.h"
+	"image_out.h"
+	"stream_out.h"
+	"binary_out.h"
+
+1393902015 /home/davis/x3drenderlib-code/trunk/include/renderer/out.h
+
+1390712349 /home/davis/x3drenderlib-code/trunk/drivers/renderer/out/screen_out.h
+
+1389668542 /home/davis/x3drenderlib-code/trunk/drivers/renderer/out/image_out.h
+
+1390713762 /home/davis/x3drenderlib-code/trunk/drivers/renderer/out/stream_out.h
+
+1390713785 /home/davis/x3drenderlib-code/trunk/drivers/renderer/out/binary_out.h
+
+1393902015 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/out/screen_out.c
+	<logout.h>
+	<math/math.h>
+	<renderer/out.h>
+	"screen_out.h"
+	<gtk/gtk.h>
+
+1390699150 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/out/stream_out.c
+
+1371894944 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/fisheye.c
+
+1390070852 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/obj_probe.c
+
+1372302856 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/orthogonal.c
+
+1393902015 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/perspective.c
+	<algorithm.h>
+	<renderer/proj_probe.h>
+	<math/math.h>
+	"perspective.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/include/renderer/proj_probe.h
+	<math/math.h>
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/perspective.h
+	<math/math.h>
+
+1394153592 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/proj_probe.c
+	<math/math.h>
+	<renderer/proj_probe.h>
+	"perspective.h"
+	"orthogonal.h"
+	"fisheye.h"
+	"spherical.h"
+
+1372330068 /home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/orthogonal.h
+
+1371894922 /home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/fisheye.h
+
+1385668930 /home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/spherical.h
+
+1385668993 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/spatial_probe.c
+
+1385668936 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/spherical.c
+
+1394513952 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/colorspectrum.c
+	<math.h>
+	<math/math.h>
+	"colorspectrum.h"
+
+1394513960 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/colorspectrum.h
+	<math/math.h>
+
+1399927647 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/main.c
+	<x3d/common.h>
+	<algorithm.h>
+	<logout.h>
+	<x3d/debug.h>
+	<math/math.h>
+	"main.h"
+	"dbg_vertex_processor.h"
+	"rasterization.h"
+	"rasterization.h"
+	<math/math.h>
+	<editor/editor.h>
+	"vibuffer.h"
+	"colorspectrum.h"
+	"surface.h"
+	<renderer/shader.h>
+	<renderer/out.h>
+
+1393902016 /home/davis/x3drenderlib-code/trunk/include/x3d/debug.h
+
+1391019942 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/main.h
+
+1393902015 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/dbg_vertex_processor.h
+
+1394219356 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterization.h
+	<math/math.h>
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vibuffer.h
+
+1397602277 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/surface.h
+	<x3d/common.h>
+
+1385670362 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/pmrenderer.c
+
+1393203238 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
+	"ptrenderer.h"
+
+1389670971 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.h
+
+1399927652 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterization.c
+	<algorithm.h>
+	<logout.h>
+	<memory.h>
+	"rasterization.h"
+	"vertexprocessor.h"
+	"rasterizer.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vertex_processor.h
+	<x3d/common.h>
+	<algorithm.h>
+	<math/math.h>
+	"rasterization.h"
+	"vibuffer.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterizer.h
+	"rasterization.h"
+
+1394224888 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterizer.c
+	<x3d/common.h>
+	<math.h>
+	<algorithm.h>
+	<math/math.h>
+	<renderer/shader.h>
+	<logout.h>
+	"rasterization.h"
+	"rasterizer.h"
+	"vertattri_lerp.h"
+	"surface.h"
+
+1394221728 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vertattri_lerp.h
+
+1363271212 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/raytracer.c
+
+1397000163 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/renderer.c
+	<x3d/renderer.h>
+	<renderer/geocache.h>
+	<renderer/renderer.h>
+	"../renderer/main.h"
+	"../shader/main.h"
+	"irenderer.h"
+	"rtrenderer.h"
+
+1397000022 /home/davis/x3drenderlib-code/trunk/include/renderer/renderer.h
+	<x3d/renderer.h>
+	<renderer/geocache.h>
+
+1392706135 /home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/main.h
+
+1397000155 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/irenderer.h
+
+1396999978 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rtrenderer.h
+	<algorithm.h>
+	<renderer/renderer.h>
+
+1394582277 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rtpass.c
+	"rtpass.h"
+
+1393902015 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rtpass.h
+
+1397000175 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rtrenderer.c
+	<memory.h>
+	<renderer/proj_probe.h>
+	<renderer/geocache.h>
+	<renderer/out.h>
+	"irenderer.h"
+	"rtrenderer.h"
+
+1394170667 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/surface.c
+	"surface.h"
+	"colorspectrum.h"
+
+1394219371 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vertex_processor.c
+	<logout.h>
+	<algorithm.h>
+	<renderer/shader.h>
+	"rasterization.h"
+	"vibuffer.h"
+	"vertex_processor.h"
+	"vertattri_lerp.h"
+	"dbg_vertex_processor.h"
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/basic_rt_shader.c
+	<renderer/shader.h>
+	<renderer/shader_lib.h>
+	"rtshader.h"
+	"basic_rt_shader_a.h"
+	"basic_rt_shader_so.h"
+
+1393902016 /home/davis/x3drenderlib-code/trunk/include/renderer/shader_lib.h
+	<x3d/common.h>
+
+1392700265 /home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/rtshader.h
+
+1393902015 /home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/basic_rt_shader_a.h
+	<math/math.h>
+	"../renderer/colorspectrum.h"
+	"../renderer/surface.h"
+
+1392700263 /home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/basic_rt_shader_so.h
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/main.c
+	"main.h"
+	<renderer/shader.h>
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/shader.c
+	<math/math.h>
+	<logout.h>
+	<memory.h>
+	<renderer/shader.h>
+	<renderer/shader_lib.h>
+	"rtshader.h"
+
+1394384115 source:/home/davis/x3drenderlib-code/trunk/kernel/camera.c
+
+1399875327 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
+	<x3d/debug.h>
+
+1400131754 source:/home/davis/x3drenderlib-code/trunk/kernel/editor.c
+	<logout.h>
+	<algorithm.h>
+	<thread.h>
+	<x3d/init.h>
+	<editor/editor.h>
+	<x3d/renderer.h>
+	<x3d/editor.h>
+
+1399822564 /home/davis/x3drenderlib-code/trunk/lib/thread.h
+	<x3d/common.h>
+	<algorithm.h>
+
+1399871249 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
+	<x3d/common.h>
+
+1400131656 source:/home/davis/x3drenderlib-code/trunk/kernel/editrenderregion.c
+	<x3d/editor.h>
+
+1400128949 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
+	<x3d/common.h>
+	<math/math.h>
+	<algorithm.h>
+	<thread.h>
+	<logout.h>
+	<lib.h>
+	<x3d/init.h>
+	<x3d/debug.h>
+	<x3d/symbol_lib.h>
+	<x3d/resloader.h>
+	<x3d/renderer.h>
+	<x3d/scene.h>
+	<x3d/editor.h>
+	<editor/editor.h>
+
+1397749452 /home/davis/x3drenderlib-code/trunk/lib/lib.h
+	<main.h>
+
+1397616326 /home/davis/x3drenderlib-code/trunk/lib/main.h
+
+1393902016 /home/davis/x3drenderlib-code/trunk/include/x3d/symbol_lib.h
+	<x3d/common.h>
+
+1394325812 /home/davis/x3drenderlib-code/trunk/include/x3d/scene.h
+
+1399867833 source:/home/davis/x3drenderlib-code/trunk/kernel/modelentity.c
+	<x3d/modelentity.h>
+
+1399867812 /home/davis/x3drenderlib-code/trunk/include/x3d/modelentity.h
+	<x3d/resloader.h>
+
+1399871260 source:/home/davis/x3drenderlib-code/trunk/kernel/panic.c
+	<x3d/common.h>
+	<x3d/init.h>
+
+1399962278 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
+	<x3d/renderable.h>
+
+1399961906 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+	<x3d/common.h>
+	<algorithm.h>
+	<math.h>
+
+1400128936 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+	<logout.h>
+	<algorithm.h>
+	<x3d/renderer.h>
+	<renderer/renderer.h>
+
+1399867968 source:/home/davis/x3drenderlib-code/trunk/kernel/resloader.c
+	<memory.h>
+	<algorithm.h>
+	<logout.h>
+	<staging.h>
+	<thread.h>
+	<x3d/resloader.h>
+	<x3d/modelentity.h>
+	<loader/modelloader.h>
+
+1386806407 source:/home/davis/x3drenderlib-code/trunk/kernel/scene.c
+
+1397759270 source:/home/davis/x3drenderlib-code/trunk/lib/algorithm.c
+	<algorithm.h>
+	<math/math.h>
+
+1394514351 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/compiler.c
+	<memory.h>
+	<compiler/compiler.h>
+
+1393902016 /home/davis/x3drenderlib-code/trunk/lib/compiler/compiler.h
+	"symbol.h"
+	"error.h"
+	"emitter.h"
+	"lexer.h"
+	"parser.h"
+
+1393902015 /home/davis/x3drenderlib-code/trunk/lib/compiler/symbol.h
+
+1383069681 /home/davis/x3drenderlib-code/trunk/lib/compiler/error.h
+
+1393902016 /home/davis/x3drenderlib-code/trunk/lib/compiler/emitter.h
+
+1393902016 /home/davis/x3drenderlib-code/trunk/lib/compiler/lexer.h
+
+1393902015 /home/davis/x3drenderlib-code/trunk/lib/compiler/parser.h
+
+1394154148 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/emitter.c
+	<x3d/common.h>
+	<algorithm.h>
+	"symbol.h"
+	"lexer.h"
+	"emitter.h"
+
+1386780312 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/error.c
+	"error.h"
+
+1397601660 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/lexer.c
+	<x3d/common.h>
+	<memory.h>
+	"symbol.h"
+	"lexer.h"
+
+1397601730 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/main.c
+	<x3d/common.h>
+	<compiler/compiler.h>
+
+1397601983 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/parser.c
+	<x3d/common.h>
+	<algorithm.h>
+	"symbol.h"
+	"error.h"
+	"emitter.h"
+	"lexer.h"
+	"parser.h"
+
+1397601677 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/symbol.c
+	<x3d/common.h>
+	"symbol.h"
+
+1397431503 source:/home/davis/x3drenderlib-code/trunk/lib/logout.c
+	<x3d/common.h>
+	<logout.h>
+
+1399824304 source:/home/davis/x3drenderlib-code/trunk/lib/main.c
+	<logout.h>
+	<algorithm.h>
+	<memory.h>
+	<staging.h>
+	<thread.h>
+	<timing.h>
+	<x3d/debug.h>
+	"main.h"
+
+1364353192 /home/davis/x3drenderlib-code/trunk/lib/timing.h
+
+1397432540 source:/home/davis/x3drenderlib-code/trunk/lib/math/decimal.c
+	<x3d/common.h>
+	<math.h>
+	<stdlib.h>
+	"decimal.h"
+
+1393902015 source:/home/davis/x3drenderlib-code/trunk/lib/math/fx.c
+	"math.h"
+	"fx.h"
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/lib/math/geometry.c
+	"math.h"
+	"vector.h"
+	"matrix.h"
+	"geometry.h"
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/lib/math/main.c
+	<math/math.h>
+	"main.h"
+
+1386780481 /home/davis/x3drenderlib-code/trunk/lib/math/main.h
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/lib/math/matrix.c
+	"math.h"
+	"vector.h"
+	"matrix.h"
+
+1393902016 source:/home/davis/x3drenderlib-code/trunk/lib/math/quat.c
+	"vector.h"
+	"quat.h"
+
+1394165070 source:/home/davis/x3drenderlib-code/trunk/lib/math/vector.c
+	<math.h>
+	<logout.h>
+	"vector.h"
+
+1397758278 source:/home/davis/x3drenderlib-code/trunk/lib/memory.c
+	<logout.h>
+	<memory.h>
+
+1399824341 source:/home/davis/x3drenderlib-code/trunk/lib/staging.c
+	<staging.h>
+
+1399822612 source:/home/davis/x3drenderlib-code/trunk/lib/thread.c
+	<x3d/common.h>
+	<algorithm.h>
+	<thread.h>
+
+1364353210 source:/home/davis/x3drenderlib-code/trunk/lib/timing.c
+
+1400131680 source:/home/davis/x3drenderlib-code/trunk/kernel/editentitylist.c
+	<x3d/editor.h>
+
+1399875230 source:/home/davis/x3drenderlib-code/trunk/kernel/editentityproperty.c
+	<x3d/editor.h>
+
+1399875292 source:/home/davis/x3drenderlib-code/trunk/kernel/editviewcontrol.c
+	<x3d/editor.h>
+
+1363271212 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/intersectproc.c
+
+1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vertexprocessor.h
+	<x3d/common.h>
+	<algorithm.h>
+	<math/math.h>
+	"rasterization.h"
+	"vibuffer.h"
+
+1399927702 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterpass.c
+	"rasterpass.h"
+
+1393902015 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterpass.h
+
+1399927059 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterpipeline.c
+	"rasterpipeline.h"
+
+1399926904 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterpipeline.h
+
+1399927487 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/raytracepipeline.c
+	"raytracepipeline.h"
+
+1399927242 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/raytracepipeline.h
+
+1399927676 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vertexprocessor.c
+	<logout.h>
+	<algorithm.h>
+	<renderer/shader.h>
+	"rasterization.h"
+	"vibuffer.h"
+	"vertexprocessor.h"
+	"vertattri_lerp.h"
+	"dbg_vertex_processor.h"
+
+1399958612 source:/home/davis/x3drenderlib-code/trunk/kernel/dynamics.c
+	<x3d/dynamics.h>
+
+1399958501 /home/davis/x3drenderlib-code/trunk/include/x3d/dynamics.h
+
+1399963984 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/dynamics_editor.c
+
+1400126386 /home/davis/x3drenderlib-code/trunk/drivers/editor/splash_screen.h
+
+1400128553 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/splash_screen.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	"gui.h"
+	"splash_screen.h"
+

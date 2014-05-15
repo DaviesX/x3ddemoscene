@@ -3,7 +3,7 @@
 #include <logout.h>
 #include <memory.h>
 #include "rasterization.h"
-#include "vertex_processor.h"
+#include "vertexprocessor.h"
 #include "rasterizer.h"
 
 

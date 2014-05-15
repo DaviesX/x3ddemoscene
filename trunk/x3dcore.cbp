@@ -45,6 +45,10 @@
 		<Linker>
 			<Add option="`pkg-config gtk+-3.0 --libs`" />
 		</Linker>
+		<Unit filename="drivers/editor/dynamics_editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/editor/dynamics_editor.h" />
 		<Unit filename="drivers/editor/gui.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -69,6 +73,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/editor/renderable_editor.h" />
+		<Unit filename="drivers/editor/splash_screen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/editor/splash_screen.h" />
 		<Unit filename="drivers/loader/fbxmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -224,6 +232,10 @@
 		<Unit filename="drivers/renderer/renderer/colorspectrum.h" />
 		<Unit filename="drivers/renderer/renderer/dbg_rasterizer.h" />
 		<Unit filename="drivers/renderer/renderer/dbg_vertex_processor.h" />
+		<Unit filename="drivers/renderer/renderer/intersectproc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/intersectproc.h" />
 		<Unit filename="drivers/renderer/renderer/irenderer.h" />
 		<Unit filename="drivers/renderer/renderer/main.c">
 			<Option compilerVar="CC" />
@@ -245,17 +257,21 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/rasterizer.h" />
-		<Unit filename="drivers/renderer/renderer/raytracer.c">
+		<Unit filename="drivers/renderer/renderer/rasterpass.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/raytracer.h" />
+		<Unit filename="drivers/renderer/renderer/rasterpass.h" />
+		<Unit filename="drivers/renderer/renderer/rasterpipeline.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/rasterpipeline.h" />
+		<Unit filename="drivers/renderer/renderer/raytracepipeline.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/raytracepipeline.h" />
 		<Unit filename="drivers/renderer/renderer/renderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/rtpass.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/renderer/renderer/rtpass.h" />
 		<Unit filename="drivers/renderer/renderer/rtrenderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -265,10 +281,10 @@
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/surface.h" />
 		<Unit filename="drivers/renderer/renderer/vertattri_lerp.h" />
-		<Unit filename="drivers/renderer/renderer/vertex_processor.c">
+		<Unit filename="drivers/renderer/renderer/vertexprocessor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/vertex_processor.h" />
+		<Unit filename="drivers/renderer/renderer/vertexprocessor.h" />
 		<Unit filename="drivers/renderer/renderer/vibuffer.h" />
 		<Unit filename="drivers/renderer/shader/basic_rt_shader.c">
 			<Option compilerVar="CC" />
@@ -311,6 +327,7 @@
 		<Unit filename="include/x3d/camera.h" />
 		<Unit filename="include/x3d/common.h" />
 		<Unit filename="include/x3d/debug.h" />
+		<Unit filename="include/x3d/dynamics.h" />
 		<Unit filename="include/x3d/editor.h">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -327,7 +344,22 @@
 		<Unit filename="kernel/debug.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="kernel/dynamics.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/editentitylist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/editentityproperty.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="kernel/editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/editrenderregion.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/editviewcontrol.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/init.c">

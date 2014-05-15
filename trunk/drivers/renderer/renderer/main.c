@@ -44,7 +44,7 @@ static void print_triangle4d ( struct point4d *p0, struct point4d *p1, struct po
                      p2->x, p2->y, p2->z, p2->w );
 }
 
-/* vertex prcessor's */		#include "vertex_processor.h"
+/* vertex prcessor's */		#include "vertexprocessor.h"
 #include "dbg_vertex_processor.h"
 #include "rasterization.h"
 

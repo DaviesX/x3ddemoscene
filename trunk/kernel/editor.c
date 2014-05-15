@@ -14,26 +14,6 @@ struct edit_activex_ops {
         void (*free) ( struct edit_activex *activex );
 };
 
-struct edit_activex {
-        char *name;
-        bool state;
-        uuid_t edit_id;
-        struct edit_activex_ops *ops;
-        enum EDIT_ACTIVEX_IDR type;
-};
-
-struct activex_render_region {
-        struct edit_activex activex;
-        enum PLATFORM_IDR type;
-        void *handle;
-        struct irectangle2d rect;
-        uuid_t rend_bind;
-};
-
-struct activex_entity_list {
-        struct edit_activex activex;
-};
-
 struct editor {
         char *name;
         uuid_t name_id;
@@ -45,16 +25,18 @@ struct editor {
 struct editor_container {
         struct alg_llist editor;
 };
-static const int c_sizeof_activex[] = {
-        [EDIT_ACTIVEX_RENDER_REGION] = sizeof(struct activex_render_region),
-        [EDIT_ACTIVEX_ENTITY_LIST]   = sizeof(struct activex_entity_list)
-};
+
 static const struct edit_activex_ops c_activex_ops[] = {
+        [EDIT_ACTIVEX_RENDER_REGION].update = cast(c_activex_ops->update) activex_render_region_update,
+        [EDIT_ACTIVEX_RENDER_REGION].free = cast(c_activex_ops->free)     activex_render_region_free
 };
 static struct editor_container g_edit_cont = {0};
 static struct edit_ops g_edit_ops = {
-        .init_editor = cast(g_edit_ops.init_editor)             load_editor,
-        .editor_main_loop = cast(g_edit_ops.editor_main_loop)   edit_main_loop
+        .editor_init =          editor_init,
+        .editor_end_init =      editor_end_init,
+        .editor_load =          editor_load,
+        .editor_loop =          editor_loop,
+        .editor_free =          editor_free
 };
 static struct thr_task *g_main_loop_task = nullptr;
 static f_Editor_Loop g_loop_func = nullptr;
@@ -62,19 +44,38 @@ static void *g_info_ptr = nullptr;
 
 static void init_editor ( char *name, struct editor *edit );
 static void free_editor ( struct editor *edit );
-static void edit_activex_init ( enum EDIT_ACTIVEX_IDR type, struct edit_activex *activex );
+static void edit_activex_add (
+        struct edit_activex *activex, char *name, struct editor *edit );
+static void free_activex ( struct edit_activex *activex );
 
 
-bool init_editor_container ( int *argc, char ***argv )
+bool editor_kernel_preinit ( int *argc, char ***argv )
+{
+        if ( !g_edit_ops.editor_init ( argc, argv ) ) {
+                return false;
+        }
+        return true;
+}
+
+bool editor_kernel_init ( void )
 {
         create_alg_llist ( &g_edit_cont.editor, sizeof ( struct editor ) );
-        if ( !g_edit_ops.init_editor ( argc, argv ) ) {
+        if ( !g_edit_ops.editor_load () ) {
                 goto fail;
         }
         return true;
 fail:
         kernel_panic ();
         return false;
+}
+
+void editor_kernel_done_init ( void )
+{
+        g_edit_ops.editor_end_init ();
+}
+
+void editor_kernel_free ( void )
+{
 }
 
 struct editor_container *editor_container_export ( void )
@@ -93,7 +94,7 @@ static void init_editor ( char *name, struct editor *edit )
         int i;
         for ( i = 0; i < MAX_ACTIVEX; i ++ ) {
                 create_alg_llist (
-                        &edit->activex[i], c_sizeof_activex[i] );
+                        &edit->activex[i], sizeof (struct edit_activex *) );
         }
         edit->id = alg_gen_uuid ();
         edit->name_id = alg_hash_str_uuid ( name );
@@ -105,6 +106,12 @@ static void free_editor ( struct editor *edit )
 {
         int i;
         for ( i = 0; i < MAX_ACTIVEX; i ++ ) {
+                int j;
+                for ( j = 0; j < edit->n_activex[i]; j ++ ) {
+                        struct edit_activex **ax = nullptr;
+                        alg_llist_i ( &edit->activex[i], j, &ax );
+                        free_activex ( *ax );
+                }
                 free_alg_llist ( &edit->activex[i] );
         }
         free_fix ( edit->name );
@@ -147,7 +154,8 @@ __dlexport struct editor *editor_get_byid ( uuid_t edit )
 __dlexport void editor_remove ( struct editor *edit )
 {
         struct editor *curr_edit;
-        alg_llist_remove ( &g_edit_cont.editor, &edit->id, &curr_edit, cmp_editor_id );
+        alg_llist_remove ( &g_edit_cont.editor, &edit->id, &curr_edit,
+                           cmp_editor_id );
         free_editor ( edit );
 }
 #undef cmp_editor_id
@@ -155,10 +163,13 @@ __dlexport void editor_remove ( struct editor *edit )
 __dlexport void editor_update ( struct editor *edit )
 {
         int j;
-        for ( j = 0; edit->n_activex[j] > 0; j ++ ) {
+        for ( j = 0; j < MAX_ACTIVEX; j ++ ) {
+                if ( edit->n_activex[j] == 0 )
+                        continue;
                 int k;
-                struct edit_activex *curr_ax = alg_llist_first (
-                                                       &edit->activex[j], &k );
+                struct edit_activex **curr_pos =
+                        alg_llist_first ( &edit->activex[j], &k );
+                struct edit_activex *curr_ax = *curr_pos;
                 while ( curr_ax != nullptr ) {
                         if ( curr_ax->state ) {
                                 curr_ax->ops->update ( curr_ax );
@@ -179,7 +190,7 @@ __dlexport void editor_update_all ( void )
         }
 }
 
-static void edit_activex_init ( enum EDIT_ACTIVEX_IDR type, struct edit_activex *activex )
+void edit_activex_init ( enum EDIT_ACTIVEX_IDR type, struct edit_activex *activex )
 {
         activex->type = type;
 }
@@ -192,6 +203,7 @@ static void edit_activex_add (
         activex->edit_id = edit->id;
         strcpy ( activex->name, name );
         edit->n_activex[activex->type] ++;
+        alg_llist_add ( &activex, &edit->activex[activex->type] );
 }
 
 static void free_activex ( struct edit_activex *activex )
@@ -206,51 +218,25 @@ static void free_activex ( struct edit_activex *activex )
         }
 }
 
-#define sort_activex( _type, _f_Func, _p ) \
-{ \
-        switch ( _type ) { \
-        case EDIT_ACTIVEX_RENDER_REGION: { \
-                struct activex_render_region *_ptr = cast(_ptr) _p; \
-                _f_Func; \
-                _p = cast(_p) _ptr; \
-                break; \
-        } \
-        case EDIT_ACTIVEX_ENTITY_LIST: { \
-                struct activex_entity_list *_ptr = cast(_ptr) _p; \
-                _f_Func; \
-                _p = cast(_p) _ptr; \
-                break; \
-        } \
-        case EDIT_ACTIVEX_FILE_LOADER: { \
-                break; \
-        } \
-        } \
-}
-
 __dlexport void editor_add_activex ( char *name, void *_activex, struct editor *editor )
 {
         struct editor *curr_ed = editor;
         struct edit_activex *activex = _activex;
         edit_activex_add ( activex, name, curr_ed );
-        sort_activex (
-                activex->type,
-                alg_llist_add ( _ptr, &curr_ed->activex[activex->type] ),
-                activex );
 }
 
-#define cmp_activex( _info, _elm )      (!strcmp ( *(_info), ((struct edit_activex *) (_elm))->name ))
+#define cmp_activex( _info, _elm )      (!strcmp ( *(_info), ((struct edit_activex *) *(_elm))->name ))
 __dlexport void editor_remove_activex (
         enum EDIT_ACTIVEX_IDR type, char *name, struct editor *editor )
 {
         struct editor *curr_ed = editor;
         struct alg_llist *activex = &curr_ed->activex[type];
-        struct edit_activex *curr_ax = nullptr;
-        sort_activex (
-                type,
-                alg_llist_remove ( activex, &name, &_ptr, cmp_activex ),
-                curr_ax );
-        if ( curr_ax != nullptr ) {
-                free_activex ( curr_ax );
+        struct edit_activex **found_pos = nullptr;
+        alg_llist_remove ( activex, &name, &found_pos, cmp_activex );
+        struct edit_activex *found_ax = *found_pos;
+
+        if ( found_ax != nullptr ) {
+                free_activex ( found_ax );
         } else {
                 log_mild_err_dbg ( "couldn't find such activex of the type: %d with its name: %s", type, name );
                 return ;
@@ -262,15 +248,14 @@ __dlexport struct edit_activex *editor_find_activex (
 {
         struct editor *curr_ed = editor;
         struct alg_llist *activex = &curr_ed->activex[type];
-        struct edit_activex *curr_ax = nullptr;
-        sort_activex (
-                type,
-                alg_llist_find ( activex, &name, &_ptr, cmp_activex ),
-                curr_ax );
-        if ( curr_ax == nullptr ) {
+        struct edit_activex **found_pos = nullptr;
+        alg_llist_find ( activex, &name, &found_pos, cmp_activex );
+        struct edit_activex *found_ax = *found_pos;
+
+        if ( found_ax == nullptr ) {
                 log_mild_err_dbg ( "couldn't find such activex of the type: %d with its name: %s", type, name );
         }
-        return curr_ax;
+        return found_ax;
 }
 #undef cmp_activex
 
@@ -287,22 +272,7 @@ __dlexport void editor_run ( bool use_custom )
                                            (f_Thread_Handler) g_loop_func, g_info_ptr, nullptr );
         } else {
                 g_main_loop_task = thr_run_task (
-                                           (f_Thread_Handler) g_edit_ops.editor_main_loop,
+                                           (f_Thread_Handler) g_edit_ops.editor_loop,
                                            nullptr, nullptr );
         }
-}
-
-__dlexport struct activex_render_region *create_activex_render_region (
-        enum PLATFORM_IDR type, void *handle, int x, int y, int w, int h )
-{
-        struct activex_render_region *rr = alloc_fix ( sizeof *rr, 1 );
-        edit_activex_init ( EDIT_ACTIVEX_RENDER_REGION, cast(&rr->activex) rr );
-        rr->type = type;
-        rr->handle = handle;
-        rr->rect.x0 = x;
-        rr->rect.y0 = y;
-        rr->rect.x1 = x + w;
-        rr->rect.y1 = y + h;
-        rr->rend_bind = renderer_container_add ( nullptr );
-        return rr;
 }

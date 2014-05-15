@@ -47,9 +47,9 @@ int load_model_from_file ( char *filename, int scene_id, struct stager *stg )
         make_model_str ( model_id, buff );
         int rc = stager_begin_entry ( buff, rec );
 //        if ( !load_model_file ( filename, rec ) ) {
-                log_severe_err_dbg ( "LoadModelFromFile",
-                                     "Failed to load model file, file name: %s", filename );
-                return MODEL_ID_INVALID;
+        log_severe_err_dbg ( "LoadModelFromFile",
+                             "Failed to load model file, file name: %s", filename );
+        return MODEL_ID_INVALID;
 //        }
         stager_end_entry ( rc, rec );
         free_entry_record ( rec );

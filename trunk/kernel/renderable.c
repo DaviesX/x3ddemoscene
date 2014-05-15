@@ -1,88 +1,135 @@
-/* renderable.c: manages all kinds of renderable and
- * connect to local renderable manager interface */
+/* renderable.c: manages all kinds of renderable and connect to local renderable manager interface */
 #include <x3d/renderable.h>
 
 
 /* @todo (davis#2#): <kernel/renderable> implement geometry renderable and simple aggregate */
+static const int c_sizeof_renderable[] = {
+        [RENDERABLE_GEOMETRY] = sizeof (struct rda_geometry)
+};
 
-struct renderable_ctx *create_renderable_ctx ( void )
+struct rda_context *create_renderable_context ( void )
 {
         return nullptr;
 }
 
-void free_renderable_ctx ( struct renderable_ctx *ctx )
+void free_renderable_context ( struct rda_context *ctx )
+{
+}
+
+/* renderable */
+struct renderable *create_renderable (
+        char *name, enum RENDERABLE_IDR type, float importance, bool is_movable,
+        struct material *mtl, struct shader *sha )
+{
+        return nullptr;
+}
+
+void free_renderable ( struct renderable *rda )
+{
+}
+
+void rda_set_name ( char *name, struct renderable *rda )
+{
+}
+
+void rda_set_importance ( float importance, struct renderable *rda )
+{
+}
+
+void rda_set_material ( struct material *mtl, struct renderable *rda )
+{
+}
+
+void rda_set_shader ( struct shader *sha, struct renderable *rda )
 {
 }
 
 /* geometry renderable */
-struct geometry_mgr;
-struct geometry;
-
-struct georend_ops {
-        struct geometry_mgr *(*create_mgr) ( void );
-        void (*reset_mgr) ( struct geometry_mgr *mgr );
-        void (*get_render_desc) ( struct geometry_mgr *mgr,
-                                  struct alg_list *desc );
-
-        struct geometry *(*create_geometry) ( void );
-        void (*update_geometry) ( void );
-        void (*add_geometry) ( struct geometry *geo, struct render_desc *desc,
-                               struct geometry_mgr *mgr );
-        void (*get_geometry_bound) ( struct geometry *geo, struct box3d *bound );
-};
-
-/*static*/ struct georend_ops g_georend_ops = {
-        .create_mgr = nullptr,
-        .reset_mgr = nullptr,
-        .get_render_desc = nullptr,
-        .create_geometry = nullptr,
-        .update_geometry = nullptr,
-        .add_geometry = nullptr,
-        .get_geometry_bound = nullptr
-};
-
-
-struct geometry_renderable *renderable_create_geometry ( void )
-{
-        return nullptr;
-}
-
-void renderable_update_geometry ( void )
+void rda_geometry_init_from_data (
+        struct point3d *vertex, int num_vert, int *index, int num_tri,
+        struct vector3d *normal, struct vector3d *tangent, struct point2d *uv,
+        struct matrix4x4 *transform, int ntransform, struct rda_geometry *geo )
 {
 }
 
-void renderable_ctx_add_geometry ( struct geometry_renderable *geo,
-                                   struct renderable_ctx *ctx )
+void rda_geometry_refine ( float iteration, struct rda_geometry *geo )
 {
 }
 
-void renderable_ctx_add_from_aggregate ( struct rdb_aggregate *agg,
-                struct renderable_ctx *ctx )
+void rda_geometry_update_vertex ( struct point3d *vertex, int count,
+                                  struct rda_geometry *geo )
 {
 }
 
-void init_rdb_aggregate ( struct rdb_aggregate *agg )
+void rda_geometry_update_index ( int *index, int count, struct rda_geometry *geo )
 {
 }
 
-void free_rdb_aggregate ( struct rdb_aggregate *agg )
+void rda_geometry_update_transform ( int i, struct matrix4x4 *transform,
+                                     struct rda_geometry *geo )
 {
 }
 
-void rdb_aggregate_add_geometry (
-        struct geometry_renderable *geo, enum RDB_AGGREG type,
-        struct rdb_aggregate *agg )
+void rda_geometry_fix_nt ( struct rda_geometry *geo )
+{
+}
+
+struct point3d *rda_geometry_get_vertex ( int *nvertex, struct rda_geometry *geo )
+{
+        *nvertex = geo->num_vertex;
+        return geo->vertex;
+}
+
+struct vector3d *rda_geometry_get_normal ( int *nnormal, struct rda_geometry *geo )
+{
+        *nnormal = geo->num_vertex;
+        return geo->normal;
+}
+
+struct vector3d *rda_geometry_get_tangent ( int *ntangent, struct rda_geometry *geo )
+{
+        *ntangent = geo->num_vertex;
+        return geo->tangent;
+}
+
+struct vector2d *rda_geometry_get_uv ( int *nuv, struct rda_geometry *geo )
+{
+        *nuv = geo->num_vertex;
+        return geo->uv;
+}
+
+int *rda_geometry_get_index ( int *nindex, struct rda_geometry *geo )
+{
+        *nindex = geo->num_tri*3;
+        return geo->index;
+}
+
+struct matrix4x4 *rda_geometry_get_transform ( int *ntransform, struct rda_geometry *geo )
+{
+        *ntransform = geo->ntransform;
+        return geo->transform;
+}
+
+/* aggregate */
+void ragg_add_geometry (
+        struct rda_geometry *geo, enum RAG_IDR type, struct rda_aggregate *agg )
+{
+}
+
+void ragg_update ( struct rda_aggregate *agg )
 {
 }
 
 /* RI Interface */
-void krender_desc_add (
-        enum RENDER_DESC_CULL method, void *shape, uint32_t renderable_type,
-        struct alg_list *desc )
+void rda_context_post_request (
+        enum RAG_CULL_IDR cull_type, rda_cullshape_t *shape,
+        enum RENDERABLE_IDR rda_type, struct rda_request *request,
+        struct rda_context *ctx )
 {
 }
-struct renderable_mgr *krenderable_ctx_get_mgr (
-        enum RENDERABLE type, struct renderable_ctx *ctx )
+
+struct renderable *rda_context_get_i ( int i, enum RENDERABLE_IDR type,
+                                       struct rda_context *ctx )
 {
-        return nullptr;
-}
+        return (struct renderable *) &ctx->rda[type][i*c_sizeof_renderable[type]];
+};

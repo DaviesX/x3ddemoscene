@@ -59,6 +59,8 @@ enum LIGHT_MODEL_IDR {
 enum RENDER_COMMAND {
         RENDER_COMMAND_SPEC,
         RENDER_COMMAND_DRAW_MODE,
+        RENDER_COMMAND_RENDER_REGION,
+        RENDER_COMMAND_RENDERABLE_CONTEXT,
         RENDER_COMMAND_CROP,
         RENDER_COMMAND_RENDER_LAYER,
         RENDER_COMMAND_THREAD,
@@ -100,8 +102,8 @@ struct render_out_ops {
  * functions' declaration
  */
 /* container's */
-void init_renderer_container ( void );
-void free_renderer_container ( void );
+void renderer_kernel_init ( void );
+void renderer_kernel_free ( void );
 uuid_t renderer_container_add ( struct renderer *rend );
 void renderer_container_remove ( uuid_t id );
 struct renderer *renderer_container_find ( uuid_t id );

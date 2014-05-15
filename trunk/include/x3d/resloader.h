@@ -13,7 +13,8 @@ enum RES_IDR {
         RES_MODEL_ENTITY,
         RES_KINEMATIC_SHAPE,
         RES_LOGICAL,
-        RES_BONDER
+        RES_BONDER,
+        RES_DLPROGRAM
 };
 
 enum RES_STATE {
