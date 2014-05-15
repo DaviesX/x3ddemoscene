@@ -11,7 +11,7 @@ struct activex_render_region {
 };
 
 
-__dlexport struct activex_render_region *create_activex_render_region (
+__dlexport struct activex_render_region *create_ax_render_region (
         enum PLATFORM_IDR type, void *handle, int x, int y, int w, int h )
 {
         struct activex_render_region *rr = alloc_fix ( sizeof *rr, 1 );
@@ -26,10 +26,10 @@ __dlexport struct activex_render_region *create_activex_render_region (
         return rr;
 }
 
-void activex_render_region_update ( struct activex_render_region *activex )
+void ax_render_region_update ( struct activex_render_region *activex )
 {
 }
 
-void activex_render_region_free ( struct activex_render_region *activex )
+void ax_render_region_free ( struct activex_render_region *activex )
 {
 }

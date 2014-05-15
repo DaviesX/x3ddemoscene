@@ -1,6 +1,6 @@
 #include <x3d/editor.h>
 
 
-struct activex_entity_list {
+struct activex_asset_list {
         struct edit_activex activex;
 };

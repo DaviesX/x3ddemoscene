@@ -347,7 +347,7 @@
 		<Unit filename="kernel/dynamics.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="kernel/editentitylist.c">
+		<Unit filename="kernel/editassetlist.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/editentityproperty.c">

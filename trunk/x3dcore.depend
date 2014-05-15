@@ -4757,7 +4757,7 @@
 
 1397763686 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
 
-1400131684 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
+1400134349 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
 	<math/math.h>
 	<algorithm.h>
 	<x3d/renderer.h>
@@ -4788,7 +4788,7 @@
 	<x3d/editor.h>
 	<editor/gui.h>
 
-1400128457 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/main_editor.c
+1400136636 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/main_editor.c
 	<gtk/gtk.h>
 	<logout.h>
 	<x3d/common.h>
@@ -5474,10 +5474,13 @@
 
 1400126386 /home/davis/x3drenderlib-code/trunk/drivers/editor/splash_screen.h
 
-1400128553 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/splash_screen.c
+1400133309 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/splash_screen.c
 	<gtk/gtk.h>
 	<logout.h>
 	<x3d/common.h>
 	"gui.h"
 	"splash_screen.h"
+
+1400133802 source:/home/davis/x3drenderlib-code/trunk/kernel/editassetlist.c
+	<x3d/editor.h>
 

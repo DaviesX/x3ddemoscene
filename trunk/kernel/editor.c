@@ -27,8 +27,8 @@ struct editor_container {
 };
 
 static const struct edit_activex_ops c_activex_ops[] = {
-        [EDIT_ACTIVEX_RENDER_REGION].update = cast(c_activex_ops->update) activex_render_region_update,
-        [EDIT_ACTIVEX_RENDER_REGION].free = cast(c_activex_ops->free)     activex_render_region_free
+        [EDIT_ACTIVEX_RENDER_REGION].update = cast(c_activex_ops->update) ax_render_region_update,
+        [EDIT_ACTIVEX_RENDER_REGION].free = cast(c_activex_ops->free)     ax_render_region_free
 };
 static struct editor_container g_edit_cont = {0};
 static struct edit_ops g_edit_ops = {
@@ -275,4 +275,8 @@ __dlexport void editor_run ( bool use_custom )
                                            (f_Thread_Handler) g_edit_ops.editor_loop,
                                            nullptr, nullptr );
         }
+}
+
+__dlexport void editor_dispatch_signal ( struct editor *editor )
+{
 }

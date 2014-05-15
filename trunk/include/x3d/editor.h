@@ -15,9 +15,14 @@ enum PLATFORM_IDR {
 
 struct editor;
 struct editor_container;
-struct edit_activex;
+
 struct activex_render_region;
-struct activex_enity_list;
+struct activex_asset_list;
+struct activex_view_control;
+struct activex_selector;
+struct activex_entity_property;
+struct activex_renderable_property;
+struct activex_dynamics_property;
 
 enum EDIT_ACTIVEX_IDR {
         EDIT_ACTIVEX_RENDER_REGION,
@@ -65,13 +70,14 @@ __dlexport struct edit_activex *editor_find_activex (
         enum EDIT_ACTIVEX_IDR type, char *name, struct editor *editor );
 __dlexport void editor_reg_custum_loop ( f_Editor_Loop func, void *info_ptr );
 __dlexport void editor_run ( bool use_custum );
+__dlexport void editor_dispatch_signal ( struct editor *editor );
 void edit_activex_init ( enum EDIT_ACTIVEX_IDR type, struct edit_activex *activex );
 
 /* activex - render region */
-__dlexport struct activex_render_region *create_activex_render_region (
+__dlexport struct activex_render_region *create_ax_render_region (
         enum PLATFORM_IDR type, void *handle, int x, int y, int w, int h );
-void activex_render_region_update ( struct activex_render_region *activex );
-void activex_render_region_free ( struct activex_render_region *activex );
+void ax_render_region_update ( struct activex_render_region *activex );
+void ax_render_region_free ( struct activex_render_region *activex );
 
 
 #endif // EDITOR_MEDIA_H_INCLUDED

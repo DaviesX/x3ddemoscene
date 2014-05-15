@@ -29,6 +29,7 @@ static struct main_editor g_main_edit;
 static void display_logo_image ( GtkWidget *draw_area, bool to_display );
 static void switch_to_edit ( void );
 static void switch_to_pure ( void );
+static gboolean main_editor_dispatch ( gpointer user_data );
 
 
 static void switch_to_edit ( void )
@@ -160,6 +161,10 @@ demo_mode:
         /* done using glade builder */
         builder_all_set ( builder );
 
+        /* set dispatch function which fetches signal
+         * from core editor when gtk_main is idle */
+        g_idle_add ( main_editor_dispatch, nullptr );
+
         /* change background color to black */
         GdkColor color;
         color.red   = 0X0;
@@ -177,7 +182,7 @@ demo_mode:
         int width, height;
         widget_get_size ( g_main_edit.curr_window, g_main_edit.curr_draw_area,
                           &x, &y, &width, &height );
-        struct activex_render_region *render_region = create_activex_render_region (
+        struct activex_render_region *render_region = create_ax_render_region (
                                 PLATFORM_GTK, g_main_edit.curr_draw_area, x, y, width, height );
         editor_add_activex ( "main-window-render-region", render_region, g_main_edit.editor );
 
@@ -192,4 +197,10 @@ void main_editor_set ( int state )
 GtkWidget *main_editor_get_region ( void )
 {
         return g_main_edit.curr_draw_area;
+}
+
+static gboolean main_editor_dispatch ( gpointer user_data )
+{
+        editor_dispatch_signal ( g_main_edit.editor );
+        return true;
 }
