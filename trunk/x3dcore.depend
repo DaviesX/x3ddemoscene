@@ -4688,7 +4688,7 @@
 1399867833 source:/home/davis/Projects/x3d/kernel/modelentity.c
 	<x3d/modelentity.h>
 
-1400128633 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/gui.c
+1401669329 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/gui.c
 	<gtk/gtk.h>
 	<gdk/gdk.h>
 	<cairo.h>
@@ -4698,7 +4698,7 @@
 	<editor/editor.h>
 	"gui.h"
 	"main_editor.h"
-	"object_editor.h"
+	"entity_editor.h"
 	"renderable_editor.h"
 	"splash_screen.h"
 
@@ -4749,7 +4749,7 @@
 
 1393902016 /home/davis/x3drenderlib-code/trunk/lib/math/quat.h
 
-1393902015 /home/davis/x3drenderlib-code/trunk/lib/math/geometry.h
+1400975336 /home/davis/x3drenderlib-code/trunk/lib/math/geometry.h
 
 1388682850 /home/davis/x3drenderlib-code/trunk/lib/math/decimal.h
 
@@ -4757,12 +4757,13 @@
 
 1397763686 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
 
-1400134349 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
+1401652296 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
 	<math/math.h>
 	<algorithm.h>
+	<serializer.h>
 	<x3d/renderer.h>
 
-1400128922 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1400976502 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<algorithm.h>
@@ -4788,7 +4789,7 @@
 	<x3d/editor.h>
 	<editor/gui.h>
 
-1400136636 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/main_editor.c
+1401653725 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/main_editor.c
 	<gtk/gtk.h>
 	<logout.h>
 	<x3d/common.h>
@@ -4830,7 +4831,7 @@
 1399186582 /home/davis/x3drenderlib-code/trunk/drivers/loader/fbxmodel.h
 	<x3d/resloader.h>
 
-1399876052 /home/davis/x3drenderlib-code/trunk/include/x3d/resloader.h
+1400987624 /home/davis/x3drenderlib-code/trunk/include/x3d/resloader.h
 	<staging.h>
 
 1399170769 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/imageloader.c
@@ -5217,10 +5218,11 @@
 1399875327 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
 	<x3d/debug.h>
 
-1400131754 source:/home/davis/x3drenderlib-code/trunk/kernel/editor.c
+1400990556 source:/home/davis/x3drenderlib-code/trunk/kernel/editor.c
 	<logout.h>
 	<algorithm.h>
 	<thread.h>
+	<serializer.h>
 	<x3d/init.h>
 	<editor/editor.h>
 	<x3d/renderer.h>
@@ -5233,7 +5235,8 @@
 1399871249 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
 	<x3d/common.h>
 
-1400131656 source:/home/davis/x3drenderlib-code/trunk/kernel/editrenderregion.c
+1401668360 source:/home/davis/x3drenderlib-code/trunk/kernel/editrenderregion.c
+	<thread.h>
 	<x3d/editor.h>
 
 1400128949 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
@@ -5272,15 +5275,15 @@
 	<x3d/common.h>
 	<x3d/init.h>
 
-1399962278 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
+1400996889 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
 	<x3d/renderable.h>
 
-1399961906 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+1400996853 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
 	<x3d/common.h>
 	<algorithm.h>
 	<math.h>
 
-1400128936 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+1400971276 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
 	<logout.h>
 	<algorithm.h>
 	<x3d/renderer.h>
@@ -5382,7 +5385,7 @@
 	"math.h"
 	"fx.h"
 
-1393902016 source:/home/davis/x3drenderlib-code/trunk/lib/math/geometry.c
+1400975415 source:/home/davis/x3drenderlib-code/trunk/lib/math/geometry.c
 	"math.h"
 	"vector.h"
 	"matrix.h"
@@ -5483,4 +5486,34 @@
 
 1400133802 source:/home/davis/x3drenderlib-code/trunk/kernel/editassetlist.c
 	<x3d/editor.h>
+
+1400987391 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
+	<x3d/common.h>
+
+1400988831 source:/home/davis/x3drenderlib-code/trunk/kernel/editrenderconf.c
+	<x3d/editor.h>
+
+1400990159 source:/home/davis/x3drenderlib-code/trunk/lib/serializer.c
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+	<memory.h>
+	<math.h>
+	<stdbool.h>
+	"serializer.h"
+
+1400990690 source:/home/davis/x3drenderlib-code/trunk/lib/dlfunction.c
+
+1401044482 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vbo.c
+
+1400997060 source:/home/davis/x3drenderlib-code/trunk/kernel/editprojectmgr.c
+
+1401670062 source:/home/davis/x3drenderlib-code/trunk/drivers/editor/entity_editor.c
+	<gtk/gtk.h>
+	<logout.h>
+	<x3d/common.h>
+	"gui.h"
+	"entity_editor.h"
+
+1399963860 /home/davis/x3drenderlib-code/trunk/drivers/editor/entity_editor.h
 

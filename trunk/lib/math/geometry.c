@@ -76,6 +76,22 @@ void build_plane3d_n ( struct vector3d *n, struct point3d *p, struct plane3d *pl
         copy_point3d ( p, &plane->p0 );
 }
 
+void build_rectangle_2d ( float x0, float x1, float y0, float y1, struct rectangle2d *rect )
+{
+        rect->x0 = x0;
+        rect->x1 = x1;
+        rect->y0 = y0;
+        rect->y1 = y1;
+}
+
+void build_irectangle_2d ( int x0, int x1, int y0, int y1, struct irectangle2d *rect )
+{
+        rect->x0 = x0;
+        rect->x1 = x1;
+        rect->y0 = y0;
+        rect->y1 = y1;
+}
+
 void point_on_line2d ( struct line2d *l, float t, struct point2d *p )
 {
         sscale_add_vector2d ( &l->p0, t, &l->v, p );

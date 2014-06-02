@@ -1,6 +1,7 @@
 #include <logout.h>
 #include <algorithm.h>
 #include <thread.h>
+#include <serializer.h>
 #include <x3d/init.h>
 #include <editor/editor.h>
 #include <x3d/renderer.h>
@@ -11,6 +12,9 @@
 
 struct edit_activex_ops {
         void (*update) ( struct edit_activex *activex );
+        void (*dispatch) ( struct edit_activex *activex );
+        void (*load) ( struct serializer *s, struct edit_activex *activex );
+        void (*save) ( struct serializer *s, struct edit_activex *activex );
         void (*free) ( struct edit_activex *activex );
 };
 
@@ -26,9 +30,10 @@ struct editor_container {
         struct alg_llist editor;
 };
 
-static const struct edit_activex_ops c_activex_ops[] = {
-        [EDIT_ACTIVEX_RENDER_REGION].update = cast(c_activex_ops->update) ax_render_region_update,
-        [EDIT_ACTIVEX_RENDER_REGION].free = cast(c_activex_ops->free)     ax_render_region_free
+static const struct edit_activex_ops c_ax_ops[] = {
+        [EDIT_ACTIVEX_RENDER_REGION].update = cast(c_ax_ops->update)      ax_render_region_update,
+        [EDIT_ACTIVEX_RENDER_REGION].dispatch = cast(c_ax_ops->dispatch)  ax_render_region_dispatch,
+        [EDIT_ACTIVEX_RENDER_REGION].free = cast(c_ax_ops->free)          ax_render_region_free
 };
 static struct editor_container g_edit_cont = {0};
 static struct edit_ops g_edit_ops = {
@@ -198,7 +203,7 @@ void edit_activex_init ( enum EDIT_ACTIVEX_IDR type, struct edit_activex *active
 static void edit_activex_add (
         struct edit_activex *activex, char *name, struct editor *edit )
 {
-        activex->ops = cast(activex->ops) &c_activex_ops[activex->type];
+        activex->ops = cast(activex->ops) &c_ax_ops[activex->type];
         activex->name = alloc_fix ( 1, strlen(name) + 1 );
         activex->edit_id = edit->id;
         strcpy ( activex->name, name );
@@ -278,5 +283,13 @@ __dlexport void editor_run ( bool use_custom )
 }
 
 __dlexport void editor_dispatch_signal ( struct editor *editor )
+{
+}
+
+__dlexport void editor_load_state ( char *filename, struct editor *editor )
+{
+}
+
+__dlexport void editor_save_state ( char *filename, struct editor *editor )
 {
 }

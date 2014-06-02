@@ -37,6 +37,14 @@ enum RENDERER_THREAD_STATE_IDR {
         RENDERER_THREAD_MULTIPLE = 0X4,
 };
 
+enum RENDER_PIPE_IDR {
+        RENDER_PIPE_FORWARD,
+        RENDER_PIPE_FORWARD_PLUS,
+        RENDER_PIPE_WHITTED,
+        RENDER_PIPE_DIRECT_LIGHTING,
+        RENDER_PIPE_METROPOLIS
+};
+
 enum RENDER_SPEC_IDR {
         RENDER_SPEC_SW_BUILTIN,
         RENDER_SPEC_HW_OPENGL,
@@ -57,6 +65,7 @@ enum LIGHT_MODEL_IDR {
 };
 
 enum RENDER_COMMAND {
+        RENDER_COMMAND_PIPELINE,
         RENDER_COMMAND_SPEC,
         RENDER_COMMAND_DRAW_MODE,
         RENDER_COMMAND_RENDER_REGION,
@@ -88,6 +97,7 @@ struct rend_coomand {
 };
 
 struct renderer_ops {
+        void (*init) ( void );
         struct lcrenderer *(*create) ( enum RENDERER_IDR method );
         void (*free) ( struct lcrenderer *r );
         void (*update) ( struct alg_llist *command, struct lcrenderer *r );
@@ -104,40 +114,37 @@ struct render_out_ops {
 /* container's */
 void renderer_kernel_init ( void );
 void renderer_kernel_free ( void );
-uuid_t renderer_container_add ( struct renderer *rend );
-void renderer_container_remove ( uuid_t id );
-struct renderer *renderer_container_find ( uuid_t id );
-struct renderer *renderer_container_i ( int i );
 
 /* registrations */
 void renderer_import_renderer ( struct renderer_ops *ops );
 void renderer_import_render_out ( struct render_out_ops *ops );
 
 /* renderer's */
-struct renderer *create_renderer ( enum RENDERER_IDR type );
-void free_renderer ( struct renderer *rend );
+__dlexport struct renderer *create_renderer ( enum RENDERER_IDR type );
+__dlexport void free_renderer ( struct renderer *rend );
 
-void renderer_bind_renderable_context ( void *ctx, struct renderer *rend );
-struct probe *renderer_get_probe ( struct renderer *rend );
-struct render_out *renderer_get_render_out ( struct renderer *rend );
+__dlexport void renderer_bind_renderable_context ( void *ctx, struct renderer *rend );
+__dlexport struct probe *renderer_get_probe ( struct renderer *rend );
+__dlexport struct render_out *renderer_get_render_out ( struct renderer *rend );
 
-void renderer_set_spec ( enum RENDER_SPEC_IDR spec, struct renderer *rend );
-void renderer_set_draw_mode ( enum DRAW_MODE_IDR draw_mode, struct renderer *rend );
-void renderer_set_crop (
+__dlexport void renderer_set_pipeline ( enum RENDER_PIPE_IDR pipeline, struct renderer *rend );
+__dlexport void renderer_set_spec ( enum RENDER_SPEC_IDR spec, struct renderer *rend );
+__dlexport void renderer_set_draw_mode ( enum DRAW_MODE_IDR draw_mode, struct renderer *rend );
+__dlexport void renderer_set_crop (
         bool to_crop, float x0, float x1, float y0, float y1, struct renderer *rend );
-void renderer_new_render_layer ( int importance, float alpha, struct renderer *rend );
-void renderer_set_thread ( enum RENDERER_THREAD_STATE_IDR state, struct renderer *rend );
-void renderer_set_light_model ( enum LIGHT_MODEL_IDR model, struct renderer *rend );
-void renderer_set_antialias ( float level, struct renderer *rend );
-void renderer_set_filter ( float level, struct renderer *rend );
-void renderer_set_hdr ( bool to_apply, struct renderer *rend );
-void renderer_set_len_flare ( bool to_apply, struct renderer *rend );
-void renderer_set_dof ( bool to_apply, struct renderer *rend );
-void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend );
+__dlexport void renderer_new_render_layer ( int importance, float alpha, struct renderer *rend );
+__dlexport void renderer_set_thread ( enum RENDERER_THREAD_STATE_IDR state, struct renderer *rend );
+__dlexport void renderer_set_light_model ( enum LIGHT_MODEL_IDR model, struct renderer *rend );
+__dlexport void renderer_set_antialias ( float level, struct renderer *rend );
+__dlexport void renderer_set_filter ( float level, struct renderer *rend );
+__dlexport void renderer_set_hdr ( bool to_apply, struct renderer *rend );
+__dlexport void renderer_set_len_flare ( bool to_apply, struct renderer *rend );
+__dlexport void renderer_set_dof ( bool to_apply, struct renderer *rend );
+__dlexport void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend );
 
-void renderer_update ( struct renderer *rend );
-void renderer_render ( struct renderer *rend );
-void renderer_commit ( struct renderer *rend );
+__dlexport void renderer_update ( struct renderer *rend );
+__dlexport void renderer_render ( struct renderer *rend );
+__dlexport void renderer_commit ( struct renderer *rend );
 
 
 #endif // RENDERER_H_INCLUDED

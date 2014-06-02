@@ -7,7 +7,7 @@
 
 
 struct renderable_editor {
-        GtkWidget *window;
+        GtkWidget *rda_prop;
 };
 
 static struct renderable_editor g_rend_edit;
@@ -19,18 +19,19 @@ bool renderable_editor_load ( char *glade_path )
 
         char file[256];
         strcpy ( file, glade_path );
-        strcat ( file, "entity_editor_widget.glade" );
+        strcat ( file, "renderable_property_widget.glade" );
         GtkBuilder *builder = builder_load ( file );
         if ( builder == nullptr ) {
                 return false;
         }
 
-        g_rend_edit.window =
-                GTK_WIDGET(gtk_builder_get_object ( builder, "renderable-editor" ));
-        if ( !g_rend_edit.window ) {
-                log_severe_err_dbg ( "cannot retrieve renderable-editor window" );
+        g_rend_edit.rda_prop =
+                (GtkWidget *) gtk_builder_get_object ( builder, "notebook" );
+        if ( !g_rend_edit.rda_prop ) {
+                log_severe_err_dbg ( "cannot retrieve renderable property widget" );
                 return false;
         }
+        builder_all_set ( builder );
         return true;
 }
 

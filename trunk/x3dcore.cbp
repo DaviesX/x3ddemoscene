@@ -49,6 +49,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/editor/dynamics_editor.h" />
+		<Unit filename="drivers/editor/entity_editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/editor/entity_editor.h" />
 		<Unit filename="drivers/editor/gui.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -61,10 +65,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/editor/main_editor.h" />
-		<Unit filename="drivers/editor/object_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/object_editor.h" />
 		<Unit filename="drivers/editor/render_procedure.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -280,6 +280,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/surface.h" />
+		<Unit filename="drivers/renderer/renderer/vbo.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="drivers/renderer/renderer/vertattri_lerp.h" />
 		<Unit filename="drivers/renderer/renderer/vertexprocessor.c">
 			<Option compilerVar="CC" />
@@ -356,6 +359,12 @@
 		<Unit filename="kernel/editor.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="kernel/editprojectmgr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/editrenderconf.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="kernel/editrenderregion.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -418,6 +427,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/compiler/symbol.h" />
+		<Unit filename="lib/dlfunction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/dlfunction.h" />
 		<Unit filename="lib/lib.h" />
 		<Unit filename="lib/logout.c">
 			<Option compilerVar="CC" />
@@ -462,6 +475,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/memory.h" />
+		<Unit filename="lib/serializer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/serializer.h" />
 		<Unit filename="lib/staging.c">
 			<Option compilerVar="CC" />
 		</Unit>

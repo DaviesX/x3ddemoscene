@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.1 -->
+<interface>
+  <requires lib="gtk+" version="3.10"/>
+  <object class="GtkListStore" id="tree-list-store"/>
+  <object class="GtkWindow" id="window">
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkTreeView" id="hierachy-tree">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="model">tree-list-store</property>
+        <child internal-child="selection">
+          <object class="GtkTreeSelection" id="treeview-selection1"/>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

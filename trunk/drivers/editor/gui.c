@@ -7,7 +7,7 @@
 #include <editor/editor.h>
 #include "gui.h"
 #include "main_editor.h"
-#include "object_editor.h"
+#include "entity_editor.h"
 #include "renderable_editor.h"
 #include "splash_screen.h"
 
@@ -193,5 +193,5 @@ void dbg_hand_image_to_display ( void *ptr, int w, int h )
         g_comm_data.tmp_image = ptr;
         g_comm_data.tmp_image_w = w;
         g_comm_data.tmp_image_h = h;
-        main_editor_draw_tmp_image ();
+//        main_editor_draw_tmp_image ();
 }

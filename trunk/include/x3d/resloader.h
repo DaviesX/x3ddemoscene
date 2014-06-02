@@ -14,7 +14,8 @@ enum RES_IDR {
         RES_KINEMATIC_SHAPE,
         RES_LOGICAL,
         RES_BONDER,
-        RES_DLPROGRAM
+        RES_DLPROGRAM,
+        RES_BINARY_BLOB
 };
 
 enum RES_STATE {

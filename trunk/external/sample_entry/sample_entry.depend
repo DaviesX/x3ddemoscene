@@ -112,9 +112,10 @@
 1399329302 /home/davis/x3drenderlib-code/trunk/lib/memory.h
 	<x3d/common.h>
 
-1400134349 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
+1401652296 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
 	<math/math.h>
 	<algorithm.h>
+	<serializer.h>
 	<x3d/renderer.h>
 
 1397619189 /home/davis/x3drenderlib-code/trunk/lib/math/math.h
@@ -132,7 +133,7 @@
 
 1393902016 /home/davis/x3drenderlib-code/trunk/lib/math/quat.h
 
-1393902015 /home/davis/x3drenderlib-code/trunk/lib/math/geometry.h
+1400975336 /home/davis/x3drenderlib-code/trunk/lib/math/geometry.h
 
 1388682850 /home/davis/x3drenderlib-code/trunk/lib/math/decimal.h
 
@@ -145,7 +146,7 @@
 
 1397763686 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
 
-1400128922 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1400976502 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<algorithm.h>
@@ -155,5 +156,8 @@
 	<memory.h>
 
 1399871498 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.h
+	<x3d/common.h>
+
+1400987391 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
 	<x3d/common.h>
 

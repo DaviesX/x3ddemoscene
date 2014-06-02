@@ -173,6 +173,10 @@ struct render_out *renderer_get_render_out ( struct renderer *rend )
         return nullptr;
 }
 
+void renderer_set_pipeline ( enum RENDER_PIPE_IDR pipeline, struct renderer *rend )
+{
+}
+
 /** \brief set the type of hardware will be used by the renderer.
  * \param spec enum RENDER_SPEC_IDR [in] specification of the hardware.
  * \param rend struct renderer* [out] renderer to be specified.

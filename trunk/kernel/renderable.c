@@ -18,8 +18,8 @@ void free_renderable_context ( struct rda_context *ctx )
 
 /* renderable */
 struct renderable *create_renderable (
-        char *name, enum RENDERABLE_IDR type, float importance, bool is_movable,
-        struct material *mtl, struct shader *sha )
+        char *name, enum RENDERABLE_IDR type, float importance,
+        bool is_movable, struct material *mtl )
 {
         return nullptr;
 }
@@ -40,7 +40,18 @@ void rda_set_material ( struct material *mtl, struct renderable *rda )
 {
 }
 
-void rda_set_shader ( struct shader *sha, struct renderable *rda )
+char *rda_get_name ( struct renderable *rda )
+{
+        return rda->name;
+}
+
+struct rda_instance *rda_instance_create ( struct matrix4x4 *transform,
+                                           struct renderable *rda )
+{
+        return nullptr;
+}
+
+void rda_instance_free ( struct rda_instance *inst )
 {
 }
 
@@ -104,15 +115,9 @@ int *rda_geometry_get_index ( int *nindex, struct rda_geometry *geo )
         return geo->index;
 }
 
-struct matrix4x4 *rda_geometry_get_transform ( int *ntransform, struct rda_geometry *geo )
-{
-        *ntransform = geo->ntransform;
-        return geo->transform;
-}
-
 /* aggregate */
-void ragg_add_geometry (
-        struct rda_geometry *geo, enum RAG_IDR type, struct rda_aggregate *agg )
+void ragg_add_renderable (
+        struct rda_instance *inst, enum RAG_IDR type, struct rda_aggregate *agg )
 {
 }
 
@@ -128,8 +133,8 @@ void rda_context_post_request (
 {
 }
 
-struct renderable *rda_context_get_i ( int i, enum RENDERABLE_IDR type,
-                                       struct rda_context *ctx )
+struct rda_instance *rda_context_get_i ( int i, enum RENDERABLE_IDR type,
+                                         struct rda_context *ctx )
 {
-        return (struct renderable *) &ctx->rda[type][i*c_sizeof_renderable[type]];
+        return ctx->rda[type][i];
 };

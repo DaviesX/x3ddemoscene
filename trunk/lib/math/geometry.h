@@ -160,6 +160,8 @@ void build_line3d ( struct point3d *p0, struct point3d *p1, struct line3d *l );
 void build_line3d_t ( struct point3d *p0, struct point3d *p1, float t0, float t1, struct line3d *l );
 void build_plane3d ( struct vector3d *n, struct point3d *p, struct plane3d *plane );
 void build_plane3d_n ( struct vector3d *n, struct point3d *p, struct plane3d *plane );
+void build_rectangle_2d ( float x0, float x1, float y0, float y1, struct rectangle2d *rect );
+void build_irectangle_2d ( int x0, int x1, int y0, int y1, struct irectangle2d *rect );
 
 void point_on_line2d ( struct line2d *l, float t, struct point2d *p );
 void point_on_line3d ( struct line3d *l, float t, struct point3d *p );

@@ -8,37 +8,29 @@
 
 
 struct main_editor {
-        GtkWidget *curr_window;
-        GtkWidget *curr_draw_area;
-        GtkWidget *edit_window;
-        GtkWidget *pure_window;
-        GtkWidget *pure_draw_area;
-        GtkWidget *draw_area;
-        GtkWidget *element_tree_view;
-        GtkWidget *new_assist_dialog;
+        GtkWidget *window;
+        GtkWidget *draw_region;
+        struct project_mgr *proj_mgr;
+        struct entity_mgr *ent_mgr;
+        struct entity_prop *ent_prop;
+        struct assist_dialog *assist_diag;
 
-        uuid_t editor_id;
+        gulong logo_draw_signal;
+
         struct editor *editor;
-        bool draw_signal_busy;
-        int logo_draw_signal;
-        int tmp_draw_signal;
+        uuid_t editor_id;
 };
 
 static struct main_editor g_main_edit;
 
-static void display_logo_image ( GtkWidget *draw_area, bool to_display );
-static void switch_to_edit ( void );
-static void switch_to_pure ( void );
+static void idle_switch_callback ( bool is_idle, void *handle, void *info );
+static void window_reize_callback ( int width, int height, bool is_fullscreen,
+                                    void *handle, void *info );
+static gboolean display_logo_callback ( GtkWidget *draw_region,
+                                        cairo_t *cairo, gpointer data );
 static gboolean main_editor_dispatch ( gpointer user_data );
 
 
-static void switch_to_edit ( void )
-{
-}
-
-static void switch_to_pure ( void )
-{
-}
 
 static gboolean display_logo_callback ( GtkWidget *draw_region,
                                         cairo_t *cairo, gpointer data )
@@ -51,9 +43,10 @@ static gboolean display_logo_callback ( GtkWidget *draw_region,
         return 0;
 }
 
-static void display_logo_image ( GtkWidget *draw_area, bool to_display )
+static void idle_switch_callback ( bool is_idle, void *handle, void *info )
 {
-        if ( to_display && !g_main_edit.draw_signal_busy ) {
+        GtkWidget *draw_area = handle;
+        if ( is_idle ) {
                 g_main_edit.logo_draw_signal =
                         g_signal_connect ( draw_area, "draw",
                                            G_CALLBACK ( display_logo_callback ), nullptr );
@@ -61,6 +54,11 @@ static void display_logo_image ( GtkWidget *draw_area, bool to_display )
                 g_signal_handler_disconnect ( draw_area,
                                               g_main_edit.logo_draw_signal );
         }
+}
+
+static void window_reize_callback ( int width, int height, bool is_fullscreen,
+                                    void *handle, void *info )
+{
 }
 
 /* temporary functions */
@@ -78,82 +76,55 @@ static gboolean display_tmp_image_callback ( GtkWidget *draw_region,
         return 0;
 }
 
-static void display_tmp_image ( GtkWidget *draw_area, bool to_display )
-{
-        if ( to_display ) {
-                g_main_edit.tmp_draw_signal = g_signal_connect (
-                                                      draw_area, "draw",
-                                                      G_CALLBACK ( display_tmp_image_callback ), nullptr );
-                g_main_edit.draw_signal_busy = true;
-        } else {
-                g_signal_handler_disconnect ( draw_area,
-                                              g_main_edit.tmp_draw_signal );
-                g_main_edit.draw_signal_busy = false;
-        }
-}
-
-void main_editor_draw_tmp_image ( void )
-{
-        display_logo_image ( g_main_edit.curr_draw_area, false );
-        display_tmp_image ( g_main_edit.curr_draw_area, true );
-}
-
 bool main_editor_load ( char *glade_path )
 {
         memset ( &g_main_edit, 0, sizeof g_main_edit );
 
-        char file[256];
-        strcpy ( file, glade_path );
-        strcat ( file, "main_editor_window.glade" );
-        GtkBuilder *builder = builder_load ( file );
-        if ( builder == nullptr ) {
-                return false;
-        }
-
-        g_main_edit.edit_window =
-                GTK_WIDGET(gtk_builder_get_object ( builder, "main-editor" ));
-        if ( !g_main_edit.edit_window ) {
-                log_severe_err_dbg ( "cannot retrieve main-editor window" );
-                return false;
-        }
-        g_main_edit.draw_area =
-                GTK_WIDGET(gtk_builder_get_object ( builder, "draw-area" ));
-        if ( !g_main_edit.draw_area ) {
-                log_severe_err_dbg ( "cannot retrieve draw-area widget" );
-                return false;
-        }
-        g_main_edit.pure_window =
-                GTK_WIDGET(gtk_builder_get_object ( builder, "pure-window" ));
-        if ( !g_main_edit.pure_window ) {
-                log_severe_err_dbg ( "cannot retrieve pure-window" );
-                return false;
-        }
-        g_main_edit.pure_draw_area =
-                GTK_WIDGET(gtk_builder_get_object ( builder, "pure-draw-area" ));
-        if ( !g_main_edit.pure_draw_area ) {
-                log_severe_err_dbg ( "cannot retrieve pure-draw-area widget" );
-                return false;
-        }
-        g_main_edit.element_tree_view =
-                GTK_WIDGET(gtk_builder_get_object ( builder, "element-tree-view" ));
-        if ( !g_main_edit.element_tree_view ) {
-                log_severe_err_dbg ( "cannot retrieve element-tree-view widget" );
-                return false;
-        }
-        g_main_edit.new_assist_dialog =
-                GTK_WIDGET(gtk_builder_get_object ( builder, "new-assist-dialog" ));
-        if ( !g_main_edit.new_assist_dialog ) {
-                log_severe_err_dbg ( "cannot retrieve new-assist-dialog" );
-                return false;
-        }
         /* set current control window */
+        char file[256];
+        GtkBuilder *builder = nullptr;
+
         if ( g_comm_data.ed_mode == X_EDITOR_DEMO_MODE ) {
 demo_mode:
-                g_main_edit.curr_window = g_main_edit.edit_window;
-                g_main_edit.curr_draw_area = g_main_edit.draw_area;
+                strcpy ( file, glade_path );
+                strcat ( file, "demo_player.glade" );
+
+                GtkBuilder *builder = nullptr;
+                if ( !(builder = builder_load ( file )) )
+                        return false;
+
+                g_main_edit.window =
+                        (GtkWidget *) gtk_builder_get_object ( builder, "demo-window" );
+                if ( !g_main_edit.window ) {
+                        log_severe_err_dbg ( "cannot retrieve demo window" );
+                        return false;
+                }
+                g_main_edit.draw_region =
+                        (GtkWidget *) gtk_builder_get_object ( builder, "demo-render-region" );
+                if ( !g_main_edit.draw_region ) {
+                        log_severe_err_dbg ( "cannot retrieve demo render region widget" );
+                        return false;
+                }
         } else if ( g_comm_data.ed_mode == X_EDITOR_EDIT_MODE ) {
-                g_main_edit.curr_window = g_main_edit.pure_window;
-                g_main_edit.curr_draw_area = g_main_edit.pure_draw_area;
+                strcpy ( file, glade_path );
+                strcat ( file, "main-editor-window.glade" );
+
+
+                if ( !(builder = builder_load ( file )) )
+                        return false;
+
+                g_main_edit.window =
+                        (GtkWidget *) gtk_builder_get_object ( builder, "main-editor-window" );
+                if ( !g_main_edit.window ) {
+                        log_severe_err_dbg ( "cannot retrieve main-editor window" );
+                        return false;
+                }
+                g_main_edit.draw_region =
+                        (GtkWidget *) gtk_builder_get_object ( builder, "render-region" );
+                if ( !g_main_edit.draw_region ) {
+                        log_severe_err_dbg ( "cannot retrieve draw-area widget" );
+                        return false;
+                }
         } else {
                 log_mild_err_dbg ( "mode is not specified corrected. selected mode: %d. running into demo mode...", g_comm_data.ed_mode );
                 goto demo_mode;
@@ -170,33 +141,30 @@ demo_mode:
         color.red   = 0X0;
         color.blue  = 0X0;
         color.green = 0X0;
-        gtk_widget_modify_bg ( g_main_edit.curr_draw_area, GTK_STATE_NORMAL, &color );
+        gtk_widget_modify_bg ( g_main_edit.draw_region, GTK_STATE_NORMAL, &color );
 
         /* show window */
-        gtk_widget_show_all ( g_main_edit.curr_window );
+        gtk_widget_show_all ( g_main_edit.window );
 
-        /* create editor and upload render region */
+        /* create editor */
         g_main_edit.editor_id = editor_add ( "main-window-editor" );
         g_main_edit.editor = editor_get_byid ( g_main_edit.editor_id );
+        /* create render region */
         int x, y;
         int width, height;
-        widget_get_size ( g_main_edit.curr_window, g_main_edit.curr_draw_area,
+        widget_get_size ( g_main_edit.window, g_main_edit.draw_region,
                           &x, &y, &width, &height );
-        struct activex_render_region *render_region = create_ax_render_region (
-                                PLATFORM_GTK, g_main_edit.curr_draw_area, x, y, width, height );
+        struct ax_render_region *render_region = create_ax_render_region (
+                                PLATFORM_GTK, g_main_edit.draw_region, x, y, width, height );
+        ax_render_region_bind_signal ( "notify_idle", (f_Generic) idle_switch_callback,
+                                       nullptr, render_region );
         editor_add_activex ( "main-window-render-region", render_region, g_main_edit.editor );
-
-        display_logo_image ( g_main_edit.curr_draw_area, true );
         return true;
-}
-
-void main_editor_set ( int state )
-{
 }
 
 GtkWidget *main_editor_get_region ( void )
 {
-        return g_main_edit.curr_draw_area;
+        return g_main_edit.draw_region;
 }
 
 static gboolean main_editor_dispatch ( gpointer user_data )
