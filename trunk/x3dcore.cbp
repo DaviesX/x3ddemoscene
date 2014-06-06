@@ -45,38 +45,6 @@
 		<Linker>
 			<Add option="`pkg-config gtk+-3.0 --libs`" />
 		</Linker>
-		<Unit filename="drivers/editor/dynamics_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/dynamics_editor.h" />
-		<Unit filename="drivers/editor/entity_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/entity_editor.h" />
-		<Unit filename="drivers/editor/gui.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/gui.h" />
-		<Unit filename="drivers/editor/main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/main.h" />
-		<Unit filename="drivers/editor/main_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/main_editor.h" />
-		<Unit filename="drivers/editor/render_procedure.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/render_procedure.h" />
-		<Unit filename="drivers/editor/renderable_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/renderable_editor.h" />
-		<Unit filename="drivers/editor/splash_screen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="drivers/editor/splash_screen.h" />
 		<Unit filename="drivers/loader/fbxmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -308,7 +276,6 @@
 		<Unit filename="drivers/renderer/shader/shader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="include/editor/editor.h" />
 		<Unit filename="include/loader/modelloader.h" />
 		<Unit filename="include/loader/sceneloader.h" />
 		<Unit filename="include/renderer/geocache.h">
@@ -331,16 +298,13 @@
 		<Unit filename="include/x3d/common.h" />
 		<Unit filename="include/x3d/debug.h" />
 		<Unit filename="include/x3d/dynamics.h" />
-		<Unit filename="include/x3d/editor.h">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="include/x3d/init.h" />
 		<Unit filename="include/x3d/modelentity.h" />
 		<Unit filename="include/x3d/renderable.h" />
 		<Unit filename="include/x3d/renderer.h" />
 		<Unit filename="include/x3d/resloader.h" />
-		<Unit filename="include/x3d/scene.h" />
 		<Unit filename="include/x3d/symbol_lib.h" />
+		<Unit filename="include/x3d/world.h" />
 		<Unit filename="kernel/camera.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -348,27 +312,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/dynamics.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/editassetlist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/editentityproperty.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/editprojectmgr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/editrenderconf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/editrenderregion.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/editviewcontrol.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/init.c">
@@ -389,7 +332,7 @@
 		<Unit filename="kernel/resloader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="kernel/scene.c">
+		<Unit filename="kernel/world.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/algorithm.c">

@@ -42,13 +42,61 @@
 			<Add directory="../include" />
 			<Add directory="../lib" />
 		</Compiler>
+		<Unit filename="../include/usr/usr_cinematicprogs.h" />
 		<Unit filename="../include/usr/usr_editor.h" />
 		<Unit filename="../include/usr/usr_entityprogs.h" />
 		<Unit filename="../include/usr/usr_missionprogs.h" />
-		<Unit filename="test.c">
+		<Unit filename="editor/common.h" />
+		<Unit filename="editor/dynamics_editor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="usr_editor.c">
+		<Unit filename="editor/dynamics_editor.h" />
+		<Unit filename="editor/editassetlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/editentityproperty.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/editprojectmgr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/editrenderconf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/editrenderregion.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/editviewcontrol.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/entity_editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/entity_editor.h" />
+		<Unit filename="editor/gui.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/gui.h" />
+		<Unit filename="editor/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/main.h" />
+		<Unit filename="editor/main_editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/main_editor.h" />
+		<Unit filename="editor/renderable_editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/renderable_editor.h" />
+		<Unit filename="editor/splash_screen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/splash_screen.h" />
+		<Unit filename="usr_cinematicprogs.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="usr_entityprogs.c">
