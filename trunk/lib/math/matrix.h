@@ -104,37 +104,12 @@ struct matrix3x2 {
 /*
  * Constants
  */
-// constants of identity matrix
-static const struct matrix4x4 IdentityMatrix4x4 = {
-        .m[0] = {1, 0, 0, 0},
-        .m[1] = {0, 1, 0, 0},
-        .m[2] = {0, 0, 1, 0},
-        .m[3] = {0, 0, 0, 1}
-};
 
-static const struct matrix4x3 IdentityMatrix4x3 = {
-        .m[0] = {1, 0, 0},
-        .m[1] = {0, 1, 0},
-        .m[2] = {0, 0, 1},
-        .m[3] = {0, 0, 0}
-};
-
-static const struct matrix3x3 IdentityMatrix3x3 = {
-        .m[0] = {1, 0, 0},
-        .m[1] = {0, 1, 0},
-        .m[2] = {0, 0, 1}
-};
-
-static const struct matrix3x2 IdentityMatrix3x2 = {
-        .m[0] = {1, 0},
-        .m[1] = {0, 1},
-        .m[2] = {0, 0}
-};
-
-static const struct matrix2x2 IdentityMatrix2x2 = {
-        .m[0] = {1, 0},
-        .m[1] = {0, 1}
-};
+extern const struct matrix4x4 IdentityMatrix4x4;
+extern const struct matrix4x3 IdentityMatrix4x3;
+extern const struct matrix3x3 IdentityMatrix3x3;
+extern const struct matrix3x2 IdentityMatrix3x2;
+extern const struct matrix2x2 IdentityMatrix2x2;
 
 
 /*

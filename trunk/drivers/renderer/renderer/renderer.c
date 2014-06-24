@@ -34,8 +34,7 @@ void init_irenderer (
         rend->idr = idr;
         rend->thr_state = thr_state;
         rend->spec = spec;
-        dbg_renderer_add_all ();
-        dbg_shader_add_all ();
+        init_shader_library ();
 }
 
 void free_irenderer ( void *_rend )

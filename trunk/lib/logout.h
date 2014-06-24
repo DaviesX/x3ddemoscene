@@ -16,13 +16,13 @@
  * Functions' declaration
  */
 
-int init_log_output ( int to_terminate );
+bool init_log_output ( int to_terminate );
 void free_log_output ( void );
 
-#define log_normal( _message, ... )		(call_log_normal ( __func__, _message, ##__VA_ARGS__ ))
-#define log_mild_err( _message, ... )		(call_log_mild_err ( __func__, _message, ##__VA_ARGS__ ))
-#define log_severe_err( _message, ... )		(call_log_severe_err ( __func__, _message, ##__VA_ARGS__ ))
-#define log_critical_err( _message, ... )	(call_log_critical_err ( __func__, _message, ##__VA_ARGS__ ))
+#define log_normal( _message, ... )		call_log_normal ( __func__, _message, ##__VA_ARGS__ )
+#define log_mild_err( _message, ... )		call_log_mild_err ( __func__, _message, ##__VA_ARGS__ )
+#define log_severe_err( _message, ... )		call_log_severe_err ( __func__, _message, ##__VA_ARGS__ )
+#define log_critical_err( _message, ... )	call_log_critical_err ( __func__, _message, ##__VA_ARGS__ )
 
 void call_log_normal ( const char *functionName, const char *message, ... );
 void call_log_mild_err ( const char *functionName, const char *errorMessage, ... );

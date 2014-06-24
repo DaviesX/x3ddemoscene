@@ -7,11 +7,12 @@
 
 #include <math/math.h>
 #include <staging.h>
+#include <symlib.h>
 #include <algorithm.h>
 
 
 /* The following rendering method is expected to engage in the renderer */
-/** \brief availble renderer type
+/** \brief available renderer type
  */
 enum RENDERER_IDR {
         RENDERER_UNDETERMINATE,         /**< a memory block with undefined renderer */
@@ -37,6 +38,54 @@ enum RENDERER_THREAD_STATE_IDR {
         RENDERER_THREAD_MULTIPLE = 0X4,
 };
 
+enum RENDER_SPEC_IDR {
+        RENDER_SPEC_SW_BUILTIN,
+        RENDER_SPEC_HW_OPENGL,
+        RENDER_SPEC_HW_DIRECTX
+};
+
+enum RENDER_ENVIRONMENT {
+        RENDER_COMMAND_SPEC,
+        RENDER_COMMAND_PROBE,
+        RENDER_COMMAND_RENDER_OUT,
+        RENDER_COMMAND_THREAD,
+        RENDER_COMMAND_ANTIALIAS,
+        RENDER_COMMAND_FILTERING,
+};
+
+struct lcrenderer;
+struct renderer;
+struct rda_context;
+struct probe;
+struct render_out;
+
+struct render_node;
+
+
+/*
+ * structures
+ */
+
+enum RENDER_NODE_IDR {
+        RENDER_LAYER,
+        RENDER_RADIANCE
+};
+
+struct render_node {
+        char*                   name;
+        int                     pos_id;
+        enum RENDER_NODE_IDR    type;
+        struct render_node*     input;
+        int                     n_input;
+        struct render_node*     output;
+        int                     n_output;
+        void*                   lc_data;
+};
+
+struct render_layer {
+        struct render_node      _node;
+};
+
 enum RENDER_PIPE_IDR {
         RENDER_PIPE_FORWARD,
         RENDER_PIPE_FORWARD_PLUS,
@@ -45,67 +94,70 @@ enum RENDER_PIPE_IDR {
         RENDER_PIPE_METROPOLIS
 };
 
-enum RENDER_SPEC_IDR {
-        RENDER_SPEC_SW_BUILTIN,
-        RENDER_SPEC_HW_OPENGL,
-        RENDER_SPEC_HW_DIRECTX
-};
-
-enum DRAW_MODE_IDR {
-        DRAW_MODE_WIREFRAME,
-        DRAW_MODE_SOLID
-};
-
 enum LIGHT_MODEL_IDR {
         LIGHT_MODE_DIRECT     = 0X1,
         LIGHT_MODE_SHADOW     = 0X2,
-        LIGHT_MODE_INDIRECT0  = 0X4,
-        LIGHT_MODE_INDIRECT1  = 0X8,
-        LIGHT_MODE_INDIRECT2  = 0X10
+        LIGHT_MODE_LIGHTMAP   = 0X4,
+        LIGHT_MODE_SH_PROBE   = 0X8,
+        LIGHT_MODE_SVO        = 0X10
 };
 
-enum RENDER_COMMAND {
-        RENDER_COMMAND_PIPELINE,
-        RENDER_COMMAND_SPEC,
-        RENDER_COMMAND_DRAW_MODE,
-        RENDER_COMMAND_RENDER_REGION,
-        RENDER_COMMAND_RENDERABLE_CONTEXT,
-        RENDER_COMMAND_CROP,
-        RENDER_COMMAND_RENDER_LAYER,
-        RENDER_COMMAND_THREAD,
-        RENDER_COMMAND_LIGHTING,
-        RENDER_COMMAND_ANTIALIAS,
-        RENDER_COMMAND_FILTERING,
-        RENDER_COMMAND_HDR,
-        RENDER_COMMAND_LEN_FLARE,
-        RENDER_COMMAND_DOF
+enum GEOMETRY_PIPE_IDR {
+        GEOMETRY_PIPE_WIREFRAME,
+        GEOMETRY_PIPE_SOLID
 };
 
-struct lcrenderer;
-struct renderer;
-struct renderable_ctx;
-struct probe;
-struct render_out;
-
-
-/*
- * structures
- */
-struct rend_coomand {
-        enum RENDER_COMMAND type;
-        struct alg_named_params params;
+struct render_radiance {
+        struct render_node      _node;
+        enum RENDER_PIPE_IDR    pipe;
+        enum LIGHT_MODEL_IDR    light_model;
+        enum GEOMETRY_PIPE_IDR  geo_pipe;
+        struct rda_context*     rda_list;
 };
 
-struct renderer_ops {
-        void (*init) ( void );
-        struct lcrenderer *(*create) ( enum RENDERER_IDR method );
-        void (*free) ( struct lcrenderer *r );
-        void (*update) ( struct alg_llist *command, struct lcrenderer *r );
-        void (*render) ( struct probe *probe, struct render_out *ro, struct lcrenderer *r );
+struct render_post_ao {
+        struct render_node      _node;
 };
 
-struct render_out_ops {
-        void (*output) ( struct render_out *ro );
+struct render_filmic_hdr {
+        struct render_node      _node;
+        const float     A;// = 0.15f;
+        const float     B;// = 0.50f;
+        const float     C;// = 0.10f;
+        const float     D;// = 0.20f;
+        const float     E;// = 0.02f;
+        const float     F;// = 0.30f;
+        const float     W;// = 11.2f;
+        float           key;
+        float           exp;
+};
+
+struct render_post_aa {
+};
+
+struct render_dof {
+};
+
+struct render_color_grading {
+};
+
+struct render_mask {
+};
+
+struct render_blending {
+};
+
+struct render_gamma {
+};
+
+struct render_tree {
+        struct render_operand*                  output;
+        d_alg_llist(render_operand)             nodes;
+        d_alg_list(render_operand)              env;
+};
+
+struct render_bytecode {
+        char*   instr;
 };
 
 /*
@@ -115,36 +167,42 @@ struct render_out_ops {
 void renderer_kernel_init ( void );
 void renderer_kernel_free ( void );
 
-/* registrations */
-void renderer_import_renderer ( struct renderer_ops *ops );
-void renderer_import_render_out ( struct render_out_ops *ops );
+/* ABIs */
+typedef void (*f_LCRenderer_Init) ( void );
+typedef struct lcrenderer* (*f_LCRenderer_Create) ( enum RENDERER_IDR method );
+typedef void (*f_LCRenderer_Free) ( struct lcrenderer *rend );
+typedef void (*f_LCRenderer_Update) ( struct render_bytecode *bytecode,
+                                      struct lcrenderer *rend );
+typedef void (*f_LCRenderer_Render) ( struct lcrenderer *rend );
+typedef void (*f_LCRenderer_Output) ( struct lcrenderer *rend );
+
+bool renderer_import ( struct symbol_set *symbols );
 
 /* renderer's */
 __dlexport struct renderer *create_renderer ( enum RENDERER_IDR type );
 __dlexport void free_renderer ( struct renderer *rend );
-
-__dlexport void renderer_bind_renderable_context ( void *ctx, struct renderer *rend );
-__dlexport struct probe *renderer_get_probe ( struct renderer *rend );
-__dlexport struct render_out *renderer_get_render_out ( struct renderer *rend );
-
-__dlexport void renderer_set_pipeline ( enum RENDER_PIPE_IDR pipeline, struct renderer *rend );
-__dlexport void renderer_set_spec ( enum RENDER_SPEC_IDR spec, struct renderer *rend );
-__dlexport void renderer_set_draw_mode ( enum DRAW_MODE_IDR draw_mode, struct renderer *rend );
-__dlexport void renderer_set_crop (
-        bool to_crop, float x0, float x1, float y0, float y1, struct renderer *rend );
-__dlexport void renderer_new_render_layer ( int importance, float alpha, struct renderer *rend );
-__dlexport void renderer_set_thread ( enum RENDERER_THREAD_STATE_IDR state, struct renderer *rend );
-__dlexport void renderer_set_light_model ( enum LIGHT_MODEL_IDR model, struct renderer *rend );
-__dlexport void renderer_set_antialias ( float level, struct renderer *rend );
-__dlexport void renderer_set_filter ( float level, struct renderer *rend );
-__dlexport void renderer_set_hdr ( bool to_apply, struct renderer *rend );
-__dlexport void renderer_set_len_flare ( bool to_apply, struct renderer *rend );
-__dlexport void renderer_set_dof ( bool to_apply, struct renderer *rend );
 __dlexport void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend );
 
 __dlexport void renderer_update ( struct renderer *rend );
 __dlexport void renderer_render ( struct renderer *rend );
 __dlexport void renderer_commit ( struct renderer *rend );
+
+__dlexport void renderer_renderscript ( const char* script, struct renderer *rend );
+__dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer *rend );
+
+__dlexport struct render_operand* render_tree_create ( struct render_tree *tree );
+__dlexport struct render_operand* render_tree_find ( int pos_id, struct render_tree *tree );
+__dlexport int render_tree_create_child ( struct render_operand* parent,
+                                          struct render_operand* child,
+                                          struct render_tree *tree );
+__dlexport void render_tree_create_environment ( struct render_operand* env,
+                                                 struct render_tree* tree );
+__dlexport int render_tree_first ( struct render_tree *tree );
+__dlexport int render_tree_next ( int pos_id, struct render_tree *tree );
+__dlexport struct alg_list* render_tree_environment ( struct render_tree *tree );
+
+__dlexport const char** renderer_query_renderer_names ( int* n );
+__dlexport const char** renderer_query_param_names ( const char* renderer, int* n );
 
 
 #endif // RENDERER_H_INCLUDED

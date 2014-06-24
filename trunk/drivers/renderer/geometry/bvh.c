@@ -139,8 +139,8 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
         struct bound_data *bounds = alloc_fix ( sizeof ( *bounds ), alg_list_n ( prim_list ) );
         int i;
         for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
-                struct primitive *prim;
-                alg_list_i ( prim_list, i, &prim );
+                struct primitive* prim =
+                        &((struct primitive*) alg_array ( list, prim_list ))[i];
                 primitive_get_bound ( prim, &bounds[i].bound );
                 get_centroid ( &bounds[i].bound, &bounds[i].centroid );
                 bounds[i].prim = prim;
@@ -393,7 +393,7 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
         end_tree_traversal ( TT0 );
 
         for ( i = 0; i < alg_list_n ( prim_list ); i ++ ) {
-                alg_list_add ( bounds[i].prim, new_prim_list );
+                alg_push_back ( list, bounds[i].prim, new_prim_list );
         }
         free_fix ( bounds );
         return tree;

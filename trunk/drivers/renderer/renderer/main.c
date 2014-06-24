@@ -7,22 +7,6 @@
 #include "main.h"
 
 
-static void dbg_vertprocessor_add_all ( void );
-static void dbg_rasterizer_add_all ( void );
-static void dbg_rtcontext_add_all ( void );
-
-/* entry */
-void dbg_renderer_add_all ( void )
-{
-        static bool first_time = true;
-        if ( first_time ) {
-                dbg_vertprocessor_add_all ();
-                dbg_rasterizer_add_all ();
-                dbg_rtcontext_add_all ();
-                first_time = false;
-        }
-}
-
 /* utility functions */
 static void print_point4d ( struct point4d *p )
 {
@@ -49,18 +33,6 @@ static void print_triangle4d ( struct point4d *p0, struct point4d *p1, struct po
 #include "rasterization.h"
 
 static void vert_post_process ( struct alg_named_params *global_params );
-
-static void dbg_vertprocessor_add_all ( void )
-{
-        vertprocessor_symbol_lib ();
-        struct unit_test ut;
-        ut.test_name = "vert_post_process";
-        ut.init = nullptr;
-        ut.test = vert_post_process;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-}
 
 static void vert_post_process ( struct alg_named_params *global_params )
 {
@@ -143,7 +115,6 @@ static void dbg_rasterizer_add_all ( void )
 /* rtcontext's */
 #include "rasterization.h"
 #include <math/math.h>
-#include <editor/editor.h>
 #include "vibuffer.h"
 #include "colorspectrum.h"
 #include "surface.h"
@@ -154,17 +125,6 @@ static void dbg_rasterizer_add_all ( void )
 static void simple_rt_pipeline_init ( struct alg_named_params *global_params );
 static void simple_rt_pipeline ( struct alg_named_params *global_params );
 static void simple_rt_pipeline_free ( struct alg_named_params *global_params );
-
-static void dbg_rtcontext_add_all ( void )
-{
-        struct unit_test ut;
-        ut.test_name = "simple_rt_pipeline";
-        ut.init = simple_rt_pipeline_init;
-        ut.test = simple_rt_pipeline;
-        ut.free = simple_rt_pipeline_free;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-}
 
 static struct rtcontext g_rtctx;
 static struct matrix4x4 g_view, g_proj;
@@ -286,7 +246,8 @@ static void simple_rt_pipeline_init ( struct alg_named_params *global_params )
         rtcontext_finalize_pipeline ( &g_rtctx );
 
         init_render_out ( OUT_IDR_SCREEN, OUT_GTK_IMPL, &g_ro );
-        void *widget = dbg_get_render_region ();
+        void *widget = nullptr;
+//        void *widget = dbg_get_render_region ();
         ro_create_screen ( widget, 0, 0, 800, 600, OUT_SCREEN_ARGB32, &g_ro );
 }
 
@@ -299,7 +260,7 @@ static void simple_rt_pipeline ( struct alg_named_params *global_params )
         rasterization_run_pipeline ( &g_rtctx, false );
 //        render_out_retrieve ( surface_get_addr ( g_color_surf ), 4, &g_ro );
 //        render_out_run ( &g_ro );
-        dbg_hand_image_to_display ( surface_get_addr ( g_color_surf ), 800, 600 );
+//        dbg_hand_image_to_display ( surface_get_addr ( g_color_surf ), 800, 600 );
 }
 
 #if 0

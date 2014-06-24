@@ -28,101 +28,6 @@ static void hash_container_p ( struct alg_named_params *param );
 
 static void llist_container_c ( struct alg_named_params *param );
 
-void dbg_lib_add_all ( void )
-{
-        struct unit_test ut;
-        ut.test_name = "variable_memory_test0";
-        ut.init = nullptr;
-        ut.test = variable_memory_test0;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "variable_memory_test1";
-        ut.init = nullptr;
-        ut.test = variable_memory_test0;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "error_report";
-        ut.init = nullptr;
-        ut.test = error_report;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "quick_sort_c";
-        ut.init = nullptr;
-        ut.test = quick_sort_c;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "quick_sort_p";
-        ut.init = nullptr;
-        ut.test = quick_sort_p;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "split_by_midvalue_c";
-        ut.init = nullptr;
-        ut.test = split_by_midvalue_c;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "split_by_midvalue_p";
-        ut.init = nullptr;
-        ut.test = split_by_midvalue_p;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "split_by_index_c";
-        ut.init = nullptr;
-        ut.test = split_by_index_c;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "split_by_index_p";
-        ut.init = nullptr;
-        ut.test = split_by_index_p;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "ptr_list_c";
-        ut.init = nullptr;
-        ut.test = ptr_list_c;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "hash_container_c";
-        ut.init = nullptr;
-        ut.test = hash_container_c;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "hash_container_p";
-        ut.init = nullptr;
-        ut.test = hash_container_p;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-
-        ut.test_name = "llist_container_c";
-        ut.init = nullptr;
-        ut.test = llist_container_c;
-        ut.free = nullptr;
-        ut.pos = DBG_KERNEL_START;
-        kernel_unit_test_add ( &ut );
-}
-
 void variable_memory_test0 ( struct alg_named_params *param )
 {
         char **str_arr = alloc_var ( sizeof ( char* ), 0 );
@@ -442,8 +347,8 @@ static void hash_container_p ( struct alg_named_params *param )
 static void llist_container_c ( struct alg_named_params *param )
 {
         bool failed = false;
-        struct alg_llist llist;
-        create_alg_llist ( &llist, sizeof (int) );
+        d_alg_llist(int) llist;
+        alg_init ( llist, sizeof (int), 0, &llist );
 
         const int n = 10;
         int array[n];
@@ -453,13 +358,13 @@ static void llist_container_c ( struct alg_named_params *param )
         }
 
         for ( i = 0; i < n; i ++ ) {
-                alg_llist_add ( &array[i], &llist );
+                alg_push_back ( llist, array[i], &llist );
         }
 
-#define cmp_llist( _info, _elm )                (*(_info) == *(_elm))
+#define cmp_llist( _data, _iter )                (_data == alg_access(_iter))
         for ( i = 0; i < n; i ++ ) {
-                int *x;
-                alg_llist_find ( &llist, &array[i], &x, cmp_llist );
+                alg_iter(int) x;
+                alg_find ( llist, array[i], x, cmp_llist, &llist );
                 if ( x != nullptr ) {
                         if ( *x != array[i] ) {
                                 log_normal ( "x != array[i]" );
@@ -471,7 +376,7 @@ static void llist_container_c ( struct alg_named_params *param )
                 }
         }
 #undef cmp_llist
-        free_alg_llist ( &llist );
+        alg_free ( llist, &llist );
         if ( !failed ) {
                 log_normal ( "llist_container_c stage 1 passed" );
         } else {
@@ -479,16 +384,16 @@ static void llist_container_c ( struct alg_named_params *param )
         }
 
         failed = false;
-        create_alg_llist ( &llist, sizeof (int) );
+        alg_init ( llist, sizeof(int), 1, &llist );
         for ( i = 0; i < n; i ++ ) {
-                alg_llist_push ( &array[i], &llist );
+                alg_push_front ( llist, array[i], &llist );
         }
 
         for ( i = 0; i < n; i ++ ) {
-                int *x;
-                alg_llist_pop ( &llist, &x );
+                alg_iter(int) x;
+                alg_last ( llist, x, &llist );
                 if ( x != nullptr ) {
-                        if ( *x != array[n - i - 1] ) {
+                        if ( alg_access(x) != array[n - i - 1] ) {
                                 log_normal ( "x != array[n - i]" );
                                 failed = true;
                         }
@@ -496,8 +401,9 @@ static void llist_container_c ( struct alg_named_params *param )
                         log_normal ( "over popped" );
                         failed = true;
                 }
+                alg_pop_back ( llist, x, &llist );
         }
-        free_alg_llist ( &llist );
+        alg_free ( llist, &llist );
 
         if ( !failed ) {
                 log_normal ( "llist_container_c stage 2 passed" );

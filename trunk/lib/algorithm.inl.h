@@ -1,5 +1,5 @@
-/* algorithm: Some commonly used algorithm which is implemented in the header
- * to avoid function pointer also to take advantage of generic type */
+/* algorithm: Some commonly used algorithm is implemented in the header
+ * to avoid function pointer(indirection) also to take advantage of generic type */
 // #ifndef ALGORITHM_INC_INCLUDED
 // #define ALGORITHM_INC_INCLUDED
 
@@ -499,126 +499,208 @@ struct qsort_part {
 }
 
 /** list containers **/
-#define list_elm( _list, _i )			(&(_list)->list[(_i)*(_list)->elm_size])
-
-#define alg_list_find( _list, _info, _ret_pos, _compare_func )	\
+#define alg_list_find( type, _data, _iter, _cmp, _inst )	\
 {\
-	*(_ret_pos) = -1; \
+	(_iter) = nullptr; \
+	typeof(_iter) _ptr = (_inst)->content; \
 	int _i; \
 	for ( _i = 0; _i < (_list)->num_elm; _i ++ ) { \
-		if ( _compare_func ( (_info), list_elm(_list, _i) ) ) { \
-			*(_ret_pos) = _i; \
+		if ( _cmp ( (_data), &_ptr[_i] ) ) { \
+			(_iter) = &_ptr[_i]; \
 			break; \
 		} \
 	} \
 }
 
-#define alg_list_remove( _list, _info, _compare_func ) \
+#define alg_list_push_back( _data, _inst ) \
 { \
-	int _i; \
-	for ( _i = 0; _i < (_list)->num_elm; _i ++ ) { \
-		if ( _compare_func ( (_info), list_elm(_list, _i) ) ) { \
-			break; \
-		} \
-	} \
-	if ( _i != (_list)->num_elm ) { \
-		if ( (_list)->ops.destroy_callback ) { \
-			(_list)->ops.destroy_callback ( list_elm( _list, _i ) ); \
-		} \
-		(_list)->num_elm --; \
-		memcpy ( &(_list)->list[_i], &(_list)->list[(_list)->num_elm], \
-			(_list)->elm_size ); \
-	} \
+        (_inst)->content = add_var ( (_inst)->content, sizeof (_data) ); \
+        typeof(_data)* _dest = (typeof(_data)*) (_inst)->content + (_inst)->num_elm; \
+        *_dest = (_data); \
+        (_inst)->num_elm ++; \
 }
 
-#define alg_list_n( _list )			((_list)->num_elm)
-#define alg_list_first( _list )			((void *) (_list)->list)
-#define alg_list_next( _list_elm )		((_list_elm) ++)
-#define alg_list_i( _list, _k, _ptr )           (*(_ptr) = &((typeof(*(_ptr))) (_list)->list)[_k])
-#define alg_list_locate( _elm, _list )          ((_elm) - (cast(_elm) (_list)->list))
-
-#define alg_llist_add( _elm, _llist ) \
+#define alg_list_pop_back( _iter, _inst ) \
 { \
-        int _i = (_llist)->icurr; \
-        (_llist)->prev = expand2_var ( (_llist)->prev, (_llist)->num_elm ); \
-        (_llist)->head = (_llist)->prev; \
-        (_llist)->next = expand2_var ( (_llist)->next, (_llist)->num_elm ); \
-        (_llist)->content = expand2_var ( (_llist)->content, (_llist)->num_elm ); \
-        typeof(_elm) _dest = (typeof(_elm)) (_llist)->content + _i; \
-        memcpy ( _dest, _elm, sizeof(*(_elm)) ); \
-        if ( (_llist)->icurr == (_llist)->ilast ) { \
-                (_llist)->next[_i] = ++ (_llist)->ilast; \
-                (_llist)->prev[(_llist)->next[_i]] = _i; \
+        (_inst)->content = dec_var ( (_inst)->content, sizeof *(_iter) ); \
+        (_inst)->num_elm --; \
+}
+
+#define alg_list_n( _inst )             (_inst)->num_elm
+#define alg_list_array( _inst )         (_inst)->content
+#define alg_list_first( _iter, _inst )  ((_iter) = (_inst)->content)
+#define alg_list_next( _iter, _inst )   (++ (_iter))
+#define alg_list_prev( _iter, _inst )   (-- (_iter))
+#define alg_list_last( _iter, _inst )   ((_iter) = &(cast(_iter) (_inst)->content)[(_inst)->num_elm - 1])
+#define alg_list_null( _iter, _inst )   ((_iter) = cast(_iter) (_inst)->content + (_inst)->num_elm)
+
+
+/** linked list containers **/
+#define alg_llist_inject( _data, _iter, _inst ) \
+{ \
+        (_inst)->prev = expand2_var ( (_inst)->prev, (_inst)->num_elm ); \
+        (_inst)->head = (_inst)->prev; \
+        (_inst)->next = expand2_var ( (_inst)->next, (_inst)->num_elm ); \
+        (_inst)->content = expand2_var ( (_inst)->content, (_inst)->num_elm ); \
+\
+        int _i = (_inst)->icurr; \
+        int _j = (_iter) - (typeof(_iter)) (_inst)->content; \
+\
+        typeof(_data)* _dest = (typeof(_data)*) (_inst)->content + _i; \
+        *_dest = (_data);\
+\
+        if ( (_inst)->icurr == (_inst)->ilast ) { \
+                (_inst)->icurr = ++ (_inst)->ilast; \
+                (_inst)->prev[(_inst)->icurr] = (_inst)->prev[_i]; \
+        } else \
+                (_inst)->icurr = (_inst)->next[_i]; \
+        (_inst)->next[(_inst)->prev[_i]] = (_inst)->icurr; \
+\
+        (_inst)->icurr = (_inst)->next[(_inst)->icurr]; \
+        (_inst)->next[(_inst)->prev[_j]] = _i; \
+        (_inst)->prev[_i] = (_inst)->prev[_j]; \
+        (_inst)->next[_i] = _j; \
+        (_inst)->prev[_j] = _i; \
+        (_inst)->num_elm ++; \
+}
+
+#define alg_llist_push_back( _data, _inst ) \
+{ \
+        (_inst)->prev = expand2_var ( (_inst)->prev, (_inst)->num_elm ); \
+        (_inst)->head = (_inst)->prev; \
+        (_inst)->next = expand2_var ( (_inst)->next, (_inst)->num_elm ); \
+        (_inst)->content = expand2_var ( (_inst)->content, (_inst)->num_elm ); \
+\
+        int _i = (_inst)->icurr; \
+        typeof(_data)* _dest = (typeof(_data)*) (_inst)->content + _i; \
+        *(_dest) = (_data); \
+\
+        if ( (_inst)->icurr == (_inst)->ilast ) { \
+                (_inst)->next[_i] = ++ (_inst)->ilast; \
+                (_inst)->prev[(_inst)->next[_i]] = _i; \
         } \
-        (_llist)->icurr = (_llist)->next[_i]; \
-        (_llist)->num_elm ++; \
+        (_inst)->icurr = (_inst)->next[_i]; \
+        (_inst)->num_elm ++; \
 }
 
-#define alg_llist_find( _llist, _info, _elm, _f_Compare ) \
+#define alg_llist_push_front( _data, _inst ) \
 { \
-        *(_elm) = nullptr; \
-        int _curr = (_llist)->head[0]; \
-        typeof(*(_elm)) _ptr = (_llist)->content; \
-        while ( _curr != (_llist)->icurr ) { \
-                if ( _f_Compare ( _info, &_ptr[_curr] ) ) { \
-                        *(_elm) = &_ptr[_curr]; \
+        (_inst)->prev = expand2_var ( (_inst)->prev, (_inst)->num_elm ); \
+        (_inst)->head = (_inst)->prev; \
+        (_inst)->next = expand2_var ( (_inst)->next, (_inst)->num_elm ); \
+        (_inst)->content = expand2_var ( (_inst)->content, (_inst)->num_elm ); \
+\
+        int _i = (_inst)->icurr; \
+        typeof(_data)* _dest = (typeof(_data)*) (_inst)->content + _i; \
+        *_dest = (_data);\
+\
+        if ( (_inst)->icurr == (_inst)->ilast ) { \
+                (_inst)->icurr = ++ (_inst)->ilast; \
+                (_inst)->prev[(_inst)->icurr] = (_inst)->prev[_i]; \
+        } else \
+                (_inst)->icurr = (_inst)->next[_i]; \
+        (_inst)->next[(_inst)->prev[_i]] = (_inst)->icurr; \
+\
+        (_inst)->prev[(_inst)->head[0]] = _i; \
+        (_inst)->prev[_i] = -1; \
+        (_inst)->next[_i] = (_inst)->head[0]; \
+        (_inst)->head[0] = _i; \
+        (_inst)->num_elm ++; \
+}
+
+#define alg_llist_insert( _data, _iter, _cmp, _inst ) \
+{ \
+        (_iter) = nullptr; \
+        int _curr = (_inst)->head[0]; \
+        typeof(_iter) _ptr = (_inst)->content; \
+        while ( _curr != (_inst)->icurr ) { \
+                if ( _cmp ( _data, &_ptr[_curr] ) ) { \
+                        (_iter) = &_ptr[_curr]; \
+                        alg_llist_inject ( _data, _iter, _inst ); \
                         break; \
                 } \
-                _curr = (_llist)->next[_curr]; \
+                _curr = (_inst)->next[_curr]; \
         } \
 }
 
-#define alg_llist_remove_i( _i, _llist ) \
+#define alg_llist_find( _data, _iter, _cmp, _inst ) \
 { \
-        (_llist)->prev[(_llist)->next[(_i)]] = (_llist)->prev[(_i)]; \
-        (_llist)->next[(_llist)->prev[(_i)]] = (_llist)->next[(_i)]; \
-        if ( (_llist)->icurr != (_llist)->ilast ) \
-                (_llist)->prev[(_llist)->next[(_llist)->icurr]] = (_i); \
-        (_llist)->next[(_llist)->icurr] = (_i); \
-        (_llist)->num_elm --; \
-}
-
-#define alg_llist_remove( _llist, _info, _elm, _f_Compare ) \
-{ \
-        *(_elm) = nullptr; \
-        int _curr = (_llist)->head[0]; \
-        typeof(*(_elm)) _ptr = (_llist)->content; \
-        while ( _curr != (_llist)->icurr ) \
-        { \
-                if ( _f_Compare ( _info, &_ptr[_curr] ) ) { \
-                        *(_elm) = &_ptr[_curr]; \
-                        alg_llist_remove_i ( _curr, _llist ); \
+        (_iter) = nullptr; \
+        int _curr = (_inst)->head[0]; \
+        typeof(_iter) _ptr = (_inst)->content; \
+        while ( _curr != (_inst)->icurr ) { \
+                if ( _cmp ( _data, &_ptr[_curr] ) ) { \
+                        (_iter) = &_ptr[_curr]; \
                         break; \
                 } \
-                _curr = (_llist)->next[_curr]; \
+                _curr = (_inst)->next[_curr]; \
         } \
 }
 
-#define alg_llist_remove_ptr( _elm, _llist ) \
+#define alg_llist_remove( _iter, _inst ) \
 { \
-        typeof(_elm) _ptr = (_llist)->content; \
-        int _i = (_elm) - _ptr; \
-        alg_llist_remove_i ( _i, _llist ); \
+        typeof(_iter) _ptr = (_inst)->content; \
+        int _i = (_iter) - _ptr; \
+        (_inst)->prev[(_inst)->next[(_i)]] = (_inst)->prev[(_i)]; \
+        (_inst)->next[(_inst)->prev[(_i)]] = (_inst)->next[(_i)]; \
+        if ( (_inst)->icurr != (_inst)->ilast ) \
+                (_inst)->prev[(_inst)->next[(_inst)->icurr]] = (_i); \
+        (_inst)->next[(_inst)->icurr] = (_i); \
+        (_inst)->num_elm --; \
 }
 
-#define alg_llist_i( _llist, _i, _elm ) \
+#define alg_llist_pop_front( _iter, _inst ) \
 { \
-        *(_elm) = (typeof(*(_elm))) (_llist)->content + (_i); \
-}
-
-#define alg_llist_locate( _elm, _llist )                ((_elm) - cast(_elm) (_llist)->content)
-
-#define alg_llist_push                  alg_llist_add
-
-#define alg_llist_pop( _llist, _elm ) \
-{ \
-        *(_elm) = nullptr; \
-        if ( (_llist)->icurr != (_llist)->head[0] ) { \
-                int _i = (_llist)->prev[(_llist)->icurr]; \
-                typeof(*(_elm)) _ptr = (_llist)->content; \
-                *(_elm) = &_ptr[_i]; \
-                alg_llist_remove_i ( _i, _llist ); \
+        if ( (_inst)->icurr != (_inst)->head[0] ) { \
+                int _front = (_inst)->head[0]; \
+                typeof(_iter) _ptr = (_inst)->content; \
+                alg_llist_remove ( &_ptr[_front], _inst ); \
         } \
+}
+
+#define alg_llist_pop_back( _iter, _inst ) \
+{ \
+        if ( (_inst)->icurr != (_inst)->head[0] ) { \
+                int _back = (_inst)->prev[(_inst)->icurr]; \
+                typeof(_iter) _ptr = (_inst)->content; \
+                alg_llist_remove ( &_ptr[_back], _inst ); \
+        } \
+}
+
+#define alg_llist_n( _inst )             ((_inst)->num_elm)
+
+#define alg_llist_first( _iter, _inst ) \
+{ \
+        typeof(_iter) _ptr = (_inst)->content; \
+        int _i = (_inst)->head[0]; \
+        _iter = &_ptr[_i]; \
+}
+
+#define alg_llist_next( _iter, _inst ) \
+{ \
+        typeof(_iter) _ptr = (_inst)->content; \
+        int _i = (_inst)->next[(_iter) - _ptr]; \
+        _iter = &_ptr[_i]; \
+}
+
+#define alg_llist_prev( _iter, _inst ) \
+{ \
+        typeof(_iter) _ptr = (_inst)->content; \
+        int _i = (_inst)->prev[(_iter) - _ptr]; \
+        _iter = &_ptr[i]; \
+}
+
+#define alg_llist_last( _iter, _inst ) \
+{ \
+        typeof(_iter) _ptr = (_inst)->content; \
+        int _i = (_inst)->prev[(_inst)->icurr]; \
+        _iter = &_ptr[_i]; \
+}
+
+#define alg_llist_null( _iter, _inst ) \
+{ \
+        typeof(_iter) _ptr = (_inst)->content; \
+        (_iter) = &_ptr[(_inst)->icurr]; \
 }
 
 

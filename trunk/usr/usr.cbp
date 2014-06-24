@@ -16,7 +16,12 @@
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-g" />
+					<Add option="-DX3D_DEBUG_MODE" />
 				</Compiler>
+				<Linker>
+					<Add library="./libX3dCore_dbg.so" />
+					<Add directory="../usr" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="../build/usr" prefix_auto="1" extension_auto="1" />
@@ -34,77 +39,53 @@
 				<Linker>
 					<Add option="-Ofast" />
 					<Add option="-flto" />
+					<Add library="libX3dCore.so" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-Werror" />
+			<Add option="-DX3D_COMPILER_GCC" />
+			<Add option="-DX3D_PLATFORM_POSIX" />
 			<Add directory="../include" />
 			<Add directory="../lib" />
 		</Compiler>
-		<Unit filename="../include/usr/usr_cinematicprogs.h" />
-		<Unit filename="../include/usr/usr_editor.h" />
-		<Unit filename="../include/usr/usr_entityprogs.h" />
-		<Unit filename="../include/usr/usr_missionprogs.h" />
-		<Unit filename="editor/common.h" />
-		<Unit filename="editor/dynamics_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/dynamics_editor.h" />
-		<Unit filename="editor/editassetlist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/editentityproperty.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/editprojectmgr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/editrenderconf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/editrenderregion.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/editviewcontrol.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/entity_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/entity_editor.h" />
-		<Unit filename="editor/gui.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/gui.h" />
-		<Unit filename="editor/main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/main.h" />
-		<Unit filename="editor/main_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/main_editor.h" />
-		<Unit filename="editor/renderable_editor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/renderable_editor.h" />
-		<Unit filename="editor/splash_screen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="editor/splash_screen.h" />
-		<Unit filename="usr_cinematicprogs.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="usr_entityprogs.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="usr_missionprogs.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Linker>
+			<Add option="`pkg-config gtk+-3.0 --libs`" />
+		</Linker>
+		<Unit filename="../include/usr/usr_cinematicprogs.hpp" />
+		<Unit filename="../include/usr/usr_editor.hpp" />
+		<Unit filename="../include/usr/usr_editorbackend.hpp" />
+		<Unit filename="../include/usr/usr_entityprogs.hpp" />
+		<Unit filename="../include/usr/usr_kernel.hpp" />
+		<Unit filename="../include/usr/usr_missionprogs.hpp" />
+		<Unit filename="../include/usr/usr_x3d.hpp" />
+		<Unit filename="editor/dynamics_editor.cpp" />
+		<Unit filename="editor/dynamics_editor.hpp" />
+		<Unit filename="editor/editassetlist.cpp" />
+		<Unit filename="editor/editentityproperty.cpp" />
+		<Unit filename="editor/editor.cpp" />
+		<Unit filename="editor/editprojectmgr.cpp" />
+		<Unit filename="editor/editrenderconf.cpp" />
+		<Unit filename="editor/editrenderregion.cpp" />
+		<Unit filename="editor/editviewcontrol.cpp" />
+		<Unit filename="editor/entity_editor.cpp" />
+		<Unit filename="editor/entity_editor.hpp" />
+		<Unit filename="editor/gtkgui.cpp" />
+		<Unit filename="editor/gui.hpp" />
+		<Unit filename="editor/main.cpp" />
+		<Unit filename="editor/main.hpp" />
+		<Unit filename="editor/main_editor.cpp" />
+		<Unit filename="editor/main_editor.hpp" />
+		<Unit filename="editor/renderable_editor.cpp" />
+		<Unit filename="editor/renderable_editor.hpp" />
+		<Unit filename="editor/splash_screen.cpp" />
+		<Unit filename="editor/splash_screen.hpp" />
+		<Unit filename="usr_cinematicprogs.cpp" />
+		<Unit filename="usr_entityprogs.cpp" />
+		<Unit filename="usr_kernel.cpp" />
+		<Unit filename="usr_missionprogs.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

@@ -25,7 +25,7 @@ struct log_output g_log_inst;
 int g_is_init = 0;
 
 
-int init_log_output ( int to_terminate )
+bool init_log_output ( int to_terminate )
 {
         if ( g_is_init ) {
                 free_log_output ();
@@ -47,13 +47,13 @@ int init_log_output ( int to_terminate )
               g_log_inst.severe_err_bhv | g_log_inst.criti_err_bhv) &
              LOG_OUTPUT_TO_FILE ) {
                 if ( !(g_log_inst.file = fopen ( FileName, "w" )) ) {
-                        return 0;
+                        return false;
                 }
                 fprintf ( g_log_inst.file, "x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n",
                           X3D_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
         }
         g_is_init = 1;
-        return 1;
+        return true;
 }
 
 

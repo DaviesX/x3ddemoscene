@@ -4,6 +4,37 @@
 #include "matrix.h"
 
 
+// constants of identity matrix
+const struct matrix4x4 IdentityMatrix4x4 = {
+        .m[0] = {1, 0, 0, 0},
+        .m[1] = {0, 1, 0, 0},
+        .m[2] = {0, 0, 1, 0},
+        .m[3] = {0, 0, 0, 1}
+};
+
+const struct matrix4x3 IdentityMatrix4x3 = {
+        .m[0] = {1, 0, 0},
+        .m[1] = {0, 1, 0},
+        .m[2] = {0, 0, 1},
+        .m[3] = {0, 0, 0}
+};
+
+const struct matrix3x3 IdentityMatrix3x3 = {
+        .m[0] = {1, 0, 0},
+        .m[1] = {0, 1, 0},
+        .m[2] = {0, 0, 1}
+};
+
+const struct matrix3x2 IdentityMatrix3x2 = {
+        .m[0] = {1, 0},
+        .m[1] = {0, 1},
+        .m[2] = {0, 0}
+};
+
+const struct matrix2x2 IdentityMatrix2x2 = {
+        .m[0] = {1, 0},
+        .m[1] = {0, 1}
+};
 
 void set_matrix2x2 ( struct matrix2x2 *matrix,
                      float m00, float m01,

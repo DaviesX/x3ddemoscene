@@ -1,11 +1,12 @@
-/* main_editor.c: implementation of the main editor control */
+/* main_editor.cpp: implementation of the main editor control */
 #include <gtk/gtk.h>
-#include <logout.h>
-#include <x3d/common.h>
-#include <x3d/editor.h>
-#include "gui.h"
-#include "main_editor.h"
+#include <usr/usr_x3d.hpp>
+#include <usr/usr_editor.hpp>
+#include <usr/usr_editorbackend.hpp>
+#include "gui.hpp"
+#include "main_editor.hpp"
 
+using namespace x3d;
 
 struct main_editor {
         GtkWidget *window;
@@ -45,7 +46,7 @@ static gboolean display_logo_callback ( GtkWidget *draw_region,
 
 static void idle_switch_callback ( bool is_idle, void *handle, void *info )
 {
-        GtkWidget *draw_area = handle;
+        GtkWidget *draw_area = (GtkWidget*) handle;
         if ( is_idle ) {
                 g_main_edit.logo_draw_signal =
                         g_signal_connect ( draw_area, "draw",
@@ -68,7 +69,7 @@ static gboolean display_tmp_image_callback ( GtkWidget *draw_region,
         int stride = cairo_format_stride_for_width (
                              CAIRO_FORMAT_ARGB32, g_comm_data.tmp_image_w);
         struct _cairo_surface *co_surface = cairo_image_surface_create_for_data (
-                        g_comm_data.tmp_image, CAIRO_FORMAT_ARGB32,
+                        (unsigned char*) g_comm_data.tmp_image, CAIRO_FORMAT_ARGB32,
                         g_comm_data.tmp_image_w, g_comm_data.tmp_image_h, stride );
         cairo_set_source_surface ( cairo, co_surface, 0.0, 0.0 );
         cairo_paint ( cairo );
@@ -147,18 +148,18 @@ demo_mode:
         gtk_widget_show_all ( g_main_edit.window );
 
         /* create editor */
-        g_main_edit.editor_id = editor_add ( "main-window-editor" );
-        g_main_edit.editor = editor_get_byid ( g_main_edit.editor_id );
+//        g_main_edit.editor_id = editor_add ( "main-window-editor" );
+//        g_main_edit.editor = editor_get_byid ( g_main_edit.editor_id );
         /* create render region */
         int x, y;
         int width, height;
         widget_get_size ( g_main_edit.window, g_main_edit.draw_region,
                           &x, &y, &width, &height );
-        struct ax_render_region *render_region = create_ax_render_region (
-                                PLATFORM_GTK, g_main_edit.draw_region, x, y, width, height );
-        ax_render_region_bind_signal ( "notify_idle", (f_Generic) idle_switch_callback,
-                                       nullptr, render_region );
-        editor_add_activex ( "main-window-render-region", render_region, g_main_edit.editor );
+//        struct ax_render_region *render_region = create_ax_render_region (
+//                                PLATFORM_GTK, g_main_edit.draw_region, x, y, width, height );
+//        ax_render_region_bind_signal ( "notify_idle", (f_Generic) idle_switch_callback,
+//                                       nullptr, render_region );
+//        editor_add_activex ( "main-window-render-region", render_region, g_main_edit.editor );
         return true;
 }
 
@@ -169,6 +170,6 @@ GtkWidget *main_editor_get_region ( void )
 
 static gboolean main_editor_dispatch ( gpointer user_data )
 {
-        editor_dispatch_signal ( g_main_edit.editor );
+//        editor_dispatch_signal ( g_main_edit.editor );
         return true;
 }

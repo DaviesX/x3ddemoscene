@@ -340,6 +340,59 @@ uuid_t alg_hash_str_uuid ( char *str )
         return (uuid_t) hash;
 }
 
+char* alg_str_simplify ( char* str )
+{
+        char* t = str;
+        char* dest = str;
+        int state = 0;
+        while ( *str != '\0' ) {
+                switch ( state ) {
+                case 0: {       /* eat spaces and convert tabs to spaces */
+                        if ( *str == ' ' || *str == '\t' ) {
+                                state = 0;
+                                str ++;
+                        } else
+                                state = 1;
+                        break;
+                }
+                case 1: {
+                        if ( *str == '\t' )
+                                *dest = ' ';
+                        *dest = *str;
+                        if ( *str == ' ' || *str == '\t' ) {
+                                state = 0;
+                        }
+                        str ++;
+                        dest ++;
+                        break;
+                }
+                }
+        }
+        *dest = '\0';
+        return t;
+}
+
+bool alg_match_suffix ( char* str, char* suffix )
+{
+        char *oe = str + strlen ( str );
+        char *se = suffix + strlen ( suffix );
+        do {
+                if ( *oe != *se )
+                        return false;
+                oe ++;
+                se ++;
+        } while ( oe != str && se != suffix );
+        return true;
+}
+
+char* alg_alloc_string ( char *string )
+{
+        int l = strlen ( string ) + 1;
+        char* s = alloc_fix ( 1, l );
+        memcpy ( s, string, l );
+        return s;
+}
+
 // Check if the main string has a substring of sub
 int alg_match_substring ( char *str, char *sub )
 {
@@ -404,9 +457,9 @@ void create_alg_list ( struct alg_list *list, int elm_size, int init_count )
 {
         memset ( list, 0, sizeof ( *list ) );
         if ( init_count < 0 ) {
-                list->list = alloc_var ( elm_size, 0 );
+                list->content = alloc_var ( elm_size, 0 );
         } else {
-                list->list = alloc_var ( elm_size, init_count );
+                list->content = alloc_var ( elm_size, init_count );
         }
         list->elm_size = elm_size;
         list->num_elm = 0;
@@ -414,47 +467,40 @@ void create_alg_list ( struct alg_list *list, int elm_size, int init_count )
 
 void free_alg_list ( struct alg_list *list )
 {
-        free_var ( list->list );
-        memset ( list, 0, sizeof ( *list ) );
-}
-
-void alg_list_add ( void *elm, struct alg_list *list )
-{
-        list->list = add_var ( list->list, list->elm_size );
-        memcpy ( &list->list[list->num_elm*list->elm_size], elm, list->elm_size );
-        list->num_elm ++;
+        free_var ( list->content );
+        zero_obj ( list );
 }
 
 void alg_list_expand ( int count, struct alg_list *list )
 {
-        list->list = expand2_var ( list->list, count );
+        list->content = expand2_var ( list->content, count );
 }
 
 void alg_list_flush ( struct alg_list *list )
 {
-        flush_var ( list->list );
+        flush_var ( list->content );
         list->num_elm = 0;
 }
 
 /* Both lists must have the same element type */
 void alg_list_copy ( struct alg_list *list0, struct alg_list *list1 )
 {
-        untyped *t = list1->list;
+        untyped *t = list1->content;
         memcpy ( list1, list0, sizeof ( *list1 ) );
-        list1->list = t;
-        list1->list = expand_var ( list1->list, list0->num_elm );
-        memcpy ( list1->list, list0->list, list0->num_elm*list0->elm_size );
+        list1->content = t;
+        list1->content = expand_var ( list1->content, list0->num_elm );
+        memcpy ( list1->content, list0->content, list0->num_elm*list0->elm_size );
 }
 
 /* swaps the list's pointer respectively */
 void alg_list_swap ( struct alg_list *list0, struct alg_list *list1 )
 {
-        untyped *t =list0->list;
-        list0->list = list1->list;
-        list1->list = t;
+        untyped *t =list0->content;
+        list0->content = list1->content;
+        list1->content = t;
 }
 
-void create_alg_llist ( struct alg_llist *llist, int elm_size )
+void create_alg_llist ( struct alg_llist *llist, int elm_size, int init_count )
 {
         memset ( llist, 0, sizeof *llist );
         llist->content = alloc_var ( elm_size, 1 );
@@ -479,7 +525,7 @@ void free_alg_llist ( struct alg_llist *llist )
         free_var ( llist->content );
         memset ( llist, 0, sizeof *llist );
 }
-
+/*
 void *alg_llist_first ( struct alg_llist *llist, int *it )
 {
         int i;
@@ -501,7 +547,7 @@ void *alg_llist_next ( struct alg_llist *llist, int *it )
                 return nullptr;
         }
 }
-
+*
 void *alg_llist_new ( struct alg_llist *llist )
 {
         const int i = llist->icurr;
@@ -526,6 +572,7 @@ void *alg_llist_recycle ( struct alg_llist *llist )
                 return nullptr;
         }
 }
+*/
 
 void alg_llist_flush ( struct alg_llist *llist )
 {
@@ -536,6 +583,49 @@ void alg_llist_flush ( struct alg_llist *llist )
         llist->ilast = 1;
         llist->head[0] = llist->icurr;
         llist->num_elm = 1;
+}
+
+struct alg_var {
+        char* name;
+        void* ptr;
+};
+
+void init_alg_var_set ( struct alg_var_set* set )
+{
+        alg_init ( llist, sizeof(struct alg_var), 1, &set->var_set );
+}
+
+void free_alg_var_set ( struct alg_var_set* set )
+{
+        alg_free ( llist, &set->var_set );
+}
+
+void alg_var_set_declare( char* name, void* data, int size, struct alg_var_set *set )
+{
+        struct alg_var var;
+        var.name = name;
+        var.ptr  = alloc_fix ( size, 1 );
+        memcpy ( var.ptr, data, size );
+        alg_iter(struct alg_var) iter;
+#define cmp_name( _data, _iter )         (!strcmp ( (_data).name, (_iter)->name ))
+        alg_find ( llist, var, iter, cmp_name, &set->var_set );
+        if ( iter != nullptr ) {
+                struct alg_var* exist = &alg_access ( iter );
+                exist->ptr = var.ptr;
+        } else {
+                var.name = alg_alloc_string ( name );
+                alg_insert ( llist, var, iter, cmp_name, &set->var_set );
+        }
+#undef cmp_name
+}
+
+void alg_var_set_undeclare ( char* name, struct alg_var_set* set )
+{
+}
+
+void* alg_var_set_use ( char* name, struct alg_var_set* set )
+{
+        return nullptr;
 }
 
 uuid_t alg_gen_uuid ( void )

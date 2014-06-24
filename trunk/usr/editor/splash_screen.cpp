@@ -1,9 +1,11 @@
 #include <gtk/gtk.h>
-#include <logout.h>
-#include <x3d/common.h>
-#include "gui.h"
-#include "splash_screen.h"
+#include <usr/usr_x3d.hpp>
+#include <usr/usr_editor.hpp>
+#include <usr/usr_editorbackend.hpp>
+#include "gui.hpp"
+#include "splash_screen.hpp"
 
+using namespace x3d;
 
 bool splash_screen_show ( char *glade_path )
 {

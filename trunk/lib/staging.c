@@ -188,10 +188,10 @@ void create_stager ( struct mem_block *block, int init_count, struct stager *stg
 void free_stager ( struct stager *stg )
 {
         free_alg_hash_llist ( &stg->lookup );
+        struct res_entry* entries = alg_array(list, &stg->entry);
         int i;
-        for ( i = 0; i < alg_list_n ( &stg->entry ); i ++ ) {
-                struct res_entry *e;
-                alg_list_i ( &stg->entry, i, &e );
+        for ( i = 0; i < alg_n ( llist, &stg->entry ); i ++ ) {
+                struct res_entry* e = &entries[i];
                 free_fix ( e->name );
                 free_var ( e->buff );
         }
@@ -202,10 +202,10 @@ void free_stager ( struct stager *stg )
 void stager_flush ( struct stager *stg )
 {
         alg_hash_llist_flush ( &stg->lookup );
+        struct res_entry* entries = alg_array(list, &stg->entry);
         int i;
         for ( i = 0; i < alg_list_n ( &stg->entry ); i ++ ) {
-                struct res_entry *e;
-                alg_list_i ( &stg->entry, i, &e );
+                struct res_entry *e = &entries[i];
                 free_fix ( e->name );
                 free_var ( e->buff );
         }
@@ -233,10 +233,11 @@ int stager_begin_entry ( char *name, struct entry_record *rec )
         char *lroot = root_layer ( &rec->layer, &d );
         uint16_t layer_uid;
         uint16_t root_uid;
+
         if ( rec->rdepth == 0 ) {
                 /* Root must be _UNIQUE_ */
                 struct entry_info root_info = {
-                        .entry = alg_list_first ( &stg->entry ),
+                        .entry = alg_array ( list, &stg->entry ),
                         .name = lroot,
                         .name_hash = gen_layer_name_hash ( lroot ),
                         .ifound = HASH_NULL_KEY
@@ -263,7 +264,7 @@ int stager_begin_entry ( char *name, struct entry_record *rec )
         entry.buff = alloc_var ( sizeof ( untyped ), 0 );
         entry.uid = layer_uid;
         int i = alg_list_n ( &stg->entry );
-        alg_list_add ( &entry, &stg->entry );
+        alg_push_back ( list, entry, &stg->entry );
         stg->num_entry ++;
 
         /* Insert the current position to the hash linked list */
@@ -289,8 +290,8 @@ void stager_end_entry ( int rdepth, struct entry_record *rec )
 
         int ientry;
         pop_stack ( &rec->rec_stack, ientry );
-        struct res_entry *entry;
-        alg_list_i ( &stg->entry, ientry, &entry );
+        struct res_entry* entries = alg_array ( list, &stg->entry );
+        struct res_entry* entry = &entries[ientry];
         entry->state = RESOURCE_LOADED;
         pop_res_name ( &rec->layer );
         uint16_t root_uid = rec->uid;
@@ -304,8 +305,8 @@ void stager_push_data ( void *data, int size, struct entry_record *rec )
 {
         assert ( rec->rdepth > 0 );
         struct stager *stg = rec->stg;
-        struct res_entry *entry;
-        alg_list_i ( &stg->entry, rec->ientry, &entry );
+        struct res_entry* entries = alg_array ( list, &stg->entry );
+        struct res_entry* entry = &entries[rec->ientry];
         entry->buff = add_var ( entry->buff, size );
         untyped *curr_byte = get_var_last ( entry->buff ) - (size - 1);
         memcpy ( curr_byte, data, size );
@@ -356,24 +357,25 @@ enum RES_ERROR stager_set_layer_first ( struct entry_record *rec )
 
         /* Search the root for uid */
         struct entry_info info = {
-                .entry = alg_list_first ( &stg->entry ),
+                .entry = alg_array ( list, &stg->entry ),
                 .name = sroot,
                 .name_hash = gen_layer_name_hash ( sroot ),
                 .ifound = HASH_NULL_KEY
         };
         uint32_t hash = gen_root_hash ( &rec->layer );
-        struct res_entry *entry;
+        struct res_entry* entry;
         alg_hash_llist_first ( &stg->lookup, hash, &entry, &info, cmp_name );
         if ( entry == nullptr ) {
                 return RES_ERR_INVALID;
         }
-        alg_list_i ( &stg->entry, info.ifound, &entry );
+        struct res_entry* entries = alg_array(list, &stg->entry);
+        entry = &entries[info.ifound];
         uint16_t root_uid = entry->uid;
         uint16_t layer_uid = root_uid + d;
 
         /* Search the layer if needed to */
         if ( d > 0 ) {
-                info.entry = alg_list_first ( &stg->entry );
+                info.entry = alg_array(list, &stg->entry);
                 info.name = slayer;
                 info.name_hash = gen_layer_name_hash ( slayer );
                 info.ifound = HASH_NULL_KEY;
@@ -389,7 +391,7 @@ enum RES_ERROR stager_set_layer_first ( struct entry_record *rec )
         rec->ientry = info.ifound;
         free_fix ( slayer );
         /* Retrieve the entry */
-        alg_list_i ( &stg->entry, info.ifound, &entry );
+        entry = &entries[info.ifound];
         assert ( entry->state != RESOURCE_INVALID );
         if ( entry->state == RESOURCE_LOADING ) {
                 return RES_ERR_READ_BLOCKED;
@@ -412,7 +414,7 @@ enum RES_ERROR stager_set_layer_next ( struct entry_record *rec )
         /*char *sroot = */ root_layer ( &rec->layer, &d );
         char *slayer = gen_layer_name ( &rec->layer );
         struct entry_info info = {
-                .entry = alg_list_first ( &stg->entry ),
+                .entry = alg_array(list, &stg->entry),
                 .name = slayer,
                 .name_hash = gen_layer_name_hash ( slayer ),
                 .ifound = rec->ientry,
@@ -426,7 +428,8 @@ enum RES_ERROR stager_set_layer_next ( struct entry_record *rec )
                 return RES_ERR_INVALID;
         }
         rec->ientry = info.ifound;
-        alg_list_i ( &stg->entry, info.ifound, &entry );
+        struct res_entry* entries = alg_array(list, &stg->entry);
+        entry = &entries[info.ifound];
         assert ( entry->state != RESOURCE_INVALID );
         if ( entry->state == RESOURCE_LOADING ) {
                 return RES_ERR_READ_BLOCKED;
@@ -442,8 +445,8 @@ enum RES_ERROR stager_reset_layer ( struct entry_record *rec )
 {
         /* Retrieve the entry */
         struct stager *stg = rec->stg;
-        struct res_entry *entry;
-        alg_list_i ( &stg->entry, rec->ientry, &entry );
+        struct res_entry* entries = alg_array(list, &stg->entry);
+        struct res_entry* entry = &entries[rec->ientry];
         assert ( entry->state != RESOURCE_INVALID );
         if ( entry->state == RESOURCE_LOADING ) {
                 return RES_ERR_READ_BLOCKED;
@@ -469,8 +472,8 @@ void *stager_pop_data ( int size, struct entry_record *rec )
         untyped *curr = rec->byte_curr;
         DEBUG_SESSION (
                 struct stager *stg = rec->stg;
-                struct res_entry *entry;
-                alg_list_i ( &stg->entry, rec->ientry, &entry );
+                struct res_entry* entries = alg_array(list, &stg->entry);
+                struct res_entry* entry = &entries[rec->ientry];
                 assert ( entry->state != RESOURCE_LOADING );
                 assert ( curr >= rec->byte_ori && curr < rec->byte_end );
         )

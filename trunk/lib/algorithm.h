@@ -217,57 +217,98 @@ do { \
 #define check_stack( _stack )                    ((_stack)->stack != (_stack)->stack_ptr)
 
 #pragma pack(4)
-struct container_operations {
-        void (*init_callback) ( void *elm );
-        void (*destroy_callback) ( void *elm );
-};
+/* containers */
 
 /* Provides a list container and
  * some common O(n) operations below */
 struct alg_list {
-        untyped *list;
-        int elm_size;
-        int num_elm;
+        void*           content;
+        int             elm_size;
+        int             num_elm;
 };
 
 /* Provides a linked list hash table container
  * Some common O(1) operations are defined below */
 struct alg_hash_llist {
-        int *hash_prev;	        /* Table header and the followed prev linked list */
-        int *next;               /* next linked list */
-        void *content;
-        int icurr;
-        int header_len;
-        int n_elm;
-        int shift_bits;
-        uint64_t size_bits;
+        void*           content;
+        int*            hash_prev;      /* Table header and the followed prev linked list */
+        int*            next;           /* next linked list */
+        int             icurr;
+        int             header_len;
+        int             n_elm;
+        int             shift_bits;
+        uint64_t        size_bits;
 };
 
 struct alg_hash_table {
-        int *hash_table;
-        int len;
-        void *content;
+        void*   content;
+        int*    hash_table;
+        int     len;
+};
+
+struct alg_hash_btree {
 };
 
 /* linked list */
 struct alg_llist {
-        int *head;
-        int *prev, *next;
-        int ilast, icurr;
-        int elm_size;
-        int num_elm;
-        void *content;
+        void*   content;
+        int*    head;
+        int*    prev;
+        int*    next;
+        int     ilast;
+        int     icurr;
+        int     elm_size;
+        int     num_elm;
 };
 
 /* Provides a balance tree container and
  * some common O(log n) operations below */
 struct alg_btree {
+        void*   content;
 };
 
-struct alg_llist_btree {
+struct alg_multi_btree {
+        void*   content;
+};
+
+struct alg_multi_hash_btree {
+        void*   content;
 };
 
 #pragma pack()
+
+#define alg_array( type, _inst )                                alg_##type##_array ( _inst )
+#define alg_iter( _type )                                       _type*
+#define alg_access( _iter )                                     (*(_iter))
+#define alg_n( type, _inst )                                    alg_##type##_n( _inst )
+#define alg_init( type, _elm_size, _init_count, _inst )         create_alg_##type ( _inst, _elm_size, _init_count )
+#define alg_free( type, _inst )                                 free_alg_##type ( _inst )
+#define alg_push_back( type, _data, _inst )                     alg_##type##_push_back ( _data, _inst )
+#define alg_push_front( type, _data, _inst )                    alg_##type##_push_front ( _data, _inst )
+#define alg_pop_back( type, _iter, _inst )                      alg_##type##_pop_back ( _iter, _inst )
+#define alg_pop_front( type, _iter, _inst )                     alg_##type##_pop_front ( _iter, _inst )
+#define alg_first( type, _iter, _inst )                         alg_##type##_first ( _iter, _inst )
+#define alg_next( type, _iter, _inst )                          alg_##type##_next ( _iter, _inst )
+#define alg_prev( type, _iter, _inst )                          alg_##type##_prev ( _iter, _inst )
+#define alg_last( type, _iter, _inst )                          alg_##type##_last ( _iter, _inst )
+#define alg_null( type, _iter, _inst )                          alg_##type##_null ( _iter, _inst )
+#define alg_find( type, _data, _iter, _cmp, _inst )             alg_##type##_find( _data, _iter, _cmp, _inst )
+#define alg_insert( type, _data, _iter, _cmp, _inst )           alg_##type##_insert( _data, _iter, _cmp, _inst )
+#define alg_inject( type, _data, _iter, _inst )                 alg_##type##_inject( _data, _iter, _inst )
+#define alg_remove( type, _iter, _inst )                        alg_##type##_remove( _iter, _inst )
+#define alg_flush( type, _inst )                                alg_##type##_flush( _inst )
+#define alg_expand( type, _n, _inst )                           alg_##type##_expand( _n, _inst );
+
+
+#define d_alg_list(_type)               struct alg_list
+#define d_alg_llist(_type)              struct alg_llist
+#define d_alg_btree(_type)              struct alg_btree
+#define d_alg_hash_llist(_type)         struct alg_hash_llist
+#define d_alg_hash_btree(_type)         struct alg_hash_btree
+
+struct alg_var_set {
+        d_alg_llist(alg_var)       var_set;
+};
 
 
 /*
@@ -318,6 +359,10 @@ uint32_t alg_hash_str3 ( char *str );
 uint32_t alg_hash_str4 ( char *str );
 uuid_t alg_hash_str_uuid ( char *str );
 
+char* alg_str_simplify ( char* str );
+bool alg_match_suffix ( char* str, char* suffix );
+char *alg_alloc_string ( char *string );
+
 int alg_match_substring ( char *str, char *sub );
 void alg_init_kmp_substring ( char *sub, char *kmp_array[] );
 int alg_match_substring_kmp ( char *str, char *sub, char *kmp_array[] );
@@ -333,7 +378,7 @@ pseudo_def ( void alg_ptr_list_inplace ( struct alg_ptr_list *ptrs, int len, voi
 
 void create_alg_list ( struct alg_list *list, int elm_size, int init_count );
 void free_alg_list ( struct alg_list *list );
-void alg_list_add ( void *elm, struct alg_list *list );
+void alg_list_push_back ( void *elm, struct alg_list *list );
 void alg_list_expand ( int count, struct alg_list *list );
 void alg_list_flush ( struct alg_list *list );
 pseudo_def ( void alg_list_find ( struct alg_list *list, void *info, void **elm_data,
@@ -344,7 +389,7 @@ pseudo_def ( int alg_list_n ( struct alg_list *list ); )
 void alg_list_copy ( struct alg_list *list0, struct alg_list *list1 );
 void alg_list_swap ( struct alg_list *list0, struct alg_list *list1 );
 
-void create_alg_llist ( struct alg_llist *llist, int elm_size );
+void create_alg_llist ( struct alg_llist *llist, int elm_size, int init_count );
 void free_alg_llist ( struct alg_llist *llist );
 pseudo_def ( void alg_llist_i ( struct alg_llist *llist, int i, void **elm ); )
 pseudo_def ( void alg_llist_add ( void *elm, struct alg_llist *llist ); )
@@ -355,17 +400,23 @@ pseudo_def ( void alg_llist_find ( struct alg_llist *llist, void *info, void **e
 pseudo_def ( void alg_llist_remove ( struct alg_llist *llist, void *info, void **elm_data,
                                      bool (*compare_func) ( void *info, void *elm ) ); )
 pseudo_def ( void alg_llist_remove_ptr ( void *elm, struct alg_llist *llist ); )
-void *alg_llist_first ( struct alg_llist *llist, int *it );
-void *alg_llist_next ( struct alg_llist *llist, int *it );
-void *alg_llist_new ( struct alg_llist *llist );
-void *alg_llist_recycle ( struct alg_llist *llist );
+// void *alg_llist_first ( struct alg_llist *llist, int *it );
+// void *alg_llist_next ( struct alg_llist *llist, int *it );
+// void *alg_llist_new ( struct alg_llist *llist );
+// void *alg_llist_recycle ( struct alg_llist *llist );
 void alg_llist_flush ( struct alg_llist *list );
+
+void init_alg_var_set ( struct alg_var_set* set );
+void free_alg_var_set ( struct alg_var_set* set );
+void alg_var_set_declare( char* name, void* data, int size, struct alg_var_set *set );
+void alg_var_set_undeclare ( char* name, struct alg_var_set* set );
+void* alg_var_set_use ( char* name, struct alg_var_set* set );
 
 uuid_t alg_gen_uuid ( void );
 void alg_use_uuid ( uuid_t id );
 
 
-#include <algorithm_inl.h>
+#include <algorithm.inl.h>
 
 
 #endif // ALGORITHM_H_INCLUDED

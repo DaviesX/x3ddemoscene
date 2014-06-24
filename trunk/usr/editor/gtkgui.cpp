@@ -1,28 +1,30 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <cairo.h>
-#include <logout.h>
-#include <algorithm.h>
-#include <x3d/editor.h>
-#include <editor/editor.h>
-#include "gui.h"
-#include "main_editor.h"
-#include "entity_editor.h"
-#include "renderable_editor.h"
-#include "splash_screen.h"
+#include <usr/usr_x3d.hpp>
+#include <usr/usr_editor.hpp>
+#include <usr/usr_editorbackend.hpp>
+#include "gui.hpp"
+#include "main_editor.hpp"
+#include "entity_editor.hpp"
+#include "renderable_editor.hpp"
+#include "splash_screen.hpp"
 
+using namespace x3d;
+using namespace x3d::usr;
 
 struct common_data g_comm_data;
 
 
-bool editor_init ( int *argc, char ***argv )
+bool EditorGtkFrontend::init ( int argc, char **argv,
+                              Editor *editor, KernelEnvironment *env )
 {
         memset ( &g_comm_data, 0, sizeof g_comm_data );
-        gtk_init ( argc, argv );
+        gtk_init ( &argc, &argv );
 
         /* determine the running mode from command line argument */
-        int n = *argc;
-        char **params = *argv;
+        int n = argc;
+        char **params = argv;
         enum X_EDITOR_MODE mode = X_EDITOR_DEMO_MODE;
         int i;
         for ( i = 0; i < n; i ++ ) {
@@ -41,7 +43,7 @@ bool editor_init ( int *argc, char ***argv )
         return true;
 }
 
-bool editor_end_init ( void )
+bool EditorGtkFrontend::end_init ( Editor *editor, KernelEnvironment *env )
 {
         if ( !splash_screen_shut () ) {
                 log_mild_err_dbg ( "couldn't shutdown the splash screen" );
@@ -50,7 +52,7 @@ bool editor_end_init ( void )
         return true;
 }
 
-bool editor_load ( void )
+bool EditorGtkFrontend::load ( Editor *editor, KernelEnvironment *env )
 {
         if ( !main_editor_load ( g_path_res.glade_path ) ) {
                 return false;
@@ -64,14 +66,14 @@ bool editor_load ( void )
         return true;
 }
 
-void editor_loop ( void *info )
+void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
 {
         gtk_main ();
 }
 
-bool editor_free ( void )
+bool EditorGtkFrontend::free ( Editor *editor, KernelEnvironment *env )
 {
-        return false;
+        return true;
 }
 
 GtkBuilder *builder_load ( char *filename )

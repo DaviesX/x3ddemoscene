@@ -51,31 +51,30 @@ struct res_comp {
 };
 
 struct res_task {
-        char *filename;
-        enum RES_STATE state;
-        struct thr_task *thrtask;
-        enum RES_IDR type;
-        struct res_loader *loader;
-        struct res_comp *stg0_info;
-        res_ptr_t *stg1_inst;
-        int n_stg1;
-        int n_ref;
+        char*                   filename;
+        enum RES_STATE          state;
+        struct thr_task*        thrtask;
+        enum RES_IDR            type;
+        struct res_loader*      loader;
+        struct res_comp*        stg0_info;
+        res_ptr_t*              stg1_inst;
+        int                     n_stg1;
+        int                     n_ref;
 };
 
 struct res_loader {
-        bool is_valid;
+        bool    is_valid;
         struct {
-                struct alg_llist task;
-                struct stager content;
-                int n_task;
-                float vacancy;
-                int iter;
+                d_alg_llist(res_task*)  task;
+                struct stager           content;
+                int                     n_task;
+                float                   vacancy;
         } *task;
-        int pivot;
-        int total_task;
-        struct mem_block block;
-        struct thr_trap trap;
-        struct work_group *wgroup;
+        int     pivot;
+        int     total_task;
+        struct mem_block        block;
+        struct thr_trap         trap;
+        struct work_group*      wgroup;
 };
 
 struct res_ops {
@@ -114,11 +113,10 @@ struct res_loader *create_res_loader ( void )
         loader->task = alloc_fix ( sizeof *loader->task, MAX_RESOURCE );
         int type;
         for ( type = 0; type < MAX_RESOURCE; type ++ ) {
-                memset ( &loader->task[type], 0, sizeof *loader->task );
+                zero_obj ( &loader->task[type] );
                 create_stager ( nullptr, 1024, &loader->task[type].content );
-                create_alg_llist ( &loader->task[type].task, sizeof (struct res_task) );
+                alg_init ( llist, sizeof (struct res_task*), 0, &loader->task[type].task );
                 loader->task[type].n_task = 0;
-                loader->task[type].iter = 0;
         }
         thr_init_trap ( &loader->trap );
         loader->wgroup = thr_new_workgroup ( 1 );
@@ -135,7 +133,7 @@ void free_res_loader ( struct res_loader *loader )
         int type;
         for ( type = 0; type < MAX_RESOURCE; type ++ ) {
                 free_stager ( &loader->task[type].content );
-                free_alg_llist ( &loader->task[type].task );
+                alg_free ( llist, &loader->task[type].task );
                 memset ( &loader->task[type], 0, sizeof *loader->task );
         }
         free_fix ( loader->task );
@@ -151,9 +149,8 @@ void res_loader_flush ( struct res_loader *loader )
         int type;
         for ( type = 0; type < MAX_RESOURCE; type ++ ) {
                 stager_flush ( &loader->task[type].content );
-                alg_llist_flush ( &loader->task[type].task );
+                alg_flush ( llist, &loader->task[type].task );
                 loader->task[type].n_task = 0;
-                loader->task[type].iter = 0;
         }
         loader->is_valid = true;
         loader->pivot = SANITIZE_THRESHOLD;
@@ -244,7 +241,8 @@ struct res_task *res_loader_load ( char *filename, enum RES_IDR type, bool is_as
                 task = alloc_fix ( sizeof (struct res_task), 1 );
 retry_res:
                 init_res_task ( filename, type, loader, task );
-                stager_push_data ( &task, sizeof(struct res_task *), entry );
+                stager_push_data ( &task, sizeof(struct res_task*), entry );
+                alg_push_back ( llist, &task, &loader->task[type].task );
 
                 if ( is_async ) {
                         task->thrtask = thr_run_task (
@@ -327,11 +325,12 @@ struct res_task *res_loader_save ( char *filename, res_ptr_t res_ptr, enum RES_I
 
 struct res_task *res_loader_pop ( enum RES_IDR type, struct res_loader *loader )
 {
-        struct res_task *task = nullptr;
-        if ( loader->task[type].iter < loader->task[type].n_task ) {
-                alg_llist_i ( &loader->task[type].task,
-                              loader->task[type].iter, &task );
-                loader->task[type].iter ++;
+        struct res_task* task = nullptr;
+        if ( alg_n ( llist, &loader->task[type].task ) > 0 ) {
+                alg_iter(struct res_task*) iter;
+                alg_last ( llist, iter, &loader->task[type].task );
+                task = alg_access ( iter );
+                alg_pop_back ( llist, iter, &loader->task[type].task );
         }
         res_loader_sanitize ( loader );
         return task;

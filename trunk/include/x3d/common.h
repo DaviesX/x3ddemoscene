@@ -2,12 +2,14 @@
 #define COMMON_H_INCLUDED
 
 
-/* Switch between different compiling environment */
-#define X3D_COMPILER_GCC
+/* Switch between different platforms */
+// #define X3D_COMPILER_GCC
 // #define X3D_COMPILER_MSVC
+// #define X3D_PLATFORM_POSIX
+// #define X3D_PLATFORM_WIN32
 
 /* Enable this to switch on debug mode */
-#define X3D_DEBUG_MODE
+// #define X3D_DEBUG_MODE
 
 #ifndef X3D_DEBUG_MODE
 #  define NDEBUG
@@ -26,7 +28,7 @@
 #  define DEBUG_SESSION( _code )
 #endif
 
-#ifdef X3D_DEBUG_MODE
+#if defined (X3D_DEBUG_MODE)
 #  define X3D_VERSION_STRING	"v 1.0 debug"
 #  pragma GCC diagnostic ignored "-Wunused-function"
 #  pragma GCC diagnostic ignored "-Wmissing-braces"
@@ -47,7 +49,11 @@ typedef void (*f_Generic) ( void );
 #  define __stdcall                     __attribute__((stdcall))
 #  define __cdecl                       __attribute__((cdecl))
 #  define __fastcall                    __attribute__((fastcall))
-#  define __dlexport                    __attribute__((__visibility__("default")))
+#  ifdef __cplusplus
+#    define __dlexport                  __attribute__((__visibility__("default")))
+#  else
+#    define __dlexport                  __attribute__((__visibility__("default")))
+#  endif
 #  define asm_return( _fake_val ) \
         { \
                 asm ("ret \n"); \
@@ -60,7 +66,9 @@ typedef void (*f_Generic) ( void );
  * Include relative headers
  */
 #ifdef X3D_COMPILER_GCC
-#  define _GNU_SOURCE
+#  ifndef _GNU_SOURCE
+#    define _GNU_SOURCE
+#  endif
 #  include <stdio.h>
 #  include <stdlib.h>
 #  include <stdarg.h>
@@ -80,9 +88,7 @@ typedef void (*f_Generic) ( void );
 #  include <errno.h>
 #  include <sys/types.h>
 #  include <sys/wait.h>
-#endif
-
-#ifdef X3D_COMPILER_MSVC
+#elif defined (X3D_COMPILER_MSVC)
 #endif
 
 

@@ -14,10 +14,11 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DX3D_DEBUG_MODE" />
 				</Compiler>
 				<Linker>
-					<Add library="./libX3dCore_dbg.so" />
 					<Add library="./libusr_dbg.so" />
+					<Add library="./libX3dCore_dbg.so" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -44,15 +45,15 @@
 			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-Werror" />
+			<Add option="-DX3D_COMPILER_GCC" />
+			<Add option="-DX3D_PLATFORM_POSIX" />
 			<Add directory="../../include" />
 			<Add directory="../../lib" />
 		</Compiler>
 		<Linker>
 			<Add option="`pkg-config gtk+-3.0 --libs`" />
 		</Linker>
-		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="main.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

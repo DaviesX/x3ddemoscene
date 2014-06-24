@@ -32,10 +32,10 @@ struct path_resource {
 
 
 static const struct path_resource g_path_res = {
-        .glade_path= "./etc/editor/",
-        .logo_file = "./etc/editor/x3d_logo.png",
-        .raw_media_dir = "./etc/media/",
-        .config_dir = "./etc/config/"
+        .glade_path = (char *) "./etc/editor/",
+        .logo_file = (char *) "./etc/editor/x3d_logo.png",
+        .raw_media_dir = (char *) "./etc/media/",
+        .config_dir = (char *) "./etc/config/"
 };
 extern struct common_data g_comm_data;
 

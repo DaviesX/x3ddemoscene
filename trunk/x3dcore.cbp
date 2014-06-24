@@ -14,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DX3D_DEBUG_MODE" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -39,11 +40,15 @@
 			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-Werror" />
+			<Add option="-DX3D_COMPILER_GCC" />
+			<Add option="-DX3D_PLATFORM_POSIX" />
 			<Add directory="lib" />
 			<Add directory="include" />
 		</Compiler>
 		<Linker>
 			<Add option="`pkg-config gtk+-3.0 --libs`" />
+			<Add option="-ldl" />
+			<Add option="-pthread" />
 		</Linker>
 		<Unit filename="drivers/loader/fbxmodel.c">
 			<Option compilerVar="CC" />
@@ -303,7 +308,6 @@
 		<Unit filename="include/x3d/renderable.h" />
 		<Unit filename="include/x3d/renderer.h" />
 		<Unit filename="include/x3d/resloader.h" />
-		<Unit filename="include/x3d/symbol_lib.h" />
 		<Unit filename="include/x3d/world.h" />
 		<Unit filename="kernel/camera.c">
 			<Option compilerVar="CC" />
@@ -339,9 +343,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/algorithm.h" />
-		<Unit filename="lib/algorithm_inl.h">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="lib/algorithm.inl.h" />
 		<Unit filename="lib/compiler/compiler.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -370,10 +372,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/compiler/symbol.h" />
-		<Unit filename="lib/dlfunction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="lib/dlfunction.h" />
 		<Unit filename="lib/lib.h" />
 		<Unit filename="lib/logout.c">
 			<Option compilerVar="CC" />
@@ -426,6 +424,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/staging.h" />
+		<Unit filename="lib/symlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/symlib.h" />
 		<Unit filename="lib/thread.c">
 			<Option compilerVar="CC" />
 		</Unit>

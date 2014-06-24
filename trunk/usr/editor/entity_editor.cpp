@@ -1,10 +1,11 @@
-/* entity_editor.c: implementation of the entity editor control */
+/* entity_editor.cpp: implementation of the entity editor control */
 #include <gtk/gtk.h>
-#include <logout.h>
-#include <x3d/common.h>
-#include "gui.h"
-#include "entity_editor.h"
+#include <usr/usr_x3d.hpp>
+#include <usr/usr_editorbackend.hpp>
+#include "gui.hpp"
+#include "entity_editor.hpp"
 
+using namespace x3d;
 
 struct entity_editor {
         GtkWidget *hier_tree;

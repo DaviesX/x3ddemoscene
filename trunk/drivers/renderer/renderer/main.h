@@ -5,7 +5,6 @@
 /*
  * Functions' declaration
  */
-void dbg_renderer_add_all ( void );
 
 /*
  * RI Interface

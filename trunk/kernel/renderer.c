@@ -15,24 +15,27 @@ struct render_out;
 struct probe;
 
 typedef struct renderer {
-        uuid_t rend_id;
-        struct lcrenderer *rend;
-        struct renderable_ctx *rdb_ctx;
-        struct alg_llist command;
+        uuid_t                  rend_id;
+        struct render_bytecode  bytecode;
+        struct lcrenderer*      rend;
+//        struct alg_llist command;
 } *p_renderer_t;
 
 struct renderer_container {
-        struct alg_llist renderer;
+        d_alg_llist(struct renderer*)    renderer;
 };
 
-static struct renderer_ops g_rend_ops = {
-        .create = cast(g_rend_ops.create)                      icreate_renderer,
-        .free = cast(g_rend_ops.free)                          ifree_renderer,
-        .update = cast(g_rend_ops.update)                      iupdate_renderer,
-        .render = cast(g_rend_ops.render)                      irenderer_render,
+struct renderer_ops {
+        f_LCRenderer_Init       lcrenderer_init;
+        f_LCRenderer_Create     lcrenderer_create;
+        f_LCRenderer_Free       lcrenderer_free;
+        f_LCRenderer_Update     lcrenderer_update;
+        f_LCRenderer_Render     lcrenderer_render;
+        f_LCRenderer_Output     lcrenderer_output;
 };
 
-static struct renderer_container g_rend_cont;
+static struct renderer_ops              g_rend_ops;
+static struct renderer_container        g_rend_cont;
 
 
 /* container's */
@@ -44,7 +47,7 @@ static struct renderer_container g_rend_cont;
  */
 void renderer_kernel_init ( void )
 {
-        create_alg_llist ( &g_rend_cont.renderer, sizeof ( p_renderer_t ) );
+        alg_init ( llist, sizeof(p_renderer_t), 1, &g_rend_cont.renderer );
 }
 
 /** \brief delete the global renderer container.
@@ -53,15 +56,16 @@ void renderer_kernel_init ( void )
  */
 void renderer_kernel_free ( void )
 {
-        int i;
-        struct alg_llist *rend = &g_rend_cont.renderer;
-        p_renderer_t *curr = alg_llist_first ( rend, &i );
-        while ( curr ) {
-                free_renderer ( *curr );
-                curr = alg_llist_next ( rend, &i );
+        alg_iter(struct renderer*) iter;
+        alg_iter(struct renderer*) last;
+        alg_first ( llist, iter, &g_rend_cont.renderer );
+        alg_last ( llist, last, &g_rend_cont.renderer );
+        while ( iter != last ) {
+                free_renderer ( alg_access ( iter ) );
+                alg_next ( llist, iter, &g_rend_cont.renderer );
         }
-        free_alg_llist ( rend );
-        memset ( &g_rend_cont, 0, sizeof g_rend_cont );
+        free_alg_llist ( &g_rend_cont.renderer );
+        zero_obj ( &g_rend_cont );
 }
 
 /** \brief add in a renderer to the global container.
@@ -73,16 +77,16 @@ void renderer_kernel_free ( void )
  */
 uuid_t renderer_container_add ( struct renderer *rend )
 {
-        struct alg_llist *rend_cont = &g_rend_cont.renderer;
-        if ( rend == nullptr ) {
+        d_alg_llist(renderer*)* rend_cont = &g_rend_cont.renderer;
+        if ( rend == nullptr )
                 rend = create_renderer ( RENDERER_UNDETERMINATE );
-        }
-        alg_llist_add ( &rend, rend_cont );
+
         rend->rend_id = alg_gen_uuid ();
+        alg_push_back ( llist, &rend, rend_cont );
         return rend->rend_id;
 }
 
-#define cmp_rend_id( _info, _curr )     ((*(_curr))->rend_id == *(_info))
+#define cmp_rend_id( _data, _iter )     ((_data) == alg_access(_iter)->rend_id)
 /** \brief remove the added renderer from the global container.
  *
  * Note that: the location as well as the content of the struct renderer will be removed.
@@ -92,9 +96,10 @@ uuid_t renderer_container_add ( struct renderer *rend )
 void renderer_container_remove ( uuid_t id )
 {
         struct alg_llist *rend_cont = &g_rend_cont.renderer;
-        p_renderer_t *curr;
-        alg_llist_remove ( rend_cont, &id, &curr, cmp_rend_id );
-        free_renderer ( *curr );
+        alg_iter(struct renderer*) iter;
+        alg_find ( llist, id, iter, cmp_rend_id, rend_cont );
+        alg_remove ( llist, iter, rend_cont );
+        free_renderer ( alg_access ( iter ) );
 }
 
 /** \brief remove the added renderer from the global container.
@@ -105,9 +110,9 @@ void renderer_container_remove ( uuid_t id )
 struct renderer *renderer_container_find ( uuid_t id )
 {
         struct alg_llist *rend_cont = &g_rend_cont.renderer;
-        p_renderer_t *curr;
-        alg_llist_find ( rend_cont, &id, &curr, cmp_rend_id );
-        return (*curr);
+        alg_iter(struct renderer*) iter;
+        alg_llist_find ( id, iter, cmp_rend_id, rend_cont );
+        return alg_access ( iter );
 }
 #undef cmp_rend_id
 
@@ -116,13 +121,49 @@ struct renderer *renderer_container_i ( int i )
         return nullptr;
 }
 
-/* registrations */
-void renderer_import_renderer ( struct renderer_ops *ops )
+/* register ABIs */
+/** \brief Import ABIs from loaded symbols.
+ *
+ * \param symbols struct symbol_set* [in] loaded symbols
+ * \return bool false if any symbol is not validate.
+ */
+bool renderer_import ( struct symbol_set *symbols )
 {
-}
+        struct renderer_ops *t_ops = &g_rend_ops;
+        bool ret = true;
 
-void renderer_import_render_out ( struct render_out_ops *ops )
-{
+        if ( !(t_ops->lcrenderer_init =
+                (f_LCRenderer_Init) symlib_ret_abi ( "lcrenderer_init", symbols )) ) {
+                log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_init" );
+                ret = false;
+        }
+        if ( !(t_ops->lcrenderer_create =
+                (f_LCRenderer_Create) symlib_ret_abi ( "lcrenderer_create", symbols )) ) {
+                log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_create" );
+                ret = false;
+        }
+        if ( !(t_ops->lcrenderer_free =
+                (f_LCRenderer_Free) symlib_ret_abi ( "lcrenderer_free", symbols )) ) {
+                log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_free" );
+                ret = false;
+        }
+        if ( !(t_ops->lcrenderer_update =
+                (f_LCRenderer_Update) symlib_ret_abi ( "lcrenderer_update", symbols )) ) {
+                log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_free" );
+                ret = false;
+        }
+        if ( !(t_ops->lcrenderer_render =
+                (f_LCRenderer_Render) symlib_ret_abi ( "lcrenderer_render", symbols )) ) {
+                log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_render" );
+                ret = false;
+        }
+        if ( !(t_ops->lcrenderer_output =
+                (f_LCRenderer_Output) symlib_ret_abi ( "lcrenderer_output", symbols )) ) {
+                log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_output" );
+                ret = false;
+        }
+
+        return ret;
 }
 
 /* renderer's */
@@ -135,9 +176,9 @@ void renderer_import_render_out ( struct render_out_ops *ops )
 struct renderer *create_renderer ( enum RENDERER_IDR type )
 {
         struct renderer *rend = alloc_fix ( sizeof *rend, 1 );
-        memset ( rend, 0, sizeof *rend );
+        zero_obj ( rend );
         if ( type != RENDERER_UNDETERMINATE ) {
-                rend->rend = g_rend_ops.create ( type );
+                rend->rend = g_rend_ops.lcrenderer_create ( type );
         }
         return rend;
 }
@@ -148,7 +189,7 @@ struct renderer *create_renderer ( enum RENDERER_IDR type )
  */
 void free_renderer ( struct renderer *rend )
 {
-        g_rend_ops.free ( rend->rend );
+        g_rend_ops.lcrenderer_free ( rend->rend );
 }
 
 /** \brief bind a rendererable context with the renderer
@@ -160,7 +201,6 @@ void free_renderer ( struct renderer *rend )
  */
 void renderer_bind_renderable_context ( void *ctx, struct renderer *rend )
 {
-        rend->rdb_ctx = ctx;
 }
 
 struct probe *renderer_get_probe ( struct renderer *rend )
@@ -184,10 +224,6 @@ void renderer_set_pipeline ( enum RENDER_PIPE_IDR pipeline, struct renderer *ren
  */
 void renderer_set_spec ( enum RENDER_SPEC_IDR spec, struct renderer *rend )
 {
-        struct rend_coomand comm;
-        comm.type = RENDER_COMMAND_SPEC;
-        push_named_params ( spec, "spec", &comm.params );
-        alg_llist_add ( &comm, &rend->command );
 }
 
 /** \brief set the expected draw mode to the renderer.
@@ -197,7 +233,7 @@ void renderer_set_spec ( enum RENDER_SPEC_IDR spec, struct renderer *rend )
  * \param rend struct renderer* [out] renderer to be specified.
  * \return void
  */
-void renderer_set_draw_mode ( enum DRAW_MODE_IDR draw_mode, struct renderer *rend )
+void renderer_set_draw_mode ( enum GEOMETRY_PIPE_IDR draw_mode, struct renderer *rend )
 {
 }
 
@@ -251,7 +287,7 @@ void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend )
  */
 void renderer_update ( struct renderer *rend )
 {
-        g_rend_ops.update ( &rend->command, rend->rend );
+        g_rend_ops.lcrenderer_update ( &rend->bytecode, rend->rend );
 }
 
 /** \brief run the renderer and render all the updated information.
@@ -262,7 +298,7 @@ void renderer_update ( struct renderer *rend )
  */
 void renderer_render ( struct renderer *rend )
 {
-//        g_rend_ops.render ( rend->rend );
+        g_rend_ops.lcrenderer_render ( rend->rend );
 }
 
 /** \brief output the rendering result thru the method specified by render_out
@@ -273,4 +309,53 @@ void renderer_render ( struct renderer *rend )
  */
 void renderer_commit ( struct renderer *rend )
 {
+        g_rend_ops.lcrenderer_output ( rend->rend );
+}
+
+static void generate_byte_code ( struct render_tree *tree, struct render_bytecode *bytecode )
+{
+}
+
+__dlexport void renderer_renderscript ( const char* script, struct renderer *rend )
+{
+}
+
+__dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer *rend )
+{
+}
+
+__dlexport struct render_operand* render_tree_create ( struct render_tree *tree )
+{
+        return nullptr;
+}
+
+__dlexport struct render_operand* render_tree_find ( int pos_id, struct render_tree *tree )
+{
+        return nullptr;
+}
+
+__dlexport int render_tree_create_child ( struct render_operand* parent,
+                                          struct render_operand* child,
+                                          struct render_tree *tree )
+{
+        return -1;
+}
+
+__dlexport void render_tree_create_environment ( struct render_operand* env,
+                                                 struct render_tree* tree )
+{
+}
+__dlexport int render_tree_first ( struct render_tree *tree )
+{
+        return -1;
+}
+
+__dlexport int render_tree_next ( int pos_id, struct render_tree *tree )
+{
+        return -1;
+}
+
+__dlexport struct alg_list* render_tree_environment ( struct render_tree *tree )
+{
+        return nullptr;
 }

@@ -41,6 +41,9 @@
 #define get_var_len( _ptr )			(call_get_var_len ( _ptr ))
 #define get_var_last( _ptr )			(call_get_var_last ( _ptr ))
 
+#define zero_obj( _data )			(memset ( _data, 0, sizeof(*(_data)) ))
+#define zero_array( _data, _count )		(memset ( _data, 0, sizeof(*(_data))*(_count) ))
+
 
 /* memory operations */
 #define set_byte( _data, _dest )	(*(uint8_t *) (_dest) = *(uint8_t *) (_data))
