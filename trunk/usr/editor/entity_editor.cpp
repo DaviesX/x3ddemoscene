@@ -1,8 +1,8 @@
 /* entity_editor.cpp: implementation of the entity editor control */
 #include <gtk/gtk.h>
 #include <usr/usr_x3d.hpp>
-#include <usr/usr_editorbackend.hpp>
-#include "gui.hpp"
+#include <usr/usr_editorfrontend.hpp>
+#include "gtkgui.hpp"
 #include "entity_editor.hpp"
 
 using namespace x3d;

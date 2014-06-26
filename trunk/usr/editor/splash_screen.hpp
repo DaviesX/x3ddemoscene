@@ -1,12 +1,11 @@
 #ifndef SPLASH_SCREEN_H_INCLUDED
 #define SPLASH_SCREEN_H_INCLUDED
 
+#include <usr/usr_editorfrontend.hpp>
 
 /*
  * functions' declaration
  */
-bool splash_screen_show ( char *glade_path );
-bool splash_screen_shut ( void );
 
 
 #endif // SPLASH_SCREEN_H_INCLUDED

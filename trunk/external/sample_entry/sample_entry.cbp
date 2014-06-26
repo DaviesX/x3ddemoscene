@@ -42,6 +42,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-Werror" />

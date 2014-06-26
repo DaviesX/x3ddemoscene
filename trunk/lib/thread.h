@@ -15,7 +15,7 @@ typedef void *(*f_Thread_Handler) ( void *info );
  */
 
 struct thr_trap {
-#ifdef X3D_COMPILER_GCC
+#ifdef X3D_PLATFORM_POSIX
         pthread_cond_t data;
         pthread_mutex_t lock;
         sem_t counter;
@@ -38,7 +38,7 @@ void free_thr_task ( struct thr_task *task );
 void thr_task_abort ( struct thr_task *task );
 bool thr_is_task_complete ( struct thr_task *task );
 bool thr_task_quit_signal ( struct thr_task *task );
-void thr_sync_with_task ( struct thr_task *task );
+void thr_sync_with_task ( struct thr_task* task );
 void thr_block_task ( struct thr_task *task );
 void thr_unblock_task ( struct thr_task *task );
 void thr_init_trap ( struct thr_trap *trap );
@@ -46,6 +46,7 @@ void thr_trap_on_data ( struct thr_trap *data, struct thr_trap *trap );
 void thr_untrap_data ( struct thr_trap *data );
 void thr_trap_on_task ( struct thr_trap *trap );
 void thr_untrap_task ( struct thr_trap *trap );
+void thr_task_idle ( int milisec );
 
 
 #endif // X3DTHREAD_H_INCLUDED

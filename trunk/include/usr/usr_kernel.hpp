@@ -10,15 +10,26 @@ namespace usr
 
 using namespace std;
 
+class KernelProxy;
+class Kernel;
+class KernelEnvironment;
+
+
 class KernelEnvironment
 {
 public:
-        template <typename t_Var> bool declare ( string name, t_Var *ptr )
+        template <typename t_Var> t_Var* make ( t_Var val )
+        {
+                t_Var* x = new t_Var;
+                *x = val;
+                return x;
+        }
+
+        bool declare ( string name, void* ptr )
         {
                 struct Data data;
                 data.name = name;
-                data.ptr = (void *) malloc ( sizeof(t_Var) );
-                *(t_Var *) data.ptr = *ptr;
+                data.ptr  = ptr;
 
                 /* check if the variable has been declared */
                 std::set<Data>::iterator it;
@@ -29,7 +40,6 @@ public:
                 } else {
                         /* the value has been declared */
                         Data declared = *it;
-                        delete (t_Var*) declared.ptr;
                         declared.ptr = data.ptr;
                 }
                 return true;
@@ -42,14 +52,14 @@ public:
                 m_data_set.erase ( data );
         }
 
-        template <typename t_Var> t_Var *use ( string name )
+        void* use ( string name )
         {
                 struct Data data;
                 data.name = name;
                 std::set<Data>::iterator it = m_data_set.find ( data );
                 if ( it != m_data_set.end () ) {
                         Data ret = *it;
-                        return (t_Var *) ret.ptr;
+                        return ret.ptr;
                 } else
                         return nullptr;
         }
@@ -68,6 +78,7 @@ private:
         set<Data, Comparer>       m_data_set;
 };
 
+
 class KernelProxy
 {
 public:
@@ -75,8 +86,21 @@ public:
                 m_name (name)
         {
         }
-
         virtual ~KernelProxy () {}
+
+        void notify_add ( Kernel* kernel )
+        {
+                this->m_kernel = kernel;
+        }
+        void notify_remove ( void )
+        {
+                this->m_kernel = nullptr;
+        }
+        Kernel* get_subjected_kernel ( void )
+        {
+                return this->m_kernel;
+        }
+
         virtual int on_init ( int argc, char **argv, KernelEnvironment *env )
         {
                 return 0;
@@ -104,6 +128,7 @@ public:
 public:
         string                  m_name;
         KernelEnvironment       m_env;
+        Kernel*                 m_kernel;
 };
 
 class __dlexport Kernel
@@ -111,12 +136,12 @@ class __dlexport Kernel
 public:
         Kernel ( void );
         ~Kernel ( void );
-        void run ( void );
+        bool run ( void );
         void stop ( void );
         bool register_proxy ( KernelProxy *proxy );
         bool unregister_proxy ( string m_name );
 public:
-        list<KernelProxy>       m_proxy;
+        list<KernelProxy*>      m_proxy;
         bool                    is_running;
 };
 

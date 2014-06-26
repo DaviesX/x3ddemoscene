@@ -48,14 +48,18 @@ public:
         Editor ( void );
         ~Editor ( void );
 
+        void open ( void ) { m_is_open = true; }
+        void close ( void )  { m_is_open = false; }
+        bool is_open ( void ) { return m_is_open; }
+
         void update ( void );
         void dispatch_signal ( void );
-        bool load_state ( char *filename );
-        bool save_state ( char *filename );
+        bool load_state ( string filename );
+        bool save_state ( string filename );
 
         void add_activex ( EditorActiveX *activex );
-        bool remove_activex ( EDIT_ACTIVEX_IDR type, char *name );
-        EditorActiveX *find_activex ( EDIT_ACTIVEX_IDR type, char *name );
+        bool remove_activex ( EDIT_ACTIVEX_IDR type, string name );
+        EditorActiveX *find_activex ( EDIT_ACTIVEX_IDR type, string name );
 
         KernelEnvironment *get_global_state ( void )
         {
@@ -67,6 +71,7 @@ public:
                 return m_id;
         }
 private:
+        bool                    m_is_open;
         uuid_t                  m_id;
         list<EditorActiveX*>    m_activex[c_NumActiveXType];
         KernelEnvironment       m_global_state;
@@ -122,8 +127,9 @@ public:
 private:
         GUI_FONTEND_IDR         m_frontend_type;
         Editor*                 m_editor;
-        EditorFrontend*          m_frontend;
+        EditorFrontend*         m_frontend;
         struct thr_task*        m_loop_task;
+        const string            m_state_file = "./etc/editor/editor_state";
 };
 
 class RenderRegionActiveX;
@@ -139,25 +145,24 @@ class RenderConfigActiveX;
 class __dlexport EditorActiveX
 {
 public:
-        EditorActiveX ( char *name, int size, EDIT_ACTIVEX_IDR type ) :
+        EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type ) :
                 m_size (size), m_type (type)
         {
-                m_name = new char[strlen (name) + 1];
-                strcpy ( m_name, name );
+                this->m_name = name;
         };
 
         virtual ~EditorActiveX ()
         {
-                delete m_name;
         }
 
         void notify_add ( Editor *e )
         {
                 this->m_state   = e->get_global_state ();
                 this->m_edit_id = e->get_id ();
+                this->on_adding ();
         }
 
-        const char *get_name ( void )
+        string get_name ( void )
         {
                 return m_name;
         }
@@ -172,13 +177,14 @@ public:
                 return m_state;
         }
 
+        virtual void on_adding ( void ) {}
         virtual void update ( void ) {}
         virtual void dispatch ( void ) {}
         virtual void load ( struct serializer *s ) {}
         virtual void save ( struct serializer *s ) {}
 private:
         int                     m_size;
-        char*                   m_name;
+        string                  m_name;
         KernelEnvironment*      m_state;
         uuid_t                  m_edit_id;
         EDIT_ACTIVEX_IDR        m_type;
@@ -193,10 +199,11 @@ typedef void (*f_Notify_resize) ( int width, int height, bool is_fullscreen,
 class __dlexport RenderRegionActiveX : public EditorActiveX
 {
 public:
-        RenderRegionActiveX ( char *name, void *handle,
+        RenderRegionActiveX ( string name, void *handle,
                               int x, int y, int w, int h );
         ~RenderRegionActiveX ();
 
+        void on_adding ( void );
         void update ( void );
         void dispatch ( void );
         void load ( struct serializer *s );
@@ -206,7 +213,7 @@ public:
         void set_idle_state ( bool is_idle );
         void resize ( int x, int y, int w, int h, bool toggle_fullscreen );
 
-        void bind_callback ( char *signal, f_Generic callback, void *data );
+        void bind_callback ( string signal, f_Generic callback, void *data );
 private:
         class RenderRegionInt;
         class RenderRegionInt *pimpl;
@@ -219,9 +226,10 @@ typedef void (*f_Notify_Error) ( string message, RenderConfigActiveX *conf, void
 class __dlexport RenderConfigActiveX : public EditorActiveX
 {
 public:
-        RenderConfigActiveX ( char *name );
+        RenderConfigActiveX ( string name );
         ~RenderConfigActiveX ( void );
 
+        void on_adding ( void );
         void update ( void );
         void dispatch ( void );
         void load ( struct serializer *s );
@@ -232,7 +240,7 @@ public:
         bool apply ( void );
         void cancel ( void );
         void* checkout_value ( string tab_name, string value );
-        void bind_callback ( char *signal, f_Generic callback, void *data );
+        void bind_callback ( string signal, f_Generic callback, void *data );
 private:
         class RenderConfigInt;
         class RenderConfigInt *pimpl;

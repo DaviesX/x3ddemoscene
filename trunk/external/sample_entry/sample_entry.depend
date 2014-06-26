@@ -88,7 +88,7 @@
 1403526919 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
 	<x3d/common.h>
 
-1403525221 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
+1403653410 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -139,14 +139,14 @@
 
 1390714932 /home/davis/x3drenderlib-code/trunk/lib/math/fx.h
 
-1403596539 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
+1403605058 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
 	<x3d/common.h>
 	<math/math.h>
-	<algorithm_inl.h>
+	<algorithm.inl.h>
 
 1403596674 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
 
-1403487403 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1403601428 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
@@ -162,7 +162,7 @@
 1403084830 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
 	<x3d/common.h>
 
-1403517714 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
+1403700939 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
 	<stdio.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
@@ -183,17 +183,17 @@
 	<x3d/init.h>
 	<x3d/renderer.h>
 
-1403528997 /home/davis/x3drenderlib-code/trunk/lib/logout.h
+1403653199 /home/davis/x3drenderlib-code/trunk/lib/logout.h
 	<x3d/common.h>
 
-1399822564 /home/davis/x3drenderlib-code/trunk/lib/thread.h
+1403702681 /home/davis/x3drenderlib-code/trunk/lib/thread.h
 	<x3d/common.h>
 	<algorithm.h>
 
-1403532291 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
+1403686091 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1403518173 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1403684790 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 
@@ -203,4 +203,6 @@
 1403427876 /home/davis/x3drenderlib-code/trunk/lib/symlib.h
 	<algorithm.h>
 	<x3d/common.h>
+
+1403596674 /home/davis/x3drenderlib-code/trunk/lib/algorithm.inl.h
 

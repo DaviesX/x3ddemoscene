@@ -619,6 +619,16 @@ void alg_var_set_declare( char* name, void* data, int size, struct alg_var_set *
 #undef cmp_name
 }
 
+bool ishexdigit ( int value )
+{
+        if ( (value >= '0' && value <= '9') ||
+             (value >= 'a' && value <= 'f') ||
+             (value >= 'A' && value <= 'F') )
+                return true;
+        else
+                return false;
+}
+
 void alg_var_set_undeclare ( char* name, struct alg_var_set* set )
 {
 }

@@ -31,8 +31,8 @@ bool init_log_output ( int to_terminate )
                 free_log_output ();
         }
         memset ( &g_log_inst, 0, sizeof ( g_log_inst ) );
-        g_log_inst.normal_bhv = LOG_OUTPUT_TO_CONSOLE;
-        g_log_inst.mild_err_bhv = LOG_OUTPUT_TO_CONSOLE;
+        g_log_inst.normal_bhv = LOG_OUTPUT_TO_BOTH;
+        g_log_inst.mild_err_bhv = LOG_OUTPUT_TO_BOTH;
         g_log_inst.severe_err_bhv = LOG_OUTPUT_TO_BOTH;
         g_log_inst.criti_err_bhv = LOG_OUTPUT_TO_BOTH;
         g_log_inst.to_terminate = to_terminate;

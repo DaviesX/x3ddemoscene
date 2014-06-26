@@ -13,6 +13,12 @@ enum DBG_POSITION {
         DBG_KERNEL_LOOP 	= 0X4,
         DBG_KERNEL_HALT 	= 0X8
 };
+enum DBG_INDEX {
+        DBG_INDEX_START,
+        DBG_INDEX_LOOP_ONCE,
+        DBG_INDEX_LOOP,
+        DBG_INDEX_HALT
+};
 #define cNumDbgPosition         4
 
 typedef void (*f_UT_Init) ( struct alg_var_set* envir );
@@ -29,8 +35,8 @@ struct unit_test {
         enum DBG_POSITION       pos;
 };
 
-void init_debugger ( int argc, char *argv[], struct symbol_set* symbols );
-void debugger_invoke ( enum DBG_POSITION pos );
+bool init_debugger ( int argc, char *argv[], struct symbol_set* symbols );
+void debugger_invoke ( enum DBG_INDEX pos );
 
 
 #endif // RUNTIME_DEBUG_H_INCLUDED

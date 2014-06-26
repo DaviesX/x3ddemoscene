@@ -412,6 +412,8 @@ void alg_var_set_declare( char* name, void* data, int size, struct alg_var_set *
 void alg_var_set_undeclare ( char* name, struct alg_var_set* set );
 void* alg_var_set_use ( char* name, struct alg_var_set* set );
 
+bool ishexdigit ( int value );
+
 uuid_t alg_gen_uuid ( void );
 void alg_use_uuid ( uuid_t id );
 

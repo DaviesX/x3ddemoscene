@@ -42,10 +42,10 @@ void set_log_behavior ( int bhv );
 #define log_severe_err_dbg			log_severe_err
 #define log_critical_err_dbg 			log_critical_err
 #else
-#define log_normal_dbg
-#define log_mild_err_dbg
-#define log_severe_err_dbg
-#define log_critical_err_dbg
+#define log_normal_dbg( ... )
+#define log_mild_err_dbg( ... )
+#define log_severe_err_dbg( ... )
+#define log_critical_err_dbg( ... )
 #endif
 
 

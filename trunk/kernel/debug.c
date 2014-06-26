@@ -16,7 +16,7 @@ struct runtime_debug g_rtdebug;
 
 
 /* unit test */
-void init_debugger ( int argc, char *argv[], struct symbol_set *symbols )
+bool init_debugger ( int argc, char *argv[], struct symbol_set *symbols )
 {
         struct runtime_debug *dbg = &g_rtdebug;
         dbg->argc = argc;
@@ -56,18 +56,35 @@ void init_debugger ( int argc, char *argv[], struct symbol_set *symbols )
                         ut.ut_run       = (f_UT_Run)  symlib_ret_abi ( test_func, symbols );
                         ut.ut_free      = (f_UT_Free) symlib_ret_abi ( test_free, symbols );
                         ut.ut_pos       = (f_UT_Pos)  symlib_ret_abi ( test_pos, symbols );
+                        if ( !ut.ut_init || !ut.ut_run ||
+                             !ut.ut_free || !ut.ut_pos ) {
+                                log_severe_err_dbg ( "couldn't find symbols" );
+                                return false;
+                        }
                         ut.pos          = ut.ut_pos ( &dbg->dbg_env );
-                        alg_push_back ( list, &ut, &dbg->test_case[ut.pos] );
+                        if ( ut.pos & DBG_KERNEL_START ) {
+                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_START] );
+                        } else if ( ut.pos & DBG_KERNEL_LOOP_ONCE ) {
+                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_LOOP_ONCE] );
+                        } else if ( ut.pos & DBG_KERNEL_LOOP ) {
+                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_LOOP] );
+                        } else if ( ut.pos & DBG_KERNEL_HALT ) {
+                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_HALT] );
+                        } else {
+                                log_severe_err_dbg ( "invalid position speciifed by: %s", test_pos );
+                                return false;
+                        }
                 }
         }
+        return true;
 }
 
-void debugger_invoke ( enum DBG_POSITION pos )
+void debugger_invoke ( enum DBG_INDEX pos )
 {
         struct runtime_debug *dbg = &g_rtdebug;
 
         switch ( pos ) {
-        case DBG_KERNEL_START: {
+        case DBG_INDEX_START: {
                 /* do initialization for all test cases */
                 int n;
                 for ( n = 0; n < cNumDbgPosition; n ++ ) {
@@ -81,9 +98,9 @@ void debugger_invoke ( enum DBG_POSITION pos )
                         }
                 }
                 /* run test case of kernel start */
-                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_KERNEL_START] );
+                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_INDEX_START] );
                 int i;
-                for ( i = 0; i < alg_n ( list, &dbg->test_case[DBG_KERNEL_START] ); i ++ ) {
+                for ( i = 0; i < alg_n ( list, &dbg->test_case[DBG_INDEX_START] ); i ++ ) {
                         struct unit_test* curr = &tests[i];
                         if ( curr->ut_run ) {
                                 curr->ut_run ( &dbg->dbg_env );
@@ -91,11 +108,11 @@ void debugger_invoke ( enum DBG_POSITION pos )
                 }
                 break;
         }
-        case DBG_KERNEL_HALT: {
+        case DBG_INDEX_HALT: {
                 /* run test case of kernel halt */
-                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_KERNEL_HALT] );
+                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_INDEX_HALT] );
                 int i;
-                for ( i = 0; i < alg_n ( list, &dbg->test_case[DBG_KERNEL_HALT] ); i ++ ) {
+                for ( i = 0; i < alg_n ( list, &dbg->test_case[DBG_INDEX_HALT] ); i ++ ) {
                         struct unit_test* curr = &tests[i];
                         if ( curr->ut_run ) {
                                 curr->ut_run ( &dbg->dbg_env );
@@ -115,10 +132,11 @@ void debugger_invoke ( enum DBG_POSITION pos )
                 }
                 break;
         }
-        case DBG_KERNEL_LOOP: {
-                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_KERNEL_LOOP] );
+        case DBG_INDEX_LOOP: {
+                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_INDEX_LOOP] );
+                int num_test = alg_n ( list, &dbg->test_case[DBG_INDEX_LOOP] );
                 int i;
-                for ( i = 0; i < alg_n ( list, &dbg->test_case[DBG_KERNEL_LOOP] ); i ++ ) {
+                for ( i = 0; i < num_test; i ++ ) {
                         struct unit_test* curr = &tests[i];
                         if ( curr->ut_run ) {
                                 curr->ut_run ( &dbg->dbg_env );
@@ -126,16 +144,17 @@ void debugger_invoke ( enum DBG_POSITION pos )
                 }
                 break;
         }
-        case DBG_KERNEL_LOOP_ONCE: {
+        case DBG_INDEX_LOOP_ONCE: {
                 static bool first_time = true;
                 if ( first_time == false )
                         break;
                 else
                         first_time = false;
 
-                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_KERNEL_LOOP_ONCE] );
+                struct unit_test* tests = alg_array ( list, &dbg->test_case[DBG_INDEX_LOOP_ONCE] );
+                int num_test = alg_n ( list, &dbg->test_case[DBG_INDEX_LOOP_ONCE] );
                 int i;
-                for ( i = 0; i < alg_n ( list, &dbg->test_case[DBG_KERNEL_LOOP_ONCE] ); i ++ ) {
+                for ( i = 0; i < num_test; i ++ ) {
                         struct unit_test* curr = &tests[i];
                         if ( curr->ut_run ) {
                                 curr->ut_run ( &dbg->dbg_env );

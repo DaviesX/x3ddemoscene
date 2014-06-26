@@ -8,6 +8,8 @@ using namespace x3d::usr;
 
 extern "C" int kernel_main ( int argc, char *argv[] )
 {
+        x3d::kernel_add_param ( (char*) "--edit-mode", (char*) "" );
+
         Kernel *kernel = new Kernel ();
         Editor *edit = new Editor ();
         KernelEditor *kern_edit = new KernelEditor ( edit );

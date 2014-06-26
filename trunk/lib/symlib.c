@@ -63,7 +63,7 @@ static bool match_symbol ( char* str, uint32_t* addr, int* size, enum SYMBOL_IDR
                         break;
                 }
                 case VALUE: {
-                        if ( isdigit ( *str ) ) {
+                        if ( ishexdigit ( *str ) ) {
                                 buf[ibuf ++] = *str;
                                 str ++;
                         } else if ( isspace ( *str ) ) {
@@ -157,10 +157,11 @@ static bool match_symbol ( char* str, uint32_t* addr, int* size, enum SYMBOL_IDR
                 }
                 case NAME: {
                         if ( isalpha ( *str ) || isdigit ( *str ) ||
-                             *str == '_' || *str == '@' ) {
+                             *str == '_' || *str == '@' || *str == '.' ||
+                             *str == '(' || *str == ')' ) {
                                 buf[ibuf ++] = *str;
                                 str ++;
-                        } else if ( isspace ( *str ) || *str == '\0' ) {
+                        } else if ( isspace ( *str ) || *str == '\n' ) {
                                 buf[ibuf] = '\0';
                                 if ( ibuf == 0 ) {
                                         *symbol_name = nullptr;
@@ -180,12 +181,30 @@ static bool match_symbol ( char* str, uint32_t* addr, int* size, enum SYMBOL_IDR
         return false;
 }
 
+static char* make_temp_file_name ( char* filename )
+{
+        static char tempname[512];
+        strcpy ( tempname, "sym-" );
+
+        char* s = filename;
+        while ( *filename != '\0' ) {
+                if ( *filename == '/' ) {
+                        s = filename + 1;
+                }
+                filename ++;
+        }
+        strcat ( tempname, s );
+        return tempname;
+}
+
 static bool dump ( char* filename, struct symbol_set *symbols )
 {
-        const char* tempfile = "temp";
         const char* commandfile = "./etc/readelf";
         const char* option = " -a ";
         char command[512] = {0};
+        char tempfile[128] = {0};
+
+        strcat ( tempfile, make_temp_file_name ( filename ) );
 
         strcat ( command, commandfile );
         strcat ( command, option );
@@ -255,12 +274,12 @@ static bool dump ( char* filename, struct symbol_set *symbols )
                         }
                 }
                 /* load in the symbols */
-#define cmp_symbol( _info, _elm )       ()
                 struct dlsymbol         s_temp;
                 unsigned int            addr;
                 int                     size;
                 enum SYMBOL_IDR         type;
                 char*                   name;
+
                 if ( match_symbol ( buf, &addr, &size, &type, &name ) ) {
                         log_normal_dbg ( "found: %x\t%u\t%u\t%s", addr, size, type, name );
                         switch ( type ) {
@@ -268,14 +287,14 @@ static bool dump ( char* filename, struct symbol_set *symbols )
                                 s_temp.func_ptr = *(f_Generic *) &addr;
                                 s_temp.name = name;
                                 s_temp.size = size;
-                                alg_push_back ( list, &s_temp, &symbols->symbol[SYMBOL_ABI] );
+                                alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_ABI] );
                                 break;
                         }
                         case SYMBOL_MISC: {
                                 s_temp.value = *(void**) &addr;
                                 s_temp.name = name;
                                 s_temp.size = size;
-                                alg_push_back ( list, &s_temp, &symbols->symbol[SYMBOL_MISC] );
+                                alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_MISC] );
                                 break;
                         }
                         default: {
@@ -284,11 +303,27 @@ static bool dump ( char* filename, struct symbol_set *symbols )
                         }
                         }
                 }
-#undef cmp_symbol
+        }
+        /* relink the address for dynamic linked */
+        if ( type == ELF_DYN ) {
+                int i;
+                for ( i = 0; i < cNumSymbolCate; i ++ ) {
+                        struct dlsymbol* syms = alg_array ( list, &symbols->symbol[i] );
+                        int num_sym = alg_n ( list, &symbols->symbol[i] );
+                        int j;
+                        for ( j = 0; j < num_sym; j ++ ) {
+                                if ( syms[j].name ) {
+                                        syms[j].func_ptr = dlsym ( symbols->handle, syms[j].name );
+                                        syms[j].value    = dlsym ( symbols->handle, syms[j].name );
+                                }
+                        }
+                }
         }
 
         fclose ( elf_info );
+#if !defined(X3D_DEBUG_MODE)
         remove ( tempfile );
+#endif
         return true;
 }
 
@@ -369,22 +404,53 @@ bool symlib_unload ( struct symbol_set *symbols )
 
 void symlib_add_abi ( char *name, f_Generic func, struct symbol_set *symbols )
 {
+        struct dlsymbol         s_temp;
+        s_temp.func_ptr = func;
+        s_temp.name = alg_alloc_string ( name );
+        s_temp.size = 0;
+        alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_ABI] );
 }
 
 void symlib_add_cstring ( char *name, char *string, struct symbol_set *symbols )
 {
+        struct dlsymbol         s_temp;
+        s_temp.const_char = alg_alloc_string ( string );
+        s_temp.name = alg_alloc_string ( name );
+        s_temp.size = strlen ( string ) + 1;
+        alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_CONST_CSTRING] );
 }
 
 void symlib_add_variable ( char *name, void *value, int size, struct symbol_set *symbols )
 {
+        struct dlsymbol         s_temp;
+        s_temp.value = value;
+        s_temp.name = alg_alloc_string ( name );
+        s_temp.size = size;
+        alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_VARIABLE] );
 }
 
 f_Generic symlib_ret_abi ( char *sym_name, struct symbol_set *symbols )
 {
+        struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_ABI] );
+        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
+        int i;
+        for ( i = 0; i < num_sym; i ++ ) {
+                if ( sym[i].name && !strcmp ( sym_name, sym[i].name ) )
+                        return sym[i].func_ptr;
+        }
+        log_mild_err_dbg ( "couldn't find such symbol as: %s", sym_name );
         return nullptr;
 }
 
 struct dlsymbol* symlib_ret_misc ( char *sym_name, struct symbol_set *symbols )
 {
+        struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_MISC] );
+        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_MISC]);
+        int i;
+        for ( i = 0; i < num_sym; i ++ ) {
+                if ( sym[i].name && !strcmp ( sym_name, sym[i].name ) )
+                        return &sym[i];
+        }
+        log_mild_err_dbg ( "couldn't find such symbol as: %s", sym_name );
         return nullptr;
 }

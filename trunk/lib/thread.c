@@ -82,7 +82,7 @@ static void workgroup_removetask ( struct thr_task *task, struct work_group *gro
 static void workgroup_removealltask ( struct work_group *group );
 
 static void terminate_task ( struct thr_task *task );
-static void sync_task ( struct thr_task *task );
+static void sync_task ( struct thr_task* task );
 
 /* platform specifc APIs */
 static void init_trap ( struct thr_trap *trap );
@@ -97,7 +97,7 @@ static void current_thread_exit ( void );
 static void join_thread ( struct thread_ctx *thread );
 static long get_cpu_corecount ( void );
 
-#ifdef X3D_COMPILER_GCC
+#ifdef X3D_PLATFORM_POSIX
 const pthread_mutex_t c_mutex_init = PTHREAD_MUTEX_INITIALIZER;
 const pthread_cond_t c_cond_init = PTHREAD_COND_INITIALIZER;
 
@@ -158,22 +158,30 @@ static long get_cpu_corecount ( void )
         return sysconf ( _SC_NPROCESSORS_ONLN );
 }
 
-#endif // X3D_COMPILER_GCC
+static void idle ( int milisec )
+{
+        usleep ( milisec*1000 );
+}
+
+#endif // X3D_PLATFORM_POSIX
 
 
 static bool retrieve_task ( struct work_group *group, struct thread_ctx *thread,
                             struct thr_task **task )
 {
-        /* idle current thread when all tasks were executed
-         * awake right after new tasks were fed in to the task queue */
-        trap_on_counter ( &group->idler );
-
         trap_on_thread ( &group->lock[LOCK_TASK] );
         if ( *task != nullptr ) {
                 (*task)->is_processed = true;
                 remove_data_trap ( &(*task)->sync_trap );
                 group->n_tasks --;
         }
+        remove_thread_trap ( &group->lock[LOCK_TASK] );
+
+        /* idle current thread when all tasks were executed
+         * awake right after new tasks were fed in to the task queue */
+        trap_on_counter ( &group->idler );
+
+        trap_on_thread ( &group->lock[LOCK_TASK] );
         bool active = group->is_active && thread->is_active;
         if ( active ) {
                 /* fetch new task and mark the new task as not being processed */
@@ -446,15 +454,15 @@ static void terminate_task ( struct thr_task *task )
         task->quit_signal = true;
 }
 
-static void sync_task ( struct thr_task *task )
+static void sync_task ( struct thr_task* task )
 {
-        trap_on_thread ( &task->binded_group->lock[LOCK_TASK] );
-        if ( !task->is_processed ) {
+        trap_on_thread ( &(task)->binded_group->lock[LOCK_TASK] );
+        if ( task != nullptr && !(task)->is_processed ) {
                 trap_on_data (
-                        &task->sync_trap,
-                        &task->binded_group->lock[LOCK_TASK] );
+                        &(task)->sync_trap,
+                        &(task)->binded_group->lock[LOCK_TASK] );
         }
-        remove_thread_trap ( &task->binded_group->lock[LOCK_TASK] );
+        remove_thread_trap ( &(task)->binded_group->lock[LOCK_TASK] );
 }
 
 void init_thread_lib ( void )
@@ -565,7 +573,7 @@ bool thr_task_exit_signal ( struct thr_task *task )
         return task->quit_signal;
 }
 
-void thr_sync_with_task ( struct thr_task *task )
+void thr_sync_with_task ( struct thr_task* task )
 {
         sync_task ( task );
 }
@@ -605,3 +613,7 @@ void thr_untrap_task ( struct thr_trap *trap )
         remove_thread_trap ( trap );
 }
 
+void thr_task_idle ( int milisec )
+{
+        idle ( milisec );
+}

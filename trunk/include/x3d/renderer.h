@@ -25,6 +25,7 @@ enum RENDERER_IDR {
         RENDERER_PRT,                   /**< precomputed radiance transfer renderer */
         RENDERER_SELECTION              /**< object selection renderer */
 };
+#define cNumRenderer            9
 
 enum RENDERER_THREAD_STATE_IDR {
         /* Renderer should not handle threading from these constants itself,
@@ -45,12 +46,12 @@ enum RENDER_SPEC_IDR {
 };
 
 enum RENDER_ENVIRONMENT {
-        RENDER_COMMAND_SPEC,
-        RENDER_COMMAND_PROBE,
-        RENDER_COMMAND_RENDER_OUT,
-        RENDER_COMMAND_THREAD,
-        RENDER_COMMAND_ANTIALIAS,
-        RENDER_COMMAND_FILTERING,
+        RENDER_ENV_SPEC,
+        RENDER_ENV_PROBE,
+        RENDER_ENV_RENDER_OUT,
+        RENDER_ENV_THREAD,
+        RENDER_ENV_ANTIALIAS,
+        RENDER_ENV_FILTERING,
 };
 
 struct lcrenderer;
@@ -171,8 +172,7 @@ void renderer_kernel_free ( void );
 typedef void (*f_LCRenderer_Init) ( void );
 typedef struct lcrenderer* (*f_LCRenderer_Create) ( enum RENDERER_IDR method );
 typedef void (*f_LCRenderer_Free) ( struct lcrenderer *rend );
-typedef void (*f_LCRenderer_Update) ( struct render_bytecode *bytecode,
-                                      struct lcrenderer *rend );
+typedef void (*f_LCRenderer_Update) ( struct render_bytecode *bytecode, struct lcrenderer *rend );
 typedef void (*f_LCRenderer_Render) ( struct lcrenderer *rend );
 typedef void (*f_LCRenderer_Output) ( struct lcrenderer *rend );
 

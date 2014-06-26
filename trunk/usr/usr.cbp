@@ -39,11 +39,12 @@
 				<Linker>
 					<Add option="-Ofast" />
 					<Add option="-flto" />
-					<Add library="libX3dCore.so" />
+					<Add library="./libX3dCore.so" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-Werror" />
 			<Add option="-DX3D_COMPILER_GCC" />
@@ -56,7 +57,7 @@
 		</Linker>
 		<Unit filename="../include/usr/usr_cinematicprogs.hpp" />
 		<Unit filename="../include/usr/usr_editor.hpp" />
-		<Unit filename="../include/usr/usr_editorbackend.hpp" />
+		<Unit filename="../include/usr/usr_editorfrontend.hpp" />
 		<Unit filename="../include/usr/usr_entityprogs.hpp" />
 		<Unit filename="../include/usr/usr_kernel.hpp" />
 		<Unit filename="../include/usr/usr_missionprogs.hpp" />
@@ -71,17 +72,12 @@
 		<Unit filename="editor/editrenderregion.cpp" />
 		<Unit filename="editor/editviewcontrol.cpp" />
 		<Unit filename="editor/entity_editor.cpp" />
-		<Unit filename="editor/entity_editor.hpp" />
 		<Unit filename="editor/gtkgui.cpp" />
-		<Unit filename="editor/gui.hpp" />
-		<Unit filename="editor/main.cpp" />
-		<Unit filename="editor/main.hpp" />
+		<Unit filename="editor/gtkgui.hpp" />
 		<Unit filename="editor/main_editor.cpp" />
-		<Unit filename="editor/main_editor.hpp" />
 		<Unit filename="editor/renderable_editor.cpp" />
-		<Unit filename="editor/renderable_editor.hpp" />
+		<Unit filename="editor/renderer_configurator.cpp" />
 		<Unit filename="editor/splash_screen.cpp" />
-		<Unit filename="editor/splash_screen.hpp" />
 		<Unit filename="usr_cinematicprogs.cpp" />
 		<Unit filename="usr_entityprogs.cpp" />
 		<Unit filename="usr_kernel.cpp" />

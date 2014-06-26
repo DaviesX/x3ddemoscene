@@ -35,13 +35,10 @@ public:
 };
 
 
-RenderRegionActiveX::RenderRegionActiveX ( char *name, void *handle,
+RenderRegionActiveX::RenderRegionActiveX ( string name, void *handle,
                                            int x, int y, int w, int h ) :
         EditorActiveX ( name, sizeof(RenderRegionActiveX), EDIT_ACTIVEX_RENDER_REGION )
 {
-        KernelEnvironment *state = this->get_state_buffer ();
-        state->declare<void*> ( c_WndHandle, &handle );
-
         this->pimpl = new RenderRegionInt ();
         RenderRegionInt *inst = pimpl;
 
@@ -73,6 +70,13 @@ RenderRegionActiveX::~RenderRegionActiveX ()
         delete this->pimpl;
 }
 
+void RenderRegionActiveX::on_adding ( void )
+{
+        RenderRegionInt *inst = this->pimpl;
+        KernelEnvironment *state = this->get_state_buffer ();
+        state->declare ( c_WndHandle, inst->m_handle );
+}
+
 void RenderRegionActiveX::set_idle_state ( bool is_idle )
 {
         int t;
@@ -99,20 +103,20 @@ void RenderRegionActiveX::resize ( int x, int y, int w, int h, bool toggle_fulls
         x3d::build_irectangle_2d ( x, y, x + w, y + h, &inst->m_rect );
 }
 
-void RenderRegionActiveX::bind_callback ( char *signal, f_Generic callback, void *data )
+void RenderRegionActiveX::bind_callback ( string signal, f_Generic callback, void *data )
 {
         RenderRegionInt *inst = this->pimpl;
         int t;
         t = inst->m_iswap & 1;
 
-        if ( !strcmp ( "notify_idle", signal ) ) {
+        if ( "notify_idle" == signal ) {
                 inst->m_idle[t].f_idle = (f_Notify_idle) callback;
                 inst->m_idle[t].d_idle = data;
-        } else if ( !strcmp ( "notify_resize", signal ) ) {
+        } else if ( "notify_resize" == signal ) {
                 inst->m_resize[t].f_resize = (f_Notify_resize) callback;
                 inst->m_resize[t].d_resize = data;
         } else {
-                x3d::log_mild_err_dbg ( "no such signal as: %s", signal );
+                log_mild_err_dbg ( "no such signal as: %s", signal.c_str () );
                 return ;
         }
 }
@@ -152,10 +156,10 @@ void RenderRegionActiveX::update ( void )
         inst->m_iswap ++;
         x3d::thr_untrap_task ( &inst->m_block_driver );
 
-        KernelEnvironment *state = get_state_buffer ();
+        KernelEnvironment* state = get_state_buffer ();
 
-        struct x3d::renderer *renderer =
-                state->use<x3d::renderer> ( c_Renderer );
+        struct x3d::renderer* renderer =
+                (struct x3d::renderer*) state->use ( c_Renderer );
         if ( renderer != inst->m_rend )
                 inst->m_rend = renderer;
 

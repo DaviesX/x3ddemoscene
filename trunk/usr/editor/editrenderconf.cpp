@@ -62,7 +62,7 @@ public:
 };
 
 
-RenderConfigActiveX::RenderConfigActiveX ( char* name ) :
+RenderConfigActiveX::RenderConfigActiveX ( string name ) :
         EditorActiveX ( name, sizeof(RenderConfigActiveX), EDIT_ACTIVEX_RENDER_CONFIG )
 {
         this->pimpl = new RenderConfigInt ();
@@ -81,6 +81,10 @@ RenderConfigActiveX::RenderConfigActiveX ( char* name ) :
 RenderConfigActiveX::~RenderConfigActiveX ( void )
 {
         delete this->pimpl;
+}
+
+void RenderConfigActiveX::on_adding ( void )
+{
 }
 
 void RenderConfigActiveX::dispatch ( void )
@@ -144,17 +148,17 @@ void* RenderConfigActiveX::checkout_value ( string tab_name, string value )
         return nullptr;
 }
 
-void RenderConfigActiveX::bind_callback ( char *signal, f_Generic callback, void *data )
+void RenderConfigActiveX::bind_callback ( string signal, f_Generic callback, void *data )
 {
         RenderConfigInt *inst = this->pimpl;
         int t;
         t = inst->m_iswap & 1;
 
-        if ( !strcmp ( "notify_error", signal ) ) {
+        if ( "notify_error" == signal ) {
                 inst->m_error[t].f_error = (f_Notify_Error) callback;
                 inst->m_error[t].d_error = data;
         } else {
-                x3d::log_mild_err_dbg ( "no such signal as: %s", signal );
+                log_mild_err_dbg ( "no such signal as: %s", signal.c_str () );
                 return ;
         }
 }

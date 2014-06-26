@@ -1,6 +1,6 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_editor.hpp>
-#include <usr/usr_editorbackend.hpp>
+#include <usr/usr_editorfrontend.hpp>
 
 using namespace x3d;
 using namespace x3d::usr;
@@ -20,13 +20,20 @@ KernelEditor::~KernelEditor ()
         delete this->m_frontend;
 }
 
-int KernelEditor::on_init ( int argc, char **argv, KernelEnvironment *env )
+int KernelEditor::on_init ( int argc, char** argv, KernelEnvironment *env )
 {
-        env->declare<int> ( "argc", &argc );
-        env->declare<char **> ( "argv", &argv );
+        env->declare ( "argc", env->make<int>(argc) );
+        env->declare ( "argv", env->make<char**>(argv) );
+
+        this->m_editor->open ();
 
         if ( !this->m_frontend->init ( argc, argv, this->m_editor, env ) ) {
                 goto fail;
+        }
+
+        if ( !this->m_editor->load_state ( this->m_state_file ) ) {
+                log_mild_err_dbg ( "couldn't load editor state from: %s",
+                                   this->m_state_file.c_str () );
         }
         return 0;
 fail:
@@ -60,7 +67,7 @@ static void *gui_thread ( struct data_info *data )
 
 int KernelEditor::on_loop_init ( KernelEnvironment *env )
 {
-        struct data_info *info = cast(info) alloc_fix ( sizeof *info, 1 );
+        struct data_info* info = (struct data_info*) alloc_fix ( sizeof *info, 1 );
 
         if ( !this->m_frontend->end_init ( this->m_editor, env ) ) {
                 goto fail;
@@ -81,6 +88,11 @@ fail:
 
 int KernelEditor::on_loop ( KernelEnvironment *env )
 {
+        if ( !this->m_editor->is_open () ) {
+                this->get_subjected_kernel()->stop();
+                return 1;
+        }
+
         this->m_editor->update ();
         return 0;
 }
@@ -92,6 +104,10 @@ int KernelEditor::on_loop_free ( KernelEnvironment *env )
 
 int KernelEditor::on_free ( KernelEnvironment *env )
 {
+        if ( !this->m_editor->save_state ( this->m_state_file ) ) {
+                log_mild_err_dbg ( "couldn't save editor state to: %s",
+                                   this->m_state_file.c_str () );
+        }
         if ( !this->m_frontend->free ( this->m_editor, env ) ) {
                 goto fail;
         }
@@ -144,6 +160,7 @@ Editor::Editor ( void )
                 this->m_activex[i].clear ();
         }
         this->m_id = alg_gen_uuid ();
+        this->m_is_open = false;
 }
 
 Editor::~Editor ( void )
@@ -176,32 +193,34 @@ void Editor::add_activex ( EditorActiveX *activex )
         this->m_activex[type].push_back ( activex );
 }
 
-EditorActiveX *Editor::find_activex ( EDIT_ACTIVEX_IDR type, char *name )
+EditorActiveX *Editor::find_activex ( EDIT_ACTIVEX_IDR type, string name )
 {
         list<EditorActiveX*>::iterator activex =
                 this->m_activex[type].begin ();
         while ( activex != this->m_activex[type].end () ) {
-                if ( !strcmp ( name, (*activex)->get_name () ) ) {
+                if ( name == (*activex)->get_name () ) {
                         return *activex;
                 }
                 ++ activex;
         }
-        log_mild_err_dbg ( "couldn't find such activex of the type: %d with its name: %s", type, name );
+        log_mild_err_dbg ( "couldn't find such activex of the type: %d with its name: %s",
+                           type, name.c_str () );
         return nullptr;
 }
 
-bool Editor::remove_activex ( EDIT_ACTIVEX_IDR type, char *name )
+bool Editor::remove_activex ( EDIT_ACTIVEX_IDR type, string name )
 {
         list<EditorActiveX*>::iterator activex =
                 this->m_activex[type].begin ();
         while ( activex != this->m_activex[type].end () ) {
-                if ( !strcmp ( name, (*activex)->get_name () ) ) {
+                if ( name == (*activex)->get_name () ) {
                         this->m_activex[type].erase ( activex );
                         return true;
                 }
                 ++ activex;
         }
-        log_mild_err_dbg ( "couldn't find such activex of the type: %d with its name: %s", type, name );
+        log_mild_err_dbg ( "couldn't find such activex of the type: %d with its name: %s",
+                           type, name.c_str () );
         return false;
 }
 
@@ -216,12 +235,13 @@ void Editor::dispatch_signal ( void )
         }
 }
 
-bool Editor::load_state ( char *filename )
+bool Editor::load_state ( string filename )
 {
         struct serializer s;
         serial_init ( &s );
-        if ( !serial_import ( filename, &s ) ) {
-                log_severe_err_dbg ( "couldn't load in editor state from: %s", filename );
+        if ( !serial_import ( (char*) filename.c_str (), &s ) ) {
+                log_severe_err_dbg ( "couldn't load in editor state from: %s",
+                                     filename.c_str () );
                 return false;
         }
 
@@ -235,7 +255,7 @@ bool Editor::load_state ( char *filename )
         return true;
 }
 
-bool Editor::save_state ( char *filename )
+bool Editor::save_state ( string filename )
 {
         struct serializer s;
         serial_init ( &s );
@@ -248,8 +268,9 @@ bool Editor::save_state ( char *filename )
                 }
         }
 
-        if ( !serial_export ( filename, &s ) ) {
-                log_severe_err_dbg ( "couldn't export editor state to: %s", filename );
+        if ( !serial_export ( (char*) filename.c_str (), &s ) ) {
+                log_severe_err_dbg ( "couldn't export editor state to: %s",
+                                     filename.c_str () );
                 return false;
         }
         return true;

@@ -209,7 +209,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/intersectproc.h" />
-		<Unit filename="drivers/renderer/renderer/irenderer.h" />
+		<Unit filename="drivers/renderer/renderer/lcrenderer.h" />
 		<Unit filename="drivers/renderer/renderer/main.c">
 			<Option compilerVar="CC" />
 		</Unit>

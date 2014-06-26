@@ -74,6 +74,7 @@ __dlexport bool kernel_start ( void )
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
 
+        init_thread_lib ();
         if ( signal->on_init != nullptr )
                 signal->on_init ( init->argc, init->argv, signal->env );
 
@@ -85,12 +86,14 @@ __dlexport bool kernel_start ( void )
                             &init->symbols ) )
                 return false;
 
-        init_debugger ( init->argc, init->argv, &init->symbols );
+        if ( !init_debugger ( init->argc, init->argv, &init->symbols ) )
+                return false;
         init_math_lib ();
-        init_thread_lib ();
         init_lib ();
+        if ( !renderer_import ( &init->symbols ) )
+                return false;
         rest_init ();
-        return nullptr;
+        return true;
 }
 
 __dlexport void kernel_halt ( void )
@@ -105,7 +108,7 @@ static void rest_init ( void )
 
         if ( signal->on_rest_init != nullptr )
                 signal->on_rest_init ( signal->env );
-        debugger_invoke ( DBG_KERNEL_START );
+        debugger_invoke ( DBG_INDEX_START );
         g_init.to_run = true;
 }
 
@@ -116,17 +119,17 @@ __dlexport void kernel_loop ( void )
 
         if ( signal->on_loop_init != nullptr )
                 signal->on_loop_init ( signal->env );
-        debugger_invoke ( DBG_KERNEL_LOOP_ONCE );
+        debugger_invoke ( DBG_INDEX_LOOP_ONCE );
 
         while ( g_init.to_run ) {
-                debugger_invoke ( DBG_KERNEL_LOOP );
+                debugger_invoke ( DBG_INDEX_LOOP );
                 if ( signal->on_loop != nullptr )
                         signal->on_loop ( signal->env );
         }
 
         if ( signal->on_loop_free != nullptr )
                 signal->on_loop_free ( signal->env );
-        debugger_invoke ( DBG_KERNEL_HALT );
+        debugger_invoke ( DBG_INDEX_HALT );
 }
 
 __dlexport void kernel_shutdown ( void )
