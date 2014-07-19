@@ -592,7 +592,7 @@ struct alg_var {
 
 void init_alg_var_set ( struct alg_var_set* set )
 {
-        alg_init ( llist, sizeof(struct alg_var), 1, &set->var_set );
+        alg_init ( llist, &set->var_set, sizeof(struct alg_var), 1 );
 }
 
 void free_alg_var_set ( struct alg_var_set* set )
@@ -608,13 +608,13 @@ void alg_var_set_declare( char* name, void* data, int size, struct alg_var_set *
         memcpy ( var.ptr, data, size );
         alg_iter(struct alg_var) iter;
 #define cmp_name( _data, _iter )         (!strcmp ( (_data).name, (_iter)->name ))
-        alg_find ( llist, var, iter, cmp_name, &set->var_set );
+        alg_find ( llist, &set->var_set, var, iter, cmp_name );
         if ( iter != nullptr ) {
                 struct alg_var* exist = &alg_access ( iter );
                 exist->ptr = var.ptr;
         } else {
                 var.name = alg_alloc_string ( name );
-                alg_insert ( llist, var, iter, cmp_name, &set->var_set );
+                alg_insert ( llist, &set->var_set, var, iter, cmp_name );
         }
 #undef cmp_name
 }

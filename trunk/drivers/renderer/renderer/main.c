@@ -226,8 +226,8 @@ static void simple_rt_pipeline_init ( struct alg_named_params *global_params )
         vertdefn_fix ( &vdefn );
         rtcontext_bind_vertdefn ( &vdefn, &g_rtctx );
 
-        g_vs = create_shader ( VERTEX_SHADER, false, SHADER_SPEC_BUILTIN );
-        g_fs = create_shader ( FRAGMENT_SHADER, false, SHADER_SPEC_BUILTIN );
+        g_vs = create_shader ( SHADER_STAGE_VERTEX, false, SHADER_SPEC_BUILTIN );
+        g_fs = create_shader ( SHADER_STAGE_FRAGMENT, false, SHADER_SPEC_BUILTIN );
         shader_add_function ( "vs_to_modelview_a", g_vs );
         shader_add_function ( "fs_pure_color_a", g_fs );
         shader_finalize ( g_vs );

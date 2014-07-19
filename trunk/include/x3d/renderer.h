@@ -45,6 +45,12 @@ enum RENDER_SPEC_IDR {
         RENDER_SPEC_HW_DIRECTX
 };
 
+enum RENDER_ACC_IDR {
+        RENDER_ACC_LINEAR,
+        RENDER_ACC_GRID,
+        RENDER_ACC_BVH
+};
+
 enum RENDER_ENVIRONMENT {
         RENDER_ENV_SPEC,
         RENDER_ENV_PROBE,
@@ -52,6 +58,10 @@ enum RENDER_ENVIRONMENT {
         RENDER_ENV_THREAD,
         RENDER_ENV_ANTIALIAS,
         RENDER_ENV_FILTERING,
+};
+
+enum RENDER_OP {
+        RENDER_OP_RADIANCE              /* rad dest, rda, pipe, lm, geopipe */
 };
 
 struct lcrenderer;
@@ -193,10 +203,10 @@ __dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer
 __dlexport struct render_operand* render_tree_create ( struct render_tree *tree );
 __dlexport struct render_operand* render_tree_find ( int pos_id, struct render_tree *tree );
 __dlexport int render_tree_create_child ( struct render_operand* parent,
-                                          struct render_operand* child,
-                                          struct render_tree *tree );
+                struct render_operand* child,
+                struct render_tree *tree );
 __dlexport void render_tree_create_environment ( struct render_operand* env,
-                                                 struct render_tree* tree );
+                struct render_tree* tree );
 __dlexport int render_tree_first ( struct render_tree *tree );
 __dlexport int render_tree_next ( int pos_id, struct render_tree *tree );
 __dlexport struct alg_list* render_tree_environment ( struct render_tree *tree );

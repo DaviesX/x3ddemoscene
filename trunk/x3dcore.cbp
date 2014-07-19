@@ -203,12 +203,16 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/colorspectrum.h" />
-		<Unit filename="drivers/renderer/renderer/dbg_rasterizer.h" />
-		<Unit filename="drivers/renderer/renderer/dbg_vertex_processor.h" />
-		<Unit filename="drivers/renderer/renderer/intersectproc.c">
+		<Unit filename="drivers/renderer/renderer/compositepipeline.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="drivers/renderer/renderer/intersectproc.h" />
+		<Unit filename="drivers/renderer/renderer/compositepipeline.h" />
+		<Unit filename="drivers/renderer/renderer/dbg_rasterizer.h" />
+		<Unit filename="drivers/renderer/renderer/dbg_vertex_processor.h" />
+		<Unit filename="drivers/renderer/renderer/fbo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/fbo.h" />
 		<Unit filename="drivers/renderer/renderer/lcrenderer.h" />
 		<Unit filename="drivers/renderer/renderer/main.c">
 			<Option compilerVar="CC" />
@@ -249,13 +253,22 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/rtrenderer.h" />
+		<Unit filename="drivers/renderer/renderer/shaderformulate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/shaderformulate.h" />
 		<Unit filename="drivers/renderer/renderer/surface.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/surface.h" />
+		<Unit filename="drivers/renderer/renderer/trianglebuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/renderer/trianglebuffer.h" />
 		<Unit filename="drivers/renderer/renderer/vbo.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="drivers/renderer/renderer/vbo.h" />
 		<Unit filename="drivers/renderer/renderer/vertattri_lerp.h" />
 		<Unit filename="drivers/renderer/renderer/vertexprocessor.c">
 			<Option compilerVar="CC" />
@@ -275,6 +288,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/shader/main.h" />
+		<Unit filename="drivers/renderer/shader/ptshader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="drivers/renderer/shader/ptshader.h" />
 		<Unit filename="drivers/renderer/shader/rtshader.h">
 			<Option compilerVar="CC" />
 		</Unit>

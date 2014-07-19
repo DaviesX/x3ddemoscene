@@ -1,11 +1,14 @@
 /* ptrenderer.c: interface of path tracing renderer go here */
 #include <x3d/renderer.h>
+#include <x3d/renderable.h>
 #include "lcrenderer.h"
 #include "ptrenderer.h"
 
+struct rda_context;
+
 
 struct pt_renderer {
-        void* something;
+        struct render_bytecode bytecode;
 };
 
 void init_ptrenderer ( struct lcrenderer_ops *ops )
@@ -32,10 +35,20 @@ void free_pt_renderer ( struct pt_renderer* r )
 
 void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* r )
 {
+        r->bytecode = *bytecode;
 }
 
 void pt_renderer_render ( struct pt_renderer* r )
 {
+        char* p_instr = r->bytecode.instr;
+        while ( true ) {
+                char op = *p_instr;
+                switch ( op ) {
+                case RENDER_OP_RADIANCE: {
+                        break;
+                }
+                }
+        }
 }
 
 void pt_renderer_output ( struct pt_renderer* r )

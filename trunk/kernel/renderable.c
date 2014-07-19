@@ -46,7 +46,7 @@ char *rda_get_name ( struct renderable *rda )
 }
 
 struct rda_instance *rda_instance_create ( struct matrix4x4 *transform,
-                                           struct renderable *rda )
+                struct renderable *rda )
 {
         return nullptr;
 }
@@ -134,7 +134,7 @@ void rda_context_post_request (
 }
 
 struct rda_instance *rda_context_get_i ( int i, enum RENDERABLE_IDR type,
-                                         struct rda_context *ctx )
+                struct rda_context *ctx )
 {
         return ctx->rda[type][i];
 };

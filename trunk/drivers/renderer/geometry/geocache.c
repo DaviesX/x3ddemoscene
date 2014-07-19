@@ -79,7 +79,7 @@ void geocache_build_pass ( uuid_t id, enum PRIMPART_IDR part_method,
 
 void geocache_add_geometry ( struct geometry *geo, uuid_t id, struct geocache *gc )
 {
-        alg_push_back ( list, geo, &gc->pass[id].geo );
+        alg_push_back ( list, &gc->pass[id].geo, geo );
         if ( gc->pass[id].desc.copy_primitve ) {
                 struct shape geo_shape;
                 geometry_get_shape ( geo, &geo_shape );

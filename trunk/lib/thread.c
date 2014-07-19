@@ -186,9 +186,9 @@ static bool retrieve_task ( struct work_group *group, struct thread_ctx *thread,
         if ( active ) {
                 /* fetch new task and mark the new task as not being processed */
                 alg_iter(struct thr_task*) fetch;
-                alg_last ( llist, fetch, &group->tasks );
+                alg_last ( llist, &group->tasks, fetch );
                 *task = alg_access ( fetch );
-                alg_pop_back ( llist, fetch, &group->tasks );
+                alg_pop_back ( llist, &group->tasks, fetch );
                 (*task)->is_waiting = false;
                 (*task)->binded_thr = thread;
         }
@@ -218,8 +218,8 @@ static void workgroup_make_inactive ( struct work_group *group )
         init_trap ( &group->lock[LOCK_THREAD] );
         group->n_tasks = 0;
         group->n_threads = 0;
-        alg_init ( llist, sizeof(struct thr_task*), 0, &group->tasks );
-        alg_init ( llist, sizeof(struct thread_ctx*), 0, &group->threads );
+        alg_init ( llist, &group->tasks, sizeof(struct thr_task*), 0 );
+        alg_init ( llist, &group->threads, sizeof(struct thread_ctx*), 0 );
 }
 
 static void workgroup_make_active ( int n_thread, struct work_group *group )
@@ -279,8 +279,8 @@ static struct thread_ctx *workgroup_addthread ( struct work_group *group )
         /* add into the list */
         trap_on_thread ( &group->lock[LOCK_THREAD] );
         alg_iter(struct thread_ctx*)    iter;
-        alg_push_back ( llist, thread, &group->threads );
-        alg_last ( llist, iter, &group->threads );
+        alg_push_back ( llist, &group->threads, thread );
+        alg_last ( llist, &group->threads, iter );
         thread->addr_id = iter;
         ((struct thread_ctx **) thread->addr_id)[0] = thread;
         group->n_threads ++;
@@ -300,7 +300,7 @@ static void workgroup_removethread ( struct thread_ctx *thread, struct work_grou
 
         /* remove it from the thread list */
         trap_on_thread ( &group->lock[LOCK_THREAD] );
-        alg_remove ( llist, thread->addr_id, &group->threads );
+        alg_remove ( llist, &group->threads, thread->addr_id );
         ((struct thread_ctx **) thread->addr_id)[0] = nullptr;
         remove_thread_trap ( &group->lock[LOCK_THREAD] );
 
@@ -312,8 +312,8 @@ static void workgroup_removeallthread ( struct work_group *group )
         trap_on_thread ( &group->lock[LOCK_THREAD] );
         alg_iter(struct thread_ctx*)    curr_pos;
         alg_iter(struct thread_ctx*)    end;
-        alg_first ( llist, curr_pos, &group->threads );
-        alg_null ( llist, end, &group->threads );
+        alg_first ( llist, &group->threads, curr_pos );
+        alg_null ( llist, &group->threads, end );
 
         while ( curr_pos != end ) {
                 struct thread_ctx *thread = alg_access(curr_pos);
@@ -324,12 +324,12 @@ static void workgroup_removeallthread ( struct work_group *group )
                 join_thread ( thread );
 
                 /* remove it from the thread list */
-                alg_remove ( llist, thread->addr_id, &group->threads );
+                alg_remove ( llist, &group->threads, thread->addr_id );
                 alg_access ( thread->addr_id ) = nullptr;
 
                 free_fix ( thread );
                 /* get next thread */
-                alg_next ( llist, curr_pos, &group->threads )
+                alg_next ( llist, &group->threads, curr_pos )
         }
         remove_thread_trap ( &group->lock[LOCK_THREAD] );
 }
@@ -384,8 +384,8 @@ static void workgroup_abandon ( struct work_group *group )
 static void workgroup_addtask ( struct thr_task *task, struct work_group *group )
 {
         trap_on_thread ( &group->lock[LOCK_TASK] );
-        alg_push_back ( llist, task, &group->tasks );
-        alg_last ( llist, task->addr_id, &group->tasks );
+        alg_push_back ( llist, &group->tasks, task );
+        alg_last ( llist, &group->tasks, task->addr_id );
         group->n_tasks ++;
         remove_counter_trap ( &group->idler );
         remove_thread_trap ( &group->lock[LOCK_TASK] );
@@ -420,8 +420,8 @@ static void workgroup_removealltask ( struct work_group *group )
         trap_on_thread ( &group->lock[LOCK_TASK] );
         alg_iter(struct thr_task*)      curr_pos;
         alg_iter(struct thr_task*)      end;
-        alg_first ( llist, curr_pos, &group->tasks );
-        alg_null ( llist, end, &group->tasks );
+        alg_first ( llist, &group->tasks, curr_pos );
+        alg_null ( llist, &group->tasks, end );
 
         while ( curr_pos != end ) {
                 struct thr_task *task = alg_access ( curr_pos );
@@ -444,7 +444,7 @@ static void workgroup_removealltask ( struct work_group *group )
                         trap_on_thread ( &group->lock[LOCK_TASK] );
                         free_fix ( task );
                 }
-                alg_next ( llist, curr_pos, &group->tasks );
+                alg_next ( llist, &group->tasks, curr_pos );
         }
         remove_thread_trap ( &group->lock[LOCK_TASK] );
 }

@@ -171,8 +171,8 @@ demo_mode:
         widget_get_size ( edit->window, edit->draw_region,
                           &x, &y, &width, &height );
         RenderRegionActiveX* rrax = new RenderRegionActiveX ( cRenderRegion,
-                                                             edit->draw_region,
-                                                             x, y, width, height );
+                        edit->draw_region,
+                        x, y, width, height );
         rrax->bind_callback ( "notify_idle", (f_Generic) idle_switch_callback, edit );
         rrax->bind_callback ( "notify_resize", (f_Generic) window_reize_callback, edit );
         this->m_editor->add_activex ( rrax );

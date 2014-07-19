@@ -1,0 +1,60 @@
+fixed symbol loader; fixed editor
+--This line, and those below, will be ignored--
+
+M    trunk/build/sample_entry
+D    trunk/drivers/renderer/renderer/irenderer.h
+A  + trunk/drivers/renderer/renderer/lcrenderer.h
+M    trunk/drivers/renderer/renderer/ptrenderer.c
+M    trunk/drivers/renderer/renderer/ptrenderer.h
+M    trunk/drivers/renderer/renderer/renderer.c
+M    trunk/drivers/renderer/renderer/rtrenderer.c
+M    trunk/drivers/renderer/renderer/rtrenderer.h
+A    trunk/etc/editor/editor_state
+M    trunk/etc/editor/main_editor_window.glade
+A    trunk/external/sample_entry/cscope.out
+M    trunk/external/sample_entry/main.cpp
+M    trunk/external/sample_entry/sample_entry.cbp
+A    trunk/external/sample_entry/sample_entry.cscope_file_list
+M    trunk/external/sample_entry/sample_entry.depend
+M    trunk/external/sample_entry/sample_entry.layout
+M    trunk/include/renderer/renderer.h
+M    trunk/include/usr/usr_editor.hpp
+D    trunk/include/usr/usr_editorbackend.hpp
+A  + trunk/include/usr/usr_editorfrontend.hpp
+M    trunk/include/usr/usr_kernel.hpp
+M    trunk/include/x3d/common.h
+M    trunk/include/x3d/debug.h
+M    trunk/include/x3d/renderer.h
+M    trunk/kernel/debug.c
+M    trunk/kernel/init.c
+M    trunk/lib/algorithm.c
+M    trunk/lib/algorithm.h
+M    trunk/lib/logout.c
+M    trunk/lib/logout.h
+M    trunk/lib/symlib.c
+M    trunk/lib/thread.c
+M    trunk/lib/thread.h
+M    trunk/sample_entry
+M    trunk/usr/editor/editor.cpp
+M    trunk/usr/editor/editrenderconf.cpp
+M    trunk/usr/editor/editrenderregion.cpp
+M    trunk/usr/editor/entity_editor.cpp
+M    trunk/usr/editor/gtkgui.cpp
+A  + trunk/usr/editor/gtkgui.hpp
+D    trunk/usr/editor/gui.hpp
+M    trunk/usr/editor/main_editor.cpp
+M    trunk/usr/editor/main_editor.hpp
+M    trunk/usr/editor/renderable_editor.cpp
+A    trunk/usr/editor/renderer_configurator.cpp
+M    trunk/usr/editor/splash_screen.cpp
+M    trunk/usr/editor/splash_screen.hpp
+D    trunk/usr/rename
+M    trunk/usr/usr.cbp
+M    trunk/usr/usr.depend
+M    trunk/usr/usr.layout
+M    trunk/usr/usr_kernel.cpp
+M    trunk/x3d.workspace.layout
+M    trunk/x3d_log
+M    trunk/x3dcore.cbp
+M    trunk/x3dcore.depend
+M    trunk/x3dcore.layout

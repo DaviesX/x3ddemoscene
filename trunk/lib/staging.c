@@ -264,7 +264,7 @@ int stager_begin_entry ( char *name, struct entry_record *rec )
         entry.buff = alloc_var ( sizeof ( untyped ), 0 );
         entry.uid = layer_uid;
         int i = alg_list_n ( &stg->entry );
-        alg_push_back ( list, entry, &stg->entry );
+        alg_push_back ( list, &stg->entry, entry );
         stg->num_entry ++;
 
         /* Insert the current position to the hash linked list */

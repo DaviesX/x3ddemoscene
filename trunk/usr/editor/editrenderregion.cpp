@@ -36,7 +36,7 @@ public:
 
 
 RenderRegionActiveX::RenderRegionActiveX ( string name, void *handle,
-                                           int x, int y, int w, int h ) :
+                int x, int y, int w, int h ) :
         EditorActiveX ( name, sizeof(RenderRegionActiveX), EDIT_ACTIVEX_RENDER_REGION )
 {
         this->pimpl = new RenderRegionInt ();

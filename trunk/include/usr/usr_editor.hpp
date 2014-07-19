@@ -48,9 +48,18 @@ public:
         Editor ( void );
         ~Editor ( void );
 
-        void open ( void ) { m_is_open = true; }
-        void close ( void )  { m_is_open = false; }
-        bool is_open ( void ) { return m_is_open; }
+        void open ( void )
+        {
+                m_is_open = true;
+        }
+        void close ( void )
+        {
+                m_is_open = false;
+        }
+        bool is_open ( void )
+        {
+                return m_is_open;
+        }
 
         void update ( void );
         void dispatch_signal ( void );

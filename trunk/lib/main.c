@@ -348,7 +348,7 @@ static void llist_container_c ( struct alg_named_params *param )
 {
         bool failed = false;
         d_alg_llist(int) llist;
-        alg_init ( llist, sizeof (int), 0, &llist );
+        alg_init ( llist, &llist, sizeof (int), 0 );
 
         const int n = 10;
         int array[n];
@@ -358,13 +358,13 @@ static void llist_container_c ( struct alg_named_params *param )
         }
 
         for ( i = 0; i < n; i ++ ) {
-                alg_push_back ( llist, array[i], &llist );
+                alg_push_back ( llist, &llist, array[i] );
         }
 
 #define cmp_llist( _data, _iter )                (_data == alg_access(_iter))
         for ( i = 0; i < n; i ++ ) {
                 alg_iter(int) x;
-                alg_find ( llist, array[i], x, cmp_llist, &llist );
+                alg_find ( llist, &llist, array[i], x, cmp_llist );
                 if ( x != nullptr ) {
                         if ( *x != array[i] ) {
                                 log_normal ( "x != array[i]" );
@@ -384,14 +384,14 @@ static void llist_container_c ( struct alg_named_params *param )
         }
 
         failed = false;
-        alg_init ( llist, sizeof(int), 1, &llist );
+        alg_init ( llist, &llist, sizeof(int), 1 );
         for ( i = 0; i < n; i ++ ) {
-                alg_push_front ( llist, array[i], &llist );
+                alg_push_front ( llist, &llist, array[i] );
         }
 
         for ( i = 0; i < n; i ++ ) {
                 alg_iter(int) x;
-                alg_last ( llist, x, &llist );
+                alg_last ( llist, &llist, x );
                 if ( x != nullptr ) {
                         if ( alg_access(x) != array[n - i - 1] ) {
                                 log_normal ( "x != array[n - i]" );
@@ -401,7 +401,7 @@ static void llist_container_c ( struct alg_named_params *param )
                         log_normal ( "over popped" );
                         failed = true;
                 }
-                alg_pop_back ( llist, x, &llist );
+                alg_pop_back ( llist, &llist, x );
         }
         alg_free ( llist, &llist );
 

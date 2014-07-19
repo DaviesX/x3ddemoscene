@@ -118,7 +118,7 @@ void Kernel::stop ( void )
 
 bool Kernel::register_proxy ( KernelProxy *proxy )
 {
-/* @todo (davis#1#): <usr_kernel> thread safe register  */
+        /* @todo (davis#1#): <usr_kernel> thread safe register  */
         if ( this->is_running )
                 return false;
         else {
@@ -130,7 +130,7 @@ bool Kernel::register_proxy ( KernelProxy *proxy )
 
 bool Kernel::unregister_proxy ( string m_name )
 {
-/* @todo (davis#2#): <usr_kernel> thread safe unregister  */
+        /* @todo (davis#2#): <usr_kernel> thread safe unregister  */
         if ( this->is_running )
                 return false;
 

@@ -47,7 +47,7 @@ static struct renderer_container        g_rend_cont;
  */
 void renderer_kernel_init ( void )
 {
-        alg_init ( llist, sizeof(p_renderer_t), 1, &g_rend_cont.renderer );
+        alg_init ( llist, &g_rend_cont.renderer, sizeof(p_renderer_t), 1 );
 }
 
 /** \brief delete the global renderer container.
@@ -58,13 +58,13 @@ void renderer_kernel_free ( void )
 {
         alg_iter(struct renderer*) iter;
         alg_iter(struct renderer*) last;
-        alg_first ( llist, iter, &g_rend_cont.renderer );
-        alg_last ( llist, last, &g_rend_cont.renderer );
+        alg_first ( llist, &g_rend_cont.renderer, iter );
+        alg_last ( llist, &g_rend_cont.renderer, last );
         while ( iter != last ) {
                 free_renderer ( alg_access ( iter ) );
-                alg_next ( llist, iter, &g_rend_cont.renderer );
+                alg_next ( llist, &g_rend_cont.renderer, iter );
         }
-        free_alg_llist ( &g_rend_cont.renderer );
+        alg_free ( llist, &g_rend_cont.renderer );
         zero_obj ( &g_rend_cont );
 }
 
@@ -82,7 +82,7 @@ uuid_t renderer_container_add ( struct renderer *rend )
                 rend = create_renderer ( RENDERER_UNDETERMINATE );
 
         rend->rend_id = alg_gen_uuid ();
-        alg_push_back ( llist, &rend, rend_cont );
+        alg_push_back ( llist, rend_cont, &rend );
         return rend->rend_id;
 }
 
@@ -97,8 +97,8 @@ void renderer_container_remove ( uuid_t id )
 {
         struct alg_llist *rend_cont = &g_rend_cont.renderer;
         alg_iter(struct renderer*) iter;
-        alg_find ( llist, id, iter, cmp_rend_id, rend_cont );
-        alg_remove ( llist, iter, rend_cont );
+        alg_find ( llist, rend_cont, id, iter, cmp_rend_id );
+        alg_remove ( llist, rend_cont, iter );
         free_renderer ( alg_access ( iter ) );
 }
 
@@ -133,32 +133,32 @@ bool renderer_import ( struct symbol_set *symbols )
         bool ret = true;
 
         if ( !(t_ops->lcrenderer_init =
-                (f_LCRenderer_Init) symlib_ret_abi ( "lcrenderer_init", symbols )) ) {
+                       (f_LCRenderer_Init) symlib_ret_abi ( symbols, "lcrenderer_init" )) ) {
                 log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_init" );
                 ret = false;
         }
         if ( !(t_ops->lcrenderer_create =
-                (f_LCRenderer_Create) symlib_ret_abi ( "lcrenderer_create", symbols )) ) {
+                       (f_LCRenderer_Create) symlib_ret_abi ( symbols, "lcrenderer_create" )) ) {
                 log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_create" );
                 ret = false;
         }
         if ( !(t_ops->lcrenderer_free =
-                (f_LCRenderer_Free) symlib_ret_abi ( "lcrenderer_free", symbols )) ) {
+                       (f_LCRenderer_Free) symlib_ret_abi ( symbols, "lcrenderer_free" )) ) {
                 log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_free" );
                 ret = false;
         }
         if ( !(t_ops->lcrenderer_update =
-                (f_LCRenderer_Update) symlib_ret_abi ( "lcrenderer_update", symbols )) ) {
+                       (f_LCRenderer_Update) symlib_ret_abi ( symbols, "lcrenderer_update" )) ) {
                 log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_free" );
                 ret = false;
         }
         if ( !(t_ops->lcrenderer_render =
-                (f_LCRenderer_Render) symlib_ret_abi ( "lcrenderer_render", symbols )) ) {
+                       (f_LCRenderer_Render) symlib_ret_abi ( symbols, "lcrenderer_render" )) ) {
                 log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_render" );
                 ret = false;
         }
         if ( !(t_ops->lcrenderer_output =
-                (f_LCRenderer_Output) symlib_ret_abi ( "lcrenderer_output", symbols )) ) {
+                       (f_LCRenderer_Output) symlib_ret_abi ( symbols, "lcrenderer_output" )) ) {
                 log_severe_err_dbg ( "fail to retrieve abi: lcrenderer_output" );
                 ret = false;
         }
@@ -335,14 +335,14 @@ __dlexport struct render_operand* render_tree_find ( int pos_id, struct render_t
 }
 
 __dlexport int render_tree_create_child ( struct render_operand* parent,
-                                          struct render_operand* child,
-                                          struct render_tree *tree )
+                struct render_operand* child,
+                struct render_tree *tree )
 {
         return -1;
 }
 
 __dlexport void render_tree_create_environment ( struct render_operand* env,
-                                                 struct render_tree* tree )
+                struct render_tree* tree )
 {
 }
 __dlexport int render_tree_first ( struct render_tree *tree )

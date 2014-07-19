@@ -46,6 +46,7 @@
 #define cast( _var )			(typeof (_var))
 
 typedef unsigned char untyped;
+typedef unsigned int address_t;
 typedef void (*f_Generic) ( void );
 
 #ifdef X3D_COMPILER_GCC

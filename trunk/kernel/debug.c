@@ -28,8 +28,8 @@ bool init_debugger ( int argc, char *argv[], struct symbol_set *symbols )
 
         int n;
         for ( n = 0; n < cNumDbgPosition; n ++ )
-                alg_init ( list, sizeof(struct unit_test), 0,
-                           &dbg->test_case[n] );
+                alg_init ( list, &dbg->test_case[n],
+                           sizeof(struct unit_test), 0 );
         int i;
         for ( i = 0; i < argc - 1; i ++ ) {
                 if ( !strcmp ( "--test", argv[i] ) ) {
@@ -52,10 +52,10 @@ bool init_debugger ( int argc, char *argv[], struct symbol_set *symbols )
 
                         struct unit_test ut;
                         ut.test_name    = alg_alloc_string ( test );
-                        ut.ut_init      = (f_UT_Init) symlib_ret_abi ( test_init, symbols );
-                        ut.ut_run       = (f_UT_Run)  symlib_ret_abi ( test_func, symbols );
-                        ut.ut_free      = (f_UT_Free) symlib_ret_abi ( test_free, symbols );
-                        ut.ut_pos       = (f_UT_Pos)  symlib_ret_abi ( test_pos, symbols );
+                        ut.ut_init      = (f_UT_Init) symlib_ret_abi ( symbols, test_init );
+                        ut.ut_run       = (f_UT_Run)  symlib_ret_abi ( symbols, test_func );
+                        ut.ut_free      = (f_UT_Free) symlib_ret_abi ( symbols, test_free );
+                        ut.ut_pos       = (f_UT_Pos)  symlib_ret_abi ( symbols, test_pos );
                         if ( !ut.ut_init || !ut.ut_run ||
                              !ut.ut_free || !ut.ut_pos ) {
                                 log_severe_err_dbg ( "couldn't find symbols" );
@@ -63,13 +63,13 @@ bool init_debugger ( int argc, char *argv[], struct symbol_set *symbols )
                         }
                         ut.pos          = ut.ut_pos ( &dbg->dbg_env );
                         if ( ut.pos & DBG_KERNEL_START ) {
-                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_START] );
+                                alg_push_back ( list, &dbg->test_case[DBG_INDEX_START], ut );
                         } else if ( ut.pos & DBG_KERNEL_LOOP_ONCE ) {
-                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_LOOP_ONCE] );
+                                alg_push_back ( list, &dbg->test_case[DBG_INDEX_LOOP_ONCE], ut );
                         } else if ( ut.pos & DBG_KERNEL_LOOP ) {
-                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_LOOP] );
+                                alg_push_back ( list, &dbg->test_case[DBG_INDEX_LOOP], ut );
                         } else if ( ut.pos & DBG_KERNEL_HALT ) {
-                                alg_push_back ( list, ut, &dbg->test_case[DBG_INDEX_HALT] );
+                                alg_push_back ( list, &dbg->test_case[DBG_INDEX_HALT], ut );
                         } else {
                                 log_severe_err_dbg ( "invalid position speciifed by: %s", test_pos );
                                 return false;

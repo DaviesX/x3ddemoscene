@@ -111,6 +111,8 @@ static bool match_symbol ( char* str, uint32_t* addr, int* size, enum SYMBOL_IDR
                                         *type = SYMBOL_MISC;
                                 else if ( !strncmp ( "FUNC", buf, ibuf ) )
                                         *type = SYMBOL_ABI;
+                                else if ( !strncmp ( "OBJECT", buf, ibuf ) )
+                                        *type = SYMBOL_VARIABLE;
                                 else
                                         *type = SYMBOL_MISC;
 
@@ -275,7 +277,7 @@ static bool dump ( char* filename, struct symbol_set *symbols )
                 }
                 /* load in the symbols */
                 struct dlsymbol         s_temp;
-                unsigned int            addr;
+                address_t               addr;
                 int                     size;
                 enum SYMBOL_IDR         type;
                 char*                   name;
@@ -287,14 +289,21 @@ static bool dump ( char* filename, struct symbol_set *symbols )
                                 s_temp.func_ptr = *(f_Generic *) &addr;
                                 s_temp.name = name;
                                 s_temp.size = size;
-                                alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_ABI] );
+                                alg_push_back ( list, &symbols->symbol[SYMBOL_ABI], s_temp );
+                                break;
+                        }
+                        case SYMBOL_VARIABLE: {
+                                s_temp.value = *(void**) &addr;
+                                s_temp.name = name;
+                                s_temp.size = size;
+                                alg_push_back ( list, &symbols->symbol[SYMBOL_MISC], s_temp );
                                 break;
                         }
                         case SYMBOL_MISC: {
                                 s_temp.value = *(void**) &addr;
                                 s_temp.name = name;
                                 s_temp.size = size;
-                                alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_MISC] );
+                                alg_push_back ( list, &symbols->symbol[SYMBOL_MISC], s_temp );
                                 break;
                         }
                         default: {
@@ -350,8 +359,8 @@ void init_symlib ( struct symbol_set *symbols )
 {
         int i;
         for ( i = 0; i < cNumSymbolCate; i ++ ) {
-                alg_init ( list, sizeof (struct dlsymbol), 100,
-                           &symbols->symbol[i] );
+                alg_init ( list, &symbols->symbol[i],
+                           sizeof (struct dlsymbol), 100 );
         }
         symbols->filename = nullptr;
         symbols->handle = nullptr;
@@ -367,7 +376,7 @@ void free_symlib ( struct symbol_set *symbols )
         symlib_unload ( symbols );
 }
 
-bool symlib_load ( char *filename, struct symbol_set *symbols )
+bool symlib_load ( struct symbol_set* symbols, char* filename )
 {
         if ( symbols->is_loaded ) {
                 log_mild_err_dbg ( "symbol set has been occupied by file: %s",
@@ -388,7 +397,7 @@ bool symlib_load ( char *filename, struct symbol_set *symbols )
         return true;
 }
 
-bool symlib_unload ( struct symbol_set *symbols )
+bool symlib_unload ( struct symbol_set* symbols )
 {
         if ( !symbols->is_loaded ) {
                 log_mild_err_dbg ( "symbol set wasn't loaded" );
@@ -402,34 +411,34 @@ bool symlib_unload ( struct symbol_set *symbols )
         return true;
 }
 
-void symlib_add_abi ( char *name, f_Generic func, struct symbol_set *symbols )
+void symlib_add_abi ( struct symbol_set* symbols, char* name, f_Generic func )
 {
         struct dlsymbol         s_temp;
         s_temp.func_ptr = func;
         s_temp.name = alg_alloc_string ( name );
         s_temp.size = 0;
-        alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_ABI] );
+        alg_push_back ( list, &symbols->symbol[SYMBOL_ABI], s_temp );
 }
 
-void symlib_add_cstring ( char *name, char *string, struct symbol_set *symbols )
+void symlib_add_cstring ( struct symbol_set* symbols, char* name, char* string  )
 {
         struct dlsymbol         s_temp;
         s_temp.const_char = alg_alloc_string ( string );
         s_temp.name = alg_alloc_string ( name );
         s_temp.size = strlen ( string ) + 1;
-        alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_CONST_CSTRING] );
+        alg_push_back ( list, &symbols->symbol[SYMBOL_CONST_CSTRING], s_temp );
 }
 
-void symlib_add_variable ( char *name, void *value, int size, struct symbol_set *symbols )
+void symlib_add_variable ( struct symbol_set* symbols, char* name, void* value, int size )
 {
         struct dlsymbol         s_temp;
         s_temp.value = value;
         s_temp.name = alg_alloc_string ( name );
         s_temp.size = size;
-        alg_push_back ( list, s_temp, &symbols->symbol[SYMBOL_VARIABLE] );
+        alg_push_back ( list, &symbols->symbol[SYMBOL_VARIABLE], s_temp );
 }
 
-f_Generic symlib_ret_abi ( char *sym_name, struct symbol_set *symbols )
+f_Generic symlib_ret_abi ( struct symbol_set* symbols, char* sym_name )
 {
         struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_ABI] );
         int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
@@ -442,7 +451,22 @@ f_Generic symlib_ret_abi ( char *sym_name, struct symbol_set *symbols )
         return nullptr;
 }
 
-struct dlsymbol* symlib_ret_misc ( char *sym_name, struct symbol_set *symbols )
+void* symlib_ret_variable ( struct symbol_set* symbols, char* sym_name, int* size )
+{
+        struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_ABI] );
+        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
+        int i;
+        for ( i = 0; i < num_sym; i ++ ) {
+                if ( sym[i].name && !strcmp ( sym_name, sym[i].name ) )
+                        if ( size != nullptr )
+                                *size = sym[i].size;
+                return sym[i].value;
+        }
+        log_mild_err_dbg ( "couldn't find such symbol as: %s", sym_name );
+        return nullptr;
+}
+
+struct dlsymbol* symlib_ret_misc ( struct symbol_set* symbols, char* sym_name )
 {
         struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_MISC] );
         int num_sym = alg_n(list, &symbols->symbol[SYMBOL_MISC]);

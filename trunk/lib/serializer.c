@@ -22,13 +22,13 @@ static void write_bit ( uint8_t data, int n_bit, struct byte_bit *pos, void *des
  */
 static void set_mem_size ( int new_size, struct serializer *serial )
 {
-	void *tmp = malloc ( new_size );
-	memset ( tmp, 0, new_size );
-	memcpy ( tmp, serial->data_stream, serial->size );
+        void *tmp = malloc ( new_size );
+        memset ( tmp, 0, new_size );
+        memcpy ( tmp, serial->data_stream, serial->size );
 
-	free ( serial->data_stream );
-	serial->data_stream = tmp;
-	serial->total = new_size;
+        free ( serial->data_stream );
+        serial->data_stream = tmp;
+        serial->total = new_size;
 }
 
 /** @brief 读取指定数量的binary位
@@ -41,25 +41,25 @@ static void set_mem_size ( int new_size, struct serializer *serial )
  */
 static uint8_t read_bit ( int n_bit, struct byte_bit *pos, void *dest_mem )
 {
-	uint8_t *byte_mem = dest_mem;
-	uint8_t data = 0;
+        uint8_t *byte_mem = dest_mem;
+        uint8_t data = 0;
 
-	/* 逐位扫描 byte_mem
-	 * 数据：1001 0101
-	 * 掩码：0001 0000
-	 * 结果：0001 0000
-	 * tmp：0000 0001 */
-	int i;
-	for ( i = 0; i < n_bit; i ++ ) {
-		uint8_t mask = 1 << pos->bit;
-		uint8_t tmp = (byte_mem[pos->byte] & mask) >> pos->bit;
-		data |= tmp << i;
+        /* 逐位扫描 byte_mem
+         * 数据：1001 0101
+         * 掩码：0001 0000
+         * 结果：0001 0000
+         * tmp：0000 0001 */
+        int i;
+        for ( i = 0; i < n_bit; i ++ ) {
+                uint8_t mask = 1 << pos->bit;
+                uint8_t tmp = (byte_mem[pos->byte] & mask) >> pos->bit;
+                data |= tmp << i;
 
-		pos->bit ++;			/**< 处理下一位 */
-		pos->byte += (pos->bit == 8);	/**< 如果bit == 8，那么byte进1 */
-		pos->bit %= 8;			/**< 如果bit == 8，那么byte进1位之后的bit是0，否则bit不改变 */
-	}
-	return data;
+                pos->bit ++;			/**< 处理下一位 */
+                pos->byte += (pos->bit == 8);	/**< 如果bit == 8，那么byte进1 */
+                pos->bit %= 8;			/**< 如果bit == 8，那么byte进1位之后的bit是0，否则bit不改变 */
+        }
+        return data;
 }
 
 /** @brief 写入指定数量的binary位
@@ -73,23 +73,23 @@ static uint8_t read_bit ( int n_bit, struct byte_bit *pos, void *dest_mem )
  */
 static void write_bit ( uint8_t data, int n_bit, struct byte_bit *pos, void *dest_mem )
 {
-	uint8_t *byte_mem = dest_mem;
+        uint8_t *byte_mem = dest_mem;
 
-	/* 逐位扫描 data
-	 * 数据：1001 0101
-	 * 掩码：0001 0000
-	 * 结果：0001 0000
-	 * tmp：0000 0001 */
-	int i;
-	for ( i = 0; i < n_bit; i ++ ) {
-		uint8_t mask = 1 << i;
-		uint8_t tmp = (data & mask) >> i;
-		byte_mem[pos->byte] |= tmp << pos->bit;
+        /* 逐位扫描 data
+         * 数据：1001 0101
+         * 掩码：0001 0000
+         * 结果：0001 0000
+         * tmp：0000 0001 */
+        int i;
+        for ( i = 0; i < n_bit; i ++ ) {
+                uint8_t mask = 1 << i;
+                uint8_t tmp = (data & mask) >> i;
+                byte_mem[pos->byte] |= tmp << pos->bit;
 
-		pos->bit ++;			/**< 处理下一位 */
-		pos->byte += (pos->bit == 8);	/**< 如果bit == 8，那么byte进1 */
-		pos->bit %= 8;			/**< 如果bit == 8，那么byte进1位之后的bit是0，否则bit不改变 */
-	}
+                pos->bit ++;			/**< 处理下一位 */
+                pos->byte += (pos->bit == 8);	/**< 如果bit == 8，那么byte进1 */
+                pos->bit %= 8;			/**< 如果bit == 8，那么byte进1位之后的bit是0，否则bit不改变 */
+        }
 }
 
 /** @brief 初始化序列化器
@@ -100,13 +100,13 @@ static void write_bit ( uint8_t data, int n_bit, struct byte_bit *pos, void *des
  */
 void serial_init ( struct serializer *serial )
 {
-	serial->data_stream = malloc ( INIT_SIZE );
-	serial->read_pos.bit = 0;
-	serial->read_pos.byte = 0;
-	serial->write_pos.bit = 0;
-	serial->write_pos.byte = 0;
-	serial->size = 0;
-	serial->total = 1;
+        serial->data_stream = malloc ( INIT_SIZE );
+        serial->read_pos.bit = 0;
+        serial->read_pos.byte = 0;
+        serial->write_pos.bit = 0;
+        serial->write_pos.byte = 0;
+        serial->size = 0;
+        serial->total = 1;
 }
 
 /** @brief 释放序列化器
@@ -117,8 +117,8 @@ void serial_init ( struct serializer *serial )
  */
 void serial_free ( struct serializer *serial )
 {
-	free ( serial->data_stream );
-	memset ( serial, 0, sizeof ( *serial ) );
+        free ( serial->data_stream );
+        memset ( serial, 0, sizeof ( *serial ) );
 }
 
 /** @brief 复位读取/写入状态
@@ -130,15 +130,15 @@ void serial_free ( struct serializer *serial )
  */
 void serial_reset ( struct serializer *serial, enum SER_RESET_MODE mode )
 {
-	if ( mode & SER_RESET_READER ) {
-		serial->read_pos.bit = 0;
-		serial->read_pos.byte = 0;
-	}
-	if ( mode & SER_RESET_WRITER ) {
-		serial->write_pos.bit = 0;
-		serial->write_pos.byte = 0;
-		serial->size = 0;
-	}
+        if ( mode & SER_RESET_READER ) {
+                serial->read_pos.bit = 0;
+                serial->read_pos.byte = 0;
+        }
+        if ( mode & SER_RESET_WRITER ) {
+                serial->write_pos.bit = 0;
+                serial->write_pos.byte = 0;
+                serial->size = 0;
+        }
 }
 
 /** @brief 读取下一个区块的字节流到data，直到遇到0指示符
@@ -151,18 +151,18 @@ void serial_reset ( struct serializer *serial, enum SER_RESET_MODE mode )
  */
 void serial_read ( void *data, int *size, struct serializer *serial )
 {
-	uint8_t *dest = data;
-	int n_read = 0;
-	int indicator;
-	do {
-		dest[n_read ++] =
-			read_bit ( 8, &serial->read_pos, serial->data_stream );
-		indicator =
-			read_bit ( 1, &serial->read_pos, serial->data_stream );
-	} while ( indicator == 1 );
-	if ( size != NULL ) {
-		*size = n_read;
-	}
+        uint8_t *dest = data;
+        int n_read = 0;
+        int indicator;
+        do {
+                dest[n_read ++] =
+                        read_bit ( 8, &serial->read_pos, serial->data_stream );
+                indicator =
+                        read_bit ( 1, &serial->read_pos, serial->data_stream );
+        } while ( indicator == 1 );
+        if ( size != NULL ) {
+                *size = n_read;
+        }
 }
 
 /** @brief 写入指定size的data到序列化器
@@ -175,21 +175,21 @@ void serial_read ( void *data, int *size, struct serializer *serial )
  */
 void serial_write ( void *data, int *size, struct serializer *serial )
 {
-	uint8_t *src = data;
-	int n_write = *size;
-	int dest_size = ceil ( n_write*9.0/8.0 );
+        uint8_t *src = data;
+        int n_write = *size;
+        int dest_size = ceil ( n_write*9.0/8.0 );
 
-	if ( serial->size + dest_size > serial->total ) {
-		set_mem_size ( (serial->size + dest_size)*2, serial );
-	}
+        if ( serial->size + dest_size > serial->total ) {
+                set_mem_size ( (serial->size + dest_size)*2, serial );
+        }
 
-	int i;
-	for ( i = 0; i < n_write; i ++ ) {
-		write_bit ( src[i], 8, &serial->write_pos, serial->data_stream );
-		write_bit ( (i != n_write - 1), 1, &serial->write_pos,
-			    serial->data_stream );
-	}
-	serial->size = serial->write_pos.byte + 1;
+        int i;
+        for ( i = 0; i < n_write; i ++ ) {
+                write_bit ( src[i], 8, &serial->write_pos, serial->data_stream );
+                write_bit ( (i != n_write - 1), 1, &serial->write_pos,
+                            serial->data_stream );
+        }
+        serial->size = serial->write_pos.byte + 1;
 }
 
 /** @brief 导入序列文件到序列化器
@@ -201,37 +201,37 @@ void serial_write ( void *data, int *size, struct serializer *serial )
  */
 bool serial_import ( char *filename, struct serializer *serial )
 {
-	/* 用二进制读取模式打开文件 */
-	FILE *f_serial = fopen ( filename, "rb" );
-	if ( !f_serial ) {
-		/* 无法打开文件 */
-		printf ( "failed in opening: %s", filename );
-		goto fail;
-	}
+        /* 用二进制读取模式打开文件 */
+        FILE *f_serial = fopen ( filename, "rb" );
+        if ( !f_serial ) {
+                /* 无法打开文件 */
+                printf ( "failed in opening: %s", filename );
+                goto fail;
+        }
 
-	fseek ( f_serial, 0, SEEK_END );
-	uint32_t size = ftell ( f_serial );
-	fseek ( f_serial, 0, SEEK_SET );
-	set_mem_size ( size, serial );
+        fseek ( f_serial, 0, SEEK_END );
+        uint32_t size = ftell ( f_serial );
+        fseek ( f_serial, 0, SEEK_SET );
+        set_mem_size ( size, serial );
 
-	fread ( serial->data_stream, 1, size, f_serial );
+        fread ( serial->data_stream, 1, size, f_serial );
 
-	if ( ferror ( f_serial ) ) {
-		/* 读取出错 */
-		goto fail;
-	} else {
-		serial->size = size;
-		printf ( "%d bytes has been read from %s\n", size, filename );
-		goto succeed;
-	}
+        if ( ferror ( f_serial ) ) {
+                /* 读取出错 */
+                goto fail;
+        } else {
+                serial->size = size;
+                printf ( "%d bytes has been read from %s\n", size, filename );
+                goto succeed;
+        }
 succeed:
-	fclose ( f_serial );
-	return true;
+        fclose ( f_serial );
+        return true;
 fail:
-	if ( f_serial ) {
-		fclose ( f_serial );
-	}
-	return false;
+        if ( f_serial ) {
+                fclose ( f_serial );
+        }
+        return false;
 }
 
 /** @brief 导出序列化器到序列文件
@@ -243,29 +243,29 @@ fail:
  */
 bool serial_export ( char *filename, struct serializer *serial )
 {
-	/* 用二进制写入模式打开文件 */
-	FILE *f_serial = fopen ( filename, "wb" );
-	if ( !f_serial ) {
-		/* 无法打开文件 */
-		printf ( "failed in opening: %s", filename );
-		goto fail;
-	}
+        /* 用二进制写入模式打开文件 */
+        FILE *f_serial = fopen ( filename, "wb" );
+        if ( !f_serial ) {
+                /* 无法打开文件 */
+                printf ( "failed in opening: %s", filename );
+                goto fail;
+        }
 
-	uint32_t size = fwrite ( serial->data_stream, 1, serial->size, f_serial );
+        uint32_t size = fwrite ( serial->data_stream, 1, serial->size, f_serial );
 
-	if ( ferror ( f_serial ) ) {
-		/* 写入出错 */
-		goto fail;
-	} else {
-		printf ( "%d bytes has been written to %s\n", size, filename );
-		goto succeed;
-	}
+        if ( ferror ( f_serial ) ) {
+                /* 写入出错 */
+                goto fail;
+        } else {
+                printf ( "%d bytes has been written to %s\n", size, filename );
+                goto succeed;
+        }
 succeed:
-	fclose ( f_serial );
-	return true;
+        fclose ( f_serial );
+        return true;
 fail:
-	if ( f_serial ) {
-		fclose ( f_serial );
-	}
-	return false;
+        if ( f_serial ) {
+                fclose ( f_serial );
+        }
+        return false;
 }

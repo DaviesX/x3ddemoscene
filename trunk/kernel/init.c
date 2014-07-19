@@ -82,8 +82,8 @@ __dlexport bool kernel_start ( void )
                 return false;
 
         init_symlib ( &init->symbols );
-        if ( !symlib_load ( get_self_so ( init->argc, init->argv ),
-                            &init->symbols ) )
+        if ( !symlib_load ( &init->symbols,
+                            get_self_so(init->argc, init->argv) ) )
                 return false;
 
         if ( !init_debugger ( init->argc, init->argv, &init->symbols ) )

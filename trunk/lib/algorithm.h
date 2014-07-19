@@ -207,6 +207,19 @@ do { \
 }
 
 #define stack_is_empty( _stack )                ((_stack)->stack_ptr == (_stack)->stack)
+#define stack_ptr( _stack )                     ((void*)(_stack)->stack_ptr)
+#define stack_push_ptr( _stack, _ptr ) \
+{ \
+        ((_stack)->stack_ptr += sizeof *(_ptr)); \
+        assert ( (_stack)->stack_ptr <= (_stack)->stack + sizeof ( (_stack)->stack ) ); \
+}
+
+#define stack_pop_ptr( _stack, _ptr ) \
+{ \
+        (_ptr) = (typeof(_ptr)) (_stack)->stack_ptr; \
+        assert ( (_stack)->stack_ptr >= (_stack)->stack ); \
+        (_stack)->stack_ptr -= sizeof *(_ptr); \
+}
 
 #define get_stack_last( _stack, _a ) \
 { \
@@ -281,23 +294,23 @@ struct alg_multi_hash_btree {
 #define alg_iter( _type )                                       _type*
 #define alg_access( _iter )                                     (*(_iter))
 #define alg_n( type, _inst )                                    alg_##type##_n( _inst )
-#define alg_init( type, _elm_size, _init_count, _inst )         create_alg_##type ( _inst, _elm_size, _init_count )
+#define alg_init( type, _inst, _elm_size, _init_count )         create_alg_##type ( _inst, _elm_size, _init_count )
 #define alg_free( type, _inst )                                 free_alg_##type ( _inst )
-#define alg_push_back( type, _data, _inst )                     alg_##type##_push_back ( _data, _inst )
-#define alg_push_front( type, _data, _inst )                    alg_##type##_push_front ( _data, _inst )
-#define alg_pop_back( type, _iter, _inst )                      alg_##type##_pop_back ( _iter, _inst )
-#define alg_pop_front( type, _iter, _inst )                     alg_##type##_pop_front ( _iter, _inst )
-#define alg_first( type, _iter, _inst )                         alg_##type##_first ( _iter, _inst )
-#define alg_next( type, _iter, _inst )                          alg_##type##_next ( _iter, _inst )
-#define alg_prev( type, _iter, _inst )                          alg_##type##_prev ( _iter, _inst )
-#define alg_last( type, _iter, _inst )                          alg_##type##_last ( _iter, _inst )
-#define alg_null( type, _iter, _inst )                          alg_##type##_null ( _iter, _inst )
-#define alg_find( type, _data, _iter, _cmp, _inst )             alg_##type##_find( _data, _iter, _cmp, _inst )
-#define alg_insert( type, _data, _iter, _cmp, _inst )           alg_##type##_insert( _data, _iter, _cmp, _inst )
-#define alg_inject( type, _data, _iter, _inst )                 alg_##type##_inject( _data, _iter, _inst )
-#define alg_remove( type, _iter, _inst )                        alg_##type##_remove( _iter, _inst )
+#define alg_push_back( type, _inst, _data )                     alg_##type##_push_back ( _data, _inst )
+#define alg_push_front( type, _inst, _data )                    alg_##type##_push_front ( _data, _inst )
+#define alg_pop_back( type, _inst, _iter )                      alg_##type##_pop_back ( _iter, _inst )
+#define alg_pop_front( type, _inst, _iter )                     alg_##type##_pop_front ( _iter, _inst )
+#define alg_first( type, _inst, _iter )                         alg_##type##_first ( _iter, _inst )
+#define alg_next( type, _inst, _iter )                          alg_##type##_next ( _iter, _inst )
+#define alg_prev( type, _inst, _iter )                          alg_##type##_prev ( _iter, _inst )
+#define alg_last( type, _inst, _iter )                          alg_##type##_last ( _iter, _inst )
+#define alg_null( type, _inst, _iter )                          alg_##type##_null ( _iter, _inst )
+#define alg_find( type, _inst, _data, _iter, _cmp )             alg_##type##_find( _data, _iter, _cmp, _inst )
+#define alg_insert( type, _inst, _data, _iter, _cmp )           alg_##type##_insert( _data, _iter, _cmp, _inst )
+#define alg_inject( type, _inst, _data, _iter )                 alg_##type##_inject( _data, _iter, _inst )
+#define alg_remove( type, _inst, _iter )                        alg_##type##_remove( _iter, _inst )
 #define alg_flush( type, _inst )                                alg_##type##_flush( _inst )
-#define alg_expand( type, _n, _inst )                           alg_##type##_expand( _n, _inst );
+#define alg_expand( type, _inst, _n )                           alg_##type##_expand( _n, _inst );
 
 
 #define d_alg_list(_type)               struct alg_list

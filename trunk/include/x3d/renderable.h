@@ -114,7 +114,7 @@ void rda_set_importance ( float importance, struct renderable *rda );
 void rda_set_material ( struct material *mtl, struct renderable *rda );
 char *rda_get_name ( struct renderable *rda );
 struct rda_instance *rda_instance_create ( struct matrix4x4 *transform,
-                                           struct renderable *rda );
+                struct renderable *rda );
 void rda_instance_free ( struct rda_instance *inst );
 
 /* geometry renderable */
@@ -147,7 +147,7 @@ void rda_context_post_request (
         enum RENDERABLE_IDR rda_type, struct rda_request *request,
         struct rda_context *ctx );
 struct rda_instance *rda_context_get_i ( int i, enum RENDERABLE_IDR type,
-                                         struct rda_context *ctx );
+                struct rda_context *ctx );
 
 
 #endif // RENDERABLE_H_INCLUDED

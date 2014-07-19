@@ -37,13 +37,14 @@ struct symbol_set {
  */
 void init_symlib ( struct symbol_set *symbols );
 void free_symlib ( struct symbol_set *symbols );
-bool symlib_load ( char *filename, struct symbol_set *symbols );
+bool symlib_load ( struct symbol_set *symbols, char *filename );
 bool symlib_unload ( struct symbol_set *symbols );
-void symlib_add_abi ( char *name, f_Generic func, struct symbol_set *symbols );
-void symlib_add_cstring ( char *name, char *string, struct symbol_set *symbols );
-void symlib_add_variable ( char *name, void *value, int size, struct symbol_set *symbols );
-f_Generic symlib_ret_abi ( char *sym_name, struct symbol_set *symbols );
-struct dlsymbol* symlib_ret_misc ( char *sym_name, struct symbol_set *symbols );
+void symlib_add_abi ( struct symbol_set *symbols, char *name, f_Generic func );
+void symlib_add_cstring ( struct symbol_set *symbols, char *name, char *string );
+void symlib_add_variable ( struct symbol_set *symbols, char *name, void *value, int size );
+f_Generic symlib_ret_abi ( struct symbol_set *symbols, char *sym_name );
+void* symlib_ret_variable ( struct symbol_set* symbols, char* sym_name, int* size );
+struct dlsymbol* symlib_ret_misc ( struct symbol_set *symbols, char *sym_name );
 
 
 #endif // SYMBOL_LIB_H_INCLUDED
