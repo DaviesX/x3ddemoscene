@@ -46,6 +46,34 @@ void free_proj_probe ( struct proj_probe *probe )
         memset ( probe, 0, sizeof *probe );
 }
 
+void proj_probe_init ( struct proj_probe* probe, enum PROJ_PROBE_IDR idr,
+                       int xres, int yres, int bits,
+                       enum DisplayType display_type, void* widget )
+{
+        probe->idr      = idr;
+        probe->dis_type = display_type;
+        probe->widget   = widget;
+        probe->xres     = xres;
+        probe->yres     = yres;
+        probe->res_size = bits/8;
+        switch ( display_type ) {
+        case DisplayGtk:
+                break;
+        case DisplayGtkOpenGL:
+                break;
+        case DisplayNull:
+        default:
+                break;
+        }
+        probe->probe = ProbeOps[idr].create ();
+}
+
+void proj_probe_free ( struct proj_probe* probe )
+{
+        ProbeOps[probe->idr].free ( probe );
+        memset ( probe, 0, sizeof *probe );
+}
+
 void proj_probe_pos ( struct point3d *pos, struct proj_probe *probe )
 {
         ProbeOps[probe->idr].set_pos ( pos, probe->probe );
@@ -82,4 +110,34 @@ void proj_probe_get_transform ( struct proj_probe *probe,
 void proj_probe_emit_ray ( float ndc_x, float ndc_y, struct proj_probe *probe, struct line3d *ray )
 {
         ProbeOps[probe->idr].emit_ray ( ndc_x, ndc_y, probe->probe, ray );
+}
+
+/* @fixme (davis#1#): <proj_probe> implement display */
+
+void proj_probe_take_this_fbo ( struct proj_probe* probe, struct fbo* fbo )
+{
+        probe->proj_data = fbo;
+}
+
+void proj_probe_display ( struct proj_probe* probe, void* widget )
+{
+}
+
+void proj_probe_save_to_file ( struct proj_probe* probe, char* filename )
+{
+}
+
+int proj_probe_get_xres ( struct proj_probe* probe )
+{
+        return probe->xres;
+}
+
+int proj_probe_get_yres ( struct proj_probe* probe )
+{
+        return probe->yres;
+}
+
+int proj_probe_get_bits ( struct proj_probe* probe )
+{
+        return probe->res_size*8;
 }

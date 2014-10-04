@@ -315,6 +315,7 @@
 		<Unit filename="include/renderer/shader.h" />
 		<Unit filename="include/renderer/shader_lib.h" />
 		<Unit filename="include/renderer/spatial_probe.h" />
+		<Unit filename="include/renderer/utility.h" />
 		<Unit filename="include/renderer/volume.h" />
 		<Unit filename="include/x3d/camera.h" />
 		<Unit filename="include/x3d/common.h" />

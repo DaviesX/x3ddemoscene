@@ -78,8 +78,9 @@ void renderer_kernel_free ( void )
 uuid_t renderer_container_add ( struct renderer *rend )
 {
         d_alg_llist(renderer*)* rend_cont = &g_rend_cont.renderer;
-        if ( rend == nullptr )
-                rend = create_renderer ( RENDERER_UNDETERMINATE );
+        if ( rend == nullptr ) {
+                rend = create_renderer ( RENDERER_UNDETERMINATE, nullptr );
+        }
 
         rend->rend_id = alg_gen_uuid ();
         alg_push_back ( llist, rend_cont, &rend );
@@ -171,14 +172,15 @@ bool renderer_import ( struct symbol_set *symbols )
  *
  * Note that: once the type of the renderer is attached(it will be attached on its creation), it cannot easily be changed. a call of renderer_retype() can change the type of the renderer, but all the settings formerly applied to that renderer will be lost.
  * \param type enum RENDERER_IDR [in] the type of renderer to be created.
+ * \param probe void* [in] probe that is to be receving rendering result.
  * \return struct renderer* the created renderer.
  */
-struct renderer *create_renderer ( enum RENDERER_IDR type )
+struct renderer *create_renderer ( enum RENDERER_IDR type, void* probe )
 {
         struct renderer *rend = alloc_fix ( sizeof *rend, 1 );
         zero_obj ( rend );
         if ( type != RENDERER_UNDETERMINATE ) {
-                rend->rend = g_rend_ops.lcrenderer_create ( type );
+                rend->rend = g_rend_ops.lcrenderer_create ( type, probe );
         }
         return rend;
 }
@@ -233,7 +235,7 @@ void renderer_set_spec ( enum RENDER_SPEC_IDR spec, struct renderer *rend )
  * \param rend struct renderer* [out] renderer to be specified.
  * \return void
  */
-void renderer_set_draw_mode ( enum GEOMETRY_PIPE_IDR draw_mode, struct renderer *rend )
+void renderer_set_draw_mode ( enum GEOMETRY_MODEL_IDR draw_mode, struct renderer *rend )
 {
 }
 

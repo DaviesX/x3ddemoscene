@@ -5,6 +5,16 @@
 #include <algorithm.h>
 #include <math.h>
 
+/*
+ * structure
+ */
+struct mtl_library {
+};
+
+/*
+ * functions' declaration
+ */
+
 
 enum RAG_CULL_IDR {
         RAG_CULL_NULL           = (0),
@@ -37,117 +47,123 @@ enum RAG_IDR {
  */
 struct material;
 struct rda_instance;
+struct ragg;
+struct renderable;
 typedef void rda_cullshape_t;
 
 struct rda_request {
-        uuid_t id;
-        enum RENDERABLE_IDR type;
-        enum RAG_CULL_IDR cull_method;
-        rda_cullshape_t *cull_shape;
+        uuid_t                  id;
+        enum RENDERABLE_IDR     type;
+        enum RAG_CULL_IDR       cull_method;
+        rda_cullshape_t*        cull_shape;
+
+        struct rda_instance**   result;
+        int                     n_result;
 };
 
 struct renderable {
-        uuid_t id;
-        char *name;
-        enum RENDERABLE_IDR type;
-        float importance;
-        bool is_movable;
-        bool is_dirty;
-        struct material *mtl;
-        struct rda_instance *insts;
+        struct {
+                void                    (*free) ( struct renderable* self );
+                struct rda_instance*    (*instance_create) ( struct renderable *self, struct matrix4x4 *transform );
+                void                    (*instance_free) ( struct rda_instance* inst );
+        };
+        uuid_t                  id;
+        char*                   name;
+        enum RENDERABLE_IDR     type;
+        float                   importance;
+        bool                    is_movable;
+        bool                    is_dirty;
+        int                     mater_ref;
+        struct rda_instance**   insts;
         int ninsts;
 };
 
 struct rda_geometry {
-        struct renderable _rda;
-        int num_vertex;
-        int num_tri;
-        struct triangle_shape *tri;
-        int *index;
-        struct point3d *vertex;
-        struct vector3d *normal;
-        struct vector3d *tangent;
-        struct point2d *uv;
+        struct renderable       _parent;
+        int                     num_vertex;
+        int                     num_tri;
+        struct triangle_shape*  tri;
+        int*                    index;
+        struct point3d*         vertex;
+        struct vector3d*        normal;
+        struct vector3d*        tangent;
+        struct point2d*         uv;
 };
 
 struct rda_skinned {
-        struct renderable _rda;
+        struct renderable       _parent;
 };
 
 struct rda_particle {
-        struct renderable _rda;
+        struct renderable       _parent;
 };
 
 struct rda_textural {
-        struct renderable _rda;
+        struct renderable       _parent;
 };
 
 struct rda_instance {
-        int i;
-        struct renderable *rda;
-        struct box3d bound;
-        struct matrix4x4 transform;
-};
-
-struct rda_aggregate {
+        int                     i;
+        struct renderable*      rda_link;
+        struct box3d            bound;
+        struct matrix4x4        transform;
 };
 
 struct rda_context {
-        struct rda_aggregate *agg;
-        struct alg_hash_llist dict[MAX_RENDERABLE_TYPE];
-        struct rda_instance **rda[MAX_RENDERABLE_TYPE];
+        struct ragg*   agg;
+        struct alg_hash_llist   dict[MAX_RENDERABLE_TYPE];
+        struct mtl_library      mtllib;
+        struct rda_request      request[128];
+        int                     n_request;
 };
 
 /*
  * functions' declaration
  */
-struct rda_context *create_renderable_context ( void );
-void free_renderable_context ( struct rda_context *ctx );
-
 /* renderable */
-struct renderable *create_renderable (
-        char *name, enum RENDERABLE_IDR type, float importance,
-        bool is_movable, struct material *mtl );
-void free_renderable ( struct renderable *rda );
-void rda_set_name ( char *name, struct renderable *rda );
-void rda_set_importance ( float importance, struct renderable *rda );
-void rda_set_material ( struct material *mtl, struct renderable *rda );
-char *rda_get_name ( struct renderable *rda );
-struct rda_instance *rda_instance_create ( struct matrix4x4 *transform,
-                struct renderable *rda );
-void rda_instance_free ( struct rda_instance *inst );
+struct renderable*      rda_create ( char *name, enum RENDERABLE_IDR type,
+                                     float importance, bool is_movable,
+                                     int mater_ref );
+void                    rda_free ( struct renderable *rda );
+void                    rda_set_name ( struct renderable *rda, char *name );
+void                    rda_set_importance ( struct renderable *rda, float importance );
+void                    rda_set_material ( struct renderable *rda, int mater_ref );
+char*                   rda_get_name ( struct renderable *rda );
+struct rda_instance*    rda_instance_create ( struct renderable *rda, struct matrix4x4 *transform );
+void                    rda_instance_free ( struct rda_instance *inst );
+struct renderable*      rda_instance_source ( struct rda_instance* inst );
 
 /* geometry renderable */
-void rda_geometry_init_from_data (
-        struct point3d *vertex, int num_vert, int *index, int num_tri,
-        struct vector3d *normal, struct vector3d *tangent, struct point2d *uv,
-        struct matrix4x4 *transform, int ntransform, struct rda_geometry *geo );
-void rda_geometry_refine ( float iteration, struct rda_geometry *geo );
-void rda_geometry_update_vertex ( struct point3d *vertex, int count,
-                                  struct rda_geometry *geo );
-void rda_geometry_update_index ( int *index, int count, struct rda_geometry *geo );
-void rda_geometry_update_transform ( int i, struct matrix4x4 *transform,
-                                     struct rda_geometry *geo );
-void rda_geometry_fix_nt ( struct rda_geometry *geo );
+void rda_geometry_init_from_data ( struct rda_geometry *geo,
+                                   struct point3d* vertex, int num_vert, int* index, int num_tri,
+                                   struct vector3d* normal, struct vector3d* tangent, struct point2d* uv,
+                                   struct matrix4x4* transform );
+void rda_geometry_refine ( struct rda_geometry* geo, float iteration );
+void rda_geometry_update_vertex ( struct rda_geometry* geo, struct point3d* vertex, int count );
+void rda_geometry_update_index ( struct rda_geometry* geo, int* index, int count );
+void rda_geometry_set_transform ( struct rda_geometry* geo, struct matrix4x4 *transform );
+void rda_geometry_fix_nt ( struct rda_geometry* geo );
 
-struct point3d *rda_geometry_get_vertex ( int *nvertex, struct rda_geometry *geo );
-struct vector3d *rda_geometry_get_normal ( int *nnormal, struct rda_geometry *geo );
-struct vector3d *rda_geometry_get_tangent ( int *ntangent, struct rda_geometry *geo );
-struct vector2d *rda_geometry_get_uv ( int *nuv, struct rda_geometry *geo );
-int *rda_geometry_get_index ( int *nindex, struct rda_geometry *geo );
+struct point3d*         rda_geometry_get_vertex ( struct rda_geometry* geo, int *nvertex );
+struct vector3d*        rda_geometry_get_normal ( struct rda_geometry* geo, int* nnormal );
+struct vector3d*        rda_geometry_get_tangent ( struct rda_geometry* geo, int* ntangent );
+struct vector2d*        rda_geometry_get_uv ( struct rda_geometry* geo, int* nuv );
+int*                    rda_geometry_get_index ( struct rda_geometry* geo, int* nindex );
 
-/* aggregate */
-void ragg_add_renderable (
-        struct rda_instance *inst, enum RAG_IDR type, struct rda_aggregate *agg );
-void ragg_update ( struct rda_aggregate *agg );
 
+/* renderable context */
+struct rda_context*     rda_context_create ( enum RAG_IDR agg_type );
+void                    rda_context_free ( struct rda_context* ctx );
+void                    rda_context_add_instance ( struct rda_context* ctx,
+                                                   struct rda_instance* insts,
+                                                   enum RENDERABLE_IDR type );
+void                    rda_context_update ( struct rda_context* ctx );
 /* RI Interface */
-void rda_context_post_request (
-        enum RAG_CULL_IDR cull_type, rda_cullshape_t *shape,
-        enum RENDERABLE_IDR rda_type, struct rda_request *request,
-        struct rda_context *ctx );
-struct rda_instance *rda_context_get_i ( int i, enum RENDERABLE_IDR type,
-                struct rda_context *ctx );
+uuid_t                  rda_context_post_request ( struct rda_context* ctx,
+                                enum RAG_CULL_IDR cull_type, rda_cullshape_t* shape,
+                                enum RENDERABLE_IDR rda_type );
+int                     rda_context_get_n ( struct rda_context* ctx, uuid_t request_id );
+struct rda_instance*    rda_context_get_i ( struct rda_context* ctx, int i, uuid_t request_id );
 
 
 #endif // RENDERABLE_H_INCLUDED

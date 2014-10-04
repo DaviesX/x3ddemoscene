@@ -6,12 +6,13 @@
 
 
 struct lcrenderer;
+struct proj_probe;
 
 /*
  * Functions' declaration
  */
 void lcrenderer_init ( void );
-struct lcrenderer* lcrenderer_create ( enum RENDERER_IDR method );
+struct lcrenderer* lcrenderer_create ( enum RENDERER_IDR method, struct proj_probe* probe );
 void lcrenderer_free ( struct lcrenderer *rend );
 void lcrenderer_update ( struct render_bytecode *bytecode, struct lcrenderer *rend );
 void lcrenderer_render ( struct lcrenderer *rend );

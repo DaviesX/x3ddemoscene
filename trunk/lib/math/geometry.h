@@ -29,6 +29,7 @@ struct line3d {
         struct vector3d v;
         float t0, t1;
 };
+#define ray3d     line3d
 
 struct rectangle2d {
         union {
@@ -203,7 +204,12 @@ int intersect_line_hyperboloid3d ( struct line3d *l, struct hyperboloid3d *hy,
                                    float *t, struct point3d *p, float *bias );
 int intersect_line_triangle3d ( struct line3d *l, struct triangle3d *tri,
                                 float *t, struct point3d *p, float *bias );
-int intersect_line_box3d ( struct line3d *l, struct box3d *b, float *t0, float *t1 );
+bool intersect_ray_triangle3d ( struct ray3d* l,
+                                struct point3d* v0, struct point3d* v1, struct point3d* v2,
+                                float b[3], float* t, float *bias );
+
+bool intersect_line_box3d ( struct line3d *l, struct box3d *b, float *t0, float *t1 );
+bool occlude_line_box3d ( struct ray3d* l, struct box3d* b );
 
 void build_box3d ( struct point3d *p0, struct point3d *p1, struct box3d *b );
 void init_box3d ( struct box3d *b );
@@ -245,7 +251,7 @@ void vector_to_spherical3d ( struct vector3d *v, struct spherical3d *s );
 
 /* Unary operations */
 #define union_box3d_u( _b0, _b1 )			(union_box3d ( _b0, _b1, _b0 ))
-#define union_box3d_pu( _b, _p )			(union_box3d_pu ( _b, _p, _b ))
+#define union_box3d_pu( _b, _p )			(union_box3d_p ( _b, _p, _b ))
 
 /* Implicit casting */
 

@@ -2,7 +2,7 @@
 #define FBO_H_INCLUDED
 
 enum SURFACE_IDR {
-        A
+        _A
 };
 
 struct fbo {

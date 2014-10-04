@@ -57,11 +57,14 @@ enum RENDER_ENVIRONMENT {
         RENDER_ENV_RENDER_OUT,
         RENDER_ENV_THREAD,
         RENDER_ENV_ANTIALIAS,
-        RENDER_ENV_FILTERING,
+        RENDER_ENV_FILTERING
 };
 
 enum RENDER_OP {
-        RENDER_OP_RADIANCE              /* rad dest, rda, pipe, lm, geopipe */
+        RENDER_OP_RADIANCE,             /* RAD          dest, rda, pipe, blending */
+//        RENDER_OP_PROBE,                /* prob         probe */
+        RENDER_OP_COMPOSITE,            /* COMP         dest, type, src  */
+        RENDER_OP_OUTPUT                /* OUT          probe, src */
 };
 
 struct lcrenderer;
@@ -102,7 +105,8 @@ enum RENDER_PIPE_IDR {
         RENDER_PIPE_FORWARD_PLUS,
         RENDER_PIPE_WHITTED,
         RENDER_PIPE_DIRECT_LIGHTING,
-        RENDER_PIPE_METROPOLIS
+        RENDER_PIPE_METROPOLIS,
+        RENDER_PIPE_IMAGE_SPACE
 };
 
 enum LIGHT_MODEL_IDR {
@@ -113,16 +117,16 @@ enum LIGHT_MODEL_IDR {
         LIGHT_MODE_SVO        = 0X10
 };
 
-enum GEOMETRY_PIPE_IDR {
-        GEOMETRY_PIPE_WIREFRAME,
-        GEOMETRY_PIPE_SOLID
+enum GEOMETRY_MODEL_IDR {
+        GEOMETRY_MODEL_WIREFRAME,
+        GEOMETRY_MODEL_SOLID
 };
 
 struct render_radiance {
         struct render_node      _node;
         enum RENDER_PIPE_IDR    pipe;
         enum LIGHT_MODEL_IDR    light_model;
-        enum GEOMETRY_PIPE_IDR  geo_pipe;
+        enum GEOMETRY_MODEL_IDR geo_pipe;
         struct rda_context*     rda_list;
 };
 
@@ -180,7 +184,7 @@ void renderer_kernel_free ( void );
 
 /* ABIs */
 typedef void (*f_LCRenderer_Init) ( void );
-typedef struct lcrenderer* (*f_LCRenderer_Create) ( enum RENDERER_IDR method );
+typedef struct lcrenderer* (*f_LCRenderer_Create) ( enum RENDERER_IDR method, struct probe* probe );
 typedef void (*f_LCRenderer_Free) ( struct lcrenderer *rend );
 typedef void (*f_LCRenderer_Update) ( struct render_bytecode *bytecode, struct lcrenderer *rend );
 typedef void (*f_LCRenderer_Render) ( struct lcrenderer *rend );
@@ -189,7 +193,7 @@ typedef void (*f_LCRenderer_Output) ( struct lcrenderer *rend );
 bool renderer_import ( struct symbol_set *symbols );
 
 /* renderer's */
-__dlexport struct renderer *create_renderer ( enum RENDERER_IDR type );
+__dlexport struct renderer *create_renderer ( enum RENDERER_IDR type, void* probe );
 __dlexport void free_renderer ( struct renderer *rend );
 __dlexport void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend );
 

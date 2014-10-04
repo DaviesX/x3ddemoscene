@@ -549,8 +549,8 @@ int intersect_line_triangle3d ( struct line3d *l, struct triangle3d *tri,
          * Substitution: va = P1 - P0, vb = P2 - P0, vc = Pr0 - P0 */
         struct vector3d va, vb, vc;
         sub_vector3d ( &tri->v[1], &tri->v[0], &va );
-        sub_vector3d ( &tri->v[2], &tri->v[0], &va );
-        sub_vector3d ( &l->p0, &tri->v[0], &va );
+        sub_vector3d ( &tri->v[2], &tri->v[0], &vb );
+        sub_vector3d ( &l->p0, &tri->v[0], &vc );
 
         /* Solve for t, b1, b2, where
          * 0 <= b0 <= 1 and 0 <= b1 <= 1 and 0 <= b2 <= 1
@@ -587,39 +587,121 @@ int intersect_line_triangle3d ( struct line3d *l, struct triangle3d *tri,
         return IN_SEGMENT;
 }
 
+/* find ray-triangle intersection and compute bias of the intersect
+ * the computation is performed at barycentric coordinate system
+ * independent of the coordinate system which the triangle is in
+ * Pt = b0*P0 + b1*P1 + b2*P2, where b0 = 1 - b1 - b2 */
+bool intersect_ray_triangle3d ( struct ray3d* l,
+                                struct point3d* v0, struct point3d* v1, struct point3d* v2,
+                                float b[3], float* t, float *bias )
+{
+        /* b0 = 1 - b1 - b2
+         * (1 - b1 - b2)*P0 + b1*P1 + b2*P2 = Pr0 + Vt
+         * -Vx*t + b1*(P1x - P0x) + b2*(P2x - P0x) = Pr0x - P0x
+         * Substitution: va = P1 - P0, vb = P2 - P0, vc = Pr0 - P0 */
+        struct vector3d va, vb, vc;
+        build_vector3d ( v0, v1, &va );
+        build_vector3d ( v0, v2, &vb );
+        build_vector3d ( v0, &l->p0, &vc );
+
+        /* Solve for t, b1, b2, where
+         * 0 <= b0 <= 1 and 0 <= b1 <= 1 and 0 <= b2 <= 1
+         * or, b1 + b2 <= 1 and 0 <= b1 <= 1 and b2 => 0
+         * which means that the intersect is within the triangle */
+        struct vector3d e1, e2;
+        cross_vector3d ( &l->v, &vb, &e2 );
+
+        float det = dot_vector3d ( &va, &e2 );
+        if ( det == 0.0f ) {
+                return false;
+        }
+
+        float inv = 1.0f/det;
+        float b1 = dot_vector3d ( &vc, &e2 )*inv;
+        if ( b1 < 0.0f || b1 > 1.0f ) {
+                return false;
+        }
+
+        cross_vector3d ( &vc, &va, &e1 );
+        float b2 = dot_vector3d ( &l->v, &e1 )*inv;
+        if ( b2 < 0.0f || b1 + b2 > 1.0f ) {
+                return false;
+        }
+
+        // Within the ray ?
+        float t0 = dot_vector3d ( &vb, &e1 )*inv;
+        if ( !in_interval ( t0, l->t0, l->t1 ) ) {
+                return false;
+        }
+
+        b[0] = 1.0f - b1 - b2;
+        b[1] = b1;
+        b[2] = b2;
+
+        *t = t0;
+        *bias = 1e-5f*t0;
+        return true;
+}
+
 /* Find line-box intersection
  * Computation can be performed at any coordinate system
  * P0 + V*t0 = MIN and P0 + V*t1 = MAX */
-int intersect_line_box3d ( struct line3d *l, struct box3d *b, float *t0, float *t1 )
+bool intersect_line_box3d ( struct ray3d *r, struct box3d *b, float *t0, float *t1 )
 {
-        float min = l->t0;
-        float max = l->t1;
+        float min = r->t0;
+        float max = r->t1;
 
         /* Test against the plane that parallels to x, y, z axis respectively */
-        float r[3] = {		/* reciprocal */
-                1.0f/l->v.x,
-                1.0f/l->v.y,
-                1.0f/l->v.z
-        };
-
         int i;
         for ( i = 0; i < 3; i ++ ) {
-                float k0 = (b->min.p[i] - l->p0.p[i])*r[i];
-                float k1 = (b->max.p[i] - l->p0.p[i])*r[i];
+                float inv = 1.0f/r->v.v[i];
+                float k0 = (b->min.p[i] - r->p0.p[i])*inv;
+                float k1 = (b->max.p[i] - r->p1.p[i])*inv;
                 if ( k0 > k1 ) {
-                        swap ( k0, k1 );
+                        /* Marching toward the middle of the ray */
+                        min = max ( k1, min );
+                        max = min ( k0, max );
+                } else {
+                        /* Marching toward the middle of the ray */
+                        min = max ( k0, min );
+                        max = min ( k1, max );
                 }
-                /* Marching toward the middle of the ray */
-                min = max ( k0, min );
-                max = min ( k1, max );
                 /* Outside the corner :) */
                 if ( min > max ) {
-                        return OUT_SEGMENT;
+                        return false;
                 }
         }
         *t0 = min;
         *t1 = max;
-        return IN_SEGMENT;
+        return true;
+}
+
+bool occlude_line_box3d ( struct ray3d* r, struct box3d* b )
+{
+        float min = r->t0;
+        float max = r->t1;
+
+        /* Test against the plane that parallels to x, y, z axis respectively */
+        int i;
+        for ( i = 0; i < 3; i ++ ) {
+                float inv = 1.0f/r->v.v[i];
+                float k0 = (b->min.p[i] - r->p0.p[i])*inv;
+                float k1 = (b->max.p[i] - r->p1.p[i])*inv;
+                if ( k0 > k1 ) {
+                        /* Marching toward the middle of the ray */
+                        min = max ( k1, min );
+                        max = min ( k0, max );
+                } else {
+                        /* Marching toward the middle of the ray */
+                        min = max ( k0, min );
+                        max = min ( k1, max );
+                }
+                /* Outside the corner :) */
+                if ( min > max ) {
+                        return false;
+                }
+        }
+        return true;
 }
 
 void build_box3d ( struct point3d *p0, struct point3d *p1, struct box3d *b )

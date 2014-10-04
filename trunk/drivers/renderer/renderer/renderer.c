@@ -1,6 +1,7 @@
 /* renderer.c: rendering system interface */
 #include <x3d/renderer.h>
 #include <renderer/shader.h>
+#include <renderer/proj_probe.h>
 #include "lcrenderer.h"
 
 
@@ -14,11 +15,11 @@ void lcrenderer_init ( void )
         init_ptrenderer ( &g_render_ops[RENDERER_PATH_TRACER] );
 }
 
-struct lcrenderer* lcrenderer_create ( enum RENDERER_IDR method )
+struct lcrenderer* lcrenderer_create ( enum RENDERER_IDR method, struct proj_probe* probe )
 {
         struct lcrenderer* t_rend = alloc_fix ( sizeof *t_rend, 1 );
         t_rend->ops      = g_render_ops[method];
-        t_rend->renderer = g_render_ops[method].lcrenderer_create ( method );
+        t_rend->renderer = g_render_ops[method].lcrenderer_create ( method, (struct probe*) probe );
         return t_rend;
 }
 

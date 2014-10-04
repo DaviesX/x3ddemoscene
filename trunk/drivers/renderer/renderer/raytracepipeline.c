@@ -80,11 +80,36 @@ struct transfer_stream {
         int32_t io_buffer[16];
 };
 
+struct hit_face {
+        struct vector3d normal;
+        int             mater;
+};
+
+struct tmp_material {
+        float diff_r, diff_g, diff_b;
+        float spec_r, spec_g, spec_b;
+};
+
+enum {
+        MATER_RED,
+        MATER_GREEN,
+        MATER_BLUE,
+        MATER_WHITE
+};
+
+const struct tmp_material cMaterial = {
+};
+
+static uint32_t brdf ( struct vector3d* normal, int mat )
+{
+        return 0;
+}
+
 static void pathtrace_radiance_cpu ( struct pathtrace_pipeline* p,
                                      struct fbo* target,
                                      struct renderable* rda, int n )
 {
-/*        struct triangle_buffer  buf;
+        struct triangle_buffer  buf;
         struct vbo*             vbo;
         tri_buf_init ( &buf );
         rda_to_tribuf ( rda, n, &buf );
@@ -96,18 +121,51 @@ static void pathtrace_radiance_cpu ( struct pathtrace_pipeline* p,
         untyped* fbo_dest;
         fbo_dimension ( target, &w, &h, &s );
         fbo_dest = fbo_memory ( target );
-
-        declare_stack ( stack, sizeof(struct transfer_stream)*10 );
+        printf ( "%x", (unsigned int) fbo_dest );
+//        declare_stack ( stack, sizeof(struct transfer_stream)*10 );
 
         struct intersect {
                 struct line3d ray;
                 float b0, b1, b2;
-        };*/
+        } p_hit;
+
+        int x, y;
+        for ( y = 0; y < h; y ++ ) {
+                for ( x = 0; x < w; x ++ ) {
+                        float u = 2.0f*((float) x/w) - ((float) x/w);
+                        float v = 2.0f*((float) y/h) - ((float) y/h);
+                        struct point3d o = {0.0f, 0.0f, 0.0f};
+                        struct point3d p = {u,    v,    1.0f};
+                        struct line3d ray;
+                        build_line3d_t ( &o, &p, 1.0f, FLOAT_INFINITE, &ray );
+                        /* bounce */
+                        struct triangle_iter iter;
+                        tri_buf_access ( &buf, &p_hit, &iter,
+                                         access_box, access_triangle );
+                        struct hit_face* attri[3];
+                        int i;
+                        for ( i = 0; i < 3; i ++ ) {
+                                int j = tri_iter_i ( &iter, i );
+                                attri[i] = vbo_i_x86 ( vbo, 0, j );
+                        }
+                        struct vector3d n;
+                        n.x = attri[0]->normal.x*p_hit.b0 +
+                              attri[1]->normal.x*p_hit.b1 +
+                              attri[2]->normal.x*p_hit.b2;
+                        n.y = attri[0]->normal.y*p_hit.b0 +
+                              attri[1]->normal.y*p_hit.b1 +
+                              attri[2]->normal.y*p_hit.b2;
+                        n.z = attri[0]->normal.z*p_hit.b0 +
+                              attri[1]->normal.z*p_hit.b1 +
+                              attri[2]->normal.z*p_hit.b2;
+                        printf ( "%f", n.x );
+                }
+        }
 }
 
 static void pathtrace_radiance_cpu2 ( struct pathtrace_pipeline* p,
-                                     struct fbo* target,
-                                     struct renderable* rda, int n )
+                                      struct fbo* target,
+                                      struct renderable* rda, int n )
 {
         struct triangle_buffer  buf;
         struct vbo*             vbo;
@@ -139,8 +197,8 @@ static void pathtrace_radiance_cpu2 ( struct pathtrace_pipeline* p,
 
         int i;
         for ( i = 0; i < p->nprobes; i ++ ) {
-/*                void* probe_in = (untyped*) p->probe_buf + i*attr_size ( &p->probe_attr );
-                shaform_input_buffer_x86 ( &p->emitter, 0, probe_in );*/
+                /*                void* probe_in = (untyped*) p->probe_buf + i*attr_size ( &p->probe_attr );
+                                shaform_input_buffer_x86 ( &p->emitter, 0, probe_in );*/
                 int j, k;
                 for ( k = 0; k < h; k ++ ) {
                         for ( j = 0; j < w; j ++ ) {
@@ -196,3 +254,4 @@ static void pathtrace_radiace_gpgpu ( struct pathtrace_pipeline* p,
                                       struct renderable* rda, int n )
 {
 }
+
