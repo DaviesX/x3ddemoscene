@@ -165,7 +165,7 @@
 	<renderer/geometry.h>
 	<x3d/renderer.h>
 
-1412401641 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1413094961 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
@@ -3107,7 +3107,7 @@
 
 1399958501 /home/davis/x3drenderlib-code/trunk/include/x3d/dynamics.h
 
-1405138833 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
+1412440674 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm.h>
@@ -3133,7 +3133,8 @@
 1403526919 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
 	<x3d/common.h>
 
-1394325812 /home/davis/x3drenderlib-code/trunk/include/x3d/world.h
+1412446343 /home/davis/x3drenderlib-code/trunk/include/x3d/world.h
+	<x3d/common.h>
 
 1399867833 source:/home/davis/x3drenderlib-code/trunk/kernel/modelentity.c
 	<x3d/modelentity.h>
@@ -3169,7 +3170,8 @@
 	<x3d/modelentity.h>
 	<loader/modelloader.h>
 
-1386806407 source:/home/davis/x3drenderlib-code/trunk/kernel/world.c
+1412657333 source:/home/davis/x3drenderlib-code/trunk/kernel/world.c
+	<x3d/world.h>
 
 1405155955 source:/home/davis/x3drenderlib-code/trunk/lib/algorithm.c
 	<algorithm.h>
@@ -3256,7 +3258,7 @@
 	"math.h"
 	"fx.h"
 
-1406279838 source:/home/davis/x3drenderlib-code/trunk/lib/math/geometry.c
+1412405506 source:/home/davis/x3drenderlib-code/trunk/lib/math/geometry.c
 	"math.h"
 	"vector.h"
 	"matrix.h"
@@ -3322,4 +3324,8 @@
 	<math/math.h>
 
 1412400042 /home/davis/x3drenderlib-code/trunk/include/renderer/utility.h
+
+1394384115 source:/home/davis/x3drenderlib-code/trunk/kernel/poi.c
+
+1412445961 source:/home/davis/x3drenderlib-code/trunk/kernel/strategy.c
 

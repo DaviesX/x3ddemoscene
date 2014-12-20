@@ -61,6 +61,7 @@
 		<Unit filename="../include/usr/usr_entityprogs.hpp" />
 		<Unit filename="../include/usr/usr_kernel.hpp" />
 		<Unit filename="../include/usr/usr_missionprogs.hpp" />
+		<Unit filename="../include/usr/usr_world.hpp" />
 		<Unit filename="../include/usr/usr_x3d.hpp" />
 		<Unit filename="editor/dynamics_editor.cpp" />
 		<Unit filename="editor/dynamics_editor.hpp" />
@@ -82,6 +83,7 @@
 		<Unit filename="usr_entityprogs.cpp" />
 		<Unit filename="usr_kernel.cpp" />
 		<Unit filename="usr_missionprogs.cpp" />
+		<Unit filename="usr_world.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

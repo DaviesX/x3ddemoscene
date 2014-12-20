@@ -35,6 +35,8 @@ const string c_Renderer         = "renderer";
 const string c_RedoStack        = "redo-stack";
 const string c_Clipboard        = "clipboard";
 const string c_WndHandle        = "window-handle";
+const string c_World            = "world";
+const string c_ViewControl      = "view-control";
 
 class Editor;
 class EditorFrontend;
@@ -142,13 +144,20 @@ private:
 };
 
 class RenderRegionActiveX;
+class RenderConfigActiveX;
+
 class AssetListActiveX;
+
 class EntityPropertyActiveX;
 class RenderablePropertyActiveX;
 class DynamicsPropertyActiveX;
+class LogicalPropertyActiveX;
+
 class ViewControlActiveX;
 class SelectorActiveX;
-class RenderConfigActiveX;
+
+class WorldDataActiveX;
+class BenchmarkWorldActiveX;
 
 
 class __dlexport EditorActiveX
@@ -255,8 +264,30 @@ private:
         class RenderConfigInt *pimpl;
 };
 
-}
 
-}
+class WorldDataActiveX : public EditorActiveX
+{
+public:
+        void on_adding ( void ) {}
+        void update ( void ) {}
+        void dispatch ( void ) {}
+        void load ( struct serializer *s ) {}
+        void save ( struct serializer *s ) {}
+};
+
+
+class BenchmarkWorldActiveX : public EditorActiveX
+{
+public:
+        void on_adding ( void ) {}
+        void update ( void ) {}
+        void dispatch ( void ) {}
+        void load ( struct serializer *s ) {}
+        void save ( struct serializer *s ) {}
+};
+
+} // namespace usr
+
+} // namespace x3d
 
 #endif // USR_EDITOR_HPP_INCLUDED

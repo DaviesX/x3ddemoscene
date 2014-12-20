@@ -322,9 +322,34 @@ __dlexport void renderer_renderscript ( const char* script, struct renderer *ren
 {
 }
 
+#define emit_instr( _instr, _unit ) \
+{ \
+        const typeof(_unit) _var = (_unit); \
+        *(typeof(_unit)*) (_instr) = _var; \
+        (_instr) += sizeof(_var); \
+}
+
 __dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer *rend )
 {
+        struct render_bytecode* bc = &rend->bytecode;
+        char* instr = bc->instr;
+        /* RAD          dest, rda, pipe, blending */
+        emit_instr ( instr, RENDER_OP_RADIANCE );
+        emit_instr ( instr, 0 );
+        emit_instr ( instr, *(void**) &tree->reserve[0] );
+        emit_instr ( instr, RENDER_PIPE_DIRECT_LIGHTING );
+        emit_instr ( instr, 0.0f );
+        /* COMP         dest, type, src  */
+        emit_instr ( instr, RENDER_OP_COMPOSITE );
+        emit_instr ( instr, 1 );
+        emit_instr ( instr, 1 );
+        emit_instr ( instr, 0 );
+        /* OUT          probe, src */
+        emit_instr ( instr, RENDER_OP_OUTPUT );
+        emit_instr ( instr, 1 );
 }
+
+#undef emit_instr
 
 __dlexport struct render_operand* render_tree_create ( struct render_tree *tree )
 {

@@ -317,19 +317,17 @@
 		<Unit filename="include/renderer/spatial_probe.h" />
 		<Unit filename="include/renderer/utility.h" />
 		<Unit filename="include/renderer/volume.h" />
-		<Unit filename="include/x3d/camera.h" />
 		<Unit filename="include/x3d/common.h" />
 		<Unit filename="include/x3d/debug.h" />
 		<Unit filename="include/x3d/dynamics.h" />
 		<Unit filename="include/x3d/init.h" />
 		<Unit filename="include/x3d/modelentity.h" />
+		<Unit filename="include/x3d/poi.h" />
 		<Unit filename="include/x3d/renderable.h" />
 		<Unit filename="include/x3d/renderer.h" />
 		<Unit filename="include/x3d/resloader.h" />
+		<Unit filename="include/x3d/strategy.h" />
 		<Unit filename="include/x3d/world.h" />
-		<Unit filename="kernel/camera.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="kernel/debug.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -345,6 +343,9 @@
 		<Unit filename="kernel/panic.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="kernel/poi.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="kernel/renderable.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -352,6 +353,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/resloader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/strategy.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/world.c">

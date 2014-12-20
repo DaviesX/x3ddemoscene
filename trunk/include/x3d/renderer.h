@@ -124,10 +124,9 @@ enum GEOMETRY_MODEL_IDR {
 
 struct render_radiance {
         struct render_node      _node;
-        enum RENDER_PIPE_IDR    pipe;
-        enum LIGHT_MODEL_IDR    light_model;
-        enum GEOMETRY_MODEL_IDR geo_pipe;
         struct rda_context*     rda_list;
+        enum RENDER_PIPE_IDR    pipe;
+        float                   blend;
 };
 
 struct render_post_ao {
@@ -169,6 +168,7 @@ struct render_tree {
         struct render_operand*                  output;
         d_alg_llist(render_operand)             nodes;
         d_alg_list(render_operand)              env;
+        uint32_t                                reserve[4];
 };
 
 struct render_bytecode {
