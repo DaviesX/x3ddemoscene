@@ -290,6 +290,33 @@ EditorActiveX::~EditorActiveX ()
 {
 }
 
+void EditorActiveX::notify_add ( Editor *e )
+{
+        m_state   = e->get_global_state ();
+        m_edit_id = e->get_id ();
+        on_adding ();
+}
+
+string EditorActiveX::get_name ( void ) const
+{
+        return m_name;
+}
+
+EDIT_ACTIVEX_IDR EditorActiveX::get_type ( void ) const
+{
+        return m_type;
+}
+
+KernelEnvironment* EditorActiveX::get_state_buffer ( void ) const
+{
+        return m_state;
+}
+
+bool EditorActiveX::is_dirty ( void ) const
+{
+        return m_dirty;
+}
+
 /* front-back buffer utilities */
 int EditorActiveX::on_front_buf ( void ) const
 {

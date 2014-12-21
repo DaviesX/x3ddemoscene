@@ -171,32 +171,11 @@ public:
         EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type );
         virtual ~EditorActiveX ();
 
-        void notify_add ( Editor *e )
-        {
-                this->m_state   = e->get_global_state ();
-                this->m_edit_id = e->get_id ();
-                this->on_adding ();
-        }
-
-        string get_name ( void )
-        {
-                return m_name;
-        }
-
-        EDIT_ACTIVEX_IDR get_type ( void )
-        {
-                return m_type;
-        }
-
-        KernelEnvironment* get_state_buffer ( void )
-        {
-                return m_state;
-        }
-
-        bool is_dirty ( void ) const
-        {
-                return m_dirty;
-        }
+        void                    notify_add ( Editor *e );
+        string                  get_name ( void ) const;
+        EDIT_ACTIVEX_IDR        get_type ( void ) const;
+        KernelEnvironment*      get_state_buffer ( void ) const;
+        bool                    is_dirty ( void ) const;
 
         virtual void on_adding ( void ) = 0;
         virtual void update ( void ) = 0;
