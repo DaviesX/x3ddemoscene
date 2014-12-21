@@ -157,7 +157,7 @@ class ViewControlActiveX;
 class SelectorActiveX;
 
 class WorldDataActiveX;
-class BenchmarkWorldActiveX;
+class BenchmarkActiveX;
 
 
 class __dlexport EditorActiveX
@@ -190,16 +190,16 @@ public:
                 return m_type;
         }
 
-        KernelEnvironment *get_state_buffer ( void )
+        KernelEnvironment* get_state_buffer ( void )
         {
                 return m_state;
         }
 
-        virtual void on_adding ( void ) {}
-        virtual void update ( void ) {}
-        virtual void dispatch ( void ) {}
-        virtual void load ( struct serializer *s ) {}
-        virtual void save ( struct serializer *s ) {}
+        virtual void on_adding ( void ) = 0;
+        virtual void update ( void ) = 0;
+        virtual void dispatch ( void ) = 0;
+        virtual void load ( struct serializer *s ) = 0;
+        virtual void save ( struct serializer *s ) = 0;
 private:
         int                     m_size;
         string                  m_name;
@@ -210,10 +210,6 @@ private:
 
 
 /* activex - render region */
-typedef void (*f_Notify_idle) ( bool is_idle, void *handle, void *data );
-typedef void (*f_Notify_resize) ( int width, int height, bool is_fullscreen,
-                                  void *handle, void *data );
-
 class __dlexport RenderRegionActiveX : public EditorActiveX
 {
 public:
@@ -237,10 +233,11 @@ private:
         class RenderRegionInt *pimpl;
 };
 
+typedef void (*f_Notify_idle) ( bool is_idle, void *handle, void *data );
+typedef void (*f_Notify_resize) ( int width, int height, bool is_fullscreen,
+                                  void *handle, void *data );
 
 /* activex - render configurator */
-typedef void (*f_Notify_Error) ( string message, RenderConfigActiveX *conf, void *data );
-
 class __dlexport RenderConfigActiveX : public EditorActiveX
 {
 public:
@@ -264,6 +261,8 @@ private:
         class RenderConfigInt *pimpl;
 };
 
+typedef void (*f_Notify_Error) ( string message, EditorActiveX *ax, void *data );
+
 
 class WorldDataActiveX : public EditorActiveX
 {
@@ -276,15 +275,27 @@ public:
 };
 
 
-class BenchmarkWorldActiveX : public EditorActiveX
+/* activex - benchmark scene launcher */
+class BenchmarkActiveX : public EditorActiveX
 {
 public:
-        void on_adding ( void ) {}
-        void update ( void ) {}
-        void dispatch ( void ) {}
-        void load ( struct serializer *s ) {}
-        void save ( struct serializer *s ) {}
+        enum BenchmarkData {
+                Benchmark_CornellBox
+        };
+
+        void on_adding ( void );
+        void update ( void );
+        void dispatch ( void );
+        void load ( struct serializer *s );
+        void save ( struct serializer *s );
+
+        void run_benchmark ( enum BenchmarkData type );
+        void run_benchmark ( string& filename );
+
+        void bind_callback ( string signal, f_Generic callback, void *data );
 };
+
+//typedef void (*f_Notify_Error) ( string message, BenchmarkActiveX *bench, void *data );
 
 } // namespace usr
 
