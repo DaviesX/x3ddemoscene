@@ -1,5 +1,5 @@
 x3drenderlibrary - v 1.0 debug
-x3d log start recording	18:11:33
+x3d log start recording	21:42:49
 
 x3d_log:<symlib_load> loading file ./libX3dCore_dbg.so
 x3d_log:<dump> dumping elf dynamic linked: ./libX3dCore_dbg.so

@@ -15,9 +15,6 @@ public:
         bool                    m_is_idle;
         bool                    m_is_resized;
 
-        struct thr_trap         m_block_driver;
-        int                     m_iswap;
-
         struct Idle {
                 bool            is_idle;
                 f_Notify_idle   f_idle;
@@ -42,13 +39,11 @@ RenderRegionActiveX::RenderRegionActiveX ( string name, void *handle,
         this->pimpl = new RenderRegionInt ();
         RenderRegionInt *inst = pimpl;
 
-        x3d::thr_init_trap ( &inst->m_block_driver );
         x3d::build_irectangle_2d ( x, y, x + w, y + h, &inst->m_rect );
         inst->m_handle          = handle;
         inst->m_rend            = nullptr;
         inst->m_is_idle         = true;
         inst->m_is_resized      = false;
-        inst->m_iswap           = 0;
 
         int i;
         for ( i = 0; i < 2; i ++ ) {
@@ -79,10 +74,8 @@ void RenderRegionActiveX::on_adding ( void )
 
 void RenderRegionActiveX::set_idle_state ( bool is_idle )
 {
-        int t;
-        t = this->pimpl->m_iswap & 1;
         this->pimpl->m_is_idle = is_idle;
-        this->pimpl->m_idle[t].is_idle = is_idle;
+        this->pimpl->m_idle[on_front_buf()].is_idle = is_idle;
 }
 
 void RenderRegionActiveX::set_renderer ( struct renderer *renderer )
@@ -92,82 +85,72 @@ void RenderRegionActiveX::set_renderer ( struct renderer *renderer )
 
 void RenderRegionActiveX::resize ( int x, int y, int w, int h, bool toggle_fullscreen )
 {
-        RenderRegionInt *inst = this->pimpl;
-        int t;
-        t = inst->m_iswap & 1;
-        inst->m_resize[t].is_resized      = true;
-        inst->m_resize[t].width           = w;
-        inst->m_resize[t].height          = h;
-        inst->m_resize[t].is_fullscreen   = toggle_fullscreen;
-        inst->m_is_resized                = true;
-        x3d::build_irectangle_2d ( x, y, x + w, y + h, &inst->m_rect );
+        pimpl->m_resize[on_front_buf()].is_resized      = true;
+        pimpl->m_resize[on_front_buf()].width           = w;
+        pimpl->m_resize[on_front_buf()].height          = h;
+        pimpl->m_resize[on_front_buf()].is_fullscreen   = toggle_fullscreen;
+        pimpl->m_is_resized                             = true;
+        x3d::build_irectangle_2d ( x, y, x + w, y + h, &pimpl->m_rect );
 }
 
 void RenderRegionActiveX::bind_callback ( string signal, f_Generic callback, void *data )
 {
-        RenderRegionInt *inst = this->pimpl;
-        int t;
-        t = inst->m_iswap & 1;
-
         if ( "notify_idle" == signal ) {
-                inst->m_idle[t].f_idle = (f_Notify_idle) callback;
-                inst->m_idle[t].d_idle = data;
+                pimpl->m_idle[on_front_buf()].f_idle = (f_Notify_idle) callback;
+                pimpl->m_idle[on_front_buf()].d_idle = data;
         } else if ( "notify_resize" == signal ) {
-                inst->m_resize[t].f_resize = (f_Notify_resize) callback;
-                inst->m_resize[t].d_resize = data;
+                pimpl->m_resize[on_front_buf()].f_resize = (f_Notify_resize) callback;
+                pimpl->m_resize[on_front_buf()].d_resize = data;
         } else {
                 log_mild_err_dbg ( "no such signal as: %s", signal.c_str () );
                 return ;
         }
 }
 
+const void* RenderRegionActiveX::get_handle ( void ) const
+{
+        return this->pimpl->m_handle;
+}
+
 void RenderRegionActiveX::dispatch ( void )
 {
-        RenderRegionInt *inst = this->pimpl;
-        x3d::thr_trap_on_task ( &inst->m_block_driver );
-
-        int t;
-        t = (inst->m_iswap + 1) & 1;
+        wait_for_update ();
         {
-                RenderRegionInt::Idle *t_idle = &inst->m_idle[t];
+                RenderRegionInt::Idle *t_idle = &pimpl->m_idle[on_back_buf()];
                 if ( t_idle->f_idle )
-                        t_idle->f_idle ( t_idle->is_idle, inst->m_handle, t_idle->d_idle );
+                        t_idle->f_idle ( t_idle->is_idle, this, t_idle->d_idle );
         }
         {
-                RenderRegionInt::Resize *t_resize = &inst->m_resize[t];
+                RenderRegionInt::Resize *t_resize = &pimpl->m_resize[on_back_buf()];
                 if ( t_resize->f_resize || t_resize->is_resized ) {
-                        t_resize->f_resize ( t_resize->width, t_resize->height,
-                                             t_resize->is_fullscreen,
-                                             inst->m_handle,
-                                             t_resize->d_resize );
+                        t_resize->f_resize ( t_resize->is_fullscreen,
+                                             t_resize->width, t_resize->height,
+                                             this, t_resize->d_resize );
                         t_resize->is_resized = false;
                 }
         }
-
-        x3d::thr_untrap_task ( &inst->m_block_driver );
+        unwait ();
 }
 
 void RenderRegionActiveX::update ( void )
 {
-        RenderRegionInt *inst = this->pimpl;
-
         /* atomically swap the state buffer */
-        x3d::thr_trap_on_task ( &inst->m_block_driver );
-        inst->m_iswap ++;
-        x3d::thr_untrap_task ( &inst->m_block_driver );
+        wait_for_update ();
+        swap_buf ();
+        unwait ();
 
         KernelEnvironment* state = get_state_buffer ();
 
         struct x3d::renderer* renderer =
                 (struct x3d::renderer*) state->use ( c_Renderer );
-        if ( renderer != inst->m_rend )
-                inst->m_rend = renderer;
+        if ( renderer != pimpl->m_rend )
+                pimpl->m_rend = renderer;
 
-        if ( !inst->m_is_idle && inst->m_rend != nullptr )
-                x3d::renderer_commit ( inst->m_rend );
+        if ( !pimpl->m_is_idle && pimpl->m_rend != nullptr )
+                x3d::renderer_commit ( pimpl->m_rend );
 
-        if ( inst->m_is_resized )
-                inst->m_is_resized = false;
+        if ( pimpl->m_is_resized )
+                pimpl->m_is_resized = false;
 }
 
 void RenderRegionActiveX::load ( struct serializer *s )

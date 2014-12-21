@@ -30,9 +30,9 @@ static const string cRenderRegion = "gtk-main-editor-render-region";
 static struct main_editor g_main_edit;
 */
 
-static void idle_switch_callback ( bool is_idle, void *handle, void *info );
-static void window_reize_callback ( int width, int height, bool is_fullscreen,
-                                    void *handle, void *info );
+static void idle_switch_callback ( bool is_idle, EditorActiveX* ax, void *info );
+static void window_reize_callback ( bool is_fullscreen, int width, int height,
+                                    EditorActiveX* ax, void *info );
 static void render_config_error_callback ( string message, RenderConfigActiveX *conf, void *data );
 static gboolean display_logo_callback ( GtkWidget *draw_region,
                                         cairo_t *cairo, gpointer data );
@@ -53,10 +53,10 @@ static gboolean display_logo_callback ( GtkWidget *draw_region,
         return 0;
 }
 
-static void idle_switch_callback ( bool is_idle, void *handle, void *info )
+static void idle_switch_callback ( bool is_idle, EditorActiveX* ax, void *info )
 {
         struct main_editor* edit = (struct main_editor*) info;
-        GtkWidget *draw_area = (GtkWidget*) handle;
+        GtkWidget *draw_area = (GtkWidget*) ((RenderRegionActiveX*) ax)->get_handle ();
         if ( is_idle ) {
                 if ( !edit->is_logo_connected ) {
                         edit->logo_draw_signal =
@@ -73,8 +73,8 @@ static void idle_switch_callback ( bool is_idle, void *handle, void *info )
         }
 }
 
-static void window_reize_callback ( int width, int height, bool is_fullscreen,
-                                    void *handle, void *info )
+static void window_reize_callback ( bool is_fullscreen, int width, int height,
+                                    EditorActiveX* ax, void *info )
 {
 }
 

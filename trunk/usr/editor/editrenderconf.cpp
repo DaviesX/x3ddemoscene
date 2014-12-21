@@ -51,9 +51,6 @@ public:
                 vector<struct Tab::Value>       stack;
         } m_command;
 
-        struct thr_trap         m_block_driver;
-        int                     m_iswap;
-
         struct Error {
                 vector<string>  error_list;
                 f_Notify_Error  f_error;
@@ -66,15 +63,12 @@ RenderConfigActiveX::RenderConfigActiveX ( string name ) :
         EditorActiveX ( name, sizeof(RenderConfigActiveX), EDIT_ACTIVEX_RENDER_CONFIG )
 {
         this->pimpl = new RenderConfigInt ();
-        RenderConfigInt *inst = this->pimpl;
-        x3d::thr_init_trap ( &inst->m_block_driver );
 
-        inst->m_iswap  = 0;
         int i;
         for ( i = 0; i < 2; i ++ ) {
-                inst->m_error[i].error_list.clear ();
-                inst->m_error[i].f_error  = nullptr;
-                inst->m_error[i].f_error  = nullptr;
+                pimpl->m_error[i].error_list.clear ();
+                pimpl->m_error[i].f_error  = nullptr;
+                pimpl->m_error[i].f_error  = nullptr;
         }
 }
 
@@ -89,13 +83,9 @@ void RenderConfigActiveX::on_adding ( void )
 
 void RenderConfigActiveX::dispatch ( void )
 {
-        RenderConfigActiveX::RenderConfigInt *inst = this->pimpl;
-        x3d::thr_trap_on_task ( &inst->m_block_driver );
-
-        int t;
-        t = (inst->m_iswap + 1) & 1;
+        wait_for_update ();
         {
-                RenderConfigInt::Error *t_error = &inst->m_error[t];
+                RenderConfigInt::Error *t_error = &pimpl->m_error[on_back_buf()];
                 if ( t_error->f_error ) {
                         while ( !t_error->error_list.empty () ) {
                                 string msg = t_error->error_list.back ();
@@ -104,18 +94,15 @@ void RenderConfigActiveX::dispatch ( void )
                         }
                 }
         }
-
-        x3d::thr_untrap_task ( &inst->m_block_driver );
+        unwait ();
 }
 
 void RenderConfigActiveX::update ( void )
-{
-        RenderConfigInt *inst = this->pimpl;
-
+{;
         /* atomically swap the state buffer */
-        x3d::thr_trap_on_task ( &inst->m_block_driver );
-        inst->m_iswap ++;
-        x3d::thr_untrap_task ( &inst->m_block_driver );
+        wait_for_update ();
+        swap_buf ();
+        unwait ();
 }
 
 void RenderConfigActiveX::load ( struct serializer *s )
@@ -150,13 +137,9 @@ void* RenderConfigActiveX::checkout_value ( string tab_name, string value )
 
 void RenderConfigActiveX::bind_callback ( string signal, f_Generic callback, void *data )
 {
-        RenderConfigInt *inst = this->pimpl;
-        int t;
-        t = inst->m_iswap & 1;
-
         if ( "notify_error" == signal ) {
-                inst->m_error[t].f_error = (f_Notify_Error) callback;
-                inst->m_error[t].d_error = data;
+                pimpl->m_error[on_front_buf()].f_error = (f_Notify_Error) callback;
+                pimpl->m_error[on_front_buf()].d_error = data;
         } else {
                 log_mild_err_dbg ( "no such signal as: %s", signal.c_str () );
                 return ;

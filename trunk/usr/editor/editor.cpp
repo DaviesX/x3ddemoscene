@@ -276,3 +276,53 @@ bool Editor::save_state ( string filename )
         return true;
 }
 
+/* EditorActiveX */
+EditorActiveX::EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type ) :
+                m_size (size), m_type (type)
+{
+        m_name          = name;
+        m_bufcount      = 0;
+        x3d::thr_init_trap ( &m_block_driver );
+        m_dirty         = false;
+};
+
+EditorActiveX::~EditorActiveX ()
+{
+}
+
+/* front-back buffer utilities */
+int EditorActiveX::on_front_buf ( void ) const
+{
+        return m_bufcount & 1;
+}
+
+int EditorActiveX::on_back_buf  ( void ) const
+{
+        return (m_bufcount + 1) & 1;
+}
+
+void EditorActiveX::swap_buf ( void )
+{
+        m_bufcount ++;
+}
+
+void EditorActiveX::wait_for_update ( void )
+{
+        x3d::thr_trap_on_task ( &m_block_driver );
+}
+
+void EditorActiveX::unwait ( void )
+{
+        x3d::thr_untrap_task ( &m_block_driver );
+}
+
+/* dirt-mark utilities */
+void EditorActiveX::mark_dirty ( void )
+{
+        m_dirty = true;
+}
+
+void EditorActiveX::unmark_dirty ( void )
+{
+        m_dirty = false;
+}

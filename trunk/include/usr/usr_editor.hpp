@@ -25,7 +25,8 @@ enum EDIT_ACTIVEX_IDR {
         EDIT_ACTIVEX_RENDER_REGION,
         EDIT_ACTIVEX_RENDER_CONFIG,
         EDIT_ACTIVEX_ENTITY_LIST,
-        EDIT_ACTIVEX_FILE_LOADER
+        EDIT_ACTIVEX_FILE_LOADER,
+        EDIT_ACTIVEX_BENCHMARK
 };
 
 const int c_NumActiveXType = 5;
@@ -162,16 +163,13 @@ class BenchmarkActiveX;
 
 class __dlexport EditorActiveX
 {
+        friend class RenderRegionActiveX;
+        friend class RenderConfigActiveX;
+        friend class WorldDataActiveX;
+        friend class BenchmarkActiveX;
 public:
-        EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type ) :
-                m_size (size), m_type (type)
-        {
-                this->m_name = name;
-        };
-
-        virtual ~EditorActiveX ()
-        {
-        }
+        EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type );
+        virtual ~EditorActiveX ();
 
         void notify_add ( Editor *e )
         {
@@ -195,6 +193,11 @@ public:
                 return m_state;
         }
 
+        bool is_dirty ( void ) const
+        {
+                return m_dirty;
+        }
+
         virtual void on_adding ( void ) = 0;
         virtual void update ( void ) = 0;
         virtual void dispatch ( void ) = 0;
@@ -206,8 +209,28 @@ private:
         KernelEnvironment*      m_state;
         uuid_t                  m_edit_id;
         EDIT_ACTIVEX_IDR        m_type;
+
+        /* front-back buffer utilities */
+        int                     m_bufcount;
+        struct x3d::thr_trap    m_block_driver;
+
+        int     on_front_buf ( void ) const;
+        int     on_back_buf  ( void ) const;
+        void    swap_buf ( void );
+        void    wait_for_update ( void );
+        void    unwait ( void );
+
+        /* dirt-mark utilities */
+        bool                    m_dirty;
+
+        void    mark_dirty ( void );
+        void    unmark_dirty ( void );
 };
 
+/* unified callbacks */
+typedef void (*f_Notify_idle) ( bool is_idle, EditorActiveX* ax, void *data );
+typedef void (*f_Notify_resize) ( bool is_fullscreen, int width, int height, EditorActiveX* ax, void *data );
+typedef void (*f_Notify_Error) ( string message, EditorActiveX *ax, void *data );
 
 /* activex - render region */
 class __dlexport RenderRegionActiveX : public EditorActiveX
@@ -228,14 +251,12 @@ public:
         void resize ( int x, int y, int w, int h, bool toggle_fullscreen );
 
         void bind_callback ( string signal, f_Generic callback, void *data );
+
+        const void* get_handle ( void ) const;
 private:
         class RenderRegionInt;
         class RenderRegionInt *pimpl;
 };
-
-typedef void (*f_Notify_idle) ( bool is_idle, void *handle, void *data );
-typedef void (*f_Notify_resize) ( int width, int height, bool is_fullscreen,
-                                  void *handle, void *data );
 
 /* activex - render configurator */
 class __dlexport RenderConfigActiveX : public EditorActiveX
@@ -261,11 +282,9 @@ private:
         class RenderConfigInt *pimpl;
 };
 
-typedef void (*f_Notify_Error) ( string message, EditorActiveX *ax, void *data );
-
-
 class WorldDataActiveX : public EditorActiveX
 {
+        friend class EditorActiveX;
 public:
         void on_adding ( void ) {}
         void update ( void ) {}
@@ -283,6 +302,9 @@ public:
                 Benchmark_CornellBox
         };
 
+        BenchmarkActiveX ( string name );
+        ~BenchmarkActiveX ( void );
+
         void on_adding ( void );
         void update ( void );
         void dispatch ( void );
@@ -293,9 +315,10 @@ public:
         void run_benchmark ( string& filename );
 
         void bind_callback ( string signal, f_Generic callback, void *data );
+private:
+        class BenchmarkInt;
+        class BenchmarkInt* pimpl;
 };
-
-//typedef void (*f_Notify_Error) ( string message, BenchmarkActiveX *bench, void *data );
 
 } // namespace usr
 

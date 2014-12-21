@@ -3,18 +3,32 @@
 
 using namespace x3d::usr;
 
-static void construct_cornellbox ( KernelEnvironment* env )
+class BenchmarkActiveX::BenchmarkInt
 {
+public:
+        string          m_benchmark[2];
+};
+
+BenchmarkActiveX::BenchmarkActiveX ( string name ) :
+        EditorActiveX ( name, sizeof(BenchmarkActiveX), EDIT_ACTIVEX_BENCHMARK )
+{
+        this->pimpl = new BenchmarkInt;
+        for ( int i = 0; i < 2; i ++ ) {
+                pimpl->m_benchmark[i].clear ();
+        }
+}
+
+BenchmarkActiveX::~BenchmarkActiveX ( void )
+{
+        delete pimpl;
 }
 
 void BenchmarkActiveX::run_benchmark ( enum BenchmarkData type )
 {
-        KernelEnvironment* env = this->get_state_buffer ();
-
         switch ( type ) {
         case Benchmark_CornellBox:
                 {
-                construct_cornellbox ( env );
+                pimpl->m_benchmark[on_front_buf()] = "cornell-box";
                 break;
                 }
         }
@@ -22,6 +36,7 @@ void BenchmarkActiveX::run_benchmark ( enum BenchmarkData type )
 
 void BenchmarkActiveX::run_benchmark ( string& filename )
 {
+        pimpl->m_benchmark[on_front_buf()] = filename;
 }
 
 void BenchmarkActiveX::bind_callback ( string signal, f_Generic callback, void *data )
@@ -32,8 +47,20 @@ void BenchmarkActiveX::on_adding ( void )
 {
 }
 
+static void construct_cornellbox ( KernelEnvironment* env )
+{
+}
+
 void BenchmarkActiveX::update ( void )
 {
+        wait_for_update ();
+        swap_buf ();
+        KernelEnvironment* env = this->get_state_buffer ();
+
+        if ( pimpl->m_benchmark[on_back_buf()] == "cornell-box" ) {
+                construct_cornellbox ( env );
+        }
+        unwait ();
 }
 
 void BenchmarkActiveX::dispatch ( void )
