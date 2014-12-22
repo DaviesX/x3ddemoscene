@@ -6,72 +6,72 @@ using namespace x3d::usr;
 
 static int on_init ( int argc, char **argv, void *env )
 {
-        Kernel* kern = (Kernel*) env;
-        list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
-        while ( iter != kern->m_proxy.end () ) {
-                KernelProxy* curr_proxy = *iter;
-                curr_proxy->on_init ( argc, argv, &curr_proxy->m_env );
-                ++ iter;
+        Kernel* kern = static_cast<Kernel*>(env);
+
+        for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
+              iter != kern->m_proxy.end ();
+              ++ iter ) {
+                (*iter)->on_init ( argc, argv, &(*iter)->m_env );
         }
         return 0;
 }
 
 static int on_rest_init ( void *env )
 {
-        Kernel* kern = (Kernel*) env;
-        list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
-        while ( iter != kern->m_proxy.end () ) {
-                KernelProxy* curr_proxy = *iter;
-                curr_proxy->on_rest_init ( &curr_proxy->m_env );
-                ++ iter;
+        Kernel* kern = static_cast<Kernel*>(env);
+
+        for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
+              iter != kern->m_proxy.end ();
+              ++ iter ) {
+                (*iter)->on_rest_init ( &(*iter)->m_env );
         }
         return 0;
 }
 
 static int on_loop_init ( void *env )
 {
-        Kernel* kern = (Kernel*) env;
-        list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
-        while ( iter != kern->m_proxy.end () ) {
-                KernelProxy* curr_proxy = *iter;
-                curr_proxy->on_loop_init ( &curr_proxy->m_env );
-                ++ iter;
+        Kernel* kern = static_cast<Kernel*>(env);
+
+        for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
+              iter != kern->m_proxy.end ();
+              ++ iter ) {
+                (*iter)->on_loop_init ( &(*iter)->m_env );
         }
         return 0;
 }
 
 static int on_loop ( void *env )
 {
-        Kernel* kern = (Kernel*) env;
-        list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
-        while ( iter != kern->m_proxy.end () ) {
-                KernelProxy* curr_proxy = *iter;
-                curr_proxy->on_loop ( &curr_proxy->m_env );
-                ++ iter;
+        Kernel* kern = static_cast<Kernel*>(env);
+
+        for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
+              iter != kern->m_proxy.end ();
+              ++ iter ) {
+                (*iter)->on_loop ( &(*iter)->m_env );
         }
         return 0;
 }
 
 static int on_loop_free ( void *env )
 {
-        Kernel* kern = (Kernel*) env;
-        list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
-        while ( iter != kern->m_proxy.end () ) {
-                KernelProxy* curr_proxy = *iter;
-                curr_proxy->on_loop_free ( &curr_proxy->m_env );
-                ++ iter;
+        Kernel* kern = static_cast<Kernel*>(env);
+
+        for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
+              iter != kern->m_proxy.end ();
+              ++ iter ) {
+                (*iter)->on_loop_free ( &(*iter)->m_env );
         }
         return 0;
 }
 
 static int on_free ( void *env )
 {
-        Kernel* kern = (Kernel*) env;
-        list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
-        while ( iter != kern->m_proxy.end () ) {
-                KernelProxy *curr_proxy = *iter;
-                curr_proxy->on_free ( &curr_proxy->m_env );
-                ++ iter;
+        Kernel* kern = static_cast<Kernel*>(env);
+
+        for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
+              iter != kern->m_proxy.end ();
+              ++ iter ) {
+                (*iter)->on_free ( &(*iter)->m_env );
         }
         return 0;
 }

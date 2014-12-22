@@ -191,10 +191,10 @@
 	<x3d/common.h>
 	<algorithm.h>
 
-1403686091 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
+1419229696 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1419196947 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1419199149 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 

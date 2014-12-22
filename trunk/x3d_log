@@ -1,5 +1,5 @@
 x3drenderlibrary - v 1.0 debug
-x3d log start recording	21:59:58
+x3d log start recording	6:35:16
 
 x3d_log:<symlib_load> loading file ./libX3dCore_dbg.so
 x3d_log:<dump> dumping elf dynamic linked: ./libX3dCore_dbg.so
@@ -2330,4 +2330,64 @@ x3d_log:<dump> found: 1211e	748	1	GatherOutput
 x3d_log:<dump> found: 2a789	153	1	res_comp_alloc_vertex
 x3d_log:<dump> found: 1b414	63	1	proj_probe_range
 x3d_log:<dump> found: 0	0	1	strcmp@@GLIBC_2.0
-x3d_log:<dump> f
+x3d_log:<dump> found: 26f7b	15	1	shader_run
+x3d_log:<dump> found: 3b82a	174	1	stager_reset_layer
+x3d_log:<dump> found: 26f8a	97	1	shader_set_uniform
+x3d_log:<dump> found: 388b4	49	1	dot_vector3d
+x3d_log:<dump> found: 10fbe	145	1	load_scene_from_file
+x3d_log:<dump> found: 0	0	1	__cxa_finalize@@GLIBC_2.1
+x3d_log:<dump> found: 2bd42	105	1	free_alg_llist
+x3d_log:<dump> found: 35725	148	1	set_matrix4x4
+x3d_log:<dump> found: 286a8	5	1	rda_geometry_update_index
+x3d_log:<dump> found: 2311f	51	1	surface_fill_color
+x3d_log:<dump> found: 43240	48	3	c_cond_init
+x3d_log:<dump> found: 346f1	50	1	copy_box3d
+x3d_log:<dump> found: 3a403	72	1	root_layer
+x3d_log:<dump> found: 3357c	169	1	build_triangle4d
+x3d_log:<dump> found: 28389	10	1	model_entity_save
+x3d_log:<dump> found: 2963d	5	1	renderer_new_render_layer
+x3d_log:<dump> found: 38b19	69	1	normalize_vector3d
+x3d_log:<dump> found: 39cab	48	1	serial_free
+x3d_log:<dump> found: 23650	49	1	fill_pix_fr32g32b32
+x3d_log:<dump> found: 4f870	4	3	MildErrPrefix
+x3d_log:<dump> found: 39100	97	1	reflect_vector3d
+x3d_log:<dump> found: 0	0	1	sem_init@@GLIBC_2.1
+x3d_log:<dump> found: 1b0f4	281	1	perspective_emit_ray
+x3d_log:<dump> found: 2c295	83	1	free_emitter
+x3d_log:<dump> found: 19b09	61	1	create_perspective
+x3d_log:<dump> found: 1e34a	56	1	rtcontext_finalize_pipeli
+x3d_log:<dump> found: 1e292	17	1	rtcontext_bind_color_buff
+x3d_log:<dump> found: 0	0	0	kernel_main
+x3d_log:<dump> found: 0	0	1	gdk_threads_enter
+x3d_log:<dump> found: 1b4e6	14	1	proj_probe_get_bits
+x3d_log:<dump> found: 360a4	466	1	mul_matrix3x3
+x3d_log:<dump> found: 2177f	5	1	rt_renderer_render
+x3d_log:<dump> found: 38e7b	42	1	build_vector2d
+x3d_log:<dump> found: 28a76	11	1	rda_instance_source
+x3d_log:<dump> found: 328fb	165	1	arctan2f
+x3d_log:<dump> found: 23808	251	1	tri_buf_modify_attri
+x3d_log:<dump> found: 25cf0	35	1	vertprocessor_symbol_lib
+x3d_log:<dump> found: 0	0	1	powf@@GLIBC_2.0
+x3d_log:<dump> found: 27df9	47	1	main
+x3d_log:<dump> found: 19739	37	1	render_out_run
+x3d_log:<dump> found: 29647	5	1	renderer_set_light_model
+x3d_log:<dump> found: 33819	391	1	intersect_line_cylinder3d
+x3d_log:<dump> found: 10e08	0	1	_init
+x3d_log:<dump> found: 2c8be	652	1	parse_exp
+x3d_log:<dump> found: 24627	48	1	free_ibuffer
+x3d_log:<dump> found: 1e2d3	17	1	rtcontext_draw_mode
+x3d_log:<dump> found: 2c717	37	1	get_token_info_lexer
+x3d_log:<dump> found: 0	0	1	ceil@@GLIBC_2.0
+x3d_log:<dump> found: 3a17b	117	1	pop_res_name
+x3d_log:<dump> found: 3b216	1022	1	stager_set_layer_first
+x3d_log:<dump> found: 324f1	106	1	fast_sin
+x3d_log:<dump> found: 290cd	334	1	renderer_container_add
+x3d_mild: *<call_alloc_var> Running over instance budget: 1024
+x3d_mild: *<call_alloc_var> Running over instance budget: 2048
+x3d_log:<run_gtk_main> found 1 gtk main running already
+x3d_log:<stop_gtk_main> found 1 gtk main running already
+x3d_log:<stop_gtk_main> no gtk main is running: 0
+x3d_log:<symlib_unload> unloading file ./libX3dCore_dbg.so
+x3d_log:<unload_dyn> symbol file: ./libX3dCore_dbg.so is not dynamic linked
+x3d log stop recording
+

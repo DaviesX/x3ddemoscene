@@ -1,3 +1,4 @@
+#include <usr/usr_x3d.hpp>
 #include <usr/usr_editor.hpp>
 #include <usr/usr_kernel.hpp>
 
@@ -47,7 +48,7 @@ void BenchmarkActiveX::on_adding ( void )
 {
 }
 
-static void construct_cornellbox ( KernelEnvironment* env )
+static void construct_cornellbox ( struct x3d::rda_context* rda )
 {
 }
 
@@ -56,9 +57,10 @@ void BenchmarkActiveX::update ( void )
         wait_for_update ();
         swap_buf ();
         KernelEnvironment* env = this->get_state_buffer ();
+        struct x3d::rda_context* rda = static_cast<struct x3d::rda_context*>(env->use ( c_World ));
 
         if ( pimpl->m_benchmark[on_back_buf()] == "cornell-box" ) {
-                construct_cornellbox ( env );
+                construct_cornellbox ( rda );
         }
         unwait ();
 }

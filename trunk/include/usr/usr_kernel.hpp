@@ -136,12 +136,36 @@ class __dlexport Kernel
 public:
         Kernel ( void );
         ~Kernel ( void );
+
+        /** \brief start the kernel upon the current thread.
+         * \return bool true if the kernel could be started, otherwise, false will be returned.
+         */
         bool run ( void );
+
+        /** \brief notify the kernel to stop.
+         * the kernel will not stop immediately after this function call.
+         * \return void
+         */
         void stop ( void );
+
+        /** \brief register the destinated kernel callbacks.
+         *  DO NOT call this function after Kernel.run() has been called.
+         * \param proxy KernelProxy* the kernel callbacks.
+         * \return bool false if the kernel is running.
+         *
+         */
         bool register_proxy ( KernelProxy *proxy );
+
+        /** \brief remove the kernel callbacks.
+         *  DO NOT call this function after Kernel.run() has been called.
+         * \param m_name string name of the kernel callbacks.
+         * \return bool false if the kernel is running.
+         *
+         */
         bool unregister_proxy ( string m_name );
 public:
         list<KernelProxy*>      m_proxy;
+private:
         bool                    is_running;
 };
 

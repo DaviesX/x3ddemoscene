@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_layout_file>
-	<ActiveProject path="usr/usr.cbp" />
-	<PreferredTarget name="Debug" />
+	<ActiveProject path="external/sample_entry/sample_entry.cbp" />
 </CodeBlocks_workspace_layout_file>
