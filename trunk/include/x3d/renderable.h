@@ -121,19 +121,21 @@ struct rda_context {
  * functions' declaration
  */
 /* renderable */
-struct renderable*      rda_create ( char *name, enum RENDERABLE_IDR type,
+/* struct renderable*      rda_create ( char *name, enum RENDERABLE_IDR type,
                                      float importance, bool is_movable,
-                                     int mater_ref );
+                                     int mater_ref );*/
 void                    rda_free ( struct renderable *rda );
 void                    rda_set_name ( struct renderable *rda, char *name );
 void                    rda_set_importance ( struct renderable *rda, float importance );
 void                    rda_set_material ( struct renderable *rda, int mater_ref );
 char*                   rda_get_name ( struct renderable *rda );
+enum RENDERABLE_IDR     rda_get_type ( struct renderable* rda );
 struct rda_instance*    rda_instance_create ( struct renderable *rda, struct matrix4x4 *transform );
 void                    rda_instance_free ( struct rda_instance *inst );
 struct renderable*      rda_instance_source ( struct rda_instance* inst );
 
 /* geometry renderable */
+struct rda_geometry* rda_geometry_create ( char *name, float importance, bool is_movable, int mater_ref );
 void rda_geometry_init_from_data ( struct rda_geometry *geo,
                                    struct point3d* vertex, int num_vert, int* index, int num_tri,
                                    struct vector3d* normal, struct vector3d* tangent, struct point2d* uv,
@@ -157,6 +159,7 @@ void                    rda_context_free ( struct rda_context* ctx );
 void                    rda_context_add_instance ( struct rda_context* ctx,
                                                    struct rda_instance* insts,
                                                    enum RENDERABLE_IDR type );
+void                    rda_context_add_instance2 ( struct rda_context* ctx, struct rda_instance* insts );
 void                    rda_context_update ( struct rda_context* ctx );
 /* RI Interface */
 uuid_t                  rda_context_post_request ( struct rda_context* ctx,

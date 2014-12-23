@@ -9,6 +9,11 @@ static const int c_sizeof_renderable[] = {
         [RENDERABLE_GEOMETRY] = sizeof (struct rda_geometry)
 };
 
+static void h_renderable_init ( struct renderable* rda,
+                                char *name, enum RENDERABLE_IDR type, float importance,
+                                bool is_movable, int mater_ref );
+
+
 /* geometry renderable */
 static void rda_geometry_init ( struct rda_geometry* geo )
 {
@@ -48,6 +53,13 @@ static struct rda_geometry* rda_geometry_make_copy ( struct rda_geometry* geo )
 {
         log_mild_err_dbg ( "no makecopy yet" );
         return nullptr;
+}
+
+struct rda_geometry* rda_geometry_create ( char *name, float importance, bool is_movable, int mater_ref )
+{
+        struct rda_geometry* geo = alloc_obj ( geo );
+        h_renderable_init ( (struct renderable*) geo, name, RENDERABLE_GEOMETRY, importance, is_movable, mater_ref );
+        return geo;
 }
 
 void rda_geometry_init_from_data ( struct rda_geometry *geo,
@@ -123,12 +135,10 @@ int* rda_geometry_get_index ( struct rda_geometry* geo, int* nindex )
 
 /* renderable */
 static const struct rda_operation {
-        void (*init) ( struct renderable* self );
         void (*free) ( struct renderable* self );
         struct renderable* (*make_copy) ( struct renderable* self );
         void (*get_bound) ( struct renderable* self, struct matrix4x4* t, struct box3d* b );
 } cRdaOps[] = {
-        [RENDERABLE_GEOMETRY].init = cast(cRdaOps->init)                rda_geometry_init,
         [RENDERABLE_GEOMETRY].free = cast(cRdaOps->free)                rda_geometry_free,
         [RENDERABLE_GEOMETRY].make_copy =  cast(cRdaOps->make_copy)     rda_geometry_make_copy,
         [RENDERABLE_GEOMETRY].get_bound = cast(cRdaOps->get_bound)      rda_geometry_get_bound
@@ -154,7 +164,7 @@ static void h_renderable_free ( struct renderable* rda )
         free_fix ( rda->name );
         zero_obj ( rda );
 }
-
+/*
 struct renderable* rda_create ( char *name, enum RENDERABLE_IDR type,
                                 float importance, bool is_movable,
                                 int mater_ref )
@@ -182,11 +192,11 @@ struct renderable* rda_create ( char *name, enum RENDERABLE_IDR type,
         cRdaOps[type].init ( rda );
         return rda;
 }
-
+*/
 void rda_free ( struct renderable *rda )
 {
-        cRdaOps[rda->type].free ( rda );
         h_renderable_free ( rda );
+        cRdaOps[rda->type].free ( rda );
         zero_obj ( rda );
         free_fix ( rda );
 }
@@ -210,6 +220,11 @@ void rda_set_material ( struct renderable *rda, int mater_ref )
 char* rda_get_name ( struct renderable *rda )
 {
         return rda->name;
+}
+
+enum RENDERABLE_IDR rda_get_type ( struct renderable* rda )
+{
+        return rda->type;
 }
 
 struct rda_instance* rda_instance_create ( struct renderable *rda, struct matrix4x4 *transform )
@@ -425,6 +440,11 @@ void rda_context_add_instance ( struct rda_context* ctx,
                                 enum RENDERABLE_IDR type )
 {
         ragg_add ( ctx->agg, type, inst );
+}
+
+void rda_context_add_instance2 ( struct rda_context* ctx, struct rda_instance* insts )
+{
+        rda_context_add_instance ( ctx, insts, rda_get_type ( rda_instance_source ( insts ) ) );
 }
 
 void rda_context_update ( struct rda_context* ctx )

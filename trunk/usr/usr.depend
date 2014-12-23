@@ -57,7 +57,7 @@
 1402811107 /home/davis/x3drenderlib-code/trunk/lib/math/matrix.h
 	<x3d/common.h>
 
-1405072116 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
+1419314831 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -115,7 +115,7 @@
 1419229696 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1413480310 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
+1419315580 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
 	<string>
 	<algorithm>
 	<set>
@@ -129,6 +129,7 @@
 	<x3d/common.h>
 	<x3d/init.h>
 	<x3d/renderer.h>
+	<x3d/renderable.h>
 	<x3d/world.h>
 
 1403617208 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorbackend.hpp
@@ -2908,5 +2909,11 @@
 	<memory.h>
 	"cornellbox.h"
 
-1419311048 /home/davis/x3drenderlib-code/trunk/usr/editor/cornellbox/cornellbox.h
+1419315172 /home/davis/x3drenderlib-code/trunk/usr/editor/cornellbox/cornellbox.h
+	<x3d/common.h>
+
+1419316461 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+	<x3d/common.h>
+	<algorithm.h>
+	<math.h>
 

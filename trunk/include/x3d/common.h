@@ -58,6 +58,11 @@ typedef void (*f_Generic) ( void );
 #  else
 #    define __dlexport                  __attribute__((__visibility__("default")))
 #  endif
+#  ifdef __cplusplus
+#    define __cpp
+#  else
+#    define __c
+#  endif
 #  define asm_return( _fake_val ) \
         { \
                 asm ("ret \n"); \
