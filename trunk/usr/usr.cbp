@@ -63,6 +63,10 @@
 		<Unit filename="../include/usr/usr_missionprogs.hpp" />
 		<Unit filename="../include/usr/usr_world.hpp" />
 		<Unit filename="../include/usr/usr_x3d.hpp" />
+		<Unit filename="editor/cornellbox/cornellbox.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="editor/cornellbox/cornellbox.h" />
 		<Unit filename="editor/editassetlist.cpp" />
 		<Unit filename="editor/editbenchmark.cpp" />
 		<Unit filename="editor/editentityproperty.cpp" />

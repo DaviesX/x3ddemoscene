@@ -50,6 +50,7 @@ void BenchmarkActiveX::on_adding ( void )
 
 static void construct_cornellbox ( struct x3d::rda_context* rda )
 {
+#include "./cornellbox/cornellbox.h"
 }
 
 void BenchmarkActiveX::update ( void )
@@ -57,6 +58,7 @@ void BenchmarkActiveX::update ( void )
         wait_for_update ();
         swap_buf ();
         KernelEnvironment* env = this->get_state_buffer ();
+/* @fixme (davis#1#): shouldn't be <rda_context> here, should be <world> */
         struct x3d::rda_context* rda = static_cast<struct x3d::rda_context*>(env->use ( c_World ));
 
         if ( pimpl->m_benchmark[on_back_buf()] == "cornell-box" ) {

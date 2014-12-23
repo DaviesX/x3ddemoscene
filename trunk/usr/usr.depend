@@ -2804,7 +2804,7 @@
 	"renderable_editor.hpp"
 	"splash_screen.hpp"
 
-1405336428 source:/home/davis/x3drenderlib-code/trunk/usr/usr_kernel.cpp
+1419230013 source:/home/davis/x3drenderlib-code/trunk/usr/usr_kernel.cpp
 	<usr/usr_kernel.hpp>
 
 1405138775 /home/davis/x3drenderlib-code/trunk/lib/symlib.h
@@ -2902,4 +2902,11 @@
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
+
+1419311233 source:/home/davis/x3drenderlib-code/trunk/usr/editor/cornellbox/cornellbox.c
+	<stdlib.h>
+	<memory.h>
+	"cornellbox.h"
+
+1419311048 /home/davis/x3drenderlib-code/trunk/usr/editor/cornellbox/cornellbox.h
 
