@@ -83,6 +83,8 @@
 		<Unit filename="editor/gtkfrontend/gtkgui.hpp" />
 		<Unit filename="editor/gtkfrontend/main_editor.cpp" />
 		<Unit filename="editor/gtkfrontend/main_editor.hpp" />
+		<Unit filename="editor/gtkfrontend/main_editor_menu.cpp" />
+		<Unit filename="editor/gtkfrontend/main_editor_menu.hpp" />
 		<Unit filename="editor/gtkfrontend/renderable_editor.cpp" />
 		<Unit filename="editor/gtkfrontend/renderable_editor.hpp" />
 		<Unit filename="editor/gtkfrontend/renderer_configurator.cpp" />

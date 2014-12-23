@@ -76,6 +76,10 @@ bool EditorGtkFrontend::load ( Editor *editor, KernelEnvironment *env )
                 log_severe_err_dbg ( "couldn't load gtk renderable editor" );
                 return false;
         }
+        if ( !main_editor_menu_load () ) {
+                log_severe_err_dbg ( "couldn't load gtk main editor menu" );
+                return false;
+        }
         return true;
 }
 

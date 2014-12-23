@@ -34,7 +34,11 @@ private:
         bool render_config_load ( void );
         bool render_config_show ( bool is_visible );
         bool render_config_shut ( void );
-private:
+
+        bool main_editor_menu_load ( void );
+        bool main_editor_menu_show ( bool is_visible );
+        bool main_editor_menu_shut ( void );
+public:
         enum {
                 X_EDITOR_RUN,
                 X_EDITOR_FREEZE,
@@ -60,6 +64,8 @@ private:
         const string            m_splash_screen = "splash_screen_window.glade";
         const string            m_renderable_prop = "renderable_property_widget.glade";
         const string            m_entity_prop   = "entity_property_widget.glade";
+private:
+        void*                   main_editor_get_builder ( void );
 };
 
 class EditorQtFrontend : public EditorFrontend

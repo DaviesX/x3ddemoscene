@@ -2814,7 +2814,7 @@
 
 1403596674 /home/davis/x3drenderlib-code/trunk/lib/algorithm.inl.h
 
-1403701173 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorfrontend.hpp
+1419330551 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorfrontend.hpp
 	<usr/usr_editor.hpp>
 
 1403679691 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkgui.hpp
@@ -2834,10 +2834,11 @@
 
 1413480190 source:/home/davis/x3drenderlib-code/trunk/usr/usr_world.cpp
 
-1419229433 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editbenchmark.cpp
+1419317460 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editbenchmark.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_kernel.hpp>
+	"./cornellbox/cornellbox.h"
 
 1402010100 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/dynamics_editor.cpp
 
@@ -2854,7 +2855,7 @@
 
 1402010100 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/entity_editor.hpp
 
-1403703079 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.cpp
+1419331232 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.cpp
 	<gtk/gtk.h>
 	<gdk/gdk.h>
 	<cairo.h>
@@ -2867,19 +2868,20 @@
 	"renderable_editor.hpp"
 	"splash_screen.hpp"
 
-1403656752 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.hpp
+1419335534 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.hpp
 
 1402010100 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderable_editor.hpp
 
 1403654681 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/splash_screen.hpp
 	<usr/usr_editorfrontend.hpp>
 
-1419198114 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.cpp
+1419335076 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
+	"main_editor.hpp"
 
 1403654198 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderable_editor.cpp
 	<gtk/gtk.h>
@@ -2916,4 +2918,12 @@
 	<x3d/common.h>
 	<algorithm.h>
 	<math.h>
+
+1419334972 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.cpp
+	<usr/usr_editorfrontend.hpp>
+	<gtk/gtk.h>
+	"main_editor.hpp"
+	"main_editor_menu.hpp"
+
+1419318932 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.hpp
 

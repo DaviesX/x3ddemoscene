@@ -4,12 +4,15 @@
 #include <usr/usr_editor.hpp>
 #include <usr/usr_editorfrontend.hpp>
 #include "gtkgui.hpp"
+#include "main_editor.hpp"
 
 using namespace x3d;
 using namespace x3d::usr;
 
 
 struct main_editor {
+        EditorGtkFrontend::X_EDITOR_MODE           editor_mode;
+        GtkBuilder*             builder;
         GtkWidget*              window;
         GtkWidget*              draw_region;
         GdkPixbuf*              logo_pix_buf;
@@ -34,14 +37,11 @@ static void idle_switch_callback ( bool is_idle, EditorActiveX* ax, void *info )
 static void window_reize_callback ( bool is_fullscreen, int width, int height,
                                     EditorActiveX* ax, void *info );
 static void render_config_error_callback ( string message, RenderConfigActiveX *conf, void *data );
-static gboolean display_logo_callback ( GtkWidget *draw_region,
+
+extern "C" gboolean display_logo_callback ( GtkWidget *draw_region,
                                         cairo_t *cairo, gpointer data );
-static gboolean destroy_callback ( GtkWidget *widget, gpointer data );
-static gboolean main_editor_dispatch ( gpointer user_data );
 
-
-
-static gboolean display_logo_callback ( GtkWidget *draw_region,
+extern "C" gboolean display_logo_callback ( GtkWidget *draw_region,
                                         cairo_t *cairo, gpointer data )
 {
         struct main_editor* edit = (struct main_editor*) data;
@@ -78,7 +78,7 @@ static void window_reize_callback ( bool is_fullscreen, int width, int height,
 {
 }
 
-static gboolean destroy_callback ( GtkWidget *widget, gpointer data )
+extern "C" gboolean destroy_callback ( GtkWidget *widget, gpointer data )
 {
         KernelEnvironment* env = (KernelEnvironment*) data;
         Editor* editor = (Editor*) env->use ( cOfficialEditor );
@@ -103,6 +103,8 @@ bool EditorGtkFrontend::main_editor_load ( void )
 
         if ( this->m_editor_mode == X_EDITOR_DEMO_MODE ) {
 demo_mode:
+                this->m_editor_mode = X_EDITOR_DEMO_MODE;
+
                 file += this->m_demo_player;
 
                 GtkBuilder *builder = nullptr;
@@ -143,8 +145,11 @@ demo_mode:
                 log_mild_err_dbg ( "mode is not specified corrected. selected mode: %d. running into demo mode...", this->m_editor_mode );
                 goto demo_mode;
         }
+        // DON'T trash it yet.
         /* done using glade builder */
-        builder_all_set ( builder );
+        // builder_all_set ( builder );
+        edit->builder = builder;
+        gtk_builder_connect_signals ( edit->builder, nullptr );
 
         /* change background color to black */
         GdkColor color;
@@ -206,9 +211,22 @@ bool EditorGtkFrontend::main_editor_show ( bool is_visible )
 bool EditorGtkFrontend::main_editor_shut ( void )
 {
         KernelEnvironment* env = this->m_env;
+
+        struct main_editor* edit =
+                (struct main_editor*) this->m_env->use ( cMainEditor );
+        /* done using glade builder */
+        builder_all_set ( edit->builder );
+
         env->undeclare ( cMainEditor );
         env->undeclare ( cOfficialEditor );
         return true;
+}
+
+void* EditorGtkFrontend::main_editor_get_builder ( void )
+{
+        struct main_editor* edit =
+                (struct main_editor*) this->m_env->use ( cMainEditor );
+        return edit->builder;
 }
 
 GtkWidget* main_editor_get_region ( void )
@@ -216,7 +234,7 @@ GtkWidget* main_editor_get_region ( void )
         return nullptr;
 }
 
-static gboolean main_editor_dispatch ( gpointer user_data )
+extern "C" gboolean main_editor_dispatch ( gpointer user_data )
 {
         KernelEnvironment* env = (KernelEnvironment*) user_data;
         Editor* editor = (Editor*) env->use ( cOfficialEditor );
