@@ -188,12 +188,12 @@ void Editor::update ( void )
 
 void Editor::add_activex ( EditorActiveX *activex )
 {
-        EDIT_ACTIVEX_IDR type = activex->get_type ();
+        EditorActiveX::EDIT_ACTIVEX_IDR type = activex->get_type ();
         activex->notify_add ( this );
         this->m_activex[type].push_back ( activex );
 }
 
-EditorActiveX *Editor::find_activex ( EDIT_ACTIVEX_IDR type, string name )
+EditorActiveX *Editor::find_activex ( EditorActiveX::EDIT_ACTIVEX_IDR type, string name )
 {
         list<EditorActiveX*>::iterator activex =
                 this->m_activex[type].begin ();
@@ -208,7 +208,7 @@ EditorActiveX *Editor::find_activex ( EDIT_ACTIVEX_IDR type, string name )
         return nullptr;
 }
 
-bool Editor::remove_activex ( EDIT_ACTIVEX_IDR type, string name )
+bool Editor::remove_activex ( EditorActiveX::EDIT_ACTIVEX_IDR type, string name )
 {
         list<EditorActiveX*>::iterator activex =
                 this->m_activex[type].begin ();
@@ -302,7 +302,7 @@ string EditorActiveX::get_name ( void ) const
         return m_name;
 }
 
-EDIT_ACTIVEX_IDR EditorActiveX::get_type ( void ) const
+EditorActiveX::EDIT_ACTIVEX_IDR EditorActiveX::get_type ( void ) const
 {
         return m_type;
 }

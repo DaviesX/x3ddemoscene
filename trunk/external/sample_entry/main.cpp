@@ -12,7 +12,7 @@ extern "C" int kernel_main ( int argc, char *argv[] )
 
         Editor *edit = new Editor ();
         KernelEditor *kern_edit = new KernelEditor ( edit );
-        kern_edit->register_gui_frontend ( GUI_FONTEND_GTK, nullptr );
+        kern_edit->register_gui_frontend ( KernelEditor::GUI_FONTEND_GTK, nullptr );
 
         Kernel *kernel = new Kernel ();
         kernel->register_proxy ( kern_edit );

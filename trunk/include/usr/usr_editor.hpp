@@ -12,23 +12,6 @@ namespace x3d
 namespace usr
 {
 
-enum GUI_FONTEND_IDR {
-        GUI_FONTEND_NONE,
-        GUI_FONTEND_PURE_SDL,
-        GUI_FONTEND_GTK,
-        GUI_FONTEND_WIN32,
-        GUI_FONTEND_QT,
-        GUI_FONTEND_CUSTUM
-};
-
-enum EDIT_ACTIVEX_IDR {
-        EDIT_ACTIVEX_RENDER_REGION,
-        EDIT_ACTIVEX_RENDER_CONFIG,
-        EDIT_ACTIVEX_ENTITY_LIST,
-        EDIT_ACTIVEX_FILE_LOADER,
-        EDIT_ACTIVEX_BENCHMARK
-};
-
 const int c_NumActiveXType = 5;
 
 /* state constants */
@@ -43,106 +26,6 @@ class Editor;
 class EditorFrontend;
 class EditorActiveX;
 class KernelEditor;
-
-
-class __dlexport Editor
-{
-public:
-        Editor ( void );
-        ~Editor ( void );
-
-        void open ( void )
-        {
-                m_is_open = true;
-        }
-        void close ( void )
-        {
-                m_is_open = false;
-        }
-        bool is_open ( void )
-        {
-                return m_is_open;
-        }
-
-        void update ( void );
-        void dispatch_signal ( void );
-        bool load_state ( string filename );
-        bool save_state ( string filename );
-
-        void add_activex ( EditorActiveX *activex );
-        bool remove_activex ( EDIT_ACTIVEX_IDR type, string name );
-        EditorActiveX *find_activex ( EDIT_ACTIVEX_IDR type, string name );
-
-        KernelEnvironment *get_global_state ( void )
-        {
-                return &this->m_global_state;
-        }
-
-        uuid_t get_id ( void )
-        {
-                return m_id;
-        }
-private:
-        bool                    m_is_open;
-        uuid_t                  m_id;
-        list<EditorActiveX*>    m_activex[c_NumActiveXType];
-        KernelEnvironment       m_global_state;
-};
-
-class EditorFrontend
-{
-public:
-        virtual ~EditorFrontend () {}
-
-        bool is_custum ( void )
-        {
-                return false;
-        }
-
-        virtual bool init ( int argc, char **argv,
-                            Editor *editor, KernelEnvironment *env )
-        {
-                return true;
-        }
-        virtual bool end_init ( Editor *editor, KernelEnvironment *env )
-        {
-                return true;
-        }
-        virtual bool load ( Editor *editor, KernelEnvironment *env )
-        {
-                return true;
-        }
-        virtual void loop ( Editor *editor, KernelEnvironment *env )
-        {
-                return ;
-        }
-        virtual bool free ( Editor *editor, KernelEnvironment *env )
-        {
-                return true;
-        }
-};
-
-class __dlexport KernelEditor : public KernelProxy
-{
-public:
-        KernelEditor ( Editor *e );
-        ~KernelEditor ( void );
-
-        int on_init ( int argc, char **argv, KernelEnvironment *env );
-        int on_rest_init ( KernelEnvironment *env );
-        int on_loop_init ( KernelEnvironment *env );
-        int on_loop ( KernelEnvironment *env );
-        int on_loop_free ( KernelEnvironment *env );
-        int on_free ( KernelEnvironment *env );
-
-        void register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend *backend );
-private:
-        GUI_FONTEND_IDR         m_frontend_type;
-        Editor*                 m_editor;
-        EditorFrontend*         m_frontend;
-        struct thr_task*        m_loop_task;
-        const string            m_state_file = "./etc/editor/editor_state";
-};
 
 class RenderRegionActiveX;
 class RenderConfigActiveX;
@@ -168,6 +51,14 @@ class __dlexport EditorActiveX
         friend class WorldDataActiveX;
         friend class BenchmarkActiveX;
 public:
+        enum EDIT_ACTIVEX_IDR {
+                EDIT_ACTIVEX_RENDER_REGION,
+                EDIT_ACTIVEX_RENDER_CONFIG,
+                EDIT_ACTIVEX_ENTITY_LIST,
+                EDIT_ACTIVEX_FILE_LOADER,
+                EDIT_ACTIVEX_BENCHMARK
+        };
+
         EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type );
         virtual ~EditorActiveX ();
 
@@ -298,6 +189,116 @@ private:
         class BenchmarkInt;
         class BenchmarkInt* pimpl;
 };
+
+
+class __dlexport Editor
+{
+public:
+        Editor ( void );
+        ~Editor ( void );
+
+        void open ( void )
+        {
+                m_is_open = true;
+        }
+        void close ( void )
+        {
+                m_is_open = false;
+        }
+        bool is_open ( void )
+        {
+                return m_is_open;
+        }
+
+        void update ( void );
+        void dispatch_signal ( void );
+        bool load_state ( string filename );
+        bool save_state ( string filename );
+
+        void add_activex ( EditorActiveX *activex );
+        bool remove_activex ( EditorActiveX::EDIT_ACTIVEX_IDR type, string name );
+        EditorActiveX *find_activex ( EditorActiveX::EDIT_ACTIVEX_IDR type, string name );
+
+        KernelEnvironment *get_global_state ( void )
+        {
+                return &this->m_global_state;
+        }
+
+        uuid_t get_id ( void )
+        {
+                return m_id;
+        }
+private:
+        bool                    m_is_open;
+        uuid_t                  m_id;
+        list<EditorActiveX*>    m_activex[c_NumActiveXType];
+        KernelEnvironment       m_global_state;
+};
+
+class EditorFrontend
+{
+public:
+        virtual ~EditorFrontend () {}
+
+        bool is_custum ( void )
+        {
+                return false;
+        }
+
+        virtual bool init ( int argc, char **argv,
+                            Editor *editor, KernelEnvironment *env )
+        {
+                return true;
+        }
+        virtual bool end_init ( Editor *editor, KernelEnvironment *env )
+        {
+                return true;
+        }
+        virtual bool load ( Editor *editor, KernelEnvironment *env )
+        {
+                return true;
+        }
+        virtual void loop ( Editor *editor, KernelEnvironment *env )
+        {
+                return ;
+        }
+        virtual bool free ( Editor *editor, KernelEnvironment *env )
+        {
+                return true;
+        }
+};
+
+class __dlexport KernelEditor : public KernelProxy
+{
+public:
+        enum GUI_FONTEND_IDR {
+                GUI_FONTEND_NONE,
+                GUI_FONTEND_PURE_SDL,
+                GUI_FONTEND_GTK,
+                GUI_FONTEND_WIN32,
+                GUI_FONTEND_QT,
+                GUI_FONTEND_CUSTUM
+        };
+
+        KernelEditor ( Editor *e );
+        ~KernelEditor ( void );
+
+        int on_init ( int argc, char **argv, KernelEnvironment *env );
+        int on_rest_init ( KernelEnvironment *env );
+        int on_loop_init ( KernelEnvironment *env );
+        int on_loop ( KernelEnvironment *env );
+        int on_loop_free ( KernelEnvironment *env );
+        int on_free ( KernelEnvironment *env );
+
+        void register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend *backend );
+private:
+        GUI_FONTEND_IDR         m_frontend_type;
+        Editor*                 m_editor;
+        EditorFrontend*         m_frontend;
+        struct thr_task*        m_loop_task;
+        const string            m_state_file = "./etc/editor/editor_state";
+};
+
 
 } // namespace usr
 

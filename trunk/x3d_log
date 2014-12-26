@@ -1,5 +1,5 @@
 x3drenderlibrary - v 1.0 debug
-x3d log start recording	11:53:54
+x3d log start recording	19:49:46
 
 x3d_log:<symlib_load> loading file ./libX3dCore_dbg.so
 x3d_log:<dump> dumping elf dynamic linked: ./libX3dCore_dbg.so
@@ -2390,8 +2390,3 @@ x3d_mild: *<call_alloc_var> Running over instance budget: 1024
 x3d_mild: *<call_alloc_var> Running over instance budget: 2048
 x3d_log:<run_gtk_main> found 1 gtk main running already
 x3d_log:<stop_gtk_main> found 1 gtk main running already
-x3d_log:<stop_gtk_main> no gtk main is running: 0
-x3d_log:<symlib_unload> unloading file ./libX3dCore_dbg.so
-x3d_log:<unload_dyn> symbol file: ./libX3dCore_dbg.so is not dynamic linked
-x3d log stop recording
-

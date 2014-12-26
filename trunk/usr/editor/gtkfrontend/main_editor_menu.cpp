@@ -7,7 +7,11 @@ using namespace x3d::usr;
 
 extern "C" void cornell_box_callback ( GtkMenuItem* menuitem, gpointer user_data )
 {
-        printf ( "pressed!\n" );
+        Editor* editor = (Editor*) user_data;
+        BenchmarkActiveX* benchmark =
+                (BenchmarkActiveX*) editor->find_activex ( EditorActiveX::EDIT_ACTIVEX_BENCHMARK,
+                                                           "benchmark-scene-menu-item" );
+        benchmark->run_benchmark ( BenchmarkActiveX::Benchmark_CornellBox );
 }
 
 bool EditorGtkFrontend::main_editor_menu_load ( void )
@@ -28,8 +32,16 @@ bool EditorGtkFrontend::main_editor_menu_load ( void )
                 return false;
         }
         gtk_menu_item_set_submenu ( bench_item, (GtkWidget*) bench_menu );
-        BenchmarkActiveX* bench_activex = new BenchmarkActiveX ( "benchmark-scene-menu-item" );
-        m_editor->add_activex ( bench_activex );
+        // cornell box benchmark
+        GtkMenuItem* cornell_box_item = (GtkMenuItem*) gtk_builder_get_object ( builder, "cornell-box-scene" );
+        if ( !cornell_box_item ) {
+                log_severe_err_dbg ( "cannot retrieve cornell-box-scene menu item" );
+                return false;
+        }
+        g_signal_connect ( G_OBJECT(cornell_box_item), "activate",
+                           G_CALLBACK(cornell_box_callback), this->m_editor );
+
+        m_editor->add_activex ( new BenchmarkActiveX ( "benchmark-scene-menu-item" ) );
         }
         // deal with the close menu
         {

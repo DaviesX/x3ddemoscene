@@ -162,7 +162,7 @@
 1405336395 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
 	<x3d/common.h>
 
-1419296401 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
+1419622604 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
 	<stdio.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
@@ -195,7 +195,7 @@
 1419229696 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1419199149 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1419622466 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 
