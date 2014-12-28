@@ -48,6 +48,7 @@ static struct renderer_container        g_rend_cont;
 void renderer_kernel_init ( void )
 {
         alg_init ( llist, &g_rend_cont.renderer, sizeof(p_renderer_t), 1 );
+        g_rend_ops.lcrenderer_init ();
 }
 
 /** \brief delete the global renderer container.

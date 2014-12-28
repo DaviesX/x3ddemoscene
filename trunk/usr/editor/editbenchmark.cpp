@@ -66,8 +66,8 @@ static void construct_cornellbox ( struct x3d::rda_context* ctx )
 
                 cornell_box_make ( &vertices, &n_vertices, &indices, &n_indices );
 
-                x3d::point3d*  vert_arr = static_cast<x3d::point3d*>(alloc_fix ( sizeof(vert_arr), n_vertices ));
-                x3d::vector3d* norm_arr = static_cast<x3d::vector3d*>(alloc_fix ( sizeof(norm_arr), n_vertices ));
+                x3d::point3d*  vert_arr = static_cast<x3d::point3d*>(alloc_fix ( sizeof(*vert_arr), n_vertices ));
+                x3d::vector3d* norm_arr = static_cast<x3d::vector3d*>(alloc_fix ( sizeof(*norm_arr), n_vertices ));
                 for ( int i = 0; i < n_vertices; i ++ ) {
                         x3d::set_point3d ( vertices[i].position[0],
                                            vertices[i].position[1],

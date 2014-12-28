@@ -38,6 +38,10 @@ private:
         bool main_editor_menu_load ( void );
         bool main_editor_menu_show ( bool is_visible );
         bool main_editor_menu_shut ( void );
+
+        bool project_manager_load ( void );
+        bool project_manager_show ( bool is_visible );
+        bool project_manager_shut ( void );
 public:
         enum {
                 X_EDITOR_RUN,

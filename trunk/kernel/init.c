@@ -92,6 +92,7 @@ __dlexport bool kernel_start ( void )
         init_lib ();
         if ( !renderer_import ( &init->symbols ) )
                 return false;
+        renderer_kernel_init ();
         init_world ();
         rest_init ();
         return true;

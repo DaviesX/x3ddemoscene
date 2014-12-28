@@ -156,7 +156,7 @@ void KernelEditor::register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend 
 /* Editor */
 Editor::Editor ( void )
 {
-        for ( int i = 0; i < c_NumActiveXType; i ++ ) {
+        for ( int i = 0; i < EditorActiveX::c_NumActiveXType; i ++ ) {
                 this->m_activex[i].clear ();
         }
         this->m_id = alg_gen_uuid ();
@@ -165,11 +165,11 @@ Editor::Editor ( void )
 
 Editor::~Editor ( void )
 {
-        for ( int i = 0; i < c_NumActiveXType; i ++ ) {
-                list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
-                while ( activex != this->m_activex[i].end () ) {
+        for ( int i = 0; i < EditorActiveX::c_NumActiveXType; i ++ ) {
+                for ( list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
+                      activex != this->m_activex[i].end ();
+                      ++ activex ) {
                         delete (*activex);
-                        ++ activex;
                 }
                 this->m_activex[i].clear ();
         }
@@ -177,11 +177,11 @@ Editor::~Editor ( void )
 
 void Editor::update ( void )
 {
-        for ( int i = 0; i < c_NumActiveXType; i ++ ) {
-                list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
-                while ( activex != this->m_activex[i].end () ) {
+        for ( int i = 0; i < EditorActiveX::c_NumActiveXType; i ++ ) {
+                for ( list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
+                      activex != this->m_activex[i].end ();
+                      ++ activex ) {
                         (*activex)->update ();
-                        ++ activex;
                 }
         }
 }
@@ -226,11 +226,11 @@ bool Editor::remove_activex ( EditorActiveX::EDIT_ACTIVEX_IDR type, string name 
 
 void Editor::dispatch_signal ( void )
 {
-        for ( int i = 0; i < c_NumActiveXType; i ++ ) {
-                list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
-                while ( activex != this->m_activex[i].end () ) {
+        for ( int i = 0; i < EditorActiveX::c_NumActiveXType; i ++ ) {
+                for ( list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
+                      activex != this->m_activex[i].end ();
+                      ++ activex ) {
                         (*activex)->dispatch ();
-                        ++ activex;
                 }
         }
 }
@@ -245,11 +245,11 @@ bool Editor::load_state ( string filename )
                 return false;
         }
 
-        for ( int i = 0; i < c_NumActiveXType; i ++ ) {
-                list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
-                while ( activex != this->m_activex[i].end () ) {
+        for ( int i = 0; i < EditorActiveX::c_NumActiveXType; i ++ ) {
+                for ( list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
+                      activex != this->m_activex[i].end ();
+                      ++ activex ) {
                         (*activex)->load ( &s );
-                        ++ activex;
                 }
         }
         return true;
@@ -260,11 +260,11 @@ bool Editor::save_state ( string filename )
         struct serializer s;
         serial_init ( &s );
 
-        for ( int i = 0; i < c_NumActiveXType; i ++ ) {
-                list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
-                while ( activex != this->m_activex[i].end () ) {
+        for ( int i = 0; i < EditorActiveX::c_NumActiveXType; i ++ ) {
+                for ( list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
+                      activex != this->m_activex[i].end ();
+                      ++ activex ) {
                         (*activex)->save ( &s );
-                        ++ activex;
                 }
         }
 
@@ -309,6 +309,8 @@ EditorActiveX::EDIT_ACTIVEX_IDR EditorActiveX::get_type ( void ) const
 
 KernelEnvironment* EditorActiveX::get_state_buffer ( void ) const
 {
+        if ( m_state == nullptr )
+                log_severe_err_dbg ( "state buffer is empty!" );
         return m_state;
 }
 

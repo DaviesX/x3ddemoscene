@@ -18,6 +18,11 @@ class KernelEnvironment;
 class KernelEnvironment
 {
 public:
+        KernelEnvironment ()
+        {
+                m_data_set.clear ();
+        }
+
         template <typename t_Var> t_Var* make ( t_Var val )
         {
                 t_Var* x = new t_Var;

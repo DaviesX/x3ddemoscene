@@ -60,11 +60,11 @@ bool EditorGtkFrontend::load ( Editor *editor, KernelEnvironment *env )
         this->m_editor = editor;
         this->m_env = env;
 
-        if ( !this->main_editor_load () ) {
+        if ( !main_editor_load () ) {
                 log_severe_err_dbg ( "couldn't load gtk main editor" );
                 return false;
         }
-        if ( !this->render_config_load () ) {
+        if ( !render_config_load () ) {
                 log_severe_err_dbg ( "couldn't load gtk renderer configurator" );
                 return false;
         }
@@ -80,6 +80,10 @@ bool EditorGtkFrontend::load ( Editor *editor, KernelEnvironment *env )
                 log_severe_err_dbg ( "couldn't load gtk main editor menu" );
                 return false;
         }
+        if ( !project_manager_load () ) {
+                log_severe_err_dbg ( "couldn't load gtk project manager" );
+                return false;
+        }
         return true;
 }
 
@@ -88,8 +92,13 @@ void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
         this->m_editor = editor;
         this->m_env = env;
 
-        if ( !this->main_editor_show ( true ) ) {
+        if ( !main_editor_show ( true ) ) {
                 log_severe_err_dbg ( "failed to show gtk main editor" );
+                return ;
+        }
+
+        if ( !project_manager_show ( true ) ) {
+                log_severe_err_dbg ( "failed to show gtk project_manager" );
                 return ;
         }
 

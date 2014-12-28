@@ -79,6 +79,15 @@ RenderConfigActiveX::~RenderConfigActiveX ( void )
 
 void RenderConfigActiveX::on_adding ( void )
 {
+        // make a default renderer
+        KernelEnvironment* state = this->get_state_buffer ();
+        struct x3d::renderer* renderer =
+                (struct x3d::renderer*) state->use ( c_Renderer );
+        if ( renderer ) {
+                x3d::free_renderer ( renderer );
+        }
+        renderer = x3d::create_renderer ( RENDERER_PATH_TRACER, nullptr );
+        state->declare ( c_Renderer, renderer );
 }
 
 void RenderConfigActiveX::dispatch ( void )

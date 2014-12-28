@@ -75,6 +75,7 @@
 		<Unit filename="editor/editrenderconf.cpp" />
 		<Unit filename="editor/editrenderregion.cpp" />
 		<Unit filename="editor/editviewcontrol.cpp" />
+		<Unit filename="editor/editworlddata.cpp" />
 		<Unit filename="editor/gtkfrontend/dynamics_editor.cpp" />
 		<Unit filename="editor/gtkfrontend/dynamics_editor.hpp" />
 		<Unit filename="editor/gtkfrontend/entity_editor.cpp" />
@@ -85,9 +86,12 @@
 		<Unit filename="editor/gtkfrontend/main_editor.hpp" />
 		<Unit filename="editor/gtkfrontend/main_editor_menu.cpp" />
 		<Unit filename="editor/gtkfrontend/main_editor_menu.hpp" />
+		<Unit filename="editor/gtkfrontend/project_manager.cpp" />
+		<Unit filename="editor/gtkfrontend/project_manager.hpp" />
 		<Unit filename="editor/gtkfrontend/renderable_editor.cpp" />
 		<Unit filename="editor/gtkfrontend/renderable_editor.hpp" />
 		<Unit filename="editor/gtkfrontend/renderer_configurator.cpp" />
+		<Unit filename="editor/gtkfrontend/renderer_configurator.hpp" />
 		<Unit filename="editor/gtkfrontend/splash_screen.cpp" />
 		<Unit filename="editor/gtkfrontend/splash_screen.hpp" />
 		<Unit filename="usr_cinematicprogs.cpp" />

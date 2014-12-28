@@ -4,6 +4,7 @@
 #include <usr/usr_editor.hpp>
 #include <usr/usr_editorfrontend.hpp>
 #include "gtkgui.hpp"
+#include "renderer_configurator.hpp"
 #include "main_editor.hpp"
 
 using namespace x3d;

@@ -12,8 +12,6 @@ namespace x3d
 namespace usr
 {
 
-const int c_NumActiveXType = 5;
-
 /* state constants */
 const string c_Renderer         = "renderer";
 const string c_RedoStack        = "redo-stack";
@@ -56,8 +54,11 @@ public:
                 EDIT_ACTIVEX_RENDER_CONFIG,
                 EDIT_ACTIVEX_ENTITY_LIST,
                 EDIT_ACTIVEX_FILE_LOADER,
+                EDIT_ACTIVEX_WORLD_DATA,
                 EDIT_ACTIVEX_BENCHMARK
         };
+
+        static const int c_NumActiveXType = EDIT_ACTIVEX_BENCHMARK - EDIT_ACTIVEX_RENDER_REGION + 1;
 
         EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type );
         virtual ~EditorActiveX ();
@@ -152,20 +153,26 @@ private:
         class RenderConfigInt *pimpl;
 };
 
-class WorldDataActiveX : public EditorActiveX
+/* activex - world data */
+class __dlexport WorldDataActiveX : public EditorActiveX
 {
-        friend class EditorActiveX;
 public:
-        void on_adding ( void ) {}
-        void update ( void ) {}
-        void dispatch ( void ) {}
-        void load ( struct serializer *s ) {}
-        void save ( struct serializer *s ) {}
+        WorldDataActiveX ( string name );
+        ~WorldDataActiveX ( void );
+
+        void on_adding ( void );
+        void update ( void );
+        void dispatch ( void );
+        void load ( struct serializer *s );
+        void save ( struct serializer *s );
+private:
+        class WorldDataInt;
+        class WorldDataInt*     pimpl;
 };
 
 
 /* activex - benchmark scene launcher */
-class BenchmarkActiveX : public EditorActiveX
+class __dlexport BenchmarkActiveX : public EditorActiveX
 {
 public:
         enum BenchmarkData {
@@ -231,7 +238,7 @@ public:
 private:
         bool                    m_is_open;
         uuid_t                  m_id;
-        list<EditorActiveX*>    m_activex[c_NumActiveXType];
+        list<EditorActiveX*>    m_activex[EditorActiveX::c_NumActiveXType];
         KernelEnvironment       m_global_state;
 };
 

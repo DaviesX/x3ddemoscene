@@ -40,8 +40,8 @@ bool EditorGtkFrontend::main_editor_menu_load ( void )
         }
         g_signal_connect ( G_OBJECT(cornell_box_item), "activate",
                            G_CALLBACK(cornell_box_callback), this->m_editor );
-
-        m_editor->add_activex ( new BenchmarkActiveX ( "benchmark-scene-menu-item" ) );
+        BenchmarkActiveX* benchmark = new BenchmarkActiveX ( "benchmark-scene-menu-item" );
+        m_editor->add_activex ( benchmark );
         }
         // deal with the close menu
         {

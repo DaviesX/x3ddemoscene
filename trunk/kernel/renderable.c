@@ -75,15 +75,21 @@ void rda_geometry_init_from_data ( struct rda_geometry *geo,
         geo->vertex     = alloc_fix ( sizeof(struct point3d), num_vert );
         geo->num_vertex = num_vert;
         memcpy ( geo->vertex, vertex, sizeof(struct point3d)*num_vert );
-        /* normal */
-        geo->normal     = alloc_fix ( sizeof(struct vector3d), num_vert );
-        memcpy ( geo->normal, normal, sizeof(struct vector3d)*num_vert );
-        /* tangent */
-        geo->tangent     = alloc_fix ( sizeof(struct vector3d), num_vert );
-        memcpy ( geo->tangent, tangent, sizeof(struct vector3d)*num_vert );
-        /* uv */
-        geo->uv         = alloc_fix ( sizeof(struct vector2d), num_vert );
-        memcpy ( geo->uv, uv, sizeof(struct vector2d)*num_vert );
+        /* normal(optional) */
+        if ( normal != nullptr ) {
+                geo->normal     = alloc_fix ( sizeof(struct vector3d), num_vert );
+                memcpy ( geo->normal, normal, sizeof(struct vector3d)*num_vert );
+        }
+        /* tangent(optional) */
+        if ( tangent != nullptr ) {
+                geo->tangent     = alloc_fix ( sizeof(struct vector3d), num_vert );
+                memcpy ( geo->tangent, tangent, sizeof(struct vector3d)*num_vert );
+        }
+        /* uv(optional) */
+        if ( uv != nullptr ) {
+                geo->uv         = alloc_fix ( sizeof(struct vector2d), num_vert );
+                memcpy ( geo->uv, uv, sizeof(struct vector2d)*num_vert );
+        }
 /* @fixme (davis#9#): <geometry renderable> add pre-transform */
         log_mild_err_dbg ( "pre-transform not supported yet" );
 }
@@ -329,6 +335,7 @@ static struct ragg* ragg_create ( enum RAG_IDR type )
         case RAG_LINEAR:
                 agg = alloc_fix ( sizeof(struct ragg_linear), 1 );
                 agg->init = cast(agg->init)                     ragg_linear_init;
+                agg->add = cast(agg->add)                       ragg_linear_add,
                 agg->free = cast(agg->free)                     ragg_linear_free;
                 agg->update = cast(agg->update)                 ragg_linear_update;
                 agg->remove = cast(agg->remove)                 ragg_linear_remove;

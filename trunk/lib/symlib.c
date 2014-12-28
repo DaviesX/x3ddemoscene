@@ -256,7 +256,7 @@ static bool dump ( char* filename, struct symbol_set *symbols )
                         }
                         case ELF_DYN: {
                                 log_normal_dbg ( "dumping elf dynamic linked: %s", filename );
-                                void* handle = dlopen ( filename, RTLD_NOW );
+                                void* handle = dlopen ( filename, RTLD_NOW | RTLD_DEEPBIND );
                                 if ( handle == nullptr ) {
                                         log_severe_err_dbg ( "failed to open dynamic linked: %s",
                                                              dlerror () );

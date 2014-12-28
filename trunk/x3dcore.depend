@@ -2928,7 +2928,7 @@
 	"fbo.h"
 	"colorspectrum.h"
 
-1419316461 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+1419758725 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
 	<x3d/common.h>
 	<algorithm.h>
 	<math.h>
@@ -3107,7 +3107,7 @@
 
 1399958501 /home/davis/x3drenderlib-code/trunk/include/x3d/dynamics.h
 
-1412440674 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
+1419743336 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm.h>
@@ -3146,12 +3146,12 @@
 	<x3d/common.h>
 	<x3d/init.h>
 
-1419316558 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
+1419805082 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
 	<math/math.h>
 	<logout.h>
 	<x3d/renderable.h>
 
-1413095678 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+1419743400 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
 	<logout.h>
 	<algorithm.h>
 	<x3d/renderer.h>
@@ -3303,7 +3303,7 @@
 1405156025 source:/home/davis/x3drenderlib-code/trunk/lib/staging.c
 	<staging.h>
 
-1405336395 source:/home/davis/x3drenderlib-code/trunk/lib/symlib.c
+1419758447 source:/home/davis/x3drenderlib-code/trunk/lib/symlib.c
 	<algorithm.h>
 	<logout.h>
 	<symlib.h>
