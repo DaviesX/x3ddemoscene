@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.16.1 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.10"/>
   <object class="GtkMenu" id="benchmark-scene">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -18,6 +18,8 @@
     <property name="width_request">1024</property>
     <property name="height_request">600</property>
     <property name="can_focus">False</property>
+    <property name="default_width">800</property>
+    <property name="default_height">600</property>
     <child>
       <object class="GtkBox" id="main-box">
         <property name="visible">True</property>
@@ -164,6 +166,14 @@
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="MI-SelectionMode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Selection mode</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -257,22 +267,49 @@
           </packing>
         </child>
         <child>
-          <object class="GtkPaned" id="asset-x-paned">
+          <object class="GtkToolbar" id="TB-MainToolBar">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkPaned" id="paned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="position">700</property>
             <child>
-              <object class="GtkScrolledWindow" id="asset-scroll">
+              <object class="GtkPaned" id="paned2">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="shadow_type">in</property>
+                <property name="position">200</property>
                 <child>
-                  <object class="GtkTreeView" id="asset-tree-view">
+                  <object class="GtkTreeView" id="TV-ProjectManager">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <child internal-child="selection">
-                      <object class="GtkTreeSelection" id="treeview-selection2"/>
+                      <object class="GtkTreeSelection" id="treeview-selection3"/>
                     </child>
                   </object>
+                  <packing>
+                    <property name="resize">False</property>
+                    <property name="shrink">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkDrawingArea" id="DA-RenderRegion">
+                    <property name="visible">True</property>
+                    <property name="app_paintable">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="resize">True</property>
+                    <property name="shrink">True</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -281,73 +318,56 @@
               </packing>
             </child>
             <child>
-              <object class="GtkPaned" id="render-region-x-paned">
+              <object class="GtkPaned" id="paned3">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="orientation">vertical</property>
+                <property name="position">250</property>
                 <child>
-                  <object class="GtkDrawingArea" id="render-region">
-                    <property name="width_request">800</property>
-                    <property name="height_request">480</property>
+                  <object class="GtkBox" id="box1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkSearchEntry" id="SE-EntitySearch">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="text" translatable="yes">Search Entity</property>
+                        <property name="primary_icon_name">edit-find-symbolic</property>
+                        <property name="primary_icon_activatable">False</property>
+                        <property name="primary_icon_sensitive">False</property>
+                        <property name="input_hints">GTK_INPUT_HINT_WORD_COMPLETION | GTK_INPUT_HINT_NONE</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkTreeView" id="TV-EntityList">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection" id="treeview-selection4"/>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="resize">False</property>
-                    <property name="shrink">False</property>
+                    <property name="shrink">True</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkPaned" id="instance-sub-property-paned">
+                  <object class="GtkListBox" id="LB-ObjectProperties">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkScrolledWindow" id="instance-property-scroll">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="shadow_type">in</property>
-                        <child>
-                          <object class="GtkTreeView" id="instance-tree-view">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <child internal-child="selection">
-                              <object class="GtkTreeSelection" id="treeview-selection3"/>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="resize">False</property>
-                        <property name="shrink">True</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="sub-property-box">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkLabel" id="sub-property-label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="ypad">3</property>
-                            <property name="label" translatable="yes">label</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="resize">True</property>
-                        <property name="shrink">True</property>
-                      </packing>
-                    </child>
+                    <property name="can_focus">False</property>
                   </object>
                   <packing>
                     <property name="resize">True</property>

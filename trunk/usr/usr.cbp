@@ -51,6 +51,7 @@
 			<Add option="-DX3D_PLATFORM_POSIX" />
 			<Add directory="../include" />
 			<Add directory="../lib" />
+			<Add directory="../include/usr" />
 		</Compiler>
 		<Linker>
 			<Add option="`pkg-config gtk+-3.0 --libs`" />

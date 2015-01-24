@@ -39,10 +39,10 @@ static void window_reize_callback ( bool is_fullscreen, int width, int height,
 static void render_config_error_callback ( string message, RenderConfigActiveX *conf, void *data );
 
 extern "C" gboolean display_logo_callback ( GtkWidget *draw_region,
-                                        cairo_t *cairo, gpointer data );
+                cairo_t *cairo, gpointer data );
 
 extern "C" gboolean display_logo_callback ( GtkWidget *draw_region,
-                                        cairo_t *cairo, gpointer data )
+                cairo_t *cairo, gpointer data )
 {
         struct main_editor* edit = (struct main_editor*) data;
         gdk_cairo_set_source_pixbuf ( cairo,
@@ -62,6 +62,7 @@ static void idle_switch_callback ( bool is_idle, EditorActiveX* ax, void *info )
                         edit->logo_draw_signal =
                                 g_signal_connect ( draw_area, "draw",
                                                    G_CALLBACK(display_logo_callback), edit );
+                        gtk_widget_queue_draw ( edit->draw_region );
                         edit->is_logo_connected = true;
                 }
         } else {
@@ -136,7 +137,7 @@ demo_mode:
                         return false;
                 }
                 edit->draw_region =
-                        (GtkWidget *) gtk_builder_get_object ( builder, "render-region" );
+                        (GtkWidget *) gtk_builder_get_object ( builder, "DA-RenderRegion" );
                 if ( !edit->draw_region ) {
                         log_severe_err_dbg ( "cannot retrieve draw-area widget" );
                         return false;
