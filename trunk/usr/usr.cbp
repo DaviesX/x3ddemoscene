@@ -62,7 +62,11 @@
 		<Unit filename="../include/usr/usr_entityprogs.hpp" />
 		<Unit filename="../include/usr/usr_kernel.hpp" />
 		<Unit filename="../include/usr/usr_missionprogs.hpp" />
+		<Unit filename="../include/usr/usr_renderaggregate.hpp" />
+		<Unit filename="../include/usr/usr_renderer.hpp" />
+		<Unit filename="../include/usr/usr_resourceloader.hpp" />
 		<Unit filename="../include/usr/usr_world.hpp" />
+		<Unit filename="../include/usr/usr_worldentity.hpp" />
 		<Unit filename="../include/usr/usr_x3d.hpp" />
 		<Unit filename="editor/cornellbox/cornellbox.c">
 			<Option compilerVar="CC" />
@@ -99,6 +103,7 @@
 		<Unit filename="usr_entityprogs.cpp" />
 		<Unit filename="usr_kernel.cpp" />
 		<Unit filename="usr_missionprogs.cpp" />
+		<Unit filename="usr_renderer.cpp" />
 		<Unit filename="usr_world.cpp" />
 		<Extensions>
 			<envvars />

@@ -9,7 +9,6 @@
 #include <x3d/debug.h>
 #include <x3d/resloader.h>
 #include <x3d/renderer.h>
-#include <x3d/world.h>
 
 
 struct signal {
@@ -93,7 +92,7 @@ __dlexport bool kernel_start ( void )
         if ( !renderer_import ( &init->symbols ) )
                 return false;
         renderer_kernel_init ();
-        init_world ();
+        //init_world ();
         rest_init ();
         return true;
 }

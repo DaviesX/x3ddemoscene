@@ -22,7 +22,6 @@ extern "C"
 #include <x3d/init.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
-#include <x3d/world.h>
 }
 
 }
