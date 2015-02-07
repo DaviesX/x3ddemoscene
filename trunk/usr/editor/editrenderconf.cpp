@@ -1,24 +1,17 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_editor.hpp>
 
-using namespace x3d;
-using namespace x3d::usr;
+namespace x3d
+{
 
+namespace usr
+{
 
 class RenderConfigActiveX::RenderConfigInt
 {
 public:
-        void update ( void );
-        void dispatch ( void );
-        void load ( struct serializer *s );
-        void save ( struct serializer *s );
-
-        void set_config_tab ( string tab_name );
-        void set_config_value ( string value, void *data );
-        bool apply ( void );
-        void cancel ( void );
-        void *checkout_value ( string target, string type );
-        void bind_callback ( char *signal, f_Generic callback, void *data );
+        RenderConfigInt ();
+        ~RenderConfigInt ();
 public:
         struct Tab {
                 struct Value {
@@ -56,13 +49,23 @@ public:
                 f_Notify_Error  f_error;
                 void*           d_error;
         } m_error[2];
+
+        Renderer*               m_renderer;
 };
 
+RenderConfigActiveX::RenderConfigInt::RenderConfigInt ()
+{
+        m_renderer = new Renderer(Renderer::RENDERER_PATH_TRACER);
+}
+
+RenderConfigActiveX::RenderConfigInt::~RenderConfigInt ()
+{
+}
 
 RenderConfigActiveX::RenderConfigActiveX ( string name ) :
         EditorActiveX ( name, sizeof(RenderConfigActiveX), EDIT_ACTIVEX_RENDER_CONFIG )
 {
-        this->pimpl = new RenderConfigInt ();
+        pimpl = new RenderConfigInt();
 
         int i;
         for ( i = 0; i < 2; i ++ ) {
@@ -81,13 +84,14 @@ void RenderConfigActiveX::on_adding ( void )
 {
         // make a default renderer
         KernelEnvironment* state = this->get_state_buffer ();
-        struct x3d::renderer* renderer =
-                (struct x3d::renderer*) state->use ( c_Renderer );
+        /*struct x3d::renderer* renderer =
+                (struct x3d::renderer*) state->use ( c_RenderConfig );
         if ( renderer ) {
                 x3d::free_renderer ( renderer );
         }
         renderer = x3d::create_renderer ( RENDERER_PATH_TRACER, nullptr );
-        state->declare ( c_Renderer, renderer );
+        state->declare ( c_Renderer, renderer );*/
+        state->declare ( c_RenderConfig, this );
 }
 
 void RenderConfigActiveX::dispatch ( void )
@@ -154,3 +158,12 @@ void RenderConfigActiveX::bind_callback ( string signal, f_Generic callback, voi
                 return ;
         }
 }
+
+Renderer* RenderConfigActiveX::get_renderer()
+{
+        return pimpl->m_renderer;
+}
+
+} // namespace usr
+
+} // namespace x3d

@@ -37,12 +37,13 @@
 
 1402010100 source:/home/davis/x3drenderlib-code/trunk/usr/editor/dynamics_editor.cpp
 
-1403067630 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editassetlist.cpp
+1423198979 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editassetlist.cpp
 	<usr/usr_editor.hpp>
 
-1419743631 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1423348359 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
+	<usr/usr_world.hpp>
 
 1397619189 /home/davis/x3drenderlib-code/trunk/lib/math/math.h
 	"vector.h"
@@ -99,7 +100,7 @@
 1405336395 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
 	<x3d/common.h>
 
-1413094961 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1423346095 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
@@ -115,7 +116,7 @@
 1419742711 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1422471720 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
+1423199121 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
 	<string>
 	<algorithm>
 	<set>
@@ -130,6 +131,7 @@
 	<x3d/init.h>
 	<x3d/renderer.h>
 	<x3d/renderable.h>
+	<x3d/renderableaggregate.h>
 
 1403617208 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorbackend.hpp
 	<usr/usr_editor.hpp>
@@ -151,11 +153,11 @@
 
 1400997060 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editprojectmgr.cpp
 
-1419743015 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editrenderconf.cpp
+1423348530 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editrenderconf.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 
-1419197240 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editrenderregion.cpp
+1423347502 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editrenderregion.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 
@@ -2831,12 +2833,14 @@
 1412446343 /home/davis/x3drenderlib-code/trunk/include/x3d/world.h
 	<x3d/common.h>
 
-1413480190 source:/home/davis/x3drenderlib-code/trunk/usr/usr_world.cpp
+1423347920 source:/home/davis/x3drenderlib-code/trunk/usr/usr_world.cpp
+	<usr/usr_world.hpp>
 
-1422074086 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editbenchmark.cpp
+1423347481 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editbenchmark.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_kernel.hpp>
+	<usr/usr_renderable.hpp>
 	"./cornellbox/cornellbox.h"
 
 1402010100 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/dynamics_editor.cpp
@@ -2914,7 +2918,7 @@
 1419315172 /home/davis/x3drenderlib-code/trunk/usr/editor/cornellbox/cornellbox.h
 	<x3d/common.h>
 
-1419758725 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+1422939395 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
 	<x3d/common.h>
 	<algorithm.h>
 	<math.h>
@@ -2927,7 +2931,7 @@
 
 1419318932 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.hpp
 
-1419758755 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editworlddata.cpp
+1422675677 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editworlddata.cpp
 	<usr/usr_editor.hpp>
 
 1419746590 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/project_manager.cpp
@@ -2938,5 +2942,38 @@
 
 1419746100 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderer_configurator.hpp
 
-1422471686 source:/home/davis/x3drenderlib-code/trunk/usr/usr_renderer.cpp
+1423346722 source:/home/davis/x3drenderlib-code/trunk/usr/usr_renderer.cpp
+	<usr/usr_renderer.hpp>
+
+1423347752 /home/davis/x3drenderlib-code/trunk/include/usr/usr_world.hpp
+	<usr/usr_renderaggregate.hpp>
+	<usr/usr_resourceloader.hpp>
+	<usr/usr_renderer.hpp>
+
+1423199064 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderaggregate.hpp
+	<usr/usr_x3d.hpp>
+	<usr/usr_renderable.hpp>
+
+1422518397 /home/davis/x3drenderlib-code/trunk/include/usr/usr_resourceloader.hpp
+
+1423348498 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderer.hpp
+	<usr/usr_x3d.hpp>
+
+1423341970 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderable.hpp
+	<usr/usr_x3d.hpp>
+
+1423343894 source:/home/davis/x3drenderlib-code/trunk/usr/usr_renderable.cpp
+	<usr/usr_x3d.hpp>
+	<usr/usr_renderable.hpp>
+
+1422658336 source:/home/davis/x3drenderlib-code/trunk/usr/usr_resourceloader.cpp
+
+1423199999 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregate.h
+	<algorithm.h>
+	<x3d/renderable.h>
+
+1423200240 source:/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp
+	<usr/usr_renderable.hpp>
+	<usr/usr_renderaggregate.hpp>
+	<usr/usr_x3d.hpp>
 

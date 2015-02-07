@@ -165,7 +165,7 @@
 	<renderer/geometry.h>
 	<x3d/renderer.h>
 
-1413094961 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1423346095 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
@@ -2916,9 +2916,10 @@
 
 1385670362 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/pmrenderer.c
 
-1412404198 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
+1423193956 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
 	<x3d/renderer.h>
 	<x3d/renderable.h>
+	<x3d/renderableaggregaterequest.h>
 	<renderer/utility.h>
 	<math/math.h>
 	"lcrenderer.h"
@@ -2928,7 +2929,7 @@
 	"fbo.h"
 	"colorspectrum.h"
 
-1419758725 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+1422939395 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
 	<x3d/common.h>
 	<algorithm.h>
 	<math.h>
@@ -3107,7 +3108,7 @@
 
 1399958501 /home/davis/x3drenderlib-code/trunk/include/x3d/dynamics.h
 
-1422384686 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
+1422471820 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm.h>
@@ -3119,7 +3120,6 @@
 	<x3d/debug.h>
 	<x3d/resloader.h>
 	<x3d/renderer.h>
-	<x3d/world.h>
 
 1403702681 /home/davis/x3drenderlib-code/trunk/lib/thread.h
 	<x3d/common.h>
@@ -3146,7 +3146,7 @@
 	<x3d/common.h>
 	<x3d/init.h>
 
-1419805082 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
+1423194006 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
 	<math/math.h>
 	<logout.h>
 	<x3d/renderable.h>
@@ -3328,4 +3328,28 @@
 1394384115 source:/home/davis/x3drenderlib-code/trunk/kernel/poi.c
 
 1412445961 source:/home/davis/x3drenderlib-code/trunk/kernel/strategy.c
+
+1423194166 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregaterequest.h
+	<x3d/renderableaggregate.h>
+
+1423199999 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregate.h
+	<algorithm.h>
+	<x3d/renderable.h>
+
+1423200289 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregate.c
+	<x3d/renderableaggregate.h>
+	<x3d/renderableaggregaterequest.h>
+	<logout.h>
+	"renderablecontainerimpl.h"
+
+1423194705 /home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.h
+	<x3d/renderable.h>
+
+1423194314 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregaterequest.c
+	<x3d/renderableaggregaterequest.h>
+
+1423194728 source:/home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.c
+	<math/math.h>
+	<logout.h>
+	"renderablecontainerimpl.h"
 

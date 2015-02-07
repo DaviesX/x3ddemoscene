@@ -8,6 +8,8 @@
 #include <list>
 #include <vector>
 
+using namespace std;
+
 namespace x3d
 {
 
@@ -22,6 +24,17 @@ extern "C"
 #include <x3d/init.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
+#include <x3d/renderableaggregate.h>
+}
+
+namespace usr
+{
+
+class CoreResource {
+public:
+        void* get_core_resource() {return nullptr;}
+};
+
 }
 
 }

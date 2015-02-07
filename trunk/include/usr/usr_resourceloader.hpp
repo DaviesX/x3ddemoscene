@@ -6,7 +6,7 @@ namespace x3d
 namespace usr
 {
 class ResourceLoader {
-}
+};
 
 }// namespace usr
 

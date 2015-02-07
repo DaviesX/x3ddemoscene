@@ -324,10 +324,11 @@
 		<Unit filename="include/x3d/modelentity.h" />
 		<Unit filename="include/x3d/poi.h" />
 		<Unit filename="include/x3d/renderable.h" />
+		<Unit filename="include/x3d/renderableaggregate.h" />
+		<Unit filename="include/x3d/renderableaggregaterequest.h" />
 		<Unit filename="include/x3d/renderer.h" />
 		<Unit filename="include/x3d/resloader.h" />
 		<Unit filename="include/x3d/strategy.h" />
-		<Unit filename="include/x3d/world.h" />
 		<Unit filename="kernel/debug.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -349,6 +350,16 @@
 		<Unit filename="kernel/renderable.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="kernel/renderableaggregate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/renderableaggregaterequest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/renderablecontainerimpl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/renderablecontainerimpl.h" />
 		<Unit filename="kernel/renderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -356,9 +367,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/strategy.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="kernel/world.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/algorithm.c">

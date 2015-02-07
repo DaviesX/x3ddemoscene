@@ -146,7 +146,7 @@
 
 1403596674 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
 
-1413094961 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1423346095 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
@@ -168,7 +168,7 @@
 	<usr/usr_kernel.hpp>
 	<usr/usr_editor.hpp>
 
-1419315580 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
+1423199121 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
 	<string>
 	<algorithm>
 	<set>
@@ -183,7 +183,7 @@
 	<x3d/init.h>
 	<x3d/renderer.h>
 	<x3d/renderable.h>
-	<x3d/world.h>
+	<x3d/renderableaggregate.h>
 
 1403653199 /home/davis/x3drenderlib-code/trunk/lib/logout.h
 	<x3d/common.h>
@@ -195,9 +195,10 @@
 1419742711 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1419743631 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1423348359 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
+	<usr/usr_world.hpp>
 
 1403084737 source:/home/davis/x3drenderlib-code/trunk/usr/usr_kernel.cpp
 	<usr/usr_kernel.hpp>
@@ -211,8 +212,34 @@
 1412446343 /home/davis/x3drenderlib-code/trunk/include/x3d/world.h
 	<x3d/common.h>
 
-1419758725 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+1422939395 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
 	<x3d/common.h>
 	<algorithm.h>
 	<math.h>
+
+1423347752 /home/davis/x3drenderlib-code/trunk/include/usr/usr_world.hpp
+	<usr/usr_renderaggregate.hpp>
+	<usr/usr_resourceloader.hpp>
+	<usr/usr_renderer.hpp>
+
+1423199064 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderaggregate.hpp
+	<usr/usr_x3d.hpp>
+	<usr/usr_renderable.hpp>
+
+1423341970 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderable.hpp
+	<usr/usr_x3d.hpp>
+
+1422518397 /home/davis/x3drenderlib-code/trunk/include/usr/usr_resourceloader.hpp
+
+1423348498 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderer.hpp
+	<usr/usr_x3d.hpp>
+
+1423199999 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregate.h
+	<algorithm.h>
+	<x3d/renderable.h>
+
+1423200240 source:/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp
+	<usr/usr_renderable.hpp>
+	<usr/usr_renderaggregate.hpp>
+	<usr/usr_x3d.hpp>
 

@@ -1,6 +1,3 @@
-/*! \file include/x3d/renderer.h
-    \brief all kernel renderer classes and enumerations go here. */
-
 #ifndef RENDERER_H_INCLUDED
 #define RENDERER_H_INCLUDED
 
@@ -175,6 +172,12 @@ struct render_bytecode {
         char*   instr;
 };
 
+typedef struct renderer {
+        uuid_t                  rend_id;
+        struct render_bytecode  bytecode;
+        struct lcrenderer*      rend;
+} *p_renderer_t;
+
 /*
  * functions' declaration
  */
@@ -193,8 +196,8 @@ typedef void (*f_LCRenderer_Output) ( struct lcrenderer *rend );
 bool renderer_import ( struct symbol_set *symbols );
 
 /* renderer's */
-__dlexport struct renderer *create_renderer ( enum RENDERER_IDR type, void* probe );
-__dlexport void free_renderer ( struct renderer *rend );
+__dlexport void renderer_init(struct renderer* rend, enum RENDERER_IDR type);
+__dlexport void renderer_free(struct renderer *rend);
 __dlexport void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend );
 
 __dlexport void renderer_update ( struct renderer *rend );

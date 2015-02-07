@@ -3,6 +3,7 @@
 
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_kernel.hpp>
+#include <usr/usr_world.hpp>
 
 using namespace std;
 
@@ -13,11 +14,11 @@ namespace usr
 {
 
 /* state constants */
-const string c_Renderer         = "renderer";
+const string c_RenderConfig     = "render-config";
 const string c_RedoStack        = "redo-stack";
 const string c_Clipboard        = "clipboard";
 const string c_WndHandle        = "window-handle";
-const string c_World            = "world";
+const string c_WorldData        = "world-data";
 const string c_ViewControl      = "view-control";
 
 class Editor;
@@ -117,14 +118,13 @@ public:
         void load ( struct serializer *s );
         void save ( struct serializer *s );
 
-        void set_renderer ( struct renderer *renderer );
-        void set_idle_state ( bool is_idle );
+        // void set_renderer ( struct renderer *renderer );
         void resize ( int x, int y, int w, int h, bool toggle_fullscreen );
-
         void bind_callback ( string signal, f_Generic callback, void *data );
-
         const void* get_handle ( void ) const;
 private:
+        void set_idle_state ( bool is_idle );
+
         class RenderRegionInt;
         class RenderRegionInt *pimpl;
 };
@@ -148,6 +148,8 @@ public:
         void cancel ( void );
         void* checkout_value ( string tab_name, string value );
         void bind_callback ( string signal, f_Generic callback, void *data );
+
+        Renderer* get_renderer ();
 private:
         class RenderConfigInt;
         class RenderConfigInt *pimpl;
@@ -165,6 +167,8 @@ public:
         void dispatch ( void );
         void load ( struct serializer *s );
         void save ( struct serializer *s );
+
+        World& get_world();
 private:
         class WorldDataInt;
         class WorldDataInt*     pimpl;
@@ -310,5 +314,6 @@ private:
 } // namespace usr
 
 } // namespace x3d
+
 
 #endif // USR_EDITOR_HPP_INCLUDED

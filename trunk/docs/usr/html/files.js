@@ -1,4 +1,27 @@
 var files =
 [
-    [ "usr_editor.c", "usr__editor_8c.html", "usr__editor_8c" ]
+    [ "cornellbox.h", "cornellbox_8h_source.html", null ],
+    [ "dynamics_editor.hpp", "dynamics__editor_8hpp_source.html", null ],
+    [ "entity_editor.hpp", "entity__editor_8hpp_source.html", null ],
+    [ "gtkgui.hpp", "gtkgui_8hpp_source.html", null ],
+    [ "main_editor.hpp", "main__editor_8hpp_source.html", null ],
+    [ "main_editor_menu.hpp", "main__editor__menu_8hpp_source.html", null ],
+    [ "project_manager.hpp", "project__manager_8hpp_source.html", null ],
+    [ "renderable_editor.hpp", "renderable__editor_8hpp_source.html", null ],
+    [ "renderer_configurator.hpp", "renderer__configurator_8hpp_source.html", null ],
+    [ "splash_screen.hpp", "splash__screen_8hpp_source.html", null ],
+    [ "usr_cinematicprogs.hpp", "usr__cinematicprogs_8hpp_source.html", null ],
+    [ "usr_editor.hpp", "usr__editor_8hpp_source.html", null ],
+    [ "usr_editorfrontend.hpp", "usr__editorfrontend_8hpp_source.html", null ],
+    [ "usr_entityprogs.hpp", "usr__entityprogs_8hpp_source.html", null ],
+    [ "usr_kernel.hpp", "usr__kernel_8hpp_source.html", null ],
+    [ "usr_missionprogs.hpp", "usr__missionprogs_8hpp_source.html", null ],
+    [ "usr_renderable.hpp", "usr__renderable_8hpp_source.html", null ],
+    [ "usr_renderaggregate.cpp", "usr__renderaggregate_8cpp.html", null ],
+    [ "usr_renderaggregate.hpp", "usr__renderaggregate_8hpp_source.html", null ],
+    [ "usr_renderer.hpp", "usr__renderer_8hpp_source.html", null ],
+    [ "usr_resourceloader.hpp", "usr__resourceloader_8hpp_source.html", null ],
+    [ "usr_world.hpp", "usr__world_8hpp_source.html", null ],
+    [ "usr_worldentity.hpp", "usr__worldentity_8hpp_source.html", null ],
+    [ "usr_x3d.hpp", "usr__x3d_8hpp_source.html", null ]
 ];

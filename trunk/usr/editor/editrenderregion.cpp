@@ -6,12 +6,16 @@ using namespace x3d;
 using namespace x3d::usr;
 
 
+namespace x3d
+{
+namespace usr
+{
+
 class RenderRegionActiveX::RenderRegionInt
 {
 public:
         void*                   m_handle;
         struct irectangle2d     m_rect;
-        struct renderer*        m_rend;
         bool                    m_is_idle;
         bool                    m_is_resized;
 
@@ -41,7 +45,6 @@ RenderRegionActiveX::RenderRegionActiveX ( string name, void *handle,
 
         x3d::build_irectangle_2d ( x, y, x + w, y + h, &inst->m_rect );
         inst->m_handle          = handle;
-        inst->m_rend            = nullptr;
         inst->m_is_idle         = true;
         inst->m_is_resized      = false;
 
@@ -74,15 +77,15 @@ void RenderRegionActiveX::on_adding ( void )
 
 void RenderRegionActiveX::set_idle_state ( bool is_idle )
 {
-        this->pimpl->m_is_idle = is_idle;
-        this->pimpl->m_idle[on_front_buf()].is_idle = is_idle;
+        pimpl->m_is_idle = is_idle;
+        pimpl->m_idle[on_front_buf()].is_idle = is_idle;
 }
-
+/*
 void RenderRegionActiveX::set_renderer ( struct renderer *renderer )
 {
         this->pimpl->m_rend = renderer;
 }
-
+*/
 void RenderRegionActiveX::resize ( int x, int y, int w, int h, bool toggle_fullscreen )
 {
         pimpl->m_resize[on_front_buf()].is_resized      = true;
@@ -135,19 +138,22 @@ void RenderRegionActiveX::dispatch ( void )
 void RenderRegionActiveX::update ( void )
 {
         /* atomically swap the state buffer */
+        KernelEnvironment* state = get_state_buffer ();
+
         wait_for_update ();
+        WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use ( c_WorldData );
+        if ( worlddata->get_world().get_render_aggregate()->get_instance_count() == 0 ) {
+                set_idle_state(true);
+        } else {
+                set_idle_state(false);
+        }
         swap_buf ();
         unwait ();
 
-        KernelEnvironment* state = get_state_buffer ();
-
-        struct x3d::renderer* renderer =
-                (struct x3d::renderer*) state->use ( c_Renderer );
-        if ( renderer != pimpl->m_rend )
-                pimpl->m_rend = renderer;
-
-        if ( !pimpl->m_is_idle && pimpl->m_rend != nullptr )
-                x3d::renderer_commit ( pimpl->m_rend );
+        RenderConfigActiveX* config = (RenderConfigActiveX*) state->use ( c_RenderConfig );
+        if ( !pimpl->m_is_idle && config != nullptr ) {
+                config->get_renderer()->commit();
+        }
 
         if ( pimpl->m_is_resized )
                 pimpl->m_is_resized = false;
@@ -160,3 +166,7 @@ void RenderRegionActiveX::load ( struct serializer *s )
 void RenderRegionActiveX::save ( struct serializer *s )
 {
 }
+
+}// namespace usr
+
+}// namespace x3d

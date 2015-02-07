@@ -51,15 +51,6 @@ struct ragg;
 struct renderable;
 typedef void rda_cullshape_t;
 
-struct rda_request {
-        uuid_t                  id;
-        enum RENDERABLE_IDR     type;
-        enum RAG_CULL_IDR       cull_method;
-        rda_cullshape_t*        cull_shape;
-
-        struct rda_instance**   result;
-        int                     n_result;
-};
 
 struct renderable {
         struct {
@@ -109,13 +100,6 @@ struct rda_instance {
         struct matrix4x4        transform;
 };
 
-struct rda_context {
-        struct ragg*   agg;
-        struct alg_hash_llist   dict[MAX_RENDERABLE_TYPE];
-        struct mtl_library      mtllib;
-        struct rda_request      request[128];
-        int                     n_request;
-};
 
 /*
  * functions' declaration
@@ -124,6 +108,9 @@ struct rda_context {
 /* struct renderable*      rda_create ( char *name, enum RENDERABLE_IDR type,
                                      float importance, bool is_movable,
                                      int mater_ref );*/
+void                    rda_init ( struct renderable* rda,
+                                   char *name, enum RENDERABLE_IDR type, float importance,
+                                   bool is_movable, int mater_ref );
 void                    rda_free ( struct renderable *rda );
 void                    rda_set_name ( struct renderable *rda, char *name );
 void                    rda_set_importance ( struct renderable *rda, float importance );
@@ -151,22 +138,6 @@ struct vector3d*        rda_geometry_get_normal ( struct rda_geometry* geo, int*
 struct vector3d*        rda_geometry_get_tangent ( struct rda_geometry* geo, int* ntangent );
 struct vector2d*        rda_geometry_get_uv ( struct rda_geometry* geo, int* nuv );
 int*                    rda_geometry_get_index ( struct rda_geometry* geo, int* nindex );
-
-
-/* renderable context */
-struct rda_context*     rda_context_create ( enum RAG_IDR agg_type );
-void                    rda_context_free ( struct rda_context* ctx );
-void                    rda_context_add_instance ( struct rda_context* ctx,
-                                                   struct rda_instance* insts,
-                                                   enum RENDERABLE_IDR type );
-void                    rda_context_add_instance2 ( struct rda_context* ctx, struct rda_instance* insts );
-void                    rda_context_update ( struct rda_context* ctx );
-/* RI Interface */
-uuid_t                  rda_context_post_request ( struct rda_context* ctx,
-                                enum RAG_CULL_IDR cull_type, rda_cullshape_t* shape,
-                                enum RENDERABLE_IDR rda_type );
-int                     rda_context_get_n ( struct rda_context* ctx, uuid_t request_id );
-struct rda_instance*    rda_context_get_i ( struct rda_context* ctx, int i, uuid_t request_id );
 
 
 #endif // RENDERABLE_H_INCLUDED

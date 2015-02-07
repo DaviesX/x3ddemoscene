@@ -1,6 +1,3 @@
-/*! \file kernel/renderer.c
-    \brief all kernel renderer interfaces go here. */
-
 #include <logout.h>
 #include <algorithm.h>
 #include <x3d/renderer.h>
@@ -14,16 +11,6 @@ struct renderable;
 struct render_out;
 struct probe;
 
-typedef struct renderer {
-        uuid_t                  rend_id;
-        struct render_bytecode  bytecode;
-        struct lcrenderer*      rend;
-//        struct alg_llist command;
-} *p_renderer_t;
-
-struct renderer_container {
-        d_alg_llist(struct renderer*)    renderer;
-};
 
 struct renderer_ops {
         f_LCRenderer_Init       lcrenderer_init;
@@ -35,7 +22,6 @@ struct renderer_ops {
 };
 
 static struct renderer_ops              g_rend_ops;
-static struct renderer_container        g_rend_cont;
 
 
 /* container's */
@@ -47,80 +33,7 @@ static struct renderer_container        g_rend_cont;
  */
 void renderer_kernel_init ( void )
 {
-        alg_init ( llist, &g_rend_cont.renderer, sizeof(p_renderer_t), 1 );
         g_rend_ops.lcrenderer_init ();
-}
-
-/** \brief delete the global renderer container.
- * \param void
- * \return void
- */
-void renderer_kernel_free ( void )
-{
-        alg_iter(struct renderer*) iter;
-        alg_iter(struct renderer*) last;
-        alg_first ( llist, &g_rend_cont.renderer, iter );
-        alg_last ( llist, &g_rend_cont.renderer, last );
-        while ( iter != last ) {
-                free_renderer ( alg_access ( iter ) );
-                alg_next ( llist, &g_rend_cont.renderer, iter );
-        }
-        alg_free ( llist, &g_rend_cont.renderer );
-        zero_obj ( &g_rend_cont );
-}
-
-/** \brief add in a renderer to the global container.
- *
- * Note that: only the p_renderer_t(pointer to the struct renderer) is added, but not the content of the structure. nullptr is allowed, but please remember to specify the pointer at some moment of the time. the location address can be found by renderer_container_find(). you may specify the pointer to that address manually.
- * \param rend struct renderer* [in] pointer to the renderer structure; it can be obtained by create_renderer ().
- * \return uuid_t unique id that identifies the location of that added renderer
- *
- */
-uuid_t renderer_container_add ( struct renderer *rend )
-{
-        d_alg_llist(renderer*)* rend_cont = &g_rend_cont.renderer;
-        if ( rend == nullptr ) {
-                rend = create_renderer ( RENDERER_UNDETERMINATE, nullptr );
-        }
-
-        rend->rend_id = alg_gen_uuid ();
-        alg_push_back ( llist, rend_cont, &rend );
-        return rend->rend_id;
-}
-
-#define cmp_rend_id( _data, _iter )     ((_data) == alg_access(_iter)->rend_id)
-/** \brief remove the added renderer from the global container.
- *
- * Note that: the location as well as the content of the struct renderer will be removed.
- * \param id uuid_t [in] the unique id of the to-be-remove renderer
- * \return void
- */
-void renderer_container_remove ( uuid_t id )
-{
-        struct alg_llist *rend_cont = &g_rend_cont.renderer;
-        alg_iter(struct renderer*) iter;
-        alg_find ( llist, rend_cont, id, iter, cmp_rend_id );
-        alg_remove ( llist, rend_cont, iter );
-        free_renderer ( alg_access ( iter ) );
-}
-
-/** \brief remove the added renderer from the global container.
- *
- * \param id uuid_t [in] the unique id of the renderer that has added to the global container formerly.
- * \return struct renderer* nullptr if the given uuid_t id cannot be found, otherwise, will be the pointer to struct renderer.
- */
-struct renderer *renderer_container_find ( uuid_t id )
-{
-        struct alg_llist *rend_cont = &g_rend_cont.renderer;
-        alg_iter(struct renderer*) iter;
-        alg_llist_find ( id, iter, cmp_rend_id, rend_cont );
-        return alg_access ( iter );
-}
-#undef cmp_rend_id
-
-struct renderer *renderer_container_i ( int i )
-{
-        return nullptr;
 }
 
 /* register ABIs */
@@ -169,28 +82,15 @@ bool renderer_import ( struct symbol_set *symbols )
 }
 
 /* renderer's */
-/** \brief create a renderer.
- *
- * Note that: once the type of the renderer is attached(it will be attached on its creation), it cannot easily be changed. a call of renderer_retype() can change the type of the renderer, but all the settings formerly applied to that renderer will be lost.
- * \param type enum RENDERER_IDR [in] the type of renderer to be created.
- * \param probe void* [in] probe that is to be receving rendering result.
- * \return struct renderer* the created renderer.
- */
-struct renderer *create_renderer ( enum RENDERER_IDR type, void* probe )
+void renderer_init(struct renderer* rend, enum RENDERER_IDR type)
 {
-        struct renderer *rend = alloc_fix ( sizeof *rend, 1 );
         zero_obj ( rend );
         if ( type != RENDERER_UNDETERMINATE ) {
-                rend->rend = g_rend_ops.lcrenderer_create ( type, probe );
+                rend->rend = g_rend_ops.lcrenderer_create ( type, nullptr );
         }
-        return rend;
 }
 
-/** \brief delete the renderer
- * \param rend struct renderer* [in] pointer to the renderer
- * \return void
- */
-void free_renderer ( struct renderer *rend )
+void renderer_free(struct renderer *rend)
 {
         g_rend_ops.lcrenderer_free ( rend->rend );
 }

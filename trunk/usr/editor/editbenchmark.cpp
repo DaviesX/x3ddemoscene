@@ -1,9 +1,13 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_editor.hpp>
 #include <usr/usr_kernel.hpp>
+#include <usr/usr_renderable.hpp>
 
-using namespace x3d;
-using namespace x3d::usr;
+
+namespace x3d
+{
+namespace usr
+{
 
 class BenchmarkActiveX::BenchmarkInt
 {
@@ -29,10 +33,10 @@ void BenchmarkActiveX::run_benchmark ( enum BenchmarkData type )
 {
         switch ( type ) {
         case Benchmark_CornellBox: {
-                pimpl->m_benchmark[on_front_buf()] = "cornell-box";
-                break;
-        }
-        }
+                        pimpl->m_benchmark[on_front_buf()] = "cornell-box";
+                        break;
+                }
+                }
 }
 
 void BenchmarkActiveX::run_benchmark ( string& filename )
@@ -50,7 +54,7 @@ void BenchmarkActiveX::on_adding ( void )
 
 #include "./cornellbox/cornellbox.h"
 
-static void construct_cornellbox ( struct x3d::rda_context* ctx )
+static void construct_cornellbox ( RenderAggregate* aggregate )
 {
         static bool             has_constructed = false;
         static struct vertex*   vertices = nullptr;
@@ -58,7 +62,7 @@ static void construct_cornellbox ( struct x3d::rda_context* ctx )
         static int*             indices = nullptr;
         static int              n_indices = 0;
 
-        static x3d::rda_instance* instance = nullptr;
+        static RenderableInstance* instance;
 
         if ( !has_constructed ) {
                 has_constructed = true;
@@ -69,24 +73,29 @@ static void construct_cornellbox ( struct x3d::rda_context* ctx )
                 vector3d* norm_arr = static_cast<vector3d*>(alloc_fix ( sizeof(*norm_arr), n_vertices ));
                 for ( int i = 0; i < n_vertices; i ++ ) {
                         set_point3d ( vertices[i].position[0],
-                                           vertices[i].position[1],
-                                           vertices[i].position[2],
-                                           &vert_arr[i] );
+                                      vertices[i].position[1],
+                                      vertices[i].position[2],
+                                      &vert_arr[i] );
                         set_vector3d ( vertices[i].normal[0],
-                                            vertices[i].normal[1],
-                                            vertices[i].normal[2],
-                                            &norm_arr[i] );
+                                       vertices[i].normal[1],
+                                       vertices[i].normal[2],
+                                       &norm_arr[i] );
                 }
-                rda_geometry* geo = rda_geometry_create ( const_cast<char*>("cornellbox"), 1.0f, false, 0 );
-                rda_geometry_init_from_data ( geo, vert_arr, n_vertices, indices, n_indices,
-                                              norm_arr, nullptr, nullptr,
-                                              const_cast<matrix4x4*>(&IdentityMatrix4x4) );
-                instance = rda_instance_create (
-                                   (renderable*) geo,
-                                   const_cast<matrix4x4*>(&IdentityMatrix4x4) );
-                rda_context_add_instance2 ( ctx, instance );
+                RenderableFactory fact;
+                GeometryRenderable* geometry = (GeometryRenderable*) fact.create ( RenderableFactory::Geometry, "cornellbox", false );
+                geometry->set_importance ( 1.0f );
+                geometry->set_material ( 0 );
+                geometry->init_from_data (  vert_arr, n_vertices, indices, n_indices,
+                                           norm_arr, nullptr, nullptr,
+                                           nullptr );
+
+                instance = geometry->make_instance ( const_cast<matrix4x4*>(&IdentityMatrix4x4) );
+                aggregate->add_instance ( instance );
+                aggregate->add_renderable ( geometry );
         } else {
-                rda_context_add_instance2 ( ctx, instance );
+                if ( !aggregate->has_instance ( instance ) ) {
+                        aggregate->add_instance ( instance );
+                }
         }
 }
 
@@ -101,12 +110,13 @@ void BenchmarkActiveX::update ( void )
 
         KernelEnvironment* env = this->get_state_buffer ();
         /* @fixme (davis#1#): shouldn't be <rda_context> here, should be <world> */
-        struct x3d::rda_context* rda = static_cast<struct x3d::rda_context*>(env->use ( c_World ));
+        WorldDataActiveX* worlddata = static_cast<WorldDataActiveX*>(env->use ( c_WorldData ));
+        RenderAggregate* aggregate = worlddata->get_world().get_render_aggregate();
 
         if ( benchmarkname.empty () ) {
                 // do nothing
         } else if ( benchmarkname == "cornell-box" ) {
-                construct_cornellbox ( rda );
+                construct_cornellbox ( aggregate );
         }
 }
 
@@ -121,3 +131,7 @@ void BenchmarkActiveX::load ( struct serializer *s )
 void BenchmarkActiveX::save ( struct serializer *s )
 {
 }
+
+}// namespace usr
+
+}// namesapce x3d

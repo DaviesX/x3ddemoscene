@@ -1,0 +1,22 @@
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:19: warning: documented symbol `x3d::usr::RenderAggregate::RenderAggregate' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:42: warning: documented symbol `x3d::usr::RenderAggregate::~RenderAggregate' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:51: warning: documented symbol `int x3d::usr::RenderAggregate::get_renderable_count' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:60: warning: documented symbol `bool x3d::usr::RenderAggregate::has_instance' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:71: warning: documented symbol `void x3d::usr::RenderAggregate::remove_instance' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:82: warning: documented symbol `void x3d::usr::RenderAggregate::add_instance' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:93: warning: documented symbol `void x3d::usr::RenderAggregate::remove_renderable' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:104: warning: documented symbol `void x3d::usr::RenderAggregate::remove_renderable' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:115: warning: documented symbol `void x3d::usr::RenderAggregate::add_renderable' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:126: warning: documented symbol `void x3d::usr::RenderAggregate::clear' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:136: warning: documented symbol `int x3d::usr::RenderAggregate::get_instance_count' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:147: warning: documented symbol `Renderable * x3d::usr::RenderAggregate::find_renderable' was not declared or defined.
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp:158: warning: documented symbol `bool x3d::usr::RenderAggregate::has_renderable' was not declared or defined.
+error: Problems running dot: exit code=127, command='dot', arguments='"/home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/graph_legend.dot" -Tpng -o "/home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/graph_legend.png"'
+error: Problems running dot: exit code=127, command='dot', arguments='"/home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/dir_c4a6f9ef9d60515833db96a1f80ff998_dep.dot" -Tpng -o "/home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/dir_c4a6f9ef9d60515833db96a1f80ff998_dep.png"'
+error: Problems running dot: exit code=127, command='dot', arguments='"/home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/usr__renderaggregate_8cpp__incl.dot" -Tpng -o "/home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/usr__renderaggregate_8cpp__incl.png"'
+error: problems opening map file /home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/usr__renderaggregate_8cpp__incl.map for inclusion in the docs!
+If you installed Graphviz/dot after a previous failing run, 
+try deleting the output directory and rerun doxygen.
+error: problems opening map file /home/davis/x3drenderlib-code/trunk/external/sample_entry/doxygen/html/dir_c4a6f9ef9d60515833db96a1f80ff998_dep.map for inclusion in the docs!
+If you installed Graphviz/dot after a previous failing run, 
+try deleting the output directory and rerun doxygen.

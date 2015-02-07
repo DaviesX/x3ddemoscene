@@ -1,6 +1,7 @@
 /* ptrenderer.c: interface of path tracing renderer go here */
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
+#include <x3d/renderableaggregaterequest.h>
 #include <renderer/utility.h>
 #include <math/math.h>
 #include "lcrenderer.h"

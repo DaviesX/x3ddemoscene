@@ -1,2 +1,18 @@
-warning: source ../usr_editor.h is not a readable file or directory... skipping.
-/home/davis/Projects/x3d/usr/usr_editor.c:7: warning: argument 'void' of command @param is not found in the argument list of usr_editor_setup_default(void)
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:18: warning: include file logout.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:19: warning: include file algorithm.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:20: warning: include file thread.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:21: warning: include file serializer.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:22: warning: include file math/math.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:23: warning: include file x3d/common.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:24: warning: include file x3d/init.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:25: warning: include file x3d/renderer.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:26: warning: include file x3d/renderable.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp:27: warning: include file x3d/renderableaggregate.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/usr/editor/cornellbox/cornellbox.h:18: warning: include file x3d/common.h not found, perhaps you forgot to add its directory to INCLUDE_PATH?
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderable.cpp:35: warning: Found unknown command `\fixme'
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderable.cpp:35: warning: Found unknown command `\fixme'
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderable.cpp:35: warning: Found unknown command `\fixme'
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderable.cpp:35: warning: Found unknown command `\fixme'
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderable.cpp:202: warning: argument 'num_normal' of command @param is not found in the argument list of x3d::usr::GeometryRenderable::get_vertex(int *num_vertex)
+/home/davis/x3drenderlib-code/trunk/usr/usr_renderable.cpp:202: warning: The following parameters of x3d::usr::GeometryRenderable::get_vertex(int *num_vertex) are not documented:
+  parameter 'num_vertex'
