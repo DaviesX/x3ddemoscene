@@ -54,7 +54,6 @@
 		<Linker>
 			<Add option="`pkg-config gtk+-3.0 --libs`" />
 		</Linker>
-		<Unit filename="../../usr/usr_renderaggregate.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<envvars />
