@@ -18,9 +18,10 @@ struct rdacontainer_ops {
 
 /* Base class */
 struct rdacontainer {
-        struct rdacontainer_ops ops;
-        int                     num_instance;
-        int                     num_renderable;
+        struct rdacontainer_ops                 ops;
+        d_alg_llist(struct rda_instance*)       inst_store;
+        int                                     num_instance;
+        int                                     num_renderable;
 };
 
 /* linear aggregate */
@@ -47,6 +48,7 @@ void                    rdacontainer_remove_instance(struct rdacontainer* cont, 
 struct rda_instance**   rdacontainer_frustum_find(struct rdacontainer* cont, enum RENDERABLE_IDR type, struct frustum3d* f);
 int                     rdacontainer_get_instance_count(struct rdacontainer* cont);
 int                     rdacontainer_get_renderable_count(struct rdacontainer* cont);
+bool                    rdacontainer_has_instance(struct rdacontainer* cont, struct rda_instance* inst);
 
 
 #endif // RENDERABLECONTAINERIMPL_H_INCLUDED

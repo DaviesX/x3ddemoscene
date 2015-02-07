@@ -69,6 +69,11 @@ static void idle_switch_callback ( bool is_idle, EditorActiveX* ax, void *info )
                 if ( edit->is_logo_connected ) {
                         g_signal_handler_disconnect ( draw_area,
                                                       edit->logo_draw_signal );
+                        GdkColor color;
+                        color.red   = 0X0;
+                        color.blue  = 0X0;
+                        color.green = 0X0;
+                        gtk_widget_modify_bg ( edit->draw_region, GTK_STATE_NORMAL, &color );
                         edit->is_logo_connected = false;
                 }
         }

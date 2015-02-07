@@ -73,8 +73,7 @@ void rda_context_add_instance2(struct rda_context* ctx, struct rda_instance* ins
 
 bool rda_context_has_instance(struct rda_context* ctx, struct rda_instance* inst)
 {
-        log_mild_err_dbg("have not implemented yet");
-        return false;
+        return rdacontainer_has_instance(ctx->container, inst);
 }
 
 void rda_context_remove_instance(struct rda_context* ctx, struct rda_instance* inst)
