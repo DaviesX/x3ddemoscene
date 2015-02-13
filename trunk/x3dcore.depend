@@ -165,7 +165,7 @@
 	<renderer/geometry.h>
 	<x3d/renderer.h>
 
-1423346095 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1423795218 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
@@ -2916,7 +2916,7 @@
 
 1385670362 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/pmrenderer.c
 
-1423193956 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
+1423795310 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
 	<x3d/renderer.h>
 	<x3d/renderable.h>
 	<x3d/renderableaggregaterequest.h>
@@ -3151,7 +3151,7 @@
 	<logout.h>
 	<x3d/renderable.h>
 
-1423346098 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+1423794855 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
 	<logout.h>
 	<algorithm.h>
 	<x3d/renderer.h>
@@ -3323,7 +3323,8 @@
 	<x3d/common.h>
 	<math/math.h>
 
-1412400042 /home/davis/x3drenderlib-code/trunk/include/renderer/utility.h
+1423795442 /home/davis/x3drenderlib-code/trunk/include/renderer/utility.h
+	<logout.h>
 
 1394384115 source:/home/davis/x3drenderlib-code/trunk/kernel/poi.c
 
@@ -3336,19 +3337,21 @@
 	<algorithm.h>
 	<x3d/renderable.h>
 
-1423200289 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregate.c
+1423350084 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregate.c
 	<x3d/renderableaggregate.h>
 	<x3d/renderableaggregaterequest.h>
 	<logout.h>
 	"renderablecontainerimpl.h"
 
-1423194705 /home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.h
+1423350285 /home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.h
 	<x3d/renderable.h>
 
-1423194314 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregaterequest.c
+1423795936 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregaterequest.c
+	<logout.h>
 	<x3d/renderableaggregaterequest.h>
+	"renderablecontainerimpl.h"
 
-1423194728 source:/home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.c
+1423351271 source:/home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.c
 	<math/math.h>
 	<logout.h>
 	"renderablecontainerimpl.h"

@@ -58,6 +58,7 @@ enum RENDER_ENVIRONMENT {
 };
 
 enum RENDER_OP {
+        RENDER_OP_NULL,
         RENDER_OP_RADIANCE,             /* RAD          dest, rda, pipe, blending */
 //        RENDER_OP_PROBE,                /* prob         probe */
         RENDER_OP_COMPOSITE,            /* COMP         dest, type, src  */
@@ -169,7 +170,7 @@ struct render_tree {
 };
 
 struct render_bytecode {
-        char*   instr;
+        char    instr[1024];
 };
 
 typedef struct renderer {

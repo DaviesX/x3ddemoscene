@@ -2,6 +2,8 @@
 #define UTILITY_H_INCLUDED
 
 
+#include <logout.h>
+
 typedef void (*f_Lerp_2) ( void* x[2], float t, void* xo );
 typedef void (*f_Lerp_3) ( void* x[3], float t[3], void* xo );
 
@@ -394,6 +396,11 @@ static inline struct util_access* u_access_create (
                 }
         case UtilAccessorBvh:
                 {
+                return nullptr;
+                }
+        default:
+                {
+                log_mild_err_dbg("failed to find such accessor type as %d", type);
                 return nullptr;
                 }
         }

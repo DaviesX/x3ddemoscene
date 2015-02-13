@@ -555,11 +555,15 @@ void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* 
         r->n_passes = 0;
         char* p_instr = r->bytecode.instr;
         while ( true ) {
-                char op = *p_instr;
+                enum RENDER_OP op;
+                get_operand(p_instr, op);
                 switch ( op ) {
+                case RENDER_OP_NULL:
+                        {
+                        goto end_parsing_instr;
+                        }
                 case RENDER_OP_RADIANCE:
                         {
-                        p_instr ++;
                         int                     dest;
                         struct rda_context*     ctx;
                         enum RENDER_PIPE_IDR    pipeline;
@@ -580,7 +584,6 @@ void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* 
                         }
                 case RENDER_OP_COMPOSITE:
                         {
-                        p_instr ++;
                         int                     dest;
                         int                     type;
                         int                     src;
@@ -598,7 +601,6 @@ void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* 
                         }
                 case RENDER_OP_OUTPUT:
                         {
-                        p_instr ++;
                         struct proj_probe*      probe;
                         int                     src;
                         get_operand ( p_instr, probe );
@@ -610,6 +612,7 @@ void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* 
                         }
                 }
         }
+end_parsing_instr:;
         /* generate renderable request */
         int i;
         for ( i = 0; i < r->n_passes; i ++ ) {

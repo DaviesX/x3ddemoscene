@@ -1,5 +1,6 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_editor.hpp>
+#include <usr/usr_renderer.hpp>
 
 namespace x3d
 {
@@ -50,6 +51,7 @@ public:
                 void*           d_error;
         } m_error[2];
 
+        RenderTree              m_tree;
         Renderer*               m_renderer;
 };
 
@@ -116,6 +118,8 @@ void RenderConfigActiveX::update ( void )
         wait_for_update ();
         swap_buf ();
         unwait ();
+
+        pimpl->m_renderer->update(&pimpl->m_tree);
 }
 
 void RenderConfigActiveX::load ( struct serializer *s )

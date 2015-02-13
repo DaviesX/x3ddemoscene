@@ -237,7 +237,7 @@ __dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer
         /* RAD          dest, rda, pipe, blending */
         emit_instr ( instr, RENDER_OP_RADIANCE );
         emit_instr ( instr, 0 );
-        emit_instr ( instr, *(void**) &tree->reserve[0] );
+        emit_instr ( instr, *(struct rda_context**) &tree->reserve[0] );
         emit_instr ( instr, RENDER_PIPE_DIRECT_LIGHTING );
         emit_instr ( instr, 0.0f );
         /* COMP         dest, type, src  */

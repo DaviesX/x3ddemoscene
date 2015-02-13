@@ -46,6 +46,7 @@ void WorldDataActiveX::on_adding ( void )
 
 void WorldDataActiveX::update ( void )
 {
+        pimpl->m_world.update();
 }
 
 void WorldDataActiveX::dispatch ( void )
