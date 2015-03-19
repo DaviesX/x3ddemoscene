@@ -31,14 +31,13 @@
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Compiler>
-					<Add option="-O2" />
 					<Add option="-Wall" />
-					<Add option="-Ofast" />
 					<Add option="-flto" />
+					<Add option="-Ofast" />
 				</Compiler>
 				<Linker>
-					<Add option="-Ofast" />
 					<Add option="-flto" />
+					<Add option="-Ofast" />
 					<Add library="./libX3dCore.so" />
 				</Linker>
 			</Target>

@@ -610,6 +610,10 @@ void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* 
                         r->final_pass = src;
                         break;
                         }
+                default:
+                        {
+                        log_mild_err_dbg("op code not handled: %d", op);
+                        }
                 }
         }
 end_parsing_instr:;

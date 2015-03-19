@@ -88,7 +88,7 @@
 1403526919 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
 	<x3d/common.h>
 
-1419314831 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
+1426807468 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -146,11 +146,12 @@
 
 1403596674 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
 
-1423795218 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1424386711 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
 	<algorithm.h>
+	<x3d/rendertree.h>
 
 1399824290 /home/davis/x3drenderlib-code/trunk/lib/staging.h
 	<algorithm.h>
@@ -207,7 +208,7 @@
 	<algorithm.h>
 	<x3d/common.h>
 
-1403596674 /home/davis/x3drenderlib-code/trunk/lib/algorithm.inl.h
+1426801244 /home/davis/x3drenderlib-code/trunk/lib/algorithm.inl.h
 
 1412446343 /home/davis/x3drenderlib-code/trunk/include/x3d/world.h
 	<x3d/common.h>
@@ -242,4 +243,6 @@
 	<usr/usr_renderable.hpp>
 	<usr/usr_renderaggregate.hpp>
 	<usr/usr_x3d.hpp>
+
+1426799645 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
 

@@ -499,12 +499,12 @@ struct qsort_part {
 }
 
 /** list containers **/
-#define alg_list_find( type, _data, _iter, _cmp, _inst )	\
+#define alg_list_find( _data, _iter, _cmp, _inst )	\
 {\
 	(_iter) = nullptr; \
 	typeof(_iter) _ptr = (_inst)->content; \
 	int _i; \
-	for ( _i = 0; _i < (_list)->num_elm; _i ++ ) { \
+	for ( _i = 0; _i < (_inst)->num_elm; _i ++ ) { \
 		if ( _cmp ( (_data), &_ptr[_i] ) ) { \
 			(_iter) = &_ptr[_i]; \
 			break; \

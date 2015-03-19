@@ -24,7 +24,6 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-fomit-frame-pointer" />
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-w" />
 					<Add option="-Ofast" />
@@ -327,6 +326,7 @@
 		<Unit filename="include/x3d/renderableaggregate.h" />
 		<Unit filename="include/x3d/renderableaggregaterequest.h" />
 		<Unit filename="include/x3d/renderer.h" />
+		<Unit filename="include/x3d/rendertree.h" />
 		<Unit filename="include/x3d/resloader.h" />
 		<Unit filename="include/x3d/strategy.h" />
 		<Unit filename="kernel/debug.c">
@@ -361,6 +361,9 @@
 		</Unit>
 		<Unit filename="kernel/renderablecontainerimpl.h" />
 		<Unit filename="kernel/renderer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/rendertree.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/resloader.c">

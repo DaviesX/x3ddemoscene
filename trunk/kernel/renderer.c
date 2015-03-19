@@ -230,8 +230,10 @@ __dlexport void renderer_renderscript ( const char* script, struct renderer *ren
         (_instr) += sizeof(_var); \
 }
 
-__dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer *rend )
+__dlexport void renderer_render_tree(struct render_tree *tree, struct renderer *rend)
 {
+        render_tree_compile(tree, &rend->bytecode);
+#if 0
         struct render_bytecode* bc = &rend->bytecode;
         char* instr = bc->instr;
         /* RAD          dest, rda, pipe, blending */
@@ -248,6 +250,7 @@ __dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer
         /* OUT          probe, src */
         emit_instr ( instr, RENDER_OP_OUTPUT );
         emit_instr ( instr, 1 );
+#endif // 0
 }
 
 #undef emit_instr

@@ -58,11 +58,12 @@ void Renderer::commit()
 
 RenderTree::RenderTree()
 {
+        render_tree_init(&m_rendertree);
 }
 
 RenderTree::~RenderTree()
 {
-
+        render_tree_free(&m_rendertree);
 }
 
 struct render_tree* RenderTree::get_core_resource()

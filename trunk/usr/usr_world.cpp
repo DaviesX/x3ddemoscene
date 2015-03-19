@@ -8,6 +8,8 @@ namespace usr
 World::World() :
         m_renderagg(RenderAggregate::SimpleLinear)
 {
+        m_resloader = nullptr;
+        m_renderer = nullptr;
 }
 
 World::~World()
@@ -41,7 +43,8 @@ void World::bind_render_processor(Renderer* renderer)
 
 void World::update()
 {
-        m_renderer->render();
+        if (m_renderer)
+                m_renderer->render();
 }
 
 }// namespace usr
