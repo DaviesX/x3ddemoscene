@@ -1,6 +1,9 @@
 #ifndef RENDERTREE_H_INCLUDED
 #define RENDERTREE_H_INCLUDED
 
+
+#include <x3d/renderable.h>
+
 struct render_tree;
 struct render_node;
 struct render_node_ops;
@@ -51,26 +54,25 @@ struct render_output {
         struct render_node      _node;
         char*                   probe;
 };
-__dlexport struct render_node*  render_node_output_create(char* name, char* probe);
+__dlexport struct render_node*  render_node_output_create(const char* name, const char* probe);
+__dlexport void                 render_node_output_set_probe(struct render_output* node, const char* probe);
 
 
 struct render_layer {
         struct render_node      _node;
 };
-__dlexport struct render_node*  render_node_layer_create(char* name);
+__dlexport struct render_node*  render_node_layer_create(const char* name);
 
 
-enum RENDER_ACC_IDR {
-        RENDER_ACC_LINEAR,
-        RENDER_ACC_GRID,
-        RENDER_ACC_BVH
-};
 struct render_rdacontext {
         struct render_node      _node;
         char*                   rdacontext;
-        enum RENDER_ACC_IDR     access;
+        enum RAG_IDR            access;
 };
-__dlexport struct render_node*  render_node_rdacontext_create(char* name, char* rdacontext, enum RENDER_ACC_IDR access);
+__dlexport struct render_node*  render_node_rdacontext_create(const char* name, const char* rdacontext, enum RAG_IDR access);
+__dlexport void                 render_node_rdacontext_set_context(struct render_rdacontext* node, const char* context);
+__dlexport void                 render_node_rdacontext_set_access(struct render_rdacontext* node,
+                                                                  enum RAG_IDR access);
 
 
 enum RENDER_PIPE_IDR {
@@ -85,7 +87,8 @@ struct render_radiance {
         struct render_node      _node;
         enum RENDER_PIPE_IDR    pipe;
 };
-__dlexport struct render_node*  render_node_radiance_create(char* name, enum RENDER_PIPE_IDR pipe);
+__dlexport struct render_node*  render_node_radiance_create(const char* name, enum RENDER_PIPE_IDR pipe);
+__dlexport void                 render_node_radiance_set_pipe(struct render_radiance* node, enum RENDER_PIPE_IDR pipe);
 
 
 struct render_post_ao {
@@ -94,13 +97,13 @@ struct render_post_ao {
 
 struct render_filmic_hdr {
         struct render_node      _node;
-        const float     A;// = 0.15f;
-        const float     B;// = 0.50f;
-        const float     C;// = 0.10f;
-        const float     D;// = 0.20f;
-        const float     E;// = 0.02f;
-        const float     F;// = 0.30f;
-        const float     W;// = 11.2f;
+        float     A;// = 0.15f;
+        float     B;// = 0.50f;
+        float     C;// = 0.10f;
+        float     D;// = 0.20f;
+        float     E;// = 0.02f;
+        float     F;// = 0.30f;
+        float     W;// = 11.2f;
         float           key;
         float           exp;
 };
@@ -184,15 +187,15 @@ void render_tree_visitor_init(struct render_tree_visitor* visitor,
                                                  void* dataptr),
                               void* dataptr);
 void render_tree_visitor_init2(struct render_tree_visitor* visitor,
-                              void (*this_node) (struct render_node* node,
-                                                 struct render_node* input[],
-                                                 struct render_node* output[],
-                                                 void* dataptr),
-                               void (*backtrack) (struct render_node* node,
+                               void (*this_node) (struct render_node* node,
                                                   struct render_node* input[],
                                                   struct render_node* output[],
                                                   void* dataptr),
-                              void* dataptr);
+                                void (*backtrack) (struct render_node* node,
+                                                   struct render_node* input[],
+                                                   struct render_node* output[],
+                                                   void* dataptr),
+                                void* dataptr);
 
 struct render_tree {
         struct render_node*     node_tree;
@@ -205,7 +208,7 @@ struct render_tree {
 __dlexport void                 render_tree_init(struct render_tree* tree);
 __dlexport void                 render_tree_free(struct render_tree* tree);
 __dlexport struct render_node*  render_tree_create_root(struct render_tree* tree);
-__dlexport struct render_node*  render_tree_get_node(struct render_tree* tree, char* name);
+__dlexport struct render_node*  render_tree_get_node(struct render_tree* tree, const char* name);
 __dlexport bool                 render_tree_insert_node(struct render_tree* tree,
                                                         struct render_node* parent,
                                                         struct render_node* node);
@@ -215,7 +218,7 @@ __dlexport bool                 render_tree_remove_node(struct render_tree* tree
                                                         struct render_node* node);
 __dlexport void                 render_tree_declare_environment(struct render_tree* tree,
                                                                 enum RENDER_ENVIRONMENT type,
-                                                                char* var_name, void* var);
+                                                                const char* var_name, void* var);
 __dlexport bool                 render_tree_compile(struct render_tree* tree, struct render_bytecode* bytecode);
 __dlexport bool                 render_tree_visit(struct render_tree* tree, struct render_tree_visitor* visitor);
 

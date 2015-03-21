@@ -374,7 +374,7 @@ uuid_t alg_hash_str_uuid ( char *str );
 
 char* alg_str_simplify ( char* str );
 bool alg_match_suffix ( char* str, char* suffix );
-char *alg_alloc_string ( char *string );
+char *alg_alloc_string ( const char *string );
 
 int alg_match_substring ( char *str, char *sub );
 void alg_init_kmp_substring ( char *sub, char *kmp_array[] );

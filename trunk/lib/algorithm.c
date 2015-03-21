@@ -385,7 +385,7 @@ bool alg_match_suffix ( char* str, char* suffix )
         return true;
 }
 
-char* alg_alloc_string ( char *string )
+char* alg_alloc_string ( const char *string )
 {
         int l = strlen ( string ) + 1;
         char* s = alloc_fix ( 1, l );

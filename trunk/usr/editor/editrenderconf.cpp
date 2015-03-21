@@ -57,7 +57,7 @@ public:
 
 RenderConfigActiveX::RenderConfigInt::RenderConfigInt ()
 {
-        m_renderer = new Renderer(Renderer::RENDERER_PATH_TRACER);
+        m_renderer = new Renderer(Renderer::Pathtracer);
 }
 
 RenderConfigActiveX::RenderConfigInt::~RenderConfigInt ()

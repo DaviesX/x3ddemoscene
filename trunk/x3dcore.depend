@@ -8,7 +8,7 @@
 	<algorithm.h>
 	<memory.h>
 
-1405155694 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
+1426958791 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
 	<x3d/common.h>
 	<math/math.h>
 	<algorithm.inl.h>
@@ -3357,7 +3357,8 @@
 	<logout.h>
 	"renderablecontainerimpl.h"
 
-1426799645 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+1426958643 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+	<x3d/renderable.h>
 
 1426805190 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
 	<algorithm.h>
