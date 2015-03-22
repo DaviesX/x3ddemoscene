@@ -25,6 +25,7 @@ enum GEOMETRY_MODEL_IDR {
 };
 
 enum RENDER_NODE_IDR {
+        RENDER_NODE_ROOT,
         RENDER_NODE_LAYER,
         RENDER_NODE_RADIANCE,
         RENDER_NODE_OUTPUT,
@@ -219,6 +220,7 @@ __dlexport bool                 render_tree_remove_node(struct render_tree* tree
 __dlexport void                 render_tree_declare_environment(struct render_tree* tree,
                                                                 enum RENDER_ENVIRONMENT type,
                                                                 const char* var_name, void* var);
+__dlexport void                 render_tree_clear_environment(struct render_tree* tree);
 __dlexport bool                 render_tree_compile(struct render_tree* tree, struct render_bytecode* bytecode);
 __dlexport bool                 render_tree_visit(struct render_tree* tree, struct render_tree_visitor* visitor);
 

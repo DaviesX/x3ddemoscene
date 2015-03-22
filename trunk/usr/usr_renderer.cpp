@@ -55,9 +55,14 @@ void Renderer::commit()
         renderer_commit(&m_renderer);
 }
 
-RenderNode* RenderOutput::create(string name, string probe)
+RenderOutput::RenderOutput(string name, string probe)
 {
-        return (RenderNode*) (m_node = (struct render_output*) render_node_output_create(name.c_str(), probe.c_str()));
+        m_node = (struct render_output*) render_node_output_create(name.c_str(), probe.c_str());
+}
+
+RenderNode* RenderOutput::get_node()
+{
+        return (RenderNode*) m_node;
 }
 
 void RenderOutput::set_probe(string probe)
@@ -65,15 +70,25 @@ void RenderOutput::set_probe(string probe)
         render_node_output_set_probe(m_node, probe.c_str());
 }
 
-RenderNode* RenderLayer::create(string name)
+RenderLayer::RenderLayer(string name)
 {
-        return (RenderNode*) (m_node = (struct render_layer*) render_node_layer_create(name.c_str()));
+        m_node = (struct render_layer*) render_node_layer_create(name.c_str());
 }
 
-RenderNode* RenderableContext::create(string name, string context, RenderAggregate::Strategy strategy)
+RenderNode* RenderLayer::get_node()
 {
-        return (RenderNode*) (m_node = (struct render_rdacontext*)
-                              render_node_rdacontext_create(name.c_str(), context.c_str(), (RAG_IDR) strategy));
+        return (RenderNode*) m_node;
+}
+
+RenderableContext::RenderableContext(string name, string context, RenderAggregate::Strategy strategy)
+{
+        m_node = (struct render_rdacontext*)
+                 render_node_rdacontext_create(name.c_str(), context.c_str(), (RAG_IDR) strategy);
+}
+
+RenderNode* RenderableContext::get_node()
+{
+        return (RenderNode*) m_node;
 }
 
 void RenderableContext::set_context(string context)
@@ -86,10 +101,15 @@ void RenderableContext::set_strategy(RenderAggregate::Strategy strategy)
         render_node_rdacontext_set_access(m_node, (RAG_IDR) strategy);
 }
 
-RenderNode* RenderRadiance::create(string name, RenderPipeline pipe)
+RenderRadiance::RenderRadiance(string name, RenderPipeline pipe)
 {
-        return (RenderNode*) (m_node = (struct render_radiance*)
-                              render_node_radiance_create(name.c_str(), (RENDER_PIPE_IDR) pipe));
+        m_node = (struct render_radiance*)
+                 render_node_radiance_create(name.c_str(), (RENDER_PIPE_IDR) pipe);
+}
+
+RenderNode* RenderRadiance::get_node()
+{
+        return (RenderNode*) m_node;
 }
 
 void RenderRadiance::set_pipeline(RenderPipeline pipe)
@@ -171,6 +191,11 @@ bool RenderTree::remove_node(RenderNode* parent, RenderNode* node)
 void RenderTree::set_environment_variable(EnvironmentType type, string var_name, void* var)
 {
         render_tree_declare_environment(&m_rendertree, (RENDER_ENVIRONMENT) type, var_name.c_str(), var);
+}
+
+void RenderTree::clear_environment_variables()
+{
+        render_tree_clear_environment(&m_rendertree);
 }
 
 bool RenderTree::visit(RenderTreeVisitor* visitor)

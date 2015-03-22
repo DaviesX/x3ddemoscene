@@ -51,7 +51,8 @@ struct var_head *change_size_var ( struct var_head *vh, int new_size, int factor
 
 void *call_alloc_fix ( uint32_t elm_size, uint32_t num_elm )
 {
-        assert ( elm_size != 0 && num_elm != 0 );
+        if (elm_size == 0 || num_elm == 0)
+                return nullptr;
         uint32_t size = elm_size*num_elm;
 
         struct fix_head fh = {

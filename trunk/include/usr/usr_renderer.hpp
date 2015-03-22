@@ -13,7 +13,8 @@ class RenderNode;
 
 class RenderOutput : public CoreResource {
 public:
-        RenderNode*             create(string name, string probe);
+        RenderOutput(string name, string probe);
+        RenderNode*             get_node();
         void                    set_probe(string probe);
 private:
         struct render_output*   m_node;
@@ -21,14 +22,16 @@ private:
 
 class RenderLayer : public CoreResource {
 public:
-        RenderNode*             create(string name);
+        RenderLayer(string name);
+        RenderNode*             get_node();
 private:
         struct render_layer*    m_node;
 };
 
 class RenderableContext : public CoreResource {
 public:
-        RenderNode*             create(string name, string context, RenderAggregate::Strategy strategy);
+        RenderableContext(string name, string context, RenderAggregate::Strategy strategy);
+        RenderNode*             get_node();
         void                    set_context(string context);
         void                    set_strategy(RenderAggregate::Strategy strategy);
 private:
@@ -45,7 +48,8 @@ public:
                 Metropolis,
                 ImageSpace
         };
-        RenderNode*             create(string name, RenderPipeline pipe);
+        RenderRadiance(string name, RenderPipeline pipe);
+        RenderNode*             get_node();
         void                    set_pipeline(RenderPipeline pipe);
 private:
         struct render_radiance* m_node;
@@ -86,6 +90,7 @@ public:
         bool                    replace_node(RenderNode* node);
         bool                    remove_node(RenderNode* parent, RenderNode* node);
         void                    set_environment_variable(EnvironmentType type, string var_name, void* var);
+        void                    clear_environment_variables();
         bool                    visit(RenderTreeVisitor* visitor);
 
         struct render_tree*     get_core_resource();

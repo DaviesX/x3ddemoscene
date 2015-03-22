@@ -196,7 +196,7 @@
 1419742711 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1423348359 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1426993811 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_world.hpp>
@@ -232,7 +232,7 @@
 
 1422518397 /home/davis/x3drenderlib-code/trunk/include/usr/usr_resourceloader.hpp
 
-1426958625 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderer.hpp
+1426996043 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderer.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_renderaggregate.hpp>
 
@@ -245,6 +245,6 @@
 	<usr/usr_renderaggregate.hpp>
 	<usr/usr_x3d.hpp>
 
-1426958643 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+1426998556 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
 	<x3d/renderable.h>
 

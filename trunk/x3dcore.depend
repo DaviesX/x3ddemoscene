@@ -3174,7 +3174,7 @@
 1412657333 source:/home/davis/x3drenderlib-code/trunk/kernel/world.c
 	<x3d/world.h>
 
-1405155955 source:/home/davis/x3drenderlib-code/trunk/lib/algorithm.c
+1426958797 source:/home/davis/x3drenderlib-code/trunk/lib/algorithm.c
 	<algorithm.h>
 	<math/math.h>
 
@@ -3285,7 +3285,7 @@
 	<logout.h>
 	"vector.h"
 
-1397758278 source:/home/davis/x3drenderlib-code/trunk/lib/memory.c
+1426996753 source:/home/davis/x3drenderlib-code/trunk/lib/memory.c
 	<logout.h>
 	<memory.h>
 
@@ -3357,10 +3357,10 @@
 	<logout.h>
 	"renderablecontainerimpl.h"
 
-1426958643 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+1426998556 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
 	<x3d/renderable.h>
 
-1426805190 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
+1426996184 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
 	<algorithm.h>
 	<memory.h>
 	<logout.h>

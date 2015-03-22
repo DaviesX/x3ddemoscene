@@ -43,7 +43,7 @@ class WorldDataActiveX;
 class BenchmarkActiveX;
 
 
-class __dlexport EditorActiveX
+class EditorActiveX
 {
         friend class RenderRegionActiveX;
         friend class RenderConfigActiveX;
@@ -130,11 +130,11 @@ private:
 };
 
 /* activex - render configurator */
-class __dlexport RenderConfigActiveX : public EditorActiveX
+class RenderConfigActiveX : public EditorActiveX
 {
 public:
-        RenderConfigActiveX ( string name );
-        ~RenderConfigActiveX ( void );
+        RenderConfigActiveX(string name);
+        ~RenderConfigActiveX();
 
         void on_adding ( void );
         void update ( void );

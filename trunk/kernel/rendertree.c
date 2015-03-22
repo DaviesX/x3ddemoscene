@@ -9,7 +9,7 @@ static void render_node_init(struct render_node* node,
                              bool (*verify_self)     (struct render_tree* tree, struct render_node* self),
                              bool (*insert_input)    (struct render_node* self, struct render_node* input),
                              bool (*remove_input)    (struct render_node* self, struct render_node* input),
-                             const char* name, int n_input, int n_output);
+                             enum RENDER_NODE_IDR type, const char* name, int n_input, int n_output);
 static void render_node_free(struct render_node* node);
 static void render_node_set_input(struct render_node* node, struct render_node* input, int i);
 static void render_node_remove_input(struct render_node* node, struct render_node* input);
@@ -67,7 +67,7 @@ struct render_node* render_node_output_create(const char* name, const char* prob
                          render_node_verify_self,
                          render_node_output_insert,
                          render_node_output_remove,
-                         (char*) name, c_NumInput, c_NumOutput);
+                         RENDER_NODE_OUTPUT, name, c_NumInput, c_NumOutput);
         node->probe = alg_alloc_string(probe);
         return (struct render_node*) node;
 }
@@ -86,7 +86,7 @@ struct render_node* render_node_layer_create(const char* name)
                          nullptr,
                          nullptr,
                          nullptr,
-                         name, c_NumInput, c_NumOutput);
+                         RENDER_NODE_LAYER, name, c_NumInput, c_NumOutput);
         return (struct render_node*) node;
 }
 
@@ -143,7 +143,7 @@ struct render_node* render_node_rdacontext_create(const char* name, const char* 
                          render_node_rdacontext_self,
                          render_node_rdacontext_insert,
                          render_node_rdacontext_remove,
-                         name, c_NumInput, c_NumOutput);
+                         RENDER_NODE_RDACONTEXT, name, c_NumInput, c_NumOutput);
         node->access     = access;
         node->rdacontext = alg_alloc_string(rdacontext);
         return (struct render_node*) node;
@@ -205,7 +205,7 @@ struct render_node* render_node_radiance_create(const char* name, enum RENDER_PI
                          render_node_radiance_self,
                          render_node_radiance_insert,
                          render_node_radiance_remove,
-                         name, c_NumInput, c_NumOutput);
+                         RENDER_NODE_RADIANCE, name, c_NumInput, c_NumOutput);
         node->pipe = pipe;
         return (struct render_node*) node;
 }
@@ -218,9 +218,10 @@ static void render_node_init(struct render_node* node,
                              bool (*verify_self)     (struct render_tree* tree, struct render_node* self),
                              bool (*insert_input)    (struct render_node* self, struct render_node* input),
                              bool (*remove_input)    (struct render_node* self, struct render_node* input),
-                             const char* name, int n_input, int n_output)
+                             enum RENDER_NODE_IDR type, const char* name, int n_input, int n_output)
 {
         zero_obj(node);
+        node->type = type;
         node->name = alg_alloc_string(name);
         node->ops.free_self = free_self;
         node->ops.verify_self = verify_self;
@@ -348,12 +349,39 @@ void render_tree_free(struct render_tree* tree)
         zero_obj(tree);
 }
 
+static bool render_node_root_free(struct render_node* self)
+{
+        render_node_free(self);
+        free_fix(self);
+        return true;
+}
+
+static bool render_node_root_verify(struct render_tree* tree, struct render_node* self)
+{
+        return true;
+}
+
+static bool render_node_root_insert(struct render_node* self, struct render_node* input)
+{
+        render_node_set_input(self, input, 0);
+        return true;
+}
+
+static bool render_node_root_remove(struct render_node* self, struct render_node* input)
+{
+        render_node_remove_input(self, input);
+        return true;
+}
+
 struct render_node* render_tree_create_root(struct render_tree* tree)
 {
         struct render_node* root = alloc_obj(root);
         render_node_init(root,
-                         nullptr, nullptr, nullptr, nullptr,
-                         "root", 1, 0);
+                         render_node_root_free,
+                         render_node_root_verify,
+                         render_node_root_insert,
+                         render_node_root_remove,
+                         RENDER_NODE_ROOT, "root", 1, 0);
         tree->node_tree = root;
         return root;
 }
@@ -421,6 +449,14 @@ void render_tree_declare_environment(struct render_tree* tree,
         int spot = tree->n_var[type] ++;
         tree->var[type][spot].name = alg_alloc_string(var_name);
         tree->var[type][spot].ptr = var;
+}
+
+void render_tree_clear_environment(struct render_tree* tree)
+{
+        int i;
+        for (i = 0; i < sizeof(tree->n_var)/sizeof(int); i ++) {
+                tree->n_var[i] = 0;
+        }
 }
 
 struct node_info {

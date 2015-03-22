@@ -114,6 +114,30 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
+                      <object class="GtkImageMenuItem" id="Undo Action">
+                        <property name="label">gtk-undo</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="Redo action">
+                        <property name="label">gtk-redo</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separator1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem6">
                         <property name="label">gtk-cut</property>
                         <property name="visible">True</property>
@@ -166,14 +190,6 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="MI-SelectionMode">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Selection mode</property>
-                        <property name="use_underline">True</property>
-                      </object>
-                    </child>
-                    <child>
                       <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -192,10 +208,10 @@
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="environment-menu">
+              <object class="GtkMenuItem" id="settings-menu">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Environment</property>
+                <property name="label" translatable="yes">_Settings</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menu4">
@@ -223,6 +239,14 @@
                   <object class="GtkMenu" id="tools-submenu">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="MI-SelectionMode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Select Object</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkMenuItem" id="benchmark-scene-menu-item">
                         <property name="visible">True</property>

@@ -1,5 +1,6 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_editor.hpp>
+#include <usr/usr_renderaggregate.hpp>
 #include <usr/usr_renderer.hpp>
 
 namespace x3d
@@ -58,6 +59,14 @@ public:
 RenderConfigActiveX::RenderConfigInt::RenderConfigInt ()
 {
         m_renderer = new Renderer(Renderer::Pathtracer);
+        // Put a default tree onto it
+        RenderOutput output("default_output", "default_probe");
+        RenderRadiance radiance("default_radiance", RenderRadiance::DirectLightning);
+        RenderableContext context("default_renderable_context", "default_context", RenderAggregate::SimpleLinear);
+        RenderNode* root = m_tree.create_root();
+        m_tree.insert_node(root, output.get_node());
+        m_tree.insert_node(output.get_node(), radiance.get_node());
+        m_tree.insert_node(radiance.get_node(), context.get_node());
 }
 
 RenderConfigActiveX::RenderConfigInt::~RenderConfigInt ()
@@ -77,12 +86,12 @@ RenderConfigActiveX::RenderConfigActiveX ( string name ) :
         }
 }
 
-RenderConfigActiveX::~RenderConfigActiveX ( void )
+RenderConfigActiveX::~RenderConfigActiveX()
 {
         delete this->pimpl;
 }
 
-void RenderConfigActiveX::on_adding ( void )
+void RenderConfigActiveX::on_adding()
 {
         // make a default renderer
         KernelEnvironment* state = this->get_state_buffer ();
