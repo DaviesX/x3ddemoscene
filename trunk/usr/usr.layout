@@ -1,19 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="editor/gtkfrontend/gtkgui.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../include/usr/usr_renderable.hpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2501" topLine="85" />
+			<Cursor1 position="210" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="editor/gtkfrontend/main_editor.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/gtkfrontend/project_manager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3013" topLine="48" />
+			<Cursor1 position="237" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="../include/usr/usr_editorfrontend.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/editviewcontrol.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1153" topLine="29" />
+			<Cursor1 position="28" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="usr_renderable.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2054" topLine="127" />
+		</Cursor>
+	</File>
+	<File name="editor/editor.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3294" topLine="126" />
+		</Cursor>
+	</File>
+	<File name="editor/gtkfrontend/main_editor.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4143" topLine="102" />
+		</Cursor>
+	</File>
+	<File name="editor/editrenderconf.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2363" topLine="57" />
+		</Cursor>
+	</File>
+	<File name="editor/gtkfrontend/main_editor.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="135" topLine="7" />
+		</Cursor>
+	</File>
+	<File name="editor/editworlddata.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1125" topLine="35" />
+		</Cursor>
+	</File>
+	<File name="../include/usr/usr_editor.hpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4088" topLine="121" />
+		</Cursor>
+	</File>
+	<File name="../include/usr/usr_kernel.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1498" topLine="54" />
+		</Cursor>
+	</File>
+	<File name="editor/gtkfrontend/renderable_editor.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1128" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="editor/cornellbox/cornellbox.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="451" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="../include/usr/usr_world.hpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -21,19 +71,29 @@
 			<Cursor1 position="671" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="../include/usr/usr_editor.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/gtkfrontend/entity_editor.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3982" topLine="191" />
+			<Cursor1 position="219" topLine="1" />
 		</Cursor>
 	</File>
-	<File name="editor/editassetlist.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/gtkfrontend/entity_editor.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="22" topLine="0" />
+			<Cursor1 position="2250" topLine="35" />
 		</Cursor>
 	</File>
-	<File name="../include/usr/usr_x3d.hpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../include/usr/usr_editorfrontend.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="376" topLine="8" />
+			<Cursor1 position="1528" topLine="36" />
+		</Cursor>
+	</File>
+	<File name="usr_kernel.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="665" topLine="20" />
+		</Cursor>
+	</File>
+	<File name="../include/usr/usr_renderer.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="746" topLine="15" />
 		</Cursor>
 	</File>
 	<File name="editor/editentityproperty.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -46,79 +106,19 @@
 			<Cursor1 position="0" topLine="9" />
 		</Cursor>
 	</File>
-	<File name="usr_renderer.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/gtkfrontend/renderer_configurator.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5017" topLine="188" />
+			<Cursor1 position="719" topLine="4" />
 		</Cursor>
 	</File>
-	<File name="usr_world.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/editbenchmark.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="295" topLine="0" />
+			<Cursor1 position="3216" topLine="88" />
 		</Cursor>
 	</File>
-	<File name="editor/gtkfrontend/main_editor_menu.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/gtkfrontend/renderable_editor.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2029" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="editor/editrenderconf.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1958" topLine="54" />
-		</Cursor>
-	</File>
-	<File name="../include/usr/usr_renderable.hpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="210" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="editor/editviewcontrol.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="28" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="usr_kernel.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3038" topLine="99" />
-		</Cursor>
-	</File>
-	<File name="editor/gtkfrontend/main_editor.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="200" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../include/usr/usr_renderer.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="746" topLine="15" />
-		</Cursor>
-	</File>
-	<File name="usr_renderaggregate.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="538" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="editor/cornellbox/cornellbox.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="451" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="editor/editor.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="456" topLine="320" />
-		</Cursor>
-	</File>
-	<File name="usr_renderable.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2054" topLine="127" />
-		</Cursor>
-	</File>
-	<File name="editor/editworlddata.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1125" topLine="35" />
-		</Cursor>
-	</File>
-	<File name="editor/editrenderregion.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4682" topLine="137" />
+			<Cursor1 position="271" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="../include/usr/usr_renderaggregate.hpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -126,9 +126,34 @@
 			<Cursor1 position="343" topLine="7" />
 		</Cursor>
 	</File>
-	<File name="../include/usr/usr_kernel.hpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/editassetlist.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1411" topLine="0" />
+			<Cursor1 position="22" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="usr_renderaggregate.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="538" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="editor/editrenderregion.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4682" topLine="137" />
+		</Cursor>
+	</File>
+	<File name="usr_world.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="295" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="editor/gtkfrontend/gtkgui.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1378" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="usr_renderer.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5017" topLine="188" />
 		</Cursor>
 	</File>
 	<File name="editor/cornellbox/cornellbox.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -136,9 +161,19 @@
 			<Cursor1 position="5134" topLine="128" />
 		</Cursor>
 	</File>
-	<File name="editor/editbenchmark.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="editor/gtkfrontend/main_editor_menu.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3216" topLine="88" />
+			<Cursor1 position="1649" topLine="29" />
+		</Cursor>
+	</File>
+	<File name="editor/gtkfrontend/gtkgui.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4469" topLine="114" />
+		</Cursor>
+	</File>
+	<File name="../include/usr/usr_x3d.hpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="376" topLine="8" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

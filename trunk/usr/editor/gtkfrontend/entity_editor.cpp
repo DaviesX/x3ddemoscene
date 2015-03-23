@@ -5,7 +5,10 @@
 #include "gtkgui.hpp"
 #include "entity_editor.hpp"
 
-using namespace x3d;
+namespace x3d
+{
+namespace usr
+{
 
 struct entity_editor {
         GtkWidget *hier_tree;
@@ -24,7 +27,7 @@ bool entity_editor_load ( char *glade_path )
         {
                 strcpy ( file, glade_path );
                 strcat ( file, "entity_property_widget.glade" );
-                GtkBuilder *builder = builder_load ( file );
+                GtkBuilder* builder = builder_load(file);
                 if ( builder == nullptr ) {
                         return false;
                 }
@@ -61,3 +64,7 @@ bool entity_editor_load ( char *glade_path )
         }
         return true;
 }
+
+}// namespace usr
+
+}// namespace x3d

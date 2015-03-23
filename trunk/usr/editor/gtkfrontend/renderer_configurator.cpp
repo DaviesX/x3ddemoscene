@@ -22,9 +22,9 @@ static void render_config_error_callback ( string message, RenderConfigActiveX *
 
 bool EditorGtkFrontend::render_config_load ( void )
 {
-        RenderConfigActiveX* rcax = new RenderConfigActiveX ( cRenderConfig );
-        rcax->bind_callback ( "notify_error", (f_Generic) render_config_error_callback, nullptr );
-        this->m_editor->add_activex ( rcax );
+        RenderConfigActiveX* ax_config = new RenderConfigActiveX(cRenderConfig);
+        ax_config->bind_callback ( "notify_error", (f_Generic) render_config_error_callback, nullptr );
+        get_core_editor()->add_activex(ax_config);
         return true;
 }
 

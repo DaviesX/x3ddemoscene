@@ -1,9 +1,12 @@
 #include <usr/usr_editorfrontend.hpp>
 #include <gtk/gtk.h>
-#include "main_editor.hpp"
-#include "main_editor_menu.hpp"
+#include "gtkgui.hpp"
 
-using namespace x3d::usr;
+namespace x3d
+{
+namespace usr
+{
+
 
 extern "C" void cornell_box_callback ( GtkMenuItem* menuitem, gpointer user_data )
 {
@@ -14,11 +17,21 @@ extern "C" void cornell_box_callback ( GtkMenuItem* menuitem, gpointer user_data
         benchmark->run_benchmark ( BenchmarkActiveX::Benchmark_CornellBox );
 }
 
+extern "C" void trigger_quit_callback(GtkWidget *widget, gpointer data)
+{
+        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(data);
+        frontend->close();
+}
+
 bool EditorGtkFrontend::main_editor_menu_load ( void )
 {
-        if ( this->m_editor_mode == X_EDITOR_DEMO_MODE )
+        if (get_editor_mode() == EditorGtkFrontend::DemoMode)
                 return true;
-        GtkBuilder* builder = (GtkBuilder*) main_editor_get_builder ();
+
+        string file = m_glade_dir + m_main_editor;
+        GtkBuilder* builder = nullptr;
+        if (!(builder = builder_load(file)))
+                return false;
         // deal with the benchmark menu
         {
         GtkMenu* bench_menu = (GtkMenu*) gtk_builder_get_object ( builder, "benchmark-scene" );
@@ -38,10 +51,10 @@ bool EditorGtkFrontend::main_editor_menu_load ( void )
                 log_severe_err_dbg ( "cannot retrieve cornell-box-scene menu item" );
                 return false;
         }
-        g_signal_connect ( G_OBJECT(cornell_box_item), "activate",
-                           G_CALLBACK(cornell_box_callback), this->m_editor );
+        g_signal_connect(G_OBJECT(cornell_box_item), "activate",
+                         G_CALLBACK(cornell_box_callback), get_core_editor());
         BenchmarkActiveX* benchmark = new BenchmarkActiveX ( "benchmark-scene-menu-item" );
-        m_editor->add_activex ( benchmark );
+        get_core_editor()->add_activex(benchmark);
         }
         // deal with the close menu
         {
@@ -50,8 +63,8 @@ bool EditorGtkFrontend::main_editor_menu_load ( void )
                 log_severe_err_dbg ( "cannot retrieve quit-menu-item widget" );
                 return false;
         }
-        g_signal_connect ( G_OBJECT(quit_menu), "activate",
-                           G_CALLBACK(destroy_callback), this->m_env );
+        g_signal_connect(G_OBJECT(quit_menu), "activate",
+                         G_CALLBACK(trigger_quit_callback), this);
         }
         return true;
 }
@@ -65,3 +78,8 @@ bool EditorGtkFrontend::main_editor_menu_shut ( void )
 {
         return true;
 }
+
+
+}// namespace usr
+
+}// namespace x3d

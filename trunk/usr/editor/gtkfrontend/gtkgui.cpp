@@ -5,62 +5,121 @@
 #include <usr/usr_editor.hpp>
 #include <usr/usr_editorfrontend.hpp>
 #include "gtkgui.hpp"
-#include "main_editor.hpp"
-#include "entity_editor.hpp"
-#include "renderable_editor.hpp"
-#include "splash_screen.hpp"
 
-using namespace x3d;
-using namespace x3d::usr;
-
-
-bool EditorGtkFrontend::init ( int argc, char **argv,
-                               Editor *editor, KernelEnvironment *env )
+namespace x3d
 {
-        this->m_editor = editor;
-        this->m_env = env;
+namespace usr
+{
 
-        gtk_init ( &argc, &argv );
-        gdk_threads_init ();
+class EditorGtkFrontend::EditorGtkFrontendInt
+{
+public:
+        EditorGtkFrontendInt(EditorGtkFrontend* frontend);
+        ~EditorGtkFrontendInt();
+
+        EditorMode              m_editor_mode;
+        Editor*                 m_editor;
+        KernelEnvironment*      m_env;
+
+        MainEditor              m_main_editor;
+
+        bool                    m_has_init;
+};
+
+EditorGtkFrontend::EditorGtkFrontendInt::EditorGtkFrontendInt(EditorGtkFrontend* frontend) :
+        m_main_editor(frontend)
+{
+        m_has_init = false;
+}
+
+EditorGtkFrontend::EditorGtkFrontendInt::~EditorGtkFrontendInt()
+{
+        m_has_init = false;
+}
+
+EditorGtkFrontend::EditorGtkFrontend()
+{
+        pimpl = new EditorGtkFrontend::EditorGtkFrontendInt(this);
+}
+
+EditorGtkFrontend::~EditorGtkFrontend()
+{
+        delete pimpl;
+}
+
+bool EditorGtkFrontend::is_usable()
+{
+        return pimpl->m_has_init;
+}
+
+void EditorGtkFrontend::close()
+{
+        log_normal_dbg("closing up gtk frontend");
+        pimpl->m_editor->close();
+}
+
+Editor* EditorGtkFrontend::get_core_editor()
+{
+        return pimpl->m_editor;
+}
+
+KernelEnvironment* EditorGtkFrontend::get_kernel_environment()
+{
+        return pimpl->m_env;
+}
+
+EditorGtkFrontend::EditorMode EditorGtkFrontend::get_editor_mode()
+{
+        return pimpl->m_editor_mode;
+}
+
+bool EditorGtkFrontend::init(int argc, char **argv, Editor *editor, KernelEnvironment *env)
+{
+        pimpl->m_has_init = true;
+        pimpl->m_editor = editor;
+        pimpl->m_env = env;
+
+        gtk_init(&argc, &argv);
+        gdk_threads_init();
 
         /* determine the running mode from command line argument */
         int n = argc;
         char **params = argv;
-        X_EDITOR_MODE mode = X_EDITOR_DEMO_MODE;
+        EditorMode mode = DemoMode;
         int i;
-        for ( i = 0; i < n; i ++ ) {
+        for (i = 0; i < n; i ++) {
                 char *buff = params[i];
-                if ( !strcmp ( buff, "--edit-mode" ) ) {
-                        mode = X_EDITOR_EDIT_MODE;
+                if (!strcmp(buff, "--edit-mode")) {
+                        mode = EditMode;
                         break;
                 }
         }
-        this->m_editor_mode = mode;
+        pimpl->m_editor_mode = mode;
 
-        if ( !this->splash_screen_load () ) {
+        if (!this->splash_screen_load()) {
                 log_mild_err_dbg ( "couldn't load splash screen" );
                 return false;
         }
-        if ( !this->splash_screen_show ( true ) ) {
+        if (!this->splash_screen_show(true)) {
                 log_mild_err_dbg ( "couldn't show splash screen" );
                 return false;
         }
         return true;
 }
 
-bool EditorGtkFrontend::end_init ( Editor *editor, KernelEnvironment *env )
+bool EditorGtkFrontend::end_init(Editor *editor, KernelEnvironment *env)
 {
-        this->m_editor = editor;
-        this->m_env = env;
+        pimpl->m_editor = editor;
+        pimpl->m_env = env;
         return true;
 }
 
-bool EditorGtkFrontend::load ( Editor *editor, KernelEnvironment *env )
+bool EditorGtkFrontend::load(Editor *editor, KernelEnvironment *env)
 {
-        this->m_editor = editor;
-        this->m_env = env;
+        pimpl->m_editor = editor;
+        pimpl->m_env = env;
 
-        if ( !main_editor_load () ) {
+        if (!pimpl->m_main_editor.show(false)) {
                 log_severe_err_dbg ( "couldn't load gtk main editor" );
                 return false;
         }
@@ -89,10 +148,10 @@ bool EditorGtkFrontend::load ( Editor *editor, KernelEnvironment *env )
 
 void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
 {
-        this->m_editor = editor;
-        this->m_env = env;
+        pimpl->m_editor = editor;
+        pimpl->m_env = env;
 
-        if ( !main_editor_show ( true ) ) {
+        if (!pimpl->m_main_editor.show(true)) {
                 log_severe_err_dbg ( "failed to show gtk main editor" );
                 return ;
         }
@@ -109,34 +168,27 @@ void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
         await_gtk_main ();
 }
 
-bool EditorGtkFrontend::free ( Editor *editor, KernelEnvironment *env )
+bool EditorGtkFrontend::free(Editor* editor, KernelEnvironment* env)
 {
-        this->m_editor = editor;
-        this->m_env = env;
-
-        if ( !this->main_editor_shut () ) {
-                log_severe_err_dbg ( "failed to shutdown gtk main editor" );
-                return false;
-        }
         return true;
 }
 
 GtkBuilder* builder_load ( string filename )
 {
-        GtkBuilder *builder = nullptr;
-        if ( !(builder = gtk_builder_new () ) ) {
-                log_severe_err_dbg ( "cannot create gtk-glade builder" );
+        GtkBuilder* builder = nullptr;
+        if (!(builder = gtk_builder_new())) {
+                log_severe_err_dbg("cannot create gtk-glade builder");
                 return nullptr;
         }
-        GError *error = nullptr;
-        if ( !(gtk_builder_add_from_file ( builder, filename.c_str (), &error )) ) {
-                if ( error ) {
-                        log_severe_err_dbg ( "builder fail to load: %s\n%s",
-                                             filename.c_str (), error->message );
-                        g_free ( error );
+        GError* error = nullptr;
+        if (!(gtk_builder_add_from_file(builder, filename.c_str(), &error))) {
+                if (error) {
+                        log_severe_err_dbg("builder fail to load: %s\n%s",
+                                           filename.c_str(), error->message);
+                        g_free(error);
                 } else {
-                        log_severe_err_dbg ( "builder fail to load: %s, unknown error",
-                                             filename.c_str () );
+                        log_severe_err_dbg("builder fail to load: %s, unknown error",
+                                           filename.c_str());
                 }
                 return nullptr;
         }
@@ -250,6 +302,11 @@ static void* do_gtk_main ( void* data )
 void stop_gtk_main ( void )
 {
         x3d::thr_trap_on_task ( &g_atomic_check );
+        if (g_gtk_main_stack == 0) {
+                log_normal_dbg("nothing to stop");
+                x3d::thr_untrap_task ( &g_atomic_check );
+                return ;
+        }
         pop_gtk_main ();
         if ( g_gtk_main_stack == 0 ) {
                 log_normal_dbg ( "no gtk main is running: %d", g_gtk_main_stack );
@@ -302,3 +359,7 @@ void dbg_hand_image_to_display ( void *ptr, int w, int h )
                 g_comm_data.tmp_image_h = h;*/
 //        main_editor_draw_tmp_image ();
 }
+
+}// namespace usr
+
+}// namespace x3d

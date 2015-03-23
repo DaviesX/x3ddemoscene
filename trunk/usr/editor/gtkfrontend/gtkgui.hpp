@@ -1,8 +1,20 @@
-#ifndef GUI_H_INCLUDED
-#define GUI_H_INCLUDED
+#ifndef GTKGUI_HPP_INCLUDED
+#define GTKGUI_HPP_INCLUDED
 
 #include <gtk/gtk.h>
 #include <usr/usr_editorfrontend.hpp>
+#include "splash_screen.hpp"
+#include "main_editor.hpp"
+#include "main_editor_menu.hpp"
+#include "project_manager.hpp"
+#include "entity_editor.hpp"
+#include "renderable_editor.hpp"
+#include "dynamics_editor.hpp"
+
+namespace x3d
+{
+namespace usr
+{
 
 struct path_resource {
         char *glade_path;
@@ -37,5 +49,8 @@ void run_gtk_main ( void );
 void stop_gtk_main ( void );
 void await_gtk_main ( void );
 
+}// namespace usr
 
-#endif // GUI_H_INCLUDED
+}// namespace x3d
+
+#endif // GTKGUI_HPP_INCLUDED

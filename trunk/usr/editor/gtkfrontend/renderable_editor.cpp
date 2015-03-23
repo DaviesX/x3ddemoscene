@@ -4,9 +4,12 @@
 #include <usr/usr_editor.hpp>
 #include <usr/usr_editorfrontend.hpp>
 #include "gtkgui.hpp"
-#include "renderable_editor.hpp"
 
-using namespace x3d;
+namespace x3d
+{
+namespace usr
+{
+
 
 struct renderable_editor {
         GtkWidget *rda_prop;
@@ -22,7 +25,7 @@ bool renderable_editor_load ( char *glade_path )
         char file[256];
         strcpy ( file, glade_path );
         strcat ( file, "renderable_property_widget.glade" );
-        GtkBuilder *builder = builder_load ( file );
+        GtkBuilder* builder = builder_load(file);
         if ( builder == nullptr ) {
                 return false;
         }
@@ -40,3 +43,7 @@ bool renderable_editor_load ( char *glade_path )
 void renderable_editor_set ( int state )
 {
 }
+
+}// namespace usr
+
+}// namespace x3d

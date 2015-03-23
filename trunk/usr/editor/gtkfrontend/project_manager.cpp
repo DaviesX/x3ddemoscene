@@ -6,7 +6,7 @@ using namespace x3d::usr;
 
 bool EditorGtkFrontend::project_manager_load ( void )
 {
-        m_editor->add_activex ( new WorldDataActiveX ( "project-manager-data" ) );
+        get_core_editor()->add_activex(new WorldDataActiveX("project-manager-data"));
         return true;
 }
 

@@ -4,235 +4,225 @@
 #include <usr/usr_editor.hpp>
 #include <usr/usr_editorfrontend.hpp>
 #include "gtkgui.hpp"
-#include "main_editor.hpp"
 
-using namespace x3d;
-using namespace x3d::usr;
+namespace x3d
+{
+namespace usr
+{
 
-
-struct main_editor {
-        EditorGtkFrontend::X_EDITOR_MODE           editor_mode;
-        GtkBuilder*             builder;
-        GtkWidget*              window;
-        GtkWidget*              draw_region;
-        GdkPixbuf*              logo_pix_buf;
+class MainEditor::MainEditorInt {
+public:
+        MainEditorInt(EditorGtkFrontend* frontend);
+        ~MainEditorInt();
+public:
+        EditorGtkFrontend*                      m_frontend;
+        bool                                    m_has_loaded;
+        GtkBuilder*                             m_builder;
+        GtkWidget*                              m_window;
+        GtkWidget*                              m_draw_region;
+        GdkPixbuf*                              m_logo_pix_buf;
         struct project_mgr*     proj_mgr;
         struct entity_mgr*      ent_mgr;
         struct entity_prop*     ent_prop;
         struct assist_dialog*   assist_diag;
 
-        gulong                  logo_draw_signal;
-        bool                    is_logo_connected;
+        gulong                                  m_logo_draw_signal;
+        gulong                                  m_idle_dispatch;
+        gulong                                  m_destroy_signal;
+        bool                                    m_is_logo_connected;
 };
 
-static const string cOfficialEditor = "gtk-official-editor";
-static const string cMainEditor = "gtk-main-editor";
 static const string cRenderRegion = "gtk-main-editor-render-region";
 
 /*
 static struct main_editor g_main_edit;
 */
+extern "C" gboolean destroy_callback(GtkWidget *widget, gpointer data);
+extern "C" gboolean main_editor_dispatch(gpointer user_data);
 
-static void idle_switch_callback ( bool is_idle, EditorActiveX* ax, void *info );
-static void window_reize_callback ( bool is_fullscreen, int width, int height,
-                                    EditorActiveX* ax, void *info );
-static void render_config_error_callback ( string message, RenderConfigActiveX *conf, void *data );
+static void idle_switch_callback(bool is_idle, EditorActiveX* ax, void *info);
+static void window_reize_callback(bool is_fullscreen, int width, int height,
+                                  EditorActiveX* ax, void *info);
+static void render_config_error_callback(string message, RenderConfigActiveX *conf, void *data);
+extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data);
 
-extern "C" gboolean display_logo_callback ( GtkWidget *draw_region,
-                cairo_t *cairo, gpointer data );
 
-extern "C" gboolean display_logo_callback ( GtkWidget *draw_region,
-                cairo_t *cairo, gpointer data )
+extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data)
 {
-        struct main_editor* edit = (struct main_editor*) data;
-        gdk_cairo_set_source_pixbuf ( cairo,
-                                      edit->logo_pix_buf,
-                                      0, 0 );
-        cairo_paint ( cairo );
-        cairo_fill ( cairo );
+        MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(data);
+        gdk_cairo_set_source_pixbuf(cairo, pimpl->m_logo_pix_buf, 0, 0);
+        cairo_paint(cairo);
+        cairo_fill(cairo);
         return 0;
 }
 
-static void idle_switch_callback ( bool is_idle, EditorActiveX* ax, void *info )
+static void idle_switch_callback(bool is_idle, EditorActiveX* ax, void *info)
 {
-        struct main_editor* edit = (struct main_editor*) info;
-        GtkWidget *draw_area = (GtkWidget*) ((RenderRegionActiveX*) ax)->get_handle ();
-        if ( is_idle ) {
-                if ( !edit->is_logo_connected ) {
-                        edit->logo_draw_signal =
-                                g_signal_connect ( draw_area, "draw",
-                                                   G_CALLBACK(display_logo_callback), edit );
-                        gtk_widget_queue_draw ( edit->draw_region );
-                        edit->is_logo_connected = true;
+        MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(info);
+        RenderRegionActiveX* ax_region = static_cast<RenderRegionActiveX*>(ax);
+        GtkWidget* draw_area = (GtkWidget*) (ax_region->get_handle());
+        if (is_idle) {
+                if (!pimpl->m_is_logo_connected) {
+                        pimpl->m_logo_draw_signal =
+                                g_signal_connect(draw_area, "draw", G_CALLBACK(display_logo_callback), pimpl);
+                        gtk_widget_queue_draw(pimpl->m_draw_region);
+                        pimpl->m_is_logo_connected = true;
                 }
         } else {
-                if ( edit->is_logo_connected ) {
-                        g_signal_handler_disconnect ( draw_area,
-                                                      edit->logo_draw_signal );
+                if (pimpl->m_is_logo_connected) {
+                        g_signal_handler_disconnect(draw_area, pimpl->m_logo_draw_signal);
                         GdkColor color;
                         color.red   = 0X0;
                         color.blue  = 0X0;
                         color.green = 0X0;
-                        gtk_widget_modify_bg ( edit->draw_region, GTK_STATE_NORMAL, &color );
-                        edit->is_logo_connected = false;
+                        gtk_widget_modify_bg(pimpl->m_draw_region, GTK_STATE_NORMAL, &color);
+                        pimpl->m_is_logo_connected = false;
                 }
         }
 }
 
-static void window_reize_callback ( bool is_fullscreen, int width, int height,
-                                    EditorActiveX* ax, void *info )
+static void window_reize_callback(bool is_fullscreen, int width, int height, EditorActiveX* ax, void *info)
 {
 }
 
-extern "C" gboolean destroy_callback ( GtkWidget *widget, gpointer data )
+extern "C" gboolean destroy_callback(GtkWidget *widget, gpointer data)
 {
-        KernelEnvironment* env = (KernelEnvironment*) data;
-        Editor* editor = (Editor*) env->use ( cOfficialEditor );
-        editor->close ();
-        stop_gtk_main ();
+        MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(data);
+        pimpl->m_frontend->close();
         return 0;
 }
 
-bool EditorGtkFrontend::main_editor_load ( void )
+MainEditor::MainEditorInt::MainEditorInt(EditorGtkFrontend* frontend)
 {
-        struct main_editor* edit =
-                (struct main_editor*) alloc_fix ( sizeof *edit, 1 );
-        zero_obj ( edit );
+        m_frontend = frontend;
+        m_has_loaded = false;
+}
 
-        KernelEnvironment* env = this->m_env;
-        env->declare ( cMainEditor, edit );
-        env->declare ( cOfficialEditor, this->m_editor );
+MainEditor::MainEditorInt::~MainEditorInt()
+{
+        if (m_frontend->is_usable()) {
+                m_frontend->get_core_editor()->remove_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_REGION, cRenderRegion);
+        }
 
-        /* set current control window */
-        string file = this->m_glade_dir;
-        GtkBuilder *builder = nullptr;
+        builder_all_set(m_builder);
+        stop_gtk_main();
 
-        if ( this->m_editor_mode == X_EDITOR_DEMO_MODE ) {
-demo_mode:
-                this->m_editor_mode = X_EDITOR_DEMO_MODE;
+        g_signal_handler_disconnect(m_draw_region, m_logo_draw_signal);
+        g_signal_handler_disconnect(m_window, m_idle_dispatch);
+        g_signal_handler_disconnect(m_window, m_destroy_signal);
+}
 
-                file += this->m_demo_player;
+MainEditor::MainEditor(EditorGtkFrontend* frontend)
+{
+        pimpl = new MainEditorInt(frontend);
+}
 
+MainEditor::~MainEditor()
+{
+        delete pimpl;
+}
+
+bool MainEditor::show(bool visible)
+{
+        if (!pimpl->m_has_loaded) {
+                /* set current control window */
+                EditorGtkFrontend* frontend = pimpl->m_frontend;
+                string file = frontend->m_glade_dir;
                 GtkBuilder *builder = nullptr;
-                if ( !(builder = builder_load ( file )) )
-                        return false;
 
-                edit->window =
-                        (GtkWidget *) gtk_builder_get_object ( builder, "demo-window" );
-                if ( !edit->window ) {
-                        log_severe_err_dbg ( "cannot retrieve demo window" );
-                        return false;
-                }
-                edit->draw_region =
-                        (GtkWidget *) gtk_builder_get_object ( builder, "demo-render-region" );
-                if ( !edit->draw_region ) {
-                        log_severe_err_dbg ( "cannot retrieve demo render region widget" );
-                        return false;
-                }
-        } else if ( this->m_editor_mode == X_EDITOR_EDIT_MODE ) {
-                file += this->m_main_editor;
+                if (frontend->get_editor_mode() == EditorGtkFrontend::DemoMode) {
+demo_mode:
+                        file += frontend->m_demo_player;
 
-                if ( !(builder = builder_load ( file )) )
-                        return false;
+                        GtkBuilder* builder = nullptr;
+                        if (!(builder = builder_load(file)))
+                                return false;
 
-                edit->window =
-                        (GtkWidget *) gtk_builder_get_object ( builder, "main-editor-window" );
-                if ( !edit->window ) {
-                        log_severe_err_dbg ( "cannot retrieve main-editor window" );
+                        pimpl->m_window = (GtkWidget*) gtk_builder_get_object(builder, "demo-window");
+                        if (!pimpl->m_window) {
+                                log_severe_err_dbg ( "cannot retrieve demo window" );
+                                return false;
+                        }
+                        pimpl->m_draw_region = (GtkWidget*) gtk_builder_get_object(builder, "demo-render-region");
+                        if (!pimpl->m_draw_region) {
+                                log_severe_err_dbg("cannot retrieve demo render region widget");
+                                return false;
+                        }
+                } else if (frontend->get_editor_mode() == EditorGtkFrontend::EditMode) {
+                        file += frontend->m_main_editor;
+
+                        if (!(builder = builder_load(file)))
+                                return false;
+
+                        pimpl->m_window = (GtkWidget*) gtk_builder_get_object(builder, "main-editor-window");
+                        if (!pimpl->m_window) {
+                                log_severe_err_dbg("cannot retrieve main-editor window");
+                                return false;
+                        }
+                        pimpl->m_draw_region = (GtkWidget*) gtk_builder_get_object(builder, "DA-RenderRegion");
+                        if (!pimpl->m_draw_region) {
+                                log_severe_err_dbg("cannot retrieve draw-area widget");
+                                return false;
+                        }
+                } else {
+                        log_mild_err_dbg("mode is not specified corrected. selected mode: %d. running into demo mode...",
+                                         frontend->get_editor_mode());
+                        goto demo_mode;
+                }
+                // DON'T trash it yet.
+                /* done using glade builder */
+                // builder_all_set ( builder );
+                pimpl->m_builder = builder;
+                gtk_builder_connect_signals(pimpl->m_builder, nullptr);
+
+                /* change background color to black */
+                GdkColor color;
+                color.red   = 0X0;
+                color.blue  = 0X0;
+                color.green = 0X0;
+                gtk_widget_modify_bg(pimpl->m_draw_region, GTK_STATE_NORMAL, &color);
+
+                /* load in logo file */
+                GError *error = nullptr;
+                string logo_file = frontend->m_glade_dir + frontend->m_logo;
+                pimpl->m_logo_pix_buf = gdk_pixbuf_new_from_file(logo_file.c_str (), &error);
+                if (error != nullptr) {
+                        log_severe_err_dbg("couldn't load logo file: %s", logo_file.c_str());
+                        log_severe_err_dbg("gtk internal message: %s", error->message);
+                        g_free(error);
                         return false;
                 }
-                edit->draw_region =
-                        (GtkWidget *) gtk_builder_get_object ( builder, "DA-RenderRegion" );
-                if ( !edit->draw_region ) {
-                        log_severe_err_dbg ( "cannot retrieve draw-area widget" );
-                        return false;
-                }
-        } else {
-                log_mild_err_dbg ( "mode is not specified corrected. selected mode: %d. running into demo mode...", this->m_editor_mode );
-                goto demo_mode;
+
+                /* create render region */
+                int x, y;
+                int width, height;
+                widget_get_size(pimpl->m_window, pimpl->m_draw_region, &x, &y, &width, &height);
+                RenderRegionActiveX* ax_region = new RenderRegionActiveX(cRenderRegion, pimpl->m_draw_region,
+                                                                         x, y, width, height );
+                ax_region->bind_callback("notify_idle", (f_Generic) idle_switch_callback, pimpl);
+                ax_region->bind_callback("notify_resize", (f_Generic) window_reize_callback, pimpl);
+                frontend->get_core_editor()->add_activex(ax_region);
+
+                /* set dispatch function which fetches signal
+                 * from core editor when gtk_main is idle
+                 * also, connect the window destroy signal */
+                pimpl->m_idle_dispatch = g_idle_add(main_editor_dispatch, pimpl);
+                pimpl->m_destroy_signal =
+                        g_signal_connect(G_OBJECT(pimpl->m_window), "destroy", G_CALLBACK(destroy_callback), pimpl);
+
+                pimpl->m_has_loaded = true;
         }
-        // DON'T trash it yet.
-        /* done using glade builder */
-        // builder_all_set ( builder );
-        edit->builder = builder;
-        gtk_builder_connect_signals ( edit->builder, nullptr );
 
-        /* change background color to black */
-        GdkColor color;
-        color.red   = 0X0;
-        color.blue  = 0X0;
-        color.green = 0X0;
-        gtk_widget_modify_bg ( edit->draw_region, GTK_STATE_NORMAL, &color );
-
-        /* load in logo file */
-        GError *error = nullptr;
-        string logo_file = this->m_glade_dir + this->m_logo;
-        edit->logo_pix_buf =
-                gdk_pixbuf_new_from_file ( logo_file.c_str (), &error );
-        if ( error != nullptr ) {
-                log_severe_err_dbg ( "couldn't load logo file: %s", logo_file.c_str () );
-                log_severe_err_dbg ( "gtk internal message: %s", error->message );
-                g_free ( error );
-                return false;
-        }
-
-        /* create render region */
-        int x, y;
-        int width, height;
-        widget_get_size ( edit->window, edit->draw_region,
-                          &x, &y, &width, &height );
-        RenderRegionActiveX* rrax = new RenderRegionActiveX ( cRenderRegion,
-                        edit->draw_region,
-                        x, y, width, height );
-        rrax->bind_callback ( "notify_idle", (f_Generic) idle_switch_callback, edit );
-        rrax->bind_callback ( "notify_resize", (f_Generic) window_reize_callback, edit );
-        this->m_editor->add_activex ( rrax );
-        return true;
-}
-
-bool EditorGtkFrontend::main_editor_show ( bool is_visible )
-{
-        gdk_threads_enter ();
-        struct main_editor* edit =
-                (struct main_editor*) this->m_env->use ( cMainEditor );
-
-        /* set dispatch function which fetches signal
-         * from core editor when gtk_main is idle
-         * also, connect the window destroy signal */
-        g_idle_add ( main_editor_dispatch, this->m_env );
-        g_signal_connect ( G_OBJECT(edit->window), "destroy",
-                           G_CALLBACK(destroy_callback), this->m_env );
-
+        gdk_threads_enter();
         /* show window */
-        if ( is_visible ) {
-                gtk_widget_show_all ( edit->window );
-                run_gtk_main ();
+        if (visible) {
+                gtk_widget_show_all(pimpl->m_window);
+                run_gtk_main();
         } else {
-                gtk_widget_hide ( edit->window );
+                gtk_widget_hide(pimpl->m_window);
         }
-        gdk_threads_leave ();
+        gdk_threads_leave();
         return true;
-}
-
-bool EditorGtkFrontend::main_editor_shut ( void )
-{
-        KernelEnvironment* env = this->m_env;
-
-        struct main_editor* edit =
-                (struct main_editor*) this->m_env->use ( cMainEditor );
-        /* done using glade builder */
-        builder_all_set ( edit->builder );
-
-        env->undeclare ( cMainEditor );
-        env->undeclare ( cOfficialEditor );
-        return true;
-}
-
-void* EditorGtkFrontend::main_editor_get_builder ( void )
-{
-        struct main_editor* edit =
-                (struct main_editor*) this->m_env->use ( cMainEditor );
-        return edit->builder;
 }
 
 GtkWidget* main_editor_get_region ( void )
@@ -240,10 +230,14 @@ GtkWidget* main_editor_get_region ( void )
         return nullptr;
 }
 
-extern "C" gboolean main_editor_dispatch ( gpointer user_data )
+extern "C" gboolean main_editor_dispatch(gpointer user_data)
 {
-        KernelEnvironment* env = (KernelEnvironment*) user_data;
-        Editor* editor = (Editor*) env->use ( cOfficialEditor );
-        editor->dispatch_signal ();
+        MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(user_data);
+        pimpl->m_frontend->get_core_editor()->dispatch_signal();
         return true;
 }
+
+
+} // namespace usr
+
+} // namespace x3d
