@@ -10,38 +10,54 @@ namespace x3d
 namespace usr
 {
 
-
-struct renderable_editor {
-        GtkWidget *rda_prop;
+class RenderableEditor::RenderableEditorInt
+{
+public:
+        RenderableEditorInt(EditorGtkFrontend* frontend);
+        ~RenderableEditorInt();
+public:
+        EditorGtkFrontend*      m_frontend;
+        GtkWidget*              m_property_box;
 };
 
-static struct renderable_editor g_rend_edit;
-
-
-bool renderable_editor_load ( char *glade_path )
+RenderableEditor::RenderableEditorInt::RenderableEditorInt(EditorGtkFrontend* frontend)
 {
-        memset ( &g_rend_edit, 0, sizeof g_rend_edit );
+        m_frontend      = frontend;
+        m_property_box  = nullptr;
+}
 
-        char file[256];
-        strcpy ( file, glade_path );
-        strcat ( file, "renderable_property_widget.glade" );
-        GtkBuilder* builder = builder_load(file);
-        if ( builder == nullptr ) {
+RenderableEditor::RenderableEditorInt::~RenderableEditorInt()
+{
+        m_frontend      = nullptr;
+}
+
+RenderableEditor::RenderableEditor(EditorGtkFrontend* frontend)
+{
+        pimpl = new RenderableEditor::RenderableEditorInt(frontend);
+}
+
+RenderableEditor::~RenderableEditor()
+{
+        delete pimpl;
+}
+
+bool RenderableEditor::show(bool visible)
+{
+        EditorGtkFrontend* frontend = pimpl->m_frontend;
+        GtkBuilder* builder = frontend->get_gtk_builder();
+        if (builder == nullptr) {
                 return false;
         }
 
-        g_rend_edit.rda_prop =
-                (GtkWidget *) gtk_builder_get_object ( builder, "notebook" );
-        if ( !g_rend_edit.rda_prop ) {
+        pimpl->m_property_box = (GtkWidget*) gtk_builder_get_object(builder, "renderable-notebook");
+        if (!pimpl->m_property_box) {
                 log_severe_err_dbg ( "cannot retrieve renderable property widget" );
                 return false;
         }
-        builder_all_set ( builder );
+        if (visible) {
+                // perform injection to the property box
+        }
         return true;
-}
-
-void renderable_editor_set ( int state )
-{
 }
 
 }// namespace usr

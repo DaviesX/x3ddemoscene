@@ -10,8 +10,16 @@ namespace x3d
 namespace usr
 {
 
-bool renderable_editor_load ( char *glade_path );
-void renderable_editor_set ( int state );
+class RenderableEditor
+{
+public:
+        RenderableEditor(EditorGtkFrontend* frontend);
+        ~RenderableEditor();
+        bool show(bool visible);
+public:
+        class RenderableEditorInt;
+        class RenderableEditorInt* pimpl;
+};
 
 }// namespace usr
 

@@ -3,64 +3,75 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_editorfrontend.hpp>
 #include "gtkgui.hpp"
-#include "entity_editor.hpp"
 
 namespace x3d
 {
 namespace usr
 {
 
-struct entity_editor {
-        GtkWidget *hier_tree;
-        GtkWidget *prop_notebook;
-        GtkListStore *stored_obj;
+class EntityEditor::EntityEditorInt {
+public:
+        EntityEditorInt(EditorGtkFrontend* frontend);
+        ~EntityEditorInt();
+
+        EditorGtkFrontend*      m_frontend;
+
+        GtkWidget*              m_hier_tree;
+        GtkWidget*              m_prop_notebook;
+        GtkListStore*           m_stored_obj;
 };
 
-static struct entity_editor g_ent_edit;
-
-
-bool entity_editor_load ( char *glade_path )
+EntityEditor::EntityEditorInt::EntityEditorInt(EditorGtkFrontend* frontend)
 {
-        memset ( &g_ent_edit, 0, sizeof g_ent_edit );
+        m_frontend = frontend;
+}
 
-        char file[256];
-        {
-                strcpy ( file, glade_path );
-                strcat ( file, "entity_property_widget.glade" );
-                GtkBuilder* builder = builder_load(file);
-                if ( builder == nullptr ) {
-                        return false;
-                }
+EntityEditor::EntityEditorInt::~EntityEditorInt()
+{
+        m_frontend = nullptr;
+}
 
-                g_ent_edit.prop_notebook =
-                        (GtkWidget *) gtk_builder_get_object ( builder, "notebook" );
-                if ( !g_ent_edit.prop_notebook ) {
-                        log_severe_err_dbg ( "cannot retrieve entity property notebook widget" );
-                        return false;
-                }
-                builder_all_set ( builder );
+EntityEditor::EntityEditor(EditorGtkFrontend* frontend)
+{
+        pimpl = new EntityEditor::EntityEditorInt(frontend);
+}
+
+EntityEditor::~EntityEditor()
+{
+        delete pimpl;
+}
+
+bool EntityEditor::show(bool visible)
+{
+        EditorGtkFrontend* frontend = pimpl->m_frontend;
+
+        GtkBuilder* builder = frontend->get_gtk_builder();
+        if (builder == nullptr) {
+                return false;
         }
         {
-                strcpy ( file, glade_path );
-                strcat ( file, "entity_tree_widget.glade" );
-                GtkBuilder *builder = builder_load ( file );
-                if ( builder == nullptr ) {
+                pimpl->m_prop_notebook = (GtkWidget*) gtk_builder_get_object(builder, "entity-notebook");
+                if (!pimpl->m_prop_notebook) {
+                        log_severe_err_dbg("cannot retrieve entity property notebook widget");
                         return false;
                 }
-
-                g_ent_edit.hier_tree =
-                        (GtkWidget *) gtk_builder_get_object ( builder, "hierachy-tree" );
-                if ( !g_ent_edit.hier_tree ) {
-                        log_severe_err_dbg ( "cannot retrieve entity hierachy tree widget" );
+        }
+        {
+                pimpl->m_hier_tree = (GtkWidget*) gtk_builder_get_object(builder, "entity-hierachy-tree");
+                if (!pimpl->m_hier_tree) {
+                        log_severe_err_dbg("cannot retrieve entity hierachy tree widget");
                         return false;
                 }
-                g_ent_edit.stored_obj =
-                        (GtkListStore *) gtk_builder_get_object ( builder, "tree-list-store" );
-                if ( !g_ent_edit.stored_obj ) {
-                        log_severe_err_dbg ( "cannot retrieve entity tree list store" );
+                // seems like list store object is not importable
+                /* pimpl->m_stored_obj = (GtkListStore*) gtk_builder_get_object(builder, "tree-list-store");
+                if (pimpl->m_stored_obj) {
+                        log_severe_err_dbg("cannot retrieve entity tree list store");
                         return false;
-                }
-                builder_all_set ( builder );
+                } */
+        }
+        if (visible) {
+                // perform injection to the main editor
+                // MainEditor* editor = frontend->get_main_editor();
         }
         return true;
 }

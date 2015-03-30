@@ -1,21 +1,53 @@
 #include <usr/usr_editorfrontend.hpp>
-#include "project_manager.hpp"
+#include "gtkgui.hpp"
 
 
-using namespace x3d::usr;
-
-bool EditorGtkFrontend::project_manager_load ( void )
+namespace x3d
 {
-        get_core_editor()->add_activex(new WorldDataActiveX("project-manager-data"));
+namespace usr
+{
+
+class ProjectManager::ProjectManagerInt
+{
+public:
+        ProjectManagerInt(EditorGtkFrontend* frontend);
+        ~ProjectManagerInt();
+public:
+        const string            c_WorldDataString;
+        EditorGtkFrontend*      m_frontend;
+};
+
+ProjectManager::ProjectManagerInt::ProjectManagerInt(EditorGtkFrontend* frontend) :
+        c_WorldDataString("project-manager-data"),
+        m_frontend(frontend)
+{
+}
+
+ProjectManager::ProjectManagerInt::~ProjectManagerInt()
+{
+        m_frontend = nullptr;
+}
+
+ProjectManager::ProjectManager(EditorGtkFrontend* frontend)
+{
+        pimpl = new ProjectManager::ProjectManagerInt(frontend);
+}
+
+ProjectManager::~ProjectManager()
+{
+        delete pimpl;
+}
+
+bool ProjectManager::show(bool visible)
+{
+        EditorGtkFrontend* frontend = pimpl->m_frontend;
+
+        if (visible) {
+                frontend->get_core_editor()->add_activex(new WorldDataActiveX(pimpl->c_WorldDataString));
+        }
         return true;
 }
 
-bool EditorGtkFrontend::project_manager_show ( bool is_visible )
-{
-        return true;
-}
+}// namespace usr
 
-bool EditorGtkFrontend::project_manager_shut ( void )
-{
-        return true;
-}
+}// namespace x3d

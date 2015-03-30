@@ -17,21 +17,10 @@ void main_editor_draw_tmp_image ( void );
 
 class MainEditor {
 public:
-        enum Component {
-                Menu,
-                ProjectManager,
-                EntityList,
-                EntityProperty,
-                RenderableProperty,
-                RendererProperty,
-                DynamicsProperty
-        };
-
         MainEditor(EditorGtkFrontend* frontend);
         ~MainEditor();
 
         bool    show(bool visible);
-        bool    inject(Component comp, GtkWidget* container);
 
         class MainEditorInt;
         class MainEditorInt*    pimpl;

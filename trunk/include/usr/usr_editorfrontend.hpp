@@ -4,11 +4,19 @@
 
 #include <usr/usr_editor.hpp>
 
+typedef struct _GtkBuilder GtkBuilder;
+
+
 namespace x3d
 {
 
 namespace usr
 {
+
+class MainEditor;
+class MainEditorMenu;
+class EntityEditor;
+class RendererConfig;
 
 /*
  * Classes' declarations
@@ -39,31 +47,21 @@ public:
         const string            m_logo          = "x3d_logo2.png";
         const string            m_main_editor   = "main_editor_window.glade";
         const string            m_demo_player   = "demo_player.glade";
-        const string            m_splash_screen = "splash_screen_window.glade";
+        const string            m_renderer_conf = "renderer_configurator.glade";
         const string            m_renderable_prop = "renderable_property_widget.glade";
         const string            m_entity_prop   = "entity_property_widget.glade";
+        const string            m_entity_tree   = "entity_tree_widget.glade";
 public:
         bool                    is_usable();
         void                    close();
         Editor*                 get_core_editor();
         KernelEnvironment*      get_kernel_environment();
         EditorMode              get_editor_mode();
-private:
-        bool splash_screen_load ( void );
-        bool splash_screen_show ( bool is_visible );
-        bool splash_screen_shut ( void );
-
-        bool render_config_load ( void );
-        bool render_config_show ( bool is_visible );
-        bool render_config_shut ( void );
-
-        bool main_editor_menu_load ( void );
-        bool main_editor_menu_show ( bool is_visible );
-        bool main_editor_menu_shut ( void );
-
-        bool project_manager_load ( void );
-        bool project_manager_show ( bool is_visible );
-        bool project_manager_shut ( void );
+        GtkBuilder*             get_gtk_builder();
+        MainEditor*             get_main_editor();
+        MainEditorMenu*         get_main_editor_menu();
+        RendererConfig*         get_renderer_config();
+        EntityEditor*           get_entity_editor();
 private:
         class EditorGtkFrontendInt;
         class EditorGtkFrontendInt*     pimpl;

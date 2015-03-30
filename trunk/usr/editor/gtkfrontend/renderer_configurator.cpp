@@ -7,33 +7,66 @@
 #include "renderer_configurator.hpp"
 #include "main_editor.hpp"
 
-using namespace x3d;
-using namespace x3d::usr;
+namespace x3d
+{
+namespace usr
+{
 
+class RendererConfig::RendererConfigInt
+{
+public:
+        RendererConfigInt(EditorGtkFrontend* frontend);
+        ~RendererConfigInt();
+public:
+        EditorGtkFrontend*      m_frontend;
+};
 
 static const string cRenderConfig = "gtk-main-editor-render-config";
-static void render_config_error_callback ( string message, RenderConfigActiveX *conf, void *data );
 
-
-static void render_config_error_callback ( string message, RenderConfigActiveX *conf, void *data )
+static void render_config_error_callback(string message, RenderConfigActiveX *conf, void *data)
 {
-        message_box_error ( cRenderConfig, message );
+        message_box_error(cRenderConfig, message);
 }
 
-bool EditorGtkFrontend::render_config_load ( void )
+RendererConfig::RendererConfigInt::RendererConfigInt(EditorGtkFrontend* frontend)
 {
-        RenderConfigActiveX* ax_config = new RenderConfigActiveX(cRenderConfig);
-        ax_config->bind_callback ( "notify_error", (f_Generic) render_config_error_callback, nullptr );
-        get_core_editor()->add_activex(ax_config);
+        m_frontend = frontend;
+}
+
+RendererConfig::RendererConfigInt::~RendererConfigInt()
+{
+        m_frontend = nullptr;
+}
+
+RendererConfig::RendererConfig(EditorGtkFrontend* frontend)
+{
+        pimpl = new RendererConfig::RendererConfigInt(frontend);
+}
+
+RendererConfig::~RendererConfig()
+{
+        delete pimpl;
+}
+
+bool RendererConfig::show(bool visible)
+{
+        EditorGtkFrontend* frontend = pimpl->m_frontend;
+        // load in GUI
+        // apply activex
+        if (visible) {
+                RenderConfigActiveX* config = new RenderConfigActiveX(cRenderConfig);
+                config->bind_callback("notify_error", (f_Generic) render_config_error_callback, nullptr);
+                frontend->get_core_editor()->add_activex(config);
+        } else {
+                Editor* edit = frontend->get_core_editor();
+                EditorActiveX* config = edit->find_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_CONFIG,
+                                                           cRenderConfig);
+                if (config)
+                        edit->remove_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_CONFIG, cRenderConfig);
+        }
         return true;
 }
 
-bool EditorGtkFrontend::render_config_show ( bool is_visible )
-{
-        return true;
-}
+}// namespace usr
 
-bool EditorGtkFrontend::render_config_shut ( void )
-{
-        return true;
-}
+}// namespace x3d

@@ -103,8 +103,6 @@ MainEditor::MainEditorInt::~MainEditorInt()
         if (m_frontend->is_usable()) {
                 m_frontend->get_core_editor()->remove_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_REGION, cRenderRegion);
         }
-
-        builder_all_set(m_builder);
         stop_gtk_main();
 
         g_signal_handler_disconnect(m_draw_region, m_logo_draw_signal);
@@ -128,16 +126,13 @@ bool MainEditor::show(bool visible)
                 /* set current control window */
                 EditorGtkFrontend* frontend = pimpl->m_frontend;
                 string file = frontend->m_glade_dir;
-                GtkBuilder *builder = nullptr;
+                GtkBuilder *builder = frontend->get_gtk_builder();
+                if (!builder)
+                        return false;
 
                 if (frontend->get_editor_mode() == EditorGtkFrontend::DemoMode) {
 demo_mode:
-                        file += frontend->m_demo_player;
-
-                        GtkBuilder* builder = nullptr;
-                        if (!(builder = builder_load(file)))
-                                return false;
-
+                        // connect to demo window
                         pimpl->m_window = (GtkWidget*) gtk_builder_get_object(builder, "demo-window");
                         if (!pimpl->m_window) {
                                 log_severe_err_dbg ( "cannot retrieve demo window" );
@@ -149,11 +144,7 @@ demo_mode:
                                 return false;
                         }
                 } else if (frontend->get_editor_mode() == EditorGtkFrontend::EditMode) {
-                        file += frontend->m_main_editor;
-
-                        if (!(builder = builder_load(file)))
-                                return false;
-
+                        // connect to editor window
                         pimpl->m_window = (GtkWidget*) gtk_builder_get_object(builder, "main-editor-window");
                         if (!pimpl->m_window) {
                                 log_severe_err_dbg("cannot retrieve main-editor window");

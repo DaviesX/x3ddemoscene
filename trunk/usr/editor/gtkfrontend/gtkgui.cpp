@@ -11,6 +11,7 @@ namespace x3d
 namespace usr
 {
 
+// properties exchanges
 class EditorGtkFrontend::EditorGtkFrontendInt
 {
 public:
@@ -20,21 +21,72 @@ public:
         EditorMode              m_editor_mode;
         Editor*                 m_editor;
         KernelEnvironment*      m_env;
+        GtkBuilder*             m_builder;
 
+        SplashScreen            m_splash_screen;
         MainEditor              m_main_editor;
+        EntityEditor            m_entity_editor;
+        RendererConfig          m_renderer_config;
+        MainEditorMenu          m_menu;
+        RenderableEditor        m_renderable_editor;
+        ProjectManager          m_project_mgr;
 
         bool                    m_has_init;
+
+public:
+        bool builder_load(string filename);
+        void builder_all_set();
 };
 
 EditorGtkFrontend::EditorGtkFrontendInt::EditorGtkFrontendInt(EditorGtkFrontend* frontend) :
-        m_main_editor(frontend)
+        m_splash_screen(frontend),
+        m_main_editor(frontend),
+        m_entity_editor(frontend),
+        m_renderer_config(frontend),
+        m_menu(frontend),
+        m_renderable_editor(frontend),
+        m_project_mgr(frontend)
 {
-        m_has_init = false;
+        m_has_init      = false;
+        m_builder       = nullptr;
+        m_editor        = nullptr;
+        m_env           = nullptr;
 }
 
 EditorGtkFrontend::EditorGtkFrontendInt::~EditorGtkFrontendInt()
 {
-        m_has_init = false;
+        g_object_unref(G_OBJECT(m_builder));
+
+        m_has_init      = false;
+        m_builder       = nullptr;
+        m_editor        = nullptr;
+        m_env           = nullptr;
+}
+
+bool EditorGtkFrontend::EditorGtkFrontendInt::builder_load(string filename)
+{
+        if (m_builder == nullptr && !(m_builder = gtk_builder_new())) {
+                log_severe_err_dbg("cannot create gtk-glade builder");
+                return false;
+        }
+        GError* error = nullptr;
+        if (!(gtk_builder_add_from_file(m_builder, filename.c_str(), &error))) {
+                if (error) {
+                        log_severe_err_dbg("builder fail to load: %s\n%s",
+                                           filename.c_str(), error->message);
+                        g_free(error);
+                } else {
+                        log_severe_err_dbg("builder fail to load: %s, unknown error",
+                                           filename.c_str());
+                }
+                return false;
+        }
+        return true;
+}
+
+void EditorGtkFrontend::EditorGtkFrontendInt::builder_all_set()
+{
+        gtk_builder_connect_signals(m_builder, nullptr);
 }
 
 EditorGtkFrontend::EditorGtkFrontend()
@@ -73,6 +125,42 @@ EditorGtkFrontend::EditorMode EditorGtkFrontend::get_editor_mode()
         return pimpl->m_editor_mode;
 }
 
+GtkBuilder* EditorGtkFrontend::get_gtk_builder()
+{
+        return pimpl->m_builder;
+}
+
+MainEditor* EditorGtkFrontend::get_main_editor()
+{
+        return &pimpl->m_main_editor;
+}
+
+MainEditorMenu* EditorGtkFrontend::get_main_editor_menu()
+{
+        return &pimpl->m_menu;
+}
+
+RendererConfig* EditorGtkFrontend::get_renderer_config()
+{
+        return &pimpl->m_renderer_config;
+}
+
+EntityEditor* EditorGtkFrontend::get_entity_editor()
+{
+        return &pimpl->m_entity_editor;
+}
+
+static bool has_command(int argc, char** argv, string command)
+{
+        int i;
+        for (i = 0; i < argc; i ++) {
+                if (!strcmp(argv[i], command.c_str())) {
+                        return true;
+                }
+        }
+        return false;
+}
+
 bool EditorGtkFrontend::init(int argc, char **argv, Editor *editor, KernelEnvironment *env)
 {
         pimpl->m_has_init = true;
@@ -82,28 +170,34 @@ bool EditorGtkFrontend::init(int argc, char **argv, Editor *editor, KernelEnviro
         gtk_init(&argc, &argv);
         gdk_threads_init();
 
-        /* determine the running mode from command line argument */
-        int n = argc;
-        char **params = argv;
-        EditorMode mode = DemoMode;
-        int i;
-        for (i = 0; i < n; i ++) {
-                char *buff = params[i];
-                if (!strcmp(buff, "--edit-mode")) {
-                        mode = EditMode;
-                        break;
-                }
-        }
-        pimpl->m_editor_mode = mode;
-
-        if (!this->splash_screen_load()) {
-                log_mild_err_dbg ( "couldn't load splash screen" );
-                return false;
-        }
-        if (!this->splash_screen_show(true)) {
+        if (!pimpl->m_splash_screen.show(true)) {
                 log_mild_err_dbg ( "couldn't show splash screen" );
                 return false;
         }
+
+        /* determine the running mode from command line argument */
+        if (has_command(argc, argv, "--edit-mode")) {
+                pimpl->m_editor_mode = EditorGtkFrontend::EditMode;
+        } else {
+                pimpl->m_editor_mode = EditorGtkFrontend::DemoMode;
+        }
+        /* load in all glade files */
+        const int c_NumGladeFiles = 6;
+        string ls_dir[c_NumGladeFiles] = {
+                m_glade_dir + m_main_editor,
+                m_glade_dir + m_demo_player,
+                m_glade_dir + m_renderer_conf,
+                m_glade_dir + m_renderable_prop,
+                m_glade_dir + m_entity_prop,
+                m_glade_dir + m_entity_tree};
+        int i;
+        for (i = 0; i < c_NumGladeFiles; i ++) {
+                if (!pimpl->builder_load(ls_dir[i])) {
+                        log_severe_err("couldn't load in glade file: %s", ls_dir[i].c_str());
+                        return false;
+                }
+        }
+        pimpl->builder_all_set();
         return true;
 }
 
@@ -120,27 +214,27 @@ bool EditorGtkFrontend::load(Editor *editor, KernelEnvironment *env)
         pimpl->m_env = env;
 
         if (!pimpl->m_main_editor.show(false)) {
-                log_severe_err_dbg ( "couldn't load gtk main editor" );
+                log_severe_err_dbg("couldn't load gtk main editor");
                 return false;
         }
-        if ( !render_config_load () ) {
-                log_severe_err_dbg ( "couldn't load gtk renderer configurator" );
+        if (!pimpl->m_renderer_config.show(true)) {
+                log_severe_err_dbg("couldn't load gtk renderer configurator");
                 return false;
         }
-        if ( !entity_editor_load ( g_path_res.glade_path ) ) {
-                log_severe_err_dbg ( "couldn't load gtk entity editor" );
+        if (!pimpl->m_entity_editor.show(true)) {
+                log_severe_err_dbg("couldn't load gtk entity editor");
                 return false;
         }
-        if ( !renderable_editor_load ( g_path_res.glade_path ) ) {
+        if (!pimpl->m_renderable_editor.show(true)) {
                 log_severe_err_dbg ( "couldn't load gtk renderable editor" );
                 return false;
         }
-        if ( !main_editor_menu_load () ) {
-                log_severe_err_dbg ( "couldn't load gtk main editor menu" );
+        if (!pimpl->m_menu.show(true)) {
+                log_severe_err_dbg("couldn't load gtk main editor menu");
                 return false;
         }
-        if ( !project_manager_load () ) {
-                log_severe_err_dbg ( "couldn't load gtk project manager" );
+        if (!pimpl->m_project_mgr.show(true)) {
+                log_severe_err_dbg("couldn't load gtk project manager");
                 return false;
         }
         return true;
@@ -152,17 +246,11 @@ void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
         pimpl->m_env = env;
 
         if (!pimpl->m_main_editor.show(true)) {
-                log_severe_err_dbg ( "failed to show gtk main editor" );
+                log_severe_err_dbg("failed to show gtk main editor");
                 return ;
         }
-
-        if ( !project_manager_show ( true ) ) {
-                log_severe_err_dbg ( "failed to show gtk project_manager" );
-                return ;
-        }
-
-        if ( !splash_screen_shut () ) {
-                log_mild_err_dbg ( "couldn't shutdown the splash screen" );
+        if (!pimpl->m_splash_screen.show(false)) {
+                log_mild_err_dbg("couldn't shutdown the splash screen");
                 return ;
         }
         await_gtk_main ();
@@ -171,34 +259,6 @@ void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
 bool EditorGtkFrontend::free(Editor* editor, KernelEnvironment* env)
 {
         return true;
-}
-
-GtkBuilder* builder_load ( string filename )
-{
-        GtkBuilder* builder = nullptr;
-        if (!(builder = gtk_builder_new())) {
-                log_severe_err_dbg("cannot create gtk-glade builder");
-                return nullptr;
-        }
-        GError* error = nullptr;
-        if (!(gtk_builder_add_from_file(builder, filename.c_str(), &error))) {
-                if (error) {
-                        log_severe_err_dbg("builder fail to load: %s\n%s",
-                                           filename.c_str(), error->message);
-                        g_free(error);
-                } else {
-                        log_severe_err_dbg("builder fail to load: %s, unknown error",
-                                           filename.c_str());
-                }
-                return nullptr;
-        }
-        return builder;
-}
-
-void builder_all_set ( GtkBuilder* builder )
-{
-        gtk_builder_connect_signals ( builder, nullptr );
-        g_object_unref ( G_OBJECT ( builder ) );
 }
 
 /* @todo (davis#1#): implement file chooser */

@@ -2818,7 +2818,7 @@
 
 1426801244 /home/davis/x3drenderlib-code/trunk/lib/algorithm.inl.h
 
-1427093458 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorfrontend.hpp
+1427687280 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorfrontend.hpp
 	<usr/usr_editor.hpp>
 
 1403679691 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkgui.hpp
@@ -2848,14 +2848,13 @@
 
 1402010100 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/dynamics_editor.cpp
 
-1427059729 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/entity_editor.cpp
+1427586498 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/entity_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
-	"entity_editor.hpp"
 
-1427059284 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.hpp
+1427564695 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.hpp
 	<gtk/gtk.h>
 	<usr/usr_editorfrontend.hpp>
 	"splash_screen.hpp"
@@ -2863,12 +2862,13 @@
 	"main_editor_menu.hpp"
 	"project_manager.hpp"
 	"entity_editor.hpp"
+	"renderer_configurator.hpp"
 	"renderable_editor.hpp"
 	"dynamics_editor.hpp"
 
-1427060655 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/entity_editor.hpp
+1427564286 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/entity_editor.hpp
 
-1427094475 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.cpp
+1427687371 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.cpp
 	<gtk/gtk.h>
 	<gdk/gdk.h>
 	<cairo.h>
@@ -2877,29 +2877,28 @@
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
-1427060788 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.hpp
+1427568878 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.hpp
 	<usr/usr_editorfrontend.hpp>
 
-1427060677 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderable_editor.hpp
+1427586919 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderable_editor.hpp
 
-1403654681 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/splash_screen.hpp
-	<usr/usr_editorfrontend.hpp>
+1427687352 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/splash_screen.hpp
 
-1427093140 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.cpp
+1427584062 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
-1427060060 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderable_editor.cpp
+1427684243 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderable_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
-1427059201 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderer_configurator.cpp
+1427584242 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderer_configurator.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
@@ -2928,23 +2927,23 @@
 	<algorithm.h>
 	<math.h>
 
-1427059991 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.cpp
+1427686133 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.cpp
 	<usr/usr_editorfrontend.hpp>
 	<gtk/gtk.h>
 	"gtkgui.hpp"
 
-1419318932 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.hpp
+1427564262 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.hpp
 
 1423534987 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editworlddata.cpp
 	<usr/usr_editor.hpp>
 
-1427059077 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/project_manager.cpp
+1427684485 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/project_manager.cpp
 	<usr/usr_editorfrontend.hpp>
-	"project_manager.hpp"
+	"gtkgui.hpp"
 
-1419746181 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/project_manager.hpp
+1427682632 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/project_manager.hpp
 
-1419746100 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderer_configurator.hpp
+1427572972 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderer_configurator.hpp
 
 1426996498 source:/home/davis/x3drenderlib-code/trunk/usr/usr_renderer.cpp
 	<usr/usr_renderer.hpp>

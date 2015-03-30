@@ -10,8 +10,16 @@ namespace x3d
 namespace usr
 {
 
-bool entity_editor_load ( char *glade_path );
-void entity_editor_set ( int state );
+class EntityEditor {
+public:
+        EntityEditor(EditorGtkFrontend* frontend);
+        ~EntityEditor();
+
+        bool    show(bool visible);
+private:
+        class EntityEditorInt;
+        class EntityEditorInt* pimpl;
+};
 
 }// namespace usr
 

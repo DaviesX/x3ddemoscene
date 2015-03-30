@@ -6,7 +6,7 @@
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkTreeView" id="hierachy-tree">
+      <object class="GtkTreeView" id="entity-hierachy-tree">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="model">tree-list-store</property>
