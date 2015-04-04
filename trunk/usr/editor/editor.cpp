@@ -61,6 +61,7 @@ struct data_info {
 static void *gui_thread ( struct data_info *data )
 {
         data->backend->loop ( data->e, data->env );
+        log_normal_dbg("gui loop exit");
         free_fix ( data );
         return nullptr;
 }
@@ -111,6 +112,8 @@ int KernelEditor::on_free ( KernelEnvironment *env )
         if ( !this->m_frontend->free ( this->m_editor, env ) ) {
                 goto fail;
         }
+        thr_sync_with_task(m_loop_task);
+        log_normal_dbg("the gui thread has exited safely");
         return 0;
 fail:
         kernel_panic ();

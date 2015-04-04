@@ -23,13 +23,13 @@ public:
         KernelEnvironment*      m_env;
         GtkBuilder*             m_builder;
 
-        SplashScreen            m_splash_screen;
-        MainEditor              m_main_editor;
-        EntityEditor            m_entity_editor;
-        RendererConfig          m_renderer_config;
-        MainEditorMenu          m_menu;
-        RenderableEditor        m_renderable_editor;
-        ProjectManager          m_project_mgr;
+        SplashScreen*           m_splash_screen;
+        MainEditor*             m_main_editor;
+        EntityEditor*           m_entity_editor;
+        RendererConfig*         m_renderer_config;
+        MainEditorMenu*         m_menu;
+        RenderableEditor*       m_renderable_editor;
+        ProjectManager*         m_project_mgr;
 
         bool                    m_has_init;
 
@@ -38,15 +38,16 @@ public:
         void builder_all_set();
 };
 
-EditorGtkFrontend::EditorGtkFrontendInt::EditorGtkFrontendInt(EditorGtkFrontend* frontend) :
-        m_splash_screen(frontend),
-        m_main_editor(frontend),
-        m_entity_editor(frontend),
-        m_renderer_config(frontend),
-        m_menu(frontend),
-        m_renderable_editor(frontend),
-        m_project_mgr(frontend)
+EditorGtkFrontend::EditorGtkFrontendInt::EditorGtkFrontendInt(EditorGtkFrontend* frontend)
 {
+        m_splash_screen         = nullptr;
+        m_main_editor           = nullptr;
+        m_entity_editor         = nullptr;
+        m_renderer_config       = nullptr;
+        m_menu                  = nullptr;
+        m_renderable_editor     = nullptr;
+        m_project_mgr           = nullptr;
+
         m_has_init      = false;
         m_builder       = nullptr;
         m_editor        = nullptr;
@@ -55,6 +56,14 @@ EditorGtkFrontend::EditorGtkFrontendInt::EditorGtkFrontendInt(EditorGtkFrontend*
 
 EditorGtkFrontend::EditorGtkFrontendInt::~EditorGtkFrontendInt()
 {
+        m_splash_screen         = nullptr;
+        m_main_editor           = nullptr;
+        m_entity_editor         = nullptr;
+        m_renderer_config       = nullptr;
+        m_menu                  = nullptr;
+        m_renderable_editor     = nullptr;
+        m_project_mgr           = nullptr;
+
         g_object_unref(G_OBJECT(m_builder));
 
         m_has_init      = false;
@@ -132,22 +141,22 @@ GtkBuilder* EditorGtkFrontend::get_gtk_builder()
 
 MainEditor* EditorGtkFrontend::get_main_editor()
 {
-        return &pimpl->m_main_editor;
+        return pimpl->m_main_editor;
 }
 
 MainEditorMenu* EditorGtkFrontend::get_main_editor_menu()
 {
-        return &pimpl->m_menu;
+        return pimpl->m_menu;
 }
 
 RendererConfig* EditorGtkFrontend::get_renderer_config()
 {
-        return &pimpl->m_renderer_config;
+        return pimpl->m_renderer_config;
 }
 
 EntityEditor* EditorGtkFrontend::get_entity_editor()
 {
-        return &pimpl->m_entity_editor;
+        return pimpl->m_entity_editor;
 }
 
 static bool has_command(int argc, char** argv, string command)
@@ -170,7 +179,15 @@ bool EditorGtkFrontend::init(int argc, char **argv, Editor *editor, KernelEnviro
         gtk_init(&argc, &argv);
         gdk_threads_init();
 
-        if (!pimpl->m_splash_screen.show(true)) {
+        pimpl->m_splash_screen         = new SplashScreen(this);
+        pimpl->m_main_editor           = new MainEditor(this);
+        pimpl->m_entity_editor         = new EntityEditor(this);
+        pimpl->m_renderer_config       = new RendererConfig(this);
+        pimpl->m_menu                  = new MainEditorMenu(this);
+        pimpl->m_renderable_editor     = new RenderableEditor(this);
+        pimpl->m_project_mgr           = new ProjectManager(this);
+
+        if (!pimpl->m_splash_screen->show(true)) {
                 log_mild_err_dbg ( "couldn't show splash screen" );
                 return false;
         }
@@ -213,27 +230,27 @@ bool EditorGtkFrontend::load(Editor *editor, KernelEnvironment *env)
         pimpl->m_editor = editor;
         pimpl->m_env = env;
 
-        if (!pimpl->m_main_editor.show(false)) {
+        if (!pimpl->m_main_editor->show(false)) {
                 log_severe_err_dbg("couldn't load gtk main editor");
                 return false;
         }
-        if (!pimpl->m_renderer_config.show(true)) {
+        if (!pimpl->m_renderer_config->show(true)) {
                 log_severe_err_dbg("couldn't load gtk renderer configurator");
                 return false;
         }
-        if (!pimpl->m_entity_editor.show(true)) {
+        if (!pimpl->m_entity_editor->show(true)) {
                 log_severe_err_dbg("couldn't load gtk entity editor");
                 return false;
         }
-        if (!pimpl->m_renderable_editor.show(true)) {
+        if (!pimpl->m_renderable_editor->show(true)) {
                 log_severe_err_dbg ( "couldn't load gtk renderable editor" );
                 return false;
         }
-        if (!pimpl->m_menu.show(true)) {
+        if (!pimpl->m_menu->show(true)) {
                 log_severe_err_dbg("couldn't load gtk main editor menu");
                 return false;
         }
-        if (!pimpl->m_project_mgr.show(true)) {
+        if (!pimpl->m_project_mgr->show(true)) {
                 log_severe_err_dbg("couldn't load gtk project manager");
                 return false;
         }
@@ -245,19 +262,26 @@ void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
         pimpl->m_editor = editor;
         pimpl->m_env = env;
 
-        if (!pimpl->m_main_editor.show(true)) {
+        if (!pimpl->m_main_editor->show(true)) {
                 log_severe_err_dbg("failed to show gtk main editor");
                 return ;
         }
-        if (!pimpl->m_splash_screen.show(false)) {
+        if (!pimpl->m_splash_screen->show(false)) {
                 log_mild_err_dbg("couldn't shutdown the splash screen");
                 return ;
         }
-        await_gtk_main ();
+        await_gtk_main();
 }
 
 bool EditorGtkFrontend::free(Editor* editor, KernelEnvironment* env)
 {
+        delete pimpl->m_main_editor;
+        delete pimpl->m_splash_screen;
+        delete pimpl->m_entity_editor;
+        delete pimpl->m_renderer_config;
+        delete pimpl->m_menu;
+        delete pimpl->m_renderable_editor;
+        delete pimpl->m_project_mgr;
         return true;
 }
 
@@ -402,9 +426,10 @@ void run_gtk_main ( void )
 void await_gtk_main ( void )
 {
         while ( g_gtk_main_stack != 0 );
-        x3d::thr_trap_on_task ( &g_atomic_check );
-        ;  /* do nothing */
-        x3d::thr_untrap_task ( &g_atomic_check );
+        /*if (g_gtk_main_task) {
+                thr_sync_with_task(g_gtk_main_task);
+                log_normal_dbg("gtk main has exit");
+        }*/
 }
 
 void* dbg_get_render_region ( void )

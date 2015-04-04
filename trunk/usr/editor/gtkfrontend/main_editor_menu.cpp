@@ -41,6 +41,9 @@ MainEditorMenu::MainEditorMenuInt::MainEditorMenuInt(EditorGtkFrontend* frontend
 
 MainEditorMenu::MainEditorMenuInt::~MainEditorMenuInt()
 {
+        stop_gtk_main();
+        await_gtk_main();
+
         m_frontend = nullptr;
 }
 

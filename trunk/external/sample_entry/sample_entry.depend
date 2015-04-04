@@ -1,168 +1,4 @@
 # depslib dependency file v1.0
-1399872081 source:/home/davis/Projects/x3d/external/sample_entry/main.c
-	<stdio.h>
-	<x3d/init.h>
-	<x3d/editor.h>
-	<usr/usr_editor.h>
-
-1399871249 /home/davis/Projects/x3d/include/x3d/init.h
-	<x3d/common.h>
-
-1399870974 /home/davis/Projects/x3d/include/x3d/common.h
-	<stdio.h>
-	<stdlib.h>
-	<stdarg.h>
-	<stddef.h>
-	<stdint.h>
-	<stdbool.h>
-	<unistd.h>
-	<memory.h>
-	<string.h>
-	<ctype.h>
-	<assert.h>
-	<math.h>
-	<pthread.h>
-	<semaphore.h>
-	<limits.h>
-	<time.h>
-	<errno.h>
-	<sys/types.h>
-	<sys/wait.h>
-
-1399329302 /home/davis/Projects/x3d/lib/memory.h
-	<x3d/common.h>
-
-1399871857 /home/davis/Projects/x3d/include/x3d/editor.h
-	<math/math.h>
-	<algorithm.h>
-	<x3d/renderer.h>
-
-1397619189 /home/davis/Projects/x3d/lib/math/math.h
-	"vector.h"
-	"matrix.h"
-	"quat.h"
-	"geometry.h"
-	"decimal.h"
-	"fx.h"
-
-1394164930 /home/davis/Projects/x3d/lib/math/vector.h
-
-1394154072 /home/davis/Projects/x3d/lib/math/matrix.h
-	<x3d/common.h>
-
-1393902016 /home/davis/Projects/x3d/lib/math/quat.h
-
-1393902015 /home/davis/Projects/x3d/lib/math/geometry.h
-
-1388682850 /home/davis/Projects/x3d/lib/math/decimal.h
-
-1390714932 /home/davis/Projects/x3d/lib/math/fx.h
-
-1397701223 /home/davis/Projects/x3d/lib/algorithm.h
-	<x3d/common.h>
-	<math/math.h>
-	<algorithm_inl.h>
-
-1397530333 /home/davis/Projects/x3d/lib/algorithm.inc
-
-1397424044 /home/davis/Projects/x3d/include/x3d/renderer.h
-	<math/math.h>
-	<staging.h>
-	<algorithm.h>
-
-1399824290 /home/davis/Projects/x3d/lib/staging.h
-	<algorithm.h>
-	<memory.h>
-
-1397763686 /home/davis/Projects/x3d/lib/algorithm_inl.h
-
-1399871498 /home/davis/Projects/x3d/include/usr/usr_editor.h
-	<x3d/common.h>
-
-1399872081 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.c
-	<stdio.h>
-	<x3d/init.h>
-	<x3d/editor.h>
-	<usr/usr_editor.h>
-
-1403526919 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
-	<x3d/common.h>
-
-1426807468 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
-	<stdio.h>
-	<stdlib.h>
-	<stdarg.h>
-	<stddef.h>
-	<stdint.h>
-	<stdbool.h>
-	<unistd.h>
-	<memory.h>
-	<string.h>
-	<ctype.h>
-	<assert.h>
-	<math.h>
-	<pthread.h>
-	<semaphore.h>
-	<limits.h>
-	<time.h>
-	<errno.h>
-	<sys/types.h>
-	<sys/wait.h>
-
-1409407105 /home/davis/x3drenderlib-code/trunk/lib/memory.h
-	<x3d/common.h>
-
-1401652296 /home/davis/x3drenderlib-code/trunk/include/x3d/editor.h
-	<math/math.h>
-	<algorithm.h>
-	<serializer.h>
-	<x3d/renderer.h>
-
-1397619189 /home/davis/x3drenderlib-code/trunk/lib/math/math.h
-	"vector.h"
-	"matrix.h"
-	"quat.h"
-	"geometry.h"
-	"decimal.h"
-	"fx.h"
-
-1394164930 /home/davis/x3drenderlib-code/trunk/lib/math/vector.h
-
-1402811107 /home/davis/x3drenderlib-code/trunk/lib/math/matrix.h
-	<x3d/common.h>
-
-1393902016 /home/davis/x3drenderlib-code/trunk/lib/math/quat.h
-
-1410099099 /home/davis/x3drenderlib-code/trunk/lib/math/geometry.h
-
-1388682850 /home/davis/x3drenderlib-code/trunk/lib/math/decimal.h
-
-1390714932 /home/davis/x3drenderlib-code/trunk/lib/math/fx.h
-
-1426958791 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
-	<x3d/common.h>
-	<math/math.h>
-	<algorithm.inl.h>
-
-1403596674 /home/davis/x3drenderlib-code/trunk/lib/algorithm_inl.h
-
-1424386711 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
-	<math/math.h>
-	<staging.h>
-	<symlib.h>
-	<algorithm.h>
-	<x3d/rendertree.h>
-
-1399824290 /home/davis/x3drenderlib-code/trunk/lib/staging.h
-	<algorithm.h>
-	<memory.h>
-
-1399871498 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.h
-	<x3d/common.h>
-
-1405336395 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
-	<x3d/common.h>
-
 1419622604 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
 	<stdio.h>
 	<usr/usr_x3d.hpp>
@@ -189,9 +25,94 @@
 1403653199 /home/davis/x3drenderlib-code/trunk/lib/logout.h
 	<x3d/common.h>
 
+1428137936 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdint.h>
+	<stdbool.h>
+	<unistd.h>
+	<memory.h>
+	<string.h>
+	<ctype.h>
+	<assert.h>
+	<math.h>
+	<pthread.h>
+	<semaphore.h>
+	<limits.h>
+	<time.h>
+	<errno.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1409407105 /home/davis/x3drenderlib-code/trunk/lib/memory.h
+	<x3d/common.h>
+
+1426958791 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
+	<x3d/common.h>
+	<math/math.h>
+	<algorithm.inl.h>
+
+1397619189 /home/davis/x3drenderlib-code/trunk/lib/math/math.h
+	"vector.h"
+	"matrix.h"
+	"quat.h"
+	"geometry.h"
+	"decimal.h"
+	"fx.h"
+
+1394164930 /home/davis/x3drenderlib-code/trunk/lib/math/vector.h
+
+1402811107 /home/davis/x3drenderlib-code/trunk/lib/math/matrix.h
+	<x3d/common.h>
+
+1393902016 /home/davis/x3drenderlib-code/trunk/lib/math/quat.h
+
+1410099099 /home/davis/x3drenderlib-code/trunk/lib/math/geometry.h
+
+1388682850 /home/davis/x3drenderlib-code/trunk/lib/math/decimal.h
+
+1390714932 /home/davis/x3drenderlib-code/trunk/lib/math/fx.h
+
+1426801244 /home/davis/x3drenderlib-code/trunk/lib/algorithm.inl.h
+
 1403702681 /home/davis/x3drenderlib-code/trunk/lib/thread.h
 	<x3d/common.h>
 	<algorithm.h>
+
+1405336395 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
+	<x3d/common.h>
+
+1403526919 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
+	<x3d/common.h>
+
+1424386711 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+	<math/math.h>
+	<staging.h>
+	<symlib.h>
+	<algorithm.h>
+	<x3d/rendertree.h>
+
+1399824290 /home/davis/x3drenderlib-code/trunk/lib/staging.h
+	<algorithm.h>
+	<memory.h>
+
+1405138775 /home/davis/x3drenderlib-code/trunk/lib/symlib.h
+	<algorithm.h>
+	<x3d/common.h>
+
+1426998556 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+	<x3d/renderable.h>
+
+1422939395 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+	<x3d/common.h>
+	<algorithm.h>
+	<math.h>
+
+1423199999 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregate.h
+	<algorithm.h>
+	<x3d/renderable.h>
 
 1419742711 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
@@ -200,23 +121,6 @@
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_world.hpp>
-
-1403084737 source:/home/davis/x3drenderlib-code/trunk/usr/usr_kernel.cpp
-	<usr/usr_kernel.hpp>
-
-1405138775 /home/davis/x3drenderlib-code/trunk/lib/symlib.h
-	<algorithm.h>
-	<x3d/common.h>
-
-1426801244 /home/davis/x3drenderlib-code/trunk/lib/algorithm.inl.h
-
-1412446343 /home/davis/x3drenderlib-code/trunk/include/x3d/world.h
-	<x3d/common.h>
-
-1422939395 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
-	<x3d/common.h>
-	<algorithm.h>
-	<math.h>
 
 1423349066 /home/davis/x3drenderlib-code/trunk/include/usr/usr_world.hpp
 	<usr/usr_renderaggregate.hpp>
@@ -235,16 +139,4 @@
 1426996043 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderer.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_renderaggregate.hpp>
-
-1423199999 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregate.h
-	<algorithm.h>
-	<x3d/renderable.h>
-
-1423200240 source:/home/davis/x3drenderlib-code/trunk/usr/usr_renderaggregate.cpp
-	<usr/usr_renderable.hpp>
-	<usr/usr_renderaggregate.hpp>
-	<usr/usr_x3d.hpp>
-
-1426998556 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
-	<x3d/renderable.h>
 

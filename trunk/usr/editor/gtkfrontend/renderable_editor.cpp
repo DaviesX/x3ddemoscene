@@ -28,6 +28,9 @@ RenderableEditor::RenderableEditorInt::RenderableEditorInt(EditorGtkFrontend* fr
 
 RenderableEditor::RenderableEditorInt::~RenderableEditorInt()
 {
+        stop_gtk_main();
+        await_gtk_main();
+
         m_frontend      = nullptr;
 }
 

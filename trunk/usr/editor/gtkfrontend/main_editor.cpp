@@ -20,7 +20,8 @@ public:
         GtkBuilder*                             m_builder;
         GtkWidget*                              m_window;
         GtkWidget*                              m_draw_region;
-        GdkPixbuf*                              m_logo_pix_buf;
+        GdkPixbuf*                              m_logo;
+        GdkPixbuf*                              m_icon;
         struct project_mgr*     proj_mgr;
         struct entity_mgr*      ent_mgr;
         struct entity_prop*     ent_prop;
@@ -50,7 +51,11 @@ extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo
 extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data)
 {
         MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(data);
-        gdk_cairo_set_source_pixbuf(cairo, pimpl->m_logo_pix_buf, 0, 0);
+        int x, y, w, h;
+        widget_get_size(pimpl->m_window, pimpl->m_draw_region, &x, &y, &w, &h);
+        GdkPixbuf* scaled = gdk_pixbuf_scale_simple(pimpl->m_logo, w, h, GDK_INTERP_NEAREST);
+        gdk_cairo_set_source_pixbuf(cairo, scaled, 0, 0);
+        gdk_pixbuf_unref(scaled);
         cairo_paint(cairo);
         cairo_fill(cairo);
         return 0;
@@ -100,14 +105,16 @@ MainEditor::MainEditorInt::MainEditorInt(EditorGtkFrontend* frontend)
 
 MainEditor::MainEditorInt::~MainEditorInt()
 {
-        if (m_frontend->is_usable()) {
-                m_frontend->get_core_editor()->remove_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_REGION, cRenderRegion);
-        }
         stop_gtk_main();
+        await_gtk_main();
 
         g_signal_handler_disconnect(m_draw_region, m_logo_draw_signal);
         g_signal_handler_disconnect(m_window, m_idle_dispatch);
         g_signal_handler_disconnect(m_window, m_destroy_signal);
+
+        if (m_frontend->is_usable()) {
+                m_frontend->get_core_editor()->remove_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_REGION, cRenderRegion);
+        }
 }
 
 MainEditor::MainEditor(EditorGtkFrontend* frontend)
@@ -175,15 +182,44 @@ demo_mode:
 
                 /* load in logo file */
                 GError *error = nullptr;
-                string logo_file = frontend->m_glade_dir + frontend->m_logo;
-                pimpl->m_logo_pix_buf = gdk_pixbuf_new_from_file(logo_file.c_str (), &error);
+                string logo_file = frontend->m_glade_dir + "x3d_logo.png";
+                pimpl->m_logo = gdk_pixbuf_new_from_file(logo_file.c_str(), &error);
                 if (error != nullptr) {
                         log_severe_err_dbg("couldn't load logo file: %s", logo_file.c_str());
                         log_severe_err_dbg("gtk internal message: %s", error->message);
                         g_free(error);
                         return false;
                 }
-
+                string icon_file = frontend->m_glade_dir + "icon.png";
+                pimpl->m_icon = gdk_pixbuf_new_from_file(icon_file.c_str(), &error);
+                if (error != nullptr) {
+                        log_severe_err_dbg("couldn't load icon file: %s", icon_file.c_str());
+                        log_severe_err_dbg("gtk internal message: %s", error->message);
+                        g_free(error);
+                        return false;
+                }
+                /* set the size of the window */
+                static const float c_WindowRatio = 0.9f;
+                static const float c_Pane1Ratio = 6.7f/8.0f*c_WindowRatio;
+                static const float c_Pane2Ratio = 1.3f/8.0f*c_WindowRatio;
+                static const float c_Pane3Ratio = 2.5f/6.0f*c_WindowRatio;
+                int win_width, win_height;
+                GdkScreen* screen = gdk_screen_get_default();
+                win_width  = gdk_screen_get_width(screen);
+                win_height = gdk_screen_get_height(screen);
+                gtk_window_set_icon(GTK_WINDOW(pimpl->m_window), pimpl->m_icon);
+                gtk_window_resize(GTK_WINDOW(pimpl->m_window), win_width*c_WindowRatio, win_height*c_WindowRatio);
+                /* set the size of the pane */
+                GtkPaned* pane1 = (GtkPaned*) gtk_builder_get_object(builder, "main-editor-pane1");
+                GtkPaned* pane2 = (GtkPaned*) gtk_builder_get_object(builder, "main-editor-pane2");
+                GtkPaned* pane3 = (GtkPaned*) gtk_builder_get_object(builder, "main-editor-pane3");
+                if (!pane1 || !pane2 || !pane3) {
+                        log_severe_err_dbg("cannot retrieve main editor pane widget");
+                        return false;
+                }
+                gtk_paned_set_position(pane1, win_width*c_Pane1Ratio);
+                gtk_paned_set_position(pane2, win_width*c_Pane2Ratio);
+                gtk_paned_set_position(pane3, win_height*c_Pane3Ratio);
                 /* create render region */
                 int x, y;
                 int width, height;

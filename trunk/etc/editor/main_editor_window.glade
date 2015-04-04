@@ -302,12 +302,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkPaned" id="paned1">
+          <object class="GtkPaned" id="main-editor-pane1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="position">700</property>
             <child>
-              <object class="GtkPaned" id="paned2">
+              <object class="GtkPaned" id="main-editor-pane2">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="position">200</property>
@@ -342,7 +342,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkPaned" id="paned3">
+              <object class="GtkPaned" id="main-editor-pane3">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="orientation">vertical</property>
