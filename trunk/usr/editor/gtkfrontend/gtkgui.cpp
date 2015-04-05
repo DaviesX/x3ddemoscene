@@ -426,10 +426,9 @@ void run_gtk_main ( void )
 void await_gtk_main ( void )
 {
         while ( g_gtk_main_stack != 0 );
-        /*if (g_gtk_main_task) {
-                thr_sync_with_task(g_gtk_main_task);
-                log_normal_dbg("gtk main has exit");
-        }*/
+        x3d::thr_trap_on_task ( &g_atomic_check );
+        ; // do nothing
+        x3d::thr_untrap_task ( &g_atomic_check );
 }
 
 void* dbg_get_render_region ( void )

@@ -1,7 +1,7 @@
 /* rasterization.c: all contextual settings and controlling procedures of the rasterization pipeline go here */
 #include <algorithm.h>
 #include <logout.h>
-#include <memory.h>
+#include <allocator.h>
 #include "rasterization.h"
 #include "vertexprocessor.h"
 #include "rasterizer.h"

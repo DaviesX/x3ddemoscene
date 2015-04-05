@@ -1,6 +1,7 @@
 /* thread.c: parallel task management utilities all go here */
 #include <x3d/common.h>
 #include <algorithm.h>
+#include <allocator.h>
 #include <thread.h>
 
 #define INIT_GROUP_COUNT                1

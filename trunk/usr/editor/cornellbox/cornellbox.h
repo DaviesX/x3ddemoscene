@@ -17,7 +17,7 @@ struct vertex {
 
 #include <x3d/common.h>
 
-#ifdef __c
+#ifdef c_compiler
 void cornell_box_make ( struct vertex** vertex, int* n_vertex, int** index, int* n_index );
 void cornell_box_free ( struct vertex* vertex, int* index );
 #else

@@ -1,6 +1,7 @@
 /* bvh.c: Manage Bvh subdivide primitive partition */
 #include <algorithm.h>
 #include <math/math.h>
+#include <allocator.h>
 #include <renderer/geometry.h>
 #include "shape_common.h"
 #include "bvh.h"

@@ -1,7 +1,7 @@
 /* shaderformulate.c: formulate a runnable shader from source code/function pointer */
 #include <algorithm.h>
 #include <math/math.h>
-#include <memory.h>
+#include <allocator.h>
 #include <logout.h>
 #include <symlib.h>
 #include <x3d/common.h>

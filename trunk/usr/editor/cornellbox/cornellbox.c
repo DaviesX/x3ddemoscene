@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <memory.h>
+#include <allocator.h>
 #include "cornellbox.h"
 
 

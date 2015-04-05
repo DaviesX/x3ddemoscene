@@ -5,6 +5,7 @@
 #include <math/math.h>
 #include <renderer/shader.h>
 #include <logout.h>
+#include <allocator.h>
 #include "rasterization.h"
 #include "rasterizer.h"
 #include "vertattri_lerp.h"

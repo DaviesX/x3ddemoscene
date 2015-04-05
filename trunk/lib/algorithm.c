@@ -1,5 +1,6 @@
 /* algorithm.c: commonly used algorithms */
 #include <algorithm.h>
+#include <allocator.h>
 #include <math/math.h>
 
 

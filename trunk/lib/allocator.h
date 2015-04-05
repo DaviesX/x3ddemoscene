@@ -1,5 +1,5 @@
-#ifndef X3DMEMORYFILLER_H_INCLUDED
-#define X3DMEMORYFILLER_H_INCLUDED
+#ifndef ALLOCATOR_H_INCLUDED
+#define ALLOCATOR_H_INCLUDED
 
 #include <x3d/common.h>
 
@@ -113,4 +113,4 @@ uint32_t query_mem_usage ( void );
 uint32_t query_mem_inst ( void );
 
 
-#endif // X3DMEMORYFILLER_H_INCLUDED
+#endif // ALLOCATOR_H_INCLUDED

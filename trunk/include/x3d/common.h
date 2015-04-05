@@ -59,9 +59,9 @@ typedef void (*f_Generic) ( void );
 #    define __dlexport                  __attribute__((__visibility__("default")))
 #  endif
 #  ifdef __cplusplus
-#    define __cpp
+#    define cpp_compiler
 #  else
-#    define __c
+#    define c_compiler
 #  endif
 #  define asm_return( _fake_val ) \
         { \

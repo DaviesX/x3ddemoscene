@@ -2,6 +2,7 @@
 #include <logout.h>
 #include <math/math.h>
 #include <renderer/out.h>
+#include <allocator.h>
 #include "screen_out.h"
 
 /* TODO (davis#3#): <out> test this module */

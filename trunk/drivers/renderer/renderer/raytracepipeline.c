@@ -1,5 +1,5 @@
 /* raytracepipeline.c: All ray tracing based pipelines go here. Each pipeline decides the method of integration of ray samples to generate the final result */
-#include <memory.h>
+#include <allocator.h>
 #include <logout.h>
 #include <math/math.h>
 #include <x3d/renderer.h>

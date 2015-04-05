@@ -1,4 +1,5 @@
 #include <algorithm.h>
+#include <allocator.h>
 #include <symlib.h>
 #include <logout.h>
 #include <x3d/debug.h>

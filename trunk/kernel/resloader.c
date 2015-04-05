@@ -1,5 +1,5 @@
 /* resloader.c: general thread-safe resource handling(staging, loading, saving and reload) */
-#include <memory.h>
+#include <allocator.h>
 #include <algorithm.h>
 #include <logout.h>
 #include <staging.h>

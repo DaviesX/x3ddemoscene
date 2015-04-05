@@ -1,5 +1,6 @@
 #include <math/math.h>
 #include <logout.h>
+#include <allocator.h>
 #include "renderablecontainerimpl.h"
 
 

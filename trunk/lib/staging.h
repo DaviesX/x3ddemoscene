@@ -2,7 +2,7 @@
 #define STAGING_H_INCLUDED
 
 #include <algorithm.h>
-#include <memory.h>
+#include <allocator.h>
 
 struct alg_hash_link_list;
 struct alg_list;

@@ -1,5 +1,6 @@
 #include <logout.h>
 #include <x3d/common.h>
+#include <allocator.h>
 #include "vbo.h"
 
 

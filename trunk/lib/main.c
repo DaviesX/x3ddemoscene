@@ -1,7 +1,7 @@
 /* main.c: All unit tests for lib module go here */
 #include <logout.h>
 #include <algorithm.h>
-#include <memory.h>
+#include <allocator.h>
 #include <staging.h>
 #include <thread.h>
 #include <timing.h>

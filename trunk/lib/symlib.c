@@ -1,6 +1,7 @@
 #include <algorithm.h>
 #include <logout.h>
 #include <symlib.h>
+#include <allocator.h>
 
 
 #if defined(X3D_PLATFORM_POSIX)

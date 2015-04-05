@@ -1,6 +1,7 @@
-/* X3dMemory.c: Memory managment */
+/* allocator.c: Memory managment */
 #include <logout.h>
 #include <memory.h>
+#include <allocator.h>
 
 
 #define INIT_COUNT			1

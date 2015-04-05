@@ -2,6 +2,7 @@
 #include <algorithm.h>
 #include <math/math.h>
 #include <renderer/geometry.h>
+#include <allocator.h>
 #include "trimesh_shape.h"
 #include "grid.h"
 

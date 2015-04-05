@@ -25,7 +25,7 @@
 1403653199 /home/davis/x3drenderlib-code/trunk/lib/logout.h
 	<x3d/common.h>
 
-1428137936 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
+1428190787 /home/davis/x3drenderlib-code/trunk/include/x3d/common.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -45,9 +45,6 @@
 	<errno.h>
 	<sys/types.h>
 	<sys/wait.h>
-
-1409407105 /home/davis/x3drenderlib-code/trunk/lib/memory.h
-	<x3d/common.h>
 
 1426958791 /home/davis/x3drenderlib-code/trunk/lib/algorithm.h
 	<x3d/common.h>
@@ -94,9 +91,12 @@
 	<algorithm.h>
 	<x3d/rendertree.h>
 
-1399824290 /home/davis/x3drenderlib-code/trunk/lib/staging.h
+1428189198 /home/davis/x3drenderlib-code/trunk/lib/staging.h
 	<algorithm.h>
-	<memory.h>
+	<allocator.h>
+
+1428189427 /home/davis/x3drenderlib-code/trunk/lib/allocator.h
+	<x3d/common.h>
 
 1405138775 /home/davis/x3drenderlib-code/trunk/lib/symlib.h
 	<algorithm.h>

@@ -5,6 +5,7 @@
 		<Option title="x3dcore" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option extended_obj_names="1" />
 		<Build>
 			<Target title="Debug">
 				<Option output="build/X3dCore_dbg" prefix_auto="1" extension_auto="1" />
@@ -24,7 +25,6 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-fexpensive-optimizations" />
 					<Add option="-w" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
@@ -37,17 +37,17 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-Werror" />
+			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-DX3D_COMPILER_GCC" />
 			<Add option="-DX3D_PLATFORM_POSIX" />
-			<Add directory="lib" />
-			<Add directory="include" />
+			<Add directory="./lib" />
+			<Add directory="./include" />
 		</Compiler>
 		<Linker>
-			<Add option="`pkg-config gtk+-3.0 --libs`" />
 			<Add option="-ldl" />
 			<Add option="-pthread" />
+			<Add option="`pkg-config gtk+-3.0 --libs`" />
 		</Linker>
 		<Unit filename="drivers/loader/fbxmodel.c">
 			<Option compilerVar="CC" />
@@ -377,6 +377,10 @@
 		</Unit>
 		<Unit filename="lib/algorithm.h" />
 		<Unit filename="lib/algorithm.inl.h" />
+		<Unit filename="lib/allocator.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/allocator.h" />
 		<Unit filename="lib/compiler/compiler.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -445,10 +449,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/math/vector.h" />
-		<Unit filename="lib/memory.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="lib/memory.h" />
 		<Unit filename="lib/serializer.c">
 			<Option compilerVar="CC" />
 		</Unit>

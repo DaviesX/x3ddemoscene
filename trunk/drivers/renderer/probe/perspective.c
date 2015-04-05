@@ -2,6 +2,7 @@
 #include <algorithm.h>
 #include <renderer/proj_probe.h>
 #include <math/math.h>
+#include <allocator.h>
 #include "perspective.h"
 
 

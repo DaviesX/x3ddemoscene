@@ -1,4 +1,5 @@
 /* surface.c: surface helper functions all go here */
+#include <allocator.h>
 #include "surface.h"
 #include "colorspectrum.h"
 
