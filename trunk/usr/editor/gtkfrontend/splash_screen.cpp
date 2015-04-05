@@ -51,7 +51,7 @@ SplashScreen::~SplashScreen()
 }
 
 struct timer_pack {
-        bool                            has_finished;
+        volatile bool                   has_finished;
         int                             n;
         int                             interval;
         int                             length;

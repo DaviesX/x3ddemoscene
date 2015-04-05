@@ -32,12 +32,13 @@
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-flto" />
 					<Add option="-Ofast" />
+					<Add option="-flto" />
+					<Add option="-DX3D_DEBUG_MODE" />
 				</Compiler>
 				<Linker>
-					<Add option="-flto" />
 					<Add option="-Ofast" />
+					<Add option="-flto" />
 					<Add library="./libX3dCore.so" />
 				</Linker>
 			</Target>

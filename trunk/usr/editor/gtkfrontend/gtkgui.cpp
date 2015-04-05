@@ -366,9 +366,9 @@ void widget_get_size ( GtkWidget* parent, GtkWidget* widget,
                                            0, 0, x, y );
 }
 
-static int              g_gtk_main_stack = 0;
-static x3d::thr_trap    g_atomic_check = {0};
-static x3d::thr_task*   g_gtk_main_task = nullptr;
+static volatile int             g_gtk_main_stack = 0;
+static x3d::thr_trap            g_atomic_check = {0};
+static x3d::thr_task*           g_gtk_main_task = nullptr;
 
 static void* do_gtk_main ( void* data )
 {
@@ -417,7 +417,7 @@ void run_gtk_main ( void )
         } else {
                 g_gtk_main_task =
                         x3d::thr_run_task ( do_gtk_main, nullptr, nullptr );
-//                log_normal_dbg ( "start gtk main" );
+                log_normal_dbg ( "starting gtk main" );
         }
         push_gtk_main ();
         x3d::thr_untrap_task ( &g_atomic_check );

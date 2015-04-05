@@ -32,6 +32,7 @@
 					<Add option="-Wall" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
+					<Add option="-DX3D_DEBUG_MODE" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
