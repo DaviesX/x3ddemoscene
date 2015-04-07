@@ -1,5 +1,5 @@
 x3drenderlibrary - v 1.0 debug
-x3d log start recording	0:35:29
+x3d log start recording	1:25:42
 
 x3d_log:<symlib_load> loading file ./libX3dCore_dbg.so
 x3d_log:<dump> dumping elf dynamic linked: ./libX3dCore_dbg.so
@@ -2505,13 +2505,13 @@ x3d_log:<run_gtk_main> found 1 gtk main running already
 x3d_log:<stop_gtk_main> found 1 gtk main running already
 x3d_log:<close> closing up gtk frontend
 x3d_log:<stop_gtk_main> no gtk main is running: 0
-x3d_log:<stop_gtk_main> nothing to stop
-x3d_log:<stop_gtk_main> nothing to stop
-x3d_log:<stop_gtk_main> nothing to stop
-x3d_log:<stop_gtk_main> nothing to stop
-x3d_log:<stop_gtk_main> nothing to stop
-x3d_log:<stop_gtk_main> nothing to stop
 x3d_log:<gui_thread> gui loop exit
+x3d_log:<stop_gtk_main> nothing to stop
+x3d_log:<stop_gtk_main> nothing to stop
+x3d_log:<stop_gtk_main> nothing to stop
+x3d_log:<stop_gtk_main> nothing to stop
+x3d_log:<stop_gtk_main> nothing to stop
+x3d_log:<stop_gtk_main> nothing to stop
 x3d_log:<on_free> the gui thread has exited safely
 x3d_log:<symlib_unload> unloading file ./libX3dCore_dbg.so
 x3d_log:<unload_dyn> symbol file: ./libX3dCore_dbg.so is not dynamic linked

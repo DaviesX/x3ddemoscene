@@ -59,6 +59,29 @@ struct timer_pack {
         SplashScreen::SplashScreenInt*  pimpl;
 };
 
+
+
+/**
+ * Original code by: Mike - http://plan99.net/~mike/blog (now a dead link--unable to find it).
+ * Modified by karlphillip for StackExchange:
+ *     (http://stackoverflow.com/questions/3908565/how-to-make-gtk-window-background-transparent)
+ * Re-worked for Gtk 3 by Louis Melahn, L.C., January 30, 2014.
+ */
+
+#include <gtk/gtk.h>
+
+
+static gboolean draw(GtkWidget *widget, cairo_t *cr, gpointer userdata)
+{
+        cairo_t *new_cr = gdk_cairo_create(gtk_widget_get_window(widget));
+        cairo_set_source_rgba (new_cr, 0.0, 0.0, 0.0, 0.0); /* transparent */
+        /* draw the background */
+        cairo_set_operator (new_cr, CAIRO_OPERATOR_SOURCE);
+        cairo_paint (new_cr);
+        cairo_destroy(new_cr);
+        return FALSE;
+}
+
 static gboolean splash_diminisher(gpointer data)
 {
         struct timer_pack* pack = static_cast<struct timer_pack*>(data);
@@ -85,12 +108,16 @@ bool SplashScreen::show(bool visible)
                 gtk_window_set_decorated(GTK_WINDOW(pimpl->m_window), TRUE);
                 gtk_window_set_position(GTK_WINDOW(pimpl->m_window), GTK_WIN_POS_CENTER_ALWAYS);
                 gtk_window_set_resizable(GTK_WINDOW(pimpl->m_window), FALSE);
-                if ( !(pimpl->m_image = gtk_image_new_from_file(filename.c_str()))) {
+                if (!(pimpl->m_image = gtk_image_new_from_file(filename.c_str()))) {
                         log_severe_err_dbg("couldn't load logo file from %s", filename.c_str());
                         return false;
                 }
                 gtk_container_add(GTK_CONTAINER(pimpl->m_window), pimpl->m_image);
-                gtk_widget_set_opacity(GTK_WIDGET(pimpl->m_window), 1.0f);
+                GdkScreen *screen = gtk_widget_get_screen(pimpl->m_window);
+                GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+                gtk_widget_set_visual(pimpl->m_window, visual);
+                gtk_widget_set_app_paintable(pimpl->m_window, TRUE);
+                g_signal_connect(G_OBJECT(pimpl->m_window), "draw", G_CALLBACK(draw), NULL);
                 pimpl->m_has_loaded = true;
         }
         if (visible) {
@@ -101,7 +128,7 @@ bool SplashScreen::show(bool visible)
                 pack->n          = 0;
                 pack->interval   = 10;
                 pack->length     = 2000;
-                pack->s_trans    = 0.8;
+                pack->s_trans    = 1.0;
                 pack->pimpl      = pimpl;
                 g_timeout_add(pack->interval, splash_diminisher, (gpointer) pack);
                 while(!pack->has_finished);
