@@ -1,9 +1,7 @@
 /* editrenderregion.cpp: render region activex implementation */
 #include <usr/usr_x3d.hpp>
+#include <usr/usr_projectionprobe.hpp>
 #include <usr/usr_editor.hpp>
-
-using namespace x3d;
-using namespace x3d::usr;
 
 
 namespace x3d
@@ -14,156 +12,205 @@ namespace usr
 class RenderRegionActiveX::RenderRegionInt
 {
 public:
-        void*                   m_handle;
-        struct irectangle2d     m_rect;
-        bool                    m_is_idle;
-        bool                    m_is_resized;
+        RenderRegionInt(OutputMethod method, void *handle, int x, int y, int w, int h);
+        ~RenderRegionInt();
 
-        struct Idle {
-                bool            is_idle;
-                f_Notify_idle   f_idle;
-                void*           d_idle;
-        } m_idle[2];
+        struct {        // Idle
+                bool            m_is_idle;
+                f_Notify_Idle   m_idle_signal;
+                void*           m_idle_signal_data;
+        };
 
-        struct Resize {
-                bool            is_resized;
-                bool            is_fullscreen;
-                int             width;
-                int             height;
-                f_Notify_resize f_resize;
-                void*           d_resize;
-        } m_resize[2];
+        struct {        // Resize
+                int                     m_width;
+                int                     m_height;
+                bool                    m_is_resized;
+                bool                    m_is_fullscreen;
+        };
+
+
+        struct {        // ViewControl
+                void*                   m_handle;
+                int                     m_method;
+                int                     m_cursor_x0;
+                int                     m_cursor_y0;
+                int                     m_cursor_x1;
+                int                     m_cursor_y1;
+                int                     m_delta;
+                struct point3d          m_viewpoint;
+                ViewMode                m_viewmode;
+                PerspectiveProbe*       m_persp;
+                OrthogonalProbe*        m_orth;
+                ProjectionProbe*        m_probe;
+                const float             c_SensitivityFactor = 0.8f;
+        };
+
+        // optics properties are default to these values
+        const enum ColorMode    c_ColorMode     = Color32Mode;
 };
 
-
-RenderRegionActiveX::RenderRegionActiveX ( string name, void *handle,
-                int x, int y, int w, int h ) :
-        EditorActiveX ( name, sizeof(RenderRegionActiveX), EDIT_ACTIVEX_RENDER_REGION )
+RenderRegionActiveX::RenderRegionInt::RenderRegionInt(OutputMethod method, void *handle, int x, int y, int w, int h)
 {
-        this->pimpl = new RenderRegionInt ();
-        RenderRegionInt *inst = pimpl;
+        m_handle        = handle;
+        m_is_idle       = true;
+        m_is_resized    = false;
+        m_method        = method;
+        set_point3d(0.0f, 0.0f, 0.0f, &m_viewpoint);
+        m_persp         = new PerspectiveProbe(method, handle, w, h, c_ColorMode);
+/* @fixme (davis#9#): <RenderRegionActiveX> orthogonal probe not supported yet */
+        m_orth          = new OrthogonalProbe(method, handle, w, h, c_ColorMode);;
 
-        x3d::build_irectangle_2d ( x, y, x + w, y + h, &inst->m_rect );
-        inst->m_handle          = handle;
-        inst->m_is_idle         = true;
-        inst->m_is_resized      = false;
+        m_is_idle               = true;
+        m_idle_signal           = nullptr;
+        m_idle_signal_data      = nullptr;
 
-        int i;
-        for ( i = 0; i < 2; i ++ ) {
-                inst->m_idle[i].is_idle = true;
-                inst->m_idle[i].f_idle  = nullptr;
-                inst->m_idle[i].d_idle  = nullptr;
+        m_width                 = w;
+        m_height                = h;
+        m_is_resized            = false;
+        m_is_fullscreen         = false;
 
-                inst->m_resize[i].is_resized    = false;
-                inst->m_resize[i].f_resize      = nullptr;
-                inst->m_resize[i].d_resize      = nullptr;
-                inst->m_resize[i].width         = w;
-                inst->m_resize[i].height        = h;
-                inst->m_resize[i].is_fullscreen = false;
-        }
+        m_persp->toggle_fullscreen(false);
+        m_probe                 = m_persp;
 }
 
-RenderRegionActiveX::~RenderRegionActiveX ()
+RenderRegionActiveX::RenderRegionInt::~RenderRegionInt()
 {
-        delete this->pimpl;
+        delete m_persp;
+        delete m_orth;
+        zero_obj(this);
 }
 
-void RenderRegionActiveX::on_adding ( void )
+RenderRegionActiveX::RenderRegionActiveX(string name, OutputMethod method, void *handle, int x, int y, int w, int h) :
+        EditorActiveX(name, sizeof(RenderRegionActiveX), EDIT_ACTIVEX_RENDER_REGION)
 {
-        RenderRegionInt *inst = this->pimpl;
-        KernelEnvironment *state = this->get_state_buffer ();
-        state->declare ( c_WndHandle, inst->m_handle );
+        pimpl = new RenderRegionInt(method, handle, x, y, w, h);
 }
 
-void RenderRegionActiveX::set_idle_state ( bool is_idle )
+RenderRegionActiveX::~RenderRegionActiveX()
 {
-        pimpl->m_is_idle = is_idle;
-        pimpl->m_idle[on_front_buf()].is_idle = is_idle;
-}
-/*
-void RenderRegionActiveX::set_renderer ( struct renderer *renderer )
-{
-        this->pimpl->m_rend = renderer;
-}
-*/
-void RenderRegionActiveX::resize ( int x, int y, int w, int h, bool toggle_fullscreen )
-{
-        pimpl->m_resize[on_front_buf()].is_resized      = true;
-        pimpl->m_resize[on_front_buf()].width           = w;
-        pimpl->m_resize[on_front_buf()].height          = h;
-        pimpl->m_resize[on_front_buf()].is_fullscreen   = toggle_fullscreen;
-        pimpl->m_is_resized                             = true;
-        x3d::build_irectangle_2d ( x, y, x + w, y + h, &pimpl->m_rect );
+        delete pimpl;
 }
 
-void RenderRegionActiveX::bind_callback ( string signal, f_Generic callback, void *data )
+void RenderRegionActiveX::on_adding()
 {
-        if ( "notify_idle" == signal ) {
-                pimpl->m_idle[on_front_buf()].f_idle = (f_Notify_idle) callback;
-                pimpl->m_idle[on_front_buf()].d_idle = data;
-        } else if ( "notify_resize" == signal ) {
-                pimpl->m_resize[on_front_buf()].f_resize = (f_Notify_resize) callback;
-                pimpl->m_resize[on_front_buf()].d_resize = data;
-        } else {
-                log_mild_err_dbg ( "no such signal as: %s", signal.c_str () );
-                return ;
-        }
-}
-
-const void* RenderRegionActiveX::get_handle ( void ) const
-{
-        return this->pimpl->m_handle;
-}
-
-void RenderRegionActiveX::dispatch ( void )
-{
-        wait_for_update ();
-        {
-                RenderRegionInt::Idle *t_idle = &pimpl->m_idle[on_back_buf()];
-                if ( t_idle->f_idle )
-                        t_idle->f_idle ( t_idle->is_idle, this, t_idle->d_idle );
-        }
-        {
-                RenderRegionInt::Resize *t_resize = &pimpl->m_resize[on_back_buf()];
-                if ( t_resize->f_resize || t_resize->is_resized ) {
-                        t_resize->f_resize ( t_resize->is_fullscreen,
-                                             t_resize->width, t_resize->height,
-                                             this, t_resize->d_resize );
-                        t_resize->is_resized = false;
-                }
-        }
-        unwait ();
-}
-
-void RenderRegionActiveX::update ( void )
-{
-        /* atomically swap the state buffer */
         KernelEnvironment* state = get_state_buffer ();
+        state->declare(c_RenderRegion, this);
+}
 
-        wait_for_update ();
-        WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use ( c_WorldData );
-        if ( worlddata->get_world().get_render_aggregate()->get_instance_count() == 0 ) {
-                set_idle_state(true);
+void RenderRegionActiveX::set_idle_state(bool is_idle)
+{
+        wait_for_update();
+        pimpl->m_is_idle = is_idle;
+        unwait();
+}
+
+void RenderRegionActiveX::resize(int x, int y, int w, int h, bool toggle_fullscreen)
+{
+        wait_for_update();
+        pimpl->m_is_resized             = true;
+        pimpl->m_is_fullscreen          = toggle_fullscreen;
+        pimpl->m_width                  = w;
+        pimpl->m_height                 = h;
+        unwait();
+}
+
+void RenderRegionActiveX::bind_callback(string signal, f_Generic callback, void* data)
+{
+        wait_for_update();
+        if ("notify_idle" == signal) {
+                pimpl->m_idle_signal            = (f_Notify_Idle) callback;
+                pimpl->m_idle_signal_data       = data;
         } else {
-                set_idle_state(false);
+                log_mild_err_dbg("no such signal as: %s", signal.c_str());
         }
-        swap_buf ();
-        unwait ();
+        unwait();
+}
 
-        RenderConfigActiveX* config = (RenderConfigActiveX*) state->use ( c_RenderConfig );
-        if ( !pimpl->m_is_idle && config != nullptr ) {
+ProjectionProbe* RenderRegionActiveX::get_probe() const
+{
+        return pimpl->m_probe;
+}
+
+void RenderRegionActiveX::moveto(int x, int y)
+{
+        wait_for_update();
+        pimpl->m_cursor_x1 = x;
+        pimpl->m_cursor_y1 = y;
+        unwait();
+}
+
+void RenderRegionActiveX::magnify(int delta)
+{
+        wait_for_update();
+        pimpl->m_delta = delta;
+        unwait();
+}
+
+void RenderRegionActiveX::set_view_mode(ViewMode mode)
+{
+        wait_for_update();
+        switch(mode) {
+        case PerspectiveMode:
+                pimpl->m_probe = pimpl->m_persp;
+                break;
+        case OrthogonalMode:
+                pimpl->m_probe = pimpl->m_orth;
+                break;
+        case QuadOrthogonalViewMode:
+                log_mild_err_dbg("Quad orthogonal view mode is not supported yet");
+                break;
+        }
+        unwait();
+}
+
+void RenderRegionActiveX::dispatch()
+{
+        wait_for_update();
+        if (pimpl->m_idle_signal) {
+                pimpl->m_idle_signal(pimpl->m_is_idle, this, pimpl->m_idle_signal_data);
+        }
+        unwait();
+}
+
+void RenderRegionActiveX::update()
+{
+        wait_for_update();
+        KernelEnvironment* state = get_state_buffer();
+        // see if there is anything to be processed by the kernel
+        WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use(c_WorldData);
+        if (worlddata->get_world().get_render_aggregate()->get_instance_count() == 0) {
+                pimpl->m_is_idle = true;
+        } else {
+                pimpl->m_is_idle = false;
+        }
+        // see if there is anything to commit to the screen
+        RenderConfigActiveX* config = (RenderConfigActiveX*) state->use(c_RenderConfig);
+        if (!pimpl->m_is_idle && config != nullptr) {
                 config->get_renderer()->commit();
         }
-
-        if ( pimpl->m_is_resized )
+        // any request to change the state of the screen
+        if (pimpl->m_is_resized) {
+                pimpl->m_persp->set_output_format(pimpl->m_width, pimpl->m_height, pimpl->c_ColorMode);
+                pimpl->m_persp->toggle_fullscreen(pimpl->m_is_fullscreen);
                 pimpl->m_is_resized = false;
+        }
+        // set position and direction
+        int delta_x = pimpl->m_cursor_x1 - pimpl->m_cursor_x0;
+        int delta_y = pimpl->m_cursor_y1 - pimpl->m_cursor_y0;
+        float x_rot = (float) delta_x/pimpl->m_width*M_PI;
+        float y_rot = (float) delta_y/pimpl->m_height*M_PI;
+        pimpl->m_probe->rotate_relative(x_rot, y_rot, 0.0f);
+        pimpl->m_probe->move_relative(pimpl->m_delta*pimpl->c_SensitivityFactor);
+        pimpl->m_cursor_x0 = pimpl->m_cursor_x1;
+        pimpl->m_cursor_y0 = pimpl->m_cursor_y1;
+        unwait();
 }
 
-void RenderRegionActiveX::load ( struct serializer *s )
+void RenderRegionActiveX::load(struct serializer *s)
 {
 }
 
-void RenderRegionActiveX::save ( struct serializer *s )
+void RenderRegionActiveX::save(struct serializer *s)
 {
 }
 

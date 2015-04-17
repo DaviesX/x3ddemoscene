@@ -3,6 +3,8 @@
 
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_kernel.hpp>
+#include <usr/usr_renderer.hpp>
+#include <usr/usr_projectionprobe.hpp>
 #include <usr/usr_world.hpp>
 
 using namespace std;
@@ -14,12 +16,11 @@ namespace usr
 {
 
 /* state constants */
+const string c_RenderRegion     = "render-region";
 const string c_RenderConfig     = "render-config";
-const string c_RedoStack        = "redo-stack";
+const string c_Selector         = "selector";
 const string c_Clipboard        = "clipboard";
-const string c_WndHandle        = "window-handle";
 const string c_WorldData        = "world-data";
-const string c_ViewControl      = "view-control";
 
 class Editor;
 class EditorFrontend;
@@ -36,7 +37,6 @@ class RenderablePropertyActiveX;
 class DynamicsPropertyActiveX;
 class LogicalPropertyActiveX;
 
-class ViewControlActiveX;
 class SelectorActiveX;
 
 class WorldDataActiveX;
@@ -51,15 +51,16 @@ class EditorActiveX
         friend class BenchmarkActiveX;
 public:
         enum EDIT_ACTIVEX_IDR {
-                EDIT_ACTIVEX_RENDER_REGION,
-                EDIT_ACTIVEX_RENDER_CONFIG,
                 EDIT_ACTIVEX_ENTITY_LIST,
                 EDIT_ACTIVEX_FILE_LOADER,
+                EDIT_ACTIVEX_BENCHMARK,
+                EDIT_ACTIVEX_RENDER_CONFIG,
                 EDIT_ACTIVEX_WORLD_DATA,
-                EDIT_ACTIVEX_BENCHMARK
+                EDIT_ACTIVEX_RENDER_REGION,
+                EDIT_ACTIVEX_NUMBER
         };
 
-        static const int c_NumActiveXType = EDIT_ACTIVEX_BENCHMARK - EDIT_ACTIVEX_RENDER_REGION + 1;
+        static const int c_NumActiveXType = EDIT_ACTIVEX_NUMBER;
 
         EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type );
         virtual ~EditorActiveX ();
@@ -100,36 +101,43 @@ private:
 };
 
 /* unified callbacks */
-typedef void (*f_Notify_idle) ( bool is_idle, EditorActiveX* ax, void *data );
-typedef void (*f_Notify_resize) ( bool is_fullscreen, int width, int height, EditorActiveX* ax, void *data );
-typedef void (*f_Notify_Error) ( string message, EditorActiveX *ax, void *data );
+typedef void (*f_Notify_Idle)   (bool is_idle, EditorActiveX* ax, void *data);
+typedef void (*f_Notify_Error)  (string message, EditorActiveX *ax, void *data);
 
-/* activex - render region */
+/* activex - render region - manage the physical screen output */
 class __dlexport RenderRegionActiveX : public EditorActiveX
 {
 public:
-        RenderRegionActiveX ( string name, void *handle,
-                              int x, int y, int w, int h );
-        ~RenderRegionActiveX ();
+        enum ViewMode {
+                PerspectiveMode,
+                OrthogonalMode,
+                QuadOrthogonalViewMode
+        };
 
-        void on_adding ( void );
-        void update ( void );
-        void dispatch ( void );
-        void load ( struct serializer *s );
-        void save ( struct serializer *s );
+        RenderRegionActiveX(string name, OutputMethod method, void* handle, int x, int y, int w, int h);
+        ~RenderRegionActiveX();
 
-        // void set_renderer ( struct renderer *renderer );
-        void resize ( int x, int y, int w, int h, bool toggle_fullscreen );
-        void bind_callback ( string signal, f_Generic callback, void *data );
-        const void* get_handle ( void ) const;
+        void                    on_adding();
+        void                    update();
+        void                    dispatch();
+        void                    load(struct serializer* s);
+        void                    save(struct serializer* s);
+
+        void                    resize(int x, int y, int w, int h, bool toggle_fullscreen);
+        void                    bind_callback(string signal, f_Generic callback, void* data);
+
+        ProjectionProbe*        get_probe() const;
+        void                    moveto(int x, int y);
+        void                    magnify(int delta);
+        void                    set_view_mode(ViewMode mode);
 private:
-        void set_idle_state ( bool is_idle );
+        void                    set_idle_state(bool is_idle);
 
         class RenderRegionInt;
-        class RenderRegionInt *pimpl;
+        class RenderRegionInt*  pimpl;
 };
 
-/* activex - render configurator */
+/* activex - render configurator - configurates the renderer */
 class RenderConfigActiveX : public EditorActiveX
 {
 public:
@@ -149,7 +157,7 @@ public:
         void* checkout_value ( string tab_name, string value );
         void bind_callback ( string signal, f_Generic callback, void *data );
 
-        Renderer* get_renderer ();
+        Renderer* get_renderer();
 private:
         class RenderConfigInt;
         class RenderConfigInt *pimpl;

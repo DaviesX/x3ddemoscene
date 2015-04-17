@@ -338,14 +338,7 @@ void render_tree_free(struct render_tree* tree)
         struct render_tree_visitor visitor;
         render_tree_visitor_init(&visitor, visit_free_node, nullptr);
         render_tree_visit(tree, &visitor);
-        int i;
-        for (i = 0; i < sizeof(tree->var)/sizeof(tree->var[0]); i ++) {
-                int j;
-                for (j = 0; j < tree->n_var[i]; j ++) {
-                        free_fix(tree->var[i][j].name);
-                        tree->var[i][j].ptr = nullptr;
-                }
-        }
+        render_tree_clear_environment(tree);
         zero_obj(tree);
 }
 
@@ -454,7 +447,12 @@ void render_tree_declare_environment(struct render_tree* tree,
 void render_tree_clear_environment(struct render_tree* tree)
 {
         int i;
-        for (i = 0; i < sizeof(tree->n_var)/sizeof(int); i ++) {
+        for (i = 0; i < sizeof(tree->var)/sizeof(tree->var[0]); i ++) {
+                int j;
+                for (j = 0; j < tree->n_var[i]; j ++) {
+                        free_fix(tree->var[i][j].name);
+                        tree->var[i][j].ptr = nullptr;
+                }
                 tree->n_var[i] = 0;
         }
 }

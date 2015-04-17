@@ -5,7 +5,7 @@
 	<usr/usr_kernel.hpp>
 	<usr/usr_editor.hpp>
 
-1423199121 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
+1429044493 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
 	<string>
 	<algorithm>
 	<set>
@@ -13,11 +13,13 @@
 	<vector>
 	<logout.h>
 	<algorithm.h>
+	<allocator.h>
 	<thread.h>
 	<serializer.h>
 	<math/math.h>
 	<x3d/common.h>
 	<x3d/init.h>
+	<x3d/projectionprobe.h>
 	<x3d/renderer.h>
 	<x3d/renderable.h>
 	<x3d/renderableaggregate.h>
@@ -84,7 +86,7 @@
 1403526919 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
 	<x3d/common.h>
 
-1424386711 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1428713582 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<math/math.h>
 	<staging.h>
 	<symlib.h>
@@ -117,9 +119,11 @@
 1419742711 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1426993811 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1429232313 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
+	<usr/usr_renderer.hpp>
+	<usr/usr_projectionprobe.hpp>
 	<usr/usr_world.hpp>
 
 1423349066 /home/davis/x3drenderlib-code/trunk/include/usr/usr_world.hpp
@@ -136,7 +140,21 @@
 
 1422518397 /home/davis/x3drenderlib-code/trunk/include/usr/usr_resourceloader.hpp
 
-1426996043 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderer.hpp
+1429067370 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderer.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_renderaggregate.hpp>
+
+1429049053 source:/home/davis/x3drenderlib-code/trunk/kernel/projectionprobe.c
+	<allocator.h>
+	<logout.h>
+	<x3d/projectionprobe.h>
+
+1429257343 /home/davis/x3drenderlib-code/trunk/include/x3d/projectionprobe.h
+	<math/math.h>
+
+1429067230 source:/home/davis/x3drenderlib-code/trunk/usr/usr_projectionprobe.cpp
+	<usr/usr_projectionprobe.hpp>
+
+1429256646 /home/davis/x3drenderlib-code/trunk/include/usr/usr_projectionprobe.hpp
+	<usr/usr_x3d.hpp>
 

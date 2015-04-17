@@ -11,6 +11,8 @@ namespace usr
 
 class RenderNode;
 
+/** \brief Render output node
+ */
 class RenderOutput : public CoreResource {
 public:
         RenderOutput(string name, string probe);
@@ -20,6 +22,8 @@ private:
         struct render_output*   m_node;
 };
 
+/** \brief Render layer node
+ */
 class RenderLayer : public CoreResource {
 public:
         RenderLayer(string name);
@@ -28,6 +32,8 @@ private:
         struct render_layer*    m_node;
 };
 
+/** \brief Renerable context node
+ */
 class RenderableContext : public CoreResource {
 public:
         RenderableContext(string name, string context, RenderAggregate::Strategy strategy);
@@ -38,6 +44,8 @@ private:
         struct render_rdacontext* m_node;
 };
 
+/** \brief Render radiance node
+ */
 class RenderRadiance : public CoreResource {
 public:
         enum RenderPipeline {
@@ -55,6 +63,8 @@ private:
         struct render_radiance* m_node;
 };
 
+/** \brief Render tree visitor
+ */
 class RenderTreeVisitor {
 public:
         RenderTreeVisitor(void* data);
@@ -68,6 +78,8 @@ private:
         void*                           m_data;
 };
 
+/** \brief Render tree
+ */
 class __dlexport RenderTree : public CoreResource {
 public:
         RenderTree ();
@@ -78,7 +90,6 @@ public:
                 Spec,
                 Probe,
                 RDA,
-                RenderOut,
                 Thread,
                 Antialias,
                 Filter

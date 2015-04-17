@@ -105,7 +105,7 @@ bool SplashScreen::show(bool visible)
 
                 pimpl->m_window = gtk_window_new(GTK_WINDOW_POPUP);
                 gtk_widget_set_size_request(pimpl->m_window, 800, 600);
-                gtk_window_set_decorated(GTK_WINDOW(pimpl->m_window), TRUE);
+                gtk_window_set_decorated(GTK_WINDOW(pimpl->m_window), FALSE);
                 gtk_window_set_position(GTK_WINDOW(pimpl->m_window), GTK_WIN_POS_CENTER_ALWAYS);
                 gtk_window_set_resizable(GTK_WINDOW(pimpl->m_window), FALSE);
                 if (!(pimpl->m_image = gtk_image_new_from_file(filename.c_str()))) {

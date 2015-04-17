@@ -323,6 +323,7 @@
 		<Unit filename="include/x3d/init.h" />
 		<Unit filename="include/x3d/modelentity.h" />
 		<Unit filename="include/x3d/poi.h" />
+		<Unit filename="include/x3d/projectionprobe.h" />
 		<Unit filename="include/x3d/renderable.h" />
 		<Unit filename="include/x3d/renderableaggregate.h" />
 		<Unit filename="include/x3d/renderableaggregaterequest.h" />
@@ -346,6 +347,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/poi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/projectionprobe.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/renderable.c">

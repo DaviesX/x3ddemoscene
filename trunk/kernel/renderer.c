@@ -201,7 +201,8 @@ void renderer_update ( struct renderer *rend )
  */
 void renderer_render ( struct renderer *rend )
 {
-        g_rend_ops.lcrenderer_render ( rend->rend );
+        if (rend->has_bytecode)
+                g_rend_ops.lcrenderer_render ( rend->rend );
 }
 
 /** \brief output the rendering result thru the method specified by render_out
@@ -232,7 +233,11 @@ __dlexport void renderer_renderscript ( const char* script, struct renderer *ren
 
 __dlexport void renderer_render_tree(struct render_tree *tree, struct renderer *rend)
 {
-        render_tree_compile(tree, &rend->bytecode);
+        if (render_tree_compile(tree, &rend->bytecode)) {
+                rend->has_bytecode = true;
+        } else {
+                log_mild_err_dbg("cannot inject bytecode because compilation is failed");
+        }
 #if 0
         struct render_bytecode* bc = &rend->bytecode;
         char* instr = bc->instr;
@@ -254,7 +259,7 @@ __dlexport void renderer_render_tree(struct render_tree *tree, struct renderer *
 }
 
 #undef emit_instr
-
+/*
 __dlexport struct render_operand* render_tree_create ( struct render_tree *tree )
 {
         return nullptr;
@@ -290,3 +295,4 @@ __dlexport struct alg_list* render_tree_environment ( struct render_tree *tree )
 {
         return nullptr;
 }
+*/

@@ -550,6 +550,7 @@ void free_pt_renderer ( struct pt_renderer* r )
 
 void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* r )
 {
+        return ;
         r->bytecode = *bytecode;
         /* update passes */
         r->n_passes = 0;
@@ -715,6 +716,7 @@ end_parsing_instr:;
 
 void pt_renderer_render ( struct pt_renderer* r )
 {
+        return ;
         char* p_instr = r->bytecode.instr;
         while ( true ) {
                 char op = *p_instr;

@@ -17,11 +17,13 @@ extern "C"
 {
 #include <logout.h>
 #include <algorithm.h>
+#include <allocator.h>
 #include <thread.h>
 #include <serializer.h>
 #include <math/math.h>
 #include <x3d/common.h>
 #include <x3d/init.h>
+#include <x3d/projectionprobe.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
 #include <x3d/renderableaggregate.h>

@@ -20,44 +20,44 @@ WorldDataActiveX::WorldDataInt::WorldDataInt()
 }
 
 
-WorldDataActiveX::WorldDataActiveX ( string name ) :
+WorldDataActiveX::WorldDataActiveX(string name) :
         EditorActiveX ( name, sizeof(WorldDataActiveX), EDIT_ACTIVEX_WORLD_DATA )
 {
         pimpl = new WorldDataActiveX::WorldDataInt;
 }
 
-WorldDataActiveX::~WorldDataActiveX ( void )
+WorldDataActiveX::~WorldDataActiveX()
 {
 }
 
-void WorldDataActiveX::on_adding ( void )
+void WorldDataActiveX::on_adding()
 {
-        // make a default renderable context
-        KernelEnvironment* state = this->get_state_buffer ();
-        /*
-        struct x3d::rda_context* context =
-                (struct x3d::rda_context*) state->use ( c_WorldData );
-        if ( context ) {
-                x3d::rda_context_free ( context );
+        // put itself to kernel environment
+        KernelEnvironment* state = get_state_buffer();
+        state->declare(c_WorldData, this);
+}
+
+void WorldDataActiveX::update()
+{
+        KernelEnvironment* state    = get_state_buffer();
+        RenderConfigActiveX* config = static_cast<RenderConfigActiveX*>(state->use(c_RenderConfig));
+        if (config) {
+                Renderer* renderer  = config->get_renderer();
+                pimpl->m_world.bind_render_processor(renderer);
         }
-        context = x3d::rda_context_create ( RAG_LINEAR );*/
-        state->declare ( c_WorldData, this );
-}
 
-void WorldDataActiveX::update ( void )
-{
         pimpl->m_world.update();
 }
 
-void WorldDataActiveX::dispatch ( void )
+void WorldDataActiveX::dispatch()
 {
 }
 
-void WorldDataActiveX::load ( struct serializer *s )
+void WorldDataActiveX::load(struct serializer *s)
 {
 }
 
-void WorldDataActiveX::save ( struct serializer *s )
+void WorldDataActiveX::save(struct serializer *s)
 {
 }
 

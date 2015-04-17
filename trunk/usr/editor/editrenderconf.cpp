@@ -54,15 +54,17 @@ public:
 
         RenderTree              m_tree;
         Renderer*               m_renderer;
+        string                  c_ProbeName = "default_probe";
+        string                  c_RenderContextName = "default_context";
 };
 
 RenderConfigActiveX::RenderConfigInt::RenderConfigInt ()
 {
         m_renderer = new Renderer(Renderer::Pathtracer);
         // Put a default tree onto it
-        RenderOutput output("default_output", "default_probe");
+        RenderOutput output("default_output", c_ProbeName);
         RenderRadiance radiance("default_radiance", RenderRadiance::DirectLightning);
-        RenderableContext context("default_renderable_context", "default_context", RenderAggregate::SimpleLinear);
+        RenderableContext context("default_renderable_context", c_RenderContextName, RenderAggregate::SimpleLinear);
         RenderNode* root = m_tree.create_root();
         m_tree.insert_node(root, output.get_node());
         m_tree.insert_node(output.get_node(), radiance.get_node());
@@ -123,11 +125,16 @@ void RenderConfigActiveX::dispatch ( void )
 
 void RenderConfigActiveX::update ( void )
 {;
+        KernelEnvironment* state = get_state_buffer();
+        RenderRegionActiveX* region = (RenderRegionActiveX*) state->use(c_RenderRegion);
+        ProjectionProbe* probe = region->get_probe();
         /* atomically swap the state buffer */
         wait_for_update ();
         swap_buf ();
         unwait ();
-
+        /* update render tree */
+        pimpl->m_tree.clear_environment_variables();
+        pimpl->m_tree.set_environment_variable(RenderTree::Probe, pimpl->c_ProbeName, (void*) probe);
         pimpl->m_renderer->update(&pimpl->m_tree);
 }
 

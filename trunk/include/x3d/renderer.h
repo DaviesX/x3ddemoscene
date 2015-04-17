@@ -38,6 +38,7 @@ struct render_out;
  */
 typedef struct renderer {
         uuid_t                  rend_id;
+        bool                    has_bytecode;
         struct render_bytecode  bytecode;
         struct lcrenderer*      rend;
 } *p_renderer_t;

@@ -64,8 +64,7 @@ extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo
 static void idle_switch_callback(bool is_idle, EditorActiveX* ax, void *info)
 {
         MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(info);
-        RenderRegionActiveX* ax_region = static_cast<RenderRegionActiveX*>(ax);
-        GtkWidget* draw_area = (GtkWidget*) (ax_region->get_handle());
+        GtkWidget* draw_area = pimpl->m_draw_region;
         if (is_idle) {
                 if (!pimpl->m_is_logo_connected) {
                         pimpl->m_logo_draw_signal =
@@ -224,7 +223,8 @@ demo_mode:
                 int x, y;
                 int width, height;
                 widget_get_size(pimpl->m_window, pimpl->m_draw_region, &x, &y, &width, &height);
-                RenderRegionActiveX* ax_region = new RenderRegionActiveX(cRenderRegion, pimpl->m_draw_region,
+                RenderRegionActiveX* ax_region = new RenderRegionActiveX(cRenderRegion, GtkRenderRegionOutput,
+                                                                         pimpl->m_draw_region,
                                                                          x, y, width, height );
                 ax_region->bind_callback("notify_idle", (f_Generic) idle_switch_callback, pimpl);
                 ax_region->bind_callback("notify_resize", (f_Generic) window_reize_callback, pimpl);

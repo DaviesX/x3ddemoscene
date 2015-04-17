@@ -43,8 +43,9 @@ void World::bind_render_processor(Renderer* renderer)
 
 void World::update()
 {
-        if (m_renderer)
+        if (m_renderer) {
                 m_renderer->render();
+        }
 }
 
 }// namespace usr
