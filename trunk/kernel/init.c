@@ -32,19 +32,30 @@ struct init {
 
 static struct init g_init = {0};
 
-static void rest_init ( void );
-static void kernel_init_param ( int argc, char **argv );
+static void rest_init();
+static void kernel_init_param(int argc, char** argv);
+static void kernel_free_param();
 
 
-static void kernel_init_param ( int argc, char **argv )
+static void kernel_init_param(int argc, char** argv)
 {
         g_init.argc = argc;
-        g_init.argv = alloc_var ( sizeof ( char * ), argc );
-        g_init.argv = expand_var ( g_init.argv, argc );
+        g_init.argv = alloc_var(sizeof(char*), argc);
+        g_init.argv = expand_var(g_init.argv, argc);
         int i;
-        for ( i = 0; i < argc; i ++ ) {
-                g_init.argv[i] = argv[i];
+        for (i = 0; i < argc; i ++) {
+                g_init.argv[i] = alg_alloc_string(argv[i]);
         }
+}
+
+static void kernel_free_param()
+{
+        int i;
+        for (i = 0; i < g_init.argc; i ++) {
+                free_fix(g_init.argv[i]);
+        }
+        free_var(g_init.argv);
+        g_init.argc = 0;
 }
 
 static char* get_self_so ( int argc, char* argv[] )
@@ -62,10 +73,12 @@ retry:
         return "./libX3dCore.so";
 }
 
-__dlexport int main ( int argc, char* argv[] )
+__dlexport int main(int argc, char* argv[])
 {
-        kernel_init_param ( argc, argv );
-        return kernel_main ( argc, argv );
+        kernel_init_param(argc, argv);
+        int e = kernel_main ( argc, argv );
+        kernel_free_param();
+        return e;
 }
 
 __dlexport bool kernel_start ( void )
@@ -137,9 +150,12 @@ __dlexport void kernel_shutdown ( void )
 {
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
+        if (!init->to_run)
+                return ;
         if ( signal->on_free != nullptr )
                 signal->on_free ( signal->env );
         free_symlib ( &init->symbols );
+        free_thread_lib();
         free_log_output ();
 }
 
@@ -148,16 +164,12 @@ __dlexport bool kernel_is_running ( void )
         return g_init.to_run;
 }
 
-__dlexport void kernel_add_param ( char *option, char *param )
+__dlexport void kernel_add_param(const char *option, const char *param)
 {
-        g_init.argv = add_var ( g_init.argv, 2 );
+        g_init.argv = add_var(g_init.argv, 2);
         int n = g_init.argc;
-        g_init.argv[n + 0] =
-                alloc_fix ( sizeof ( char ), strlen ( option ) + 1 );
-        strcpy ( g_init.argv[n + 0], option );
-        g_init.argv[n + 1] =
-                alloc_fix ( sizeof ( char ), strlen ( param ) + 1 );
-        strcpy ( g_init.argv[n + 1], param );
+        g_init.argv[n + 0] = alg_alloc_string(option);
+        g_init.argv[n + 1] = alg_alloc_string(param);
         g_init.argc += 2;
 }
 

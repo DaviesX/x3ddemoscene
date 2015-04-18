@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1419622604 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
+1429318450 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
 	<stdio.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
@@ -83,7 +83,7 @@
 1405336395 /home/davis/x3drenderlib-code/trunk/lib/serializer.h
 	<x3d/common.h>
 
-1403526919 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
+1429299548 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
 	<x3d/common.h>
 
 1428713582 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
@@ -119,7 +119,7 @@
 1419742711 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1429232313 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1429300315 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_renderer.hpp>

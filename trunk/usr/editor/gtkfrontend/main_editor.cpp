@@ -107,6 +107,8 @@ MainEditor::MainEditorInt::~MainEditorInt()
         stop_gtk_main();
         await_gtk_main();
 
+        gdk_pixbuf_unref(m_logo);
+        gdk_pixbuf_unref(m_icon);
         g_signal_handler_disconnect(m_draw_region, m_logo_draw_signal);
         g_signal_handler_disconnect(m_window, m_idle_dispatch);
         g_signal_handler_disconnect(m_window, m_destroy_signal);

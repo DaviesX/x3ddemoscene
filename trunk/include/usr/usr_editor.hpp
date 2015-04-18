@@ -25,7 +25,7 @@ const string c_WorldData        = "world-data";
 class Editor;
 class EditorFrontend;
 class EditorActiveX;
-class KernelEditor;
+class EditorBackend;
 
 class RenderRegionActiveX;
 class RenderConfigActiveX;
@@ -287,7 +287,7 @@ public:
         }
 };
 
-class __dlexport KernelEditor : public KernelProxy
+class __dlexport EditorBackend : public KernelProxy
 {
 public:
         enum GUI_FONTEND_IDR {
@@ -299,9 +299,11 @@ public:
                 GUI_FONTEND_CUSTUM
         };
 
-        KernelEditor ( Editor *e );
-        ~KernelEditor ( void );
+        EditorBackend ( Editor *e );
+        ~EditorBackend ( void );
 
+        void register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend *backend );
+private:
         int on_init ( int argc, char **argv, KernelEnvironment *env );
         int on_rest_init ( KernelEnvironment *env );
         int on_loop_init ( KernelEnvironment *env );
@@ -309,8 +311,6 @@ public:
         int on_loop_free ( KernelEnvironment *env );
         int on_free ( KernelEnvironment *env );
 
-        void register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend *backend );
-private:
         GUI_FONTEND_IDR         m_frontend_type;
         Editor*                 m_editor;
         EditorFrontend*         m_frontend;

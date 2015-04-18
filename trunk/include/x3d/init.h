@@ -9,7 +9,7 @@
  * functions' declaration
  */
 __dlexport int kernel_main ( int argc, char** argv );
-__dlexport void kernel_add_param ( char *option, char *param );
+__dlexport void kernel_add_param(const char *option, const char *param);
 __dlexport bool kernel_start ( void );
 __dlexport void kernel_halt ( void );
 __dlexport void kernel_loop ( void );

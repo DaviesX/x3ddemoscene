@@ -7,7 +7,7 @@ using namespace x3d::usr;
 
 
 /* KernelEditor */
-KernelEditor::KernelEditor ( Editor *e ) :
+EditorBackend::EditorBackend ( Editor *e ) :
         KernelProxy ( "KernelEditor" ),
         m_editor (e)
 {
@@ -15,12 +15,12 @@ KernelEditor::KernelEditor ( Editor *e ) :
         this->m_frontend = new EditorGtkFrontend ();
 }
 
-KernelEditor::~KernelEditor ()
+EditorBackend::~EditorBackend ()
 {
-        delete this->m_frontend;
+        delete m_frontend;
 }
 
-int KernelEditor::on_init ( int argc, char** argv, KernelEnvironment *env )
+int EditorBackend::on_init ( int argc, char** argv, KernelEnvironment *env )
 {
         env->declare ( "argc", env->make<int>(argc) );
         env->declare ( "argv", env->make<char**>(argv) );
@@ -41,7 +41,7 @@ fail:
         return 1;
 }
 
-int KernelEditor::on_rest_init ( KernelEnvironment *env )
+int EditorBackend::on_rest_init ( KernelEnvironment *env )
 {
         if ( !this->m_frontend->load ( this->m_editor, env ) ) {
                 goto fail;
@@ -66,7 +66,7 @@ static void *gui_thread ( struct data_info *data )
         return nullptr;
 }
 
-int KernelEditor::on_loop_init ( KernelEnvironment *env )
+int EditorBackend::on_loop_init ( KernelEnvironment *env )
 {
         struct data_info* info = (struct data_info*) alloc_fix ( sizeof *info, 1 );
 
@@ -87,7 +87,7 @@ fail:
         return 1;
 }
 
-int KernelEditor::on_loop ( KernelEnvironment *env )
+int EditorBackend::on_loop ( KernelEnvironment *env )
 {
         if ( !this->m_editor->is_open () ) {
                 this->get_subjected_kernel()->stop();
@@ -98,12 +98,12 @@ int KernelEditor::on_loop ( KernelEnvironment *env )
         return 0;
 }
 
-int KernelEditor::on_loop_free ( KernelEnvironment *env )
+int EditorBackend::on_loop_free ( KernelEnvironment *env )
 {
         return 0;
 }
 
-int KernelEditor::on_free ( KernelEnvironment *env )
+int EditorBackend::on_free ( KernelEnvironment *env )
 {
         if ( !this->m_editor->save_state ( this->m_state_file ) ) {
                 log_mild_err_dbg ( "couldn't save editor state to: %s",
@@ -120,7 +120,7 @@ fail:
         return 1;
 }
 
-void KernelEditor::register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend *backend )
+void EditorBackend::register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend *backend )
 {
         if ( this->m_frontend && !this->m_frontend->is_custum () ) {
                 delete this->m_frontend;

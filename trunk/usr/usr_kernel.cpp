@@ -64,14 +64,15 @@ static int on_loop_free ( void *env )
         return 0;
 }
 
-static int on_free ( void *env )
+static int on_free(void* env)
 {
         Kernel* kern = static_cast<Kernel*>(env);
 
-        for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
-              iter != kern->m_proxy.end ();
-              ++ iter ) {
-                (*iter)->on_free ( &(*iter)->m_env );
+        for (list<KernelProxy*>::iterator iter = kern->m_proxy.begin();
+              iter != kern->m_proxy.end(); ++ iter) {
+                KernelProxy* proxy = *iter;
+                proxy->on_free(&(*iter)->m_env);
+                delete proxy;
         }
         return 0;
 }
@@ -101,13 +102,13 @@ Kernel::~Kernel ( void )
 
 bool Kernel::run ( void )
 {
-        this->is_running = true;
-        if ( !kernel_start () ) {
-                this->is_running = false;
+        is_running = true;
+        if (!kernel_start()) {
+                is_running = false;
                 return false;
         }
         kernel_loop ();
-        this->is_running = false;
+        is_running = false;
         return true;
 }
 

@@ -368,13 +368,13 @@ void init_symlib ( struct symbol_set *symbols )
         symbols->is_loaded = false;
 }
 
-void free_symlib ( struct symbol_set *symbols )
+void free_symlib(struct symbol_set* symbols)
 {
+        symlib_unload(symbols);
         int i;
-        for ( i = 0; i < cNumSymbolCate; i ++ ) {
-                alg_free ( list, &symbols->symbol[i] );
+        for (i = 0; i < cNumSymbolCate; i ++) {
+                alg_free(list, &symbols->symbol[i]);
         }
-        symlib_unload ( symbols );
 }
 
 bool symlib_load ( struct symbol_set* symbols, char* filename )
@@ -405,10 +405,19 @@ bool symlib_unload ( struct symbol_set* symbols )
                 return false;
         }
         log_normal_dbg ( "unloading file %s", symbols->filename );
-        unload_dyn ( symbols );
-        symbols->is_loaded = false;
-        symbols->handle = nullptr;
-        free_fix ( symbols->filename );
+        int i;
+        for (i = 0; i < cNumSymbolCate; i ++) {
+                struct dlsymbol* syms   = alg_array(list, &symbols->symbol[i]);
+                int num_sym             = alg_n(list, &symbols->symbol[i]);
+                int j;
+                for (j = 0; j < num_sym; j ++) {
+                        free_fix(syms[j].name);
+                }
+        }
+        unload_dyn(symbols);
+        symbols->is_loaded      = false;
+        symbols->handle         = nullptr;
+        free_fix(symbols->filename);
         return true;
 }
 

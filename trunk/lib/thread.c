@@ -228,21 +228,21 @@ static void workgroup_make_active ( int n_thread, struct work_group *group )
         group->is_active = true;
         int i;
         for ( i = 0; i < n_thread; i ++ )
-                workgroup_addthread ( group );
+                workgroup_addthread(group);
 }
 
 static void workgroup_free_active ( struct work_group *group )
 {
         group->is_active = false;
-        workgroup_removealltask ( group );
-        workgroup_removeallthread ( group );
-        init_trap ( &group->idler );
-        init_trap ( &group->lock[0] );
-        init_trap ( &group->lock[1] );
+        workgroup_removealltask(group);
+        workgroup_removeallthread(group);
+        init_trap(&group->idler);
+        init_trap(&group->lock[0]);
+        init_trap(&group->lock[1]);
         group->n_tasks = 0;
         group->n_threads = 0;
-        alg_llist_flush ( &group->tasks );
-        alg_llist_flush ( &group->threads );
+        alg_llist_flush(&group->tasks);
+        alg_llist_flush(&group->threads);
 }
 
 static void workgroup_free_inactive ( struct work_group *group )
@@ -264,8 +264,8 @@ static struct work_group *create_workgroup ( void )
 static void free_workgroup ( struct work_group *group )
 {
         while ( group->next != nullptr ) {
-                struct work_group *group = group->next;
-                workgroup_remove ( group->prev );
+                group = group->next;
+                workgroup_remove(group->prev);
         }
 }
 
@@ -310,11 +310,11 @@ static void workgroup_removethread ( struct thread_ctx *thread, struct work_grou
 
 static void workgroup_removeallthread ( struct work_group *group )
 {
-        trap_on_thread ( &group->lock[LOCK_THREAD] );
+        trap_on_thread(&group->lock[LOCK_THREAD]);
         alg_iter(struct thread_ctx*)    curr_pos;
         alg_iter(struct thread_ctx*)    end;
-        alg_first ( llist, &group->threads, curr_pos );
-        alg_null ( llist, &group->threads, end );
+        alg_first(llist, &group->threads, curr_pos);
+        alg_null(llist, &group->threads, end);
 
         while ( curr_pos != end ) {
                 struct thread_ctx *thread = alg_access(curr_pos);
@@ -322,23 +322,28 @@ static void workgroup_removeallthread ( struct work_group *group )
                 /* notify the termination of the thread,
                  * then join and wait for its exit */
                 thread->is_active = false;
-                join_thread ( thread );
+                /* untrap counters */
+                int i;
+                for (i = 0; i < group->n_threads; i ++) {
+                        remove_counter_trap(&group->idler);
+                }
+                join_thread(thread);
 
                 /* remove it from the thread list */
-                alg_remove ( llist, &group->threads, thread->addr_id );
-                alg_access ( thread->addr_id ) = nullptr;
+                alg_remove(llist, &group->threads, thread->addr_id);
+                alg_access(thread->addr_id) = nullptr;
 
-                free_fix ( thread );
+                free_fix(thread);
                 /* get next thread */
-                alg_next ( llist, &group->threads, curr_pos )
+                alg_next(llist, &group->threads, curr_pos);
         }
-        remove_thread_trap ( &group->lock[LOCK_THREAD] );
+        remove_thread_trap(&group->lock[LOCK_THREAD]);
 }
 
 static struct work_group *workgroup_new ( int n_thread, struct work_group *group )
 {
         if ( group->next == nullptr ) {
-                group->next = alloc_fix ( sizeof *group, 1 );
+                group->next = alloc_obj(group->next);
                 group->next->prev = group;
                 group->next->next = nullptr;
                 workgroup_make_inactive ( group->next );
@@ -351,6 +356,8 @@ static struct work_group *workgroup_new ( int n_thread, struct work_group *group
 
 static void workgroup_remove ( struct work_group *group )
 {
+        if (group == nullptr)
+                return ;
         workgroup_free_active ( group );
         workgroup_free_inactive ( group );
 
@@ -480,7 +487,7 @@ void init_thread_lib ( void )
         g_thrpool.grouped = g_thrpool.grouped_head;
         int i;
         for ( i = 0; i < INIT_GROUP_COUNT; i ++ ) {
-                workgroup_new ( g_ncores, g_thrpool.grouped );
+                workgroup_new(g_ncores, g_thrpool.grouped);
                 g_thrpool.grouped = g_thrpool.grouped->next;
         }
         g_thrpool.grouped = g_thrpool.grouped_head;
