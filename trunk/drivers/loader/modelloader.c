@@ -1,5 +1,6 @@
 /* modelloader.c: All model loading functions go here */
-#include <staging.h>
+#include <container/staging.h>
+#include <misc.h>
 #include <logout.h>
 #include <x3d/resloader.h>
 #include <loader/modelloader.h>

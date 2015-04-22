@@ -1,6 +1,6 @@
+#include <misc.h>
 #include <x3d/common.h>
 #include <math/math.h>
-#include <algorithm.h>
 #include <thread.h>
 #include <logout.h>
 #include <symlib.h>

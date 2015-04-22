@@ -2,7 +2,7 @@
 #define SHADERFORMULATE_H_INCLUDED
 
 
-#include <algorithm.h>
+#include <container/hashmap.h>
 #include <x3d/common.h>
 
 

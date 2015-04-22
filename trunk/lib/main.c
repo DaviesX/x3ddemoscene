@@ -1,8 +1,9 @@
 /* main.c: All unit tests for lib module go here */
 #include <logout.h>
-#include <algorithm.h>
 #include <allocator.h>
-#include <staging.h>
+#include <container/paramset.h>
+#include <container/staging.h>
+#include <container/quicksort.h>
 #include <thread.h>
 #include <timing.h>
 #include <x3d/debug.h>

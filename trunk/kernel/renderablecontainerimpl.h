@@ -2,6 +2,7 @@
 #define RENDERABLECONTAINERIMPL_H_INCLUDED
 
 /* @todo (davis#1#): don't need renderable dependency later... */
+#include <container/linkedlist.h>
 #include <x3d/renderable.h>
 
 struct rdacontainer;

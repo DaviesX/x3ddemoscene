@@ -1,5 +1,5 @@
 /* grid.c: Manage grid spatial primitive partition */
-#include <algorithm.h>
+#include <container/arraylist.h>
 #include <math/math.h>
 #include <renderer/geometry.h>
 #include <allocator.h>

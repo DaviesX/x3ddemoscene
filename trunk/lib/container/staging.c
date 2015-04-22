@@ -1,5 +1,9 @@
 /* staging.cpp: data resource staging operations go here */
-#include <staging.h>
+#include <misc.h>
+#include <container/stack.h>
+#include <container/hashmap.h>
+#include <container/linkedlist.h>
+#include <container/staging.h>
 
 
 #define HASH_SIZE		(1 << 16)

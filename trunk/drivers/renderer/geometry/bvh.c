@@ -1,5 +1,7 @@
 /* bvh.c: Manage Bvh subdivide primitive partition */
-#include <algorithm.h>
+#include <container/arraylist.h>
+#include <container/stack.h>
+#include <container/quicksort.h>
 #include <math/math.h>
 #include <allocator.h>
 #include <renderer/geometry.h>

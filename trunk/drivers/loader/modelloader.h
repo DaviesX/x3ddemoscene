@@ -2,7 +2,7 @@
 #define X3DSCENELOADER_H_INCLUDED
 
 
-#include <staging.h>
+#include <container/staging.h>
 
 /*
  * Definitions

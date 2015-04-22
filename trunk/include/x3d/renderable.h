@@ -1,9 +1,9 @@
 #ifndef RENDERABLE_H_INCLUDED
 #define RENDERABLE_H_INCLUDED
 
+#include <type.h>
 #include <x3d/common.h>
-#include <algorithm.h>
-#include <math.h>
+#include <math/math.h>
 
 /*
  * structure

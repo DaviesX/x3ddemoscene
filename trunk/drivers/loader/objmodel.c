@@ -1,6 +1,7 @@
 /* obj_model.c: Obj model file loading functions all go here */
+#include <misc.h>
 #include <math/math.h>
-#include <staging.h>
+#include <container/staging.h>
 #include <logout.h>
 #include <x3d/resloader.h>
 #include "modelloader.h"

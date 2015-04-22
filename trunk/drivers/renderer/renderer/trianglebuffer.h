@@ -1,8 +1,8 @@
 #ifndef TRIANGLEBUFFER_H_INCLUDED
 #define TRIANGLEBUFFER_H_INCLUDED
 
-#include <algorithm.h>
-
+#include <container/arraylist.h>
+#include <math/math.h>
 
 enum TRIBUFFER_ATTR_IDR {
         TRIBUFFER_ATTR_NULL     = 0,

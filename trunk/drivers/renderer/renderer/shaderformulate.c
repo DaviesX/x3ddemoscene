@@ -1,5 +1,6 @@
 /* shaderformulate.c: formulate a runnable shader from source code/function pointer */
-#include <algorithm.h>
+#include <misc.h>
+#include <container/stack.h>
 #include <math/math.h>
 #include <allocator.h>
 #include <logout.h>

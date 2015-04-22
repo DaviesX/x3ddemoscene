@@ -2,6 +2,7 @@
 #define MODEL_ENTITY_H_INCLUDED
 
 
+#include <math/math.h>
 #include <x3d/resloader.h>
 
 

@@ -1,7 +1,8 @@
 #ifndef STAGING_H_INCLUDED
 #define STAGING_H_INCLUDED
 
-#include <algorithm.h>
+#include <container/hashmap.h>
+#include <container/arraylist.h>
 #include <allocator.h>
 
 struct alg_hash_link_list;

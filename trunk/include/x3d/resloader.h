@@ -2,7 +2,7 @@
 #define RESLOADER_H_INCLUDED
 
 
-#include <staging.h>
+#include <container/staging.h>
 
 enum RES_IDR {
         RES_RENDERABLE,

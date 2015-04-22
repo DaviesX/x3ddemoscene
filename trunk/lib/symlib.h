@@ -1,7 +1,7 @@
 #ifndef SYMBOL_LIB_H_INCLUDED
 #define SYMBOL_LIB_H_INCLUDED
 
-#include <algorithm.h>
+#include <container/arraylist.h>
 #include <x3d/common.h>
 
 

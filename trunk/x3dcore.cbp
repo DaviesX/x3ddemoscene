@@ -377,11 +377,6 @@
 		<Unit filename="kernel/strategy.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/algorithm.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="lib/algorithm.h" />
-		<Unit filename="lib/algorithm.inl.h" />
 		<Unit filename="lib/allocator.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -414,6 +409,40 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/compiler/symbol.h" />
+		<Unit filename="lib/container/arraylist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/arraylist.h" />
+		<Unit filename="lib/container/balancedtree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/balancedtree.h" />
+		<Unit filename="lib/container/container.h" />
+		<Unit filename="lib/container/hashmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/hashmap.h" />
+		<Unit filename="lib/container/hashmapstatic.h" />
+		<Unit filename="lib/container/linkedlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/linkedlist.h" />
+		<Unit filename="lib/container/paramset.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/paramset.h" />
+		<Unit filename="lib/container/quicksort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/quicksort.h" />
+		<Unit filename="lib/container/stack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/stack.h" />
+		<Unit filename="lib/container/staging.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/container/staging.h" />
 		<Unit filename="lib/lib.h" />
 		<Unit filename="lib/logout.c">
 			<Option compilerVar="CC" />
@@ -454,14 +483,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/math/vector.h" />
+		<Unit filename="lib/misc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/misc.h" />
 		<Unit filename="lib/serializer.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/serializer.h" />
-		<Unit filename="lib/staging.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="lib/staging.h" />
 		<Unit filename="lib/symlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -474,6 +503,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/timing.h" />
+		<Unit filename="lib/type.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

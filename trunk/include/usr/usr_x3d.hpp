@@ -16,7 +16,7 @@ namespace x3d
 extern "C"
 {
 #include <logout.h>
-#include <algorithm.h>
+#include <misc.h>
 #include <allocator.h>
 #include <thread.h>
 #include <serializer.h>
