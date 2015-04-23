@@ -1,7 +1,7 @@
 /* allocator.c: Memory managment */
-#include <logout.h>
-#include <memory.h>
-#include <allocator.h>
+#include <x3d/common.h>
+#include <system/log.h>
+#include <system/allocator.h>
 
 
 #define INIT_COUNT			1
@@ -35,7 +35,7 @@ struct mem_rec g_mem_rec = {0};
 #define inc_inst() \
 { \
 	static int ibudget = 1; \
-	DEBUG_IF ( g_mem_rec.inst >= INSTANCE_BUGDET*ibudget, \
+	DebugIf ( g_mem_rec.inst >= INSTANCE_BUGDET*ibudget, \
 			log_mild_err_dbg ( "Running over instance budget: %d", \
 					   INSTANCE_BUGDET*ibudget ); \
 			ibudget ++; \

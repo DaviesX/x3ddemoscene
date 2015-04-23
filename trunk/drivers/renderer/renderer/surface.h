@@ -1,7 +1,7 @@
 #ifndef X3DSURFACE_H_INCLUDED
 #define X3DSURFACE_H_INCLUDED
 
-#include <x3d/common.h>
+#include <misc.h>
 
 /*
  * Definitions

@@ -2,8 +2,6 @@
 #define GEOMETRY_H_INCLUDED
 
 
-#include <x3d/common.h>
-// #include <x3d/resource_loader.h>
 #include <renderer/shader.h>
 #include <math/math.h>
 

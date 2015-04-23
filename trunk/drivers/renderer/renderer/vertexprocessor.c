@@ -1,7 +1,6 @@
 /* vertprocessor.c: all vertex processing during rasterization go here */
-#include <logout.h>
-#include <algorithm.h>
-#include <allocator.h>
+#include <system/log.h>
+#include <system/allocator.h>
 #include <renderer/shader.h>
 #include "rasterization.h"
 #include "vibuffer.h"

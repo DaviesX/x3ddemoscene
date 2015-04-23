@@ -1,7 +1,7 @@
 /* trimesh_subdivide.c: triangle mesh subdivide algorithm */
 #include <math/math.h>
 #include <renderer/geometry.h>
-#include <allocator.h>
+#include <system/allocator.h>
 #include "shape_common.h"
 #include "trimesh_subdivide.h"
 

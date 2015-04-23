@@ -3,7 +3,7 @@
 
 #include <container/hashmap.h>
 #include <container/arraylist.h>
-#include <allocator.h>
+#include <system/allocator.h>
 
 struct alg_hash_link_list;
 struct alg_list;

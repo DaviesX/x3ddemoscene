@@ -3,7 +3,7 @@
 #include <container/stack.h>
 #include <container/quicksort.h>
 #include <math/math.h>
-#include <allocator.h>
+#include <system/allocator.h>
 #include <renderer/geometry.h>
 #include "shape_common.h"
 #include "bvh.h"

@@ -4,8 +4,7 @@
 
 #include <math/math.h>
 #include <container/staging.h>
-#include <symlib.h>
-#include <algorithm.h>
+#include <system/symlib.h>
 
 #include <x3d/rendertree.h>
 

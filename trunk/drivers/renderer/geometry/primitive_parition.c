@@ -1,4 +1,5 @@
 /* primitive_partition.c: divide-and-conquer optimization for primitives  */
+#include <misc.h>
 #include <renderer/geometry.h>
 #include "bvh.h"
 #include "grid.h"

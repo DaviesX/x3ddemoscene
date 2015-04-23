@@ -26,21 +26,21 @@ struct alg_list {
 
 #pragma pack()
 
-pseudo_def(void create_alg_ptr_list(void* list, int len, bool is_inplace, struct alg_ptr_list* ptrs);)
-pseudo_def(void free_alg_ptr_list(struct alg_ptr_list* ptrs );)
-pseudo_def(void alg_ptr_list_tonew(struct alg_ptr_list* ptrs, int len, void* new_list))
-pseudo_def(void alg_ptr_list_inplace(struct alg_ptr_list* ptrs, int len, void* list))
+PseudoDef(void create_alg_ptr_list(void* list, int len, bool is_inplace, struct alg_ptr_list* ptrs);)
+PseudoDef(void free_alg_ptr_list(struct alg_ptr_list* ptrs );)
+PseudoDef(void alg_ptr_list_tonew(struct alg_ptr_list* ptrs, int len, void* new_list))
+PseudoDef(void alg_ptr_list_inplace(struct alg_ptr_list* ptrs, int len, void* list))
 
 static inline void create_alg_list(struct alg_list* list, int elm_size, int init_count);
 static inline void free_alg_list(struct alg_list* list);
 static inline void alg_list_push_back(void* elm, struct alg_list* list);
 static inline void alg_list_expand(int count, struct alg_list* list);
 static inline void alg_list_flush(struct alg_list* list);
-pseudo_def(void alg_list_find(struct alg_list* list, void* info, void** elm_data,
+PseudoDef(void alg_list_find(struct alg_list* list, void* info, void** elm_data,
                               bool (*compare_func) (void* info, void* elm));)
-pseudo_def(void alg_list_remove(struct alg_list* list, void* info,
+PseudoDef(void alg_list_remove(struct alg_list* list, void* info,
                                 bool (*compare_func) (void* info, void* elm));)
-pseudo_def(int alg_list_n(struct alg_list* list);)
+PseudoDef(int alg_list_n(struct alg_list* list);)
 static inline void alg_list_copy(struct alg_list* list0, struct alg_list* list1);
 static inline void alg_list_swap(struct alg_list* list0, struct alg_list* list1);
 

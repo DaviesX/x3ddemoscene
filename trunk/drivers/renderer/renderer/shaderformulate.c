@@ -2,9 +2,9 @@
 #include <misc.h>
 #include <container/stack.h>
 #include <math/math.h>
-#include <allocator.h>
-#include <logout.h>
-#include <symlib.h>
+#include <system/allocator.h>
+#include <system/log.h>
+#include <system/symlib.h>
 #include <x3d/common.h>
 #include "shaderformulate.h"
 

@@ -377,10 +377,10 @@
 		<Unit filename="kernel/strategy.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/allocator.c">
+		<Unit filename="lib/codecs/serializer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/allocator.h" />
+		<Unit filename="lib/codecs/serializer.h" />
 		<Unit filename="lib/compiler/compiler.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -443,11 +443,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/container/staging.h" />
-		<Unit filename="lib/lib.h" />
-		<Unit filename="lib/logout.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="lib/logout.h" />
 		<Unit filename="lib/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -487,23 +482,26 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="lib/misc.h" />
-		<Unit filename="lib/serializer.c">
+		<Unit filename="lib/system/allocator.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/serializer.h" />
-		<Unit filename="lib/symlib.c">
+		<Unit filename="lib/system/allocator.h" />
+		<Unit filename="lib/system/log.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/symlib.h" />
-		<Unit filename="lib/thread.c">
+		<Unit filename="lib/system/log.h" />
+		<Unit filename="lib/system/symlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/thread.h" />
-		<Unit filename="lib/timing.c">
+		<Unit filename="lib/system/symlib.h" />
+		<Unit filename="lib/system/thread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="lib/timing.h" />
-		<Unit filename="lib/type.h" />
+		<Unit filename="lib/system/thread.h" />
+		<Unit filename="lib/system/timing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/system/timing.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

@@ -1,6 +1,6 @@
-#include <logout.h>
+#include <system/log.h>
 #include <x3d/common.h>
-#include <allocator.h>
+#include <system/allocator.h>
 #include "vbo.h"
 
 

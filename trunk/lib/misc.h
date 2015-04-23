@@ -2,7 +2,17 @@
 #define MISC_H_INCLUDED
 
 
-#include <type.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+typedef long long       uuid_t;
+typedef unsigned char   untyped;
+typedef unsigned int    address_t;
+typedef void            (*f_Generic) ( void );
+
+#define nullptr				0
+#define cast(_var)			(typeof (_var))
 
 
 int alg_match_pattern ( const char *cstr, const char *format, ... );

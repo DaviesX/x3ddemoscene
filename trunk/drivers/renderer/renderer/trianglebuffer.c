@@ -1,7 +1,6 @@
 /* trianglebuffer.c: manages an aggregate of triangles */
-#include <allocator.h>
-#include <logout.h>
-#include <algorithm.h>
+#include <system/allocator.h>
+#include <system/log.h>
 #include "trianglebuffer.h"
 
 

@@ -23,15 +23,15 @@ struct alg_llist {
 
 static inline void create_alg_llist(struct alg_llist* llist, int elm_size, int init_count);
 static inline void free_alg_llist(struct alg_llist* llist);
-pseudo_def(void alg_llist_i(struct alg_llist* llist, int i, void** elm);)
-pseudo_def(void alg_llist_add(void* elm, struct alg_llist* llist);)
-pseudo_def(void alg_llist_push(void* elm, struct alg_llist* llist);)
-pseudo_def(void alg_llist_pop(struct alg_llist* llist, void** elm ); )
-pseudo_def(void alg_llist_find(struct alg_llist* llist, void* info, void** elm_data,
+PseudoDef(void alg_llist_i(struct alg_llist* llist, int i, void** elm);)
+PseudoDef(void alg_llist_add(void* elm, struct alg_llist* llist);)
+PseudoDef(void alg_llist_push(void* elm, struct alg_llist* llist);)
+PseudoDef(void alg_llist_pop(struct alg_llist* llist, void** elm ); )
+PseudoDef(void alg_llist_find(struct alg_llist* llist, void* info, void** elm_data,
                                bool (*compare_func) (void* info, void* elm));)
-pseudo_def(void alg_llist_remove(struct alg_llist* llist, void* info, void** elm_data,
+PseudoDef(void alg_llist_remove(struct alg_llist* llist, void* info, void** elm_data,
                                  bool (*compare_func) (void* info, void* elm));)
-pseudo_def(void alg_llist_remove_ptr(void* elm, struct alg_llist* llist);)
+PseudoDef(void alg_llist_remove_ptr(void* elm, struct alg_llist* llist);)
 static inline void  alg_llist_flush(struct alg_llist* list);
 
 

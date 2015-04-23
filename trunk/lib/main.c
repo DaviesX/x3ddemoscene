@@ -1,11 +1,11 @@
 /* main.c: All unit tests for lib module go here */
-#include <logout.h>
-#include <allocator.h>
+#include <system/log.h>
+#include <system/allocator.h>
 #include <container/paramset.h>
 #include <container/staging.h>
 #include <container/quicksort.h>
-#include <thread.h>
-#include <timing.h>
+#include <system/thread.h>
+#include <system/timing.h>
 #include <x3d/debug.h>
 #include "main.h"
 
@@ -83,7 +83,7 @@ void variable_memory_test1 ( struct alg_named_params *param )
 static void error_report ( struct alg_named_params *param )
 {
         /* Test the error report code in logout.h/c */
-        init_log_output ( 0 );
+        log_init ( 0 );
         log_normal ( "This is a normal message" );
         log_mild_err ( "This is a mild error message" );
         log_severe_err ( "This is a severe error message" );

@@ -1,10 +1,9 @@
 #include <misc.h>
 #include <x3d/common.h>
 #include <math/math.h>
-#include <thread.h>
-#include <logout.h>
-#include <symlib.h>
-#include <lib.h>
+#include <system/thread.h>
+#include <system/log.h>
+#include <system/symlib.h>
 #include <x3d/init.h>
 #include <x3d/debug.h>
 #include <x3d/resloader.h>
@@ -90,7 +89,7 @@ __dlexport bool kernel_start ( void )
         if ( signal->on_init != nullptr )
                 signal->on_init ( init->argc, init->argv, signal->env );
 
-        if ( !init_log_output ( true ) )
+        if ( !log_init ( true ) )
                 return false;
 
         init_symlib ( &init->symbols );
@@ -101,7 +100,6 @@ __dlexport bool kernel_start ( void )
         if ( !init_debugger ( init->argc, init->argv, &init->symbols ) )
                 return false;
         init_math_lib ();
-        init_lib ();
         if ( !renderer_import ( &init->symbols ) )
                 return false;
         renderer_kernel_init ();
@@ -150,13 +148,11 @@ __dlexport void kernel_shutdown ( void )
 {
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
-        if (!init->to_run)
-                return ;
         if ( signal->on_free != nullptr )
                 signal->on_free ( signal->env );
         free_symlib ( &init->symbols );
         free_thread_lib();
-        free_log_output ();
+        log_free ();
 }
 
 __dlexport bool kernel_is_running ( void )

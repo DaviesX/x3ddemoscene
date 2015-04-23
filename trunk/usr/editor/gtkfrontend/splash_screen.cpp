@@ -103,7 +103,7 @@ bool SplashScreen::show(bool visible)
         if (!pimpl->m_has_loaded) {
                 string filename = frontend->m_glade_dir + frontend->m_logo;
 
-                pimpl->m_window = gtk_window_new(GTK_WINDOW_POPUP);
+                pimpl->m_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
                 gtk_widget_set_size_request(pimpl->m_window, 800, 600);
                 gtk_window_set_decorated(GTK_WINDOW(pimpl->m_window), FALSE);
                 gtk_window_set_position(GTK_WINDOW(pimpl->m_window), GTK_WIN_POS_CENTER_ALWAYS);

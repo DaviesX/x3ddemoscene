@@ -1,7 +1,7 @@
 /* main.c: Unit tests to all rendering functions go here */
 #include <x3d/common.h>
 #include <container/paramset.h>
-#include <logout.h>
+#include <system/log.h>
 #include <x3d/debug.h>
 #include <math/math.h>
 #include "main.h"

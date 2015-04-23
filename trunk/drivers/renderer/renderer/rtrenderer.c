@@ -1,5 +1,5 @@
 /* rt_renderer.c: interface of rasterizer renderer goes here */
-#include <allocator.h>
+#include <system/allocator.h>
 #include <x3d/renderer.h>
 #include <renderer/proj_probe.h>
 #include <renderer/geocache.h>

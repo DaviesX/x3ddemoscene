@@ -1,8 +1,8 @@
 /* thread.c: parallel task management utilities all go here */
 #include <x3d/common.h>
 #include <container/linkedlist.h>
-#include <allocator.h>
-#include <thread.h>
+#include <system/allocator.h>
+#include <system/thread.h>
 
 #define INIT_GROUP_COUNT                1
 #define MAX_GROUP_COUNT                 5

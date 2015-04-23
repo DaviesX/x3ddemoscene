@@ -1,7 +1,6 @@
 /* geometry.c: geometric(shapes and geometry) handling all go here */
+#include <misc.h>
 #include <renderer/geometry.h>
-
-
 
 /*
  * shapes

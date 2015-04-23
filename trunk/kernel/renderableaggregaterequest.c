@@ -1,5 +1,5 @@
-#include <logout.h>
-#include <allocator.h>
+#include <system/log.h>
+#include <system/allocator.h>
 #include <x3d/renderableaggregaterequest.h>
 #include "renderablecontainerimpl.h"
 

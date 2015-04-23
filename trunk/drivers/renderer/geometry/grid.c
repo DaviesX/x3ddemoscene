@@ -2,7 +2,7 @@
 #include <container/arraylist.h>
 #include <math/math.h>
 #include <renderer/geometry.h>
-#include <allocator.h>
+#include <system/allocator.h>
 #include "trimesh_shape.h"
 #include "grid.h"
 

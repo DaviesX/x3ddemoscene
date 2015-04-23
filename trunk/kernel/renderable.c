@@ -1,8 +1,8 @@
 /* renderable.c: manages all kinds of renderable and connect to local renderable manager interface */
 #include <misc.h>
 #include <math/math.h>
-#include <logout.h>
-#include <allocator.h>
+#include <system/log.h>
+#include <system/allocator.h>
 #include <x3d/renderable.h>
 
 

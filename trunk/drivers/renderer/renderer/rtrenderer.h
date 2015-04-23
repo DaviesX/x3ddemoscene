@@ -2,7 +2,6 @@
 #define RT_RENDERER_H_INCLUDED
 
 
-#include <algorithm.h>
 #include <x3d/renderer.h>
 
 struct proj_probe;

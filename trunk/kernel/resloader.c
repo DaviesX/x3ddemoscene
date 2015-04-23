@@ -1,7 +1,7 @@
 /* resloader.c: general thread-safe resource handling(staging, loading, saving and reload) */
-#include <allocator.h>
-#include <logout.h>
-#include <thread.h>
+#include <system/allocator.h>
+#include <system/log.h>
+#include <system/thread.h>
 #include <container/linkedlist.h>
 #include <container/staging.h>
 #include <x3d/resloader.h>

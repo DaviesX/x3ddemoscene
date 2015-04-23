@@ -1,6 +1,6 @@
-/* logout.c: All log handling functions go here */
+/* log.c: All log handling functions go here */
 #include <x3d/common.h>
-#include <logout.h>
+#include <system/log.h>
 
 
 #define MAX_MESSAGE_LENGTH		1024
@@ -25,10 +25,10 @@ struct log_output g_log_inst;
 int g_is_init = 0;
 
 
-bool init_log_output ( int to_terminate )
+bool log_init ( int to_terminate )
 {
         if ( g_is_init ) {
-                free_log_output ();
+                goto finished;
         }
         memset ( &g_log_inst, 0, sizeof ( g_log_inst ) );
         g_log_inst.normal_bhv = LOG_OUTPUT_TO_BOTH;
@@ -53,11 +53,12 @@ bool init_log_output ( int to_terminate )
                           X3D_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec );
         }
         g_is_init = 1;
+finished:
         return true;
 }
 
 
-void free_log_output ( void )
+void log_free ( void )
 {
         if ( g_log_inst.file ) {
                 fprintf ( g_log_inst.file, "x3d log stop recording\n\n" );
@@ -72,7 +73,7 @@ void free_log_output ( void )
 { \
 	if ( !g_is_init ) { \
 		/* Initialize log reporter, if it is not */ \
-		init_log_output ( 1 ); \
+		log_init ( 1 ); \
 	} \
 \
 	va_list _args; \

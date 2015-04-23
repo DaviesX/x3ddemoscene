@@ -1,5 +1,4 @@
-#include <logout.h>
-#include <algorithm.h>
+#include <system/log.h>
 #include <x3d/renderer.h>
 #include <renderer/renderer.h>
 

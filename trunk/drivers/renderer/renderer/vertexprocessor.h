@@ -2,7 +2,6 @@
 #define RT_VERTEXPROCESS_INCLUDED
 
 #include <x3d/common.h>
-#include <algorithm.h>
 #include <math/math.h>
 #include "rasterization.h"
 #include "vibuffer.h"

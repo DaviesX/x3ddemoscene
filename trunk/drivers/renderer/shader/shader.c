@@ -1,7 +1,7 @@
 /* shader.c: shader interfaces */
 #include <math/math.h>
-#include <logout.h>
-#include <allocator.h>
+#include <system/log.h>
+#include <system/allocator.h>
 #include <renderer/shader.h>
 #include <renderer/shader_lib.h>
 #include "rtshader.h"

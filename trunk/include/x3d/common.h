@@ -2,14 +2,18 @@
 #define COMMON_H_INCLUDED
 
 
-/* Switch between different platforms */
-// #define X3D_COMPILER_GCC
-// #define X3D_COMPILER_MSVC
-// #define X3D_PLATFORM_POSIX
-// #define X3D_PLATFORM_WIN32
+/**
+  * Switch between different platforms
+  * #define X3D_COMPILER_GCC
+  * #define X3D_COMPILER_MSVC
+  * #define X3D_PLATFORM_POSIX
+  * #define X3D_PLATFORM_WIN32
+ **/
 
-/* Enable this to switch on debug mode */
-// #define X3D_DEBUG_MODE
+/**
+ * Enable this to switch on debug mode
+ * #define X3D_DEBUG_MODE
+ **/
 
 #ifndef X3D_DEBUG_MODE
 #  define NDEBUG
@@ -17,15 +21,15 @@
 
 /* Debug if statement, Debug session block */
 #ifdef X3D_DEBUG_MODE
-#  define DEBUG_IF( _statement, _code ) \
+#  define DebugIf(_statement, _code) \
            if ( _statement ) { \
                 _code \
            }
-#  define DEBUG_SESSION( _code )                _code
+#  define DebugSession(_code)                  _code
 #else
-#  define DEBUG_IF( _statement, _code )	\
+#  define DebugIf(_statement, _code)	\
            if (0) ;
-#  define DEBUG_SESSION( _code )
+#  define DebugSession(_code)
 #endif
 
 #if defined (X3D_DEBUG_MODE)
@@ -40,14 +44,8 @@
 #  pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#define SESSION_IN( _session )
-#define pseudo_def( defn )
-#define nullptr				NULL
-#define cast( _var )			(typeof (_var))
-
-typedef unsigned char untyped;
-typedef unsigned int address_t;
-typedef void (*f_Generic) ( void );
+#define SessionIn(_session)
+#define PseudoDef(defn)
 
 #ifdef X3D_COMPILER_GCC
 #  define __stdcall                     __attribute__((stdcall))

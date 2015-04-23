@@ -1,8 +1,8 @@
 /* screen_out.c: define render output through screen */
-#include <logout.h>
+#include <system/log.h>
 #include <math/math.h>
 #include <renderer/out.h>
-#include <allocator.h>
+#include <system/allocator.h>
 #include "screen_out.h"
 
 /* TODO (davis#3#): <out> test this module */

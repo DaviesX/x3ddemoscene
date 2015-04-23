@@ -1,8 +1,8 @@
 #include <misc.h>
 #include <container/paramset.h>
-#include <allocator.h>
-#include <symlib.h>
-#include <logout.h>
+#include <system/allocator.h>
+#include <system/symlib.h>
+#include <system/log.h>
 #include <x3d/debug.h>
 
 

@@ -1,7 +1,7 @@
 #ifndef RENDERABLE_H_INCLUDED
 #define RENDERABLE_H_INCLUDED
 
-#include <type.h>
+#include <misc.h>
 #include <x3d/common.h>
 #include <math/math.h>
 

@@ -15,13 +15,13 @@ namespace x3d
 
 extern "C"
 {
-#include <logout.h>
 #include <misc.h>
-#include <allocator.h>
-#include <thread.h>
-#include <serializer.h>
-#include <math/math.h>
 #include <x3d/common.h>
+#include <system/log.h>
+#include <system/allocator.h>
+#include <system/thread.h>
+#include <codecs/serializer.h>
+#include <math/math.h>
 #include <x3d/init.h>
 #include <x3d/projectionprobe.h>
 #include <x3d/renderer.h>
@@ -32,9 +32,10 @@ extern "C"
 namespace usr
 {
 
-class CoreResource {
+template<class T> class CoreResource {
 public:
-        void* get_core_resource() {return nullptr;}
+        virtual T*      get_core_resource() {return nullptr;}
+        virtual void    set_core_resource(T* t) {}
 };
 
 }

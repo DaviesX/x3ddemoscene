@@ -1,6 +1,5 @@
 /* geocache.c: Overall scene definitions and management all go here */
-#include <algorithm.h>
-#include <logout.h>
+#include <system/log.h>
 #include <renderer/geometry.h>
 #include <renderer/geocache.h>
 #include "shape_common.h"

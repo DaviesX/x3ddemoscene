@@ -1,8 +1,8 @@
 #include <misc.h>
 #include <container/stack.h>
 #include <container/arraylist.h>
-#include <allocator.h>
-#include <logout.h>
+#include <system/allocator.h>
+#include <system/log.h>
 #include <x3d/rendertree.h>
 
 

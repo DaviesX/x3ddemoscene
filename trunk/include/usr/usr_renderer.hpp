@@ -13,7 +13,7 @@ class RenderNode;
 
 /** \brief Render output node
  */
-class RenderOutput : public CoreResource {
+class RenderOutput : public CoreResource<struct render_output> {
 public:
         RenderOutput(string name, string probe);
         RenderNode*             get_node();
@@ -24,7 +24,7 @@ private:
 
 /** \brief Render layer node
  */
-class RenderLayer : public CoreResource {
+class RenderLayer : public CoreResource<struct render_layer> {
 public:
         RenderLayer(string name);
         RenderNode*             get_node();
@@ -34,7 +34,7 @@ private:
 
 /** \brief Renerable context node
  */
-class RenderableContext : public CoreResource {
+class RenderableContext : public CoreResource<struct render_rdacontext> {
 public:
         RenderableContext(string name, string context, RenderAggregate::Strategy strategy);
         RenderNode*             get_node();
@@ -46,7 +46,7 @@ private:
 
 /** \brief Render radiance node
  */
-class RenderRadiance : public CoreResource {
+class RenderRadiance : public CoreResource<struct render_radiance> {
 public:
         enum RenderPipeline {
                 Forward,
@@ -80,7 +80,7 @@ private:
 
 /** \brief Render tree
  */
-class __dlexport RenderTree : public CoreResource {
+class __dlexport RenderTree : public CoreResource<struct render_tree> {
 public:
         RenderTree ();
         ~RenderTree ();
@@ -111,7 +111,7 @@ private:
 
 /** \brief Render processsor.
  */
-class Renderer : public CoreResource {
+class Renderer : public CoreResource<struct renderer> {
 public:
         enum Driver {
                 Undeterminate,          /**< a memory block with undefined renderer */
@@ -128,11 +128,11 @@ public:
         Renderer(Driver driver);
         ~Renderer();
 
-        void update(RenderTree* tree);
-        void render();
-        void commit();
+        void                    update(RenderTree* tree);
+        void                    render();
+        void                    commit();
 
-        struct renderer* get_core_resource();
+        struct renderer*        get_core_resource();
 private:
         struct renderer         m_renderer;
 };

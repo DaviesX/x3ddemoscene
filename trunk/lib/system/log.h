@@ -1,5 +1,5 @@
-#ifndef X3DLOGOUTPUT_H_INCLUDED
-#define X3DLOGOUTPUT_H_INCLUDED
+#ifndef LOG_H_INCLUDED
+#define LOG_H_INCLUDED
 
 
 #include <x3d/common.h>
@@ -16,8 +16,8 @@
  * Functions' declaration
  */
 
-bool init_log_output ( int to_terminate );
-void free_log_output ( void );
+bool log_init ( int to_terminate );
+void log_free ( void );
 
 #define log_normal( _message, ... )		call_log_normal ( __func__, _message, ##__VA_ARGS__ )
 #define log_mild_err( _message, ... )		call_log_mild_err ( __func__, _message, ##__VA_ARGS__ )
@@ -49,4 +49,4 @@ void set_log_behavior ( int bhv );
 #endif
 
 
-#endif // X3DLOGOUTPUT_H_INCLUDED
+#endif // LOG_H_INCLUDED

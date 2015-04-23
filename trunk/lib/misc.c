@@ -1,5 +1,5 @@
-#include <thread.h>
-#include <allocator.h>
+#include <system/thread.h>
+#include <system/allocator.h>
 #include <math/math.h>
 #include <misc.h>
 

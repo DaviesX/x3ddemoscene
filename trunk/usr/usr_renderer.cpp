@@ -55,6 +55,12 @@ void Renderer::commit()
         renderer_commit(&m_renderer);
 }
 
+struct renderer* Renderer::get_core_resource()
+{
+        return &m_renderer;
+}
+
+
 RenderOutput::RenderOutput(string name, string probe)
 {
         m_node = (struct render_output*) render_node_output_create(name.c_str(), probe.c_str());

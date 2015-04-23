@@ -1,7 +1,6 @@
 #ifndef GEOCACHE_H_INCLUDED
 #define GEOCACHE_H_INCLUDED
 
-#include <algorithm.h>
 #include <x3d/common.h>
 #include <renderer/geometry.h>
 #include <x3d/renderer.h>

@@ -10,7 +10,7 @@ enum SER_RESET_MODE {
         SER_RESET_WRITER = 0X2
 };
 
-enum SERIAL_IO_MODE {	/* 为下一次改进准备 */
+enum SERIAL_IO_MODE {
         SERIAL_READ,
         SERIAL_WRITE
 };
@@ -24,11 +24,11 @@ struct byte_bit {
 };
 
 struct serializer {
-        void *data_stream;
+        void* data_stream;
         struct byte_bit read_pos;
         struct byte_bit write_pos;
-        int size;	/* 已使用的大小 */
-        int total;	/* 总大小 */
+        int size;
+        int total;
 };
 
 /*

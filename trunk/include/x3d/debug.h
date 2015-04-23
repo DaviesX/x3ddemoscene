@@ -3,7 +3,7 @@
 
 
 #include <x3d/common.h>
-#include <symlib.h>
+#include <system/symlib.h>
 
 struct alg_var_set;
 

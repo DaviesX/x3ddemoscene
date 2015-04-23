@@ -23,20 +23,20 @@ struct alg_hash_llist {
 #pragma pack()
 
 
-pseudo_def(void create_alg_hash_llist(int header_len, int n_elm, int elm_size,
+PseudoDef(void create_alg_hash_llist(int header_len, int n_elm, int elm_size,
                                       struct alg_hash_llist* hash_llist);)
-pseudo_def(void free_alg_hash_llist(struct alg_hash_llist* hash_llist);)
-pseudo_def(void alg_hash_llist_flush(struct alg_hash_llist* hash_llist);)
-pseudo_def(typedef (*f_No_Update) (struct alg_hash_llist* hash_llist, int i);)
-pseudo_def(typedef (*f_Dym_Update) (struct alg_hash_llist* hash_llist, int i);)
-pseudo_def(void alg_hash_llist_add(struct alg_hash_llist* hash_llist, void *elm, uint64_t key, f_Update);)
-pseudo_def(void alg_hash_llist_first(struct alg_hash_llist* hash_llist,
+PseudoDef(void free_alg_hash_llist(struct alg_hash_llist* hash_llist);)
+PseudoDef(void alg_hash_llist_flush(struct alg_hash_llist* hash_llist);)
+PseudoDef(typedef (*f_No_Update) (struct alg_hash_llist* hash_llist, int i);)
+PseudoDef(typedef (*f_Dym_Update) (struct alg_hash_llist* hash_llist, int i);)
+PseudoDef(void alg_hash_llist_add(struct alg_hash_llist* hash_llist, void *elm, uint64_t key, f_Update);)
+PseudoDef(void alg_hash_llist_first(struct alg_hash_llist* hash_llist,
                                      uint64_t key, void* rfound, void* info,
                                      bool (*cmp) (void* info, void* elm));)
-pseudo_def(void alg_hash_llist_next(struct alg_hash_llist *hash_llist, void *rfound, void* info,
+PseudoDef(void alg_hash_llist_next(struct alg_hash_llist *hash_llist, void *rfound, void* info,
                                     bool (*cmp) (void* info, void *elm));)
-pseudo_def(void alg_hash_llist_insert(struct alg_hash_llist* hash_llist, void* elm, void* rfound);)
-pseudo_def(void alg_hash_llist_remove(struct alg_hash_llist* hash_llist, void* rfound);)
+PseudoDef(void alg_hash_llist_insert(struct alg_hash_llist* hash_llist, void* elm, void* rfound);)
+PseudoDef(void alg_hash_llist_remove(struct alg_hash_llist* hash_llist, void* rfound);)
 
 
 

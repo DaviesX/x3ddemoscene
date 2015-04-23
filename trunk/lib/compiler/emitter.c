@@ -1,6 +1,5 @@
 #include <x3d/common.h>
-#include <algorithm.h>
-#include <allocator.h>
+#include <system/allocator.h>
 #include "symbol.h"
 #include "lexer.h"
 #include "emitter.h"

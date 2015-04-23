@@ -4,18 +4,18 @@
 
 #include <container/container.h>
 
-pseudo_def(void alg_bubble_sort(void* list, int len, void* info,
+PseudoDef(void alg_bubble_sort(void* list, int len, void* info,
                                 bool (*cmp) (void* elm0, void* elm1, void* info));)
-pseudo_def(void alg_insert_sort(void* list, int len, void* info,
+PseudoDef(void alg_insert_sort(void* list, int len, void* info,
                                 bool (*cmp) (void* elm0, void* elm1, void* info));)
-pseudo_def(void alg_quick_sort(void* list, int len, void* info,
+PseudoDef(void alg_quick_sort(void* list, int len, void* info,
                                bool (*cmp) (void* elm0, void* elm1, void* info));)
-pseudo_def(void alg_split_bymidvalue(void* list, int len, TYPE mid_val,
+PseudoDef(void alg_split_bymidvalue(void* list, int len, TYPE mid_val,
                                      bool (*cmp) (TYPE mid_val, void* elm), int* i_result);)
-pseudo_def(void alg_split_byvalue(void* array, int len, void* info,
+PseudoDef(void alg_split_byvalue(void* array, int len, void* info,
                                   bool (*cmp) (void* info, void* elm),
                                   int* i_result);)
-pseudo_def(void alg_split_byindex(void* array, int len, int i, void* info,
+PseudoDef(void alg_split_byindex(void* array, int len, int i, void* info,
                                   bool (*cmp) (void* elm0, void* elm1, void* info));)
 
 

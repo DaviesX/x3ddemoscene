@@ -2,6 +2,7 @@
 #define ALLOCATOR_H_INCLUDED
 
 #include <x3d/common.h>
+#include <misc.h>
 
 /*
  * Definitions
@@ -90,10 +91,10 @@ struct mem_block {
  * Functions declarations
  */
 
-pseudo_def ( void memsetw ( void *dest, uint16_t data, int count ); )
-pseudo_def ( void memsetl ( void *dest, uint32_t data, int count ); )
-pseudo_def ( void memsetll ( void *dest, uint64_t data, int count ); )
-pseudo_def ( void memsetql ( void *dest, uint64_t data[2], int count ); )
+PseudoDef ( void memsetw ( void *dest, uint16_t data, int count ); )
+PseudoDef ( void memsetl ( void *dest, uint32_t data, int count ); )
+PseudoDef ( void memsetll ( void *dest, uint64_t data, int count ); )
+PseudoDef ( void memsetql ( void *dest, uint64_t data[2], int count ); )
 
 void *call_alloc_fix ( uint32_t elm_size, uint32_t num_elm );
 void call_free_fix ( void *ptr );

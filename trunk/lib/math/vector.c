@@ -1,6 +1,6 @@
 // vector.c: All vector functions go here
 #include <math.h>
-#include <logout.h>
+#include <system/log.h>
 #include "vector.h"
 
 

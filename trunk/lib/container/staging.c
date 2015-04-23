@@ -246,7 +246,7 @@ int stager_begin_entry ( char *name, struct entry_record *rec )
                         .name_hash = gen_layer_name_hash ( lroot ),
                         .ifound = HASH_NULL_KEY
                 };
-                DEBUG_SESSION (
+                DebugSession (
                         assert ( d == 0 );
                         int hash = gen_layer_hash ( &rec->layer );
                         struct res_entry *entry;
@@ -299,7 +299,7 @@ void stager_end_entry ( int rdepth, struct entry_record *rec )
         entry->state = RESOURCE_LOADED;
         pop_res_name ( &rec->layer );
         uint16_t root_uid = rec->uid;
-        DEBUG_SESSION (
+        DebugSession (
                 assert ( entry->uid == root_uid + rec->rdepth );
         )
 }
@@ -474,7 +474,7 @@ void stager_reset_data ( struct entry_record *rec )
 void *stager_pop_data ( int size, struct entry_record *rec )
 {
         untyped *curr = rec->byte_curr;
-        DEBUG_SESSION (
+        DebugSession (
                 struct stager *stg = rec->stg;
                 struct res_entry* entries = alg_array(list, &stg->entry);
                 struct res_entry* entry = &entries[rec->ientry];

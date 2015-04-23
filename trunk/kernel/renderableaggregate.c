@@ -1,6 +1,6 @@
 #include <x3d/renderableaggregate.h>
 #include <x3d/renderableaggregaterequest.h>
-#include <logout.h>
+#include <system/log.h>
 #include "renderablecontainerimpl.h"
 
 

@@ -81,6 +81,11 @@ struct renderable* Renderable::get_core_resource()
         return m_renderable;
 }
 
+void Renderable::set_core_resource(struct renderable* r)
+{
+        m_renderable = r;
+}
+
 /* RenderableFactory */
 /** \brief construct a renderable.
  *
@@ -285,6 +290,11 @@ Renderable* RenderableInstance::get_source()
 struct rda_instance* RenderableInstance::get_core_resource()
 {
         return m_instance;
+}
+
+void RenderableInstance::set_core_resource(struct rda_instance* r)
+{
+        m_instance = r;
 }
 
 }// namespace usr

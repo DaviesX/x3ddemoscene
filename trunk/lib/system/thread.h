@@ -2,7 +2,6 @@
 #define X3DTHREAD_H_INCLUDED
 
 #include <x3d/common.h>
-#include <algorithm.h>
 
 
 struct thr_task;

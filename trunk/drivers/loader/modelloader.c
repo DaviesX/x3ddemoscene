@@ -1,7 +1,7 @@
 /* modelloader.c: All model loading functions go here */
 #include <container/staging.h>
 #include <misc.h>
-#include <logout.h>
+#include <system/log.h>
 #include <x3d/resloader.h>
 #include <loader/modelloader.h>
 #include "modelloader.h"

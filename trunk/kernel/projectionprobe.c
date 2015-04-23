@@ -1,5 +1,5 @@
-#include <allocator.h>
-#include <logout.h>
+#include <system/allocator.h>
+#include <system/log.h>
 #include <x3d/projectionprobe.h>
 
 

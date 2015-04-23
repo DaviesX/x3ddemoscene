@@ -1,4 +1,5 @@
 /* proj_probe.c: abstraction of projective probe */
+#include <misc.h>
 #include <math/math.h>
 #include <renderer/proj_probe.h>
 #include "perspective.h"

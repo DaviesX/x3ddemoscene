@@ -10,7 +10,7 @@ namespace usr
 {
 /** \brief Containers for renderable and its instances.
  */
-class RenderAggregate : public CoreResource {
+class RenderAggregate : public CoreResource<struct rda_context> {
 public:
         enum Strategy {
                 SimpleLinear,

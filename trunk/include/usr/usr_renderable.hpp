@@ -26,7 +26,7 @@ public:
 
 /** \brief Renderable base class.
  */
-class Renderable : public CoreResource
+class Renderable : public CoreResource<struct renderable>
 {
 public:
         Renderable(struct renderable* renderable);
@@ -37,6 +37,7 @@ public:
         RenderableFactory::RenderableDesc get_desc ();
         RenderableInstance*     make_instance ( struct matrix4x4* transform );
         struct renderable*      get_core_resource();
+        void                    set_core_resource(struct renderable* r);
 private:
         struct renderable*      m_renderable;
 };
@@ -69,14 +70,15 @@ private:
 
 /** \brief Renderable instance.
  */
-class RenderableInstance : public CoreResource
+class RenderableInstance : public CoreResource<struct rda_instance>
 {
 public:
         RenderableInstance(struct rda_instance* instance);
         ~RenderableInstance ();
 
         Renderable* get_source ();
-        struct rda_instance* get_core_resource();
+        struct rda_instance*    get_core_resource();
+        void                    set_core_resource(struct rda_instance* r);
 private:
         struct rda_instance*     m_instance;
 };

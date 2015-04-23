@@ -2,8 +2,7 @@
 #define INIT_H_INCLUDED
 
 
-#include <x3d/common.h>
-
+#include <misc.h>
 
 /*
  * functions' declaration

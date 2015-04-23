@@ -1,5 +1,5 @@
 /* trimesh_shape.c: triangle mesh implementation */
-#include <allocator.h>
+#include <system/allocator.h>
 #include "trimesh_shape.h"
 
 

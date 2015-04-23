@@ -3,7 +3,7 @@
 
 
 #include <x3d/common.h>
-#include <allocator.h>
+#include <system/allocator.h>
 
 
 #define alg_array( type, _inst )                                alg_##type##_array ( _inst )
