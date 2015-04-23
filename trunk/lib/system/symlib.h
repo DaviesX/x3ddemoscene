@@ -35,8 +35,8 @@ struct symbol_set {
 /*
  * functions' declarations
  */
-void init_symlib ( struct symbol_set *symbols );
-void free_symlib ( struct symbol_set *symbols );
+void symlib_init ( struct symbol_set *symbols );
+void symlib_free ( struct symbol_set *symbols );
 bool symlib_load ( struct symbol_set *symbols, char *filename );
 bool symlib_unload ( struct symbol_set *symbols );
 void symlib_add_abi ( struct symbol_set *symbols, char *name, f_Generic func );

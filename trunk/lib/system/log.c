@@ -61,10 +61,10 @@ finished:
 void log_free ( void )
 {
         if ( g_log_inst.file ) {
-                fprintf ( g_log_inst.file, "x3d log stop recording\n\n" );
+                fprintf ( g_log_inst.file, "\nx3d log stop recording\n\n" );
                 fclose ( g_log_inst.file );
         }
-        printf ( "x3d log stop recording\n\n" );
+        printf ( "\nx3d log stop recording\n\n" );
         memset ( &g_log_inst, 0, sizeof ( g_log_inst ) );
         g_is_init = 0;
 }

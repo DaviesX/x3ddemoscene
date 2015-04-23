@@ -100,6 +100,7 @@ MainEditor::MainEditorInt::MainEditorInt(EditorGtkFrontend* frontend)
 {
         m_frontend = frontend;
         m_has_loaded = false;
+        m_is_logo_connected = false;
 }
 
 MainEditor::MainEditorInt::~MainEditorInt()

@@ -44,6 +44,10 @@ static int on_loop ( void *env )
 {
         Kernel* kern = static_cast<Kernel*>(env);
 
+        if (kern->m_proxy.begin() == kern->m_proxy.end ()) {
+                log_normal_dbg("No proxy is currently registered. kernel will now stop");
+                kern->stop();
+        }
         for ( list<KernelProxy*>::iterator iter = kern->m_proxy.begin ();
               iter != kern->m_proxy.end ();
               ++ iter ) {
@@ -107,7 +111,7 @@ bool Kernel::run ( void )
                 is_running = false;
                 return false;
         }
-        kernel_loop ();
+        kernel_loop();
         is_running = false;
         return true;
 }

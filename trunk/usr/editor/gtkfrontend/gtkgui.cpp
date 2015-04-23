@@ -399,7 +399,6 @@ void stop_gtk_main ( void )
                         gtk_main_quit ();
                         gdk_threads_leave ();
                         x3d::thr_sync_with_task ( g_gtk_main_task );
-                        free_fix ( g_gtk_main_task );
                 }
         } else {
                 log_normal_dbg ( "found %d gtk main running already",
@@ -410,17 +409,16 @@ void stop_gtk_main ( void )
 
 void run_gtk_main ( void )
 {
-        x3d::thr_trap_on_task ( &g_atomic_check );
+        x3d::thr_trap_on_task(&g_atomic_check);
         if ( g_gtk_main_stack > 0 ) {
-                log_normal_dbg ( "found %d gtk main running already",
-                                 g_gtk_main_stack );
+                log_normal_dbg("found %d gtk main running already",
+                                g_gtk_main_stack);
         } else {
-                g_gtk_main_task =
-                        x3d::thr_run_task ( do_gtk_main, nullptr, nullptr );
-                log_normal_dbg ( "starting gtk main" );
+                g_gtk_main_task = thr_run_task(get_function_name(), do_gtk_main, nullptr, nullptr );
+                log_normal_dbg("starting gtk main");
         }
-        push_gtk_main ();
-        x3d::thr_untrap_task ( &g_atomic_check );
+        push_gtk_main();
+        x3d::thr_untrap_task(&g_atomic_check);
 }
 
 void await_gtk_main ( void )

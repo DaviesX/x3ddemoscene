@@ -6,7 +6,7 @@
 using namespace x3d;
 using namespace x3d::usr;
 
-extern "C" int kernel_main ( int argc, char *argv[] )
+extern "C" int kernel_main(int argc, char* argv[])
 {
         kernel_add_param("--edit-mode", "");
 

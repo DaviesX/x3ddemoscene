@@ -30,12 +30,11 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-Wall" />
+					<Add option="-g" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
-					<Add option="-DX3D_DEBUG_MODE" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
 					<Add library="./libX3dCore.so" />

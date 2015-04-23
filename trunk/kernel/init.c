@@ -85,14 +85,14 @@ __dlexport bool kernel_start ( void )
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
 
-        init_thread_lib ();
+        thread_lib_init();
         if ( signal->on_init != nullptr )
                 signal->on_init ( init->argc, init->argv, signal->env );
 
         if ( !log_init ( true ) )
                 return false;
 
-        init_symlib ( &init->symbols );
+        symlib_init ( &init->symbols );
         if ( !symlib_load ( &init->symbols,
                             get_self_so(init->argc, init->argv) ) )
                 return false;
@@ -150,9 +150,9 @@ __dlexport void kernel_shutdown ( void )
         struct signal* signal = &init->signal;
         if ( signal->on_free != nullptr )
                 signal->on_free ( signal->env );
-        free_symlib ( &init->symbols );
-        free_thread_lib();
-        log_free ();
+        symlib_free ( &init->symbols );
+        thread_lib_free();
+        log_free();
 }
 
 __dlexport bool kernel_is_running ( void )

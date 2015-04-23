@@ -356,7 +356,7 @@ static bool unload_dyn ( struct symbol_set *symbols )
 #endif
 
 
-void init_symlib ( struct symbol_set *symbols )
+void symlib_init ( struct symbol_set *symbols )
 {
         int i;
         for ( i = 0; i < cNumSymbolCate; i ++ ) {
@@ -368,7 +368,7 @@ void init_symlib ( struct symbol_set *symbols )
         symbols->is_loaded = false;
 }
 
-void free_symlib(struct symbol_set* symbols)
+void symlib_free(struct symbol_set* symbols)
 {
         symlib_unload(symbols);
         int i;

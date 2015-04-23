@@ -25,14 +25,13 @@ struct thr_trap {
 /*
  * functions' declaration
  */
-void init_thread_lib ( void );
-void free_thread_lib ( void );
+void thread_lib_init();
+void thread_lib_free();
 struct work_group *thr_new_workgroup ( int n_parallel );
 void thr_free_workgroup ( struct work_group *group );
 void thr_abandon_workgroup ( struct work_group *group );
 bool thr_is_workgroup_complete ( struct work_group *group );
-struct thr_task *thr_run_task (
-        f_Thread_Handler task_func, void *info, struct work_group *group );
+struct thr_task* thr_run_task(const char* name, f_Thread_Handler task_func, void *info, struct work_group *group);
 void free_thr_task ( struct thr_task *task );
 void thr_task_abort ( struct thr_task *task );
 bool thr_is_task_complete ( struct thr_task *task );

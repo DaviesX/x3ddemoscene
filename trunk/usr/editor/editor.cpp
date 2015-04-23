@@ -58,11 +58,11 @@ struct data_info {
         Editor*                 e;
 };
 
-static void *gui_thread ( struct data_info *data )
+static void* gui_thread(struct data_info* data)
 {
-        data->backend->loop ( data->e, data->env );
+        data->backend->loop(data->e, data->env);
         log_normal_dbg("gui loop exit");
-        free_fix ( data );
+        free_fix(data);
         return nullptr;
 }
 
@@ -78,8 +78,7 @@ int EditorBackend::on_loop_init ( KernelEnvironment *env )
         info->e = this->m_editor;
         info->env = env;
 
-        this->m_loop_task =
-                thr_run_task ( (f_Thread_Handler) gui_thread, info, nullptr );
+        this->m_loop_task = thr_run_task("gui_thread", (f_Thread_Handler) gui_thread, info, nullptr);
         return 0;
 fail:
         free_fix ( info );

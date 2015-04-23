@@ -26,9 +26,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-w" />
+					<Add option="-g" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
-					<Add option="-DX3D_DEBUG_MODE" />
 				</Compiler>
 				<Linker>
 					<Add option="-Ofast" />

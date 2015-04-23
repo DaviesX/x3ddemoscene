@@ -245,8 +245,7 @@ retry_res:
                 alg_push_back ( llist, &loader->task[type].task, &task );
 
                 if ( is_async ) {
-                        task->thrtask = thr_run_task (
-                                                async_run_loader, task, loader->wgroup );
+                        task->thrtask = thr_run_task(get_function_name(), async_run_loader, task, loader->wgroup);
                 } else {
                         async_run_loader ( task );
                 }
@@ -312,7 +311,7 @@ struct res_task *res_loader_save ( char *filename, res_ptr_t res_ptr, enum RES_I
 
         if ( is_async ) {
                 task->thrtask =
-                        thr_run_task ( async_run_saver, task, loader->wgroup );
+                        thr_run_task(get_function_name(), async_run_saver, task, loader->wgroup);
         } else {
                 async_run_saver ( task );
         }
