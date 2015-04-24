@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1429827615 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
+1429828079 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
 	<stdio.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
@@ -194,6 +194,6 @@
 	<container/arraylist.h>
 	<x3d/common.h>
 
-1429816194 /home/davis/x3drenderlib-code/trunk/lib/codecs/serializer.h
-	<x3d/common.h>
+1429855897 /home/davis/x3drenderlib-code/trunk/lib/codecs/serializer.h
+	<misc.h>
 

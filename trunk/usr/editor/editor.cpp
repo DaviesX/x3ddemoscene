@@ -240,12 +240,11 @@ void Editor::dispatch_signal ( void )
 bool Editor::load_state ( string filename )
 {
         struct serializer s;
-        serial_init ( &s );
-        if ( !serial_import ( (char*) filename.c_str (), &s ) ) {
-                log_severe_err_dbg ( "couldn't load in editor state from: %s",
-                                     filename.c_str () );
+        serial_init(&s);/*
+        if (!serial_import(&s)) {
+                log_severe_err_dbg("couldn't load in editor state from: %s", filename.c_str());
                 return false;
-        }
+        }*/
 
         for ( int i = 0; i < EditorActiveX::c_NumActiveXType; i ++ ) {
                 for ( list<EditorActiveX*>::iterator activex = this->m_activex[i].begin ();
@@ -270,11 +269,12 @@ bool Editor::save_state ( string filename )
                 }
         }
 
-        if ( !serial_export ( (char*) filename.c_str (), &s ) ) {
-                log_severe_err_dbg ( "couldn't export editor state to: %s",
-                                     filename.c_str () );
+        /*int size;
+        uint8_t* stream = serial_export(&s, &size);
+        if (false) {
+                log_severe_err_dbg ( "couldn't export editor state to: %s", filename.c_str());
                 return false;
-        }
+        }*/
         return true;
 }
 

@@ -2,45 +2,45 @@
 #define SERIALIZER_H_INCLUDED
 
 
-#include <x3d/common.h>
+#include <misc.h>
 
 
-enum SER_RESET_MODE {
-        SER_RESET_READER = 0X1,
-        SER_RESET_WRITER = 0X2
+enum SerialResetMode {
+        SerialResetReader = 0X1,
+        SerialResetWriter = 0X2
 };
 
-enum SERIAL_IO_MODE {
-        SERIAL_READ,
-        SERIAL_WRITE
+enum SerialIOMode {
+        SerialRead,
+        SerialWrite
 };
 
 /*
  * structures
  */
 struct byte_bit {
-        uint32_t byte;
-        uint32_t bit;
+        uint32_t        byte;
+        uint32_t        bit;
 };
 
 struct serializer {
-        void* data_stream;
-        struct byte_bit read_pos;
-        struct byte_bit write_pos;
-        int size;
-        int total;
+        void*                   data_stream;
+        struct byte_bit         read_pos;
+        struct byte_bit         write_pos;
+        int                     size;
+        int                     total;
 };
 
 /*
- * interfaces
+ * functions' declaration
  */
-void serial_init ( struct serializer *serial );
-void serial_free ( struct serializer *serial );
-void serial_reset ( struct serializer *serial, enum SER_RESET_MODE mode );
-void serial_read ( void *data, int *size, struct serializer *serial );
-void serial_write ( void *data, int *size, struct serializer *serial );
-bool serial_import ( char *filename, struct serializer *serial );
-bool serial_export ( char *filename, struct serializer *serial );
+void            serial_init(struct serializer* self);
+void            serial_free(struct serializer* self);
+void            serial_reset(struct serializer* self, enum SerialResetMode mode);
+void            serial_read(struct serializer* self, void* data, int* size);
+void            serial_write(struct serializer* self, void* data, int* size);
+void            serial_import(struct serializer* self, uint8_t* stream);
+uint8_t*        serial_export(struct serializer* self, int* size);
 
 
 #endif // SERIALIZER_H_INCLUDED
