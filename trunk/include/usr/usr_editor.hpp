@@ -85,7 +85,7 @@ private:
 
         /* front-back buffer utilities */
         int                     m_bufcount;
-        struct x3d::thr_trap    m_block_driver;
+        struct x3d::thread_trap m_block_driver;
 
         int     on_front_buf ( void ) const;
         int     on_back_buf  ( void ) const;
@@ -314,7 +314,7 @@ private:
         GUI_FONTEND_IDR         m_frontend_type;
         Editor*                 m_editor;
         EditorFrontend*         m_frontend;
-        struct thr_task*        m_loop_task;
+        struct thread_task*     m_loop_task;
         const string            m_state_file = "./etc/editor/editor_state";
 };
 

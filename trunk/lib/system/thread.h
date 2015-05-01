@@ -1,19 +1,19 @@
-#ifndef X3DTHREAD_H_INCLUDED
-#define X3DTHREAD_H_INCLUDED
+#ifndef THREAD_H_INCLUDED
+#define THREAD_H_INCLUDED
 
 #include <x3d/common.h>
 
 
-struct thr_task;
+struct thread_task;
 struct work_group;
-struct thr_trap;
+struct thread_trap;
 typedef void *(*f_Thread_Handler) ( void *info );
 
 /*
  * structures
  */
 
-struct thr_trap {
+struct thread_trap {
 #ifdef X3D_PLATFORM_POSIX
         pthread_cond_t data;
         pthread_mutex_t lock;
@@ -25,26 +25,26 @@ struct thr_trap {
 /*
  * functions' declaration
  */
-void thread_lib_init();
-void thread_lib_free();
-struct work_group *thr_new_workgroup ( int n_parallel );
-void thr_free_workgroup ( struct work_group *group );
-void thr_abandon_workgroup ( struct work_group *group );
-bool thr_is_workgroup_complete ( struct work_group *group );
-struct thr_task* thr_run_task(const char* name, f_Thread_Handler task_func, void *info, struct work_group *group);
-void free_thr_task ( struct thr_task *task );
-void thr_task_abort ( struct thr_task *task );
-bool thr_is_task_complete ( struct thr_task *task );
-bool thr_task_quit_signal ( struct thr_task *task );
-void thr_sync_with_task ( struct thr_task* task );
-void thr_block_task ( struct thr_task *task );
-void thr_unblock_task ( struct thr_task *task );
-void thr_init_trap ( struct thr_trap *trap );
-void thr_trap_on_data ( struct thr_trap *data, struct thr_trap *trap );
-void thr_untrap_data ( struct thr_trap *data );
-void thr_trap_on_task ( struct thr_trap *trap );
-void thr_untrap_task ( struct thr_trap *trap );
-void thr_task_idle ( int milisec );
+void                    thread_lib_init();
+void                    thread_lib_free();
+struct work_group*      thread_new_workgroup(int n_parallel);
+void                    thread_free_workgroup(struct work_group* group);
+void                    thread_abandon_workgroup(struct work_group* group);
+bool                    thread_is_workgroup_complete(struct work_group* group);
+struct thread_task*     thread_run_task(const char* name, f_Thread_Handler task_func, void* info, struct work_group* group);
+void                    thread_task_free(struct thread_task* task);
+void                    thread_task_abort(struct thread_task* task);
+bool                    thread_is_task_complete(struct thread_task* task);
+bool                    thread_task_quit_signal(struct thread_task* task);
+void                    thread_sync_with_task(struct thread_task* task);
+void                    thread_block_task(struct thread_task* task);
+void                    thread_unblock_task(struct thread_task* task);
+void                    thread_init_trap(struct thread_trap* trap);
+void                    thread_trap_on_data(struct thread_trap* data, struct thread_trap* trap);
+void                    thread_untrap_data(struct thread_trap* data);
+void                    thread_trap_on_task(struct thread_trap* trap);
+void                    thread_untrap_task(struct thread_trap* trap);
+void                    thread_task_idle(int milisec);
 
 
-#endif // X3DTHREAD_H_INCLUDED
+#endif // THREAD_H_INCLUDED

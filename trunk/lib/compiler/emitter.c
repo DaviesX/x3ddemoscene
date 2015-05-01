@@ -27,7 +27,7 @@ void free_emitter ( struct code_emitter *e )
 
 void emit_postfix ( struct token_info *tok, struct code_emitter *e )
 {
-        e->post_exp->o_tok = push_var ( tok, e->post_exp->o_tok );
+        e->post_exp->o_tok = alloc_push_var ( tok, e->post_exp->o_tok );
         e->post_exp->n_tok ++;
 }
 

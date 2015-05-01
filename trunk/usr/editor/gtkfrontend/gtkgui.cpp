@@ -367,8 +367,8 @@ void widget_get_size ( GtkWidget* parent, GtkWidget* widget,
 }
 
 static volatile int             g_gtk_main_stack = 0;
-static x3d::thr_trap            g_atomic_check = {0};
-static x3d::thr_task*           g_gtk_main_task = nullptr;
+static x3d::thread_trap            g_atomic_check = {0};
+static x3d::thread_task*           g_gtk_main_task = nullptr;
 
 static void* do_gtk_main ( void* data )
 {
@@ -385,10 +385,10 @@ static void* do_gtk_main ( void* data )
 
 void stop_gtk_main ( void )
 {
-        x3d::thr_trap_on_task ( &g_atomic_check );
+        x3d::thread_trap_on_task ( &g_atomic_check );
         if (g_gtk_main_stack == 0) {
                 log_normal_dbg("nothing to stop");
-                x3d::thr_untrap_task ( &g_atomic_check );
+                x3d::thread_untrap_task ( &g_atomic_check );
                 return ;
         }
         pop_gtk_main ();
@@ -398,35 +398,35 @@ void stop_gtk_main ( void )
                         gdk_threads_enter ();
                         gtk_main_quit ();
                         gdk_threads_leave ();
-                        x3d::thr_sync_with_task ( g_gtk_main_task );
+                        x3d::thread_sync_with_task ( g_gtk_main_task );
                 }
         } else {
                 log_normal_dbg ( "found %d gtk main running already",
                                  g_gtk_main_stack );
         }
-        x3d::thr_untrap_task ( &g_atomic_check );
+        x3d::thread_untrap_task ( &g_atomic_check );
 }
 
 void run_gtk_main ( void )
 {
-        x3d::thr_trap_on_task(&g_atomic_check);
+        x3d::thread_trap_on_task(&g_atomic_check);
         if ( g_gtk_main_stack > 0 ) {
                 log_normal_dbg("found %d gtk main running already",
                                 g_gtk_main_stack);
         } else {
-                g_gtk_main_task = thr_run_task(get_function_name(), do_gtk_main, nullptr, nullptr );
+                g_gtk_main_task = thread_run_task(get_function_name(), do_gtk_main, nullptr, nullptr );
                 log_normal_dbg("starting gtk main");
         }
         push_gtk_main();
-        x3d::thr_untrap_task(&g_atomic_check);
+        x3d::thread_untrap_task(&g_atomic_check);
 }
 
 void await_gtk_main ( void )
 {
         while ( g_gtk_main_stack != 0 );
-        x3d::thr_trap_on_task ( &g_atomic_check );
+        x3d::thread_trap_on_task ( &g_atomic_check );
         ; // do nothing
-        x3d::thr_untrap_task ( &g_atomic_check );
+        x3d::thread_untrap_task ( &g_atomic_check );
 }
 
 void* dbg_get_render_region ( void )

@@ -178,7 +178,7 @@ struct triangle_mesh_shape *LoopTesselateTriangleMesh ( struct triangle_mesh_sha
                 // Initialize next levels' vertices
                 int iVertex;
                 for ( iVertex = 0; iVertex < numberVertex; iVertex ++ ) {
-                        childTessVertex = add_var ( childTessVertex, 1 );
+                        childTessVertex = alloc_add_var ( childTessVertex, 1 );
                         struct tesselate_vertex *currTessVertex = &tessVertex[iVertex];
                         struct tesselate_vertex *childVertex = get_var_last ( childTessVertex );
 
@@ -197,7 +197,7 @@ struct triangle_mesh_shape *LoopTesselateTriangleMesh ( struct triangle_mesh_sha
                         struct tesselate_face * currTessFace = &tessFace[iFace];
                         int iChildFace;
                         for ( iChildFace = 0; iChildFace < 4; iChildFace ++ ) {
-                                childTessFace = add_var ( childTessFace, 1 );
+                                childTessFace = alloc_add_var ( childTessFace, 1 );
                                 currTessFace->childFace[iChildFace] = get_var_last ( childTessFace );
                         }
 
@@ -363,7 +363,7 @@ struct triangle_mesh_shape *LoopTesselateTriangleMesh ( struct triangle_mesh_sha
 
                                         // Update odd vertex
                                         copy_point3d ( &newVert, &newVertex.vertex );
-                                        childTessVertex = push_var ( &newVert, childTessVertex );
+                                        childTessVertex = alloc_push_var ( &newVert, childTessVertex );
                                         numberNewVertex ++;
 
                                         // Update the central triangle too
@@ -769,7 +769,7 @@ void InitTesselateGeometry ( struct triangle_mesh_shape *triangleMesh,
         // Copy Vertices
         int iVertex;
         for ( iVertex = 0; iVertex < triangleMesh->num_vertex; iVertex ++ ) {
-                tessVertex = add_var ( tessVertex, 1 );
+                tessVertex = alloc_add_var ( tessVertex, 1 );
                 copy_point3d ( &triangleMesh[iVertex].v[iVertex],
                                &tessVertex[iVertex].vertex );
         }
@@ -777,7 +777,7 @@ void InitTesselateGeometry ( struct triangle_mesh_shape *triangleMesh,
         // And faces too
         int iFace;
         for ( iFace = 0; iFace < triangleMesh->num_tri; iFace ++ ) {
-                tessFace = add_var ( tessFace, 1 );
+                tessFace = alloc_add_var ( tessFace, 1 );
 
                 struct tesselate_face * currTessFace = &tessFace[iFace];
                 struct triangle_shape *currFace = &triangleMesh->tri[iFace];
@@ -986,7 +986,7 @@ struct tesselate_edge * FindEdge ( struct tesselate_edge * cTessEdge, struct tes
 void AddEdge ( struct tesselate_edge *newEdge, struct tesselate_edge **tessEdges, int *numberEdge )
 {
         /// TODO: Implements a O(log n) searching algorithm
-        *tessEdges = push_var ( newEdge, *tessEdges );
+        *tessEdges = alloc_push_var ( newEdge, *tessEdges );
         (*numberEdge) ++;
 }
 

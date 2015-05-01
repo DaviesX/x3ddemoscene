@@ -81,7 +81,7 @@ static inline void alg_list_copy(struct alg_list* list0, struct alg_list* list1)
         untyped *t = (untyped*) list1->content;
         memcpy ( list1, list0, sizeof ( *list1 ) );
         list1->content = t;
-        list1->content = expand_var ( list1->content, list0->num_elm );
+        list1->content = alloc_expand_var ( list1->content, list0->num_elm );
         memcpy ( list1->content, list0->content, list0->num_elm*list0->elm_size );
 }
 
@@ -109,7 +109,7 @@ static inline void alg_list_swap(struct alg_list* list0, struct alg_list* list1)
 
 #define alg_list_push_back( _data, _inst ) \
 { \
-        (_inst)->content = add_var ( (_inst)->content, sizeof (_data) ); \
+        (_inst)->content = alloc_add_var ( (_inst)->content, sizeof (_data) ); \
         typeof(_data)* _dest = (typeof(_data)*) (_inst)->content + (_inst)->num_elm; \
         *_dest = (_data); \
         (_inst)->num_elm ++; \

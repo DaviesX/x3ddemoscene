@@ -33,7 +33,7 @@ enum RES_ERROR {
  * Functions declaration
  */
 
-void create_stager ( struct mem_block *block, int init_count, struct stager *stg );
+void create_stager ( struct arena_allocator *block, int init_count, struct stager *stg );
 void free_stager ( struct stager *stg );
 void stager_flush ( struct stager *stg );
 

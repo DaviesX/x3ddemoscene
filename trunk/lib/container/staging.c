@@ -180,7 +180,7 @@ char *root_layer ( struct res_name *name, int *rdepth )
         return name->layer[0];
 }
 
-void create_stager ( struct mem_block *block, int init_count, struct stager *stg )
+void create_stager ( struct arena_allocator *block, int init_count, struct stager *stg )
 {
         init_count = init_count > 0 ? init_count : INIT_COUNT;
         int hash_size = init_count*4;
@@ -311,7 +311,7 @@ void stager_push_data ( void *data, int size, struct entry_record *rec )
         struct stager *stg = rec->stg;
         struct res_entry* entries = alg_array ( list, &stg->entry );
         struct res_entry* entry = &entries[rec->ientry];
-        entry->buff = add_var ( entry->buff, size );
+        entry->buff = alloc_add_var ( entry->buff, size );
         untyped *curr_byte = get_var_last ( entry->buff ) - (size - 1);
         memcpy ( curr_byte, data, size );
         stg->byte_used += size;

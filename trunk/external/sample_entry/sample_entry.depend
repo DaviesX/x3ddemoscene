@@ -114,7 +114,7 @@
 1419742711 /home/davis/x3drenderlib-code/trunk/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1429300315 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1430497848 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_renderer.hpp>
@@ -161,7 +161,7 @@
 1429731846 /home/davis/x3drenderlib-code/trunk/lib/type.h
 	<x3d/common.h>
 
-1429815002 /home/davis/x3drenderlib-code/trunk/lib/container/staging.h
+1429913520 /home/davis/x3drenderlib-code/trunk/lib/container/staging.h
 	<container/hashmap.h>
 	<container/arraylist.h>
 	<system/allocator.h>
@@ -174,7 +174,7 @@
 	<x3d/common.h>
 	<system/allocator.h>
 
-1429817432 /home/davis/x3drenderlib-code/trunk/lib/container/arraylist.h
+1429915421 /home/davis/x3drenderlib-code/trunk/lib/container/arraylist.h
 	<container/container.h>
 
 1429817432 /home/davis/x3drenderlib-code/trunk/lib/container/linkedlist.h
@@ -183,11 +183,11 @@
 1429819456 /home/davis/x3drenderlib-code/trunk/lib/system/log.h
 	<x3d/common.h>
 
-1429817969 /home/davis/x3drenderlib-code/trunk/lib/system/allocator.h
+1429915482 /home/davis/x3drenderlib-code/trunk/lib/system/allocator.h
 	<x3d/common.h>
 	<misc.h>
 
-1429827741 /home/davis/x3drenderlib-code/trunk/lib/system/thread.h
+1430497760 /home/davis/x3drenderlib-code/trunk/lib/system/thread.h
 	<x3d/common.h>
 
 1429827823 /home/davis/x3drenderlib-code/trunk/lib/system/symlib.h

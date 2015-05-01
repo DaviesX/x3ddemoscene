@@ -121,13 +121,13 @@ void resource_piler_test ( struct alg_named_params *np )
         int idata = pop_data_resource_piler_c ( int, rec );
         printf ( "%x\n", idata );
 
-        printf ( "memory instances: %d\n", query_mem_inst () );
-        printf ( "memory usage: %d bytes\n", query_mem_usage () );
+        printf ( "memory instances: %d\n", alloc_query_instance_count () );
+        printf ( "memory usage: %d bytes\n", alloc_query_usage () );
         puts ( "free memory..." );
         free_res_record_s ( rec );
         free_resource_piler ( &rp );
-        printf ( "memory instances: %d\n", query_mem_inst () );
-        printf ( "memory usage: %d bytes\n", query_mem_usage () );
+        printf ( "memory instances: %d\n", alloc_query_instance_count () );
+        printf ( "memory usage: %d bytes\n", alloc_query_usage () );
 //	dbg_finish ();
 }
 #endif

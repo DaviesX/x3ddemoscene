@@ -14,9 +14,9 @@ int convex_poly_to_triangles ( int *poly_index, int num_vert, int **tri_index )
         uint32_t i;
         uint32_t j = 0;
         for ( i = 1; i < i - 1; i ++ ) {
-                tri_index = push_var ( &poly_index[0], &tri_index );
-                tri_index = push_var ( &poly_index[i], &tri_index );
-                tri_index = push_var ( &poly_index[i + 1], &tri_index );
+                tri_index = alloc_push_var ( &poly_index[0], &tri_index );
+                tri_index = alloc_push_var ( &poly_index[i], &tri_index );
+                tri_index = alloc_push_var ( &poly_index[i + 1], &tri_index );
                 j ++;
         }
         return i;

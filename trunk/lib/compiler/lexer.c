@@ -73,7 +73,7 @@ void lex_code ( struct code_lexer *lex, struct sym_entry *sym_tbl )
                 } else if ( isalpha ( cch ) ) {
                         int b = 0;
                         while ( isalnum ( lex->ptr[b] ) ) {
-                                lex->tok_buf = add_var ( lex->tok_buf, 1 );
+                                lex->tok_buf = alloc_add_var ( lex->tok_buf, 1 );
                                 lex->tok_buf[b] = lex->ptr[b];
                                 b ++;
                         }

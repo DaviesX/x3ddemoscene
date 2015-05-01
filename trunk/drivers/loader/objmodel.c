@@ -98,7 +98,7 @@ int FetchToMem ( FILE *file, struct OBJ_INTER_FILE *objInterFile )
 
         while ( fgets ( tmpBuffer, MAX_LINE_LEN, file ) ) {
                 int actualLen = StripRedundant ( tmpBuffer ) + 1;
-                objInterFile->fileContent = add_var ( objInterFile->fileContent, actualLen );
+                objInterFile->fileContent = alloc_add_var ( objInterFile->fileContent, actualLen );
                 memcpy ( &objInterFile->fileContent[usedByte], tmpBuffer, actualLen );
                 usedByte += actualLen;
                 nLines ++;
@@ -249,7 +249,7 @@ int PrimitiveScanPass ( struct OBJ_INTER_FILE *objInterFile )
                         }
                         if ( newMeshSwitch ) {
                                 // Add and initialize mesh content
-                                objInterFile->meshes = add_var ( objInterFile->meshes, 1 );
+                                objInterFile->meshes = alloc_add_var ( objInterFile->meshes, 1 );
                                 currMesh = &objInterFile->meshes[iMesh];
                                 memset ( currMesh, 0, sizeof ( struct MESH ) );
                                 InitMesh ( currMesh );
@@ -278,7 +278,7 @@ int PrimitiveScanPass ( struct OBJ_INTER_FILE *objInterFile )
                                 newMeshSwitch = 1;
                         }
                         isNewMeshFinish = 0;
-                        currMesh->primitives = add_var ( currMesh->primitives, 1 );
+                        currMesh->primitives = alloc_add_var ( currMesh->primitives, 1 );
                         currPrimitives = currMesh->primitives;
 
                         int nVerts = GetVertNum ( currentLine );
@@ -380,7 +380,7 @@ void VertexAttrScanPass ( struct OBJ_INTER_FILE *objInterFile )
                         currentLine += contentLen;
                         GetNextStr ( currentLine, ' ', 0, contentLen );
                         objInterFile->gbVertAttr.vPositions =
-                                add_var ( objInterFile->gbVertAttr.vPositions, 1 );
+                                alloc_add_var ( objInterFile->gbVertAttr.vPositions, 1 );
                         struct point4d *currVertPos = get_var_last ( objInterFile->gbVertAttr.vPositions );
                         int nComps = MakeAttribute ( currentLine, currVertPos );
                         if ( nComps == 3 ) {	// If the file does't specify a w component
@@ -393,7 +393,7 @@ void VertexAttrScanPass ( struct OBJ_INTER_FILE *objInterFile )
                         currentLine += contentLen;
                         GetNextStr ( currentLine, ' ', 0, contentLen );
                         objInterFile->gbVertAttr.vNormals =
-                                add_var ( objInterFile->gbVertAttr.vNormals, 1 );
+                                alloc_add_var ( objInterFile->gbVertAttr.vNormals, 1 );
                         struct vector4d *currVertNor = get_var_last ( objInterFile->gbVertAttr.vNormals );
                         int nComps = MakeAttribute ( currentLine, currVertNor );
                         if ( nComps == 3 ) {	// If the file does't specify a w component
@@ -404,7 +404,7 @@ void VertexAttrScanPass ( struct OBJ_INTER_FILE *objInterFile )
                 case 't': {			// "vt"
                         currentLine += contentLen;
                         GetNextStr ( currentLine, ' ', 0, contentLen );
-                        objInterFile->gbVertAttr.vUVs = add_var ( objInterFile->gbVertAttr.vUVs, 1 );
+                        objInterFile->gbVertAttr.vUVs = alloc_add_var ( objInterFile->gbVertAttr.vUVs, 1 );
                         struct vector3d *currVertUv = get_var_last ( objInterFile->gbVertAttr.vUVs );
                         int nComps = MakeAttribute ( currentLine, currVertUv );
                         if ( nComps == 2 ) {	// If the file does't specify a w component
@@ -509,7 +509,7 @@ void GatherOutput ( struct OBJ_INTER_FILE *objInterFile, struct res_task *task )
                 /* Begin vertex attributes */
                 int vertLen = objInterFile->gbVertAttr.nVerts;
                 int filterLen = objInterFile->gbVertAttr.nVerts*currMesh->nVertAttrs;
-                filter = expand_var ( filter, filterLen );
+                filter = alloc_expand_var ( filter, filterLen );
                 memset ( filter, 0, filterLen );
                 int nVerts = SelectVertAttr ( currMesh, filter );
                 struct GLOBAL_VERT_ATTR *gbVertAttr = &objInterFile->gbVertAttr;

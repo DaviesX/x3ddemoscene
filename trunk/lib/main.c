@@ -33,9 +33,9 @@ void variable_memory_test0 ( struct alg_named_params *param )
 {
         char **str_arr = alloc_var ( sizeof ( char* ), 0 );
         char *s0 = "Hello, first string\n";
-        str_arr = push_var ( &s0, str_arr );
+        str_arr = alloc_push_var ( &s0, str_arr );
         char *s1 = "Do you see me ? Second string\n";
-        str_arr = push_var ( &s1, str_arr );
+        str_arr = alloc_push_var ( &s1, str_arr );
         log_normal ( "%s", &str_arr[0][0] );
         log_normal ( "%s", &str_arr[1][0] );
         free_var ( str_arr );
@@ -44,14 +44,14 @@ void variable_memory_test0 ( struct alg_named_params *param )
 
 void variable_memory_test1 ( struct alg_named_params *param )
 {
-        log_normal ( "memory query 0: %dkb", query_mem_usage () );
+        log_normal ( "memory query 0: %dkb", alloc_query_usage () );
         const int count = 10000;
         /* add/decrease */
         int *array = alloc_var ( sizeof ( int ), 0 );
-        log_normal ( "memory query 1: %dkb", query_mem_usage () );
+        log_normal ( "memory query 1: %dkb", alloc_query_usage () );
         int i;
         for ( i = 0; i < count; i ++ ) {
-                array = add_var ( array, 1 );
+                array = alloc_add_var ( array, 1 );
                 array[i] = i;
 
 //                int *curr = get_var_last ( array );
@@ -63,20 +63,20 @@ void variable_memory_test1 ( struct alg_named_params *param )
                 array = dec_var ( array, 2 );
         }
         log_normal ( "number element(deleted): %d", get_var_len ( array ) );
-        log_normal ( "memory query 2: %dkb", query_mem_usage () );
+        log_normal ( "memory query 2: %dkb", alloc_query_usage () );
         /* shrink-expand */
         array = shrink_var ( array );
         log_normal ( "number element(shrinked): %d", get_var_len ( array ) );
-        log_normal ( "memory query 3: %dkb", query_mem_usage () );
+        log_normal ( "memory query 3: %dkb", alloc_query_usage () );
         for ( i = 0; i < count; i ++ ) {
-                array = expand_var ( array, i + 1 );
+                array = alloc_expand_var ( array, i + 1 );
                 array[i] = i;
         }
         log_normal ( "number element(expanded): %d", get_var_len ( array ) );
         flush_var ( array );
         log_normal ( "number element(flushed): %d", get_var_len ( array ) );
         free_var ( array );
-        log_normal ( "memory query 4: %dkb", query_mem_usage () );
+        log_normal ( "memory query 4: %dkb", alloc_query_usage () );
 //	dbg_finish ();
 }
 

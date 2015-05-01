@@ -19,35 +19,30 @@
 
 
 // Utility macro function
-#define alloc_fix( _elm_size, num_elm )		(call_alloc_fix ( _elm_size, num_elm))
 #define free_fix( _ptr ) \
 { \
-	call_free_fix ( _ptr ); \
+	__free_fix(_ptr); \
 	_ptr = nullptr; \
 }
-#define alloc_var( _elm_size, num_elm )		(call_alloc_var ( _elm_size, num_elm))
-#define free_var( _ptr ) \
+
+#define free_var(_ptr) \
 { \
-	call_free_var ( _ptr ); \
+	__free_var(_ptr); \
 	_ptr = nullptr; \
 }
-#define add_var( _ptr, _n )			(call_add_var ( _ptr, _n ))
-#define push_var( _data, _ptr )			(call_push_var ( _data, _ptr ))
-#define pop_var( _ptr, _data )			(call_pop_var ( _ptr, _data ))
-#define expand_var( _ptr, _n )			(call_expand_var( _ptr, _n ))
-#define expand2_var( _ptr, _n )			(call_expand2_var( _ptr, _n ))
+#define expand2_var( _ptr, _n )			(alloc_expand2_var( _ptr, _n ))
 #define shrink_var( _ptr )			(call_shrink_var ( _ptr ))
 #define dec_var( _ptr, _n )			(call_dec_var ( _ptr, _n ))
 #define flush_var( _ptr )			(call_flush_var ( _ptr ))
 #define get_var_len( _ptr )			(call_get_var_len ( _ptr ))
 #define get_var_last( _ptr )			(call_get_var_last ( _ptr ))
 
-#define alloc_obj( _data ) \
+#define alloc_obj(_data) \
 	alloc_fix(sizeof *(_data), 1); \
 	memset ( _data, 0, sizeof *(_data) ); \
 
-#define zero_obj( _data )			(memset ( _data, 0, sizeof(*(_data)) ))
-#define zero_array( _data, _count )		(memset ( _data, 0, sizeof(*(_data))*(_count) ))
+#define zero_obj( _data )			(memset(_data, 0, sizeof(*(_data))))
+#define zero_array( _data, _count )		(memset(_data, 0, sizeof(*(_data))*(_count)))
 
 
 /* memory operations */
@@ -57,10 +52,10 @@
 #define set_double( _data, _dest )	(*(uint64_t *) (_dest) = *(uint64_t *) (_data))
 #define set_quad( _data, _dest )
 
-#define memsetb( _dest, _data, _count )		(memset ( _dest, _data, _count ))
+#define memsetb(_dest, _data, _count)		(memset(_dest, _data, _count))
 
 /* Fill memory in word, notice that count is not equal to size in byte */
-#define memsetw( _dest, _data, _count )		\
+#define memsetw(_dest, _data, _count)		\
 	asm (\
 		"movl %0, %%edi\n"\
 		"movl %1, %%ecx\n"\
@@ -71,7 +66,7 @@
 	);
 
 /* Fill memory in long, notice that count is not equal to size in byte */
-#define memsetl( _dest, _data, _count )	\
+#define memsetl(_dest, _data, _count)	\
 	asm (\
 		"movl %0, %%edi\n"\
 		"movl %1, %%ecx\n"\
@@ -81,37 +76,37 @@
 		:"r"(dest), "r"(count), "r"(data)\
 	);
 
-#define memsetd( _dest, _data, _count )
-#define memsetq( _dest, _data, _count )
+#define memsetd(_dest, _data, _count)
+#define memsetq(_dest, _data, _count)
 
-struct mem_block {
+struct arena_allocator {
 };
 
 /*
  * Functions declarations
  */
 
-PseudoDef ( void memsetw ( void *dest, uint16_t data, int count ); )
-PseudoDef ( void memsetl ( void *dest, uint32_t data, int count ); )
-PseudoDef ( void memsetll ( void *dest, uint64_t data, int count ); )
-PseudoDef ( void memsetql ( void *dest, uint64_t data[2], int count ); )
+PseudoDef(void memsetw(void *dest, uint16_t data, int count);)
+PseudoDef(void memsetl(void *dest, uint32_t data, int count);)
+PseudoDef(void memsetll(void *dest, uint64_t data, int count);)
+PseudoDef(void memsetql(void *dest, uint64_t data[2], int count);)
 
-void *call_alloc_fix ( uint32_t elm_size, uint32_t num_elm );
-void call_free_fix ( void *ptr );
-void *call_alloc_var ( uint32_t elm_size, uint32_t num_elm );
-void call_free_var ( void *ptr );
-void *call_add_var ( void *ptr, int n );
-void *call_push_var ( void *data, void *ptr );
-void *call_pop_var ( void *ptr, void *data );
-void *call_expand_var ( void *ptr, uint32_t n );
-void *call_expand2_var ( void *ptr, uint32_t n );
-void *call_shrink_var ( void *ptr );
-void *call_dec_var ( void *ptr, int n );
-void *call_flush_var ( void *ptr );
-uint32_t call_get_var_len ( void *ptr );
-void *call_get_var_last ( void *ptr );
-uint32_t query_mem_usage ( void );
-uint32_t query_mem_inst ( void );
+void* 		alloc_fix(uint32_t elm_size, uint32_t num_elm);
+void 		__free_fix(void* ptr);
+void*		alloc_var(uint32_t elm_size, uint32_t num_elm);
+void 		__free_var(void* ptr);
+void*		alloc_add_var(void* ptr, int n);
+void* 		alloc_push_var(void* data, void* ptr);
+void*		alloc_pop_var(void* ptr, void* data);
+void*		alloc_expand_var(void* ptr, uint32_t n);
+void*		alloc_expand2_var(void* ptr, uint32_t n);
+void*		call_shrink_var ( void *ptr );
+void*		call_dec_var ( void *ptr, int n );
+void*		call_flush_var ( void *ptr );
+uint32_t 	call_get_var_len ( void *ptr );
+void*		call_get_var_last ( void *ptr );
+uint32_t 	alloc_query_usage ( void );
+uint32_t 	alloc_query_instance_count ( void );
 
 
 #endif // ALLOCATOR_H_INCLUDED

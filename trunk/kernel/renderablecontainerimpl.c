@@ -53,7 +53,7 @@ static void rdacontainer_linear_free(struct rdacontainer_linear* cont)
 static void rdacontainer_linear_add(struct rdacontainer_linear* cont, enum RENDERABLE_IDR type, struct rda_instance* inst)
 {
         int n = get_var_len(cont->insts[type]);
-        cont->insts[type] = add_var ( cont->insts[type], 1 );
+        cont->insts[type] = alloc_add_var ( cont->insts[type], 1 );
         cont->insts[type][n] = inst;
 }
 

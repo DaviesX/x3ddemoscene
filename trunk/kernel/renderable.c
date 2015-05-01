@@ -244,7 +244,7 @@ struct rda_instance* rda_instance_create ( struct renderable *rda, struct matrix
         insts->rda_link         = rda;
         cRdaOps[rda->type].get_bound ( rda, transform, &insts->bound );
 
-        rda->insts = add_var ( rda->insts, 1 );
+        rda->insts = alloc_add_var ( rda->insts, 1 );
         rda->insts[rda->ninsts ++] = insts;
         return insts;
 }

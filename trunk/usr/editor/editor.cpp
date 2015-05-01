@@ -78,7 +78,7 @@ int EditorBackend::on_loop_init ( KernelEnvironment *env )
         info->e = this->m_editor;
         info->env = env;
 
-        this->m_loop_task = thr_run_task("gui_thread", (f_Thread_Handler) gui_thread, info, nullptr);
+        this->m_loop_task = thread_run_task("gui_thread", (f_Thread_Handler) gui_thread, info, nullptr);
         return 0;
 fail:
         free_fix ( info );
@@ -111,7 +111,7 @@ int EditorBackend::on_free ( KernelEnvironment *env )
         if ( !this->m_frontend->free ( this->m_editor, env ) ) {
                 goto fail;
         }
-        thr_sync_with_task(m_loop_task);
+        thread_sync_with_task(m_loop_task);
         log_normal_dbg("the gui thread has exited safely");
         return 0;
 fail:
@@ -284,7 +284,7 @@ EditorActiveX::EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type ) :
 {
         m_name          = name;
         m_bufcount      = 0;
-        x3d::thr_init_trap ( &m_block_driver );
+        x3d::thread_init_trap ( &m_block_driver );
         m_dirty         = false;
 };
 
@@ -339,12 +339,12 @@ void EditorActiveX::swap_buf ( void )
 
 void EditorActiveX::wait_for_update ( void )
 {
-        x3d::thr_trap_on_task ( &m_block_driver );
+        x3d::thread_trap_on_task ( &m_block_driver );
 }
 
 void EditorActiveX::unwait ( void )
 {
-        x3d::thr_untrap_task ( &m_block_driver );
+        x3d::thread_untrap_task ( &m_block_driver );
 }
 
 /* dirt-mark utilities */

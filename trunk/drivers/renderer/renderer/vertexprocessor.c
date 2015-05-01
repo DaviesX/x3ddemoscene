@@ -118,7 +118,7 @@ void ibuffer_set_format ( enum INDEX_ELEMENT_FORMAT format, struct index_buffer 
 void vbuffer_add_vertex ( struct vertex_buffer *vbuffer )
 {
         int i = vbuffer->curr - (untyped *) vbuffer->buffer;
-        vbuffer->buffer = add_var ( vbuffer->buffer, vbuffer->attri.vertsize );
+        vbuffer->buffer = alloc_add_var ( vbuffer->buffer, vbuffer->attri.vertsize );
         vbuffer->curr = (untyped *) vbuffer->buffer + i;
         vbuffer->elm_cnt ++;
 }
@@ -126,7 +126,7 @@ void vbuffer_add_vertex ( struct vertex_buffer *vbuffer )
 void ibuffer_add_index ( struct index_buffer *ibuffer )
 {
         int i = ibuffer->curr - (untyped *) ibuffer->buffer;
-        ibuffer->buffer = add_var ( ibuffer->buffer, SizeOfIndexF[ibuffer->format] );
+        ibuffer->buffer = alloc_add_var ( ibuffer->buffer, SizeOfIndexF[ibuffer->format] );
         ibuffer->curr = (untyped *) ibuffer->buffer + i;
         ibuffer->elm_cnt ++;
 }

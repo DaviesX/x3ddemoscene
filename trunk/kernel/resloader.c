@@ -53,7 +53,7 @@ struct res_comp {
 struct res_task {
         char*                   filename;
         enum RES_STATE          state;
-        struct thr_task*        thrtask;
+        struct thread_task*        thrtask;
         enum RES_IDR            type;
         struct res_loader*      loader;
         struct res_comp*        stg0_info;
@@ -72,8 +72,8 @@ struct res_loader {
         } *task;
         int     pivot;
         int     total_task;
-        struct mem_block        block;
-        struct thr_trap         trap;
+        struct arena_allocator  block;
+        struct thread_trap         trap;
         struct work_group*      wgroup;
 };
 
@@ -118,8 +118,8 @@ struct res_loader *create_res_loader ( void )
                 alg_init ( llist, &loader->task[type].task, sizeof (struct res_task*), 0 );
                 loader->task[type].n_task = 0;
         }
-        thr_init_trap ( &loader->trap );
-        loader->wgroup = thr_new_workgroup ( 1 );
+        thread_init_trap ( &loader->trap );
+        loader->wgroup = thread_new_workgroup ( 1 );
         loader->is_valid = true;
         loader->pivot = 1;
         return loader;
@@ -127,8 +127,8 @@ struct res_loader *create_res_loader ( void )
 
 void free_res_loader ( struct res_loader *loader )
 {
-        thr_trap_on_task ( &loader->trap );
-        thr_free_workgroup ( loader->wgroup );
+        thread_trap_on_task ( &loader->trap );
+        thread_free_workgroup ( loader->wgroup );
         loader->wgroup = nullptr;
         int type;
         for ( type = 0; type < MAX_RESOURCE; type ++ ) {
@@ -138,14 +138,14 @@ void free_res_loader ( struct res_loader *loader )
         }
         free_fix ( loader->task );
         loader->is_valid = false;
-        thr_untrap_task ( &loader->trap );
+        thread_untrap_task ( &loader->trap );
 }
 
 void res_loader_flush ( struct res_loader *loader )
 {
-        thr_trap_on_task ( &loader->trap );
-        thr_abandon_workgroup ( loader->wgroup );
-        loader->wgroup = thr_new_workgroup ( 1 );
+        thread_trap_on_task ( &loader->trap );
+        thread_abandon_workgroup ( loader->wgroup );
+        loader->wgroup = thread_new_workgroup ( 1 );
         int type;
         for ( type = 0; type < MAX_RESOURCE; type ++ ) {
                 stager_flush ( &loader->task[type].content );
@@ -154,16 +154,16 @@ void res_loader_flush ( struct res_loader *loader )
         }
         loader->is_valid = true;
         loader->pivot = SANITIZE_THRESHOLD;
-        thr_untrap_task ( &loader->trap );
+        thread_untrap_task ( &loader->trap );
 }
 
 void res_loader_sanitize ( struct res_loader *loader )
 {
         if ( loader->total_task > loader->pivot ) {
-                thr_trap_on_task ( &loader->trap );
+                thread_trap_on_task ( &loader->trap );
                 /* @todo (davis#3#): release zero-referenced tasks */
                 loader->pivot = loader->total_task*2;
-                thr_untrap_task ( &loader->trap );
+                thread_untrap_task ( &loader->trap );
         }
 }
 
@@ -225,7 +225,7 @@ static void *async_run_loader ( void *info )
 struct res_task *res_loader_load ( char *filename, enum RES_IDR type, bool is_async,
                                    struct res_loader *loader )
 {
-        thr_trap_on_task ( &loader->trap );
+        thread_trap_on_task ( &loader->trap );
         if ( !loader->is_valid ) {
                 log_severe_err_dbg ( "loader has been released but this function is called" );
                 return nullptr;
@@ -245,7 +245,7 @@ retry_res:
                 alg_push_back ( llist, &loader->task[type].task, &task );
 
                 if ( is_async ) {
-                        task->thrtask = thr_run_task(get_function_name(), async_run_loader, task, loader->wgroup);
+                        task->thrtask = thread_run_task(get_function_name(), async_run_loader, task, loader->wgroup);
                 } else {
                         async_run_loader ( task );
                 }
@@ -264,7 +264,7 @@ retry_res:
         }
 
         free_entry_record ( entry );
-        thr_untrap_task ( &loader->trap );
+        thread_untrap_task ( &loader->trap );
         return task;
 }
 
@@ -300,7 +300,7 @@ static void *async_run_saver ( void *info )
 struct res_task *res_loader_save ( char *filename, res_ptr_t res_ptr, enum RES_IDR type,
                                    bool is_async, struct res_loader *loader )
 {
-        thr_trap_on_task ( &loader->trap );
+        thread_trap_on_task ( &loader->trap );
         if ( !loader->is_valid ) {
                 log_severe_err_dbg ( "loader has been released but this function is called" );
                 return nullptr;
@@ -311,14 +311,14 @@ struct res_task *res_loader_save ( char *filename, res_ptr_t res_ptr, enum RES_I
 
         if ( is_async ) {
                 task->thrtask =
-                        thr_run_task(get_function_name(), async_run_saver, task, loader->wgroup);
+                        thread_run_task(get_function_name(), async_run_saver, task, loader->wgroup);
         } else {
                 async_run_saver ( task );
         }
         loader->task[type].n_task ++;
         loader->total_task ++;
 
-        thr_untrap_task ( &loader->trap );
+        thread_untrap_task ( &loader->trap );
         return task;
 }
 
@@ -348,7 +348,7 @@ retry_pop:
 
         switch ( task->state ) {
         case RES_STATE_LOADING: {
-                thr_sync_with_task ( task->thrtask );
+                thread_sync_with_task ( task->thrtask );
                 goto retry_pop;
         }
         case RES_STATE_FAILED:
@@ -374,7 +374,7 @@ void res_loader_task_free ( struct res_task *task )
 
 struct res_comp *res_comp_alloc_unit ( struct res_task *task )
 {
-        task->stg0_info = add_var ( task->stg0_info, 1 );
+        task->stg0_info = alloc_add_var ( task->stg0_info, 1 );
         struct res_comp *comp = &task->stg0_info[task->n_stg1 ++];
         comp->loader = task->loader;
         memset ( comp, 0, sizeof *comp );
@@ -504,6 +504,6 @@ void *res_comp_shrink ( void *ptr, int real_count )
         void *head = (untyped *) ptr - sizeof (void*);
         void *data;
         memcpy ( &data, &head, sizeof (void*) );
-        expand_var ( data, real_count );
+        alloc_expand_var ( data, real_count );
         return (untyped *) data + sizeof (void*);
 }

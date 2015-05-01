@@ -251,28 +251,28 @@ static inline void u_aos_accumulate ( struct util_aos* u_aos,
         if ( format & UtilAttriVertex ) {
                 struct point3d* src = va_arg ( v_arg, struct point3d* );
                 u_aos->aos[_AttriVertex].s_data =
-                        add_var ( u_aos->aos[_AttriVertex].s_data, num_vertex );
+                        alloc_add_var ( u_aos->aos[_AttriVertex].s_data, num_vertex );
                 struct point3d* v = u_aos->aos[_AttriVertex].s_data;
                 memcpy ( &v[u_aos->n_vertex], src, num_vertex );
         }
         if ( format & UtilAttriNormal ) {
                 struct vector3d* src = va_arg ( v_arg, struct vector3d* );
                 u_aos->aos[_AttriNormal].s_data =
-                        add_var ( u_aos->aos[_AttriNormal].s_data, num_vertex );
+                        alloc_add_var ( u_aos->aos[_AttriNormal].s_data, num_vertex );
                 struct vector3d* n = u_aos->aos[_AttriNormal].s_data;
                 memcpy ( &n[u_aos->n_vertex], src, num_vertex );
         }
         if ( format & UtilAttriTangent ) {
                 struct vector3d* src = va_arg ( v_arg, struct vector3d* );
                 u_aos->aos[_AttriTangent].s_data =
-                        add_var ( u_aos->aos[_AttriTangent].s_data, num_vertex );
+                        alloc_add_var ( u_aos->aos[_AttriTangent].s_data, num_vertex );
                 struct vector3d* t = u_aos->aos[_AttriTangent].s_data;
                 memcpy ( &t[u_aos->n_vertex], src, num_vertex );
         }
         if ( format & UtilAttriUV ) {
                 struct vector2d* src = va_arg ( v_arg, struct vector3d* );
                 u_aos->aos[_AttriUV].s_data =
-                        add_var ( u_aos->aos[_AttriUV].s_data, num_vertex );
+                        alloc_add_var ( u_aos->aos[_AttriUV].s_data, num_vertex );
                 struct vector2d* uv = u_aos->aos[_AttriUV].s_data;
                 memcpy ( &uv[u_aos->n_vertex], src, num_vertex );
         }
@@ -280,7 +280,7 @@ static inline void u_aos_accumulate ( struct util_aos* u_aos,
         va_end ( v_arg );
 
         /* copy indices */
-        u_aos->index = add_var ( u_aos->index, num_index );
+        u_aos->index = alloc_add_var ( u_aos->index, num_index );
         int* d_index = &u_aos->index[u_aos->n_index];
         int i;
         for ( i = 0; i < num_index; i ++ ) {

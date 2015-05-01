@@ -94,7 +94,7 @@ void shader_add_function ( char *function, struct shader *shader )
                 log_critical_err_dbg ( "no such shader library function: %s", function );
                 return ;
         }
-        shader->src_lib = push_var ( &lib, shader->src_lib );
+        shader->src_lib = alloc_push_var ( &lib, shader->src_lib );
 }
 
 void shader_finalize ( struct shader *shader )
@@ -179,7 +179,7 @@ int shader_get_outvar_loc ( int type, struct shader *shader )
 
 void shader_set_uniform_buffer ( struct uniform_buffer *uni, struct shader *shader )
 {
-        shader->uni_buf = push_var ( &uni, shader->uni_buf );
+        shader->uni_buf = alloc_push_var ( &uni, shader->uni_buf );
 }
 
 /* RI Interface */
@@ -252,7 +252,7 @@ shaderlib_t shaderlib_get ( char *name )
 shaderlib_t shaderlib_create_from ( shaderlib_t lib0, char *name, int lib_form )
 {
         /* initialize new library from the existed */
-        g_libfunc = add_var ( g_libfunc, 1 );
+        g_libfunc = alloc_add_var ( g_libfunc, 1 );
         struct shader_func *func = &g_libfunc[g_nlibfunc];
         if ( func->lib_form == SHADER_FUNC_STATIC &&
              lib_form != SHADER_FUNC_STATIC ) {
@@ -294,7 +294,7 @@ static void alloc_for_so_lib ( struct shader_func *func )
 
 shaderlib_t shaderlib_load ( char *name, struct shader_func *func )
 {
-        g_libfunc = add_var ( g_libfunc, 1 );
+        g_libfunc = alloc_add_var ( g_libfunc, 1 );
 
         func->name = alloc_fix ( 1, strlen ( name ) + 1 );
         strcpy ( func->name, name );

@@ -13,7 +13,7 @@
 #define PATTERN_MAX_COUNTS		16
 
 volatile static uuid_t          g_uuid = 0;
-static struct thr_trap          g_uuid_trap = {0};
+static struct thread_trap          g_uuid_trap = {0};
 
 /* contains translated pattern */
 typedef struct PATTERN_DATA_TYP {
@@ -468,15 +468,15 @@ bool ishexdigit ( int value )
 
 uuid_t alg_gen_uuid ( void )
 {
-        thr_trap_on_task(&g_uuid_trap);
+        thread_trap_on_task(&g_uuid_trap);
         uuid_t x = g_uuid ++;
-        thr_untrap_task(&g_uuid_trap);
+        thread_untrap_task(&g_uuid_trap);
         return x;
 }
 
 void alg_use_uuid ( uuid_t id )
 {
-        thr_trap_on_task(&g_uuid_trap);
+        thread_trap_on_task(&g_uuid_trap);
         g_uuid = max(id, g_uuid);
-        thr_untrap_task(&g_uuid_trap);
+        thread_untrap_task(&g_uuid_trap);
 }

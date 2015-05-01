@@ -32,25 +32,27 @@ struct mem_rec g_mem_rec = {0};
 
 #define inc_usage( _size )		(g_mem_rec.used += (_size))
 #define dec_usage( _size )		(g_mem_rec.used -= (_size))
-#define inc_inst() \
-{ \
-	static int ibudget = 1; \
-	DebugIf ( g_mem_rec.inst >= INSTANCE_BUGDET*ibudget, \
-			log_mild_err_dbg ( "Running over instance budget: %d", \
-					   INSTANCE_BUGDET*ibudget ); \
-			ibudget ++; \
-		) \
-	g_mem_rec.inst ++; \
-}
-#define dec_inst() \
-{ \
-	g_mem_rec.inst --; \
+
+static inline void inc_inst()
+{
+	static int ibudget = 1;
+	DebugIf ( g_mem_rec.inst >= INSTANCE_BUGDET*ibudget,
+			log_mild_err_dbg ( "Running over instance budget: %d",
+					   INSTANCE_BUGDET*ibudget );
+			ibudget ++;
+		)
+	g_mem_rec.inst ++;
 }
 
-struct var_head *change_size_var ( struct var_head *vh, int new_size, int factor );
+static inline void dec_inst()
+{
+	g_mem_rec.inst --;
+}
+
+static struct var_head* change_size_var(struct var_head* vh, int new_size, int factor);
 
 
-void *call_alloc_fix ( uint32_t elm_size, uint32_t num_elm )
+void* alloc_fix(uint32_t elm_size, uint32_t num_elm)
 {
         if (elm_size == 0 || num_elm == 0)
                 return nullptr;
@@ -59,28 +61,28 @@ void *call_alloc_fix ( uint32_t elm_size, uint32_t num_elm )
         struct fix_head fh = {
                 .used = size
         };
-        const uint32_t offset = sizeof ( fh );
-        untyped *mem = malloc ( size + offset );
-        assert ( mem );
-        inc_usage ( size + offset );
-        inc_inst ();
+        const uint32_t offset = sizeof(fh);
+        untyped *mem = malloc(size + offset);
+        assert(mem);
+        inc_usage(size + offset);
+        inc_inst();
 
-        memcpy ( mem, &fh, offset );
+        memcpy(mem, &fh, offset);
         return &mem[offset];
 }
 
-void call_free_fix ( void *ptr )
+void __free_fix(void* ptr)
 {
-        if ( ptr ) {
-                struct fix_head *fh = &((struct fix_head *) ptr)[-1];
-                dec_usage ( fh->used + sizeof ( *fh ) );
-                dec_inst ();
-                free ( fh );
+        if (ptr) {
+                struct fix_head* fh = &((struct fix_head*) ptr)[-1];
+                dec_usage(fh->used + sizeof (*fh));
+                dec_inst();
+                free(fh);
         }
 }
 
 /* Allocate variable memory */
-void *call_alloc_var ( uint32_t elm_size, uint32_t num_elm )
+void *alloc_var ( uint32_t elm_size, uint32_t num_elm )
 {
         assert ( elm_size != 0 );
         num_elm = (num_elm == 0) ? INIT_COUNT : num_elm;
@@ -91,7 +93,7 @@ void *call_alloc_var ( uint32_t elm_size, uint32_t num_elm )
         untyped *mem = malloc ( size + offset );
         assert ( mem );
         inc_usage ( size + offset );
-        inc_inst ()
+        inc_inst ();
 
         vh.elm_size = elm_size;
         vh.used = 0;
@@ -101,7 +103,7 @@ void *call_alloc_var ( uint32_t elm_size, uint32_t num_elm )
         return &mem[offset];
 }
 
-void call_free_var ( void *ptr )
+void __free_var(void* ptr)
 {
         if ( ptr ) {
                 struct var_head *vh = &((struct var_head *) ptr)[-1];
@@ -116,7 +118,7 @@ struct var_head *change_size_var ( struct var_head *vh, int new_size, int factor
         void *mem = malloc ( factor*new_size + sizeof ( *vh ) );
         assert ( mem );
         inc_usage ( factor*new_size + sizeof ( *vh ) );
-        inc_inst ()
+        inc_inst();
 
         struct var_head *vh2 = mem;
         vh2->elm_size = vh->elm_size;
@@ -133,7 +135,7 @@ struct var_head *change_size_var ( struct var_head *vh, int new_size, int factor
 /* Increase the size of a variable memory,
  * and return the new memory address after the increment.
  * You _MUST_ retrieve the returned value*/
-void *call_add_var ( void *ptr, int n )
+void *alloc_add_var ( void *ptr, int n )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         if ( vh->used + n*vh->elm_size > vh->total ) {
@@ -143,7 +145,7 @@ void *call_add_var ( void *ptr, int n )
         return &vh[1];
 }
 
-void *call_push_var ( void *data, void *ptr )
+void *alloc_push_var ( void *data, void *ptr )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         if ( vh->used + vh->elm_size > vh->total ) {
@@ -155,16 +157,16 @@ void *call_push_var ( void *data, void *ptr )
         return buff;
 }
 
-void *call_pop_var ( void *ptr, void *data )
+void* alloc_pop_var(void* ptr, void* data)
 {
-        struct var_head *vh = &((struct var_head *) ptr)[-1];
-        vh->used -= vh->elm_size;
-        untyped *buff = (untyped *) &vh[1];
-        memcpy ( data, &buff[vh->used], vh->elm_size );
+        struct var_head* vh     = &((struct var_head*) ptr)[-1];
+        vh->used                -= vh->elm_size;
+        untyped* buff           = (untyped*) &vh[1];
+        memcpy(data, &buff[vh->used], vh->elm_size);
         return buff;
 }
 
-void *call_expand_var ( void *ptr, uint32_t n )
+void *alloc_expand_var ( void *ptr, uint32_t n )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         if ( n*vh->elm_size > vh->total ) {
@@ -174,7 +176,7 @@ void *call_expand_var ( void *ptr, uint32_t n )
         return &vh[1];
 }
 
-void *call_expand2_var ( void *ptr, uint32_t n )
+void *alloc_expand2_var ( void *ptr, uint32_t n )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         if ( n*vh->elm_size > vh->total ) {
@@ -221,12 +223,12 @@ void *call_get_var_last ( void *ptr )
         return (void *) addr;
 }
 
-uint32_t query_mem_usage ( void )
+uint32_t alloc_query_usage ( void )
 {
         return g_mem_rec.used;
 }
 
-uint32_t query_mem_inst ( void )
+uint32_t alloc_query_instance_count ( void )
 {
         return g_mem_rec.inst;
 }
