@@ -24,7 +24,7 @@ struct render_pass {
         int                     src;
         int                     dest;
         float                   dest_blend;
-        enum RENDER_PIPE_IDR    pipe;
+        enum RenderPipeType     pipe;
         int                     sub_pass[10];
         int                     n_subpass;
         struct rda_context*     ctx;
@@ -565,22 +565,7 @@ void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* 
                         }
                 case RENDER_OP_RADIANCE:
                         {
-                        int                     dest;
-                        struct rda_context*     ctx;
-                        enum RENDER_PIPE_IDR    pipeline;
-                        float                   blend;
-                        get_operand ( p_instr, dest );
-                        get_operand ( p_instr, ctx );
-                        get_operand ( p_instr, pipeline );
-                        get_operand ( p_instr, blend );
-
-                        struct render_pass* pass = &r->pass[dest];
-                        pass->nature = RenderPassRadiance;
-                        pass->dest = dest;
-                        pass->dest_blend = blend;
-                        pass->ctx = ctx;
-                        pass->pipe = pipeline;
-                        r->n_passes ++;
+                        // Removed
                         break;
                         }
                 case RENDER_OP_COMPOSITE:
@@ -726,7 +711,7 @@ void pt_renderer_render ( struct pt_renderer* r )
                         p_instr ++;
                         int                     dest;
                         struct rda_context*     ctx;
-                        enum RENDER_PIPE_IDR    pipeline;
+                        enum RenderPipeType    pipeline;
                         float                   blend;
                         get_operand ( p_instr, dest );
                         get_operand ( p_instr, ctx );
@@ -771,3 +756,76 @@ void pt_renderer_render ( struct pt_renderer* r )
 void pt_renderer_output ( struct pt_renderer* r )
 {
 }
+
+struct render_node_ex_impl* pt_radiance_node_creator(struct render_node_ex* parent)
+{
+        struct pt_radiance_node* node = alloc_obj(node);
+        zero_obj(node);
+        node->_parent2 = *(struct render_radiance*) parent;
+        // fill in ops
+        struct render_node_ex_ops       ops;
+        ops.f_compute           = pt_radiance_node_compute;
+        ops.f_free              = pt_radiance_node_free;
+        ops.f_get_result        = pt_radiance_node_get_result;
+        ops.f_is_compatible     = pt_radiance_node_is_compatible;
+        node->_parent.ops       = ops;
+        return (struct render_node_ex_impl*) node;
+}
+
+bool pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+{
+        /* It will be compatible if the radiance node is:
+         * 1. software based
+         * 2. preferred path tracing renderer
+         * 3. using solid geometry model
+         * 4. with direct lighting rendering pipeline */
+        enum RenderEnvironment* spec = render_tree_retrieve_environment(tree, RenderEnvSpec);
+        if (*spec != RenderSpecSWBuiltin) {
+                return false;
+        }
+        enum PreferredRendererType* renderer = render_tree_retrieve_environment(tree, RenderEnvPreferredRenderer);
+        if (*renderer != RendererPathTracer) {
+                return false;
+        }
+        enum GeometryModelType* model = render_tree_retrieve_environment(tree, RenderEnvGeometryModel);
+        if (*model != GeometryModelSolid) {
+                return false;
+        }
+        enum RenderPipeType pipe = render_node_radiance_get_pipe(&((struct pt_radiance_node*) self)->_parent2);
+        if (pipe != RenderPipeDirectLighting) {
+                return false;
+        }
+        return true;
+}
+
+void pt_radiance_node_compute(struct render_node_ex_impl* self,
+                              const struct render_node_ex_impl* input[],
+                              const struct render_node_ex_impl* output[])
+{
+        struct pt_radiance_node* node = (struct pt_radiance_node*) self;
+        // Get input node instance <renderable loader> and its context
+        const int slot                                  = render_node_radiance_get_input_slot(RenderNodeRenderableLoader);
+        struct pt_renderable_loader_node* rdaloader     = (struct pt_renderable_loader_node*) input[slot];
+        struct rda_context* context                     = rdaloader->_parent.ops.f_get_result(rdaloader);
+        // Get geometry data
+        uuid_t request_id                               = rda_context_post_request(context, RAG_CULL_NULL, nullptr,
+                                                                                   RENDERABLE_GEOMETRY);
+        const int n                                     = rda_context_get_n(context, request_id);
+        int i;
+        for (i = 0; i < n; i ++) {
+                struct rda_instance* inst = rda_context_get_i(context, i, request_id);
+                struct rda_geometry* geometry = rda_instance_source(inst);
+                int n_vertices;
+                struct point3d* vertices = rda_geometry_get_vertex(geometry, &n_vertices);
+        }
+}
+
+void* pt_radiance_node_get_result(struct render_node_ex_impl* self)
+{
+        return &((struct pt_radiance_node*) self)->target;
+}
+
+void pt_radiance_node_free(struct render_node_ex_impl* self)
+{
+}
+

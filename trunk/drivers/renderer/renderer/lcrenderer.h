@@ -2,7 +2,7 @@
 #define IRENDERER_H_INCLUDED
 
 #include <x3d/renderer.h>
-
+/*
 struct lcrenderer_ops;
 
 struct lcrenderer_ops {
@@ -21,5 +21,5 @@ struct lcrenderer {
 void init_rtrenderer ( struct lcrenderer_ops *ops );
 void init_ptrenderer ( struct lcrenderer_ops *ops );
 
-
+*/
 #endif // IRENDERER_H_INCLUDED

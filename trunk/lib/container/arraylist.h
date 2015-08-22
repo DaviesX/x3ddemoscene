@@ -7,7 +7,7 @@
 #pragma pack(4)
 
 /* Sometimes we need to put the pointers of
- * an array of data into a separate list for non-linear
+ * an array of data into a separate self for non-linear
  * access or arrangment temporarily or perminently. When the
  * process is done, the alg_pointer_list can restore the lineary order
  * with a new copy of array, while alg_double_pointer_list does not
@@ -16,7 +16,7 @@ struct alg_ptr_list {
         void *ptr;
 };
 
-/* Provides a list container and
+/* Provides a self container and
  * some common O(n) operations below */
 struct alg_list {
         void*           content;
@@ -26,162 +26,162 @@ struct alg_list {
 
 #pragma pack()
 
-PseudoDef(void create_alg_ptr_list(void* list, int len, bool is_inplace, struct alg_ptr_list* ptrs);)
-PseudoDef(void free_alg_ptr_list(struct alg_ptr_list* ptrs );)
-PseudoDef(void alg_ptr_list_tonew(struct alg_ptr_list* ptrs, int len, void* new_list))
-PseudoDef(void alg_ptr_list_inplace(struct alg_ptr_list* ptrs, int len, void* list))
+PseudoDef(void alg_ptr_list_init(struct alg_ptr_list* self, void* list, int len, bool is_inplace);)
+PseudoDef(void alg_ptr_list_free(struct alg_ptr_list* self);)
+PseudoDef(void alg_ptr_list_tonew(struct alg_ptr_list* self, int len, void* new_list))
+PseudoDef(void alg_ptr_list_inplace(struct alg_ptr_list* self, int len, void* list))
 
-static inline void create_alg_list(struct alg_list* list, int elm_size, int init_count);
-static inline void free_alg_list(struct alg_list* list);
-static inline void alg_list_push_back(void* elm, struct alg_list* list);
-static inline void alg_list_expand(int count, struct alg_list* list);
-static inline void alg_list_flush(struct alg_list* list);
-PseudoDef(void alg_list_find(struct alg_list* list, void* info, void** elm_data,
-                              bool (*compare_func) (void* info, void* elm));)
-PseudoDef(void alg_list_remove(struct alg_list* list, void* info,
-                                bool (*compare_func) (void* info, void* elm));)
-PseudoDef(int alg_list_n(struct alg_list* list);)
+static inline void alg_list_init(struct alg_list* self, int elm_size, int init_count);
+static inline void alg_list_free(struct alg_list* self);
+static inline void alg_list_push_back(struct alg_list* self, void* elm);
+static inline void alg_list_expand(struct alg_list* self, int count);
+static inline void alg_list_flush(struct alg_list* self);
+PseudoDef(void alg_list_find(struct alg_list* self, void* info, void** elm_data,
+                             bool (*compare_func) (void* info, void* elm));)
+PseudoDef(void alg_list_remove(struct alg_list* self, void* info,
+                               bool (*compare_func) (void* info, void* elm));)
+PseudoDef(int alg_list_n(struct alg_list* self);)
 static inline void alg_list_copy(struct alg_list* list0, struct alg_list* list1);
 static inline void alg_list_swap(struct alg_list* list0, struct alg_list* list1);
 
 
 
-static inline void create_alg_list(struct alg_list* list, int elm_size, int init_count)
+static inline void alg_list_init(struct alg_list* self, int elm_size, int init_count)
 {
-        memset ( list, 0, sizeof ( *list ) );
-        if ( init_count < 0 ) {
-                list->content = alloc_var ( elm_size, 0 );
+        zero_obj(self);
+        if (init_count < 0) {
+                self->content = alloc_var(elm_size, 0);
         } else {
-                list->content = alloc_var ( elm_size, init_count );
+                self->content = alloc_var(elm_size, init_count);
         }
-        list->elm_size = elm_size;
-        list->num_elm = 0;
+        self->elm_size  = elm_size;
+        self->num_elm   = 0;
 }
 
-static inline void free_alg_list(struct alg_list* list)
+static inline void alg_list_free(struct alg_list* self)
 {
-        free_var ( list->content );
-        zero_obj ( list );
+        free_var(self->content);
+        zero_obj(self);
 }
 
-static inline void alg_list_expand(int count, struct alg_list* list)
+static inline void alg_list_expand(struct alg_list* self, int count)
 {
-        list->content = expand2_var ( list->content, count );
+        self->content = expand2_var(self->content, count);
 }
 
-static inline void alg_list_flush(struct alg_list* list)
+static inline void alg_list_flush(struct alg_list* self)
 {
-        flush_var ( list->content );
-        list->num_elm = 0;
+        flush_var(self->content);
+        self->num_elm = 0;
 }
 
 /* Both lists must have the same element type */
 static inline void alg_list_copy(struct alg_list* list0, struct alg_list* list1)
 {
-        untyped *t = (untyped*) list1->content;
-        memcpy ( list1, list0, sizeof ( *list1 ) );
-        list1->content = t;
-        list1->content = alloc_expand_var ( list1->content, list0->num_elm );
-        memcpy ( list1->content, list0->content, list0->num_elm*list0->elm_size );
+        untyped *t      = (untyped*) list1->content;
+        memcpy(list1, list0, sizeof(*list1));
+        list1->content  = t;
+        list1->content  = alloc_expand_var(list1->content, list0->num_elm);
+        memcpy(list1->content, list0->content, list0->num_elm*list0->elm_size);
 }
 
-/* swaps the list's pointer respectively */
+/* swaps the self's pointer respectively */
 static inline void alg_list_swap(struct alg_list* list0, struct alg_list* list1)
 {
-        untyped *t = (untyped*) list0->content;
-        list0->content = list1->content;
-        list1->content = t;
+        untyped *t      = (untyped*) list0->content;
+        list0->content  = list1->content;
+        list1->content  = t;
 }
 
 
-#define alg_list_find( _data, _iter, _cmp, _inst )	\
+#define alg_list_find(_self, _data, _iter, f_Compare)	\
 {\
-	(_iter) = nullptr; \
-	typeof(_iter) _ptr = (_inst)->content; \
+	(_iter)                 = nullptr; \
+	typeof(_iter) _ptr      = (_self)->content; \
 	int _i; \
-	for ( _i = 0; _i < (_inst)->num_elm; _i ++ ) { \
-		if ( _cmp ( (_data), &_ptr[_i] ) ) { \
+	for (_i = 0; _i < (_self)->num_elm; _i ++) { \
+		if (f_Compare((_data), &_ptr[_i])) { \
 			(_iter) = &_ptr[_i]; \
 			break; \
 		} \
 	} \
 }
 
-#define alg_list_push_back( _data, _inst ) \
+#define alg_list_push_back(_self, _data) \
 { \
-        (_inst)->content = alloc_add_var ( (_inst)->content, sizeof (_data) ); \
-        typeof(_data)* _dest = (typeof(_data)*) (_inst)->content + (_inst)->num_elm; \
-        *_dest = (_data); \
-        (_inst)->num_elm ++; \
+        (_self)->content        = alloc_add_var((_self)->content, sizeof(_data)); \
+        typeof(_data)* _dest    = (typeof(_data)*) (_self)->content + (_self)->num_elm; \
+        *_dest                  = (_data); \
+        (_self)->num_elm ++; \
 }
 
-#define alg_list_pop_back( _iter, _inst ) \
+#define alg_list_pop_back(_self, _iter) \
 { \
-        (_inst)->content = dec_var ( (_inst)->content, sizeof *(_iter) ); \
-        (_inst)->num_elm --; \
+        (_self)->content = dec_var((_self)->content, sizeof *(_iter)); \
+        (_self)->num_elm --; \
 }
 
-#define alg_list_n( _inst )             (_inst)->num_elm
-#define alg_list_array( _inst )         (_inst)->content
-#define alg_list_first( _iter, _inst )  ((_iter) = (_inst)->content)
-#define alg_list_next( _iter, _inst )   (++ (_iter))
-#define alg_list_prev( _iter, _inst )   (-- (_iter))
-#define alg_list_last( _iter, _inst )   ((_iter) = &(cast(_iter) (_inst)->content)[(_inst)->num_elm - 1])
-#define alg_list_null( _iter, _inst )   ((_iter) = cast(_iter) (_inst)->content + (_inst)->num_elm)
+#define alg_list_n(_self)               (_self)->num_elm
+#define alg_list_array(_self)           (_self)->content
+#define alg_list_first(_self, _iter)    ((_iter) = (_self)->content)
+#define alg_list_next(_self, _iter)     (++ (_iter))
+#define alg_list_prev(_self, _iter)     (-- (_iter))
+#define alg_list_last(_self, _iter)     ((_iter) = &(cast(_iter) (_self)->content)[(_self)->num_elm - 1])
+#define alg_list_null(_self, _iter)     ((_iter) = cast(_iter) (_self)->content + (_self)->num_elm)
 
 
-#define alg_ptr_list_i( _ptr_l, i )	((_ptr_l)[i].ptr)
+#define alg_ptr_list_i(_self, i)	((_self)[i].ptr)
 
-#define create_alg_ptr_list( _list, _len, _is_inplace, _ptrs ) \
+#define alg_ptr_list_init(_self, _list, _len, _is_inplace) \
 { \
-        int _ptr_len = (_len)*(_is_inplace + 1); \
-        (_ptrs)->ptr = alloc_fix ( sizeof *(_ptrs), _ptr_len );\
+        int _ptr_len    = (_len)*(_is_inplace + 1); \
+        (_self)->ptr    = alloc_fix(sizeof *(_self), _ptr_len);\
         int _i; \
-        for ( _i = 0; _i < (_len); _i ++ ) { \
-                (_ptrs)[_i].ptr = &(_list)[_i]; \
+        for (_i = 0; _i < (_len); _i ++) { \
+                (_self)[_i].ptr = &(_list)[_i]; \
         } \
 }
 
-#define free_alg_ptr_list( _ptrs )         (free_fix ( _ptrs ))
+#define alg_ptr_list_free(_self)         (free_fix(_self))
 
-#define alg_ptr_list_tonew( _ptrs, _len, _new_list ) \
+#define alg_ptr_list_tonew(_self, _len, _new_list) \
 { \
         int _i; \
-        for ( _i = 0; _i < (_len); _i ++ ) { \
-                _new_list[_i] = *(cast(_new_list) (_ptrs)[_i].ptr); \
+        for (_i = 0; _i < (_len); _i ++) { \
+                _new_list[_i] = *(cast(_new_list) (_self)[_i].ptr); \
         } \
 }
 
-#define alg_ptr_list_inplace( _ptr_list, _len, _list ) \
+#define alg_ptr_list_inplace(_self, _len, _list) \
 { \
-        typeof(&_list) _ori_ptrs = cast(&_list) &(_ptr_list)[_len]; \
-        typeof(&_list) _ptrs = cast(&_list) &(_ptr_list)[0]; \
+        typeof(&_list) _ori_ptrs        = cast(&_list) &(_self)[_len]; \
+        typeof(&_list) _ptrs            = cast(&_list) &(_self)[0]; \
         int _i; \
-        for ( _i = 0; _i < (_len); _i ++ ) { \
+        for (_i = 0; _i < (_len); _i ++) { \
                 _ori_ptrs[(_ptrs)[_i] - (_list)] = &_list[_i]; \
         } \
-        typeof (*(_list)) _temp[2]; \
+        typeof (*(_list))       _temp[2]; \
         _temp[0] = (_list)[0]; \
 \
-        int _i_iter = 0; \
-        int _i_elm = 0; \
-        int _switcher = 0; \
-        while ( _i_elm < (_len) ) { \
-                if (  (_ptrs)[_i_iter] != &(_list)[_i_iter] ) { \
-                        (_ptrs)[_i_iter] = &(_list)[_i_iter]; \
-                        _i_iter = (_ptrs)[_i_iter] - (_list); \
-                        _temp[(_switcher + 1) & 1] = (_list)[_i_iter]; \
-                        (_list)[_i_iter] = _temp[_switcher & 1]; \
+        int _i_iter     = 0; \
+        int _i_elm      = 0; \
+        int _switcher   = 0; \
+        while (_i_elm < (_len)) { \
+                if ((_ptrs)[_i_iter] != &(_list)[_i_iter]) { \
+                        (_ptrs)[_i_iter]                = &(_list)[_i_iter]; \
+                        _i_iter                         = (_ptrs)[_i_iter] - (_list); \
+                        _temp[(_switcher + 1) & 1]      = (_list)[_i_iter]; \
+                        (_list)[_i_iter]                = _temp[_switcher & 1]; \
                         _switcher ++; \
                 } else { \
                         do { \
                                 _i_iter ++; \
                                 _i_elm ++; \
-                        } while ( &(_list)[_i_iter] == (_ptrs)[_i_iter] ); \
+                        } while (&(_list)[_i_iter] == (_ptrs)[_i_iter]); \
                         _temp[_switcher & 1] = (_list)[_i_iter]; \
                 } \
         } \
-        free_fix ( _ptrs ); \
+        free_fix(_ptrs); \
 }
 
 #endif // ARRAYLIST_H_INCLUDED

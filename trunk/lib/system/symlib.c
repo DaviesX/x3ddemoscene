@@ -461,6 +461,19 @@ f_Generic symlib_ret_abi ( struct symbol_set* symbols, char* sym_name )
         return nullptr;
 }
 
+f_Generic symlib_ret_abi2(struct symbol_set* symbols, void* data, f_Match_Name f_match_name)
+{
+        struct dlsymbol* sym = alg_array(list, &symbols->symbol[SYMBOL_ABI]);
+        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
+        int i;
+        for (i = 0; i < num_sym; i ++) {
+                if (sym[i].name && !f_match_name(data, sym[i].name)))
+                        return sym[i].func_ptr;
+        }
+        log_mild_err_dbg("couldn't find symbol by such matcher: %x", f_match_name);
+        return nullptr;
+}
+
 void* symlib_ret_variable ( struct symbol_set* symbols, char* sym_name, int* size )
 {
         struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_ABI] );

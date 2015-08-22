@@ -30,7 +30,6 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-Wall" />
-					<Add option="-g" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
 				</Compiler>

@@ -26,7 +26,6 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-w" />
-					<Add option="-g" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
 				</Compiler>
@@ -213,7 +212,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/fbo.h" />
-		<Unit filename="drivers/renderer/renderer/lcrenderer.h" />
 		<Unit filename="drivers/renderer/renderer/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -246,7 +244,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/raytracepipeline.h" />
-		<Unit filename="drivers/renderer/renderer/renderer.c">
+		<Unit filename="drivers/renderer/renderer/rendererinsmod.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="drivers/renderer/renderer/rtrenderer.c">
@@ -312,6 +310,7 @@
 		<Unit filename="include/renderer/renderer.h">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="include/renderer/rendererinsmod.h" />
 		<Unit filename="include/renderer/shader.h" />
 		<Unit filename="include/renderer/shader_lib.h" />
 		<Unit filename="include/renderer/spatial_probe.h" />
@@ -328,7 +327,14 @@
 		<Unit filename="include/x3d/renderableaggregate.h" />
 		<Unit filename="include/x3d/renderableaggregaterequest.h" />
 		<Unit filename="include/x3d/renderer.h" />
+		<Unit filename="include/x3d/rendernodehdr.h" />
+		<Unit filename="include/x3d/rendernodelayer.h" />
+		<Unit filename="include/x3d/rendernodeoutput.h" />
+		<Unit filename="include/x3d/rendernodepostao.h" />
+		<Unit filename="include/x3d/rendernoderadiance.h" />
+		<Unit filename="include/x3d/rendernoderdaloader.h" />
 		<Unit filename="include/x3d/rendertree.h" />
+		<Unit filename="include/x3d/rendertreeenvconsts.h" />
 		<Unit filename="include/x3d/resloader.h" />
 		<Unit filename="include/x3d/strategy.h" />
 		<Unit filename="kernel/debug.c">
@@ -366,6 +372,21 @@
 		</Unit>
 		<Unit filename="kernel/renderablecontainerimpl.h" />
 		<Unit filename="kernel/renderer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/rendernodehdr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/rendernodelayer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/rendernodeoutput.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/rendernoderadiance.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kernel/rendernoderdaloader.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="kernel/rendertree.c">

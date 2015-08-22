@@ -2,74 +2,67 @@
 #define RENDERER_H_INCLUDED
 
 
-#include <math/math.h>
-#include <container/staging.h>
-#include <system/symlib.h>
-
+#include <misc.h>
+#include <x3d/common.h>
 #include <x3d/rendertree.h>
 
-
-/* The following rendering method is expected to engage in the renderer */
-/** \brief available renderer type
+/*
+ * forward declarations
  */
-enum RENDERER_IDR {
-        RENDERER_UNDETERMINATE,         /**< a memory block with undefined renderer */
-        RENDERER_RASTERIZER,            /**< rasterization renderer */
-        RENDERER_PATH_TRACER,           /**< path tracing renderer */
-        RENDERER_PHOTON_TRACER,         /**< photon tracing renderer */
-        RENDERER_PHOTON_MAP,            /**< photon light map generation renderer */
-        RENDERER_RADIOSITY,             /**< radiosity light map generation renderer */
-        RENDERER_RADIANCE_CACHE,        /**< radiance cache generation renderer */
-        RENDERER_PRT,                   /**< precomputed radiance transfer renderer */
-        RENDERER_SELECTION              /**< object selection renderer */
-};
-#define cNumRenderer            9
-
-struct lcrenderer;
-struct renderer;
-struct rda_context;
-struct probe;
-struct render_out;
-
+struct render_tree;
+struct render_node;
+struct render_node_ex;
+struct render_node_ex_impl;
+struct symbol_set;
 
 /*
  * structures
  */
-typedef struct renderer {
-        uuid_t                  rend_id;
-        bool                    has_bytecode;
-        struct render_bytecode  bytecode;
-        struct lcrenderer*      rend;
-} *p_renderer_t;
+
+typedef bool (*f_Render_NodeExImpl_Is_Compatiable) (struct render_node_ex_impl* self, struct render_tree* tree);
+typedef void (*f_Render_NodeExImpl_Compute) (struct render_node_ex_impl* self,
+                                             const struct render_node_ex_impl* input[],
+                                             const struct render_node_ex_impl* output[]);
+typedef void* (*f_Render_NodeExImpl_Get_Result) (struct render_node_ex_impl* self);
+typedef void (*f_Render_NodeExImpl_Free) (struct render_node_ex_impl* self);
+struct render_node_ex_ops {
+        f_Render_NodeExImpl_Is_Compatiable      f_is_compatible;
+        f_Render_NodeExImpl_Compute             f_compute;
+        f_Render_NodeEx_Get_Result              f_get_result;
+        f_Render_NodeEx_Free                    f_free;
+};
+
+struct render_node_ex_impl {
+        struct render_node_ex_ops       ops;
+        struct render_node_ex*          ref;
+};
+
+struct render_node_ex {
+        struct render_node              _parent;
+        enum RenderNodeType             type;
+        struct render_node_ex_impl*     metainst[32];
+};
+
 
 /*
  * functions' declaration
  */
-/* container's */
-void renderer_kernel_init ( void );
-void renderer_kernel_free ( void );
+/* struct render_node_ex's */
+void                            render_node_ex_init(struct render_node_ex* self, enum RenderNodeType type);
+void                            render_node_ex_free(struct render_node_ex* self);
+struct render_node_ex*          render_node_ex_impl_get_ex(struct render_node_ex_impl* self);
+struct render_node_ex_impl*     render_node_ex_get_ex_impl(struct render_node_ex* self, int id);
 
 /* ABIs */
-typedef void (*f_LCRenderer_Init) ( void );
-typedef struct lcrenderer* (*f_LCRenderer_Create) ( enum RENDERER_IDR method, struct probe* probe );
-typedef void (*f_LCRenderer_Free) ( struct lcrenderer *rend );
-typedef void (*f_LCRenderer_Update) ( struct render_bytecode *bytecode, struct lcrenderer *rend );
-typedef void (*f_LCRenderer_Render) ( struct lcrenderer *rend );
-typedef void (*f_LCRenderer_Output) ( struct lcrenderer *rend );
+typedef void (*f_Rendererinsmod) ();
+typedef void (*f_Rendererrmmod) ();
 
-bool renderer_import ( struct symbol_set *symbols );
+void            renderer_kernel_init();
+void            renderer_kernel_free();
+bool            renderer_import(struct symbol_set* symbols);
 
 /* renderer's */
-__dlexport void renderer_init(struct renderer* rend, enum RENDERER_IDR type);
-__dlexport void renderer_free(struct renderer *rend);
-__dlexport void renderer_retype ( enum RENDERER_IDR type, struct renderer *rend );
-
-__dlexport void renderer_update ( struct renderer *rend );
-__dlexport void renderer_render ( struct renderer *rend );
-__dlexport void renderer_commit ( struct renderer *rend );
-
-__dlexport void renderer_renderscript ( const char* script, struct renderer *rend );
-__dlexport void renderer_render_tree ( struct render_tree *tree, struct renderer *rend );
+void            renderer_render(struct render_tree* tree);
 
 
 #endif // RENDERER_H_INCLUDED

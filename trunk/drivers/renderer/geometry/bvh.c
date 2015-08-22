@@ -80,12 +80,12 @@ struct bvh_subdivide *build_bvh_subdivide ( struct alg_list *prim_list, int buil
 
         /* Recursively build Bvh tree for primitives */
         struct alg_list new_prim_list;
-        create_alg_list ( &new_prim_list, sizeof ( struct primitive ), alg_list_n ( prim_list ) );
+        alg_list_init ( &new_prim_list, sizeof ( struct primitive ), alg_list_n ( prim_list ) );
         int num_nodes;
         struct initial_tree *initial =
                 build_initial_tree ( prim_list, build_method, &new_prim_list, &num_nodes );
         alg_list_swap ( &new_prim_list, prim_list );
-        free_alg_list ( &new_prim_list );
+        alg_list_free ( &new_prim_list );
         bvh->prim_list = prim_list;
 
         /* Convert to a linear tree, which is to be actually used */

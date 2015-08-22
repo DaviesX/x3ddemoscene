@@ -7,6 +7,10 @@
 
 static struct lcrenderer_ops g_render_ops[cNumRenderer];
 
+void lcrenderer_register()
+{
+}
+
 void lcrenderer_init ( void )
 {
         init_shader_library ();

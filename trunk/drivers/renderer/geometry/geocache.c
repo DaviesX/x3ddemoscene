@@ -46,8 +46,8 @@ void geocache_add_pass ( uuid_t id, struct geopass_desc *desc, struct geocache *
         gc->pass[id].id = id;
         memcpy ( &gc->pass[id].desc, desc, sizeof ( *desc ) );
         gc->pass[id].desc.state = GEOPASS_HAS_DESC;
-        create_alg_list ( &gc->pass[id].geo, sizeof ( struct geometry ), 0 );
-        create_alg_list ( &gc->pass[id].prim, sizeof ( struct primitive ), 0 );
+        alg_list_init ( &gc->pass[id].geo, sizeof ( struct geometry ), 0 );
+        alg_list_init ( &gc->pass[id].prim, sizeof ( struct primitive ), 0 );
         gc->n_pass ++;
 }
 
@@ -57,8 +57,8 @@ void geocache_remove_pass ( uuid_t id, struct geocache *gc )
                 log_normal_dbg ( "pass: %d had already been removed", id );
                 return ;
         }
-        free_alg_list ( &gc->pass[id].geo );
-        free_alg_list ( &gc->pass[id].prim );
+        alg_list_free ( &gc->pass[id].geo );
+        alg_list_free ( &gc->pass[id].prim );
         free_primitive_partition ( &gc->pass[id].primpart );
         gc->pass[id].id = -1;
         gc->pass[id].state = GEOPASS_NOT_BUILT;

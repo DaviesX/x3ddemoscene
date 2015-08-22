@@ -6,212 +6,6 @@
 #include <x3d/rendertree.h>
 
 
-static void render_node_init(struct render_node* node,
-                             bool (*free_self)       (struct render_node* self),
-                             bool (*verify_self)     (struct render_tree* tree, struct render_node* self),
-                             bool (*insert_input)    (struct render_node* self, struct render_node* input),
-                             bool (*remove_input)    (struct render_node* self, struct render_node* input),
-                             enum RENDER_NODE_IDR type, const char* name, int n_input, int n_output);
-static void render_node_free(struct render_node* node);
-static void render_node_set_input(struct render_node* node, struct render_node* input, int i);
-static void render_node_remove_input(struct render_node* node, struct render_node* input);
-static enum RENDER_NODE_IDR render_node_get_type(struct render_node* node);
-static const char* render_node_get_name(struct render_node* node);
-static void render_node_copy_link(struct render_node* src, struct render_node* dest);
-
-static bool render_tree_check_environment(struct render_tree* tree, enum RENDER_ENVIRONMENT type, char* name);
-
-/*
- * render_output
- */
-static bool render_node_output_free(struct render_node* self)
-{
-        render_node_free(self);
-        struct render_output* node = (struct render_output*) self;
-        free_fix(node->probe);
-        free_fix(node);
-        return true;
-}
-
-static bool render_node_output_insert(struct render_node* self, struct render_node* input)
-{
-        render_node_set_input(self, input, 0);
-        return true;
-}
-
-static bool render_node_output_remove(struct render_node* self, struct render_node* input)
-{
-        render_node_remove_input(self, input);
-        return true;
-}
-
-static bool render_node_verify_self(struct render_tree* tree, struct render_node* self)
-{
-        return render_tree_check_environment(tree, RENDER_ENV_PROBE, ((struct render_output*) self)->probe);
-}
-
-void render_node_output_set_probe(struct render_output* node, const char* probe)
-{
-        if (node->probe) {
-                free_fix(node->probe);
-        }
-        node->probe = alg_alloc_string(probe);
-}
-
-struct render_node* render_node_output_create(const char* name, const char* probe)
-{
-        static const int c_NumInput = 1;
-        static const int c_NumOutput = 1;
-
-        struct render_output* node = alloc_obj(node);
-        render_node_init((struct render_node*) node,
-                         render_node_output_free,
-                         render_node_verify_self,
-                         render_node_output_insert,
-                         render_node_output_remove,
-                         RENDER_NODE_OUTPUT, name, c_NumInput, c_NumOutput);
-        node->probe = alg_alloc_string(probe);
-        return (struct render_node*) node;
-}
-
-/*
- * render_layer
- */
-struct render_node* render_node_layer_create(const char* name)
-{
-        static const int c_NumInput = 1;
-        static const int c_NumOutput = 1;
-
-        struct render_layer* node = alloc_obj(node);
-        render_node_init((struct render_node*) node,
-                         nullptr,
-                         nullptr,
-                         nullptr,
-                         nullptr,
-                         RENDER_NODE_LAYER, name, c_NumInput, c_NumOutput);
-        return (struct render_node*) node;
-}
-
-/*
- * render_rdacontext
- */
-static bool render_node_rdacontext_free(struct render_node* self)
-{
-        render_node_free(self);
-        struct render_rdacontext* node = (struct render_rdacontext*) self;
-        free_fix(node->rdacontext);
-        free_fix(node);
-        return true;
-}
-
-static bool render_node_rdacontext_insert(struct render_node* self, struct render_node* input)
-{
-        log_mild_err_dbg("cannot insert input to renderable context node");
-        return false;
-}
-
-static bool render_node_rdacontext_remove(struct render_node* self, struct render_node* input)
-{
-        log_mild_err_dbg("cannot remove input from renderable context node, nothing to be removed");
-        return false;
-}
-
-static bool render_node_rdacontext_self(struct render_tree* tree, struct render_node* self)
-{
-        return render_tree_check_environment(tree, RENDER_ENV_RDA, ((struct render_rdacontext*) self)->rdacontext);
-}
-
-void render_node_rdacontext_set_context(struct render_rdacontext* node, const char* context)
-{
-        if (node->rdacontext) {
-                free_fix(node->rdacontext);
-        }
-        node->rdacontext = alg_alloc_string(context);
-}
-
-void render_node_rdacontext_set_access(struct render_rdacontext* node, enum RAG_IDR access)
-{
-        node->access = access;
-}
-
-struct render_node* render_node_rdacontext_create(const char* name, const char* rdacontext, enum RAG_IDR access)
-{
-        static const int c_NumInput = 0;
-        static const int c_NumOutput = 1;
-
-        struct render_rdacontext* node = alloc_obj(node);
-        render_node_init((struct render_node*) node,
-                         render_node_rdacontext_free,
-                         render_node_rdacontext_self,
-                         render_node_rdacontext_insert,
-                         render_node_rdacontext_remove,
-                         RENDER_NODE_RDACONTEXT, name, c_NumInput, c_NumOutput);
-        node->access     = access;
-        node->rdacontext = alg_alloc_string(rdacontext);
-        return (struct render_node*) node;
-}
-
-/*
- * render_radiance
- */
-static bool render_node_radiance_free(struct render_node* self)
-{
-        render_node_free(self);
-        free_fix(self);
-        return true;
-}
-
-static bool render_node_radiance_insert(struct render_node* self, struct render_node* input)
-{
-        static const int c_RenderableContextSlot = 0;
-
-        enum RENDER_NODE_IDR type = render_node_get_type(input);
-        switch(type) {
-        case RENDER_NODE_RDACONTEXT:
-                {
-                render_node_set_input(self, input, c_RenderableContextSlot);
-                return true;
-                }
-        default:
-                {
-                log_mild_err_dbg("unsupported input type: %d", type);
-                return false;
-                }
-        }
-}
-
-static bool render_node_radiance_remove(struct render_node* self, struct render_node* input)
-{
-        render_node_remove_input(self, input);
-        return true;
-}
-
-static bool render_node_radiance_self(struct render_tree* tree, struct render_node* self)
-{
-        return true;
-}
-
-void render_node_radiance_set_pipe(struct render_radiance* node, enum RENDER_PIPE_IDR pipe)
-{
-        node->pipe = pipe;
-}
-
-struct render_node* render_node_radiance_create(const char* name, enum RENDER_PIPE_IDR pipe)
-{
-        static const int c_NumInput = 1;
-        static const int c_NumOutput = 1;
-
-        struct render_radiance* node = alloc_obj(node);
-        render_node_init((struct render_node*) node,
-                         render_node_radiance_free,
-                         render_node_radiance_self,
-                         render_node_radiance_insert,
-                         render_node_radiance_remove,
-                         RENDER_NODE_RADIANCE, name, c_NumInput, c_NumOutput);
-        node->pipe = pipe;
-        return (struct render_node*) node;
-}
-
 /*
  * class render_tree
  */
@@ -220,7 +14,7 @@ static void render_node_init(struct render_node* node,
                              bool (*verify_self)     (struct render_tree* tree, struct render_node* self),
                              bool (*insert_input)    (struct render_node* self, struct render_node* input),
                              bool (*remove_input)    (struct render_node* self, struct render_node* input),
-                             enum RENDER_NODE_IDR type, const char* name, int n_input, int n_output)
+                             enum RenderNodeType type, const char* name, int n_input, int n_output)
 {
         zero_obj(node);
         node->type = type;
@@ -265,7 +59,7 @@ static void render_node_remove_input(struct render_node* node, struct render_nod
         input->input[i] = nullptr;
 }
 
-static enum RENDER_NODE_IDR render_node_get_type(struct render_node* node)
+static enum RenderNodeType render_node_get_type(struct render_node* node)
 {
         return node->type;
 }
@@ -302,7 +96,7 @@ static void render_node_copy_link(struct render_node* src, struct render_node* d
         }
 }
 
-static bool render_tree_check_environment(struct render_tree* tree, enum RENDER_ENVIRONMENT type, char* name)
+static bool render_tree_check_environment(struct render_tree* tree, enum RenderEnvironment type, char* name)
 {
         if (type != RENDER_ENV_VOID) {
                 int i;
@@ -438,12 +232,18 @@ bool render_tree_remove_node(struct render_tree* tree,
 }
 
 void render_tree_declare_environment(struct render_tree* tree,
-                                     enum RENDER_ENVIRONMENT type,
+                                     enum RenderEnvironment type,
                                      const char* var_name, void* var)
 {
         int spot = tree->n_var[type] ++;
         tree->var[type][spot].name = alg_alloc_string(var_name);
         tree->var[type][spot].ptr = var;
+}
+
+void* render_tree_retrieve_environment(struct render_tree* tree, enum RenderEnvironment type)
+{
+        int spot = tree->n_var[type];
+        return tree->var[type][spot].ptr;
 }
 
 void render_tree_clear_environment(struct render_tree* tree)
@@ -535,7 +335,7 @@ bool render_tree_compile(struct render_tree* tree, struct render_bytecode* bytec
         data.bytecode           = bytecode->instr;
         data.is_succeeded       = true;
         data.reg_count          = 0;
-        create_alg_list(&data.node_infos, sizeof(struct node_info), 1);
+        alg_list_init(&data.node_infos, sizeof(struct node_info), 1);
 
         struct render_tree_visitor visitor;
         render_tree_visitor_init2(&visitor, visit_compile_push, visit_compile_backtrack, &data);

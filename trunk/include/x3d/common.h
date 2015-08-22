@@ -47,6 +47,11 @@
 #define SessionIn(_session)
 #define PseudoDef(defn)
 
+#define __public
+#define __private
+#define __callback
+#define __implement
+
 #ifdef X3D_COMPILER_GCC
 #  define __stdcall                     __attribute__((stdcall))
 #  define __cdecl                       __attribute__((cdecl))

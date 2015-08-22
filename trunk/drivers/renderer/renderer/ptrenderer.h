@@ -3,17 +3,44 @@
 
 
 #include <x3d/renderer.h>
-#include <renderer/proj_probe.h>
+#include "raytracepipeline.h"
 
 /*
- * Functions' declarations
+ * structures
  */
-struct pt_renderer *create_pt_renderer ( enum RENDERER_IDR type, struct proj_probe* probe );
-void free_pt_renderer ( struct pt_renderer* r );
+struct pt_radiance_node {
+        struct render_node_ex_impl      _parent;
+        struct render_radiance          _parent2;
+        struct pathtrace_pipeline*      pipeline;
 
-void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* r );
-void pt_renderer_render ( struct pt_renderer* r );
-void pt_renderer_output ( struct pt_renderer* r );
+        struct box3d*                   simplex;
+        enum UtilAccessorType           acc_type;
+        struct util_access*             acc_stt;
+        struct util_stream              stream[10];
+        int                             n_streams;
+        struct util_aos                 aos_geo;
+        struct util_aos                 aos_media;
+
+        struct util_image               target;
+};
+
+struct pt_renderable_loader_node {
+        struct render_node_ex_impl      _parent;
+        struct render_rdaloader         _parent2;
+};
+
+
+/*
+ * functions' declarations
+ */
+struct render_node_ex_impl* __callback  pt_radiance_node_creator(struct render_node* parent);
+
+bool __implement        pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree);
+void __implement        pt_radiance_node_compute(struct render_node_ex_impl* self,
+                                                 const struct render_node_ex_impl* input[],
+                                                 const struct render_node_ex_impl* output[]);
+void* __implement       pt_radiance_node_get_result(struct render_node_ex_impl* self);
+void __implement        pt_radiance_node_free(struct render_node_ex_impl* self);
 
 
 #endif // PT_RENDERER_H_INCLUDED

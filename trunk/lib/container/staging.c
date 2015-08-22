@@ -186,7 +186,7 @@ void create_stager ( struct arena_allocator *block, int init_count, struct stage
         int hash_size = init_count*4;
         memset ( stg, 0, sizeof ( *stg ) );
         create_alg_hash_llist ( hash_size, init_count, sizeof (struct res_entry), &stg->lookup );
-        create_alg_list ( &stg->entry, sizeof ( struct res_entry ), INIT_COUNT );
+        alg_list_init ( &stg->entry, sizeof ( struct res_entry ), INIT_COUNT );
 }
 
 void free_stager ( struct stager *stg )
@@ -199,7 +199,7 @@ void free_stager ( struct stager *stg )
                 free_fix ( e->name );
                 free_var ( e->buff );
         }
-        free_alg_list ( &stg->entry );
+        alg_list_free ( &stg->entry );
         memset ( stg, 0, sizeof ( *stg ) );
 }
 

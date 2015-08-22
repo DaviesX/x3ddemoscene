@@ -32,7 +32,6 @@
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-g" />
 					<Add option="-Ofast" />
 					<Add option="-flto" />
 				</Compiler>
