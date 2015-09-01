@@ -1,6 +1,10 @@
 #ifndef RENDERNODERDALOADER_H_INCLUDED
 #define RENDERNODERDALOADER_H_INCLUDED
 
+
+#include <x3d/renderer.h>
+
+
 /*
  * structures
  */

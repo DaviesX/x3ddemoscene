@@ -46,6 +46,7 @@
 			<Add option="-std=c++11" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
 			<Add option="-Werror" />
+			<Add option="-fPIC" />
 			<Add option="-DX3D_COMPILER_GCC" />
 			<Add option="-DX3D_PLATFORM_POSIX" />
 			<Add directory="../include" />

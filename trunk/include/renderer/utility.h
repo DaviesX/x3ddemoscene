@@ -3,6 +3,7 @@
 
 
 #include <system/log.h>
+#include <system/allocator.h>
 
 typedef void (*f_Lerp_2) ( void* x[2], float t, void* xo );
 typedef void (*f_Lerp_3) ( void* x[3], float t[3], void* xo );

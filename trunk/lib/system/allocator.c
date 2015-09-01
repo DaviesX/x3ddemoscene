@@ -1,5 +1,6 @@
 /* allocator.c: Memory managment */
 #include <x3d/common.h>
+#include <misc.h>
 #include <system/log.h>
 #include <system/allocator.h>
 
@@ -217,10 +218,10 @@ uint32_t call_get_var_len ( void *ptr )
 
 void *call_get_var_last ( void *ptr )
 {
-        struct var_head *vh = &((struct var_head *) ptr)[-1];
-        ptr = (untyped *) ptr + vh->used - vh->elm_size;
-        uint32_t addr = (vh->used != 0)*(*(uint32_t *) &ptr);
-        return (void *) addr;
+        struct var_head* vh     = &((struct var_head*) ptr)[-1];
+        ptr                     = (untyped*) ptr + vh->used - vh->elm_size;
+        address_t addr          = (vh->used != 0)*(*(uint32_t *) &ptr);
+        return (void*) addr;
 }
 
 uint32_t alloc_query_usage ( void )

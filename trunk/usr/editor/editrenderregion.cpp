@@ -186,7 +186,8 @@ void RenderRegionActiveX::update()
         // see if there is anything to commit to the screen
         RenderConfigActiveX* config = (RenderConfigActiveX*) state->use(c_RenderConfig);
         if (!pimpl->m_is_idle && config != nullptr) {
-                config->get_renderer()->commit();
+/* NOTE (davis#9#): no render commit is required */
+                // config->get_renderer()->commit();
         }
         // any request to change the state of the screen
         if (pimpl->m_is_resized) {

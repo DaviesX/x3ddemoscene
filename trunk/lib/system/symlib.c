@@ -2,6 +2,7 @@
 #include <system/log.h>
 #include <system/symlib.h>
 #include <system/allocator.h>
+#include <x3d/init.h>
 
 
 #if defined(X3D_PLATFORM_POSIX)
@@ -29,7 +30,7 @@ static bool match_type ( char* str, enum ELF_TYPE* type )
         }
 }
 
-static bool match_symbol ( char* str, uint32_t* addr, int* size, enum SYMBOL_IDR* type,
+static bool match_symbol ( char* str, address_t* addr, int* size, enum SYMBOL_IDR* type,
                            char** symbol_name )
 {
         /* Num:    Value    Size    Type    Bind   Vis       Ndx  Name
@@ -64,15 +65,19 @@ static bool match_symbol ( char* str, uint32_t* addr, int* size, enum SYMBOL_IDR
                         break;
                 }
                 case VALUE: {
-                        if ( ishexdigit ( *str ) ) {
+                        if (ishexdigit(*str)) {
                                 buf[ibuf ++] = *str;
                                 str ++;
-                        } else if ( isspace ( *str ) ) {
+                        } else if(isspace(*str)) {
                                 buf[ibuf] = '\0';
-                                if ( ibuf == 0 )
-                                        return false;
+                                if(ibuf == 0) return false;
                                 ibuf = 0;
-                                sscanf ( buf, "%x", addr );
+                                // parses the hex-address
+                                errno = 0;
+                                *addr = strtoull(buf, NULL, 16);
+                                if (errno == EINVAL || errno == ERANGE) {
+                                        kernel_panic();
+                                }
 
                                 state = SIZE;
                                 str ++;
@@ -467,7 +472,7 @@ f_Generic symlib_ret_abi2(struct symbol_set* symbols, void* data, f_Match_Name f
         int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
         int i;
         for (i = 0; i < num_sym; i ++) {
-                if (sym[i].name && !f_match_name(data, sym[i].name)))
+                if (sym[i].name && !f_match_name(data, sym[i].name))
                         return sym[i].func_ptr;
         }
         log_mild_err_dbg("couldn't find symbol by such matcher: %x", f_match_name);

@@ -3,10 +3,6 @@
 
 #include <x3d/renderer.h>
 
-/*
- * forward declarations
- */
-struct render_node_ex_impl;
 
 /*
  * functions' declaration

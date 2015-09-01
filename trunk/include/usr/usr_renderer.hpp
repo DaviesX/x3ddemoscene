@@ -41,7 +41,7 @@ public:
         void                    set_context(string context);
         void                    set_strategy(RenderAggregate::Strategy strategy);
 private:
-        struct render_rdacontext* m_node;
+        struct render_rdaloader* m_node;
 };
 
 /** \brief Render radiance node
@@ -130,11 +130,10 @@ public:
 
         void                    update(RenderTree* tree);
         void                    render();
-        void                    commit();
-
-        struct renderer*        get_core_resource();
+/* NOTE (davis#9#): renderer no core resource */
+        // struct renderer*        get_core_resource();
 private:
-        struct renderer         m_renderer;
+        RenderTree*             m_tree;
 };
 
 }// namespace usr

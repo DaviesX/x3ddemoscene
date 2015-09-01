@@ -39,6 +39,7 @@
 			<Add option="-Wall" />
 			<Add option="-Werror" />
 			<Add option="`pkg-config gtk+-3.0 --cflags`" />
+			<Add option="-fPIC" />
 			<Add option="-DX3D_COMPILER_GCC" />
 			<Add option="-DX3D_PLATFORM_POSIX" />
 			<Add directory="./lib" />

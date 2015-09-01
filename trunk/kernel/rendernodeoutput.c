@@ -1,6 +1,7 @@
 #include <system/allocator.h>
 #include <x3d/rendertree.h>
 #include <x3d/rendernodeoutput.h>
+#include <x3d/rendertreeenvconsts.h>
 
 
 static bool render_node_output_free(struct render_node* self)
@@ -27,7 +28,7 @@ static bool render_node_output_remove(struct render_node* self, struct render_no
 
 static bool render_node_verify_self(struct render_tree* tree, struct render_node* self)
 {
-        return render_tree_check_environment(tree, RENDER_ENV_PROBE, ((struct render_output*) self)->probe);
+        return render_tree_check_environment(tree, RenderEnvProbe, ((struct render_output*) self)->probe);
 }
 
 void render_node_output_set_probe(struct render_output* node, const char* probe)
@@ -38,7 +39,7 @@ void render_node_output_set_probe(struct render_output* node, const char* probe)
         node->probe = alg_alloc_string(probe);
 }
 
-struct render_node* render_node_output_create(const char* name, const char* probe)
+struct render_node_ex* render_node_output_create(const char* name, const char* probe)
 {
         static const int c_NumInput = 1;
         static const int c_NumOutput = 1;
@@ -49,8 +50,8 @@ struct render_node* render_node_output_create(const char* name, const char* prob
                          render_node_verify_self,
                          render_node_output_insert,
                          render_node_output_remove,
-                         RnederNodeOutput, name, c_NumInput, c_NumOutput);
-        render_node_ex_init((struct render_node_ex*) node, RenderNodeOutput);
+                         RenderNodeOutput, name, c_NumInput, c_NumOutput);
+        render_node_ex_init(&node->_parent, RenderNodeOutput);
         node->probe = alg_alloc_string(probe);
-        return (struct render_node*) node;
+        return &node->_parent;
 }

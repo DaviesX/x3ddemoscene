@@ -2,7 +2,6 @@
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
 #include <x3d/renderableaggregaterequest.h>
-#include <renderer/utility.h>
 #include <math/math.h>
 #include "lcrenderer.h"
 #include "ptrenderer.h"
@@ -399,20 +398,20 @@ static inline void rgb_hdr_radiance ( struct float_color3* x, float avg_illum,
 
 }
 
-static void render_radiance ( struct render_pass* pass )
+static void render_radiance ( struct pt_radiance_node* render_node )
 {
         /* construct intersection packet */
         struct intersect_packet ip;
         int num_index;
-        ip.i_array = u_aos_get_index ( &pass->aos_geo, &num_index );
-        ip.n_streams = pass->n_streams;
-        ip.stream = pass->stream;
+        ip.i_array = u_aos_get_index ( &render_node->aos_geo, &num_index );
+        ip.n_streams = render_node->n_streams;
+        ip.stream = render_node->stream;
 
         struct ray_tree         s[10] = {0};
         struct ray_tree*        node = s;
 
-        unsigned int width  = pass->target.width;
-        unsigned int height = pass->target.height;
+        unsigned int width  = render_node->target.width;
+        unsigned int height = render_node->target.height;
 
         struct {
                 float dx;
@@ -461,11 +460,11 @@ static void render_radiance ( struct render_pass* pass )
 
                                         node->n_emit = n_rray;
                                         //test_evaluate ( &rt->tbuf, node );
-                                        evaluate_ray_tree ( node, pass->acc_stt, &ip );
+                                        evaluate_ray_tree ( node, render_node->acc_stt, &ip );
                                         add_color3 ( &acc_rad, (struct float_color3*) &node->i_rad, &acc_rad );
                                 }
                         }
-                        struct float_color3* dest = u_image_read ( &pass->target, 0, i, j );
+                        struct float_color3* dest = u_image_read ( &render_node->target, 0, i, j );
                         scale_color3 ( 1.0f/((float) (cNumSamples*cNumSpp)), &acc_rad, dest );
                 }
         }
@@ -518,7 +517,7 @@ static void render_output ( struct render_pass* src_pass, struct proj_probe* pro
                 }
         }
 }
-
+/*
 void init_ptrenderer ( struct lcrenderer_ops *ops )
 {
         ops->lcrenderer_create = cast (ops->lcrenderer_create) create_pt_renderer;
@@ -541,6 +540,9 @@ void free_pt_renderer ( struct pt_renderer* r )
         zero_obj ( r );
         free_fix ( r );
 }
+*/
+
+#if 0
 
 #define get_operand( _op, _obj ) \
 { \
@@ -752,7 +754,7 @@ void pt_renderer_render ( struct pt_renderer* r )
                 }
         }
 }
-
+#endif // 0
 void pt_renderer_output ( struct pt_renderer* r )
 {
 }
@@ -779,7 +781,7 @@ bool pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct ren
          * 2. preferred path tracing renderer
          * 3. using solid geometry model
          * 4. with direct lighting rendering pipeline */
-        enum RenderEnvironment* spec = render_tree_retrieve_environment(tree, RenderEnvSpec);
+        enum RenderSpecType* spec = render_tree_retrieve_environment(tree, RenderEnvSpec);
         if (*spec != RenderSpecSWBuiltin) {
                 return false;
         }
@@ -806,18 +808,64 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
         // Get input node instance <renderable loader> and its context
         const int slot                                  = render_node_radiance_get_input_slot(RenderNodeRenderableLoader);
         struct pt_renderable_loader_node* rdaloader     = (struct pt_renderable_loader_node*) input[slot];
-        struct rda_context* context                     = rdaloader->_parent.ops.f_get_result(rdaloader);
+        struct rda_context* context                     = rdaloader->_parent.ops.f_get_result(&rdaloader->_parent);
         // Get geometry data
         uuid_t request_id                               = rda_context_post_request(context, RAG_CULL_NULL, nullptr,
                                                                                    RENDERABLE_GEOMETRY);
         const int n                                     = rda_context_get_n(context, request_id);
+        u_aos_free(&node->aos_geo);
+        u_aos_init(&node->aos_geo, UtilAttriVertex | UtilAttriNormal);
         int i;
         for (i = 0; i < n; i ++) {
                 struct rda_instance* inst = rda_context_get_i(context, i, request_id);
-                struct rda_geometry* geometry = rda_instance_source(inst);
-                int n_vertices;
-                struct point3d* vertices = rda_geometry_get_vertex(geometry, &n_vertices);
+                struct rda_geometry* geometry = (struct rda_geometry*) rda_instance_source(inst);
+                int num_index;
+                int* index      = rda_geometry_get_index(geometry, &num_index);
+                int num_vertex;
+                void* vertex    = rda_geometry_get_vertex(geometry, &num_vertex);
+                void* normal    = rda_geometry_get_normal(geometry, &num_vertex);
+                u_aos_accumulate(&node->aos_geo, index, num_index, num_vertex, vertex, normal);
         }
+        void** shader_var_addr[10];
+
+        /* generate streams */
+        void* vertex[10];
+        int n_vertex = u_aos_get_vertex(&node->aos_geo, vertex, &node->n_streams);
+        bool* avail = u_aos_get_availibility(&node->aos_geo);
+
+        int cSizeOfStream[10] = {};
+        f_Lerp_3 cStreamLerp3[10] = {
+        };
+        int k, m;
+        for (m = 0, k = 0; k < 10; k ++)
+        {
+                if (avail[k] == true) {
+                        u_stream_init(&node->stream[m],
+                                      vertex[k], cSizeOfStream[k], n_vertex,
+                                      &cSizeOfStream[k], &shader_var_addr[m], 1, nullptr, cStreamLerp3[k]);
+                        m ++;
+                }
+        }
+        /* update simplex and accessor utility */
+        free_simplex(node->simplex);
+        u_access_free(node->acc_stt);
+
+        int num_index, num_simplex;
+        int* index = u_aos_get_index(&node->aos_geo, &num_index);
+        node->simplex = construct_simplex(node->stream, node->n_streams,
+                                          index, num_index, &num_simplex);
+        /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
+        node->acc_type = UtilAccessorLinear;
+        node->acc_stt = u_access_create(node->acc_type, node->simplex, num_simplex);
+        u_access_build(node->acc_stt);
+
+        /* create target */
+        /* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
+        u_image_free(&node->target);
+        u_image_init(&node->target, 1, UtilImgRGBRadiance, 800, 600);
+        u_image_alloc(&node->target, 0);
+
+        render_radiance(node);
 }
 
 void* pt_radiance_node_get_result(struct render_node_ex_impl* self)

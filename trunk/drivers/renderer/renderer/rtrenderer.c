@@ -1,6 +1,7 @@
 /* rt_renderer.c: interface of rasterizer renderer goes here */
 #include <system/allocator.h>
 #include <x3d/renderer.h>
+#include <x3d/rendertreeenvconsts.h>
 #include <renderer/proj_probe.h>
 #include <renderer/geocache.h>
 #include <renderer/out.h>
@@ -15,10 +16,10 @@ struct rt_renderer {
         struct geocache         gc;
         struct proj_probe       probe;
         struct render_out       ro;
-        enum RENDER_SPEC_IDR    spec;
-        enum RENDERER_THREAD_STATE_IDR thr_state;
+        enum RenderSpecType     spec;
+        int                     thread_state;
 };
-
+#if 0
 void init_rtrenderer ( struct lcrenderer_ops *ops )
 {
         ops->lcrenderer_create = cast (ops->lcrenderer_create) create_rt_renderer;
@@ -58,3 +59,5 @@ void rt_renderer_render ( struct rt_renderer* r )
 void rt_renderer_output ( struct rt_renderer* r )
 {
 }
+
+#endif // 0

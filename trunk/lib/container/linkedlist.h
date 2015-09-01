@@ -21,7 +21,7 @@ struct alg_llist {
 #pragma pack()
 
 
-static inline void alg_llist_create(struct alg_llist* llist, int elm_size, int init_count);
+static inline void alg_llist_init(struct alg_llist* llist, int elm_size, int init_count);
 static inline void alg_llist_free(struct alg_llist* self);
 PseudoDef(void alg_llist_i(struct alg_llist* self, int i, void** elm);)
 PseudoDef(void alg_llist_add(void* elm, struct alg_llist* self);)
@@ -36,7 +36,7 @@ static inline void  alg_llist_flush(struct alg_llist* list);
 
 
 
-static inline void alg_llist_create(struct alg_llist* self, int elm_size, int init_count)
+static inline void alg_llist_init(struct alg_llist* self, int elm_size, int init_count)
 {
         memset ( self, 0, sizeof *self );
         self->content = (int*) alloc_var ( elm_size, 1 );

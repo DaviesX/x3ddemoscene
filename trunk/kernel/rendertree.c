@@ -9,7 +9,7 @@
 /*
  * class render_tree
  */
-static void render_node_init(struct render_node* node,
+void render_node_init(struct render_node* node,
                              bool (*free_self)       (struct render_node* self),
                              bool (*verify_self)     (struct render_tree* tree, struct render_node* self),
                              bool (*insert_input)    (struct render_node* self, struct render_node* input),
@@ -32,7 +32,7 @@ static void render_node_init(struct render_node* node,
         zero_array(node->output, node->n_output);
 }
 
-static void render_node_free(struct render_node* node)
+void render_node_free(struct render_node* node)
 {
         free_fix(node->name);
         free_fix(node->input);
@@ -40,13 +40,13 @@ static void render_node_free(struct render_node* node)
         zero_obj(node);
 }
 
-static void render_node_set_input(struct render_node* node, struct render_node* input, int i)
+void render_node_set_input(struct render_node* node, struct render_node* input, int i)
 {
         node->input[i] = input;
         input->output[input->i_output ++] = node;
 }
 
-static void render_node_remove_input(struct render_node* node, struct render_node* input)
+void render_node_remove_input(struct render_node* node, struct render_node* input)
 {
         int i, j;
         for (i = 0, j = 0; i < input->i_output; i ++) {
@@ -59,17 +59,17 @@ static void render_node_remove_input(struct render_node* node, struct render_nod
         input->input[i] = nullptr;
 }
 
-static enum RenderNodeType render_node_get_type(struct render_node* node)
+enum RenderNodeType render_node_get_type(struct render_node* node)
 {
         return node->type;
 }
 
-static const char* render_node_get_name(struct render_node* node)
+const char* render_node_get_name(struct render_node* node)
 {
         return node->name;
 }
 
-static void render_node_copy_link(struct render_node* src, struct render_node* dest)
+void render_node_copy_link(struct render_node* src, struct render_node* dest)
 {
         dest->n_input = src->n_input;
         memcpy(dest->input, src->input, sizeof(*dest->input)*dest->n_input);
@@ -96,9 +96,9 @@ static void render_node_copy_link(struct render_node* src, struct render_node* d
         }
 }
 
-static bool render_tree_check_environment(struct render_tree* tree, enum RenderEnvironment type, char* name)
+bool render_tree_check_environment(struct render_tree* tree, enum RenderEnvironment type, char* name)
 {
-        if (type != RENDER_ENV_VOID) {
+        if (type != RenderEnvVoid) {
                 int i;
                 for (i = 0; i < tree->n_var[type]; i ++) {
                         if (!strcmp(name, tree->var[type][i].name) && tree->var[type][i].ptr != nullptr) {
@@ -170,7 +170,7 @@ struct render_node* render_tree_create_root(struct render_tree* tree)
                          render_node_root_verify,
                          render_node_root_insert,
                          render_node_root_remove,
-                         RENDER_NODE_ROOT, "root", 1, 0);
+                         RenderNodeRoot, "root", 1, 0);
         tree->node_tree = root;
         return root;
 }

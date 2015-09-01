@@ -1,6 +1,7 @@
 #include <math/math.h>
 #include <system/log.h>
 #include <system/allocator.h>
+#include <container/linkedlist.h>
 #include "renderablecontainerimpl.h"
 
 
@@ -86,12 +87,12 @@ static void rdacontainer_init(struct rdacontainer* cont, struct rdacontainer_ops
         cont->num_instance = 0;
         cont->num_renderable = 0;
         cont->ops = *ops;
-        create_alg_llist(&cont->inst_store, sizeof(struct rda_instance*), 0);
+        alg_init(llist, &cont->inst_store, sizeof(struct rda_instance*), 0);
 }
 
 static void rdacontainer_free_internal(struct rdacontainer* cont)
 {
-        free_alg_llist(&cont->inst_store);
+        alg_free(llist, &cont->inst_store);
         zero_obj(cont);
 }
 
@@ -131,7 +132,7 @@ void rdacontainer_clear(struct rdacontainer* cont)
 void rdacontainer_add_instance(struct rdacontainer* cont, enum RENDERABLE_IDR type, struct rda_instance* inst)
 {
         cont->ops.add(cont, type, inst);
-        alg_llist_push_back(inst, &cont->inst_store);
+        alg_llist_push_back(&cont->inst_store, inst);
         cont->num_instance ++;
 }
 
@@ -139,10 +140,10 @@ void rdacontainer_add_instance(struct rdacontainer* cont, enum RENDERABLE_IDR ty
 void rdacontainer_remove_instance(struct rdacontainer* cont, enum RENDERABLE_IDR type, struct rda_instance* inst)
 {
         alg_iter(struct rda_instance*) iter;
-        alg_llist_find(&inst, iter, cmp_instance_address, &cont->inst_store);
+        alg_llist_find(&cont->inst_store, &inst, iter, cmp_instance_address);
         if (iter != nullptr) {
                 cont->ops.remove(cont, type, inst);
-                alg_llist_remove(iter, &cont->inst_store);
+                alg_llist_remove(&cont->inst_store, iter);
                 cont->num_instance --;
         } else {
                 log_mild_err_dbg("couldn't find such renderable instance as: %x", inst);
@@ -167,7 +168,7 @@ int rdacontainer_get_renderable_count(struct rdacontainer* cont)
 bool rdacontainer_has_instance(struct rdacontainer* cont, struct rda_instance* inst)
 {
         alg_iter(struct rda_instance*) iter;
-        alg_llist_find(&inst, iter, cmp_instance_address, &cont->inst_store);
+        alg_llist_find(&cont->inst_store, &inst, iter, cmp_instance_address);
         return iter != nullptr;
 }
 #undef cmp_instance_address

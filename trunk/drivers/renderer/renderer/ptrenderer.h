@@ -3,6 +3,9 @@
 
 
 #include <x3d/renderer.h>
+#include <x3d/rendernoderadiance.h>
+#include <x3d/rendernoderdaloader.h>
+#include <renderer/utility.h>
 #include "raytracepipeline.h"
 
 /*
@@ -33,7 +36,7 @@ struct pt_renderable_loader_node {
 /*
  * functions' declarations
  */
-struct render_node_ex_impl* __callback  pt_radiance_node_creator(struct render_node* parent);
+struct render_node_ex_impl* __callback  pt_radiance_node_creator(struct render_node_ex* parent);
 
 bool __implement        pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree);
 void __implement        pt_radiance_node_compute(struct render_node_ex_impl* self,

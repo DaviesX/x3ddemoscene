@@ -86,8 +86,8 @@ void render_node_ex_init(struct render_node_ex* self, enum RenderNodeType type)
         self->type = type;
         int i;
         for (i = 0; i < g_rend_ops_metadata.count[type]; i ++) {
-                self->metainst[i] = g_rend_ops_metadata.f_creator[type][i]((struct render_node*) self);
-                self->metainst[i].ref = self;
+                self->metainst[i] = g_rend_ops_metadata.f_creator[type][i](self);
+                self->metainst[i]->ref = self;
         }
 }
 

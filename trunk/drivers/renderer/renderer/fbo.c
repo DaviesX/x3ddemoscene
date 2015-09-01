@@ -1,5 +1,5 @@
 /* fbo.c: framebuffer implementation */
-#include <misc.h>
+#include <x3d/common.h>
 #include "fbo.h"
 
 

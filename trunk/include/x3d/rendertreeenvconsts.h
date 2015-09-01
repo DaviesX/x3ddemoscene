@@ -21,11 +21,11 @@ enum PreferredRendererType {
 };
 
 
-const int LightModelDirect      = 0X1;
-const int LightModelShadow      = 0X2;
-const int LightModelLightMap    = 0X4;
-const int LightModelSHProbe     = 0X8;
-const int LightModelSVO         = 0X10;
+static const int LightModelDirect      = 0X1;
+static const int LightModelShadow      = 0X2;
+static const int LightModelLightMap    = 0X4;
+static const int LightModelSHProbe     = 0X8;
+static const int LightModelSVO         = 0X10;
 
 enum GeometryModelType {
         GeometryModelWireframe,
@@ -35,11 +35,11 @@ enum GeometryModelType {
 /* Renderer should not handle threading from these constants itself,
  * this are the states telling which situation
  * the renderer is being created with */
-const int RenderThreadMutual            = 0X0;
-const int RenderThreadSeparated         = 0X1;
+static const int RenderThreadMutual            = 0X0;
+static const int RenderThreadSeparated         = 0X1;
 /* These are what renderer expected to behave internally */
-const int RenderThreadSingle            = 0X2;
-const int RenderThreadMultiple          = 0X4;
+static const int RenderThreadSingle            = 0X2;
+static const int RenderThreadMultiple          = 0X4;
 
 enum RenderSpecType {
         RenderSpecSWBuiltin,

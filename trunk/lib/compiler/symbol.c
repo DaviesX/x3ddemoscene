@@ -1,4 +1,4 @@
-#include <misc.h>
+#include <x3d/common.h>
 #include "symbol.h"
 
 

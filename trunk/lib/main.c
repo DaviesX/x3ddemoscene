@@ -251,9 +251,9 @@ static void ptr_list_c ( struct alg_named_params *param )
 
         if ( is_inplace ) {
                 struct alg_ptr_list ptrs;
-                create_alg_ptr_list ( list, n, is_inplace, &ptrs );
-                alg_quick_sort ( &ptrs, n, nullptr, cmp_ptrs );
-                alg_ptr_list_inplace ( &ptrs, n, list );
+                alg_ptr_list_init(&ptrs, list, n, is_inplace);
+                alg_quick_sort(&ptrs, n, nullptr, cmp_ptrs);
+                alg_ptr_list_inplace(&ptrs, n, list);
 
                 log_normal ( "in-place result: " );
                 for ( i = 0; i < n - 1; i ++ ) {
@@ -266,7 +266,7 @@ static void ptr_list_c ( struct alg_named_params *param )
         } else {
                 int *new_list = alloc_fix ( sizeof ( int ), n );
                 struct alg_ptr_list ptrs;
-                create_alg_ptr_list ( list, n, is_inplace, &ptrs );
+                alg_ptr_list_init(&ptrs, list, n, is_inplace);
                 struct alg_ptr_list *list = &ptrs;
                 alg_quick_sort ( list, n, nullptr, cmp_ptrs );
                 alg_ptr_list_tonew ( &ptrs, n, new_list );
@@ -295,7 +295,7 @@ static void hash_container_c ( struct alg_named_params *param )
         int array[11] = {0, 4, 2, 3, 4, 5, 10, 2, 0, 3, 5};
 
         struct alg_hash_llist hash_llist;
-        create_alg_hash_llist ( 1 << 8, 0, sizeof (int), &hash_llist );
+        alg_hash_llist_init(&hash_llist, 1 << 8, 0, sizeof (int));
         int i;
         for ( i = 0; i < 11; i ++ ) {
                 log_normal ( "Looking up..." );
@@ -310,7 +310,7 @@ static void hash_container_c ( struct alg_named_params *param )
                         alg_hash_llist_add ( &hash_llist, &array[i], i, f_Dym_Update );
                 }
         }
-        free_alg_hash_llist ( &hash_llist );
+        alg_hash_llist_free(&hash_llist);
 
 }
 
@@ -324,7 +324,7 @@ static void hash_container_p ( struct alg_named_params *param )
         }
 
         struct alg_hash_llist hash_llist;
-        create_alg_hash_llist ( 1 << 15, 1, sizeof (int), &hash_llist );
+        alg_hash_llist_init(&hash_llist, 1 << 15, 1, sizeof (int));
         int begin = clock ();
         int k;
         for ( k = 0; k < 10000; k ++ ) {
@@ -342,7 +342,7 @@ static void hash_container_p ( struct alg_named_params *param )
         }
         int end = clock ();
         log_normal ( "%f", (float) (end - begin)/CLOCKS_PER_SEC );
-        free_alg_hash_llist ( &hash_llist );
+        alg_hash_llist_free(&hash_llist);
 }
 
 static void llist_container_c ( struct alg_named_params *param )

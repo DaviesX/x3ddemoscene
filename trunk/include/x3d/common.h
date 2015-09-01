@@ -71,8 +71,19 @@
                 asm ("ret \n"); \
                 return (_fake_val); \
         }
-#endif
 
+#  if __SIZEOF_POINTER__ == 8
+#      define __64bit
+#  elif __SIZEOF_POINTER__ == 4
+#      define __32bit
+#  endif // __SIZEOF_POINTER__
+
+#  define nullptr                       0
+#  define cast(_var)			(typeof(_var))
+#  define get_file_name()               (__FILE__)
+#  define get_function_name()           (__func__)
+#  define get_line_number()             (__LINE__)
+#endif
 
 /*
  * Include relative headers

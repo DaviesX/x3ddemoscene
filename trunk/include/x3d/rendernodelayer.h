@@ -1,6 +1,9 @@
 #ifndef RENDERNODELAYER_H_INCLUDED
 #define RENDERNODELAYER_H_INCLUDED
 
+#include <x3d/renderer.h>
+
+
 /*
  * structures
  */

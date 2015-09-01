@@ -6,18 +6,18 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#if defined(X3D_COMPILER_GCC)
+#  if __SIZEOF_POINTER__ == 8
+     typedef uint64_t    address_t;
+#  elif __SIZEOF_POINTER__ == 4
+     typedef uint32_t    address_t;
+#  endif
+#endif // defined X3D_COMPILER_GCC
+
 typedef long long       uuid_t;
 typedef unsigned char   untyped;
-typedef unsigned int    address_t;
 typedef void            (*f_Generic)();
 
-#if defined(X3D_COMPILER_GCC)
-#  define nullptr                       0
-#  define cast(_var)			(typeof(_var))
-#  define get_file_name()               (__FILE__)
-#  define get_function_name()           (__func__)
-#  define get_line_number()             (__LINE__)
-#endif // defined X3D_COMPILER_GCC
 
 int             alg_match_pattern(const char* cstr, const char* format, ...);
 

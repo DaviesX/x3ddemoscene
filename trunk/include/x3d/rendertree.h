@@ -16,7 +16,8 @@ struct render_node_ops;
  * consts
  */
 enum RenderNodeType {
-        RenderNodeNull,
+        // RenderNodeNull,
+        RenderNodeRoot,
         RenderNodeRenderableLoader,
         RenderNodeLayerLoader,
         RenderNodeProbeLoader,

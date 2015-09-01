@@ -27,6 +27,12 @@ extern "C"
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
 #include <x3d/renderableaggregate.h>
+#include <x3d/rendernodeoutput.h>
+#include <x3d/rendernodelayer.h>
+#include <x3d/rendernodehdr.h>
+#include <x3d/rendernoderadiance.h>
+#include <x3d/rendernoderdaloader.h>
+#include <x3d/rendertreeenvconsts.h>
 }
 
 namespace usr

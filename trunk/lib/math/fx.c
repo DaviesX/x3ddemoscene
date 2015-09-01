@@ -7,7 +7,7 @@
 static float g_sin_tbl[361];
 static float g_cos_tbl[361];
 static float g_pow_tbl[1001][101];
-static int g_log2_tbl[2048];
+static int g_log2_tbl[2049];
 
 
 

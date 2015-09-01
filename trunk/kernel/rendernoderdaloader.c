@@ -27,7 +27,7 @@ static bool render_node_rdaloader_remove(struct render_node* self, struct render
 
 static bool render_node_rdaloader_self(struct render_tree* tree, struct render_node* self)
 {
-        return render_tree_check_environment(tree, RENDER_ENV_RDA, ((struct render_rdaloader*) self)->rdacontext);
+        return render_tree_check_environment(tree, RenderEnvRenderable, ((struct render_rdaloader*) self)->rdacontext);
 }
 
 void render_node_rdaloader_set_context(struct render_rdaloader* node, const char* context)
@@ -50,10 +50,10 @@ struct render_node* render_node_rdaloader_create(const char* name, const char* r
 
         struct render_rdaloader* node = alloc_obj(node);
         render_node_init((struct render_node*) node,
-                         render_node_rdacontext_free,
-                         render_node_rdacontext_self,
-                         render_node_rdacontext_insert,
-                         render_node_rdacontext_remove,
+                         render_node_rdaloader_free,
+                         render_node_rdaloader_self,
+                         render_node_rdaloader_insert,
+                         render_node_rdaloader_remove,
                          RenderNodeRenderableLoader, name, c_NumInput, c_NumOutput);
         render_node_ex_init((struct render_node_ex*) node, RenderNodeRenderableLoader);
         node->access     = access;

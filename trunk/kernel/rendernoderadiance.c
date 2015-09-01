@@ -17,7 +17,7 @@ static bool render_node_radiance_insert(struct render_node* self, struct render_
 {
         enum RenderNodeType type = render_node_get_type(input);
         switch(type) {
-        case RENDER_NODE_RDACONTEXT:
+        case RenderNodeRenderableLoader:
                 {
                 render_node_set_input(self, input, c_RenderableLoaderSlot);
                 return true;

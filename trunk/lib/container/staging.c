@@ -185,13 +185,13 @@ void create_stager ( struct arena_allocator *block, int init_count, struct stage
         init_count = init_count > 0 ? init_count : INIT_COUNT;
         int hash_size = init_count*4;
         memset ( stg, 0, sizeof ( *stg ) );
-        create_alg_hash_llist ( hash_size, init_count, sizeof (struct res_entry), &stg->lookup );
-        alg_list_init ( &stg->entry, sizeof ( struct res_entry ), INIT_COUNT );
+        alg_hash_llist_init(&stg->lookup, hash_size, init_count, sizeof (struct res_entry));
+        alg_list_init(&stg->entry, sizeof ( struct res_entry ), INIT_COUNT);
 }
 
 void free_stager ( struct stager *stg )
 {
-        free_alg_hash_llist ( &stg->lookup );
+        alg_free(hash_llist, &stg->lookup);
         struct res_entry* entries = alg_array(list, &stg->entry);
         int i;
         for ( i = 0; i < alg_n ( llist, &stg->entry ); i ++ ) {
@@ -244,7 +244,7 @@ int stager_begin_entry ( char *name, struct entry_record *rec )
                         .entry = alg_array ( list, &stg->entry ),
                         .name = lroot,
                         .name_hash = gen_layer_name_hash ( lroot ),
-                        .ifound = HASH_NULL_KEY
+                        .ifound = NIL_POSITION
                 };
                 DebugSession (
                         assert ( d == 0 );
@@ -364,7 +364,7 @@ enum RES_ERROR stager_set_layer_first ( struct entry_record *rec )
                 .entry = alg_array ( list, &stg->entry ),
                 .name = sroot,
                 .name_hash = gen_layer_name_hash ( sroot ),
-                .ifound = HASH_NULL_KEY
+                .ifound = NIL_POSITION
         };
         uint32_t hash = gen_root_hash ( &rec->layer );
         struct res_entry* entry;
@@ -382,7 +382,7 @@ enum RES_ERROR stager_set_layer_first ( struct entry_record *rec )
                 info.entry = alg_array(list, &stg->entry);
                 info.name = slayer;
                 info.name_hash = gen_layer_name_hash ( slayer );
-                info.ifound = HASH_NULL_KEY;
+                info.ifound = NIL_POSITION;
                 info.uid = layer_uid;
 
                 hash = gen_layer_hash ( &rec->layer );

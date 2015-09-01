@@ -28,8 +28,8 @@ typedef void (*f_Render_NodeExImpl_Free) (struct render_node_ex_impl* self);
 struct render_node_ex_ops {
         f_Render_NodeExImpl_Is_Compatiable      f_is_compatible;
         f_Render_NodeExImpl_Compute             f_compute;
-        f_Render_NodeEx_Get_Result              f_get_result;
-        f_Render_NodeEx_Free                    f_free;
+        f_Render_NodeExImpl_Get_Result          f_get_result;
+        f_Render_NodeExImpl_Free                f_free;
 };
 
 struct render_node_ex_impl {

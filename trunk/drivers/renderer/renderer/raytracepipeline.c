@@ -4,6 +4,7 @@
 #include <system/log.h>
 #include <math/math.h>
 #include <x3d/renderer.h>
+#include <x3d/rendertreeenvconsts.h>
 #include "colorspectrum.h"
 #include "vbo.h"
 #include "fbo.h"
@@ -13,7 +14,7 @@
 
 
 struct pathtrace_pipeline {
-        enum RENDER_SPEC_IDR    spec;
+        enum RenderSpecType     spec;
         int                     nthreads;
         int                     nsamples;
         int                     nprobes;
@@ -55,10 +56,10 @@ void pathtrace_radiance ( struct pathtrace_pipeline* p,
                           struct renderable* rda, int n )
 {
         switch ( p->spec ) {
-        case RENDER_SPEC_SW_BUILTIN:
+        case RenderSpecSWBuiltin:
                 pathtrace_radiance_cpu ( p, target, rda, n );
                 break;
-        case RENDER_SPEC_HW_OPENGL:
+        case RenderSpecHWOpenGL:
                 pathtrace_radiace_gpgpu ( p, target, rda, n );
                 break;
         default:
@@ -122,7 +123,7 @@ static void pathtrace_radiance_cpu ( struct pathtrace_pipeline* p,
         untyped* fbo_dest;
         fbo_dimension ( target, &w, &h, &s );
         fbo_dest = fbo_memory ( target );
-        printf ( "%x", (unsigned int) fbo_dest );
+        printf ( "%x", *(unsigned int*) &fbo_dest );
 //        declare_stack ( stack, sizeof(struct transfer_stream)*10 );
 
         struct intersect {

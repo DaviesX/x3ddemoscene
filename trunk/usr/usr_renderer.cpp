@@ -12,7 +12,8 @@ namespace usr
  */
 Renderer::Renderer(Driver driver)
 {
-        renderer_init(&m_renderer, (RENDERER_IDR) driver);
+/* NOTE (davis#9#): renderer doesn't need init */
+//        renderer_init(&m_renderer, (RENDERER_IDR) driver);
 }
 
 /** \brief destruct the renderer.
@@ -20,7 +21,8 @@ Renderer::Renderer(Driver driver)
  */
 Renderer::~Renderer()
 {
-        renderer_free(&m_renderer);
+/* NOTE (davis#9#): renderer doesn't need free */
+        // renderer_free(&m_renderer);
 }
 
 /** \brief update rendering information from RenderTree.
@@ -31,8 +33,9 @@ Renderer::~Renderer()
  */
 void Renderer::update(RenderTree* tree)
 {
-        renderer_render_tree(tree->get_core_resource(), &m_renderer);
-        renderer_update(&m_renderer);
+        // renderer_render_tree(tree->get_core_resource(), &m_renderer);
+        // renderer_update(&m_renderer);
+        m_tree = tree;
 }
 
 /** \brief Run the renderer.
@@ -42,7 +45,7 @@ void Renderer::update(RenderTree* tree)
  */
 void Renderer::render()
 {
-        renderer_render(&m_renderer);
+        renderer_render(m_tree->get_core_resource());
 }
 
 /** \brief commit the rendering result.
@@ -50,15 +53,17 @@ void Renderer::render()
  * \return void
  *
  */
-void Renderer::commit()
-{
-        renderer_commit(&m_renderer);
-}
+//void Renderer::commit()
+//{
+/* NOTE (davis#9#): renderer doesn't need commit */
+        // renderer_commit(&m_renderer);
+//}
 
-struct renderer* Renderer::get_core_resource()
-{
-        return &m_renderer;
-}
+/* NOTE (davis#9#): renderer no core resource */
+//struct renderer* Renderer::get_core_resource()
+//{
+//        return &m_renderer;
+//}
 
 
 RenderOutput::RenderOutput(string name, string probe)
@@ -88,8 +93,8 @@ RenderNode* RenderLayer::get_node()
 
 RenderableContext::RenderableContext(string name, string context, RenderAggregate::Strategy strategy)
 {
-        m_node = (struct render_rdacontext*)
-                 render_node_rdacontext_create(name.c_str(), context.c_str(), (RAG_IDR) strategy);
+        m_node = (struct render_rdaloader*)
+                 render_node_rdaloader_create(name.c_str(), context.c_str(), (RAG_IDR) strategy);
 }
 
 RenderNode* RenderableContext::get_node()
@@ -99,18 +104,18 @@ RenderNode* RenderableContext::get_node()
 
 void RenderableContext::set_context(string context)
 {
-        render_node_rdacontext_set_context(m_node, context.c_str());
+        render_node_rdaloader_set_context(m_node, context.c_str());
 }
 
 void RenderableContext::set_strategy(RenderAggregate::Strategy strategy)
 {
-        render_node_rdacontext_set_access(m_node, (RAG_IDR) strategy);
+        render_node_rdaloader_set_access(m_node, (RAG_IDR) strategy);
 }
 
 RenderRadiance::RenderRadiance(string name, RenderPipeline pipe)
 {
         m_node = (struct render_radiance*)
-                 render_node_radiance_create(name.c_str(), (RENDER_PIPE_IDR) pipe);
+                 render_node_radiance_create(name.c_str(), (RenderPipeType) pipe);
 }
 
 RenderNode* RenderRadiance::get_node()
@@ -120,7 +125,7 @@ RenderNode* RenderRadiance::get_node()
 
 void RenderRadiance::set_pipeline(RenderPipeline pipe)
 {
-        render_node_radiance_set_pipe(m_node, (RENDER_PIPE_IDR) pipe);
+        render_node_radiance_set_pipe(m_node, (RenderPipeType) pipe);
 }
 
 struct packer {
@@ -196,7 +201,7 @@ bool RenderTree::remove_node(RenderNode* parent, RenderNode* node)
 
 void RenderTree::set_environment_variable(EnvironmentType type, string var_name, void* var)
 {
-        render_tree_declare_environment(&m_rendertree, (RENDER_ENVIRONMENT) type, var_name.c_str(), var);
+        render_tree_declare_environment(&m_rendertree, (RenderEnvironment) type, var_name.c_str(), var);
 }
 
 void RenderTree::clear_environment_variables()

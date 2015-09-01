@@ -253,8 +253,8 @@ static void workgroup_free_active ( struct work_group *group )
 static void workgroup_free_inactive ( struct work_group *group )
 {
         group->is_active = false;
-        free_alg_llist ( &group->tasks );
-        free_alg_llist ( &group->threads );
+        alg_llist_free(&group->tasks);
+        alg_llist_free(&group->threads);
 }
 
 static struct work_group *create_workgroup ( void )
@@ -410,7 +410,7 @@ static void workgroup_removetask ( struct thread_task *task, struct work_group *
         trap_on_thread(&group->lock[LOCK_TASK]);
         if (task->is_waiting) {
                 /* the task is still sitting in the queue, just remove it directly */
-                alg_llist_remove(task->addr_id, &group->tasks);
+                alg_llist_remove(&group->tasks, task->addr_id);
                 group->n_tasks --;
         } else if (task->is_processed) {
                 /* the task is being processed, nothing have to do */
@@ -440,7 +440,7 @@ static void workgroup_removealltask ( struct work_group *group )
 
                 if (task->is_waiting) {
                         /* the task is still sitting in the queue, just remove it directly */
-                        alg_llist_remove(task->addr_id, &group->tasks);
+                        alg_llist_remove(&group->tasks, task->addr_id);
                         group->n_tasks --;
                 } else if(task->is_processed) {
                         /* the task is being processed, nothing have to do */

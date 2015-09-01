@@ -2,6 +2,8 @@
 #define RENDERNODERADIANCE_H_INCLUDED
 
 
+#include <x3d/renderer.h>
+
 enum RenderPipeType {
         RenderPipeForward,
         RenderPipeForwardPlus,
