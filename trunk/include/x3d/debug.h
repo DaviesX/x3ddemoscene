@@ -21,10 +21,10 @@ enum DBG_INDEX {
 };
 #define cNumDbgPosition         4
 
-typedef void (*f_UT_Init) ( struct alg_var_set* envir );
-typedef void (*f_UT_Run) ( struct alg_var_set* envir );
-typedef void (*f_UT_Free) ( struct alg_var_set* envir );
-typedef enum DBG_POSITION (*f_UT_Pos) ( struct alg_var_set* envir );
+typedef void (*f_UT_Init) (struct alg_var_set* envir);
+typedef void (*f_UT_Run) (struct alg_var_set* envir);
+typedef void (*f_UT_Free) (struct alg_var_set* envir);
+typedef enum DBG_POSITION (*f_UT_Pos) (struct alg_var_set* envir);
 
 struct unit_test {
         char*                   test_name;

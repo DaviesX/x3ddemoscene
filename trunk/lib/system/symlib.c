@@ -46,7 +46,7 @@ static bool match_symbol ( char* str, address_t* addr, int* size, enum SYMBOL_ID
                 NAME
         };
         int state = NUM;
-        char buf[64] = {0};
+        char buf[1024] = {0};
         int ibuf = 0;
 
         while ( *str != '\0' ) {
@@ -208,7 +208,7 @@ static char* make_temp_file_name ( char* filename )
 static bool dump ( char* filename, struct symbol_set *symbols )
 {
         const char* commandfile = "./etc/readelf";
-        const char* option = " -a ";
+        const char* option = " -a --wide ";
         char command[512] = {0};
         char tempfile[128] = {0};
 
@@ -269,6 +269,7 @@ static bool dump ( char* filename, struct symbol_set *symbols )
                                         fclose ( elf_info );
                                         return false;
                                 }
+                                symbols->handle = handle;
                                 break;
                         }
                         default: {
@@ -321,15 +322,17 @@ static bool dump ( char* filename, struct symbol_set *symbols )
         }
         /* relink the address for dynamic linked */
         if ( type == ELF_DYN ) {
+                dlerror();
                 int i;
                 for ( i = 0; i < cNumSymbolCate; i ++ ) {
-                        struct dlsymbol* syms = alg_array ( list, &symbols->symbol[i] );
-                        int num_sym = alg_n ( list, &symbols->symbol[i] );
+                        struct dlsymbol* syms = alg_array(list, &symbols->symbol[i]);
+                        int num_sym = alg_n(list, &symbols->symbol[i]);
                         int j;
                         for ( j = 0; j < num_sym; j ++ ) {
-                                if ( syms[j].name ) {
-                                        syms[j].func_ptr = dlsym ( symbols->handle, syms[j].name );
-                                        syms[j].value    = dlsym ( symbols->handle, syms[j].name );
+                                if (syms[j].name) {
+                                        syms[j].func_ptr = dlsym(symbols->handle, syms[j].name);
+                                        syms[j].reason   = dlerror();
+                                        syms[j].value    = dlsym(symbols->handle, syms[j].name);
                                 }
                         }
                 }
@@ -455,14 +458,16 @@ void symlib_add_variable ( struct symbol_set* symbols, char* name, void* value, 
 
 f_Generic symlib_ret_abi ( struct symbol_set* symbols, char* sym_name )
 {
-        struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_ABI] );
+        struct dlsymbol* sym = alg_array(list, &symbols->symbol[SYMBOL_ABI]);
         int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
         int i;
         for ( i = 0; i < num_sym; i ++ ) {
-                if ( sym[i].name && !strcmp ( sym_name, sym[i].name ) )
+                if (sym[i].name && !strcmp(sym_name, sym[i].name)) {
+                        log_normal_dbg("detailed information about abi - %s:", sym[i].name, sym[i].reason);
                         return sym[i].func_ptr;
+                }
         }
-        log_mild_err_dbg ( "couldn't find such symbol as: %s", sym_name );
+        log_mild_err_dbg("couldn't find such symbol as: %s", sym_name);
         return nullptr;
 }
 
@@ -472,8 +477,10 @@ f_Generic symlib_ret_abi2(struct symbol_set* symbols, void* data, f_Match_Name f
         int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
         int i;
         for (i = 0; i < num_sym; i ++) {
-                if (sym[i].name && !f_match_name(data, sym[i].name))
+                if (sym[i].name && f_match_name(data, sym[i].name)) {
+                        log_normal_dbg("detailed information about abi - %s:", sym[i].name, sym[i].reason);
                         return sym[i].func_ptr;
+                }
         }
         log_mild_err_dbg("couldn't find symbol by such matcher: %x", f_match_name);
         return nullptr;

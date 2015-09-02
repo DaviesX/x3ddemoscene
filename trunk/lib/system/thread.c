@@ -104,12 +104,12 @@ static void join_thread ( struct thread_ctx *thread );
 static long get_cpu_corecount ( void );
 
 #ifdef X3D_PLATFORM_POSIX
-const pthread_mutex_t c_mutex_init = PTHREAD_MUTEX_INITIALIZER;
-const pthread_cond_t c_cond_init = PTHREAD_COND_INITIALIZER;
+static const pthread_mutex_t    c_mutex_init = PTHREAD_MUTEX_INITIALIZER;
+static const pthread_cond_t     c_cond_init = PTHREAD_COND_INITIALIZER;
 
-static void init_trap ( struct thread_trap *trap )
+static void init_trap(struct thread_trap *trap)
 {
-        sem_init ( &trap->counter, 0, 0 );
+        sem_init(&trap->counter, 0, 0);
         trap->lock = c_mutex_init;
         trap->data = c_cond_init;
 }
@@ -490,13 +490,11 @@ static void task_terminate(struct thread_task* self)
 
 static void task_synchronize(struct thread_task* self)
 {
-        trap_on_thread ( &(self)->binded_group->lock[LOCK_TASK] );
-        if ( self != nullptr && !(self)->is_processed ) {
-                trap_on_data (
-                        &(self)->sync_trap,
-                        &(self)->binded_group->lock[LOCK_TASK] );
+        trap_on_thread(&self->binded_group->lock[LOCK_TASK]);
+        if (self != nullptr && !self->is_processed) {
+                trap_on_data(&self->sync_trap, &self->binded_group->lock[LOCK_TASK]);
         }
-        remove_thread_trap ( &(self)->binded_group->lock[LOCK_TASK] );
+        remove_thread_trap(&self->binded_group->lock[LOCK_TASK]);
 }
 
 void thread_lib_init()

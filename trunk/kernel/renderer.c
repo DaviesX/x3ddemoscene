@@ -44,12 +44,12 @@ bool renderer_import(struct symbol_set* symbols)
         struct renderer_ops *t_ops = &g_rend_ops;
         bool ret = true;
 
-        if (!(t_ops->f_insmod = (f_Rendererinsmod) symlib_ret_abi2(symbols, "rendererinsmod", match_mod_abi))) {
-                log_severe_err_dbg("fail to retrieve abi: rendererinsmod");
+        if (!(t_ops->f_insmod = (f_Rendererinsmod) symlib_ret_abi2(symbols, "rendererinsmod_x3d", match_mod_abi))) {
+                log_severe_err_dbg("fail to retrieve abi: rendererinsmod_x3d");
                 ret = false;
         }
-        if (!(t_ops->f_rmmod = (f_Rendererrmmod) symlib_ret_abi2(symbols, "rendererrmmod", match_mod_abi))) {
-                log_severe_err_dbg("fail to retrieve abi: rendererrmmod");
+        if (!(t_ops->f_rmmod = (f_Rendererrmmod) symlib_ret_abi2(symbols, "rendererrmmod_x3d", match_mod_abi))) {
+                log_severe_err_dbg("fail to retrieve abi: rendererinsmod_x3d");
                 ret = false;
         }
         return ret;

@@ -6,11 +6,11 @@
 #include <container/quicksort.h>
 #include <system/thread.h>
 #include <system/timing.h>
+#include <x3d/common.h>
 #include <x3d/debug.h>
 #include "main.h"
 
 
-static void variable_memory_test0 ( struct alg_named_params *param );
 static void variable_memory_test1 ( struct alg_named_params *param );
 
 static void error_report ( struct alg_named_params *param );
@@ -29,7 +29,13 @@ static void hash_container_p ( struct alg_named_params *param );
 
 static void llist_container_c ( struct alg_named_params *param );
 
-void variable_memory_test0 ( struct alg_named_params *param )
+__dlexport void __callback                  variable_memory_test0_init(struct alg_var_set* envir) {}
+__dlexport void __callback                  variable_memory_test0_free(struct alg_var_set* envir) {}
+__dlexport enum DBG_POSITION __callback     variable_memory_test0_pos(struct alg_var_set* envir)
+{
+        return DBG_KERNEL_START;
+}
+__dlexport void __callback                  variable_memory_test0(struct alg_var_set* envir)
 {
         char **str_arr = alloc_var ( sizeof ( char* ), 0 );
         char *s0 = "Hello, first string\n";

@@ -19,6 +19,7 @@ enum SYMBOL_IDR {
  */
 struct dlsymbol {
         char*                   name;
+        char*                   reason;
         f_Generic               func_ptr;
         char*                   const_char;
         void*                   value;

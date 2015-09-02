@@ -2966,11 +2966,11 @@
 	<renderer/shader.h>
 	<renderer/out.h>
 
-1429816466 /home/davis/x3drenderlib-code/trunk/include/x3d/debug.h
+1441157973 /home/davis/x3drenderlib-code/trunk/include/x3d/debug.h
 	<x3d/common.h>
 	<system/symlib.h>
 
-1435968983 /home/davis/x3drenderlib-code/trunk/lib/system/symlib.h
+1441160457 /home/davis/x3drenderlib-code/trunk/lib/system/symlib.h
 	<container/arraylist.h>
 	<x3d/common.h>
 
@@ -3448,7 +3448,7 @@
 	<container/linkedlist.h>
 	"renderablecontainerimpl.h"
 
-1441098738 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+1441113454 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
 	<system/log.h>
 	<system/symlib.h>
 	<x3d/renderer.h>
@@ -3585,7 +3585,7 @@
 	<container/linkedlist.h>
 	<container/staging.h>
 
-1441099759 source:/home/davis/x3drenderlib-code/trunk/lib/main.c
+1441160878 source:/home/davis/x3drenderlib-code/trunk/lib/main.c
 	<system/log.h>
 	<system/allocator.h>
 	<container/paramset.h>
@@ -3593,6 +3593,7 @@
 	<container/quicksort.h>
 	<system/thread.h>
 	<system/timing.h>
+	<x3d/common.h>
 	<x3d/debug.h>
 	"main.h"
 
@@ -3652,7 +3653,7 @@
 	<system/log.h>
 	<system/allocator.h>
 
-1441103475 source:/home/davis/x3drenderlib-code/trunk/lib/system/symlib.c
+1441161597 source:/home/davis/x3drenderlib-code/trunk/lib/system/symlib.c
 	<misc.h>
 	<system/log.h>
 	<system/symlib.h>
@@ -3660,7 +3661,7 @@
 	<x3d/init.h>
 	<dlfcn.h>
 
-1441103547 source:/home/davis/x3drenderlib-code/trunk/lib/system/thread.c
+1441157005 source:/home/davis/x3drenderlib-code/trunk/lib/system/thread.c
 	<container/linkedlist.h>
 	<system/allocator.h>
 	<system/thread.h>

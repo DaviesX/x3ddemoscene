@@ -8,6 +8,8 @@ using namespace x3d::usr;
 
 extern "C" int kernel_main(int argc, char* argv[])
 {
+
+        kernel_add_param("--test", "variable_memory_test0");
         kernel_add_param("--edit-mode", "");
 
         Editor* editor          = new Editor();
