@@ -41,6 +41,9 @@ struct render_node_ex {
         struct render_node              _parent;
         enum RenderNodeType             type;
         struct render_node_ex_impl*     metainst[32];
+
+        /* this variable is procedurally set */
+        int                             first_compatible;
 };
 
 
@@ -62,7 +65,7 @@ void            renderer_kernel_free();
 bool            renderer_import(struct symbol_set* symbols);
 
 /* renderer's */
-void            renderer_render(struct render_tree* tree);
+bool            renderer_render(struct render_tree* tree);
 
 
 #endif // RENDERER_H_INCLUDED

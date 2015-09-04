@@ -458,8 +458,8 @@ void symlib_add_variable ( struct symbol_set* symbols, char* name, void* value, 
 
 f_Generic symlib_ret_abi ( struct symbol_set* symbols, char* sym_name )
 {
-        struct dlsymbol* sym = alg_array(list, &symbols->symbol[SYMBOL_ABI]);
-        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
+        struct dlsymbol* sym    = alg_array(list, &symbols->symbol[SYMBOL_ABI]);
+        int num_sym             = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
         int i;
         for ( i = 0; i < num_sym; i ++ ) {
                 if (sym[i].name && !strcmp(sym_name, sym[i].name)) {
@@ -473,8 +473,8 @@ f_Generic symlib_ret_abi ( struct symbol_set* symbols, char* sym_name )
 
 f_Generic symlib_ret_abi2(struct symbol_set* symbols, void* data, f_Match_Name f_match_name)
 {
-        struct dlsymbol* sym = alg_array(list, &symbols->symbol[SYMBOL_ABI]);
-        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
+        struct dlsymbol* sym    = alg_array(list, &symbols->symbol[SYMBOL_ABI]);
+        int num_sym             = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
         int i;
         for (i = 0; i < num_sym; i ++) {
                 if (sym[i].name && f_match_name(data, sym[i].name)) {
@@ -486,30 +486,30 @@ f_Generic symlib_ret_abi2(struct symbol_set* symbols, void* data, f_Match_Name f
         return nullptr;
 }
 
-void* symlib_ret_variable ( struct symbol_set* symbols, char* sym_name, int* size )
+void* symlib_ret_variable(struct symbol_set* symbols, char* sym_name, int* size)
 {
-        struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_ABI] );
-        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
+        struct dlsymbol* sym    = alg_array(list, &symbols->symbol[SYMBOL_ABI]);
+        int num_sym             = alg_n(list, &symbols->symbol[SYMBOL_ABI]);
         int i;
-        for ( i = 0; i < num_sym; i ++ ) {
-                if ( sym[i].name && !strcmp ( sym_name, sym[i].name ) )
-                        if ( size != nullptr )
-                                *size = sym[i].size;
-                return sym[i].value;
+        for (i = 0; i < num_sym; i ++) {
+                if (sym[i].name && !strcmp(sym_name, sym[i].name)){
+                        if ( size != nullptr ) *size = sym[i].size;
+                        return sym[i].value;
+                }
         }
-        log_mild_err_dbg ( "couldn't find such symbol as: %s", sym_name );
+        log_mild_err_dbg("couldn't find such symbol as: %s", sym_name);
         return nullptr;
 }
 
-struct dlsymbol* symlib_ret_misc ( struct symbol_set* symbols, char* sym_name )
+struct dlsymbol* symlib_ret_misc(struct symbol_set* symbols, char* sym_name)
 {
-        struct dlsymbol* sym = alg_array ( list, &symbols->symbol[SYMBOL_MISC] );
-        int num_sym = alg_n(list, &symbols->symbol[SYMBOL_MISC]);
+        struct dlsymbol* sym    = alg_array(list, &symbols->symbol[SYMBOL_MISC]);
+        int num_sym             = alg_n(list, &symbols->symbol[SYMBOL_MISC]);
         int i;
-        for ( i = 0; i < num_sym; i ++ ) {
-                if ( sym[i].name && !strcmp ( sym_name, sym[i].name ) )
+        for (i = 0; i < num_sym; i ++) {
+                if (sym[i].name && !strcmp(sym_name, sym[i].name))
                         return &sym[i];
         }
-        log_mild_err_dbg ( "couldn't find such symbol as: %s", sym_name );
+        log_mild_err_dbg("couldn't find such symbol as: %s", sym_name);
         return nullptr;
 }

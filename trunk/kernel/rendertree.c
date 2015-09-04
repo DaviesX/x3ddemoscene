@@ -259,92 +259,6 @@ void render_tree_clear_environment(struct render_tree* tree)
         }
 }
 
-struct node_info {
-        const char*     name;
-        int             out_reg;
-};
-
-struct visit_compile_data {
-        declare_stack(stack, 128*sizeof(struct render_node*));
-        char*                           bytecode;
-        d_alg_list(struct node_info)    node_infos;
-        int                             reg_count;
-        bool                            is_succeeded;
-};
-
-static void visit_compile_push(struct render_node* node, struct render_node* input[], struct render_node* output[], void* dataptr)
-{
-        struct visit_compile_data* data = dataptr;
-        if (!data->is_succeeded)
-                return ;
-        push_stack(&data->stack, node);
-}
-
-#define write_bytecode(_dest, _code) \
-{ \
-        *(typeof(_code)*)(_dest) = (_code); \
-        _dest += sizeof(_code); \
-}
-
-static void visit_compile_backtrack(struct render_node* node, struct render_node* input[], struct render_node* output[], void* dataptr)
-{
-        struct visit_compile_data* data = dataptr;
-        if (!data->is_succeeded)
-                return ;
-        struct render_node* op_node;
-        pop_stack(&data->stack, op_node);
-        // generate instruction
-        if (op_node->n_output != 0) {
-#define node_info_cmp(_data, _node_info)          (!strcmp(_data, (_node_info)->name))
-                alg_iter(struct node_info) iter;
-                alg_find(list, &data->node_infos, render_node_get_name(op_node), iter, node_info_cmp);
-                struct node_info info;
-                if (iter == nullptr) {
-                        // new operator, allocate register
-                        info.name = render_node_get_name(op_node);
-                        info.out_reg = data->reg_count ++;
-                        alg_push_back(list, &data->node_infos, info);
-                } else {
-                        info = alg_access(iter);
-                }
-                int op_size = sizeof(op_size) + 4 + sizeof(int) + op_node->n_input*sizeof(int);
-                write_bytecode(data->bytecode, op_size);                        printf("%d ", op_size);
-                write_bytecode(data->bytecode, render_node_get_type(node));     printf("%d ", render_node_get_type(node));
-                write_bytecode(data->bytecode, info.out_reg);                   printf("%d ", info.out_reg);
-                int i;
-                for (i = 0; i < op_node->n_input; i ++) {
-                        alg_find(list, &data->node_infos, render_node_get_name(op_node->input[i]), iter, node_info_cmp);
-                        if (iter == nullptr) {
-                                log_severe_err("input: %s of operator node: %s doesn't have an allocated register",
-                                                render_node_get_name(op_node), render_node_get_name(op_node->input[i]));
-                                log_severe_err("generation halt");
-                                data->is_succeeded = false;
-                        }
-                        write_bytecode(data->bytecode, alg_access(iter).out_reg);printf("%d ", alg_access(iter).out_reg);
-                }
-                printf("\n");
-#undef node_info_cmp
-        } else {
-                log_normal_dbg("operator node: %s doesn't have output", render_node_get_name(op_node));
-        }
-}
-
-bool render_tree_compile(struct render_tree* tree, struct render_bytecode* bytecode)
-{
-        struct visit_compile_data data;
-        data.bytecode           = bytecode->instr;
-        data.is_succeeded       = true;
-        data.reg_count          = 0;
-        alg_list_init(&data.node_infos, sizeof(struct node_info), 1);
-
-        struct render_tree_visitor visitor;
-        render_tree_visitor_init2(&visitor, visit_compile_push, visit_compile_backtrack, &data);
-        render_tree_visit(tree, &visitor);
-
-        alg_free(list, &data.node_infos);
-        return data.is_succeeded;
-}
-
 static bool is_empty_input(int* c_ibranch, struct render_node* node)
 {
         int i;
@@ -417,4 +331,39 @@ void render_tree_visitor_init2(struct render_tree_visitor* visitor,
 {
         render_tree_visitor_init(visitor, this_node, dataptr);
         visitor->backtrack = backtrack;
+}
+
+
+struct node_info {
+        const char*     name;
+        int             out_reg;
+};
+
+struct visit_verify_data {
+        bool                            is_succeeded;
+        struct render_tree*             tree;
+};
+
+static void visit_compile_push(struct render_node* node, struct render_node* input[], struct render_node* output[], void* dataptr)
+{
+        struct visit_verify_data* data = dataptr;
+        bool is_succeeded = node->ops.verify_self(data->tree, node);
+        if (!data->is_succeeded) {
+                return ;
+        } else {
+                data->is_succeeded = is_succeeded;
+        }
+}
+
+bool render_tree_verify(struct render_tree* self)
+{
+        struct visit_verify_data        data;
+        data.is_succeeded       = true;
+        data.tree               = self;
+
+        struct render_tree_visitor visitor;
+        render_tree_visitor_init(&visitor, visit_compile_push, &data);
+        render_tree_visit(self, &visitor);
+
+        return data.is_succeeded;
 }

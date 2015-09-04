@@ -1,8 +1,10 @@
 /* ptrenderer.c: interface of path tracing renderer go here */
+#include <math/math.h>
+#include <system/symlib.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
 #include <x3d/renderableaggregaterequest.h>
-#include <math/math.h>
+#include <renderer/shader.h>
 #include "lcrenderer.h"
 #include "ptrenderer.h"
 #include "trianglebuffer.h"
@@ -96,6 +98,20 @@ struct intersect_packet {
         void (*transfer) ( void );
         void (*postprobe) ( void );
 };
+
+// lerp utility functions
+static void lerp_point(struct point3d* p[3], float t[3], struct point3d* xo)
+{
+        int i;
+        for (i = 0; i < 3; i ++) {
+                xo->p[i] = p[0]->p[i]*t[0] + p[1]->p[i]*t[1] + p[2]->p[i]*t[2];
+        }
+}
+
+static void lerp_matid(int* p[3], float t[3], int* xo)
+{
+        *xo = *p[0];
+}
 
 /* intersection callee */
 static bool real_subroutine ( int i, struct intersect_packet* ip )
@@ -759,6 +775,17 @@ void pt_renderer_output ( struct pt_renderer* r )
 {
 }
 
+/* @fixme (davis#1#): <ptrenderer> shader should be more elegant */
+void**         shader_var_addr[10];
+
+void pt_renderer_system_init(struct symbol_set* symbols)
+{
+        init_shader_library();
+        shader_var_addr[_AttriVertex] = symlib_ret_variable(symbols, "g_position", nullptr);
+        shader_var_addr[_AttriNormal] = symlib_ret_variable(symbols, "g_normal", nullptr);
+}
+
+// radiance node
 struct render_node_ex_impl* pt_radiance_node_creator(struct render_node_ex* parent)
 {
         struct pt_radiance_node* node = alloc_obj(node);
@@ -814,7 +841,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
                                                                                    RENDERABLE_GEOMETRY);
         const int n                                     = rda_context_get_n(context, request_id);
         u_aos_free(&node->aos_geo);
-        u_aos_init(&node->aos_geo, UtilAttriVertex | UtilAttriNormal);
+        u_aos_init(&node->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatId);
         int i;
         for (i = 0; i < n; i ++) {
                 struct rda_instance* inst = rda_context_get_i(context, i, request_id);
@@ -824,21 +851,27 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
                 int num_vertex;
                 void* vertex    = rda_geometry_get_vertex(geometry, &num_vertex);
                 void* normal    = rda_geometry_get_normal(geometry, &num_vertex);
-                u_aos_accumulate(&node->aos_geo, index, num_index, num_vertex, vertex, normal);
+                int matid       = rda_get_material_reference(&geometry->_parent);
+                u_aos_accumulate(&node->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
         }
-        void** shader_var_addr[10];
 
         /* generate streams */
         void* vertex[10];
         int n_vertex = u_aos_get_vertex(&node->aos_geo, vertex, &node->n_streams);
         bool* avail = u_aos_get_availibility(&node->aos_geo);
 
-        int cSizeOfStream[10] = {};
+        int cSizeOfStream[10] = {
+                [_AttriVertex] = sizeof(struct point3d),
+                [_AttriNormal] = sizeof(struct vector3d),
+                [_AttriMatId]  = sizeof(int)
+        };
         f_Lerp_3 cStreamLerp3[10] = {
+                [_AttriVertex] = (f_Lerp_3) lerp_point,
+                [_AttriVertex] = (f_Lerp_3) lerp_point,
+                [_AttriMatId]  = (f_Lerp_3) lerp_matid
         };
         int k, m;
-        for (m = 0, k = 0; k < 10; k ++)
-        {
+        for (m = 0, k = 0; k < 10; k ++) {
                 if (avail[k] == true) {
                         u_stream_init(&node->stream[m],
                                       vertex[k], cSizeOfStream[k], n_vertex,
@@ -875,5 +908,51 @@ void* pt_radiance_node_get_result(struct render_node_ex_impl* self)
 
 void pt_radiance_node_free(struct render_node_ex_impl* self)
 {
+/* @todo (davis#2#): <pt_radiance_node_free> release resources */
 }
 
+
+// renderable loader node
+struct render_node_ex_impl* pt_renderable_loader_node_creator(struct render_node_ex* parent)
+{
+        struct pt_renderable_loader_node* node = alloc_obj(node);
+        zero_obj(node);
+        node->_parent2 = *(struct render_rdaloader*) parent;
+        // fill in ops
+        struct render_node_ex_ops       ops;
+        ops.f_compute           = pt_renderable_loader_node_compute;
+        ops.f_free              = pt_renderable_loader_node_free;
+        ops.f_get_result        = pt_renderable_loader_node_get_result;
+        ops.f_is_compatible     = pt_renderable_loader_node_is_compatible;
+        node->_parent.ops       = ops;
+        return (struct render_node_ex_impl*) node;
+}
+
+bool pt_renderable_loader_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+{
+        struct pt_renderable_loader_node* node = cast(node) self;
+        struct rda_context* context = render_tree_retrieve_environment(tree, RenderEnvRenderable);
+        if (!context) {
+                return false;
+        }
+        node->context = context;
+        return true;
+}
+
+void pt_renderable_loader_node_compute(struct render_node_ex_impl* self,
+                                       const struct render_node_ex_impl* input[],
+                                       const struct render_node_ex_impl* output[])
+{
+        // nothing to do
+}
+
+void* pt_renderable_loader_node_get_result(struct render_node_ex_impl* self)
+{
+        struct pt_renderable_loader_node* node = cast(node) self;
+        return node->context;
+}
+
+void pt_renderable_loader_node_free(struct render_node_ex_impl* self)
+{
+        // nothing to do
+}

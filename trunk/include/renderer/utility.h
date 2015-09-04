@@ -5,8 +5,8 @@
 #include <system/log.h>
 #include <system/allocator.h>
 
-typedef void (*f_Lerp_2) ( void* x[2], float t, void* xo );
-typedef void (*f_Lerp_3) ( void* x[3], float t[3], void* xo );
+typedef void (*f_Lerp_2)(void* x[2], float t, void* xo);
+typedef void (*f_Lerp_3)(void* x[3], float t[3], void* xo);
 
 /** \brief stream-to-shader connector utility
  */
@@ -154,14 +154,16 @@ enum UtilAttribute {
         UtilAttriVertex         = 1 << 1,
         UtilAttriNormal         = 1 << 2,
         UtilAttriTangent        = 1 << 3,
-        UtilAttriUV             = 1 << 4
+        UtilAttriUV             = 1 << 4,
+        UtilAttriMatId          = 1 << 5
 };
 
 enum _AttriMap {
         _AttriVertex,
         _AttriNormal,
         _AttriTangent,
-        _AttriUV
+        _AttriUV,
+        _AttriMatId
 };
 
 /** \brief make array-of-structure streams
@@ -179,38 +181,36 @@ struct util_aos {
         int                     n_vertex;
 };
 
-static inline void u_aos_init ( struct util_aos* u_aos, enum UtilAttribute format )
+static inline void u_aos_init(struct util_aos* u_aos, enum UtilAttribute format)
 {
-        zero_obj ( u_aos );
+        zero_obj(u_aos);
 
-        u_aos->index     = alloc_var ( sizeof(int), 1 );
+        u_aos->index     = alloc_var(sizeof(int), 1);
         u_aos->n_index   = 0;
+        u_aos->n_vertex = 0;
 
         if ( format & UtilAttriVertex ) {
-                u_aos->aos[_AttriVertex].s_data =
-                        alloc_var ( sizeof(struct point3d), 1 );
-                u_aos->n_vertex = 0;
+                u_aos->aos[_AttriVertex].s_data = alloc_var(sizeof(struct point3d), 1);
                 u_aos->avail[_AttriVertex] = true;
                 u_aos->n_streams ++;
         }
         if ( format & UtilAttriNormal ) {
-                u_aos->aos[_AttriNormal].s_data =
-                        alloc_var ( sizeof(struct vector3d), 1 );
-                u_aos->n_vertex = 0;
+                u_aos->aos[_AttriNormal].s_data = alloc_var(sizeof(struct vector3d), 1);
                 u_aos->avail[_AttriNormal] = true;
                 u_aos->n_streams ++;
         }
         if ( format & UtilAttriTangent ) {
-                u_aos->aos[_AttriTangent].s_data =
-                        alloc_var ( sizeof(struct vector3d), 1 );
-                u_aos->n_vertex = 0;
+                u_aos->aos[_AttriTangent].s_data = alloc_var(sizeof(struct vector3d), 1);
                 u_aos->avail[_AttriTangent] = true;
                 u_aos->n_streams ++;
         }
         if ( format & UtilAttriUV ) {
-                u_aos->aos[_AttriUV].s_data =
-                        alloc_var ( sizeof(struct vector2d), 1 );
-                u_aos->n_vertex = 0;
+                u_aos->aos[_AttriUV].s_data = alloc_var(sizeof(struct vector2d), 1);
+                u_aos->avail[_AttriUV] = true;
+                u_aos->n_streams ++;
+        }
+        if (format & UtilAttriMatId) {
+                u_aos->aos[_AttriMatId].s_data = alloc_var(sizeof(int), 1);
                 u_aos->avail[_AttriUV] = true;
                 u_aos->n_streams ++;
         }
@@ -218,31 +218,30 @@ static inline void u_aos_init ( struct util_aos* u_aos, enum UtilAttribute forma
         u_aos->format = format;
 }
 
-static inline void u_aos_free ( struct util_aos* u_aos )
+static inline void u_aos_free(struct util_aos* u_aos)
 {
-        free_var ( u_aos->index );
+        free_var(u_aos->index);
         u_aos->n_index = 0;
         u_aos->n_vertex = 0;
         int i;
-        for ( i = 0; i < 10; i ++ ) {
-                free_var ( u_aos->aos[i].s_data );
+        for (i = 0; i < 10; i ++) {
+                free_var(u_aos->aos[i].s_data);
         }
-        zero_obj ( u_aos );
+        zero_obj(u_aos);
 }
 
-static inline void u_aos_flush ( struct util_aos* u_aos )
+static inline void u_aos_flush(struct util_aos* u_aos)
 {
-        flush_var ( u_aos->index );
+        flush_var(u_aos->index);
         u_aos->n_index = 0;
         u_aos->n_vertex = 0;
         int i;
-        for ( i = 0; i < 10; i ++ ) {
-                flush_var ( u_aos->aos[i].s_data );
+        for (i = 0; i < 10; i ++) {
+                flush_var(u_aos->aos[i].s_data);
         }
 }
 
-static inline void u_aos_accumulate ( struct util_aos* u_aos,
-                        int* index, int num_index, int num_vertex, ... )
+static inline void u_aos_accumulate(struct util_aos* u_aos, int* index, int num_index, int num_vertex, ...)
 {
         /* copy vertex attributes */
         va_list v_arg;
@@ -277,11 +276,21 @@ static inline void u_aos_accumulate ( struct util_aos* u_aos,
                 struct vector2d* uv = u_aos->aos[_AttriUV].s_data;
                 memcpy ( &uv[u_aos->n_vertex], src, num_vertex );
         }
+        if (format & UtilAttriMatId) {
+                // material id is set uniformly for each accumulation
+                int src = va_arg(v_arg, int);
+                u_aos->aos[_AttriMatId].s_data = alloc_add_var(u_aos->aos[_AttriMatId].s_data, num_vertex);
+                int* matid = u_aos->aos[_AttriMatId].s_data;
+                int i;
+                for (i = u_aos->n_index; i < u_aos->n_index + num_vertex; i ++) {
+                        matid[i] = src;
+                }
+        }
 
         va_end ( v_arg );
 
         /* copy indices */
-        u_aos->index = alloc_add_var ( u_aos->index, num_index );
+        u_aos->index = alloc_add_var(u_aos->index, num_index);
         int* d_index = &u_aos->index[u_aos->n_index];
         int i;
         for ( i = 0; i < num_index; i ++ ) {

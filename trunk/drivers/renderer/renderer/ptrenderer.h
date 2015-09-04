@@ -30,20 +30,33 @@ struct pt_radiance_node {
 struct pt_renderable_loader_node {
         struct render_node_ex_impl      _parent;
         struct render_rdaloader         _parent2;
+
+        struct rda_context*             context;
 };
 
 
 /*
  * functions' declarations
  */
-struct render_node_ex_impl* __callback  pt_radiance_node_creator(struct render_node_ex* parent);
+void __public           pt_renderer_system_init(struct symbol_set* symbol);
 
+// radiance node
+struct render_node_ex_impl* __callback  pt_radiance_node_creator(struct render_node_ex* parent);
 bool __implement        pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree);
 void __implement        pt_radiance_node_compute(struct render_node_ex_impl* self,
                                                  const struct render_node_ex_impl* input[],
                                                  const struct render_node_ex_impl* output[]);
 void* __implement       pt_radiance_node_get_result(struct render_node_ex_impl* self);
 void __implement        pt_radiance_node_free(struct render_node_ex_impl* self);
+
+// renderable loader node
+struct render_node_ex_impl* __callback  pt_renderable_loader_node_creator(struct render_node_ex* parent);
+bool __implement        pt_renderable_loader_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree);
+void __implement        pt_renderable_loader_node_compute(struct render_node_ex_impl* self,
+                                                 const struct render_node_ex_impl* input[],
+                                                 const struct render_node_ex_impl* output[]);
+void* __implement       pt_renderable_loader_node_get_result(struct render_node_ex_impl* self);
+void __implement        pt_renderable_loader_node_free(struct render_node_ex_impl* self);
 
 
 #endif // PT_RENDERER_H_INCLUDED

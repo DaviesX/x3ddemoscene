@@ -105,7 +105,6 @@ __dlexport enum RenderNodeType  render_node_get_type(struct render_node* node);
 __dlexport const char*          render_node_get_name(struct render_node* node);
 __dlexport void                 render_node_copy_link(struct render_node* src, struct render_node* dest);
 
-__dlexport bool                 render_tree_check_environment(struct render_tree* tree, enum RenderEnvironment type, char* name);
 
 /* struct render_tree's */
 __dlexport void                 render_tree_init(struct render_tree* tree);
@@ -122,9 +121,11 @@ __dlexport bool                 render_tree_remove_node(struct render_tree* tree
 __dlexport void                 render_tree_declare_environment(struct render_tree* tree,
                                                                 enum RenderEnvironment type,
                                                                 const char* var_name, void* var);
+__dlexport bool                 render_tree_check_environment(struct render_tree* tree, enum RenderEnvironment type, char* name);
 __dlexport void*                render_tree_retrieve_environment(struct render_tree* tree, enum RenderEnvironment type);
 __dlexport void                 render_tree_clear_environment(struct render_tree* tree);
 __dlexport bool                 render_tree_visit(struct render_tree* tree, struct render_tree_visitor* visitor);
+__dlexport bool                 render_tree_verify(struct render_tree* self);
 
 
 #endif // RENDERTREE_H_INCLUDED

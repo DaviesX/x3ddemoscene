@@ -236,6 +236,11 @@ enum RENDERABLE_IDR rda_get_type ( struct renderable* rda )
         return rda->type;
 }
 
+int rda_get_material_reference(struct renderable* self)
+{
+        return self->mater_ref;
+}
+
 struct rda_instance* rda_instance_create ( struct renderable *rda, struct matrix4x4 *transform )
 {
         struct rda_instance* insts = alloc_obj ( insts );

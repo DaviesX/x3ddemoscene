@@ -117,6 +117,7 @@ void                    rda_set_importance ( struct renderable *rda, float impor
 void                    rda_set_material ( struct renderable *rda, int mater_ref );
 char*                   rda_get_name ( struct renderable *rda );
 enum RENDERABLE_IDR     rda_get_type ( struct renderable* rda );
+int                     rda_get_material_reference(struct renderable* self);
 struct rda_instance*    rda_instance_create ( struct renderable *rda, struct matrix4x4 *transform );
 void                    rda_instance_free ( struct rda_instance *inst );
 struct renderable*      rda_instance_source ( struct rda_instance* inst );
