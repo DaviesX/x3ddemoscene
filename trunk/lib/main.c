@@ -31,9 +31,15 @@ static void llist_container_c ( struct alg_named_params *param );
 
 __dlexport void __callback                  variable_memory_test0_init(struct alg_var_set* envir) {}
 __dlexport void __callback                  variable_memory_test0_free(struct alg_var_set* envir) {}
-__dlexport enum DBG_POSITION __callback     variable_memory_test0_pos(struct alg_var_set* envir)
+__dlexport enum DebugPosition* __callback   variable_memory_test0_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
 {
-        return DBG_KERNEL_START;
+        static enum DebugPosition pos[] = {
+                Debug_KernelStart
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = false;
+        return pos;
 }
 __dlexport void __callback                  variable_memory_test0(struct alg_var_set* envir)
 {

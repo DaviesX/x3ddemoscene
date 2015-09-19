@@ -480,3 +480,17 @@ void alg_use_uuid ( uuid_t id )
         g_uuid = max(id, g_uuid);
         thread_untrap_task(&g_uuid_trap);
 }
+
+char** misc_get_command_params(char* command, int argc, char* argv[], int* n_matched)
+{
+        char** params = alloc_fix(sizeof(char*), argc);
+        int j = 0;
+        int i;
+        for (i = 0; i < argc - 1; i ++) {
+                if (!strcmp(command, argv[i]) && i + 1 < argc) {
+                        params[j ++] = argv[i + 1];
+                }
+        }
+        *n_matched = j;
+        return params;
+}

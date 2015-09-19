@@ -4,6 +4,7 @@
 #include <system/thread.h>
 #include <system/log.h>
 #include <system/symlib.h>
+#include <container/paramset.h>
 #include <x3d/init.h>
 #include <x3d/debug.h>
 #include <x3d/resloader.h>
@@ -97,7 +98,7 @@ __dlexport bool kernel_start ( void )
                             get_self_so(init->argc, init->argv) ) )
                 return false;
 
-        if ( !init_debugger ( init->argc, init->argv, &init->symbols ) )
+        if ( !debugger_init ( init->argc, init->argv, &init->symbols ) )
                 return false;
         init_math_lib ();
         if ( !renderer_import ( &init->symbols ) )
@@ -113,35 +114,50 @@ __dlexport void kernel_halt ( void )
         g_init.to_run = false;
 }
 
-static void rest_init ( void )
+static void rest_init ()
 {
-        struct init*   init = &g_init;
-        struct signal* signal = &init->signal;
+        struct init*   init     = &g_init;
+        struct signal* signal   = &init->signal;
 
-        if ( signal->on_rest_init != nullptr )
-                signal->on_rest_init ( signal->env );
-        debugger_invoke ( DBG_INDEX_START );
+        if (signal->on_rest_init != nullptr)
+                signal->on_rest_init(signal->env);
+
+        struct alg_var_set params;
+        alg_var_set_init(&params);
+        debugger_invoke_begin();
+        debugger_invoke(Debug_KernelStart, &params);
+
         g_init.to_run = true;
+
+        debugger_invoke_end();
+        alg_var_set_free(&params);
 }
 
-__dlexport void kernel_loop ( void )
+__dlexport void kernel_loop()
 {
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
 
-        if ( signal->on_loop_init != nullptr )
-                signal->on_loop_init ( signal->env );
-        debugger_invoke ( DBG_INDEX_LOOP_ONCE );
+        if (signal->on_loop_init != nullptr)
+                signal->on_loop_init(signal->env);
 
-        while ( g_init.to_run ) {
-                debugger_invoke ( DBG_INDEX_LOOP );
-                if ( signal->on_loop != nullptr )
-                        signal->on_loop ( signal->env );
+        struct alg_var_set params;
+        alg_var_set_init(&params);
+        while (g_init.to_run) {
+                debugger_invoke_begin();
+                debugger_invoke(Debug_KernelLoop, &params);
+
+                if (signal->on_loop != nullptr)
+                        signal->on_loop(signal->env);
         }
 
-        if ( signal->on_loop_free != nullptr )
-                signal->on_loop_free ( signal->env );
-        debugger_invoke ( DBG_INDEX_HALT );
+        if (signal->on_loop_free != nullptr)
+                signal->on_loop_free(signal->env);
+
+        debugger_invoke(Debug_KernelHalt, &params);
+
+        debugger_invoke_end();
+        alg_var_set_free(&params);
 }
 
 __dlexport void kernel_shutdown ( void )

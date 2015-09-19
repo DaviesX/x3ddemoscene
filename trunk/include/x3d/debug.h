@@ -1,5 +1,5 @@
-#ifndef RUNTIME_DEBUG_H_INCLUDED
-#define RUNTIME_DEBUG_H_INCLUDED
+#ifndef DEBUG_H_INCLUDED
+#define DEBUG_H_INCLUDED
 
 
 #include <x3d/common.h>
@@ -7,24 +7,19 @@
 
 struct alg_var_set;
 
-enum DBG_POSITION {
-        DBG_KERNEL_START 	= 0X1,
-        DBG_KERNEL_LOOP_ONCE 	= 0X2,
-        DBG_KERNEL_LOOP 	= 0X4,
-        DBG_KERNEL_HALT 	= 0X8
+enum DebugPosition {
+        Debug_KernelStart,
+        Debug_KernelLoop,
+        Debug_KernelHalt,
+        DebugPTRendererPrintBenchmarkGeometry,
+        DebugPTRendererExportRenderredImage,
+        c_NumDebugPositions
 };
-enum DBG_INDEX {
-        DBG_INDEX_START,
-        DBG_INDEX_LOOP_ONCE,
-        DBG_INDEX_LOOP,
-        DBG_INDEX_HALT
-};
-#define cNumDbgPosition         4
 
 typedef void (*f_UT_Init) (struct alg_var_set* envir);
 typedef void (*f_UT_Run) (struct alg_var_set* envir);
 typedef void (*f_UT_Free) (struct alg_var_set* envir);
-typedef enum DBG_POSITION (*f_UT_Pos) (struct alg_var_set* envir);
+typedef enum DebugPosition* (*f_UT_Pos) (struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped);
 
 struct unit_test {
         char*                   test_name;
@@ -32,11 +27,21 @@ struct unit_test {
         f_UT_Run                ut_run;
         f_UT_Free               ut_free;
         f_UT_Pos                ut_pos;
-        enum DBG_POSITION       pos;
+        enum DebugPosition      pos;
+        int                     num_run;
+        int                     counted;
+        clock_t                 begin_time;
+        clock_t                 end_time;
+        float                   avg_time;
+        bool                    is_skipped;
 };
 
-bool init_debugger ( int argc, char *argv[], struct symbol_set* symbols );
-void debugger_invoke ( enum DBG_INDEX pos );
+bool __public   debugger_init(int argc, char *argv[], struct symbol_set* symbols);
+void __public   debugger_free();
+bool __private  debugger_invoke_internal(enum DebugPosition pos, struct alg_var_set* params);
+#define         debugger_invoke_begin()
+#define         debugger_invoke(_pos, _params)          if (debugger_invoke_internal(_pos, _params)) goto _LDB;
+#define         debugger_invoke_end()                   _LDB:
 
 
-#endif // RUNTIME_DEBUG_H_INCLUDED
+#endif // DEBUG_H_INCLUDED

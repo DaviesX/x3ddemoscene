@@ -20,8 +20,8 @@ struct alg_named_params {
 };
 
 
-void init_alg_var_set(struct alg_var_set* set);
-void free_alg_var_set(struct alg_var_set* set);
+void alg_var_set_init(struct alg_var_set* set);
+void alg_var_set_free(struct alg_var_set* set);
 void alg_var_set_declare(char* name, void* data, int size, struct alg_var_set* set);
 void alg_var_set_undeclare(char* name, struct alg_var_set* set);
 void* alg_var_set_use(char* name, struct alg_var_set* set);

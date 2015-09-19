@@ -42,7 +42,7 @@
 	<x3d/common.h>
 	<misc.h>
 
-1441104050 /home/davis/x3drenderlib-code/trunk/lib/misc.h
+1442671792 /home/davis/x3drenderlib-code/trunk/lib/misc.h
 	<stdint.h>
 	<stdbool.h>
 	<stdlib.h>
@@ -2897,7 +2897,7 @@
 	<system/allocator.h>
 	"perspective.h"
 
-1429913976 /home/davis/x3drenderlib-code/trunk/lib/container/paramset.h
+1442674402 /home/davis/x3drenderlib-code/trunk/lib/container/paramset.h
 	<container/container.h>
 	<container/linkedlist.h>
 
@@ -2966,7 +2966,7 @@
 	<renderer/shader.h>
 	<renderer/out.h>
 
-1441157973 /home/davis/x3drenderlib-code/trunk/include/x3d/debug.h
+1442691361 /home/davis/x3drenderlib-code/trunk/include/x3d/debug.h
 	<x3d/common.h>
 	<system/symlib.h>
 
@@ -3337,7 +3337,7 @@
 	<renderer/shader_lib.h>
 	"rtshader.h"
 
-1429816466 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
+1442691798 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
 	<misc.h>
 	<container/paramset.h>
 	<system/allocator.h>
@@ -3350,13 +3350,14 @@
 
 1399958501 /home/davis/x3drenderlib-code/trunk/include/x3d/dynamics.h
 
-1429915421 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
+1442691423 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
 	<misc.h>
 	<x3d/common.h>
 	<math/math.h>
 	<system/thread.h>
 	<system/log.h>
 	<system/symlib.h>
+	<container/paramset.h>
 	<x3d/init.h>
 	<x3d/debug.h>
 	<x3d/resloader.h>
@@ -3571,7 +3572,7 @@
 
 1429550824 source:/home/davis/x3drenderlib-code/trunk/lib/container/linkedlist.c
 
-1429732543 source:/home/davis/x3drenderlib-code/trunk/lib/container/paramset.c
+1442674804 source:/home/davis/x3drenderlib-code/trunk/lib/container/paramset.c
 	<misc.h>
 	<container/paramset.h>
 
@@ -3587,7 +3588,7 @@
 	<container/linkedlist.h>
 	<container/staging.h>
 
-1441160878 source:/home/davis/x3drenderlib-code/trunk/lib/main.c
+1442691636 source:/home/davis/x3drenderlib-code/trunk/lib/main.c
 	<system/log.h>
 	<system/allocator.h>
 	<container/paramset.h>
@@ -3639,7 +3640,7 @@
 	<system/log.h>
 	"vector.h"
 
-1430497610 source:/home/davis/x3drenderlib-code/trunk/lib/misc.c
+1442671833 source:/home/davis/x3drenderlib-code/trunk/lib/misc.c
 	<system/thread.h>
 	<system/allocator.h>
 	<math/math.h>
