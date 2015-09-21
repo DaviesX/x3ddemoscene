@@ -17,6 +17,7 @@ struct render_output {
  */
 struct render_node_ex*  render_node_output_create(const char* name, const char* probe);
 void                    render_node_output_set_probe(struct render_output* node, const char* probe);
+const int               render_node_output_get_input_slot();
 
 
 #endif // RENDERNODEOUTPUT_H_INCLUDED

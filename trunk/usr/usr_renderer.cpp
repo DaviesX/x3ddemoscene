@@ -91,23 +91,23 @@ RenderNode* RenderLayer::get_node()
         return (RenderNode*) m_node;
 }
 
-RenderableContext::RenderableContext(string name, string context, RenderAggregate::Strategy strategy)
+RenderableLoader::RenderableLoader(string name, string context, RenderAggregate::Strategy strategy)
 {
         m_node = (struct render_rdaloader*)
                  render_node_rdaloader_create(name.c_str(), context.c_str(), (RAG_IDR) strategy);
 }
 
-RenderNode* RenderableContext::get_node()
+RenderNode* RenderableLoader::get_node()
 {
         return (RenderNode*) m_node;
 }
 
-void RenderableContext::set_context(string context)
+void RenderableLoader::set_context(string context)
 {
         render_node_rdaloader_set_context(m_node, context.c_str());
 }
 
-void RenderableContext::set_strategy(RenderAggregate::Strategy strategy)
+void RenderableLoader::set_strategy(RenderAggregate::Strategy strategy)
 {
         render_node_rdaloader_set_access(m_node, (RAG_IDR) strategy);
 }

@@ -77,9 +77,11 @@ static void render_tree_find_compatible(struct render_node* node, struct render_
                         break;
                 }
         }
-        log_severe_err_dbg("no compatible implementation for render node: %s of type, rendering will be abort",
-                           render_node_get_name(node), render_node_get_type(node));
-        data->is_succeeded = false;
+        if (type != RenderNodeRoot) {
+                log_severe_err_dbg("no compatible implementation for render node: %s of type %d, rendering will be abort",
+                                   render_node_get_name(node), render_node_get_type(node));
+                data->is_succeeded = false;
+        }
 }
 
 static void render_tree_compute(struct render_node* node, struct render_node* input[], struct render_node* output[], void* dataptr)

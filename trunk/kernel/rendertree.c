@@ -265,11 +265,11 @@ static bool is_empty_input(int* c_ibranch, struct render_node* node)
         for (i = 0; i < node->n_input; i ++) {
                 if (node->input[i] != nullptr) {
                         *c_ibranch = i;
-                        return true;
+                        return false;
                 }
         }
         *c_ibranch = -1;
-        return false;
+        return true;
 }
 
 static struct render_node* next_input(int* c_ibranch, struct render_node* node)

@@ -4,6 +4,7 @@
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
 #include <x3d/renderableaggregaterequest.h>
+#include <x3d/projectionprobe.h>
 #include <renderer/shader.h>
 #include "lcrenderer.h"
 #include "ptrenderer.h"
@@ -901,7 +902,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
         render_radiance(node);
 }
 
-void* pt_radiance_node_get_result(struct render_node_ex_impl* self)
+void* pt_radiance_node_get_result(const struct render_node_ex_impl* self)
 {
         return &((struct pt_radiance_node*) self)->target;
 }
@@ -946,13 +947,185 @@ void pt_renderable_loader_node_compute(struct render_node_ex_impl* self,
         // nothing to do
 }
 
-void* pt_renderable_loader_node_get_result(struct render_node_ex_impl* self)
+void* pt_renderable_loader_node_get_result(const struct render_node_ex_impl* self)
 {
-        struct pt_renderable_loader_node* node = cast(node) self;
+        const struct pt_renderable_loader_node* node = cast(node) self;
         return node->context;
 }
 
 void pt_renderable_loader_node_free(struct render_node_ex_impl* self)
+{
+        // nothing to do
+}
+
+// render output node
+struct render_node_ex_impl* pt_render_output_node_creator(struct render_node_ex* parent)
+{
+        struct pt_render_output_node* node = alloc_obj(node);
+        zero_obj(node);
+        node->_parent2 = *(struct render_output*) parent;
+        // fill in ops
+        struct render_node_ex_ops       ops;
+        ops.f_compute           = pt_render_output_node_compute;
+        ops.f_free              = pt_render_output_node_free;
+        ops.f_get_result        = pt_render_output_node_get_result;
+        ops.f_is_compatible     = pt_render_output_node_is_compatible;
+        node->_parent.ops       = ops;
+        return (struct render_node_ex_impl*) node;
+}
+
+bool pt_render_output_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+{
+        struct pt_render_output_node* node = cast(node) self;
+        struct perspective_probe* probe = render_tree_retrieve_environment(tree, RenderEnvProbe);
+        if (!probe) {
+                return false;
+        }
+        if (PerspectiveProbe != projprobe_get_type((struct projection_probe*) probe)) {
+                return false;
+        }
+        switch (projprobe_get_output_method((struct projection_probe*) probe)) {
+        case GtkRenderRegionOutput:
+                break;
+        case GtkOpenGLOutput:
+                break;
+        default:
+                return false;
+        }
+        node->probe = probe;
+        return true;
+}
+
+
+#include <gtk/gtk.h>
+
+typedef gboolean (*f_GTK_Display_Callback) (struct _GtkWidget *widget, struct _cairo *cairo, gpointer data);
+struct gtk_out {
+        f_GTK_Display_Callback  display_callback;
+        int                     signal_handler;
+        int                     signal_state;
+        struct _GtkWidget*      dst_widget;
+        enum _cairo_format      format;
+        void*                   src_surface;
+        int                     width, height;
+        int                     x, y;
+        int                     stride;
+};
+
+#define DRAW_SIGNAL_REMAIN	1
+#define DRAW_SIGNAL_NONE	0
+
+static gboolean display_callback(struct _GtkWidget *widget, struct _cairo *cairo, gpointer data);
+
+
+static struct gtk_out *gtk_out_create(GtkWidget *widget,
+                                      int x, int y, int width, int height,
+                                      enum ColorMode format, void* src_surface)
+{
+        struct gtk_out *out = alloc_fix(sizeof *out, 1);
+        memset(out, 0, sizeof *out);
+
+        switch(format) {
+        case Color8Mode: {
+                out->format = CAIRO_FORMAT_A1;
+                out->stride = 1;
+                break;
+        }
+        case Color16AMode: {
+                out->format = CAIRO_FORMAT_RGB16_565;
+                out->stride = 2;
+                break;
+        }
+        case Color24Mode: {
+                out->format = CAIRO_FORMAT_RGB24;
+                out->stride = 3;
+                break;
+        }
+        case Color32Mode: {
+                out->format = CAIRO_FORMAT_ARGB32;
+                out->stride = 4;
+                break;
+        }
+        default: {
+                log_severe_err_dbg("color format is not supported by the api");
+                return nullptr;
+        }
+        }
+        out->display_callback   = display_callback;
+        out->dst_widget         = widget;
+        out->signal_handler     = g_signal_connect(widget, "draw", G_CALLBACK(display_callback), out);
+        out->signal_state       = DRAW_SIGNAL_NONE;
+        out->src_surface        = src_surface;
+        return out;
+}
+
+static void gtk_out_free(struct gtk_out *out)
+{
+        while(out->signal_state == DRAW_SIGNAL_REMAIN) {
+                log_normal_dbg("Wait for DrawSignal being cleared");
+        }
+        log_normal_dbg("signal cleared == 0, clear up");
+        g_signal_handler_disconnect(out->dst_widget, out->signal_handler);
+        free_fix(out);
+}
+
+static void gtk_out_run(struct gtk_out *out)
+{
+        gdk_threads_enter ();
+        out->signal_state = DRAW_SIGNAL_REMAIN;
+        gtk_widget_queue_draw(out->dst_widget);
+        gdk_threads_leave ();
+}
+
+static gboolean display_callback(struct _GtkWidget *widget,
+                                 struct _cairo *cairo, gpointer data)
+{
+        struct gtk_out *out = data;
+        struct _cairo_surface *co_surface =
+                cairo_image_surface_create_for_data(out->src_surface,
+                                out->format, out->width, out->height, out->stride);
+        cairo_set_source_surface(cairo, co_surface, out->x, out->y);
+        cairo_paint(cairo);
+        cairo_surface_destroy(co_surface);
+        out->signal_state = DRAW_SIGNAL_NONE;
+        return 0;
+}
+
+void pt_render_output_node_compute(struct render_node_ex_impl* self,
+                                   const struct render_node_ex_impl* input[],
+                                   const struct render_node_ex_impl* output[])
+{
+        struct pt_render_output_node* node = cast(node) self;
+
+        const struct render_node_ex_impl* image_node    = input[render_node_output_get_input_slot()];
+        struct util_image* input_image                  = image_node->ops.f_get_result(image_node);
+
+        switch (projprobe_get_output_method((struct projection_probe*) node->probe)) {
+        case GtkRenderRegionOutput: {
+                void* image_buffer              = u_image_read(input_image, 0, 0, 0);
+                GtkWidget* target_widget        = projprobe_get_target_screen((struct projection_probe*) node->probe);
+                int img_width                   = projprobe_get_width((struct projection_probe*) node->probe);
+                int img_height                  = projprobe_get_height((struct projection_probe*) node->probe);
+                enum ColorMode colormode        = projprobe_get_colormode((struct projection_probe*) node->probe);
+                struct gtk_out* goutput         = gtk_out_create(target_widget, 0, 0, img_width, img_height,
+                                                                 colormode, image_buffer);
+                gtk_out_run(goutput);
+                gtk_out_free(goutput);
+                break;
+        }
+        case GtkOpenGLOutput: {
+/* @fixme (davis#9#): <pt_render_out_node_compute> add OpenGL support */
+                break;
+        }
+        }
+}
+
+void* pt_render_output_node_get_result(const struct render_node_ex_impl* self)
+{
+        return ((struct pt_render_output_node*) self)->probe;
+}
+
+void pt_render_output_node_free(struct render_node_ex_impl* self)
 {
         // nothing to do
 }

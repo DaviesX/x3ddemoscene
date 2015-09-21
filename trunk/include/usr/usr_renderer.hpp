@@ -32,11 +32,11 @@ private:
         struct render_layer*    m_node;
 };
 
-/** \brief Renerable context node
+/** \brief Renderable context node
  */
-class RenderableContext : public CoreResource<struct render_rdacontext> {
+class RenderableLoader : public CoreResource<struct render_rdacontext> {
 public:
-        RenderableContext(string name, string context, RenderAggregate::Strategy strategy);
+        RenderableLoader(string name, string context, RenderAggregate::Strategy strategy);
         RenderNode*             get_node();
         void                    set_context(string context);
         void                    set_strategy(RenderAggregate::Strategy strategy);
@@ -82,8 +82,8 @@ private:
  */
 class __dlexport RenderTree : public CoreResource<struct render_tree> {
 public:
-        RenderTree ();
-        ~RenderTree ();
+        RenderTree();
+        ~RenderTree();
 
         enum EnvironmentType {
                 Void,

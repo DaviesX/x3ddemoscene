@@ -23,7 +23,7 @@ typedef bool (*f_Render_NodeExImpl_Is_Compatiable) (struct render_node_ex_impl* 
 typedef void (*f_Render_NodeExImpl_Compute) (struct render_node_ex_impl* self,
                                              const struct render_node_ex_impl* input[],
                                              const struct render_node_ex_impl* output[]);
-typedef void* (*f_Render_NodeExImpl_Get_Result) (struct render_node_ex_impl* self);
+typedef void* (*f_Render_NodeExImpl_Get_Result) (const struct render_node_ex_impl* self);
 typedef void (*f_Render_NodeExImpl_Free) (struct render_node_ex_impl* self);
 struct render_node_ex_ops {
         f_Render_NodeExImpl_Is_Compatiable      f_is_compatible;

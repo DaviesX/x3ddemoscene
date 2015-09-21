@@ -256,7 +256,7 @@
 
 1390713785 /home/davis/x3drenderlib-code/trunk/drivers/renderer/out/binary_out.h
 
-1429815002 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/out/screen_out.c
+1442821842 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/out/screen_out.c
 	<system/log.h>
 	<math/math.h>
 	<renderer/out.h>
@@ -2879,7 +2879,7 @@
 	<x3d/renderer.h>
 	<renderer/geometry.h>
 
-1441378426 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1442820914 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<misc.h>
 	<x3d/common.h>
 	<x3d/rendertree.h>
@@ -2904,7 +2904,7 @@
 1441099372 /home/davis/x3drenderlib-code/trunk/lib/container/linkedlist.h
 	<container/container.h>
 
-1437125231 /home/davis/x3drenderlib-code/trunk/include/renderer/proj_probe.h
+1442773349 /home/davis/x3drenderlib-code/trunk/include/renderer/proj_probe.h
 	<math/math.h>
 
 1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/probe/perspective.h
@@ -3181,7 +3181,7 @@
 
 1441103958 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertreeenvconsts.h
 
-1437125529 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rendererinsmod.c
+1442775141 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rendererinsmod.c
 	<x3d/common.h>
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
@@ -3243,10 +3243,11 @@
 1441096087 /home/davis/x3drenderlib-code/trunk/include/renderer/rendererinsmod.h
 	<x3d/renderer.h>
 
-1441185255 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.h
+1442820957 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.h
 	<x3d/renderer.h>
 	<x3d/rendernoderadiance.h>
 	<x3d/rendernoderdaloader.h>
+	<x3d/rendernodeoutput.h>
 	<renderer/utility.h>
 	"raytracepipeline.h"
 
@@ -3261,7 +3262,7 @@
 1441096783 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernoderdaloader.h
 	<x3d/renderer.h>
 
-1441186852 /home/davis/x3drenderlib-code/trunk/include/renderer/utility.h
+1442822216 /home/davis/x3drenderlib-code/trunk/include/renderer/utility.h
 	<system/log.h>
 	<system/allocator.h>
 
@@ -3337,7 +3338,7 @@
 	<renderer/shader_lib.h>
 	"rtshader.h"
 
-1442691798 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
+1442761041 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
 	<misc.h>
 	<container/paramset.h>
 	<system/allocator.h>
@@ -3387,7 +3388,7 @@
 	<system/log.h>
 	<x3d/projectionprobe.h>
 
-1429257343 /home/davis/x3drenderlib-code/trunk/include/x3d/projectionprobe.h
+1442822476 /home/davis/x3drenderlib-code/trunk/include/x3d/projectionprobe.h
 	<math/math.h>
 
 1441186379 source:/home/davis/x3drenderlib-code/trunk/kernel/renderable.c
@@ -3397,12 +3398,13 @@
 	<system/allocator.h>
 	<x3d/renderable.h>
 
-1441187056 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
+1442822957 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
 	<math/math.h>
 	<system/symlib.h>
 	<x3d/renderer.h>
 	<x3d/renderable.h>
 	<x3d/renderableaggregaterequest.h>
+	<x3d/projectionprobe.h>
 	<renderer/shader.h>
 	"lcrenderer.h"
 	"ptrenderer.h"
@@ -3410,6 +3412,7 @@
 	"vbo.h"
 	"fbo.h"
 	"colorspectrum.h"
+	<gtk/gtk.h>
 
 1423194166 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregaterequest.h
 	<x3d/renderableaggregate.h>
@@ -3451,19 +3454,19 @@
 	<container/linkedlist.h>
 	"renderablecontainerimpl.h"
 
-1441379038 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+1442770606 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
 	<system/log.h>
 	<system/symlib.h>
 	<x3d/renderer.h>
 	<renderer/rendererinsmod.h>
 
-1441099087 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernodeoutput.c
+1442820807 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernodeoutput.c
 	<system/allocator.h>
 	<x3d/rendertree.h>
 	<x3d/rendernodeoutput.h>
 	<x3d/rendertreeenvconsts.h>
 
-1436780245 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernodeoutput.h
+1442820799 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernodeoutput.h
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
 
@@ -3479,7 +3482,7 @@
 	<x3d/rendertree.h>
 	<x3d/rendernoderdaloader.h>
 
-1441360555 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
+1442770128 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
 	<misc.h>
 	<container/stack.h>
 	<container/arraylist.h>

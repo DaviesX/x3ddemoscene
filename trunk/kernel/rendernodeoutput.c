@@ -55,3 +55,8 @@ struct render_node_ex* render_node_output_create(const char* name, const char* p
         node->probe = alg_alloc_string(probe);
         return &node->_parent;
 }
+
+const int render_node_output_get_input_slot()
+{
+        return 0;
+}

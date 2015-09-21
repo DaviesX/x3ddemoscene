@@ -18,6 +18,7 @@ enum OutputMethod {
 };
 
 enum ColorMode {
+        Color8Mode,
         Color16AMode,
         Color16BMode,
         Color24Mode,
