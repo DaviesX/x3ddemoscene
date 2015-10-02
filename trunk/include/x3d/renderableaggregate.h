@@ -25,7 +25,7 @@ struct rda_context {
         int                             n_request;
 };
 
-void                    rda_context_init(struct rda_context* ctx, enum RAG_IDR agg_type);
+void                    rda_context_init(struct rda_context* ctx, enum RenderAggregateType agg_type);
 void                    rda_context_free(struct rda_context* ctx);
 void                    rda_context_add_renderable(struct rda_context* ctx, struct renderable* rda);
 bool                    rda_context_has_renderable(struct rda_context* ctx, struct renderable* rda);

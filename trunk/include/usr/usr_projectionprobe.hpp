@@ -11,7 +11,7 @@ namespace usr
 
 /** \brief Projection Probe
  */
-class ProjectionProbe {
+class ProjectionProbe : public CoreResource<struct projection_probe> {
         friend class PerspectiveProbe;
         friend class OrthogonalProbe;
 private:
@@ -30,6 +30,8 @@ public:
         void                            move_relative(float x);
         void                            transform_base(struct matrix4x4* transform);
         void                            transform_base_relative(struct matrix4x4* transform);
+
+        struct projection_probe*        get_core_resource();
 private:
         struct projection_probe*        m_probe;
 };
@@ -39,7 +41,7 @@ private:
 class PerspectiveProbe : public ProjectionProbe {
 public:
         PerspectiveProbe(enum OutputMethod method, void* target_screen, int width, int height, ColorMode colormode);
-        ~PerspectiveProbe();
+        virtual ~PerspectiveProbe();
 
         void            set_optics(float focal_length, float v_dist, float aperture);
         void            set_direction(struct vector3d* up, struct point3d* target);
@@ -52,7 +54,7 @@ private:
 class OrthogonalProbe : public ProjectionProbe {
 public:
         OrthogonalProbe(enum OutputMethod method, void* target_screen, int width, int height, ColorMode colormode);
-        ~OrthogonalProbe();
+        virtual ~OrthogonalProbe();
 };
 
 }// namespace usr

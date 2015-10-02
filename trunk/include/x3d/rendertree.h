@@ -122,7 +122,8 @@ __dlexport void                 render_tree_declare_environment(struct render_tr
                                                                 enum RenderEnvironment type,
                                                                 const char* var_name, void* var);
 __dlexport bool                 render_tree_check_environment(struct render_tree* tree, enum RenderEnvironment type, char* name);
-__dlexport void*                render_tree_retrieve_environment(struct render_tree* tree, enum RenderEnvironment type);
+__dlexport void*                render_tree_retrieve_environment(struct render_tree* tree, const char* name,
+                                                                 enum RenderEnvironment type);
 __dlexport void                 render_tree_clear_environment(struct render_tree* tree);
 __dlexport bool                 render_tree_visit(struct render_tree* tree, struct render_tree_visitor* visitor);
 __dlexport bool                 render_tree_verify(struct render_tree* self);

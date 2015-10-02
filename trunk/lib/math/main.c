@@ -20,7 +20,7 @@ void PowTableFunctionTest ( void )
 {
         float err = 0.0f;
 
-        init_math_lib ();
+        math_lib_init ();
 
         int i, j;
         for ( j = 0; j < 10; j ++ )

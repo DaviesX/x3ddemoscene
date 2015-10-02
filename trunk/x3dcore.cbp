@@ -375,6 +375,7 @@
 		<Unit filename="kernel/renderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="kernel/rendernodedummyimpl.h" />
 		<Unit filename="kernel/rendernodehdr.c">
 			<Option compilerVar="CC" />
 		</Unit>

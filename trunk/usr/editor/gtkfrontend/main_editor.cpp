@@ -41,9 +41,9 @@ static struct main_editor g_main_edit;
 extern "C" gboolean destroy_callback(GtkWidget *widget, gpointer data);
 extern "C" gboolean main_editor_dispatch(gpointer user_data);
 
-static void idle_switch_callback(bool is_idle, EditorActiveX* ax, void *info);
+static void idle_switch_callback(bool is_idle, EditorBackendActiveX* ax, void *info);
 static void window_reize_callback(bool is_fullscreen, int width, int height,
-                                  EditorActiveX* ax, void *info);
+                                  EditorBackendActiveX* ax, void *info);
 static void render_config_error_callback(string message, RenderConfigActiveX *conf, void *data);
 extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data);
 
@@ -61,7 +61,7 @@ extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo
         return 0;
 }
 
-static void idle_switch_callback(bool is_idle, EditorActiveX* ax, void *info)
+static void idle_switch_callback(bool is_idle, EditorBackendActiveX* ax, void *info)
 {
         MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(info);
         GtkWidget* draw_area = pimpl->m_draw_region;
@@ -85,7 +85,7 @@ static void idle_switch_callback(bool is_idle, EditorActiveX* ax, void *info)
         }
 }
 
-static void window_reize_callback(bool is_fullscreen, int width, int height, EditorActiveX* ax, void *info)
+static void window_reize_callback(bool is_fullscreen, int width, int height, EditorBackendActiveX* ax, void *info)
 {
 }
 
@@ -115,7 +115,7 @@ MainEditor::MainEditorInt::~MainEditorInt()
         g_signal_handler_disconnect(m_window, m_destroy_signal);
 
         if (m_frontend->is_usable()) {
-                m_frontend->get_core_editor()->remove_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_REGION, cRenderRegion);
+                m_frontend->get_core_editor()->remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_REGION, cRenderRegion);
         }
 }
 

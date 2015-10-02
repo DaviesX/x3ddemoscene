@@ -46,7 +46,7 @@ void render_node_radiance_set_pipe(struct render_radiance* node, enum RenderPipe
         node->pipe = pipe;
 }
 
-enum RenderPipeType render_node_radiance_get_pipe(struct render_radiance* node)
+enum RenderPipeType render_node_radiance_get_pipe(const struct render_radiance* node)
 {
         return node->pipe;
 }

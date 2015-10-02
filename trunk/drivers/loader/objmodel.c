@@ -381,7 +381,7 @@ void VertexAttrScanPass ( struct OBJ_INTER_FILE *objInterFile )
                         GetNextStr ( currentLine, ' ', 0, contentLen );
                         objInterFile->gbVertAttr.vPositions =
                                 alloc_add_var ( objInterFile->gbVertAttr.vPositions, 1 );
-                        struct point4d *currVertPos = get_var_last ( objInterFile->gbVertAttr.vPositions );
+                        struct point4d *currVertPos = alloc_get_var_last ( objInterFile->gbVertAttr.vPositions );
                         int nComps = MakeAttribute ( currentLine, currVertPos );
                         if ( nComps == 3 ) {	// If the file does't specify a w component
                                 currVertPos->w = 1.0f;
@@ -394,7 +394,7 @@ void VertexAttrScanPass ( struct OBJ_INTER_FILE *objInterFile )
                         GetNextStr ( currentLine, ' ', 0, contentLen );
                         objInterFile->gbVertAttr.vNormals =
                                 alloc_add_var ( objInterFile->gbVertAttr.vNormals, 1 );
-                        struct vector4d *currVertNor = get_var_last ( objInterFile->gbVertAttr.vNormals );
+                        struct vector4d *currVertNor = alloc_get_var_last ( objInterFile->gbVertAttr.vNormals );
                         int nComps = MakeAttribute ( currentLine, currVertNor );
                         if ( nComps == 3 ) {	// If the file does't specify a w component
                                 currVertNor->w = 1.0f;
@@ -405,7 +405,7 @@ void VertexAttrScanPass ( struct OBJ_INTER_FILE *objInterFile )
                         currentLine += contentLen;
                         GetNextStr ( currentLine, ' ', 0, contentLen );
                         objInterFile->gbVertAttr.vUVs = alloc_add_var ( objInterFile->gbVertAttr.vUVs, 1 );
-                        struct vector3d *currVertUv = get_var_last ( objInterFile->gbVertAttr.vUVs );
+                        struct vector3d *currVertUv = alloc_get_var_last ( objInterFile->gbVertAttr.vUVs );
                         int nComps = MakeAttribute ( currentLine, currVertUv );
                         if ( nComps == 2 ) {	// If the file does't specify a w component
                                 currVertUv->z = 1.0f;

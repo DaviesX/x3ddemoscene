@@ -18,19 +18,19 @@ namespace usr
   */
 RenderAggregate::RenderAggregate(Strategy strategy)
 {
-        RAG_IDR rag;
+        RenderAggregateType rag;
         switch (strategy) {
         case RenderAggregate::SimpleLinear:
-                rag = RAG_LINEAR;
+                rag = RenderAggregateLinear;
                 break;
         case RenderAggregate::StaticBvh:
-                rag = RAG_STATIC_BVH;
+                rag = RenderAggregateStaticBVH;
                 break;
         case RenderAggregate::DynamicGrid:
-                rag = RAG_DYNAMIC_GRID;
+                rag = RenderAggregateDynamicGrid;
                 break;
         default:
-                rag = RAG_LINEAR;
+                rag = RenderAggregateLinear;
                 log_normal("Unknown strategy, falls back to SimpleLinear");
                 break;
         }

@@ -14,10 +14,11 @@ void rendererinsmod_x3d()
         renderer_install_render_node_factory(RendererPathTracer, RenderNodeRadiance, pt_radiance_node_creator);
         renderer_install_render_node_factory(RendererPathTracer, RenderNodeRenderableLoader, pt_renderable_loader_node_creator);
         renderer_install_render_node_factory(RendererPathTracer, RenderNodeOutput, pt_render_output_node_creator);
-        renderer_finalize_render_node_factory();
 }
 
 void rendererrmmod_x3d()
 {
         renderer_remove_render_node_factory(RendererPathTracer, RenderNodeRadiance);
+        renderer_remove_render_node_factory(RendererPathTracer, RenderNodeRenderableLoader);
+        renderer_remove_render_node_factory(RendererPathTracer, RenderNodeOutput);
 }

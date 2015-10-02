@@ -99,9 +99,9 @@ do { \
                 free_fix ( (_p)->str[_i] ); \
                 (_p)->str[_i] = nullptr; \
         } \
-        flush_var ( (_p)->str ); \
-        flush_var ( (_p)->ref ); \
-        flush_var ( (_p)->buff ); \
+        alloc_flush_var ( (_p)->str ); \
+        alloc_flush_var ( (_p)->ref ); \
+        alloc_flush_var ( (_p)->buff ); \
         (_p)->n_ref = 0; \
         (_p)->size = 0; \
         (_p)->curr_pos = 0; \

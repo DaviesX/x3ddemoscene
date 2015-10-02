@@ -11,7 +11,6 @@ typedef struct render_node_ex_impl* (*f_Render_Node_Creator) (struct render_node
 
 void renderer_install_render_node_factory(int id, enum RenderNodeType type, f_Render_Node_Creator creator);
 void renderer_remove_render_node_factory(int id, enum RenderNodeType type);
-void renderer_finalize_render_node_factory();
 
 
 

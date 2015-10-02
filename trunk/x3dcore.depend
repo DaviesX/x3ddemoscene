@@ -9,7 +9,7 @@
 	<container/arraylist.h>
 	<system/allocator.h>
 
-1433008760 /home/davis/x3drenderlib-code/trunk/lib/container/hashmap.h
+1443042031 /home/davis/x3drenderlib-code/trunk/lib/container/hashmap.h
 	<container/container.h>
 	<math/math.h>
 
@@ -38,7 +38,7 @@
 	<sys/types.h>
 	<sys/wait.h>
 
-1429915482 /home/davis/x3drenderlib-code/trunk/lib/system/allocator.h
+1443041971 /home/davis/x3drenderlib-code/trunk/lib/system/allocator.h
 	<x3d/common.h>
 	<misc.h>
 
@@ -47,7 +47,7 @@
 	<stdbool.h>
 	<stdlib.h>
 
-1397619189 /home/davis/x3drenderlib-code/trunk/lib/math/math.h
+1443040328 /home/davis/x3drenderlib-code/trunk/lib/math/math.h
 	"vector.h"
 	"matrix.h"
 	"quat.h"
@@ -68,10 +68,10 @@
 
 1390714932 /home/davis/x3drenderlib-code/trunk/lib/math/fx.h
 
-1433003773 /home/davis/x3drenderlib-code/trunk/lib/container/arraylist.h
+1443042031 /home/davis/x3drenderlib-code/trunk/lib/container/arraylist.h
 	<container/container.h>
 
-1429819456 /home/davis/x3drenderlib-code/trunk/lib/system/log.h
+1443032820 /home/davis/x3drenderlib-code/trunk/lib/system/log.h
 	<x3d/common.h>
 
 1399186582 /home/davis/x3drenderlib-code/trunk/drivers/loader/fbxmodel.h
@@ -112,7 +112,7 @@
 1399186591 /home/davis/x3drenderlib-code/trunk/drivers/loader/pbrtmodel.h
 	<x3d/resloader.h>
 
-1429915421 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/objmodel.c
+1443041962 source:/home/davis/x3drenderlib-code/trunk/drivers/loader/objmodel.c
 	<misc.h>
 	<math/math.h>
 	<container/staging.h>
@@ -215,11 +215,11 @@
 
 1373827222 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/sphere_shape.c
 
-1429914719 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_shape.c
+1443041822 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_shape.c
 	<system/allocator.h>
 	"trimesh_shape.h"
 
-1429914719 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_subdivide.c
+1443041962 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/geometry/trimesh_subdivide.c
 	<math/math.h>
 	<renderer/geometry.h>
 	<system/allocator.h>
@@ -2879,7 +2879,7 @@
 	<x3d/renderer.h>
 	<renderer/geometry.h>
 
-1442820914 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1443038243 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<misc.h>
 	<x3d/common.h>
 	<x3d/rendertree.h>
@@ -2897,11 +2897,11 @@
 	<system/allocator.h>
 	"perspective.h"
 
-1442674402 /home/davis/x3drenderlib-code/trunk/lib/container/paramset.h
+1443041822 /home/davis/x3drenderlib-code/trunk/lib/container/paramset.h
 	<container/container.h>
 	<container/linkedlist.h>
 
-1441099372 /home/davis/x3drenderlib-code/trunk/lib/container/linkedlist.h
+1443042031 /home/davis/x3drenderlib-code/trunk/lib/container/linkedlist.h
 	<container/container.h>
 
 1442773349 /home/davis/x3drenderlib-code/trunk/include/renderer/proj_probe.h
@@ -3004,7 +3004,7 @@
 1393902016 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterizer.h
 	"rasterization.h"
 
-1429815002 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterizer.c
+1443042031 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rasterizer.c
 	<x3d/common.h>
 	<math/math.h>
 	<renderer/shader.h>
@@ -3029,7 +3029,7 @@
 	<x3d/renderable.h>
 	"fbo.h"
 
-1441186346 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
+1443190879 /home/davis/x3drenderlib-code/trunk/include/x3d/renderable.h
 	<misc.h>
 	<x3d/common.h>
 	<math/math.h>
@@ -3175,13 +3175,13 @@
 
 1434738344 /usr/include/gtk-3.0/gtk/gtk-autocleanups.h
 
-1441188279 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+1443160672 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
 	<x3d/renderable.h>
 	<x3d/rendertreeenvconsts.h>
 
 1441103958 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertreeenvconsts.h
 
-1442775141 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rendererinsmod.c
+1443031086 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rendererinsmod.c
 	<x3d/common.h>
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
@@ -3240,10 +3240,10 @@
 	<system/log.h>
 	"trianglebuffer.h"
 
-1441096087 /home/davis/x3drenderlib-code/trunk/include/renderer/rendererinsmod.h
+1443030882 /home/davis/x3drenderlib-code/trunk/include/renderer/rendererinsmod.h
 	<x3d/renderer.h>
 
-1442820957 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.h
+1443192476 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.h
 	<x3d/renderer.h>
 	<x3d/rendernoderadiance.h>
 	<x3d/rendernoderdaloader.h>
@@ -3256,13 +3256,13 @@
 	<limits.h>
 	<float.h>
 
-1441096768 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernoderadiance.h
+1443191537 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernoderadiance.h
 	<x3d/renderer.h>
 
-1441096783 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernoderdaloader.h
+1443190822 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernoderdaloader.h
 	<x3d/renderer.h>
 
-1442822216 /home/davis/x3drenderlib-code/trunk/include/renderer/utility.h
+1443041822 /home/davis/x3drenderlib-code/trunk/include/renderer/utility.h
 	<system/log.h>
 	<system/allocator.h>
 
@@ -3272,7 +3272,7 @@
 	<system/allocator.h>
 	"vbo.h"
 
-1429913976 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vertexprocessor.c
+1443042031 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/vertexprocessor.c
 	<system/log.h>
 	<system/allocator.h>
 	<renderer/shader.h>
@@ -3330,7 +3330,7 @@
 1441095911 /home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/rtrenderer.h
 	<x3d/renderer.h>
 
-1429914719 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/shader.c
+1443041932 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/shader/shader.c
 	<math/math.h>
 	<system/log.h>
 	<system/allocator.h>
@@ -3351,7 +3351,7 @@
 
 1399958501 /home/davis/x3drenderlib-code/trunk/include/x3d/dynamics.h
 
-1442691423 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
+1443040807 source:/home/davis/x3drenderlib-code/trunk/kernel/init.c
 	<misc.h>
 	<x3d/common.h>
 	<math/math.h>
@@ -3398,7 +3398,7 @@
 	<system/allocator.h>
 	<x3d/renderable.h>
 
-1442822957 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
+1443192715 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
 	<math/math.h>
 	<system/symlib.h>
 	<x3d/renderer.h>
@@ -3417,17 +3417,17 @@
 1423194166 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregaterequest.h
 	<x3d/renderableaggregate.h>
 
-1429732091 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregate.h
+1443190822 /home/davis/x3drenderlib-code/trunk/include/x3d/renderableaggregate.h
 	<container/linkedlist.h>
 	<x3d/renderable.h>
 
-1429814736 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregate.c
+1443190823 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregate.c
 	<x3d/renderableaggregate.h>
 	<x3d/renderableaggregaterequest.h>
 	<system/log.h>
 	"renderablecontainerimpl.h"
 
-1429732390 /home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.h
+1443190823 /home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.h
 	<container/linkedlist.h>
 	<x3d/renderable.h>
 
@@ -3447,42 +3447,43 @@
 1441096790 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernodelayer.h
 	<x3d/renderer.h>
 
-1441099409 source:/home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.c
+1443190884 source:/home/davis/x3drenderlib-code/trunk/kernel/renderablecontainerimpl.c
 	<math/math.h>
 	<system/log.h>
 	<system/allocator.h>
 	<container/linkedlist.h>
 	"renderablecontainerimpl.h"
 
-1442770606 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+1443194712 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
 	<system/log.h>
 	<system/symlib.h>
 	<x3d/renderer.h>
 	<renderer/rendererinsmod.h>
+	"rendernodedummyimpl.h"
 
-1442820807 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernodeoutput.c
+1443161158 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernodeoutput.c
 	<system/allocator.h>
 	<x3d/rendertree.h>
 	<x3d/rendernodeoutput.h>
 	<x3d/rendertreeenvconsts.h>
 
-1442820799 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernodeoutput.h
+1443161146 /home/davis/x3drenderlib-code/trunk/include/x3d/rendernodeoutput.h
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
 
-1441099106 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernoderadiance.c
+1443191532 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernoderadiance.c
 	<system/allocator.h>
 	<system/log.h>
 	<x3d/rendertree.h>
 	<x3d/rendernoderadiance.h>
 
-1441099181 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernoderdaloader.c
+1443190823 source:/home/davis/x3drenderlib-code/trunk/kernel/rendernoderdaloader.c
 	<system/allocator.h>
 	<system/log.h>
 	<x3d/rendertree.h>
 	<x3d/rendernoderdaloader.h>
 
-1442770128 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
+1443161773 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
 	<misc.h>
 	<container/stack.h>
 	<container/arraylist.h>
@@ -3541,7 +3542,7 @@
 1386780312 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/error.c
 	"error.h"
 
-1429913976 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/lexer.c
+1443041822 source:/home/davis/x3drenderlib-code/trunk/lib/compiler/lexer.c
 	<x3d/common.h>
 	<system/allocator.h>
 	"symbol.h"
@@ -3584,14 +3585,14 @@
 
 1429550703 source:/home/davis/x3drenderlib-code/trunk/lib/container/stack.c
 
-1441099592 source:/home/davis/x3drenderlib-code/trunk/lib/container/staging.c
+1443041962 source:/home/davis/x3drenderlib-code/trunk/lib/container/staging.c
 	<misc.h>
 	<container/stack.h>
 	<container/hashmap.h>
 	<container/linkedlist.h>
 	<container/staging.h>
 
-1442691636 source:/home/davis/x3drenderlib-code/trunk/lib/main.c
+1443041541 source:/home/davis/x3drenderlib-code/trunk/lib/main.c
 	<system/log.h>
 	<system/allocator.h>
 	<container/paramset.h>
@@ -3623,7 +3624,7 @@
 	"matrix.h"
 	"geometry.h"
 
-1393902016 source:/home/davis/x3drenderlib-code/trunk/lib/math/main.c
+1443040327 source:/home/davis/x3drenderlib-code/trunk/lib/math/main.c
 	<math/math.h>
 	"main.h"
 
@@ -3649,15 +3650,19 @@
 	<math/math.h>
 	<misc.h>
 
-1429825655 source:/home/davis/x3drenderlib-code/trunk/lib/system/log.c
+1443040866 source:/home/davis/x3drenderlib-code/trunk/lib/system/log.c
 	<x3d/common.h>
+	<container/linkedlist.h>
+	<system/allocator.h>
 	<system/log.h>
 
-1441101868 source:/home/davis/x3drenderlib-code/trunk/lib/system/allocator.c
+1443041962 source:/home/davis/x3drenderlib-code/trunk/lib/system/allocator.c
 	<x3d/common.h>
 	<misc.h>
 	<system/log.h>
 	<system/allocator.h>
+	<container/paramset.h>
+	<x3d/debug.h>
 
 1441176989 source:/home/davis/x3drenderlib-code/trunk/lib/system/symlib.c
 	<misc.h>
@@ -3673,4 +3678,8 @@
 	<system/thread.h>
 
 1364353210 source:/home/davis/x3drenderlib-code/trunk/lib/system/timing.c
+
+1443194145 /home/davis/x3drenderlib-code/trunk/kernel/rendernodedummyimpl.h
+	<x3d/rendertree.h>
+	<x3d/renderer.h>
 

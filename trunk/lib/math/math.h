@@ -106,7 +106,7 @@
 #include "fx.h"
 
 
-#define init_math_lib() \
+#define math_lib_init() \
 { \
 	init_sincos_table (); \
 	init_pow_table (); \

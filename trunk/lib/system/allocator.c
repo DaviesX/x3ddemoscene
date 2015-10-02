@@ -187,7 +187,7 @@ void *alloc_expand2_var ( void *ptr, uint32_t n )
         return &vh[1];
 }
 
-void *call_shrink_var ( void *ptr )
+void *alloc_shrink_var ( void *ptr )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         if ( vh->total > vh->used ) {
@@ -196,27 +196,27 @@ void *call_shrink_var ( void *ptr )
         return &vh[1];
 }
 
-void *call_dec_var ( void *ptr, int n )
+void *alloc_dec_var ( void *ptr, int n )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         vh->used -= n*vh->elm_size;
         return &vh[1];
 }
 
-void *call_flush_var ( void *ptr )
+void *alloc_flush_var ( void *ptr )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         vh->used = 0;
         return &vh[1];
 }
 
-uint32_t call_get_var_len ( void *ptr )
+uint32_t alloc_get_var_len ( void *ptr )
 {
         struct var_head *vh = &((struct var_head *) ptr)[-1];
         return vh->used/vh->elm_size;
 }
 
-void *call_get_var_last ( void *ptr )
+void *alloc_get_var_last ( void *ptr )
 {
         struct var_head* vh     = &((struct var_head*) ptr)[-1];
         ptr                     = (untyped*) ptr + vh->used - vh->elm_size;
@@ -232,4 +232,76 @@ uint32_t alloc_query_usage ( void )
 uint32_t alloc_query_instance_count ( void )
 {
         return g_mem_rec.inst;
+}
+
+
+// Test Cases:
+#include <container/paramset.h>
+#include <x3d/debug.h>
+// variable_memory_test0
+__dlexport void __callback                  variable_memory_test0_init(struct alg_var_set* envir) {}
+__dlexport void __callback                  variable_memory_test0_free(struct alg_var_set* envir) {}
+__dlexport enum DebugPosition* __callback   variable_memory_test0_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        static enum DebugPosition pos[] = {
+                Debug_KernelStart
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = true;
+        return pos;
+}
+__dlexport void __callback                  variable_memory_test0(struct alg_var_set* envir)
+{
+        char **str_arr = alloc_var(sizeof(char*), 0);
+        char *s0 = "Hello, first string\n";
+        str_arr = alloc_push_var(&s0, str_arr);
+        char *s1 = "Do you see me ? Second string\n";
+        str_arr = alloc_push_var(&s1, str_arr);
+        log_normal("%s", &str_arr[0][0]);
+        log_normal("%s", &str_arr[1][0]);
+        free_var(str_arr);
+}
+
+// variable_memory_test1
+__dlexport void __callback                  variable_memory_test1_init(struct alg_var_set* envir) {}
+__dlexport void __callback                  variable_memory_test1_free(struct alg_var_set* envir) {}
+__dlexport enum DebugPosition* __callback   variable_memory_test1_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        return variable_memory_test0_pos(envir, n_pos, num_run, is_skipped);
+}
+__dlexport void __callback              variable_memory_test1(struct alg_var_set* envir)
+{
+        log_normal("memory query 0: %db", alloc_query_usage ());
+        const int count = 10000;
+        /* add/decrease */
+        int *array = alloc_var(sizeof(int), 0);
+        log_normal("memory query 1: %db", alloc_query_usage ());
+        int i;
+        for(i = 0; i < count; i ++) {
+                array = alloc_add_var(array, 1);
+                array[i] = i;
+
+                log_set_behavior(LOG_OUTPUT_TO_FILE);
+                log_normal("%d", array[i]);
+        }
+        log_normal("number element(added): %d", alloc_get_var_len(array));
+        for(i = 0; i < count/2; i ++) {
+                array = alloc_dec_var(array, 2);
+        }
+        log_normal("number element(deleted): %d", alloc_get_var_len(array));
+        log_normal("memory query 2: %db", alloc_query_usage ());
+        /* shrink-expand */
+        array = alloc_shrink_var(array);
+        log_normal("number element(shrinked): %d", alloc_get_var_len(array));
+        log_normal("memory query 3: %db", alloc_query_usage ());
+        for(i = 0; i < count; i ++) {
+                array = alloc_expand_var(array, i + 1);
+                array[i] = i;
+        }
+        log_normal("number element(expanded): %d", alloc_get_var_len(array));
+        alloc_flush_var(array);
+        log_normal("number element(flushed): %d", alloc_get_var_len(array));
+        free_var(array);
+        log_normal("memory query 4: %db", alloc_query_usage ());
 }

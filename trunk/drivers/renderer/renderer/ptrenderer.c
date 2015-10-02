@@ -791,7 +791,7 @@ struct render_node_ex_impl* pt_radiance_node_creator(struct render_node_ex* pare
 {
         struct pt_radiance_node* node = alloc_obj(node);
         zero_obj(node);
-        node->_parent2 = *(struct render_radiance*) parent;
+        // node->_parent2 = *(struct render_radiance*) parent;
         // fill in ops
         struct render_node_ex_ops       ops;
         ops.f_compute           = pt_radiance_node_compute;
@@ -802,30 +802,31 @@ struct render_node_ex_impl* pt_radiance_node_creator(struct render_node_ex* pare
         return (struct render_node_ex_impl*) node;
 }
 
-bool pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+char* pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
 {
         /* It will be compatible if the radiance node is:
          * 1. software based
          * 2. preferred path tracing renderer
          * 3. using solid geometry model
          * 4. with direct lighting rendering pipeline */
-        enum RenderSpecType* spec = render_tree_retrieve_environment(tree, RenderEnvSpec);
-        if (*spec != RenderSpecSWBuiltin) {
-                return false;
+        enum RenderSpecType* spec = render_tree_retrieve_environment(tree, nullptr, RenderEnvSpec);
+        if (spec && *spec != RenderSpecSWBuiltin) {
+                return "pt_renderer: spec && *spec != RenderSpecSWBuiltin";
         }
-        enum PreferredRendererType* renderer = render_tree_retrieve_environment(tree, RenderEnvPreferredRenderer);
-        if (*renderer != RendererPathTracer) {
-                return false;
+        enum PreferredRendererType* renderer = render_tree_retrieve_environment(tree, nullptr, RenderEnvPreferredRenderer);
+        if (renderer && *renderer != RendererPathTracer) {
+                return "pt_renderer: renderer && *renderer != RendererPathTracer";
         }
-        enum GeometryModelType* model = render_tree_retrieve_environment(tree, RenderEnvGeometryModel);
-        if (*model != GeometryModelSolid) {
-                return false;
+        enum GeometryModelType* model = render_tree_retrieve_environment(tree, nullptr, RenderEnvGeometryModel);
+        if (model && *model != GeometryModelSolid) {
+                return "pt_renderer: model && *model != GeometryModelSolid";
         }
-        enum RenderPipeType pipe = render_node_radiance_get_pipe(&((struct pt_radiance_node*) self)->_parent2);
+        struct render_radiance* parent = cast(parent) render_node_ex_impl_get_ex(self);
+        enum RenderPipeType pipe = render_node_radiance_get_pipe(parent);
         if (pipe != RenderPipeDirectLighting) {
-                return false;
+                return "pt_renderer: pipe != RenderPipeDirectLighting";
         }
-        return true;
+        return nullptr;
 }
 
 void pt_radiance_node_compute(struct render_node_ex_impl* self,
@@ -918,7 +919,7 @@ struct render_node_ex_impl* pt_renderable_loader_node_creator(struct render_node
 {
         struct pt_renderable_loader_node* node = alloc_obj(node);
         zero_obj(node);
-        node->_parent2 = *(struct render_rdaloader*) parent;
+        // node->_parent2 = *(struct render_rdaloader*) parent;
         // fill in ops
         struct render_node_ex_ops       ops;
         ops.f_compute           = pt_renderable_loader_node_compute;
@@ -929,15 +930,17 @@ struct render_node_ex_impl* pt_renderable_loader_node_creator(struct render_node
         return (struct render_node_ex_impl*) node;
 }
 
-bool pt_renderable_loader_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+char* pt_renderable_loader_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
 {
-        struct pt_renderable_loader_node* node = cast(node) self;
-        struct rda_context* context = render_tree_retrieve_environment(tree, RenderEnvRenderable);
+        struct pt_renderable_loader_node* node  = cast(node) self;
+        struct render_rdaloader* parent         = cast(parent) render_node_ex_impl_get_ex(self);
+        const char* context_name                = render_node_rdaloader_get_context(parent);
+        struct rda_context* context = render_tree_retrieve_environment(tree, context_name, RenderEnvRenderable);
         if (!context) {
-                return false;
+                return "pt_renderer: !context";
         }
         node->context = context;
-        return true;
+        return nullptr;
 }
 
 void pt_renderable_loader_node_compute(struct render_node_ex_impl* self,
@@ -963,7 +966,7 @@ struct render_node_ex_impl* pt_render_output_node_creator(struct render_node_ex*
 {
         struct pt_render_output_node* node = alloc_obj(node);
         zero_obj(node);
-        node->_parent2 = *(struct render_output*) parent;
+        // node->_parent2 = *(struct render_output*) parent;
         // fill in ops
         struct render_node_ex_ops       ops;
         ops.f_compute           = pt_render_output_node_compute;
@@ -974,15 +977,17 @@ struct render_node_ex_impl* pt_render_output_node_creator(struct render_node_ex*
         return (struct render_node_ex_impl*) node;
 }
 
-bool pt_render_output_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+char* pt_render_output_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
 {
-        struct pt_render_output_node* node = cast(node) self;
-        struct perspective_probe* probe = render_tree_retrieve_environment(tree, RenderEnvProbe);
+        struct pt_render_output_node* node      = cast(node) self;
+        struct render_output* parent            = cast(parent) render_node_ex_impl_get_ex(self);
+        const char* probe_name                  = render_node_output_get_probe(parent);
+        struct perspective_probe* probe = render_tree_retrieve_environment(tree, probe_name, RenderEnvProbe);
         if (!probe) {
-                return false;
+                return "pt_renderer: !probe";
         }
         if (PerspectiveProbe != projprobe_get_type((struct projection_probe*) probe)) {
-                return false;
+                return "pt_renderer: PerspectiveProbe != projprobe_get_type((struct projection_probe*) probe)";
         }
         switch (projprobe_get_output_method((struct projection_probe*) probe)) {
         case GtkRenderRegionOutput:
@@ -990,10 +995,10 @@ bool pt_render_output_node_is_compatible(struct render_node_ex_impl* self, struc
         case GtkOpenGLOutput:
                 break;
         default:
-                return false;
+                return "pt_renderer: invalid output method";
         }
         node->probe = probe;
-        return true;
+        return nullptr;
 }
 
 

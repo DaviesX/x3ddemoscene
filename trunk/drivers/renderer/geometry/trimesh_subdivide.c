@@ -180,7 +180,7 @@ struct triangle_mesh_shape *LoopTesselateTriangleMesh ( struct triangle_mesh_sha
                 for ( iVertex = 0; iVertex < numberVertex; iVertex ++ ) {
                         childTessVertex = alloc_add_var ( childTessVertex, 1 );
                         struct tesselate_vertex *currTessVertex = &tessVertex[iVertex];
-                        struct tesselate_vertex *childVertex = get_var_last ( childTessVertex );
+                        struct tesselate_vertex *childVertex = alloc_get_var_last ( childTessVertex );
 
                         // The property of a tesselated vertex
                         // will be identical to the current one
@@ -198,7 +198,7 @@ struct triangle_mesh_shape *LoopTesselateTriangleMesh ( struct triangle_mesh_sha
                         int iChildFace;
                         for ( iChildFace = 0; iChildFace < 4; iChildFace ++ ) {
                                 childTessFace = alloc_add_var ( childTessFace, 1 );
-                                currTessFace->childFace[iChildFace] = get_var_last ( childTessFace );
+                                currTessFace->childFace[iChildFace] = alloc_get_var_last ( childTessFace );
                         }
 
                 }// End For ( Each face )
@@ -1008,7 +1008,7 @@ void DeleteEdge ( struct tesselate_edge * sEdge, struct tesselate_edge * tessEdg
 
                         }// End For
 
-                        dec_var ( sEdge, 1 );
+                        alloc_dec_var(sEdge, 1);
                         (*numberEdge) --;
                         break;
 

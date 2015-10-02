@@ -24,7 +24,7 @@ class RendererConfig;
 class EditorGtkFrontend : public EditorFrontend
 {
 public:
-        enum EditorMode {
+        enum EditorBackendMode {
                 DemoMode,
                 EditMode
         };
@@ -33,11 +33,11 @@ public:
         ~EditorGtkFrontend();
 
         bool init ( int argc, char **argv,
-                    Editor *editor, KernelEnvironment *env );
-        bool end_init ( Editor *editor, KernelEnvironment *env );
-        bool load ( Editor *editor, KernelEnvironment *env );
-        void loop ( Editor *editor, KernelEnvironment *env );
-        bool free ( Editor *editor, KernelEnvironment *env );
+                    EditorBackend *editor, KernelEnvironment *env );
+        bool end_init ( EditorBackend *editor, KernelEnvironment *env );
+        bool load ( EditorBackend *editor, KernelEnvironment *env );
+        void loop ( EditorBackend *editor, KernelEnvironment *env );
+        bool free ( EditorBackend *editor, KernelEnvironment *env );
 
 public:
         const string            m_glade_dir = "./etc/editor/";
@@ -54,17 +54,17 @@ public:
 public:
         bool                    is_usable();
         void                    close();
-        Editor*                 get_core_editor();
+        EditorBackend*          get_core_editor();
         KernelEnvironment*      get_kernel_environment();
-        EditorMode              get_editor_mode();
+        EditorBackendMode       get_editor_mode();
         GtkBuilder*             get_gtk_builder();
         MainEditor*             get_main_editor();
         MainEditorMenu*         get_main_editor_menu();
         RendererConfig*         get_renderer_config();
         EntityEditor*           get_entity_editor();
 private:
-        class EditorGtkFrontendInt;
-        class EditorGtkFrontendInt*     pimpl;
+        class EditorBackendGtkFrontendInt;
+        class EditorBackendGtkFrontendInt*     pimpl;
 };
 
 class EditorQtFrontend : public EditorFrontend

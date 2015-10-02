@@ -240,10 +240,19 @@ void render_tree_declare_environment(struct render_tree* tree,
         tree->var[type][spot].ptr = var;
 }
 
-void* render_tree_retrieve_environment(struct render_tree* tree, enum RenderEnvironment type)
+void* render_tree_retrieve_environment(struct render_tree* tree, const char* name, enum RenderEnvironment type)
 {
-        int spot = tree->n_var[type];
-        return tree->var[type][spot].ptr;
+        if (name) {
+                int i;
+                for (i = 0; i < tree->n_var[type]; i ++) {
+                        if (!strcmp(name, tree->var[type][i].name)) {
+                                return tree->var[type][i].ptr;
+                        }
+                }
+                return nullptr;
+        } else {
+                return tree->var[type][tree->n_var[type] - 1].ptr;
+        }
 }
 
 void render_tree_clear_environment(struct render_tree* tree)

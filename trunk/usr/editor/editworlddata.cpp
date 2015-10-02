@@ -12,16 +12,18 @@ public:
         WorldDataInt();
         ~WorldDataInt();
 /* @todo (davis#2#): <WorldDataActiveX> */
-        World          m_world;
+        bool            m_is_activated;
+        World           m_world;
 };
 
 WorldDataActiveX::WorldDataInt::WorldDataInt()
 {
+        m_is_activated = false;
 }
 
 
 WorldDataActiveX::WorldDataActiveX(string name) :
-        EditorActiveX ( name, sizeof(WorldDataActiveX), EDIT_ACTIVEX_WORLD_DATA )
+        EditorBackendActiveX ( name, sizeof(WorldDataActiveX), EDIT_ACTIVEX_WORLD_DATA )
 {
         pimpl = new WorldDataActiveX::WorldDataInt;
 }
@@ -37,6 +39,11 @@ void WorldDataActiveX::on_adding()
         state->declare(c_WorldData, this);
 }
 
+void WorldDataActiveX::preupdate()
+{
+        pimpl->m_is_activated = true;
+}
+
 void WorldDataActiveX::update()
 {
         KernelEnvironment* state    = get_state_buffer();
@@ -46,7 +53,14 @@ void WorldDataActiveX::update()
                 pimpl->m_world.bind_render_processor(renderer);
         }
 
-        pimpl->m_world.update();
+        if (pimpl->m_is_activated) {
+                pimpl->m_world.update();
+        }
+}
+
+void WorldDataActiveX::deactivate()
+{
+        pimpl->m_is_activated = false;
 }
 
 void WorldDataActiveX::dispatch()

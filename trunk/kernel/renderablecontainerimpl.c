@@ -53,7 +53,7 @@ static void rdacontainer_linear_free(struct rdacontainer_linear* cont)
 
 static void rdacontainer_linear_add(struct rdacontainer_linear* cont, enum RENDERABLE_IDR type, struct rda_instance* inst)
 {
-        int n = get_var_len(cont->insts[type]);
+        int n = alloc_get_var_len(cont->insts[type]);
         cont->insts[type] = alloc_add_var ( cont->insts[type], 1 );
         cont->insts[type][n] = inst;
 }
@@ -68,7 +68,7 @@ static void rdacontainer_linear_clear(struct rdacontainer_linear* cont)
 {
         int i;
         for ( i = 0; i < sizeof(cont->insts)/sizeof(char*); i ++ ) {
-                flush_var(cont->insts[i]);
+                alloc_flush_var(cont->insts[i]);
         }
 }
 
@@ -96,18 +96,18 @@ static void rdacontainer_free_internal(struct rdacontainer* cont)
         zero_obj(cont);
 }
 
-struct rdacontainer* rdacontainer_create(enum RAG_IDR type)
+struct rdacontainer* rdacontainer_create(enum RenderAggregateType type)
 {
         struct rdacontainer* cont = nullptr;
         /* allocate new object and link its operations */
         switch ( type ) {
-        case RAG_LINEAR:
+        case RenderAggregateLinear:
                 cont = alloc_fix(sizeof(struct rdacontainer_linear), 1);
                 rdacontainer_linear_init((struct rdacontainer_linear*) cont);
                 break;
-        case RAG_STATIC_BVH:
+        case RenderAggregateStaticBVH:
                 break;
-        case RAG_DYNAMIC_GRID:
+        case RenderAggregateDynamicGrid:
                 break;
         }
         return cont;

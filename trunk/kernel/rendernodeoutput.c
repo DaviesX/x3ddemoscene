@@ -39,6 +39,11 @@ void render_node_output_set_probe(struct render_output* node, const char* probe)
         node->probe = alg_alloc_string(probe);
 }
 
+const char* render_node_output_get_probe(const struct render_output* self)
+{
+        return self->probe;
+}
+
 struct render_node_ex* render_node_output_create(const char* name, const char* probe)
 {
         static const int c_NumInput = 1;

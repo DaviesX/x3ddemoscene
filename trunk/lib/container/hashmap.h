@@ -75,9 +75,9 @@ PseudoDef(void alg_hash_llist_remove(struct alg_hash_llist* self, void* rfound);
 
 #define alg_hash_llist_flush(_self) \
 { \
-	flush_var ( (_self)->hash_prev ); \
-	flush_var ( (_self)->next ); \
-	flush_var ( (_self)->content ); \
+	alloc_flush_var ( (_self)->hash_prev ); \
+	alloc_flush_var ( (_self)->next ); \
+	alloc_flush_var ( (_self)->content ); \
 \
 	int _n_elm = (_self)->header_len + (_self)->n_elm; \
 	int _i; \
@@ -97,9 +97,9 @@ PseudoDef(void alg_hash_llist_remove(struct alg_hash_llist* self, void* rfound);
                 /* used up all the space, we needs to expand and partially \
                  * initialize those new spaces */ \
                 int _len                = (_self)->header_len + _new_cnt; \
-                (_self)->hash_prev      = expand2_var((_self)->hash_prev, _len); \
-                (_self)->next           = expand2_var((_self)->next, _len); \
-                (_self)->content        = expand2_var((_self)->content, _new_cnt); \
+                (_self)->hash_prev      = alloc_expand2_var((_self)->hash_prev, _len); \
+                (_self)->next           = alloc_expand2_var((_self)->next, _len); \
+                (_self)->content        = alloc_expand2_var((_self)->content, _new_cnt); \
 \
                 int *_hash_prev         = &(_self)->hash_prev[(_self)->header_len]; \
                 int *_next              = &(_self)->next[(_self)->header_len]; \

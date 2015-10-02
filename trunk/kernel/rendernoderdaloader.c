@@ -38,12 +38,17 @@ void render_node_rdaloader_set_context(struct render_rdaloader* node, const char
         node->rdacontext = alg_alloc_string(context);
 }
 
-void render_node_rdaloader_set_access(struct render_rdaloader* node, enum RAG_IDR access)
+void render_node_rdaloader_set_access(struct render_rdaloader* node, enum RenderAggregateType access)
 {
         node->access = access;
 }
 
-struct render_node* render_node_rdaloader_create(const char* name, const char* rdacontext, enum RAG_IDR access)
+const char* render_node_rdaloader_get_context(const struct render_rdaloader* node)
+{
+        return node->rdacontext;
+}
+
+struct render_node* render_node_rdaloader_create(const char* name, const char* rdacontext, enum RenderAggregateType access)
 {
         static const int c_NumInput = 0;
         static const int c_NumOutput = 1;

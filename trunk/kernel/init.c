@@ -87,50 +87,52 @@ __dlexport bool kernel_start ( void )
         struct signal* signal = &init->signal;
 
         thread_lib_init();
-        if ( signal->on_init != nullptr )
-                signal->on_init ( init->argc, init->argv, signal->env );
+        if (signal->on_init != nullptr) {
+                signal->on_init(init->argc, init->argv, signal->env);
+        }
 
-        if ( !log_init ( true ) )
+        if (!log_init(true)) {
                 return false;
-
-        symlib_init ( &init->symbols );
-        if ( !symlib_load ( &init->symbols,
-                            get_self_so(init->argc, init->argv) ) )
+        }
+        symlib_init(&init->symbols);
+        if (!symlib_load(&init->symbols, get_self_so(init->argc, init->argv))) {
                 return false;
-
-        if ( !debugger_init ( init->argc, init->argv, &init->symbols ) )
+        }
+        if (!debugger_init(init->argc, init->argv, &init->symbols)) {
                 return false;
-        init_math_lib ();
-        if ( !renderer_import ( &init->symbols ) )
+        }
+        math_lib_init();
+        if (!renderer_import(&init->symbols)) {
                 return false;
-        renderer_kernel_init ();
-        //init_world ();
-        rest_init ();
-        return true;
-}
-
-__dlexport void kernel_halt ( void )
-{
-        g_init.to_run = false;
-}
-
-static void rest_init ()
-{
-        struct init*   init     = &g_init;
-        struct signal* signal   = &init->signal;
-
-        if (signal->on_rest_init != nullptr)
-                signal->on_rest_init(signal->env);
+        }
+        renderer_kernel_init();
 
         struct alg_var_set params;
         alg_var_set_init(&params);
         debugger_invoke_begin();
-        debugger_invoke(Debug_KernelStart, &params);
+                debugger_invoke(Debug_KernelStart, &params);
 
-        g_init.to_run = true;
+        rest_init ();
 
         debugger_invoke_end();
         alg_var_set_free(&params);
+        return true;
+}
+
+__dlexport void kernel_halt()
+{
+        g_init.to_run = false;
+}
+
+static void rest_init()
+{
+        struct init*   init     = &g_init;
+        struct signal* signal   = &init->signal;
+
+        if (signal->on_rest_init != nullptr) {
+                signal->on_rest_init(signal->env);
+        }
+        g_init.to_run = true;
 }
 
 __dlexport void kernel_loop()
@@ -164,9 +166,16 @@ __dlexport void kernel_shutdown ( void )
 {
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
-        if ( signal->on_free != nullptr )
-                signal->on_free ( signal->env );
-        symlib_free ( &init->symbols );
+
+        if (!init->to_run) {
+                log_mild_err_dbg("the kernel is not launched. so it will not shutdown.");
+                log_free();
+                return ;
+        }
+        if (signal->on_free != nullptr) {
+                signal->on_free(signal->env);
+        }
+        symlib_free(&init->symbols);
         thread_lib_free();
         log_free();
 }

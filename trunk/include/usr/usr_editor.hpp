@@ -22,10 +22,10 @@ const string c_Selector         = "selector";
 const string c_Clipboard        = "clipboard";
 const string c_WorldData        = "world-data";
 
-class Editor;
-class EditorFrontend;
-class EditorActiveX;
 class EditorBackend;
+class EditorFrontend;
+class EditorBackendActiveX;
+class KernelEditor;
 
 class RenderRegionActiveX;
 class RenderConfigActiveX;
@@ -43,7 +43,7 @@ class WorldDataActiveX;
 class BenchmarkActiveX;
 
 
-class EditorActiveX
+class EditorBackendActiveX
 {
         friend class RenderRegionActiveX;
         friend class RenderConfigActiveX;
@@ -62,20 +62,21 @@ public:
 
         static const int c_NumActiveXType = EDIT_ACTIVEX_NUMBER;
 
-        EditorActiveX ( string name, int size, EDIT_ACTIVEX_IDR type );
-        virtual ~EditorActiveX ();
+        EditorBackendActiveX(string name, int size, EDIT_ACTIVEX_IDR type);
+        virtual ~EditorBackendActiveX ();
 
-        void                    notify_add ( Editor *e );
-        string                  get_name ( void ) const;
-        EDIT_ACTIVEX_IDR        get_type ( void ) const;
-        KernelEnvironment*      get_state_buffer ( void ) const;
-        bool                    is_dirty ( void ) const;
+        void                    notify_add(EditorBackend *e);
+        string                  get_name() const;
+        EDIT_ACTIVEX_IDR        get_type() const;
+        KernelEnvironment*      get_state_buffer() const;
+        bool                    is_dirty() const;
 
-        virtual void on_adding ( void ) = 0;
-        virtual void update ( void ) = 0;
-        virtual void dispatch ( void ) = 0;
-        virtual void load ( struct serializer *s ) = 0;
-        virtual void save ( struct serializer *s ) = 0;
+        virtual void on_adding() = 0;
+        virtual void preupdate() {};
+        virtual void update() = 0;
+        virtual void dispatch() = 0;
+        virtual void load(struct serializer *s) = 0;
+        virtual void save(struct serializer *s) = 0;
 private:
         int                     m_size;
         string                  m_name;
@@ -87,25 +88,25 @@ private:
         int                     m_bufcount;
         struct x3d::thread_trap m_block_driver;
 
-        int     on_front_buf ( void ) const;
-        int     on_back_buf  ( void ) const;
-        void    swap_buf ( void );
-        void    wait_for_update ( void );
-        void    unwait ( void );
+        int     on_front_buf() const;
+        int     on_back_buf () const;
+        void    swap_buf();
+        void    wait_for_update();
+        void    unwait();
 
         /* dirt-mark utilities */
         bool                    m_dirty;
 
-        void    mark_dirty ( void );
-        void    unmark_dirty ( void );
+        void    mark_dirty();
+        void    unmark_dirty();
 };
 
 /* unified callbacks */
-typedef void (*f_Notify_Idle)   (bool is_idle, EditorActiveX* ax, void *data);
-typedef void (*f_Notify_Error)  (string message, EditorActiveX *ax, void *data);
+typedef void (*f_Notify_Idle)   (bool is_idle, EditorBackendActiveX* ax, void *data);
+typedef void (*f_Notify_Error)  (string message, EditorBackendActiveX *ax, void *data);
 
 /* activex - render region - manage the physical screen output */
-class __dlexport RenderRegionActiveX : public EditorActiveX
+class __dlexport RenderRegionActiveX : public EditorBackendActiveX
 {
 public:
         enum ViewMode {
@@ -138,24 +139,24 @@ private:
 };
 
 /* activex - render configurator - configurates the renderer */
-class RenderConfigActiveX : public EditorActiveX
+class RenderConfigActiveX : public EditorBackendActiveX
 {
 public:
         RenderConfigActiveX(string name);
         ~RenderConfigActiveX();
 
-        void on_adding ( void );
-        void update ( void );
-        void dispatch ( void );
-        void load ( struct serializer *s );
-        void save ( struct serializer *s );
+        void on_adding();
+        void update();
+        void dispatch();
+        void load(struct serializer *s);
+        void save(struct serializer *s);
 
-        void set_config_tab ( string tab_name );
-        void set_config_value ( string value, void *data );
-        bool apply ( void );
-        void cancel ( void );
-        void* checkout_value ( string tab_name, string value );
-        void bind_callback ( string signal, f_Generic callback, void *data );
+        void set_config_tab(string tab_name);
+        void set_config_value(string value, void *data);
+        bool apply();
+        void cancel();
+        void* checkout_value(string tab_name, string value);
+        void bind_callback(string signal, f_Generic callback, void *data);
 
         Renderer* get_renderer();
 private:
@@ -164,19 +165,21 @@ private:
 };
 
 /* activex - world data */
-class __dlexport WorldDataActiveX : public EditorActiveX
+class __dlexport WorldDataActiveX : public EditorBackendActiveX
 {
 public:
-        WorldDataActiveX ( string name );
-        ~WorldDataActiveX ( void );
+        WorldDataActiveX(string name);
+        ~WorldDataActiveX();
 
-        void on_adding ( void );
-        void update ( void );
-        void dispatch ( void );
-        void load ( struct serializer *s );
-        void save ( struct serializer *s );
+        void on_adding();                       // upon adding the activex to the editor
+        void preupdate();                       // any activesx-independent orderless action should be taken here
+        void update();                          // update for current loop
+        void dispatch();                        // inform editor backends of signals
+        void load(struct serializer *s);        // load status from the serial sequence
+        void save(struct serializer *s);        // save status to the serial sequence
 
-        World& get_world();
+        World&  get_world();
+        void    deactivate();
 private:
         class WorldDataInt;
         class WorldDataInt*     pimpl;
@@ -184,73 +187,73 @@ private:
 
 
 /* activex - benchmark scene launcher */
-class __dlexport BenchmarkActiveX : public EditorActiveX
+class __dlexport BenchmarkActiveX : public EditorBackendActiveX
 {
 public:
         enum BenchmarkData {
                 Benchmark_CornellBox
         };
 
-        BenchmarkActiveX ( string name );
-        ~BenchmarkActiveX ( void );
+        BenchmarkActiveX(string name);
+        ~BenchmarkActiveX();
 
-        void on_adding ( void );
-        void update ( void );
-        void dispatch ( void );
-        void load ( struct serializer *s );
-        void save ( struct serializer *s );
+        void on_adding();
+        void update();
+        void dispatch();
+        void load(struct serializer *s);
+        void save(struct serializer *s);
 
-        void run_benchmark ( enum BenchmarkData type );
-        void run_benchmark ( string& filename );
+        void run_benchmark(enum BenchmarkData type);
+        void run_benchmark(string& filename);
 
-        void bind_callback ( string signal, f_Generic callback, void *data );
+        void bind_callback(string signal, f_Generic callback, void *data);
 private:
         class BenchmarkInt;
         class BenchmarkInt* pimpl;
 };
 
 
-class __dlexport Editor
+class __dlexport EditorBackend
 {
 public:
-        Editor ( void );
-        ~Editor ( void );
+        EditorBackend();
+        ~EditorBackend();
 
-        void open ( void )
+        void open()
         {
                 m_is_open = true;
         }
-        void close ( void )
+        void close()
         {
                 m_is_open = false;
         }
-        bool is_open ( void )
+        bool is_open()
         {
                 return m_is_open;
         }
 
-        void update ( void );
-        void dispatch_signal ( void );
-        bool load_state ( string filename );
-        bool save_state ( string filename );
+        void update();
+        void dispatch_signal();
+        bool load_state(string filename);
+        bool save_state(string filename);
 
-        void add_activex ( EditorActiveX *activex );
-        bool remove_activex ( EditorActiveX::EDIT_ACTIVEX_IDR type, string name );
-        EditorActiveX *find_activex ( EditorActiveX::EDIT_ACTIVEX_IDR type, string name );
+        void add_activex(EditorBackendActiveX *activex);
+        bool remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_IDR type, string name);
+        EditorBackendActiveX *find_activex(EditorBackendActiveX::EDIT_ACTIVEX_IDR type, string name);
 
-        KernelEnvironment *get_global_state ( void )
+        KernelEnvironment *get_global_state()
         {
                 return &this->m_global_state;
         }
 
-        uuid_t get_id ( void )
+        uuid_t get_id()
         {
                 return m_id;
         }
 private:
         bool                    m_is_open;
         uuid_t                  m_id;
-        list<EditorActiveX*>    m_activex[EditorActiveX::c_NumActiveXType];
+        list<EditorBackendActiveX*>    m_activex[EditorBackendActiveX::c_NumActiveXType];
         KernelEnvironment       m_global_state;
 };
 
@@ -259,35 +262,35 @@ class EditorFrontend
 public:
         virtual ~EditorFrontend () {}
 
-        bool is_custum ( void )
+        bool is_custum()
         {
                 return false;
         }
 
-        virtual bool init ( int argc, char **argv,
-                            Editor *editor, KernelEnvironment *env )
+        virtual bool init(int argc, char **argv,
+                            EditorBackend *editor, KernelEnvironment *env)
         {
                 return true;
         }
-        virtual bool end_init ( Editor *editor, KernelEnvironment *env )
+        virtual bool end_init(EditorBackend *editor, KernelEnvironment *env)
         {
                 return true;
         }
-        virtual bool load ( Editor *editor, KernelEnvironment *env )
+        virtual bool load(EditorBackend *editor, KernelEnvironment *env)
         {
                 return true;
         }
-        virtual void loop ( Editor *editor, KernelEnvironment *env )
+        virtual void loop(EditorBackend *editor, KernelEnvironment *env)
         {
                 return ;
         }
-        virtual bool free ( Editor *editor, KernelEnvironment *env )
+        virtual bool free(EditorBackend *editor, KernelEnvironment *env)
         {
                 return true;
         }
 };
 
-class __dlexport EditorBackend : public KernelProxy
+class __dlexport KernelEditor : public KernelProxy
 {
 public:
         enum GUI_FONTEND_IDR {
@@ -299,20 +302,21 @@ public:
                 GUI_FONTEND_CUSTUM
         };
 
-        EditorBackend ( Editor *e );
-        ~EditorBackend ( void );
+        KernelEditor();
+        ~KernelEditor();
 
-        void register_gui_frontend ( GUI_FONTEND_IDR type, EditorFrontend *backend );
+        void register_editor_frontend(GUI_FONTEND_IDR type, EditorFrontend *backend);
+        void register_editor_backend(EditorBackend* backend);
 private:
-        int on_init ( int argc, char **argv, KernelEnvironment *env );
-        int on_rest_init ( KernelEnvironment *env );
-        int on_loop_init ( KernelEnvironment *env );
-        int on_loop ( KernelEnvironment *env );
-        int on_loop_free ( KernelEnvironment *env );
-        int on_free ( KernelEnvironment *env );
+        int on_init(int argc, char **argv, KernelEnvironment *env);
+        int on_rest_init(KernelEnvironment *env);
+        int on_loop_init(KernelEnvironment *env);
+        int on_loop(KernelEnvironment *env);
+        int on_loop_free(KernelEnvironment *env);
+        int on_free(KernelEnvironment *env);
 
         GUI_FONTEND_IDR         m_frontend_type;
-        Editor*                 m_editor;
+        EditorBackend*          m_backend;
         EditorFrontend*         m_frontend;
         struct thread_task*     m_loop_task;
         const string            m_state_file = "./etc/editor/editor_state";

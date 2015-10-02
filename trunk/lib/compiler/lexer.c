@@ -84,7 +84,7 @@ void lex_code ( struct code_lexer *lex, struct sym_entry *sym_tbl )
                         if ( p == -1 ) {
                                 p = insert_symbol ( lex->tok_buf, sym_tbl );
                         }
-                        flush_var ( lex->tok_buf );
+                        alloc_flush_var ( lex->tok_buf );
 
                         lex->tok_info.token = TOK_IDR_IDENTIFIER;
                         lex->tok_info.tok_attr = p;

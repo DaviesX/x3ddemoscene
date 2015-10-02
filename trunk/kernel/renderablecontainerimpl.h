@@ -40,7 +40,7 @@ struct rdacontainer_grid {
 };
 
 
-struct rdacontainer*    rdacontainer_create(enum RAG_IDR type);
+struct rdacontainer*    rdacontainer_create(enum RenderAggregateType type);
 void                    rdacontainer_free(struct rdacontainer* cont);
 void                    rdacontainer_update(struct rdacontainer* cont);
 void                    rdacontainer_clear(struct rdacontainer* cont);

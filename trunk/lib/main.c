@@ -11,7 +11,6 @@
 #include "main.h"
 
 
-static void variable_memory_test1 ( struct alg_named_params *param );
 
 static void error_report ( struct alg_named_params *param );
 static void quick_sort_c ( struct alg_named_params *param );
@@ -29,68 +28,9 @@ static void hash_container_p ( struct alg_named_params *param );
 
 static void llist_container_c ( struct alg_named_params *param );
 
-__dlexport void __callback                  variable_memory_test0_init(struct alg_var_set* envir) {}
-__dlexport void __callback                  variable_memory_test0_free(struct alg_var_set* envir) {}
-__dlexport enum DebugPosition* __callback   variable_memory_test0_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
-{
-        static enum DebugPosition pos[] = {
-                Debug_KernelStart
-        };
-        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
-        *num_run = 1;
-        *is_skipped = false;
-        return pos;
-}
-__dlexport void __callback                  variable_memory_test0(struct alg_var_set* envir)
-{
-        char **str_arr = alloc_var ( sizeof ( char* ), 0 );
-        char *s0 = "Hello, first string\n";
-        str_arr = alloc_push_var ( &s0, str_arr );
-        char *s1 = "Do you see me ? Second string\n";
-        str_arr = alloc_push_var ( &s1, str_arr );
-        log_normal ( "%s", &str_arr[0][0] );
-        log_normal ( "%s", &str_arr[1][0] );
-        free_var ( str_arr );
-//	dbg_finish ();
-}
 
-void variable_memory_test1 ( struct alg_named_params *param )
-{
-        log_normal ( "memory query 0: %dkb", alloc_query_usage () );
-        const int count = 10000;
-        /* add/decrease */
-        int *array = alloc_var ( sizeof ( int ), 0 );
-        log_normal ( "memory query 1: %dkb", alloc_query_usage () );
-        int i;
-        for ( i = 0; i < count; i ++ ) {
-                array = alloc_add_var ( array, 1 );
-                array[i] = i;
 
-//                int *curr = get_var_last ( array );
-                set_log_behavior ( LOG_OUTPUT_TO_FILE );
-                log_normal ( "%d", array[i] );
-        }
-        log_normal ( "number element(added): %d", get_var_len ( array ) );
-        for ( i = 0; i < count/2; i ++ ) {
-                array = dec_var ( array, 2 );
-        }
-        log_normal ( "number element(deleted): %d", get_var_len ( array ) );
-        log_normal ( "memory query 2: %dkb", alloc_query_usage () );
-        /* shrink-expand */
-        array = shrink_var ( array );
-        log_normal ( "number element(shrinked): %d", get_var_len ( array ) );
-        log_normal ( "memory query 3: %dkb", alloc_query_usage () );
-        for ( i = 0; i < count; i ++ ) {
-                array = alloc_expand_var ( array, i + 1 );
-                array[i] = i;
-        }
-        log_normal ( "number element(expanded): %d", get_var_len ( array ) );
-        flush_var ( array );
-        log_normal ( "number element(flushed): %d", get_var_len ( array ) );
-        free_var ( array );
-        log_normal ( "memory query 4: %dkb", alloc_query_usage () );
-//	dbg_finish ();
-}
+
 
 static void error_report ( struct alg_named_params *param )
 {
@@ -101,7 +41,7 @@ static void error_report ( struct alg_named_params *param )
         log_severe_err ( "This is a severe error message" );
         log_critical_err ( "This is a critical error message" );
         int para = 10, para1 = 15;
-        set_log_behavior ( LOG_OUTPUT_TO_FILE );
+        log_set_behavior ( LOG_OUTPUT_TO_FILE );
         log_normal ( "There are two numbers: %d %d", para, para1 );
 }
 

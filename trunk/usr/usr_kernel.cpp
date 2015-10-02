@@ -99,9 +99,9 @@ Kernel::Kernel ( void )
         this->is_running = false;
 }
 
-Kernel::~Kernel ( void )
+Kernel::~Kernel()
 {
-        kernel_shutdown ();
+        kernel_shutdown();
 }
 
 bool Kernel::run ( void )

@@ -30,12 +30,6 @@
 	__free_var(_ptr); \
 	_ptr = nullptr; \
 }
-#define expand2_var( _ptr, _n )			(alloc_expand2_var( _ptr, _n ))
-#define shrink_var( _ptr )			(call_shrink_var ( _ptr ))
-#define dec_var( _ptr, _n )			(call_dec_var ( _ptr, _n ))
-#define flush_var( _ptr )			(call_flush_var ( _ptr ))
-#define get_var_len( _ptr )			(call_get_var_len ( _ptr ))
-#define get_var_last( _ptr )			(call_get_var_last ( _ptr ))
 
 #define alloc_obj(_data) \
 	alloc_fix(sizeof *(_data), 1); \
@@ -100,13 +94,13 @@ void* 		alloc_push_var(void* data, void* ptr);
 void*		alloc_pop_var(void* ptr, void* data);
 void*		alloc_expand_var(void* ptr, uint32_t n);
 void*		alloc_expand2_var(void* ptr, uint32_t n);
-void*		call_shrink_var ( void *ptr );
-void*		call_dec_var ( void *ptr, int n );
-void*		call_flush_var ( void *ptr );
-uint32_t 	call_get_var_len ( void *ptr );
-void*		call_get_var_last ( void *ptr );
-uint32_t 	alloc_query_usage ( void );
-uint32_t 	alloc_query_instance_count ( void );
+void*		alloc_shrink_var(void* ptr);
+void*		alloc_dec_var(void* ptr, int n);
+void*		alloc_flush_var(void* ptr);
+uint32_t 	alloc_get_var_len(void* ptr);
+void*		alloc_get_var_last(void* ptr);
+uint32_t 	alloc_query_usage();
+uint32_t 	alloc_query_instance_count();
 
 
 #endif // ALLOCATOR_H_INCLUDED

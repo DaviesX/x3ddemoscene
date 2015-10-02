@@ -12,14 +12,14 @@ namespace usr
 {
 
 // properties exchanges
-class EditorGtkFrontend::EditorGtkFrontendInt
+class EditorGtkFrontend::EditorBackendGtkFrontendInt
 {
 public:
-        EditorGtkFrontendInt(EditorGtkFrontend* frontend);
-        ~EditorGtkFrontendInt();
+        EditorBackendGtkFrontendInt(EditorGtkFrontend* frontend);
+        ~EditorBackendGtkFrontendInt();
 
-        EditorMode              m_editor_mode;
-        Editor*                 m_editor;
+        EditorBackendMode              m_editor_mode;
+        EditorBackend*                 m_editor;
         KernelEnvironment*      m_env;
         GtkBuilder*             m_builder;
 
@@ -38,7 +38,7 @@ public:
         void builder_all_set();
 };
 
-EditorGtkFrontend::EditorGtkFrontendInt::EditorGtkFrontendInt(EditorGtkFrontend* frontend)
+EditorGtkFrontend::EditorBackendGtkFrontendInt::EditorBackendGtkFrontendInt(EditorGtkFrontend* frontend)
 {
         m_splash_screen         = nullptr;
         m_main_editor           = nullptr;
@@ -54,7 +54,7 @@ EditorGtkFrontend::EditorGtkFrontendInt::EditorGtkFrontendInt(EditorGtkFrontend*
         m_env           = nullptr;
 }
 
-EditorGtkFrontend::EditorGtkFrontendInt::~EditorGtkFrontendInt()
+EditorGtkFrontend::EditorBackendGtkFrontendInt::~EditorBackendGtkFrontendInt()
 {
         m_splash_screen         = nullptr;
         m_main_editor           = nullptr;
@@ -72,7 +72,7 @@ EditorGtkFrontend::EditorGtkFrontendInt::~EditorGtkFrontendInt()
         m_env           = nullptr;
 }
 
-bool EditorGtkFrontend::EditorGtkFrontendInt::builder_load(string filename)
+bool EditorGtkFrontend::EditorBackendGtkFrontendInt::builder_load(string filename)
 {
         if (m_builder == nullptr && !(m_builder = gtk_builder_new())) {
                 log_severe_err_dbg("cannot create gtk-glade builder");
@@ -93,14 +93,14 @@ bool EditorGtkFrontend::EditorGtkFrontendInt::builder_load(string filename)
         return true;
 }
 
-void EditorGtkFrontend::EditorGtkFrontendInt::builder_all_set()
+void EditorGtkFrontend::EditorBackendGtkFrontendInt::builder_all_set()
 {
         gtk_builder_connect_signals(m_builder, nullptr);
 }
 
 EditorGtkFrontend::EditorGtkFrontend()
 {
-        pimpl = new EditorGtkFrontend::EditorGtkFrontendInt(this);
+        pimpl = new EditorGtkFrontend::EditorBackendGtkFrontendInt(this);
 }
 
 EditorGtkFrontend::~EditorGtkFrontend()
@@ -119,7 +119,7 @@ void EditorGtkFrontend::close()
         pimpl->m_editor->close();
 }
 
-Editor* EditorGtkFrontend::get_core_editor()
+EditorBackend* EditorGtkFrontend::get_core_editor()
 {
         return pimpl->m_editor;
 }
@@ -129,7 +129,7 @@ KernelEnvironment* EditorGtkFrontend::get_kernel_environment()
         return pimpl->m_env;
 }
 
-EditorGtkFrontend::EditorMode EditorGtkFrontend::get_editor_mode()
+EditorGtkFrontend::EditorBackendMode EditorGtkFrontend::get_editor_mode()
 {
         return pimpl->m_editor_mode;
 }
@@ -170,7 +170,7 @@ static bool has_command(int argc, char** argv, string command)
         return false;
 }
 
-bool EditorGtkFrontend::init(int argc, char **argv, Editor *editor, KernelEnvironment *env)
+bool EditorGtkFrontend::init(int argc, char **argv, EditorBackend *editor, KernelEnvironment *env)
 {
         pimpl->m_has_init = true;
         pimpl->m_editor = editor;
@@ -218,14 +218,14 @@ bool EditorGtkFrontend::init(int argc, char **argv, Editor *editor, KernelEnviro
         return true;
 }
 
-bool EditorGtkFrontend::end_init(Editor *editor, KernelEnvironment *env)
+bool EditorGtkFrontend::end_init(EditorBackend *editor, KernelEnvironment *env)
 {
         pimpl->m_editor = editor;
         pimpl->m_env = env;
         return true;
 }
 
-bool EditorGtkFrontend::load(Editor *editor, KernelEnvironment *env)
+bool EditorGtkFrontend::load(EditorBackend *editor, KernelEnvironment *env)
 {
         pimpl->m_editor = editor;
         pimpl->m_env = env;
@@ -257,7 +257,7 @@ bool EditorGtkFrontend::load(Editor *editor, KernelEnvironment *env)
         return true;
 }
 
-void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
+void EditorGtkFrontend::loop ( EditorBackend *editor, KernelEnvironment *env )
 {
         pimpl->m_editor = editor;
         pimpl->m_env = env;
@@ -273,7 +273,7 @@ void EditorGtkFrontend::loop ( Editor *editor, KernelEnvironment *env )
         await_gtk_main();
 }
 
-bool EditorGtkFrontend::free(Editor* editor, KernelEnvironment* env)
+bool EditorGtkFrontend::free(EditorBackend* editor, KernelEnvironment* env)
 {
         delete pimpl->m_main_editor;
         delete pimpl->m_splash_screen;

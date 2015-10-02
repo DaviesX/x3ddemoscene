@@ -9,14 +9,15 @@ using namespace x3d::usr;
 extern "C" int kernel_main(int argc, char* argv[])
 {
 
-        kernel_add_param("--test", "variable_memory_test0");
+        //kernel_add_param("--test", "variable_memory_test0");
+        //kernel_add_param("--test", "variable_memory_test1");
         kernel_add_param("--edit-mode", "");
 
-        Editor* editor          = new Editor();
-        EditorBackend* backend  = new EditorBackend(editor);
-        Kernel* kernel          = new Kernel();
-        backend->register_gui_frontend(EditorBackend::GUI_FONTEND_GTK, nullptr);
-        kernel->register_proxy(backend);
+        KernelEditor* kern_editor       = new KernelEditor();
+        Kernel* kernel                  = new Kernel();
+        kern_editor->register_editor_frontend(KernelEditor::GUI_FONTEND_GTK, nullptr);
+        kern_editor->register_editor_backend(new EditorBackend());
+        kernel->register_proxy(kern_editor);
         kernel->run();
 
         delete kernel;

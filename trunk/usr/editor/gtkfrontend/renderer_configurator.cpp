@@ -61,11 +61,11 @@ bool RendererConfig::show(bool visible)
                 config->bind_callback("notify_error", (f_Generic) render_config_error_callback, nullptr);
                 frontend->get_core_editor()->add_activex(config);
         } else {
-                Editor* edit = frontend->get_core_editor();
-                EditorActiveX* config = edit->find_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_CONFIG,
+                EditorBackend* edit = frontend->get_core_editor();
+                EditorBackendActiveX* config = edit->find_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_CONFIG,
                                                            cRenderConfig);
                 if (config)
-                        edit->remove_activex(EditorActiveX::EDIT_ACTIVEX_RENDER_CONFIG, cRenderConfig);
+                        edit->remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_CONFIG, cRenderConfig);
         }
         return true;
 }

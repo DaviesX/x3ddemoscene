@@ -2,6 +2,7 @@
 #include <system/symlib.h>
 #include <x3d/renderer.h>
 #include <renderer/rendererinsmod.h>
+#include "rendernodedummyimpl.h"
 
 
 #define MAX_RENDER_CONTEXT		32
@@ -16,6 +17,7 @@ struct renderer_ops {
 
 struct renderer_node_ops_metadata {
         f_Render_Node_Creator   f_creator[c_Num_Render_Node_Type][c_Num_Render_Node_Impl];
+        int                     entries[c_Num_Render_Node_Type][c_Num_Render_Node_Impl];
         int                     count[c_Num_Render_Node_Type];
 };
 
@@ -69,23 +71,44 @@ static void render_tree_find_compatible(struct render_node* node, struct render_
         }
         enum RenderNodeType type        = render_node_get_type(node);
         struct render_node_ex* node_ex  = cast(node_ex) node;
+        int first_compatible            = -1;
+        char* errors[c_Num_Render_Node_Impl];
         int i;
         for (i = 0; i < g_rend_ops_metadata.count[type]; i ++) {
-                if (node_ex->metainst[i] &&
-                    node_ex->metainst[i]->ops.f_is_compatible(node_ex->metainst[i], data->tree)) {
-                        node_ex->first_compatible = i;
-                        break;
+                if (node_ex->metainst[i]) {
+                        if (nullptr == (errors[i] = node_ex->metainst[i]->ops.f_is_compatible(node_ex->metainst[i], data->tree))) {
+                                first_compatible = i;
+                                break;
+                        }
                 }
         }
-        if (type != RenderNodeRoot) {
-                log_severe_err_dbg("no compatible implementation for render node: %s of type %d, rendering will be abort",
-                                   render_node_get_name(node), render_node_get_type(node));
-                data->is_succeeded = false;
+        if (first_compatible == -1) {
+                if (type != RenderNodeRoot) {
+                        log_severe_err_dbg("no compatible implementation for render node: %s of type %d, rendering will be abort, below are the errors reported from each implementation: ", render_node_get_name(node), render_node_get_type(node));
+                        for (i = 0; i < g_rend_ops_metadata.count[type]; i ++) {
+                                log_severe_err_dbg("\t%s", errors[i]);
+                        }
+                        data->is_succeeded = false;
+                } else {
+                        // root node implementation is optional, using dummy node implementation to fake the root node
+                        first_compatible = -1;
+/* @fixme (davis#2#): <render_tree_find_compatible> find a way to make render root node optional and remove all render root node check */
+
+                        // node_ex->metainst[first_compatible] = dummy_root_node_impl_create();
+                        data->is_succeeded = true;
+                }
+        } else {
+                data->is_succeeded = true;
         }
+        node_ex->first_compatible = first_compatible;
 }
 
 static void render_tree_compute(struct render_node* node, struct render_node* input[], struct render_node* output[], void* dataptr)
 {
+        /* @fixme (davis#2#): <render_tree_compute> this hack should be removed after root node is fixed */
+        if (render_node_get_type(node) == RenderNodeRoot) {
+                return ;
+        }
         struct render_tree* tree        = cast(tree) dataptr;
         struct render_node_ex* node_ex  = cast(node_ex) node;
 
@@ -96,13 +119,16 @@ static void render_tree_compute(struct render_node* node, struct render_node* in
                 struct render_node_ex* input_ex = (struct render_node_ex*) input[j];
                 input_list[j] = input_ex->metainst[input_ex->first_compatible];
         }
+        /* @fixme (davis#2#): <render_tree_compute> output node couldn't be passed until root node if fixed  */
+        /*
         for (j = 0; j < node->n_output; j ++) {
                 struct render_node_ex* output_ex = (struct render_node_ex*) output[j];
                 output_list[j] = output_ex->metainst[output_ex->first_compatible];
+        }*/
+        if (node_ex->metainst[node_ex->first_compatible]) {
+                node_ex->metainst[node_ex->first_compatible]->ops.
+                        f_compute(node_ex->metainst[node_ex->first_compatible], input_list, output_list);
         }
-        node_ex->metainst[node_ex->first_compatible]->ops.f_compute(node_ex->metainst[node_ex->first_compatible],
-                                                                    input_list,
-                                                                    output_list);
         free_fix(output_list);
         free_fix(input_list);
 }
@@ -137,7 +163,10 @@ bool renderer_render(struct render_tree* tree)
 /* render_node_factory's */
 void renderer_install_render_node_factory(int id, enum RenderNodeType type, f_Render_Node_Creator creator)
 {
+        int count = g_rend_ops_metadata.count[type];
         g_rend_ops_metadata.f_creator[type][id] = creator;
+        g_rend_ops_metadata.entries[type][count] = id;
+        g_rend_ops_metadata.count[type] = ++ count;
 }
 
 void renderer_remove_render_node_factory(int id, enum RenderNodeType type)
@@ -145,22 +174,13 @@ void renderer_remove_render_node_factory(int id, enum RenderNodeType type)
         g_rend_ops_metadata.f_creator[type][id] = nullptr;
 }
 
-void renderer_finalize_render_node_factory()
-{
-        int i;
-        for (i = 0; i < c_Num_Render_Node_Type; i ++) {
-                int j;
-                for (j = 0; g_rend_ops_metadata.f_creator[i][j] != nullptr; j ++);
-                g_rend_ops_metadata.count[i] = j;
-        }
-}
-
 void render_node_ex_init(struct render_node_ex* self, enum RenderNodeType type)
 {
         self->type = type;
         int i;
         for (i = 0; i < g_rend_ops_metadata.count[type]; i ++) {
-                self->metainst[i] = g_rend_ops_metadata.f_creator[type][i](self);
+                int k = g_rend_ops_metadata.entries[type][i];
+                self->metainst[i] = g_rend_ops_metadata.f_creator[type][k](self);
                 self->metainst[i]->ref = self;
         }
 }

@@ -76,6 +76,11 @@ void ProjectionProbe::transform_base_relative(struct matrix4x4* transform)
         projprobe_transform_base_relative(m_probe, transform);
 }
 
+struct projection_probe* ProjectionProbe::get_core_resource()
+{
+        return m_probe;
+}
+
 /* PerspectiveProbe */
 PerspectiveProbe::PerspectiveProbe(enum OutputMethod method, void* target_screen, int width, int height, ColorMode colormode) :
         ProjectionProbe((struct projection_probe*) (persprobe_create(method, target_screen)),

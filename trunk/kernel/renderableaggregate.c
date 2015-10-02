@@ -5,7 +5,7 @@
 
 
 /* renderable context */
-void rda_context_init(struct rda_context* ctx, enum RAG_IDR agg_type)
+void rda_context_init(struct rda_context* ctx, enum RenderAggregateType agg_type)
 {
         ctx->container = rdacontainer_create(agg_type);
         ctx->num_renderable = 0;

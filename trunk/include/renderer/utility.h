@@ -232,12 +232,12 @@ static inline void u_aos_free(struct util_aos* u_aos)
 
 static inline void u_aos_flush(struct util_aos* u_aos)
 {
-        flush_var(u_aos->index);
+        alloc_flush_var(u_aos->index);
         u_aos->n_index = 0;
         u_aos->n_vertex = 0;
         int i;
         for (i = 0; i < 10; i ++) {
-                flush_var(u_aos->aos[i].s_data);
+                alloc_flush_var(u_aos->aos[i].s_data);
         }
 }
 

@@ -38,7 +38,7 @@ static void *gen_ordered_stream ( int count );
 static void *gen_ordered_stream ( int count )
 {
         if ( g_ordered_arr ) {
-                g_ordered_arr = expand2_var ( g_ordered_arr, count );
+                g_ordered_arr = alloc_expand2_var ( g_ordered_arr, count );
         } else {
                 g_ordered_arr = alloc_var ( sizeof ( uint32_t ), count );
         }
@@ -204,7 +204,7 @@ void vertprocessor_finalize ( struct rtcontext *cont, struct vertprocessor *vp )
         if ( !vp->cache ) {
                 vp->cache = alloc_var ( 1, vp->n_total*vp->v_out_size );
         } else {
-                vp->cache = expand2_var ( vp->cache, vp->n_total*vp->v_out_size );
+                vp->cache = alloc_expand2_var ( vp->cache, vp->n_total*vp->v_out_size );
         }
 //	vp->clip_cache = alloc_var ( 1, 8*vp->v_out_size );
         /* set up vertex shader */
@@ -497,8 +497,8 @@ int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_ty
         count = (prim_type == TRIANGLE_PRIMITIVE) ? (count/2) : (count);
         count = min ( count, vp->n_total - vp->n_done );
         count = count - count%prim_type;
-        flush_var ( vp->cache );
-        vp->cache = expand2_var ( vp->cache, count );
+        alloc_flush_var ( vp->cache );
+        vp->cache = alloc_expand2_var ( vp->cache, count );
         untyped *vert_out = vp->cache;
         int i;
         for ( i = 0; i < count; i ++ ) {

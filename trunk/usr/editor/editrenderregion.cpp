@@ -81,7 +81,7 @@ RenderRegionActiveX::RenderRegionInt::~RenderRegionInt()
 }
 
 RenderRegionActiveX::RenderRegionActiveX(string name, OutputMethod method, void *handle, int x, int y, int w, int h) :
-        EditorActiveX(name, sizeof(RenderRegionActiveX), EDIT_ACTIVEX_RENDER_REGION)
+        EditorBackendActiveX(name, sizeof(RenderRegionActiveX), EDIT_ACTIVEX_RENDER_REGION)
 {
         pimpl = new RenderRegionInt(method, handle, x, y, w, h);
 }
@@ -179,6 +179,7 @@ void RenderRegionActiveX::update()
         // see if there is anything to be processed by the kernel
         WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use(c_WorldData);
         if (worlddata->get_world().get_render_aggregate()->get_instance_count() == 0) {
+                worlddata->deactivate();
                 pimpl->m_is_idle = true;
         } else {
                 pimpl->m_is_idle = false;

@@ -66,12 +66,12 @@ static inline void alg_list_free(struct alg_list* self)
 
 static inline void alg_list_expand(struct alg_list* self, int count)
 {
-        self->content = expand2_var(self->content, count);
+        self->content = alloc_expand2_var(self->content, count);
 }
 
 static inline void alg_list_flush(struct alg_list* self)
 {
-        flush_var(self->content);
+        alloc_flush_var(self->content);
         self->num_elm = 0;
 }
 
@@ -117,7 +117,7 @@ static inline void alg_list_swap(struct alg_list* list0, struct alg_list* list1)
 
 #define alg_list_pop_back(_self, _iter) \
 { \
-        (_self)->content = dec_var((_self)->content, sizeof *(_iter)); \
+        (_self)->content = alloc_dec_var((_self)->content, sizeof *(_iter)); \
         (_self)->num_elm --; \
 }
 

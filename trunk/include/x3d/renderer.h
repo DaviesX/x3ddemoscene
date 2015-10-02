@@ -19,7 +19,7 @@ struct symbol_set;
  * structures
  */
 
-typedef bool (*f_Render_NodeExImpl_Is_Compatiable) (struct render_node_ex_impl* self, struct render_tree* tree);
+typedef char* (*f_Render_NodeExImpl_Is_Compatiable) (struct render_node_ex_impl* self, struct render_tree* tree);
 typedef void (*f_Render_NodeExImpl_Compute) (struct render_node_ex_impl* self,
                                              const struct render_node_ex_impl* input[],
                                              const struct render_node_ex_impl* output[]);

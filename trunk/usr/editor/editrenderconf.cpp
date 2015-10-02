@@ -63,8 +63,8 @@ RenderConfigActiveX::RenderConfigInt::RenderConfigInt()
         m_renderer = new Renderer(Renderer::Pathtracer);
         // Put a default tree onto it
         RenderOutput output("default_output", c_ProbeName);
-        RenderRadiance radiance("default_radiance", RenderRadiance::DirectLightning);
-        RenderableLoader rdaloader("default_renderable_context", c_RenderContextName, RenderAggregate::SimpleLinear);
+        RenderRadiance radiance("default_radiance", RenderPipeDirectLighting);
+        RenderableLoader rdaloader("default_renderable_context", c_RenderContextName, RenderAggregateLinear);
         RenderNode* root = m_tree.create_root();
         m_tree.insert_node(root, output.get_node());
         m_tree.insert_node(output.get_node(), radiance.get_node());
@@ -76,7 +76,7 @@ RenderConfigActiveX::RenderConfigInt::~RenderConfigInt()
 }
 
 RenderConfigActiveX::RenderConfigActiveX(string name) :
-        EditorActiveX(name, sizeof(RenderConfigActiveX), EDIT_ACTIVEX_RENDER_CONFIG)
+        EditorBackendActiveX(name, sizeof(RenderConfigActiveX), EDIT_ACTIVEX_RENDER_CONFIG)
 {
         pimpl = new RenderConfigInt();
 
@@ -134,7 +134,7 @@ void RenderConfigActiveX::update()
         unwait();
         /* update render tree */
         pimpl->m_tree.clear_environment_variables();
-        pimpl->m_tree.set_environment_variable(RenderTree::Probe, pimpl->c_ProbeName, (void*) probe);
+        pimpl->m_tree.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
         pimpl->m_renderer->update(&pimpl->m_tree);
 }
 

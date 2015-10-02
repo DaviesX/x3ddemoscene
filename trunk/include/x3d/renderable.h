@@ -36,10 +36,10 @@ enum RENDERABLE_IDR {
         RENDERABLE_TEXTURAL
 };
 
-enum RAG_IDR {
-        RAG_LINEAR,
-        RAG_STATIC_BVH,
-        RAG_DYNAMIC_GRID
+enum RenderAggregateType {
+        RenderAggregateLinear,
+        RenderAggregateStaticBVH,
+        RenderAggregateDynamicGrid
 };
 
 /*

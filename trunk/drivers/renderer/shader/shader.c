@@ -121,10 +121,10 @@ static void builtin_finalize ( struct shader *shader )
                 /* dynamic shader */
         } else {
                 /* static shader */
-                if ( get_var_len ( shader->src_lib ) > 1 ) {
+                if ( alloc_get_var_len ( shader->src_lib ) > 1 ) {
                         log_critical_err_dbg ( "must not have multiple library functions in a static shader" );
                         return ;
-                } else if ( get_var_len ( shader->src_lib ) == 0 ) {
+                } else if ( alloc_get_var_len ( shader->src_lib ) == 0 ) {
                         log_critical_err_dbg ( "no library function is added to this the currect shader" );
                         return ;
                 }
@@ -228,7 +228,7 @@ struct uniform_buffer *uni_buffer_group_get ( char *name, struct uni_buffer_grou
 static struct shader_func *get_libfunc ( char *name )
 {
         int i;
-        for ( i = 0; i < get_var_len ( g_libfunc ); i ++ ) {
+        for ( i = 0; i < alloc_get_var_len ( g_libfunc ); i ++ ) {
                 if ( !strcmp ( name, g_libfunc[i].name ) ) {
                         return &g_libfunc[i];
                 }
@@ -240,7 +240,7 @@ static struct shader_func *get_libfunc ( char *name )
 shaderlib_t shaderlib_get ( char *name )
 {
         int i;
-        for ( i = 0; i < get_var_len ( g_libfunc ); i ++ ) {
+        for ( i = 0; i < alloc_get_var_len ( g_libfunc ); i ++ ) {
                 if ( !strcmp ( name, g_libfunc[i].name ) ) {
                         return i;
                 }

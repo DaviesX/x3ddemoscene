@@ -36,10 +36,10 @@ private:
  */
 class RenderableLoader : public CoreResource<struct render_rdacontext> {
 public:
-        RenderableLoader(string name, string context, RenderAggregate::Strategy strategy);
+        RenderableLoader(string name, string context, RenderAggregateType strategy);
         RenderNode*             get_node();
         void                    set_context(string context);
-        void                    set_strategy(RenderAggregate::Strategy strategy);
+        void                    set_strategy(RenderAggregateType strategy);
 private:
         struct render_rdaloader* m_node;
 };
@@ -48,17 +48,9 @@ private:
  */
 class RenderRadiance : public CoreResource<struct render_radiance> {
 public:
-        enum RenderPipeline {
-                Forward,
-                ForwardPlus,
-                Whitted,
-                DirectLightning,
-                Metropolis,
-                ImageSpace
-        };
-        RenderRadiance(string name, RenderPipeline pipe);
+        RenderRadiance(string name, RenderPipeType type);
         RenderNode*             get_node();
-        void                    set_pipeline(RenderPipeline pipe);
+        void                    set_pipeline(RenderPipeType pipe);
 private:
         struct render_radiance* m_node;
 };
@@ -85,22 +77,12 @@ public:
         RenderTree();
         ~RenderTree();
 
-        enum EnvironmentType {
-                Void,
-                Spec,
-                Probe,
-                RDA,
-                Thread,
-                Antialias,
-                Filter
-        };
-
         RenderNode*             get_node(string name);
         RenderNode*             create_root();
         bool                    insert_node(RenderNode* parent, RenderNode* node);
         bool                    replace_node(RenderNode* node);
         bool                    remove_node(RenderNode* parent, RenderNode* node);
-        void                    set_environment_variable(EnvironmentType type, string var_name, void* var);
+        void                    set_environment_variable(RenderEnvironment type, string var_name, void* var);
         void                    clear_environment_variables();
         bool                    visit(RenderTreeVisitor* visitor);
 
