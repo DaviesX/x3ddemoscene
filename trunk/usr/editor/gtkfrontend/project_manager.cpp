@@ -128,7 +128,7 @@ bool ProjectManager::show(bool visible)
         fill_in_tree_view_and_model(tree_view);
 
         if (visible) {
-                frontend->get_core_editor()->add_activex(new WorldDataActiveX(pimpl->c_WorldDataString));
+                frontend->get_backend_editor()->add_activex(new WorldDataActiveX(pimpl->c_WorldDataString));
         }
         return true;
 }

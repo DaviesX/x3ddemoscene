@@ -33,7 +33,8 @@ public:
         bool                                    m_is_logo_connected;
 };
 
-static const string cRenderRegion = "gtk-main-editor-render-region";
+static const string c_GtkRenderRegion = "gtk-main-editor-render-region";
+static const string c_GtkPowersaveSwitch = "gtk-main-editor-powersave-switch";
 
 /*
 static struct main_editor g_main_edit;
@@ -115,7 +116,7 @@ MainEditor::MainEditorInt::~MainEditorInt()
         g_signal_handler_disconnect(m_window, m_destroy_signal);
 
         if (m_frontend->is_usable()) {
-                m_frontend->get_core_editor()->remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_REGION, cRenderRegion);
+                m_frontend->get_backend_editor()->remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_REGION, c_GtkRenderRegion);
         }
 }
 
@@ -226,12 +227,14 @@ demo_mode:
                 int x, y;
                 int width, height;
                 widget_get_size(pimpl->m_window, pimpl->m_draw_region, &x, &y, &width, &height);
-                RenderRegionActiveX* ax_region = new RenderRegionActiveX(cRenderRegion, GtkRenderRegionOutput,
+                RenderRegionActiveX* ax_region = new RenderRegionActiveX(c_GtkRenderRegion, GtkRenderRegionOutput,
                                                                          pimpl->m_draw_region,
                                                                          x, y, width, height );
                 ax_region->bind_callback("notify_idle", (f_Generic) idle_switch_callback, pimpl);
                 ax_region->bind_callback("notify_resize", (f_Generic) window_reize_callback, pimpl);
-                frontend->get_core_editor()->add_activex(ax_region);
+                PowersaveSwitchActiveX* ax_powersave = new PowersaveSwitchActiveX(c_GtkPowersaveSwitch);
+                frontend->get_backend_editor()->add_activex(ax_region);
+                frontend->get_backend_editor()->add_activex(ax_powersave);
 
                 /* set dispatch function which fetches signal
                  * from core editor when gtk_main is idle
@@ -260,10 +263,13 @@ GtkWidget* main_editor_get_region ( void )
         return nullptr;
 }
 
+#include <system/thread.h>
+
 extern "C" gboolean main_editor_dispatch(gpointer user_data)
 {
         MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(user_data);
-        pimpl->m_frontend->get_core_editor()->dispatch_signal();
+        pimpl->m_frontend->get_backend_editor()->dispatch_signal();
+        thread_task_idle(10);
         return true;
 }
 

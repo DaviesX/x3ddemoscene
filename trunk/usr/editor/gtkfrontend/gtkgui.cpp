@@ -119,7 +119,7 @@ void EditorGtkFrontend::close()
         pimpl->m_editor->close();
 }
 
-EditorBackend* EditorGtkFrontend::get_core_editor()
+EditorBackend* EditorGtkFrontend::get_backend_editor()
 {
         return pimpl->m_editor;
 }
@@ -383,7 +383,7 @@ static void* do_gtk_main ( void* data )
 #define push_gtk_main()         (g_gtk_main_stack ++)
 #define pop_gtk_main()          (g_gtk_main_stack --)
 
-void stop_gtk_main ( void )
+void stop_gtk_main()
 {
         x3d::thread_trap_on_task ( &g_atomic_check );
         if (g_gtk_main_stack == 0) {
@@ -407,7 +407,7 @@ void stop_gtk_main ( void )
         x3d::thread_untrap_task ( &g_atomic_check );
 }
 
-void run_gtk_main ( void )
+void run_gtk_main()
 {
         x3d::thread_trap_on_task(&g_atomic_check);
         if ( g_gtk_main_stack > 0 ) {
@@ -421,15 +421,15 @@ void run_gtk_main ( void )
         x3d::thread_untrap_task(&g_atomic_check);
 }
 
-void await_gtk_main ( void )
+void await_gtk_main()
 {
-        while ( g_gtk_main_stack != 0 );
+        while (g_gtk_main_stack != 0) { thread_task_idle(10); }
         x3d::thread_trap_on_task ( &g_atomic_check );
         ; // do nothing
         x3d::thread_untrap_task ( &g_atomic_check );
 }
 
-void* dbg_get_render_region ( void )
+void* dbg_get_render_region()
 {
         return main_editor_get_region ();
 }

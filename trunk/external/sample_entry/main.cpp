@@ -14,9 +14,10 @@ extern "C" int kernel_main(int argc, char* argv[])
         kernel_add_param("--edit-mode", "");
 
         KernelEditor* kern_editor       = new KernelEditor();
-        Kernel* kernel                  = new Kernel();
-        kern_editor->register_editor_frontend(KernelEditor::GUI_FONTEND_GTK, nullptr);
+        kern_editor->register_editor_frontend(KernelEditor::GUIFrontendGTK, nullptr);
         kern_editor->register_editor_backend(new EditorBackend());
+
+        Kernel* kernel                  = new Kernel();
         kernel->register_proxy(kern_editor);
         kernel->run();
 

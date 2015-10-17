@@ -176,10 +176,9 @@ void RenderRegionActiveX::update()
 {
         wait_for_update();
         KernelEnvironment* state = get_state_buffer();
-        // see if there is anything to be processed by the kernel
+        // see if there is anything needed to be processed by the kernel
         WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use(c_WorldData);
-        if (worlddata->get_world().get_render_aggregate()->get_instance_count() == 0) {
-                worlddata->deactivate();
+        if (!worlddata->has_works()) {
                 pimpl->m_is_idle = true;
         } else {
                 pimpl->m_is_idle = false;

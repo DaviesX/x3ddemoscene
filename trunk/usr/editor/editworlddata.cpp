@@ -11,6 +11,8 @@ class WorldDataActiveX::WorldDataInt
 public:
         WorldDataInt();
         ~WorldDataInt();
+
+        bool    has_works();
 /* @todo (davis#2#): <WorldDataActiveX> */
         bool            m_is_activated;
         World           m_world;
@@ -21,6 +23,10 @@ WorldDataActiveX::WorldDataInt::WorldDataInt()
         m_is_activated = false;
 }
 
+bool WorldDataActiveX::WorldDataInt::has_works()
+{
+        return (m_is_activated = m_world.get_render_aggregate()->get_instance_count() != 0);
+}
 
 WorldDataActiveX::WorldDataActiveX(string name) :
         EditorBackendActiveX ( name, sizeof(WorldDataActiveX), EDIT_ACTIVEX_WORLD_DATA )
@@ -41,7 +47,7 @@ void WorldDataActiveX::on_adding()
 
 void WorldDataActiveX::preupdate()
 {
-        pimpl->m_is_activated = true;
+        pimpl->has_works();
 }
 
 void WorldDataActiveX::update()
@@ -58,9 +64,9 @@ void WorldDataActiveX::update()
         }
 }
 
-void WorldDataActiveX::deactivate()
+bool WorldDataActiveX::has_works()
 {
-        pimpl->m_is_activated = false;
+        return pimpl->m_is_activated;
 }
 
 void WorldDataActiveX::dispatch()

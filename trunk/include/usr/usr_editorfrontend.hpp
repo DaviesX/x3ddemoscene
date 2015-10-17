@@ -54,7 +54,7 @@ public:
 public:
         bool                    is_usable();
         void                    close();
-        EditorBackend*          get_core_editor();
+        EditorBackend*          get_backend_editor();
         KernelEnvironment*      get_kernel_environment();
         EditorBackendMode       get_editor_mode();
         GtkBuilder*             get_gtk_builder();

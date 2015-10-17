@@ -40,7 +40,7 @@
 1423198979 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editassetlist.cpp
 	<usr/usr_editor.hpp>
 
-1443826205 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
+1443831759 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_renderer.hpp>
@@ -169,12 +169,12 @@
 1402812079 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editentityproperty.cpp
 	<usr/usr_editor.hpp>
 
-1443826523 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editor.cpp
+1443831795 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editor.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 
-1443825674 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorfrontend.hpp
+1443829292 /home/davis/x3drenderlib-code/trunk/include/usr/usr_editorfrontend.hpp
 	<usr/usr_editor.hpp>
 
 1400997060 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editprojectmgr.cpp
@@ -185,7 +185,7 @@
 	<usr/usr_renderaggregate.hpp>
 	<usr/usr_renderer.hpp>
 
-1443825417 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editrenderregion.cpp
+1445101714 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editrenderregion.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_projectionprobe.hpp>
 	<usr/usr_editor.hpp>
@@ -193,7 +193,7 @@
 1403068768 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editviewcontrol.cpp
 	<usr/usr_editor.hpp>
 
-1443825417 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editworlddata.cpp
+1443829352 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editworlddata.cpp
 	<usr/usr_editor.hpp>
 
 1402010100 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/dynamics_editor.cpp
@@ -1713,7 +1713,7 @@
 	<gdk/gdktypes.h>
 	<gdk/gdkversionmacros.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h
 	<glib.h>
 	<gdk-pixbuf/gdk-pixbuf-features.h>
 	<glib-object.h>
@@ -1725,40 +1725,40 @@
 	<gdk-pixbuf/gdk-pixbuf-loader.h>
 	<gdk-pixbuf/gdk-pixbuf-enum-types.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-features.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-features.h
 	<glib.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-core.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-core.h
 	<glib.h>
 	<glib-object.h>
 	<gio/gio.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-transform.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-transform.h
 	<glib.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-animation.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-animation.h
 	<glib-object.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-simple-anim.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-simple-anim.h
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-io.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-io.h
 	<stdio.h>
 	<glib.h>
 	<gmodule.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-loader.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-loader.h
 	<glib.h>
 	<glib-object.h>
 	<gdk-pixbuf/gdk-pixbuf-core.h>
 	<gdk-pixbuf/gdk-pixbuf-animation.h>
 	<gdk-pixbuf/gdk-pixbuf-io.h>
 
-1439923492 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-enum-types.h
+1444483569 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-enum-types.h
 	<glib-object.h>
 
 1416352689 /usr/include/pango-1.0/pango/pangocairo.h
@@ -2911,7 +2911,7 @@
 
 1402010100 /home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/dynamics_editor.hpp
 
-1443825588 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.cpp
+1445099376 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/gtkgui.cpp
 	<gtk/gtk.h>
 	<gdk/gdk.h>
 	<cairo.h>
@@ -2920,19 +2920,20 @@
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
-1443825588 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.cpp
+1445099476 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
+	<system/thread.h>
 
-1443825588 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.cpp
+1443829292 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/main_editor_menu.cpp
 	<usr/usr_editorfrontend.hpp>
 	<gtk/gtk.h>
 	"gtkgui.hpp"
 
-1443825588 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/project_manager.cpp
+1443829291 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/project_manager.cpp
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
@@ -2943,7 +2944,7 @@
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
-1443825588 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderer_configurator.cpp
+1443829291 source:/home/davis/x3drenderlib-code/trunk/usr/editor/gtkfrontend/renderer_configurator.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
@@ -3003,4 +3004,8 @@
 
 1428712440 source:/home/davis/x3drenderlib-code/trunk/usr/usr_world.cpp
 	<usr/usr_world.hpp>
+
+1445098782 source:/home/davis/x3drenderlib-code/trunk/usr/editor/editpowersaveswitch.cpp
+	<usr/usr_editor.hpp>
+	<system/thread.h>
 

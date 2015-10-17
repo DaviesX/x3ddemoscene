@@ -24,7 +24,7 @@ extern "C" void cornell_box_callback ( GtkMenuItem* menuitem, gpointer user_data
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
         BenchmarkActiveX* benchmark = static_cast<BenchmarkActiveX*>
-                (frontend->get_core_editor()->find_activex( EditorBackendActiveX::EDIT_ACTIVEX_BENCHMARK, "benchmark-scene-menu-item"));
+                (frontend->get_backend_editor()->find_activex( EditorBackendActiveX::EDIT_ACTIVEX_BENCHMARK, "benchmark-scene-menu-item"));
         benchmark->run_benchmark(BenchmarkActiveX::Benchmark_CornellBox);
 }
 
@@ -89,7 +89,7 @@ bool MainEditorMenu::show(bool visible)
         g_signal_connect(G_OBJECT(cornell_box_item), "activate",
                          G_CALLBACK(cornell_box_callback), frontend);
         BenchmarkActiveX* benchmark = new BenchmarkActiveX("benchmark-scene-menu-item");
-        frontend->get_core_editor()->add_activex(benchmark);
+        frontend->get_backend_editor()->add_activex(benchmark);
         }
         // deal with the close menu
         {

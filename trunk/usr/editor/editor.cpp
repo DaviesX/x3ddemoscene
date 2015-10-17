@@ -9,7 +9,7 @@ using namespace x3d::usr;
 /* KernelEditor */
 KernelEditor::KernelEditor() : KernelProxy("KernelEditor")
 {
-        m_frontend_type = GUI_FONTEND_GTK;
+        m_frontend_type = GUIFrontendGTK;
         m_frontend      = new EditorGtkFrontend ();
         m_backend       = nullptr;
 }
@@ -18,6 +18,11 @@ KernelEditor::~KernelEditor ()
 {
         delete m_frontend;
         delete m_backend;
+}
+
+void KernelEditor::close()
+{
+        get_subjected_kernel()->stop();
 }
 
 int KernelEditor::on_init ( int argc, char** argv, KernelEnvironment *env )
@@ -125,31 +130,31 @@ void KernelEditor::register_editor_backend(EditorBackend* backend)
         m_backend = backend;
 }
 
-void KernelEditor::register_editor_frontend (GUI_FONTEND_IDR type, EditorFrontend *frontend)
+void KernelEditor::register_editor_frontend (GUIFrontendType type, EditorFrontend *frontend)
 {
         if ( this->m_frontend && !this->m_frontend->is_custum () ) {
                 delete this->m_frontend;
         }
 
         switch ( type ) {
-        case GUI_FONTEND_NONE:
-        case GUI_FONTEND_GTK: {
+        case GUIFrontendNone:
+        case GUIFrontendGTK: {
                 this->m_frontend = new EditorGtkFrontend ();
                 break;
         }
-        case GUI_FONTEND_QT: {
+        case GUIFrontendQT: {
                 this->m_frontend = new EditorQtFrontend ();
                 break;
         }
-        case GUI_FONTEND_WIN32: {
+        case GUIFrontendWin32: {
                 this->m_frontend = new EditorWin32Frontend ();
                 break;
         }
-        case GUI_FONTEND_PURE_SDL: {
+        case GUIFrontendPureSDL: {
                 this->m_frontend = new EditorPureSdlFrontend ();
                 break;
         }
-        case GUI_FONTEND_CUSTUM: {
+        case GUIFrontendCUSTOM: {
                 this->m_frontend = frontend;
                 break;
         }
@@ -185,10 +190,15 @@ EditorBackend::~EditorBackend ( void )
 
 void EditorBackend::update ( void )
 {
-        for ( int i = 0; i < EditorBackendActiveX::c_NumActiveXType; i ++ ) {
-                for ( list<EditorBackendActiveX*>::iterator activex = this->m_activex[i].begin ();
-                      activex != this->m_activex[i].end ();
-                      ++ activex ) {
+        for (int i = 0; i < EditorBackendActiveX::c_NumActiveXType; i ++) {
+                for (list<EditorBackendActiveX*>::iterator activex = this->m_activex[i].begin ();
+                     activex != this->m_activex[i].end (); ++ activex) {
+                        (*activex)->preupdate ();
+                }
+        }
+        for (int i = 0; i < EditorBackendActiveX::c_NumActiveXType; i ++) {
+                for (list<EditorBackendActiveX*>::iterator activex = this->m_activex[i].begin ();
+                     activex != this->m_activex[i].end (); ++ activex) {
                         (*activex)->update ();
                 }
         }

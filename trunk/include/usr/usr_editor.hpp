@@ -21,6 +21,7 @@ const string c_RenderConfig     = "render-config";
 const string c_Selector         = "selector";
 const string c_Clipboard        = "clipboard";
 const string c_WorldData        = "world-data";
+const string c_PowersaveSwitch  = "powersave-switch";
 
 class EditorBackend;
 class EditorFrontend;
@@ -57,6 +58,7 @@ public:
                 EDIT_ACTIVEX_RENDER_CONFIG,
                 EDIT_ACTIVEX_WORLD_DATA,
                 EDIT_ACTIVEX_RENDER_REGION,
+                EDIT_ACTIVEX_POWERSAVE_SWITCH,
                 EDIT_ACTIVEX_NUMBER
         };
 
@@ -179,7 +181,7 @@ public:
         void save(struct serializer *s);        // save status to the serial sequence
 
         World&  get_world();
-        void    deactivate();
+        bool    has_works();
 private:
         class WorldDataInt;
         class WorldDataInt*     pimpl;
@@ -212,6 +214,25 @@ private:
         class BenchmarkInt* pimpl;
 };
 
+/* activex - powersave switch */
+class PowersaveSwitchActiveX : public EditorBackendActiveX
+{
+public:
+        PowersaveSwitchActiveX(string name);
+        ~PowersaveSwitchActiveX();
+
+        void on_adding();
+        void update();
+        void dispatch();
+        void load(struct serializer *s);
+        void save(struct serializer *s);
+
+        void switch_on_performance();
+        void switch_on_powersave();
+private:
+        class PowersaveSwitchInt;
+        class PowersaveSwitchInt* pimpl;
+};
 
 class __dlexport EditorBackend
 {
@@ -251,10 +272,10 @@ public:
                 return m_id;
         }
 private:
-        bool                    m_is_open;
-        uuid_t                  m_id;
-        list<EditorBackendActiveX*>    m_activex[EditorBackendActiveX::c_NumActiveXType];
-        KernelEnvironment       m_global_state;
+        bool                            m_is_open;
+        uuid_t                          m_id;
+        list<EditorBackendActiveX*>     m_activex[EditorBackendActiveX::c_NumActiveXType];
+        KernelEnvironment               m_global_state;
 };
 
 class EditorFrontend
@@ -293,20 +314,21 @@ public:
 class __dlexport KernelEditor : public KernelProxy
 {
 public:
-        enum GUI_FONTEND_IDR {
-                GUI_FONTEND_NONE,
-                GUI_FONTEND_PURE_SDL,
-                GUI_FONTEND_GTK,
-                GUI_FONTEND_WIN32,
-                GUI_FONTEND_QT,
-                GUI_FONTEND_CUSTUM
+        enum GUIFrontendType {
+                GUIFrontendNone,
+                GUIFrontendPureSDL,
+                GUIFrontendGTK,
+                GUIFrontendWin32,
+                GUIFrontendQT,
+                GUIFrontendCUSTOM
         };
 
         KernelEditor();
         ~KernelEditor();
 
-        void register_editor_frontend(GUI_FONTEND_IDR type, EditorFrontend *backend);
+        void register_editor_frontend(GUIFrontendType type, EditorFrontend *backend);
         void register_editor_backend(EditorBackend* backend);
+        void close();
 private:
         int on_init(int argc, char **argv, KernelEnvironment *env);
         int on_rest_init(KernelEnvironment *env);
@@ -315,7 +337,7 @@ private:
         int on_loop_free(KernelEnvironment *env);
         int on_free(KernelEnvironment *env);
 
-        GUI_FONTEND_IDR         m_frontend_type;
+        GUIFrontendType         m_frontend_type;
         EditorBackend*          m_backend;
         EditorFrontend*         m_frontend;
         struct thread_task*     m_loop_task;

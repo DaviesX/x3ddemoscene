@@ -78,6 +78,7 @@
 		<Unit filename="editor/editbenchmark.cpp" />
 		<Unit filename="editor/editentityproperty.cpp" />
 		<Unit filename="editor/editor.cpp" />
+		<Unit filename="editor/editpowersaveswitch.cpp" />
 		<Unit filename="editor/editprojectmgr.cpp" />
 		<Unit filename="editor/editrenderconf.cpp" />
 		<Unit filename="editor/editrenderregion.cpp" />
