@@ -144,7 +144,7 @@ bool renderer_render(struct render_tree* tree)
         data.is_succeeded       = true;
 
         struct render_tree_visitor visitor_compatibility;
-        render_tree_visitor_init(&visitor_compatibility, render_tree_find_compatible, &data);
+        render_tree_visitor_init2(&visitor_compatibility, nullptr, render_tree_find_compatible, &data);
         render_tree_visit(tree, &visitor_compatibility);
         if (!data.is_succeeded) {
                 return false;
@@ -152,7 +152,7 @@ bool renderer_render(struct render_tree* tree)
 
         data.is_succeeded       = true;
         struct render_tree_visitor visitor_compute;
-        render_tree_visitor_init(&visitor_compute, render_tree_compute, &data);
+        render_tree_visitor_init2(&visitor_compute, nullptr, render_tree_compute, &data);
         render_tree_visit(tree, &visitor_compute);
         if (!data.is_succeeded) {
                 return false;

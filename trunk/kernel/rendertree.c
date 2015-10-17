@@ -281,6 +281,18 @@ static bool is_empty_input(int* c_ibranch, struct render_node* node)
         return true;
 }
 
+static struct render_node* first_input(int* c_ibranch, struct render_node* node)
+{
+        int i;
+        for (i = *c_ibranch; i < node->n_input; i ++) {
+                if (node->input[i] != nullptr) {
+                        *c_ibranch = i;
+                        return node->input[i];
+                }
+        }
+        return nullptr;
+}
+
 static struct render_node* next_input(int* c_ibranch, struct render_node* node)
 {
         int i;
@@ -303,14 +315,22 @@ bool render_tree_visit(struct render_tree* tree, struct render_tree_visitor* vis
         begin_tree_traversal(r0);
         if (c_node == nullptr || is_empty_input(&c_ibranch, c_node)) {
                 backtrack_tree_branch(&stack, r0,
+                                      if (c_node == nullptr) {
+                                              log_critical_err_dbg("encountering empty node during traversal. logical error!");
+                                      }
+                                      if (visitor->backtrack) {
+                                              visitor->backtrack(c_node, c_node->input, c_node->output, visitor->dataptr);
+                                      }
                                       pop_stack(&stack, c_ibranch);
                                       pop_stack(&stack, c_node);
                                       c_node = next_input(&c_ibranch, c_node););
         } else {
-                enter_tree_branch(visitor->this_node(c_node, c_node->input, c_node->output, visitor->dataptr);
+                enter_tree_branch(if (visitor->this_node) {
+                                          visitor->this_node(c_node, c_node->input, c_node->output, visitor->dataptr);
+                                  }
                                   push_stack(&stack, c_node);
                                   push_stack(&stack, c_ibranch);
-                                  c_node = c_node->input[c_ibranch];);
+                                  c_node = first_input(&c_ibranch, c_node););
         }
         end_tree_traversal(r0);
         return true;
@@ -323,6 +343,7 @@ void render_tree_visitor_init(struct render_tree_visitor* visitor,
                                                  void* dataptr),
                               void* dataptr)
 {
+        zero_obj(visitor);
         visitor->this_node = this_node;
         visitor->dataptr = dataptr;
 }
