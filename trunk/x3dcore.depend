@@ -2879,7 +2879,7 @@
 	<x3d/renderer.h>
 	<renderer/geometry.h>
 
-1443038243 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1445140967 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<misc.h>
 	<x3d/common.h>
 	<x3d/rendertree.h>
@@ -2897,7 +2897,7 @@
 	<system/allocator.h>
 	"perspective.h"
 
-1443041822 /home/davis/x3drenderlib-code/trunk/lib/container/paramset.h
+1445140574 /home/davis/x3drenderlib-code/trunk/lib/container/paramset.h
 	<container/container.h>
 	<container/linkedlist.h>
 
@@ -2966,7 +2966,7 @@
 	<renderer/shader.h>
 	<renderer/out.h>
 
-1442691361 /home/davis/x3drenderlib-code/trunk/include/x3d/debug.h
+1445140304 /home/davis/x3drenderlib-code/trunk/include/x3d/debug.h
 	<x3d/common.h>
 	<system/symlib.h>
 
@@ -3175,7 +3175,7 @@
 
 1434738344 /usr/include/gtk-3.0/gtk/gtk-autocleanups.h
 
-1443160672 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+1445141101 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
 	<x3d/renderable.h>
 	<x3d/rendertreeenvconsts.h>
 
@@ -3338,7 +3338,7 @@
 	<renderer/shader_lib.h>
 	"rtshader.h"
 
-1442761041 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
+1445140608 source:/home/davis/x3drenderlib-code/trunk/kernel/debug.c
 	<misc.h>
 	<container/paramset.h>
 	<system/allocator.h>
@@ -3398,7 +3398,7 @@
 	<system/allocator.h>
 	<x3d/renderable.h>
 
-1443192715 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
+1445143172 source:/home/davis/x3drenderlib-code/trunk/drivers/renderer/renderer/ptrenderer.c
 	<math/math.h>
 	<system/symlib.h>
 	<x3d/renderer.h>
@@ -3431,7 +3431,7 @@
 	<container/linkedlist.h>
 	<x3d/renderable.h>
 
-1429815002 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregaterequest.c
+1445137955 source:/home/davis/x3drenderlib-code/trunk/kernel/renderableaggregaterequest.c
 	<system/log.h>
 	<system/allocator.h>
 	<x3d/renderableaggregaterequest.h>
@@ -3454,9 +3454,11 @@
 	<container/linkedlist.h>
 	"renderablecontainerimpl.h"
 
-1445107326 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
+1445143071 source:/home/davis/x3drenderlib-code/trunk/kernel/renderer.c
 	<system/log.h>
 	<system/symlib.h>
+	<container/paramset.h>
+	<x3d/debug.h>
 	<x3d/renderer.h>
 	<renderer/rendererinsmod.h>
 	"rendernodedummyimpl.h"
@@ -3483,7 +3485,7 @@
 	<x3d/rendertree.h>
 	<x3d/rendernoderdaloader.h>
 
-1445107417 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
+1445142347 source:/home/davis/x3drenderlib-code/trunk/kernel/rendertree.c
 	<misc.h>
 	<container/stack.h>
 	<container/arraylist.h>
@@ -3576,7 +3578,7 @@
 
 1429550824 source:/home/davis/x3drenderlib-code/trunk/lib/container/linkedlist.c
 
-1442674804 source:/home/davis/x3drenderlib-code/trunk/lib/container/paramset.c
+1445142548 source:/home/davis/x3drenderlib-code/trunk/lib/container/paramset.c
 	<misc.h>
 	<container/paramset.h>
 

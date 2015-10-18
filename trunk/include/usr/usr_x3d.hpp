@@ -40,8 +40,15 @@ namespace usr
 
 template<class T> class CoreResource {
 public:
-        virtual T*      get_core_resource() {return nullptr;}
-        virtual void    set_core_resource(T* t) {}
+        virtual T*  get_core_resource()
+        {
+                log_critical_err_dbg("pending for core resources access, but accessor does not exists");
+                return nullptr;
+        }
+        virtual void set_core_resource(T* t)
+        {
+                log_critical_err_dbg("pending for core resources mutation, but mutator does not exists");
+        }
 };
 
 }

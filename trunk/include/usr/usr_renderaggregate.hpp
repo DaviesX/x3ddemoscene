@@ -33,6 +33,8 @@ public:
         bool has_renderable ( Renderable* renderable );
         Renderable* find_renderable ( string name );
         int get_renderable_count();
+
+        struct rda_context* get_core_resource();
 private:
         struct rda_context      m_context;
 };

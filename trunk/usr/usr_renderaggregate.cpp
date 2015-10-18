@@ -160,6 +160,11 @@ bool RenderAggregate::has_renderable(Renderable* renderable)
         return rda_context_has_renderable(&m_context, renderable->get_core_resource());
 }
 
+struct rda_context* RenderAggregate::get_core_resource()
+{
+        return &m_context;
+}
+
 }// namespace usr
 
 }// namespace x3d

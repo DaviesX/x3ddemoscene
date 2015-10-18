@@ -25,11 +25,13 @@ typedef void (*f_Render_NodeExImpl_Compute) (struct render_node_ex_impl* self,
                                              const struct render_node_ex_impl* output[]);
 typedef void* (*f_Render_NodeExImpl_Get_Result) (const struct render_node_ex_impl* self);
 typedef void (*f_Render_NodeExImpl_Free) (struct render_node_ex_impl* self);
+typedef float (*f_Render_NodeExImpl_Progress) (struct render_node_ex_impl* self);
 struct render_node_ex_ops {
         f_Render_NodeExImpl_Is_Compatiable      f_is_compatible;
         f_Render_NodeExImpl_Compute             f_compute;
         f_Render_NodeExImpl_Get_Result          f_get_result;
         f_Render_NodeExImpl_Free                f_free;
+        f_Render_NodeExImpl_Progress            f_progress;
 };
 
 struct render_node_ex_impl {

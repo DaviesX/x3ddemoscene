@@ -24,9 +24,9 @@ bool debugger_init(int argc, char *argv[], struct symbol_set *symbols)
         dbg->argc = argc;
         dbg->argv = argv;
         alg_var_set_init(&dbg->dbg_env);
-        alg_var_set_declare("argc", &argc, sizeof(argc), &dbg->dbg_env);
-        alg_var_set_declare("argv", &argv, sizeof(argv), &dbg->dbg_env);
-        alg_var_set_declare("x3d-core-symbol", symbols, sizeof(*symbols), &dbg->dbg_env);
+        alg_var_set_declare(&dbg->dbg_env, "argc", &argc, sizeof(argc));
+        alg_var_set_declare(&dbg->dbg_env, "argv", &argv, sizeof(argv));
+        alg_var_set_declare(&dbg->dbg_env, "x3d-core-symbol", symbols, sizeof(*symbols));
         dbg->test_case = alloc_fix(sizeof(*dbg->test_case), c_NumDebugPositions);
         int n;
         for (n = 0; n < c_NumDebugPositions; n ++) {

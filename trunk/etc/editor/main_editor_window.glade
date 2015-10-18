@@ -87,6 +87,22 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="MI-BuildDemoscene">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Build Demoscene</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="MI-CloseDemoscene">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Close Demoscene</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem3">
                         <property name="label">gtk-save</property>
                         <property name="visible">True</property>
@@ -102,14 +118,6 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkMenuItem" id="MI-BuildDemoscene">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Build Demoscene</property>
-                        <property name="use_underline">True</property>
                       </object>
                     </child>
                     <child>
@@ -278,13 +286,13 @@
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="tools-menu">
+              <object class="GtkMenuItem" id="M-Run">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Tools</property>
+                <property name="label" translatable="yes">_Run</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
-                  <object class="GtkMenu" id="tools-submenu">
+                  <object class="GtkMenu" id="SM-Run">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -302,6 +310,14 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="MI-RunDemoscene">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Run Demoscene</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="MI-SceneBaker">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -310,18 +326,18 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="MI-OptimizeSceneStructure">
+                      <object class="GtkMenuItem" id="MI-AnalyzeSceneStructure">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Optimize Scene Structure</property>
+                        <property name="label" translatable="yes">_Analyze Scene Structure</property>
                         <property name="use_underline">True</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="MI-RunDemoscene">
+                      <object class="GtkMenuItem" id="MI-RenderCurrentFrame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Run Demoscene</property>
+                        <property name="label" translatable="yes">_Render Current Frame</property>
                         <property name="use_underline">True</property>
                       </object>
                     </child>
@@ -340,10 +356,10 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="MI-RefreshResource">
+                      <object class="GtkMenuItem" id="MI-ReloadResource">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Refresh All Resources</property>
+                        <property name="label" translatable="yes">_Reload Linked Resources</property>
                         <property name="use_underline">True</property>
                       </object>
                     </child>
@@ -380,17 +396,6 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkToolbar" id="TB-MainToolBar">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
           </packing>
         </child>
         <child>

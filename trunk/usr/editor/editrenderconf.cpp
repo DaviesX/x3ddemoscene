@@ -128,6 +128,8 @@ void RenderConfigActiveX::update()
         KernelEnvironment* state = get_state_buffer();
         RenderRegionActiveX* region = (RenderRegionActiveX*) state->use(c_RenderRegion);
         ProjectionProbe* probe = region->get_probe();
+        WorldDataActiveX* world_data = (WorldDataActiveX*) state->use(c_WorldData);
+        World& world = world_data->get_world();
         /* atomically swap the state buffer */
         wait_for_update ();
         swap_buf();
@@ -135,6 +137,8 @@ void RenderConfigActiveX::update()
         /* update render tree */
         pimpl->m_tree.clear_environment_variables();
         pimpl->m_tree.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
+        pimpl->m_tree.set_environment_variable(RenderEnvRenderable, pimpl->c_RenderContextName,
+                                               world.get_render_aggregate()->get_core_resource());
         pimpl->m_renderer->update(&pimpl->m_tree);
 }
 

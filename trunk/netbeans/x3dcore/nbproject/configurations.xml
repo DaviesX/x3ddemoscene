@@ -1,0 +1,2171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="loader" displayName="loader" projectFiles="true">
+        <itemPath>../../include/loader/modelloader.h</itemPath>
+        <itemPath>../../include/loader/sceneloader.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="renderer" displayName="renderer" projectFiles="true">
+        <itemPath>../../include/renderer/geocache.h</itemPath>
+        <itemPath>../../include/renderer/geometry.h</itemPath>
+        <itemPath>../../include/renderer/obj_probe.h</itemPath>
+        <itemPath>../../include/renderer/out.h</itemPath>
+        <itemPath>../../include/renderer/proj_probe.h</itemPath>
+        <itemPath>../../include/renderer/renderable.h</itemPath>
+        <itemPath>../../include/renderer/renderer.h</itemPath>
+        <itemPath>../../include/renderer/rendererinsmod.h</itemPath>
+        <itemPath>../../include/renderer/shader.h</itemPath>
+        <itemPath>../../include/renderer/shader_lib.h</itemPath>
+        <itemPath>../../include/renderer/spatial_probe.h</itemPath>
+        <itemPath>../../include/renderer/utility.h</itemPath>
+        <itemPath>../../include/renderer/volume.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="x3d" displayName="x3d" projectFiles="true">
+        <itemPath>../../include/x3d/common.h</itemPath>
+        <itemPath>../../include/x3d/debug.h</itemPath>
+        <itemPath>../../include/x3d/dynamics.h</itemPath>
+        <itemPath>../../include/x3d/init.h</itemPath>
+        <itemPath>../../include/x3d/modelentity.h</itemPath>
+        <itemPath>../../include/x3d/poi.h</itemPath>
+        <itemPath>../../include/x3d/projectionprobe.h</itemPath>
+        <itemPath>../../include/x3d/renderable.h</itemPath>
+        <itemPath>../../include/x3d/renderableaggregate.h</itemPath>
+        <itemPath>../../include/x3d/renderableaggregaterequest.h</itemPath>
+        <itemPath>../../include/x3d/renderer.h</itemPath>
+        <itemPath>../../include/x3d/rendererimpl.h</itemPath>
+        <itemPath>../../include/x3d/rendernodehdr.h</itemPath>
+        <itemPath>../../include/x3d/rendernodelayer.h</itemPath>
+        <itemPath>../../include/x3d/rendernodeoutput.h</itemPath>
+        <itemPath>../../include/x3d/rendernodepostao.h</itemPath>
+        <itemPath>../../include/x3d/rendernoderadiance.h</itemPath>
+        <itemPath>../../include/x3d/rendernoderdaloader.h</itemPath>
+        <itemPath>../../include/x3d/rendertree.h</itemPath>
+        <itemPath>../../include/x3d/rendertreeenvconsts.h</itemPath>
+        <itemPath>../../include/x3d/resloader.h</itemPath>
+        <itemPath>../../include/x3d/strategy.h</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
+        <logicalFolder name="disk" displayName="disk" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="input" displayName="input" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="loader" displayName="loader" projectFiles="true">
+          <itemPath>../../drivers/loader/fbxmodel.c</itemPath>
+          <itemPath>../../drivers/loader/fbxmodel.h</itemPath>
+          <itemPath>../../drivers/loader/imageloader.c</itemPath>
+          <itemPath>../../drivers/loader/imageloader.h</itemPath>
+          <itemPath>../../drivers/loader/main.c</itemPath>
+          <itemPath>../../drivers/loader/main.h</itemPath>
+          <itemPath>../../drivers/loader/modelloader.c</itemPath>
+          <itemPath>../../drivers/loader/modelloader.h</itemPath>
+          <itemPath>../../drivers/loader/objmodel.c</itemPath>
+          <itemPath>../../drivers/loader/objmodel.h</itemPath>
+          <itemPath>../../drivers/loader/pbrtmodel.c</itemPath>
+          <itemPath>../../drivers/loader/pbrtmodel.h</itemPath>
+          <itemPath>../../drivers/loader/rendererconf.c</itemPath>
+          <itemPath>../../drivers/loader/rendererconf.h</itemPath>
+          <itemPath>../../drivers/loader/x3dscene.c</itemPath>
+          <itemPath>../../drivers/loader/x3dscene.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="renderer" displayName="renderer" projectFiles="true">
+          <logicalFolder name="geometry" displayName="geometry" projectFiles="true">
+            <itemPath>../../drivers/renderer/geometry/bvh.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/bvh.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/cone_shape.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/cone_shape.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/cylinder_shape.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/cylinder_shape.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/disk_shape.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/disk_shape.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/geocache.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/geometry.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/grid.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/grid.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/hyperboloid_shape.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/hyperboloid_shape.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/kdtree.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/kdtree.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/main.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/main.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/octree.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/octree.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/paraboloid_shape.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/paraboloid_shape.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/primitive_parition.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/shape_common.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/sphere_shape.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/sphere_shape.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/trimesh_shape.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/trimesh_shape.h</itemPath>
+            <itemPath>../../drivers/renderer/geometry/trimesh_subdivide.c</itemPath>
+            <itemPath>../../drivers/renderer/geometry/trimesh_subdivide.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="light" displayName="light" projectFiles="true">
+            <itemPath>../../drivers/renderer/light/light.c</itemPath>
+            <itemPath>../../drivers/renderer/light/light.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="material" displayName="material" projectFiles="true">
+            <itemPath>../../drivers/renderer/material/material.c</itemPath>
+            <itemPath>../../drivers/renderer/material/material.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="misc" displayName="misc" projectFiles="true">
+            <itemPath>../../drivers/renderer/misc/volume.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="out" displayName="out" projectFiles="true">
+            <itemPath>../../drivers/renderer/out/binary_out.c</itemPath>
+            <itemPath>../../drivers/renderer/out/binary_out.h</itemPath>
+            <itemPath>../../drivers/renderer/out/image_out.c</itemPath>
+            <itemPath>../../drivers/renderer/out/image_out.h</itemPath>
+            <itemPath>../../drivers/renderer/out/out.c</itemPath>
+            <itemPath>../../drivers/renderer/out/screen_out.c</itemPath>
+            <itemPath>../../drivers/renderer/out/screen_out.h</itemPath>
+            <itemPath>../../drivers/renderer/out/stream_out.c</itemPath>
+            <itemPath>../../drivers/renderer/out/stream_out.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="probe" displayName="probe" projectFiles="true">
+            <itemPath>../../drivers/renderer/probe/fisheye.c</itemPath>
+            <itemPath>../../drivers/renderer/probe/fisheye.h</itemPath>
+            <itemPath>../../drivers/renderer/probe/obj_probe.c</itemPath>
+            <itemPath>../../drivers/renderer/probe/orthogonal.c</itemPath>
+            <itemPath>../../drivers/renderer/probe/orthogonal.h</itemPath>
+            <itemPath>../../drivers/renderer/probe/perspective.c</itemPath>
+            <itemPath>../../drivers/renderer/probe/perspective.h</itemPath>
+            <itemPath>../../drivers/renderer/probe/proj_probe.c</itemPath>
+            <itemPath>../../drivers/renderer/probe/spatial_probe.c</itemPath>
+            <itemPath>../../drivers/renderer/probe/spherical.c</itemPath>
+            <itemPath>../../drivers/renderer/probe/spherical.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="renderable" displayName="renderable" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="renderer" displayName="renderer" projectFiles="true">
+            <itemPath>../../drivers/renderer/renderer/bufferedobject.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/bufferedobject.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/colorspectrum.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/colorspectrum.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/compositepipeline.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/compositepipeline.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/dbg_rasterizer.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/dbg_vertex_processor.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/fbo.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/fbo.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/lcrenderer.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/main.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/main.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/pmrenderer.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/pmrenderer.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/ptrenderer.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/ptrenderer.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterization.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterization.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterizer.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterizer.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterpass.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterpass.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterpipeline.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rasterpipeline.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/raytracepipeline.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/raytracepipeline.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rendererinsmod.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rendererinsmod.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rendertarget.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rendertarget.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rtrenderer.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/rtrenderer.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/shaderformulate.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/shaderformulate.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/surface</itemPath>
+            <itemPath>../../drivers/renderer/renderer/surface.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/surface.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/trianglebuffer.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/trianglebuffer.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/vbo.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/vbo.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/vertattri_lerp.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/vertexprocessor.c</itemPath>
+            <itemPath>../../drivers/renderer/renderer/vertexprocessor.h</itemPath>
+            <itemPath>../../drivers/renderer/renderer/vibuffer.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="shader" displayName="shader" projectFiles="true">
+            <itemPath>../../drivers/renderer/shader/basic_rt_shader.c</itemPath>
+            <itemPath>../../drivers/renderer/shader/basic_rt_shader_a.h</itemPath>
+            <itemPath>../../drivers/renderer/shader/basic_rt_shader_so.h</itemPath>
+            <itemPath>../../drivers/renderer/shader/main.c</itemPath>
+            <itemPath>../../drivers/renderer/shader/main.h</itemPath>
+            <itemPath>../../drivers/renderer/shader/ptshader.c</itemPath>
+            <itemPath>../../drivers/renderer/shader/ptshader.h</itemPath>
+            <itemPath>../../drivers/renderer/shader/rtshader.h</itemPath>
+            <itemPath>../../drivers/renderer/shader/shader.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="texture" displayName="texture" projectFiles="true">
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="solver" displayName="solver" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="sound" displayName="sound" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="sys" displayName="sys" projectFiles="true">
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="kernel" displayName="kernel" projectFiles="true">
+        <itemPath>../../kernel/debug.c</itemPath>
+        <itemPath>../../kernel/dynamics.c</itemPath>
+        <itemPath>../../kernel/init.c</itemPath>
+        <itemPath>../../kernel/modelentity.c</itemPath>
+        <itemPath>../../kernel/panic.c</itemPath>
+        <itemPath>../../kernel/poi.c</itemPath>
+        <itemPath>../../kernel/projectionprobe.c</itemPath>
+        <itemPath>../../kernel/renderable.c</itemPath>
+        <itemPath>../../kernel/renderableaggregate.c</itemPath>
+        <itemPath>../../kernel/renderableaggregaterequest.c</itemPath>
+        <itemPath>../../kernel/renderablecontainerimpl.c</itemPath>
+        <itemPath>../../kernel/renderablecontainerimpl.h</itemPath>
+        <itemPath>../../kernel/renderer.c</itemPath>
+        <itemPath>../../kernel/rendernodedummyimpl.h</itemPath>
+        <itemPath>../../kernel/rendernodehdr.c</itemPath>
+        <itemPath>../../kernel/rendernodelayer.c</itemPath>
+        <itemPath>../../kernel/rendernodeoutput.c</itemPath>
+        <itemPath>../../kernel/rendernoderadiance.c</itemPath>
+        <itemPath>../../kernel/rendernoderdaloader.c</itemPath>
+        <itemPath>../../kernel/rendertree.c</itemPath>
+        <itemPath>../../kernel/resloader.c</itemPath>
+        <itemPath>../../kernel/strategy.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="lib" displayName="lib" projectFiles="true">
+        <logicalFolder name="codecs" displayName="codecs" projectFiles="true">
+          <itemPath>../../lib/codecs/serializer.c</itemPath>
+          <itemPath>../../lib/codecs/serializer.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="compiler" displayName="compiler" projectFiles="true">
+          <itemPath>../../lib/compiler/compiler.c</itemPath>
+          <itemPath>../../lib/compiler/compiler.h</itemPath>
+          <itemPath>../../lib/compiler/emitter.c</itemPath>
+          <itemPath>../../lib/compiler/emitter.h</itemPath>
+          <itemPath>../../lib/compiler/error.c</itemPath>
+          <itemPath>../../lib/compiler/error.h</itemPath>
+          <itemPath>../../lib/compiler/lexer.c</itemPath>
+          <itemPath>../../lib/compiler/lexer.h</itemPath>
+          <itemPath>../../lib/compiler/main.c</itemPath>
+          <itemPath>../../lib/compiler/main.h</itemPath>
+          <itemPath>../../lib/compiler/parser.c</itemPath>
+          <itemPath>../../lib/compiler/parser.h</itemPath>
+          <itemPath>../../lib/compiler/symbol.c</itemPath>
+          <itemPath>../../lib/compiler/symbol.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="container" displayName="container" projectFiles="true">
+          <itemPath>../../lib/container/arraylist.c</itemPath>
+          <itemPath>../../lib/container/arraylist.h</itemPath>
+          <itemPath>../../lib/container/balancedtree.c</itemPath>
+          <itemPath>../../lib/container/balancedtree.h</itemPath>
+          <itemPath>../../lib/container/container.h</itemPath>
+          <itemPath>../../lib/container/hashmap.c</itemPath>
+          <itemPath>../../lib/container/hashmap.h</itemPath>
+          <itemPath>../../lib/container/hashmapstatic.h</itemPath>
+          <itemPath>../../lib/container/linkedlist.c</itemPath>
+          <itemPath>../../lib/container/linkedlist.h</itemPath>
+          <itemPath>../../lib/container/paramset.c</itemPath>
+          <itemPath>../../lib/container/paramset.h</itemPath>
+          <itemPath>../../lib/container/quicksort.c</itemPath>
+          <itemPath>../../lib/container/quicksort.h</itemPath>
+          <itemPath>../../lib/container/stack.c</itemPath>
+          <itemPath>../../lib/container/stack.h</itemPath>
+          <itemPath>../../lib/container/staging.c</itemPath>
+          <itemPath>../../lib/container/staging.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="math" displayName="math" projectFiles="true">
+          <itemPath>../../lib/math/decimal.c</itemPath>
+          <itemPath>../../lib/math/decimal.h</itemPath>
+          <itemPath>../../lib/math/fx.c</itemPath>
+          <itemPath>../../lib/math/fx.h</itemPath>
+          <itemPath>../../lib/math/geometry.c</itemPath>
+          <itemPath>../../lib/math/geometry.h</itemPath>
+          <itemPath>../../lib/math/main.c</itemPath>
+          <itemPath>../../lib/math/main.h</itemPath>
+          <itemPath>../../lib/math/math.h</itemPath>
+          <itemPath>../../lib/math/matrix.c</itemPath>
+          <itemPath>../../lib/math/matrix.h</itemPath>
+          <itemPath>../../lib/math/quat.c</itemPath>
+          <itemPath>../../lib/math/quat.h</itemPath>
+          <itemPath>../../lib/math/vector.c</itemPath>
+          <itemPath>../../lib/math/vector.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="spatial" displayName="spatial" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="system" displayName="system" projectFiles="true">
+          <itemPath>../../lib/system/allocator.c</itemPath>
+          <itemPath>../../lib/system/allocator.h</itemPath>
+          <itemPath>../../lib/system/log.c</itemPath>
+          <itemPath>../../lib/system/log.h</itemPath>
+          <itemPath>../../lib/system/symlib.c</itemPath>
+          <itemPath>../../lib/system/symlib.h</itemPath>
+          <itemPath>../../lib/system/thread.c</itemPath>
+          <itemPath>../../lib/system/thread.h</itemPath>
+          <itemPath>../../lib/system/timing.c</itemPath>
+          <itemPath>../../lib/system/timing.h</itemPath>
+        </logicalFolder>
+        <itemPath>../../lib/main.c</itemPath>
+        <itemPath>../../lib/main.h</itemPath>
+        <itemPath>../../lib/misc.c</itemPath>
+        <itemPath>../../lib/misc.h</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>../kernel</Elem>
+    <Elem>../include/x3d</Elem>
+    <Elem>../include/renderer</Elem>
+    <Elem>../include/loader</Elem>
+    <Elem>../lib</Elem>
+    <Elem>../drivers</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <architecture>2</architecture>
+          <incDir>
+            <pElem>../../include</pElem>
+            <pElem>../../lib</pElem>
+          </incDir>
+          <commandLine>-Werror `pkg-config gtk+-3.0 --cflags` -fPIC </commandLine>
+          <preprocessorList>
+            <Elem>X3D_COMPILER_GCC</Elem>
+            <Elem>X3D_PLATFORM_POSIX</Elem>
+          </preprocessorList>
+          <useLinkerLibraries>false</useLinkerLibraries>
+        </cTool>
+        <linkerTool>
+          <commandLine>-ldl -pthread `pkg-config gtk+-3.0 --libs` </commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../../drivers/loader/fbxmodel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/fbxmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/imageloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/imageloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/modelloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/modelloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/objmodel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/objmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/pbrtmodel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/pbrtmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/rendererconf.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/loader/rendererconf.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/loader/x3dscene.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/x3dscene.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/bvh.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/bvh.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cone_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cone_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cylinder_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cylinder_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/disk_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/disk_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/geocache.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/geometry.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/grid.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/grid.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/hyperboloid_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/hyperboloid_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/kdtree.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/kdtree.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/main.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/octree.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/octree.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/paraboloid_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/paraboloid_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/primitive_parition.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/shape_common.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/sphere_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/sphere_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_subdivide.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_subdivide.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/light/light.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/light/light.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/material/material.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/material/material.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/misc/volume.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/binary_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/binary_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/image_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/image_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/out.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/screen_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/screen_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/stream_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/stream_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/fisheye.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/fisheye.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/obj_probe.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/orthogonal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/orthogonal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/perspective.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/perspective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/proj_probe.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/spatial_probe.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/spherical.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/spherical.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/bufferedobject.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/bufferedobject.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/colorspectrum.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/colorspectrum.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/compositepipeline.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/compositepipeline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/dbg_rasterizer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/dbg_vertex_processor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/fbo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/fbo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/lcrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/main.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/pmrenderer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/pmrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/ptrenderer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/ptrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterization.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterization.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterizer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterizer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpass.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpipeline.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpipeline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/raytracepipeline.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/raytracepipeline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendererinsmod.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendererinsmod.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendertarget.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendertarget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rtrenderer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rtrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/shaderformulate.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/shaderformulate.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/surface"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/surface.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/surface.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/trianglebuffer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/trianglebuffer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vbo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vbo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vertattri_lerp.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vertexprocessor.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vertexprocessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vibuffer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/basic_rt_shader.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/basic_rt_shader_a.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/basic_rt_shader_so.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/main.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/ptshader.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/ptshader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/rtshader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/shader.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../include/loader/modelloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/loader/sceneloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/geocache.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/geometry.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/obj_probe.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/out.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/proj_probe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/renderable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/rendererinsmod.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/shader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/shader_lib.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/spatial_probe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/volume.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/debug.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/dynamics.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/init.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/modelentity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/poi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/projectionprobe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderableaggregate.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderableaggregaterequest.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendererimpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodehdr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodelayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodeoutput.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodepostao.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernoderadiance.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernoderdaloader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendertree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendertreeenvconsts.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/resloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/strategy.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../kernel/debug.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/dynamics.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/init.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/modelentity.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/panic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/poi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/projectionprobe.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/renderable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/renderableaggregate.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/renderableaggregaterequest.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../kernel/renderablecontainerimpl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../kernel/renderablecontainerimpl.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../kernel/renderer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodedummyimpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodehdr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodelayer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodeoutput.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernoderadiance.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernoderdaloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendertree.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/resloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/strategy.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/codecs/serializer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/codecs/serializer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/compiler.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/compiler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/emitter.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/emitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/error.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/error.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/lexer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/lexer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/parser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/symbol.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/symbol.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/arraylist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/arraylist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/balancedtree.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/balancedtree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/container.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/hashmap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/hashmap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/hashmapstatic.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../lib/container/linkedlist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/linkedlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/paramset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/paramset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/quicksort.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/quicksort.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/staging.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/staging.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/decimal.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/decimal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/fx.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/fx.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/geometry.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/geometry.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/math.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/matrix.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/quat.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/quat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/vector.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/vector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/misc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/misc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/allocator.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/allocator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/log.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/log.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/symlib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/symlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/thread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/thread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/timing.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/timing.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <incDir>
+            <pElem>../../include</pElem>
+            <pElem>../../lib</pElem>
+          </incDir>
+          <commandLine>-Werror `pkg-config gtk+-3.0 --cflags` -fPIC </commandLine>
+          <preprocessorList>
+            <Elem>X3D_COMPILER_GCC</Elem>
+            <Elem>X3D_PLATFORM_POSIX</Elem>
+          </preprocessorList>
+          <useLinkerLibraries>false</useLinkerLibraries>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <commandLine>-ldl -pthread `pkg-config gtk+-3.0 --libs` </commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../../drivers/loader/fbxmodel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/fbxmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/imageloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/imageloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/modelloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/modelloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/objmodel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/objmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/pbrtmodel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/pbrtmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/rendererconf.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/loader/rendererconf.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/loader/x3dscene.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/loader/x3dscene.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/bvh.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/bvh.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cone_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cone_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cylinder_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/cylinder_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/disk_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/disk_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/geocache.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/geometry.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/grid.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/grid.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/hyperboloid_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/hyperboloid_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/kdtree.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/kdtree.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/main.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/octree.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/octree.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/paraboloid_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/paraboloid_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/primitive_parition.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/shape_common.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/sphere_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/sphere_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_shape.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_shape.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_subdivide.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/geometry/trimesh_subdivide.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/light/light.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/light/light.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/material/material.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/material/material.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/misc/volume.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/binary_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/binary_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/image_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/image_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/out.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/screen_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/screen_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/stream_out.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/out/stream_out.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/fisheye.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/fisheye.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/obj_probe.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/orthogonal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/orthogonal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/perspective.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/perspective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/proj_probe.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/spatial_probe.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/spherical.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/probe/spherical.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/bufferedobject.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/bufferedobject.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/colorspectrum.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/colorspectrum.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/compositepipeline.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/compositepipeline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/dbg_rasterizer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/dbg_vertex_processor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/fbo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/fbo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/lcrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/main.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/pmrenderer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/pmrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/ptrenderer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/ptrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterization.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterization.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterizer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterizer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpass.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpipeline.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rasterpipeline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/raytracepipeline.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/raytracepipeline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendererinsmod.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendererinsmod.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendertarget.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rendertarget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rtrenderer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/rtrenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/shaderformulate.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/shaderformulate.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/surface"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/surface.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/surface.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/trianglebuffer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/trianglebuffer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vbo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vbo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vertattri_lerp.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vertexprocessor.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vertexprocessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/renderer/vibuffer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/basic_rt_shader.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/basic_rt_shader_a.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/basic_rt_shader_so.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/main.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/ptshader.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/ptshader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/rtshader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../drivers/renderer/shader/shader.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../include/loader/modelloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/loader/sceneloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/geocache.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/geometry.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/obj_probe.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/out.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/proj_probe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/renderable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/rendererinsmod.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/shader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/shader_lib.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/spatial_probe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/renderer/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/renderer/volume.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/debug.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/dynamics.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/init.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/modelentity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/poi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/projectionprobe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderableaggregate.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderableaggregaterequest.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendererimpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodehdr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodelayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodeoutput.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernodepostao.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernoderadiance.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendernoderdaloader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendertree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/rendertreeenvconsts.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/x3d/resloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/x3d/strategy.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../kernel/debug.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/dynamics.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/init.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/modelentity.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/panic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/poi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/projectionprobe.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/renderable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/renderableaggregate.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/renderableaggregaterequest.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../kernel/renderablecontainerimpl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../kernel/renderablecontainerimpl.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../kernel/renderer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodedummyimpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodehdr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodelayer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernodeoutput.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernoderadiance.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendernoderdaloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/rendertree.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/resloader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../kernel/strategy.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/codecs/serializer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/codecs/serializer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/compiler.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/compiler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/emitter.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/emitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/error.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/error.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/lexer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/lexer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/parser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/symbol.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/compiler/symbol.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/arraylist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/arraylist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/balancedtree.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/balancedtree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/container.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/hashmap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/hashmap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/hashmapstatic.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../lib/container/linkedlist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/linkedlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/paramset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/paramset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/quicksort.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/quicksort.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/container/staging.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/container/staging.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/decimal.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/decimal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/fx.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/fx.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/geometry.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/geometry.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/math.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/matrix.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/quat.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/quat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/math/vector.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/math/vector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/misc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/misc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/allocator.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/allocator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/log.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/log.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/symlib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/symlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/thread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/thread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/timing.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/timing.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -13,6 +13,7 @@ enum DebugPosition {
         Debug_KernelHalt,
         DebugPTRendererPrintBenchmarkGeometry,
         DebugPTRendererExportRenderredImage,
+        Debug_renderer_c_renderer_render,
         c_NumDebugPositions
 };
 

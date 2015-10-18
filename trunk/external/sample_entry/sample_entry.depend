@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1443831727 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
+1445142261 source:/home/davis/x3drenderlib-code/trunk/external/sample_entry/main.cpp
 	<stdio.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_editor.hpp>
 
-1441105242 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
+1445135949 /home/davis/x3drenderlib-code/trunk/include/usr/usr_x3d.hpp
 	<string>
 	<algorithm>
 	<set>
@@ -88,7 +88,7 @@
 1429818090 /home/davis/x3drenderlib-code/trunk/include/x3d/init.h
 	<misc.h>
 
-1443038243 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
+1445140967 /home/davis/x3drenderlib-code/trunk/include/x3d/renderer.h
 	<misc.h>
 	<x3d/common.h>
 	<x3d/rendertree.h>
@@ -104,7 +104,7 @@
 	<container/arraylist.h>
 	<x3d/common.h>
 
-1443160672 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
+1445141101 /home/davis/x3drenderlib-code/trunk/include/x3d/rendertree.h
 	<x3d/renderable.h>
 	<x3d/rendertreeenvconsts.h>
 
@@ -132,7 +132,7 @@
 	<usr/usr_resourceloader.hpp>
 	<usr/usr_renderer.hpp>
 
-1429818730 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderaggregate.hpp
+1445136033 /home/davis/x3drenderlib-code/trunk/include/usr/usr_renderaggregate.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_renderable.hpp>
 

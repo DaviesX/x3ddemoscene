@@ -1,5 +1,7 @@
 #include <system/log.h>
 #include <system/symlib.h>
+#include <container/paramset.h>
+#include <x3d/debug.h>
 #include <x3d/renderer.h>
 #include <renderer/rendererinsmod.h>
 #include "rendernodedummyimpl.h"
@@ -135,6 +137,12 @@ static void render_tree_compute(struct render_node* node, struct render_node* in
 
 bool renderer_render(struct render_tree* tree)
 {
+        debugger_invoke_begin();
+        struct alg_var_set      dbg_params;
+        alg_var_set_init(&dbg_params);
+        alg_var_set_declare(&dbg_params, "tree", tree, sizeof(tree));
+        debugger_invoke(Debug_renderer_c_renderer_render, (struct alg_var_set*) tree);
+
         if (!render_tree_verify(tree)) {
                 log_severe_err_dbg("couldn't verify render tree");
                 return false;
@@ -157,6 +165,9 @@ bool renderer_render(struct render_tree* tree)
         if (!data.is_succeeded) {
                 return false;
         }
+
+        debugger_invoke_end();
+        alg_var_set_free(&dbg_params);
         return true;
 }
 
@@ -204,4 +215,29 @@ struct render_node_ex* render_node_ex_impl_get_ex(struct render_node_ex_impl* se
 struct render_node_ex_impl* render_node_ex_get_ex_impl(struct render_node_ex* self, int id)
 {
         return self->metainst[id];
+}
+
+
+
+// Test Cases:
+
+
+// renderer_tree_test
+__dlexport void __callback                  renderer_tree_test_init(struct alg_var_set* envir) {}
+__dlexport void __callback                  renderer_tree_test_free(struct alg_var_set* envir) {}
+__dlexport enum DebugPosition* __callback   renderer_tree_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        static enum DebugPosition pos[] = {
+                Debug_renderer_c_renderer_render,
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = false;
+        return pos;
+}
+__dlexport void __callback                  renderer_tree_test(struct alg_var_set* envir)
+{
+        log_normal_dbg("renderer tree test commence");
+        struct render_tree* tree = (struct render_tree*) envir; //alg_var_set_use(envir, "tree");
+        render_tree_print(tree);
 }

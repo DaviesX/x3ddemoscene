@@ -127,6 +127,7 @@ __dlexport void*                render_tree_retrieve_environment(struct render_t
 __dlexport void                 render_tree_clear_environment(struct render_tree* tree);
 __dlexport bool                 render_tree_visit(struct render_tree* tree, struct render_tree_visitor* visitor);
 __dlexport bool                 render_tree_verify(struct render_tree* self);
+__dlexport void                 render_tree_print(struct render_tree* self);
 
 
 #endif // RENDERTREE_H_INCLUDED

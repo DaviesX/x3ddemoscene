@@ -131,7 +131,7 @@ bool SplashScreen::show(bool visible)
                 pack->s_trans    = 1.0;
                 pack->pimpl      = pimpl;
                 g_timeout_add(pack->interval, splash_diminisher, (gpointer) pack);
-                while(!pack->has_finished);
+                while(!pack->has_finished) thread_task_idle(1);
                 free_fix(pack);
                 stop_gtk_main();
         }
