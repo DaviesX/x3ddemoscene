@@ -85,9 +85,9 @@ static int on_free(void* env)
 Kernel::Kernel ( void )
 {
 #ifdef X3D_DEBUG_MODE
-        kernel_add_param ( (char*) "--so_path", (char*) "./libX3dCore_dbg.so" );
+        kernel_add_param ( (char*) "--so_path", (char*) "./libx3dcore.so" );
 #else
-        kernel_add_param ( (char*) "--so_path", (char*) "./libX3dCore.so" );
+        kernel_add_param ( (char*) "--so_path", (char*) "./libx3dcore.so" );
 #endif
         kernel_reg_environment ( (void*) this );
         kernel_reg_signal ( (char*) "on-init", (f_Generic) on_init );

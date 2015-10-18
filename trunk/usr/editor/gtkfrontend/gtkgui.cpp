@@ -83,7 +83,7 @@ bool EditorGtkFrontend::EditorBackendGtkFrontendInt::builder_load(string filenam
                 if (error) {
                         log_severe_err_dbg("builder fail to load: %s\n%s",
                                            filename.c_str(), error->message);
-                        g_free(error);
+                        //g_free(error);
                 } else {
                         log_severe_err_dbg("builder fail to load: %s, unknown error",
                                            filename.c_str());

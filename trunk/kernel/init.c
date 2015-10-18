@@ -70,7 +70,7 @@ static char* get_self_so ( int argc, char* argv[] )
                 }
         }
 retry:
-        return "./libX3dCore.so";
+        return "./libx3dcore.so";
 }
 
 __dlexport int main(int argc, char* argv[])

@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="usr" displayName="usr" projectFiles="true">
+        <itemPath>../../include/usr/usr_cinematicprogs.hpp</itemPath>
+        <itemPath>../../include/usr/usr_editor.hpp</itemPath>
+        <itemPath>../../include/usr/usr_editorfrontend.hpp</itemPath>
+        <itemPath>../../include/usr/usr_entityprogs.hpp</itemPath>
+        <itemPath>../../include/usr/usr_kernel.hpp</itemPath>
+        <itemPath>../../include/usr/usr_missionprogs.hpp</itemPath>
+        <itemPath>../../include/usr/usr_projectionprobe.hpp</itemPath>
+        <itemPath>../../include/usr/usr_renderable.hpp</itemPath>
+        <itemPath>../../include/usr/usr_renderaggregate.hpp</itemPath>
+        <itemPath>../../include/usr/usr_renderer.hpp</itemPath>
+        <itemPath>../../include/usr/usr_resourceloader.hpp</itemPath>
+        <itemPath>../../include/usr/usr_world.hpp</itemPath>
+        <itemPath>../../include/usr/usr_worldentity.hpp</itemPath>
+        <itemPath>../../include/usr/usr_x3d.hpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="usr" displayName="usr" projectFiles="true">
+        <logicalFolder name="editor" displayName="editor" projectFiles="true">
+          <logicalFolder name="cornellbox" displayName="cornellbox" projectFiles="true">
+            <itemPath>../../usr/editor/cornellbox/cornellbox.c</itemPath>
+            <itemPath>../../usr/editor/cornellbox/cornellbox.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="gtkfrontend" displayName="gtkfrontend" projectFiles="true">
+            <itemPath>../../usr/editor/gtkfrontend/dynamics_editor.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/dynamics_editor.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/entity_editor.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/entity_editor.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/gtkgui.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/gtkgui.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/main_editor.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/main_editor.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/main_editor_menu.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/main_editor_menu.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/project_manager.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/project_manager.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/renderable_editor.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/renderable_editor.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/renderer_configurator.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/renderer_configurator.hpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/splash_screen.cpp</itemPath>
+            <itemPath>../../usr/editor/gtkfrontend/splash_screen.hpp</itemPath>
+          </logicalFolder>
+          <itemPath>../../usr/editor/editassetlist.cpp</itemPath>
+          <itemPath>../../usr/editor/editbenchmark.cpp</itemPath>
+          <itemPath>../../usr/editor/editentityproperty.cpp</itemPath>
+          <itemPath>../../usr/editor/editor.cpp</itemPath>
+          <itemPath>../../usr/editor/editpowersaveswitch.cpp</itemPath>
+          <itemPath>../../usr/editor/editprojectmgr.cpp</itemPath>
+          <itemPath>../../usr/editor/editrenderconf.cpp</itemPath>
+          <itemPath>../../usr/editor/editrenderregion.cpp</itemPath>
+          <itemPath>../../usr/editor/editviewcontrol.cpp</itemPath>
+          <itemPath>../../usr/editor/editworlddata.cpp</itemPath>
+        </logicalFolder>
+        <itemPath>../../usr/usr_cinematicprogs.cpp</itemPath>
+        <itemPath>../../usr/usr_entityprogs.cpp</itemPath>
+        <itemPath>../../usr/usr_kernel.cpp</itemPath>
+        <itemPath>../../usr/usr_missionprogs.cpp</itemPath>
+        <itemPath>../../usr/usr_projectionprobe.cpp</itemPath>
+        <itemPath>../../usr/usr_renderable.cpp</itemPath>
+        <itemPath>../../usr/usr_renderaggregate.cpp</itemPath>
+        <itemPath>../../usr/usr_renderer.cpp</itemPath>
+        <itemPath>../../usr/usr_resourceloader.cpp</itemPath>
+        <itemPath>../../usr/usr_world.cpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>../../usr</Elem>
+    <Elem>../../include/usr</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>../../lib</pElem>
+            <pElem>../../include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>X3D_COMPILER_GCC</Elem>
+            <Elem>X3D_DEBUG_MODE</Elem>
+            <Elem>X3D_PLATFORM_POSIX</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <architecture>2</architecture>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../lib</pElem>
+            <pElem>../../include</pElem>
+          </incDir>
+          <commandLine>`pkg-config gtk+-3.0 --cflags` -Werror -fPIC </commandLine>
+          <preprocessorList>
+            <Elem>X3D_COMPILER_GCC</Elem>
+            <Elem>X3D_PLATFORM_POSIX</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>/home/davis/x3drenderlib-code/trunk/bin/libusr.so</output>
+          <commandLine>`pkg-config gtk+-3.0 --libs`</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../../include/usr/usr_cinematicprogs.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_editor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_editorfrontend.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_entityprogs.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_kernel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_missionprogs.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_projectionprobe.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_renderable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_renderaggregate.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_renderer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_resourceloader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_world.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_worldentity.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_x3d.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../usr/editor/cornellbox/cornellbox.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/cornellbox/cornellbox.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editassetlist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/editbenchmark.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/editentityproperty.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/editpowersaveswitch.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editprojectmgr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editrenderconf.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editrenderregion.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editviewcontrol.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editworlddata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/dynamics_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/dynamics_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/entity_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/entity_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/gtkgui.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/gtkgui.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor_menu.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor_menu.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/project_manager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/project_manager.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderable_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderable_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderer_configurator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderer_configurator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/splash_screen.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/splash_screen.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/usr_cinematicprogs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_entityprogs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_missionprogs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_projectionprobe.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_renderable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_renderaggregate.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_resourceloader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_world.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../../lib</pElem>
+            <pElem>../../include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>X3D_COMPILER_GCC</Elem>
+            <Elem>X3D_PLATFORM_POSIX</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../lib</pElem>
+            <pElem>../../include</pElem>
+          </incDir>
+          <commandLine>`pkg-config gtk+-3.0 --cflags` -Werror -fPIC </commandLine>
+          <preprocessorList>
+            <Elem>X3D_COMPILER_GCC</Elem>
+            <Elem>X3D_PLATFORM_POSIX</Elem>
+          </preprocessorList>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <commandLine>`pkg-config gtk+-3.0 --libs`</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../../include/usr/usr_cinematicprogs.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_editor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_editorfrontend.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_entityprogs.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_kernel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_missionprogs.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_projectionprobe.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_renderable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_renderaggregate.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_renderer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_resourceloader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_world.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_worldentity.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../include/usr/usr_x3d.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../usr/editor/cornellbox/cornellbox.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/cornellbox/cornellbox.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editassetlist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/editbenchmark.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/editentityproperty.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/editpowersaveswitch.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editprojectmgr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editrenderconf.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editrenderregion.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editviewcontrol.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/editworlddata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/dynamics_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/dynamics_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/entity_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/entity_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/gtkgui.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/gtkgui.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor_menu.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/main_editor_menu.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/project_manager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/project_manager.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderable_editor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderable_editor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderer_configurator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/renderer_configurator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/splash_screen.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../usr/editor/gtkfrontend/splash_screen.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../usr/usr_cinematicprogs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_entityprogs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_missionprogs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_projectionprobe.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_renderable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_renderaggregate.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_resourceloader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../usr/usr_world.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
