@@ -82,19 +82,20 @@ static void construct_cornellbox ( RenderAggregate* aggregate )
                                        &norm_arr[i] );
                 }
                 RenderableFactory fact;
-                GeometryRenderable* geometry = (GeometryRenderable*) fact.create ( RenderableFactory::Geometry, "cornellbox", false );
-                geometry->set_importance ( 1.0f );
-                geometry->set_material ( 0 );
-                geometry->init_from_data (  vert_arr, n_vertices, indices, n_indices,
-                                           norm_arr, nullptr, nullptr,
-                                           nullptr );
+                GeometryRenderable* geometry = (GeometryRenderable*) fact.create(RenderableFactory::Geometry, 
+										 "cornellbox", false);
+                geometry->set_importance(1.0f);
+                geometry->set_material(0);
+                geometry->init_from_data(vert_arr, n_vertices, indices, n_indices,
+                                         norm_arr, nullptr, nullptr,
+                                         nullptr);
 
-                instance = geometry->make_instance ( const_cast<matrix4x4*>(&IdentityMatrix4x4) );
-                aggregate->add_instance ( instance );
-                aggregate->add_renderable ( geometry );
+                instance = geometry->make_instance(const_cast<matrix4x4*>(&IdentityMatrix4x4));
+                aggregate->add_instance(instance);
+                aggregate->add_renderable(geometry);
         } else {
-                if ( !aggregate->has_instance ( instance ) ) {
-                        aggregate->add_instance ( instance );
+                if (!aggregate->has_instance(instance)) {
+                        aggregate->add_instance(instance);
                 }
         }
 }

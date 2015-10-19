@@ -361,6 +361,10 @@
           </preprocessorList>
           <useLinkerLibraries>false</useLinkerLibraries>
         </cTool>
+        <ccTool>
+          <architecture>2</architecture>
+          <standard>8</standard>
+        </ccTool>
         <linkerTool>
           <output>/home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so</output>
           <commandLine>-ldl -pthread `pkg-config gtk+-3.0 --libs` </commandLine>
@@ -931,11 +935,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../drivers/renderer/shader/ptshader.c"
-            ex="false"
-            tool="0"
-            flavor2="0">
-      </item>
       <item path="../../drivers/renderer/shader/ptshader.h"
             ex="false"
             tool="3"
@@ -1281,6 +1280,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>/home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so</output>
           <commandLine>-ldl -pthread `pkg-config gtk+-3.0 --libs` </commandLine>
         </linkerTool>
       </compileType>

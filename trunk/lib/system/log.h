@@ -31,6 +31,8 @@ void __private  call_log_critical_err(const char *functionName, const char *erro
 char** __public log_get_last_ten_errors();
 void  __public  log_set_behavior(int bhv);
 
+void log_guard_frequency_for_next_message(int min_interval);
+
 
 /*
  * Definitions

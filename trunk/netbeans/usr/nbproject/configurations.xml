@@ -384,6 +384,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>/home/davis/x3drenderlib-code/trunk/bin/libusr.so</output>
           <commandLine>`pkg-config gtk+-3.0 --libs`</commandLine>
         </linkerTool>
       </compileType>

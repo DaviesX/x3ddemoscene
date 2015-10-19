@@ -10,6 +10,17 @@
   * #define X3D_PLATFORM_WIN32
  **/
 
+#ifndef X3D_COMPILER_GCC
+#  define X3D_COMPILER_GCC
+#endif
+#ifndef X3D_PLATFORM_POSIX
+#  define X3D_PLATFORM_POSIX
+#endif
+#ifndef X3D_DEBUG_MODE
+#  define X3D_DEBUG_MODE
+#endif
+
+
 /**
  * Enable this to switch on debug mode
  * #define X3D_DEBUG_MODE

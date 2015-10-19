@@ -21,7 +21,7 @@ extern "C" int kernel_main(int argc, char* argv[])
         Kernel* kernel                  = new Kernel();
         kernel->register_proxy(kern_editor);
         kernel->run();
-
+	
         delete kernel;
         return 0;
 }

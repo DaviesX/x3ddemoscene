@@ -32,7 +32,7 @@ void alg_var_set_declare(struct alg_var_set *self, char* name, void* data, int s
                 exist->ptr = var.ptr;
         } else {
                 var.name = alg_alloc_string(name);
-                alg_insert(llist, &self->var_set, var, iter, cmp_name);
+                alg_push_back(llist, &self->var_set, var);
         }
 #undef cmp_name
 }

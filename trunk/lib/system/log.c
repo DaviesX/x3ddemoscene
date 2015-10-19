@@ -165,3 +165,8 @@ void log_set_behavior(int bhv)
 {
         g_log_inst.tmp_bhv = bhv;
 }
+
+// @todo(davis#9#): implement <log_guard_frequency_for_next_message>
+void log_guard_frequency_for_next_message(int min_interval)
+{
+}

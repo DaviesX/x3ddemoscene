@@ -8,7 +8,7 @@
 
 /* @todo (davis#2#): <kernel/renderable> implement geometry renderable and simple aggregate */
 static const int c_sizeof_renderable[] = {
-        [RENDERABLE_GEOMETRY] = sizeof (struct rda_geometry)
+        [RenderableGeometry] = sizeof (struct rda_geometry)
 };
 
 
@@ -56,7 +56,7 @@ static struct rda_geometry* rda_geometry_make_copy ( struct rda_geometry* geo )
 struct rda_geometry* rda_geometry_create ( char *name, float importance, bool is_movable, int mater_ref )
 {
         struct rda_geometry* geo = alloc_obj ( geo );
-        rda_init ( (struct renderable*) geo, name, RENDERABLE_GEOMETRY, importance, is_movable, mater_ref );
+        rda_init(&geo->_parent, name, RenderableGeometry, importance, is_movable, mater_ref);
         return geo;
 }
 
@@ -148,23 +148,23 @@ static const struct rda_operation {
         struct renderable* (*make_copy) ( struct renderable* self );
         void (*get_bound) ( struct renderable* self, struct matrix4x4* t, struct box3d* b );
 } cRdaOps[] = {
-        [RENDERABLE_GEOMETRY].free = cast(cRdaOps->free)                rda_geometry_free,
-        [RENDERABLE_GEOMETRY].make_copy =  cast(cRdaOps->make_copy)     rda_geometry_make_copy,
-        [RENDERABLE_GEOMETRY].get_bound = cast(cRdaOps->get_bound)      rda_geometry_get_bound
+        [RenderableGeometry].free = cast(cRdaOps->free)                rda_geometry_free,
+        [RenderableGeometry].make_copy =  cast(cRdaOps->make_copy)     rda_geometry_make_copy,
+        [RenderableGeometry].get_bound = cast(cRdaOps->get_bound)      rda_geometry_get_bound
 };
 
-void rda_init ( struct renderable* rda,
-                char *name, enum RENDERABLE_IDR type, float importance,
-                bool is_movable, int mater_ref )
+void rda_init(struct renderable* self,
+               char *name, enum RenderableType type, float importance,
+               bool is_movable, int mater_ref)
 {
-        rda->id         = alg_gen_uuid ( );
-        rda->importance = importance;
-        rda->name       = alg_alloc_string ( name );
-        rda->is_dirty   = true;
-        rda->is_movable = is_movable;
-        rda->mater_ref  = mater_ref;
-        rda->insts      = alloc_var ( sizeof(struct rda_instance*), 1 );
-        rda->type       = type;
+        self->id         = alg_gen_uuid ( );
+        self->importance = importance;
+        self->name       = alg_alloc_string ( name );
+        self->is_dirty   = true;
+        self->is_movable = is_movable;
+        self->mater_ref  = mater_ref;
+        self->insts      = alloc_var ( sizeof(struct rda_instance*), 1 );
+        self->type       = type;
 }
 
 static void h_renderable_free ( struct renderable* rda )
@@ -231,7 +231,7 @@ char* rda_get_name ( struct renderable *rda )
         return rda->name;
 }
 
-enum RENDERABLE_IDR rda_get_type ( struct renderable* rda )
+enum RenderableType rda_get_type ( struct renderable* rda )
 {
         return rda->type;
 }

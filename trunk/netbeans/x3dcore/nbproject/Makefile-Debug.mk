@@ -96,7 +96,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/767442731/vertexprocessor.o \
 	${OBJECTDIR}/_ext/501084237/basic_rt_shader.o \
 	${OBJECTDIR}/_ext/501084237/main.o \
-	${OBJECTDIR}/_ext/501084237/ptshader.o \
 	${OBJECTDIR}/_ext/501084237/shader.o \
 	${OBJECTDIR}/_ext/1109276195/debug.o \
 	${OBJECTDIR}/_ext/1109276195/dynamics.o \
@@ -154,8 +153,8 @@ OBJECTFILES= \
 CFLAGS=-m64 -Werror `pkg-config gtk+-3.0 --cflags` -fPIC  
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-m64
+CXXFLAGS=-m64
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -478,11 +477,6 @@ ${OBJECTDIR}/_ext/501084237/main.o: ../../drivers/renderer/shader/main.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/501084237
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/501084237/main.o ../../drivers/renderer/shader/main.c
-
-${OBJECTDIR}/_ext/501084237/ptshader.o: ../../drivers/renderer/shader/ptshader.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/501084237
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/501084237/ptshader.o ../../drivers/renderer/shader/ptshader.c
 
 ${OBJECTDIR}/_ext/501084237/shader.o: ../../drivers/renderer/shader/shader.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/501084237

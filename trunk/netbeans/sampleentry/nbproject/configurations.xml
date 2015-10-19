@@ -119,6 +119,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>/home/davis/x3drenderlib-code/trunk/bin/sampleentry</output>
           <linkerLibItems>
             <linkerLibProjectItem>
               <makeArtifact PL="../x3dcore"

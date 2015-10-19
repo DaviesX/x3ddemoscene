@@ -10,10 +10,8 @@ void rda_context_init(struct rda_context* ctx, enum RenderAggregateType agg_type
         ctx->container = rdacontainer_create(agg_type);
         ctx->num_renderable = 0;
         int i;
-        for ( i = 0;
-              i < sizeof(ctx->request)/sizeof(struct rda_request);
-              i ++ ) {
-                rda_request_init ( &ctx->request[i] );
+        for (i = 0; i < sizeof(ctx->request)/sizeof(struct rda_request); i ++) {
+                rda_request_init(&ctx->request[i]);
         }
         ctx->n_request = 0;
 }
@@ -61,7 +59,7 @@ void rda_context_remove_renderable_by_name(struct rda_context* ctx, char* name)
 
 void rda_context_add_instance(struct rda_context* ctx,
                               struct rda_instance* inst,
-                              enum RENDERABLE_IDR type)
+                              enum RenderableType type)
 {
         rdacontainer_add_instance(ctx->container, type, inst);
 }

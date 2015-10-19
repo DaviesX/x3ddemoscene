@@ -3,23 +3,39 @@
 
 
 /* system i/o variables */
-//IVAR float                      g_xy[2];                I
-IVAR float                      g_uv[2];                I
-OVAR ray3                       g_recur[2];             O
-OVAR int                        g_n_recur;              O
-OVAR ray3                       g_illum[1024];          O
-OVAR int                        g_n_illum;              O
-IVAR bool                       g_is_vis[1024];         I
-IVAR ray3                       g_incident;             I
-//IVAR ray3                       g_emit;                 I
-OVAR vec3                       g_radiance;             O
+////IVAR float                    g_xy[2];                I
+//IVAR float*                     g_uv[2];                I
+//OVAR ray3*                      g_recur[2];             O
+//OVAR int*                       g_n_recur;              O
+//OVAR ray3*                      g_illum[1024];          O
+//OVAR int*                       g_n_illum;              O
+//IVAR bool*                      g_is_vis[1024];         I
+//IVAR ray3*                      g_incident;             I
+////IVAR ray3                       g_emit;                 I
+//OVAR vec3*                      g_radiance;             O
+//
+///* custom i/o variables */
+//IVAR float*                   g_position[3];          I
+//IVAR float*                   g_normal[3];            I
+//IVAR int*                     g_mater_id;             I
+//
+//VAR int*                      g_nbounce;
+
+IVAR float*                     g_uv;                //I[]
+OVAR ray3*                      g_recur;             //O[]
+OVAR int*                       g_n_recur;           //O
+OVAR ray3*                      g_illum;             //O[]
+OVAR int*                       g_n_illum;           //O
+IVAR bool*                      g_is_vis;            //I[]
+IVAR ray3*                      g_incident;          //I
+OVAR vec3*                      g_radiance;          //O
 
 /* custom i/o variables */
-IVAR float                    g_position[3];          I
-IVAR float                    g_normal[3];            I
-IVAR int                      g_mater_id;             I
+IVAR float*                     g_position;               I
+IVAR float*                     g_normal;                 I
+IVAR int*                       g_mater_id;               I
 
-VAR int                      g_nbounce;
+VAR int*                        g_nbounce;
 
 struct material {
         int                     brdf;
@@ -113,7 +129,7 @@ static void a_easyrt_probe ( void )
         g_recur[0].v.v[1] = g_uv[1]*uni_height;
         g_recur[0].v.v[2] = uni_focal;
         /* put it to recursive ray set */
-        g_n_recur = 1;
+        *g_n_recur = 1;
 }
 
 static void make_illuminate_sample ( void )
@@ -132,8 +148,9 @@ static void make_illuminate_sample ( void )
         }
         g_n_illum += uni_n_point_light;
         for ( j = 0; j < uni_n_area_light; j ++, i ++ ) {
-                for ( c = 0; c < 3; c ++ )
+                for ( c = 0; c < 3; c ++ ) {
                         g_illum[i].o.v[c] = g_position[c];
+                }
                 g_illum[i].t[0] = 1e-5f;
                 g_illum[i].t[1] = 1.0f - 1e-5f;
                 float s[4] = {
@@ -155,13 +172,13 @@ static void make_illuminate_sample ( void )
                 for ( c = 0; c < 3; c ++ )
                         g_illum[i].v.v[c] = samp_p[c] - g_position[c];
         }
-        g_n_illum += uni_n_area_light;
+        *g_n_illum = *g_n_illum + uni_n_area_light;
 }
 
 static void mirror_sample_shader ( void )
 {
         /* reject when recursive bounce reaches 3 */
-        if ( g_nbounce ++ >= 3 ) {
+        if (*g_nbounce ++ >= 3) {
                 g_n_recur = 0;
                 goto illuminate_ray;
         }
@@ -169,7 +186,7 @@ static void mirror_sample_shader ( void )
         int c;
 //recursive_ray:
         for ( c = 0; c < 3; c ++ )
-                g_incident.v.v[c] = -g_incident.v.v[c];
+                (*g_incident).v.v[c] = -(*g_incident).v.v[c];
         for ( c = 0; c < 3; c ++ )
                 g_recur[0].o.v[c] = g_position[c];
 
@@ -177,18 +194,18 @@ static void mirror_sample_shader ( void )
         float iln = 1.0f/sqrtf ( g_normal[0]*g_normal[0] +
                                  g_normal[1]*g_normal[1] +
                                  g_normal[2]*g_normal[2] );
-        float ili = 1.0f/sqrtf ( g_incident.v.v[0]*g_incident.v.v[0] +
-                                 g_incident.v.v[1]*g_incident.v.v[1] +
-                                 g_incident.v.v[2]*g_incident.v.v[2] );
+        float ili = 1.0f/sqrtf ( (*g_incident).v.v[0]*(*g_incident).v.v[0] +
+                                 (*g_incident).v.v[1]*(*g_incident).v.v[1] +
+                                 (*g_incident).v.v[2]*(*g_incident).v.v[2] );
         for ( c = 0; c < 3; c ++ ) {
                 g_normal[c] *= iln;
-                g_incident.v.v[c] *= ili;
+                (*g_incident).v.v[c] *= ili;
         }
-        float n_dot_i = 2.0f*(g_normal[0]*g_incident.v.v[0] +
-                              g_normal[1]*g_incident.v.v[1] +
-                              g_normal[2]*g_incident.v.v[2]);
+        float n_dot_i = 2.0f*(g_normal[0]*(*g_incident).v.v[0] +
+                              g_normal[1]*(*g_incident).v.v[1] +
+                              g_normal[2]*(*g_incident).v.v[2]);
         for ( c = 0; c < 3; c ++ ) {
-                g_recur[0].v.v[c] = g_normal[c]*n_dot_i - g_incident.v.v[c];
+                g_recur[0].v.v[c] = g_normal[c]*n_dot_i - (*g_incident).v.v[c];
         }
         float ilr = 1.0f/sqrtf ( g_recur[0].v.v[0]*g_recur[0].v.v[0] +
                                  g_recur[0].v.v[1]*g_recur[0].v.v[1] +
@@ -198,7 +215,7 @@ static void mirror_sample_shader ( void )
 
         g_recur[0].t[0] = 0.0f + 1.e-2f;
         g_recur[0].t[1] = 50000.0f;
-        g_n_recur = 1;
+        *g_n_recur = 1;
 
 illuminate_ray:;
         make_illuminate_sample ( );
@@ -207,7 +224,7 @@ illuminate_ray:;
 static void lambert_sample_shader ( void )
 {
         /* reject when recursive bounce reaches 3 */
-        if ( g_nbounce ++ >= 3 ) {
+        if (*g_nbounce ++ >= 3) {
                 g_n_recur = 0;
                 goto illuminate_ray;
         }
@@ -215,7 +232,7 @@ static void lambert_sample_shader ( void )
         int c;
 //recursive_ray:
         for ( c = 0; c < 3; c ++ )
-                g_incident.v.v[c] = -g_incident.v.v[c];
+                (*g_incident).v.v[c] = -(*g_incident).v.v[c];
         for ( c = 0; c < 3; c ++ )
                 g_recur[0].o.v[c] = g_position[c];
 #if 1
@@ -246,10 +263,10 @@ static void lambert_sample_shader ( void )
         }
 */
         float u[3], v[3];
-        vec3_cross ( (vec3*) g_normal, &g_incident.v, (vec3*) u );
+        vec3_cross ( (vec3*) g_normal, &(*g_incident).v, (vec3*) u );
         vec3_cross ( (vec3*) u, (vec3*) g_normal, (vec3*) v );
         vec3_norm ( (vec3*) g_normal );
-        vec3_norm ( &g_incident.v );
+        vec3_norm ( &(*g_incident).v );
         vec3_norm ( (vec3*) u );
         vec3_norm ( (vec3*) v );
         /* transform ray */
@@ -272,7 +289,7 @@ static void lambert_sample_shader ( void )
 */
         g_recur[0].t[0] = 0.0f + 1.e-2f;
         g_recur[0].t[1] = 50000.0f;
-        g_n_recur = 1;
+        *g_n_recur = 1;
 
 illuminate_ray:;
         make_illuminate_sample ( );
@@ -280,7 +297,7 @@ illuminate_ray:;
 
 static void a_easyrt_sample ( void )
 {
-        switch ( uni_material[g_mater_id].brdf ) {
+        switch ( uni_material[*g_mater_id].brdf ) {
         case DIFFUSE:
                 lambert_sample_shader ();
                 break;
@@ -288,7 +305,7 @@ static void a_easyrt_sample ( void )
                 mirror_sample_shader ();
                 break;
         case GLOSSY:
-                if ( erand48 ( uni_xi ) < uni_material[g_mater_id].gloss )
+                if ( erand48 ( uni_xi ) < uni_material[*g_mater_id].gloss )
                         mirror_sample_shader ();
                 else
                         lambert_sample_shader ();
@@ -300,12 +317,12 @@ static void a_easyrt_illuminate ( void )
 {
         int i;
         for ( i = 0; i < 3; i ++ )
-                g_radiance.v[i] = 0.0f;
+                (*g_radiance).v[i] = 0.0f;
         /* emit point lights */
         i = 0;
         int j;
         for ( j = 0; j < uni_n_point_light; j ++, i ++ ) {
-                if ( g_is_vis[j] == true ) {
+                if (g_is_vis[j] == true ) {
                         float d[3];
                         int c;
                         for ( c = 0; c < 3; c ++ )
@@ -322,15 +339,15 @@ static void a_easyrt_illuminate ( void )
                                                  g_normal[2]*d[2]);
                         cos_flux = max ( 0.0f, cos_flux );
                         for ( c = 0; c < 3; c ++ ) {
-                                g_radiance.v[c] += cos_flux*
-                                        uni_material[g_mater_id].diff.v[c]*
+                                (*g_radiance).v[c] += cos_flux*
+                                        uni_material[*g_mater_id].diff.v[c]*
                                         uni_point_light[j].power/s_dist;
                         }
                 }
         }
         /* emit area lights */
         for ( j = 0; j < uni_n_area_light; j ++, i ++ ) {
-                if ( g_is_vis[j] == true ) {
+                if (g_is_vis[j] == true ) {
                         float d[3];
                         int c;
                         for ( c = 0; c < 3; c ++ )
@@ -351,8 +368,8 @@ static void a_easyrt_illuminate ( void )
                         cos_area = max ( 0.0f, cos_area );
                         float solid_angle = uni_rect_light[j].area*cos_area/s_dist;
                         for ( c = 0; c < 3; c ++ ) {
-                                g_radiance.v[c] += cos_flux*
-                                        uni_material[g_mater_id].diff.v[c]*
+                                (*g_radiance).v[c] += cos_flux*
+                                        uni_material[*g_mater_id].diff.v[c]*
                                         uni_rect_light[j].power*solid_angle;
                         }
                 }
@@ -362,10 +379,10 @@ static void a_easyrt_illuminate ( void )
 static void a_easyrt_transfer ( void )
 {
         int i;
-        float cos_flux = (g_incident.v.v[0])*g_normal[0] +
-                         (g_incident.v.v[1])*g_normal[1] +
-                         (g_incident.v.v[2])*g_normal[2];
+        float cos_flux = ((*g_incident).v.v[0])*g_normal[0] +
+                         ((*g_incident).v.v[1])*g_normal[1] +
+                         ((*g_incident).v.v[2])*g_normal[2];
         cos_flux = max ( 0.0f, cos_flux );
         for ( i = 0; i < 3; i ++ )
-                g_radiance.v[i] = uni_material[g_mater_id].diff.v[i]*g_radiance.v[i]*cos_flux;
+                (*g_radiance).v[i] = uni_material[*g_mater_id].diff.v[i]*(*g_radiance).v[i]*cos_flux;
 }

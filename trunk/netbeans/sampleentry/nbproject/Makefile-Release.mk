@@ -56,15 +56,15 @@ LDLIBSOPTIONS=-Wl,-rpath,../x3dcore/dist/Release/GNU-Linux-x86 -L../x3dcore/dist
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sampleentry
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk /home/davis/x3drenderlib-code/trunk/bin/sampleentry
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sampleentry: ../x3dcore/dist/Release/GNU-Linux-x86/libx3dcore.so
+/home/davis/x3drenderlib-code/trunk/bin/sampleentry: ../x3dcore/dist/Release/GNU-Linux-x86/libx3dcore.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sampleentry: ../usr/dist/Release/GNU-Linux-x86/libusr.so
+/home/davis/x3drenderlib-code/trunk/bin/sampleentry: ../usr/dist/Release/GNU-Linux-x86/libusr.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sampleentry: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sampleentry ${OBJECTFILES} ${LDLIBSOPTIONS} `pkg-config gtk+-3.0 --libs` 
+/home/davis/x3drenderlib-code/trunk/bin/sampleentry: ${OBJECTFILES}
+	${MKDIR} -p /home/davis/x3drenderlib-code/trunk/bin
+	${LINK.cc} -o /home/davis/x3drenderlib-code/trunk/bin/sampleentry ${OBJECTFILES} ${LDLIBSOPTIONS} `pkg-config gtk+-3.0 --libs` 
 
 ${OBJECTDIR}/_ext/1817864255/main.o: ../../external/sample_entry/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1817864255
@@ -79,7 +79,7 @@ ${OBJECTDIR}/_ext/1817864255/main.o: ../../external/sample_entry/main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sampleentry
+	${RM} /home/davis/x3drenderlib-code/trunk/bin/sampleentry
 
 # Subprojects
 .clean-subprojects:

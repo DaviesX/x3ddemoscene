@@ -85,11 +85,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libusr.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk /home/davis/x3drenderlib-code/trunk/bin/libusr.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libusr.${CND_DLIB_EXT}: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libusr.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} `pkg-config gtk+-3.0 --libs` -shared -fPIC
+/home/davis/x3drenderlib-code/trunk/bin/libusr.so: ${OBJECTFILES}
+	${MKDIR} -p /home/davis/x3drenderlib-code/trunk/bin
+	${LINK.cc} -o /home/davis/x3drenderlib-code/trunk/bin/libusr.so ${OBJECTFILES} ${LDLIBSOPTIONS} `pkg-config gtk+-3.0 --libs` -shared -fPIC
 
 ${OBJECTDIR}/_ext/1973935413/cornellbox.o: ../../usr/editor/cornellbox/cornellbox.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1973935413
@@ -247,7 +247,7 @@ ${OBJECTDIR}/_ext/1445276660/usr_world.o: ../../usr/usr_world.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libusr.${CND_DLIB_EXT}
+	${RM} /home/davis/x3drenderlib-code/trunk/bin/libusr.so
 
 # Subprojects
 .clean-subprojects:

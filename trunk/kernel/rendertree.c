@@ -407,48 +407,38 @@ static const char* c_NodeTypeToString[] = {
         "RenderNodeOutput",
 };
 
-static void __visit_print_push(struct render_node* node, struct render_node* input[], struct render_node* output[],
-                               void* dataptr)
+static void __print_common(struct render_node* node, struct render_node* input[], struct render_node* output[], 
+                           const char* prefix)
 {
-        log_normal_dbg("PUSH    : [name:%s, type: %s]",
-                       render_node_get_name(node), render_node_get_type(node));
+        log_normal_dbg("%s: [name:%s, type: %s]", prefix,
+                       render_node_get_name(node), c_NodeTypeToString[render_node_get_type(node)]);
         int i;
         for (i = 0; i < node->n_input; i ++) {
                 if (input[i] != nullptr) {
-                        log_normal_dbg("\tINPUT    : [name:%s, type: %s]",
+                        log_normal_dbg("\tINPUT: [name:%s, type: %s]",
                                        render_node_get_name(input[i]),
                                        c_NodeTypeToString[render_node_get_type(input[i])]);
                 }
         }
         for (i = 0; i < node->n_output; i ++) {
                 if (output[i] != nullptr) {
-                        log_normal_dbg("\tOUTPUT    : [name:%s, type: %s]",
+                        log_normal_dbg("\tOUTPUT: [name:%s, type: %s]",
                                        render_node_get_name(output[i]),
                                        c_NodeTypeToString[render_node_get_type(output[i])]);
                 }
         }
 }
 
+static void __visit_print_push(struct render_node* node, struct render_node* input[], struct render_node* output[],
+                               void* dataptr)
+{
+        __print_common(node, input, output, "PUSH    ");
+}
+
 static void __visit_print_backtrack(struct render_node* node, struct render_node* input[], struct render_node* output[],
                                     void* dataptr)
 {
-        log_normal_dbg("BACKTRACK: [name:%s, type: %s]",
-                       render_node_get_name(node), render_node_get_type(node));
-        int i;
-        for (i = 0; i < node->n_input; i ++) {
-                if (input[i] != nullptr) {
-                        log_normal_dbg("\tINPUT    : [name:%s, type: %s]",
-                                       render_node_get_name(input[i]),
-                                       c_NodeTypeToString[render_node_get_type(input[i])]);
-                }
-        }
-        for (i = 0; i < node->n_output; i ++) {
-                if (output[i] != nullptr) {
-                        log_normal_dbg("\tOUTPUT    : [name:%s, type: %s]",
-                                       render_node_get_name(output[i]),
-                                       c_NodeTypeToString[render_node_get_type(output[i])]);
-                }
-        }
+        __print_common(node, input, output, "BACKTRACK");
 }
 
 void render_tree_print(struct render_tree* self)
@@ -456,4 +446,5 @@ void render_tree_print(struct render_tree* self)
         log_normal_dbg("Print result of tree: %x", self);
         struct render_tree_visitor      visitor;
         render_tree_visitor_init2(&visitor, __visit_print_push, __visit_print_backtrack, nullptr);
+        render_tree_visit(self, &visitor);
 }

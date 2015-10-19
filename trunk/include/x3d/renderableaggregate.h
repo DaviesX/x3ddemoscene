@@ -7,8 +7,11 @@
 
 struct rda_request {
         uuid_t                  id;
-        enum RENDERABLE_IDR     type;
-        enum RAG_CULL_IDR       cull_method;
+        enum RenderableType     type;
+	
+	bool			has_updated;
+	
+        enum RenderAggregateCullType       cull_method;
         rda_cullshape_t*        cull_shape;
 
         struct rda_instance**   result;
@@ -19,8 +22,10 @@ struct rdacontainer;
 
 struct rda_context {
         struct rdacontainer*            container;
+	
         d_alg_llist(struct renderable*) rdalist;
         int                             num_renderable;
+	
         struct rda_request              request[128];
         int                             n_request;
 };
@@ -34,7 +39,7 @@ void                    rda_context_remove_renderable(struct rda_context* ctx, s
 void                    rda_context_remove_renderable_by_name(struct rda_context* ctx, char* name);
 void                    rda_context_add_instance (struct rda_context* ctx,
                                                   struct rda_instance* insts,
-                                                  enum RENDERABLE_IDR type);
+                                                  enum RenderableType type);
 void                    rda_context_add_instance2(struct rda_context* ctx, struct rda_instance* inst);
 bool                    rda_context_has_instance(struct rda_context* ctx, struct rda_instance* inst);
 void                    rda_context_remove_instance(struct rda_context* ctx, struct rda_instance* inst);

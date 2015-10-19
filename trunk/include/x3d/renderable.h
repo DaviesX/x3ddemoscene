@@ -16,25 +16,25 @@ struct mtl_library {
  */
 
 
-enum RAG_CULL_IDR {
-        RAG_CULL_NULL           = (0),
-        RAG_CULL_CUBE           = (1 << 1),
-        RAG_CULL_FRUSTUM        = (1 << 2),
-        RAG_CULL_PYRAMID        = (1 << 3),
-        RAG_CULL_OCCLUSION      = (1 << 4),
-        RAG_CULL_LOD            = (1 << 5)
+enum RenderAggregateCullType {
+        RenderAggregateCullNull           = (0),
+        RenderAggregateCullCube           = (1 << 1),
+        RenderAggregateCullFrustum        = (1 << 2),
+        RenderAggregateCullPyramid        = (1 << 3),
+	RenderAggregateCullOcclusion      = (1 << 4),
+        RenderAggregateCullLOD            = (1 << 5)
 };
 
-#define MAX_RENDERABLE_TYPE             6
-
-enum RENDERABLE_IDR {
-        RENDERABLE_GEOMETRY,
-        RENDERABLE_SKINNED,
-        RENDERABLE_PARTICLE,
-        RENDERABLE_VOLUME,
-        RENDERABLE_PROCEDURAL,
-        RENDERABLE_TEXTURAL
+enum RenderableType {
+        RenderableGeometry,
+        RenderableSkinned,
+        RenderableParticle,
+        RenderableVolume,
+        RenderableProcedural,
+        RenderableTextural
 };
+
+#define MAX_RENDERABLE_TYPE           6
 
 enum RenderAggregateType {
         RenderAggregateLinear,
@@ -60,7 +60,7 @@ struct renderable {
         };
         uuid_t                  id;
         char*                   name;
-        enum RENDERABLE_IDR     type;
+	enum RenderableType     type;
         float                   importance;
         bool                    is_movable;
         bool                    is_dirty;
@@ -108,15 +108,15 @@ struct rda_instance {
 /* struct renderable*      rda_create ( char *name, enum RENDERABLE_IDR type,
                                      float importance, bool is_movable,
                                      int mater_ref );*/
-void                    rda_init ( struct renderable* rda,
-                                   char *name, enum RENDERABLE_IDR type, float importance,
-                                   bool is_movable, int mater_ref );
+void                    rda_init(struct renderable* self,
+                                  char *name, enum RenderableType type, float importance,
+                                  bool is_movable, int mater_ref);
 void                    rda_free ( struct renderable *rda );
 void                    rda_set_name ( struct renderable *rda, char *name );
 void                    rda_set_importance ( struct renderable *rda, float importance );
 void                    rda_set_material ( struct renderable *rda, int mater_ref );
-char*                   rda_get_name ( struct renderable *rda );
-enum RENDERABLE_IDR     rda_get_type ( struct renderable* rda );
+char*                   rda_get_name(struct renderable *self);
+enum RenderableType	rda_get_type(struct renderable* self);
 int                     rda_get_material_reference(struct renderable* self);
 struct rda_instance*    rda_instance_create ( struct renderable *rda, struct matrix4x4 *transform );
 void                    rda_instance_free ( struct rda_instance *inst );

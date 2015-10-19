@@ -218,7 +218,7 @@ static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, 
                                 *ip->in_incident = inci;
                                 *ip->out_radiance = &out_rad;
 
-                                ip->transfer ( );
+                                ip->transfer();
 
                                 add_vector3d_u ( &node->i_rad, &out_rad );
                                 node->i_emit ++;
@@ -267,9 +267,9 @@ static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, 
                 *ip->out_recur_count = &n_rray;
                 *ip->out_recur_ray = rray;
                 *ip->out_illum_ray = iray;
-                u_stream_lerp3_link ( ip->stream, ip->n_streams, ip->face, ip->b );
+                u_stream_lerp3_link(ip->stream, ip->n_streams, ip->face, ip->b);
 
-                ip->sample ( );
+                ip->sample();
 
                 int k;
                 for ( k = 0; k < n_rray; k ++ ) {
@@ -286,9 +286,9 @@ static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, 
                 *ip->in_is_vis = is_vis;
                 *ip->out_radiance = &node->i_rad;
 
-                ip->illuminate ( );
+                ip->illuminate();
 
-                u_stream_export_dest_status ( ip->stream, ip->n_streams, node->sha_input );
+                u_stream_export_dest_status(ip->stream, ip->n_streams, node->sha_input);
         }
 }
 #if 0
@@ -415,6 +415,8 @@ static inline void rgb_hdr_radiance ( struct float_color3* x, float avg_illum,
 
 }
 
+#include "../shader/ptshader.c"
+
 static void render_radiance ( struct pt_radiance_node* render_node )
 {
         /* construct intersection packet */
@@ -423,6 +425,24 @@ static void render_radiance ( struct pt_radiance_node* render_node )
         ip.i_array = u_aos_get_index ( &render_node->aos_geo, &num_index );
         ip.n_streams = render_node->n_streams;
         ip.stream = render_node->stream;
+/**@todo (davis#1#) <intersect_packet> these should be done through shader formulate context */
+        ip.in_uv                = (void**) &g_uv;
+        ip.in_radiance          = (void**) &g_radiance;
+        ip.in_incident          = (void**) &g_incident;
+        ip.in_is_vis            = (void**) &g_is_vis;
+        ip.out_illum_count      = (void**) &g_n_illum;
+        ip.out_illum_ray        = (void**) &g_illum;
+        ip.out_radiance         = (void**) &g_radiance;
+        ip.out_recur_count      = (void**) &g_n_recur;
+        ip.out_recur_ray        = (void**) &g_recur;
+        ip.preprobe             = a_easyrt_probe;
+        ip.sample               = a_easyrt_sample;
+        ip.illuminate           = a_easyrt_illuminate;
+        ip.transfer             = a_easyrt_transfer;
+        ip.postprobe            = nullptr;
+        /* gives temporary buffering */
+        ray3 illum_rays[1024];
+        *ip.out_illum_ray = illum_rays;
 
         struct ray_tree         s[10] = {0};
         struct ray_tree*        node = s;
@@ -451,7 +471,7 @@ static void render_radiance ( struct pt_radiance_node* render_node )
 
         float tw = width - 1;
         float th = height - 1;
-
+ 
         int j;
         for ( j = 0; j < height; j ++ ) {
                 printf ( "%d\n", j );
@@ -465,7 +485,7 @@ static void render_radiance ( struct pt_radiance_node* render_node )
                                 uv.y = -(2.0f*((float) j/th + spp[k].dy) - 1.0f);
                                 int n_rray;
 
-                                *ip.in_uv = &uv;
+                                *ip.in_uv = uv.p;
                                 *ip.out_recur_count = &n_rray;
                                 *ip.out_recur_ray = node->e_ray;
 
@@ -626,9 +646,9 @@ end_parsing_instr:;
         int i;
         for ( i = 0; i < r->n_passes; i ++ ) {
                 struct render_pass* pass = &r->pass[i];
-                pass->sub_pass[RENDERABLE_GEOMETRY] =
-                        rda_context_post_request ( pass->ctx, RAG_CULL_NULL,
-                                                   nullptr, RENDERABLE_GEOMETRY );
+                pass->sub_pass[RenderableGeometry] =
+                        rda_context_post_request ( pass->ctx, RenderAggregateCullNull,
+                                                   nullptr, RenderableGeometry );
                 rda_context_update ( pass->ctx );
         }
 
@@ -643,10 +663,10 @@ end_parsing_instr:;
                         u_aos_init ( &pass->aos_geo, attri );
                         /* - process geometries */
                         int j;
-                        int n_rda = rda_context_get_n ( pass->ctx, pass->sub_pass[RENDERABLE_GEOMETRY] );
+                        int n_rda = rda_context_get_n ( pass->ctx, pass->sub_pass[RenderableGeometry] );
                         for ( j = 0; j < n_rda; j ++ ) {
                                 struct rda_instance* inst = rda_context_get_i ( pass->ctx, j,
-                                                                                pass->sub_pass[RENDERABLE_GEOMETRY] );
+                                                                                pass->sub_pass[RenderableGeometry] );
                                 struct rda_geometry* geo  = (struct rda_geometry*) rda_instance_source ( inst );
                                 int num_index;
                                 int* index = rda_geometry_get_index ( geo, &num_index );
@@ -776,14 +796,12 @@ void pt_renderer_output ( struct pt_renderer* r )
 {
 }
 
-/* @fixme (davis#1#): <ptrenderer> shader should be more elegant */
-void**         shader_var_addr[10];
 
 void pt_renderer_system_init(struct symbol_set* symbols)
 {
         init_shader_library();
-        shader_var_addr[_AttriVertex] = symlib_ret_variable(symbols, "g_position", nullptr);
-        shader_var_addr[_AttriNormal] = symlib_ret_variable(symbols, "g_normal", nullptr);
+//        shader_var_addr[_AttriVertex] = symlib_ret_variable(symbols, "g_position", nullptr);
+//        shader_var_addr[_AttriNormal] = symlib_ret_variable(symbols, "g_normal", nullptr);
 }
 
 // radiance node
@@ -839,8 +857,9 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
         struct pt_renderable_loader_node* rdaloader     = (struct pt_renderable_loader_node*) input[slot];
         struct rda_context* context                     = rdaloader->_parent.ops.f_get_result(&rdaloader->_parent);
         // Get geometry data
-        uuid_t request_id                               = rda_context_post_request(context, RAG_CULL_NULL, nullptr,
-                                                                                   RENDERABLE_GEOMETRY);
+        uuid_t request_id                               = rda_context_post_request(context, RenderAggregateCullCube, 
+                                                                                   nullptr, RenderableGeometry);
+        rda_context_update(context);
         const int n                                     = rda_context_get_n(context, request_id);
         u_aos_free(&node->aos_geo);
         u_aos_init(&node->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatId);
@@ -875,9 +894,23 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
         int k, m;
         for (m = 0, k = 0; k < 10; k ++) {
                 if (avail[k] == true) {
+                        /* @fixme (davis#1#): <ptrenderer> shader should be more elegant */
+                        void** shader_var_loc[1] = {nullptr};
+                        switch(k) {
+                                case _AttriVertex:
+                                        shader_var_loc[0] = (void**) &g_position;
+                                        break;
+                                case _AttriNormal:
+                                        shader_var_loc[0] = (void**) &g_normal;
+                                        break;
+                                case _AttriMatId:
+                                        shader_var_loc[0] = (void**) &g_mater_id;
+                                        break;
+                        }
+                        
                         u_stream_init(&node->stream[m],
                                       vertex[k], cSizeOfStream[k], n_vertex,
-                                      &cSizeOfStream[k], &shader_var_addr[m], 1, nullptr, cStreamLerp3[k]);
+                                      &cSizeOfStream[k], shader_var_loc, 1, nullptr, cStreamLerp3[k]);
                         m ++;
                 }
         }

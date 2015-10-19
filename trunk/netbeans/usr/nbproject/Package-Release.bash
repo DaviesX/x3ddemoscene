@@ -13,8 +13,8 @@ CND_BUILDDIR=build
 CND_DLIB_EXT=so
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libusr.${CND_DLIB_EXT}
-OUTPUT_BASENAME=libusr.${CND_DLIB_EXT}
+OUTPUT_PATH=/home/davis/x3drenderlib-code/trunk/bin/libusr.so
+OUTPUT_BASENAME=libusr.so
 PACKAGE_TOP_DIR=libusr.so/
 
 # Functions

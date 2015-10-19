@@ -168,11 +168,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libx3dcore.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk /home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libx3dcore.${CND_DLIB_EXT}: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libx3dcore.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -ldl -pthread `pkg-config gtk+-3.0 --libs`  -shared -fPIC
+/home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so: ${OBJECTFILES}
+	${MKDIR} -p /home/davis/x3drenderlib-code/trunk/bin
+	${LINK.c} -o /home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so ${OBJECTFILES} ${LDLIBSOPTIONS} -ldl -pthread `pkg-config gtk+-3.0 --libs`  -shared -fPIC
 
 ${OBJECTDIR}/_ext/248117513/fbxmodel.o: ../../drivers/loader/fbxmodel.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/248117513
@@ -745,7 +745,7 @@ ${OBJECTDIR}/_ext/579834215/timing.o: ../../lib/system/timing.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libx3dcore.${CND_DLIB_EXT}
+	${RM} /home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so
 
 # Subprojects
 .clean-subprojects:

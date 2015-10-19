@@ -418,6 +418,9 @@ static inline struct util_access* u_access_create (
 
 static inline void u_access_free(struct util_access* acc)
 {
+	if (acc == nullptr) {
+		return ;
+	}
         switch(acc->type) {
         case UtilAccessorLinear:
                 {

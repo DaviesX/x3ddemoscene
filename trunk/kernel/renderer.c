@@ -141,7 +141,7 @@ bool renderer_render(struct render_tree* tree)
         struct alg_var_set      dbg_params;
         alg_var_set_init(&dbg_params);
         alg_var_set_declare(&dbg_params, "tree", tree, sizeof(tree));
-        debugger_invoke(Debug_renderer_c_renderer_render, (struct alg_var_set*) tree);
+        debugger_invoke(Debug_renderer_c_renderer_render, &dbg_params);
 
         if (!render_tree_verify(tree)) {
                 log_severe_err_dbg("couldn't verify render tree");
@@ -238,6 +238,6 @@ __dlexport enum DebugPosition* __callback   renderer_tree_test_pos(struct alg_va
 __dlexport void __callback                  renderer_tree_test(struct alg_var_set* envir)
 {
         log_normal_dbg("renderer tree test commence");
-        struct render_tree* tree = (struct render_tree*) envir; //alg_var_set_use(envir, "tree");
+        struct render_tree* tree = alg_var_set_use(envir, "tree");
         render_tree_print(tree);
 }
