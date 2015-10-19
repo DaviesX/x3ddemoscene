@@ -95,19 +95,19 @@ private:
  */
 class Renderer : public CoreResource<struct renderer> {
 public:
-        enum Driver {
-                Undeterminate,          /**< a memory block with undefined renderer */
-                Rasterizer,             /**< rasterization renderer */
-                Pathtracer,             /**< path tracing renderer */
-                Photontracer,           /**< photon tracing renderer */
-                Photonmap,              /**< photon light map generation renderer */
-                Radiosity,              /**< radiosity light map generation renderer */
-                RadianceCache,          /**< radiance cache generation renderer */
-                PRT,                    /**< precomputed radiance transfer renderer */
-                Selection               /**< object selection renderer */
-        };
+//        enum Driver {
+//                Undeterminate,          /**< a memory block with undefined renderer */
+//                Rasterizer,             /**< rasterization renderer */
+//                Pathtracer,             /**< path tracing renderer */
+//                Photontracer,           /**< photon tracing renderer */
+//                Photonmap,              /**< photon light map generation renderer */
+//                Radiosity,              /**< radiosity light map generation renderer */
+//                RadianceCache,          /**< radiance cache generation renderer */
+//                PRT,                    /**< precomputed radiance transfer renderer */
+//                Selection               /**< object selection renderer */
+//        };
 
-        Renderer(Driver driver);
+        Renderer();
         ~Renderer();
 
         void                    update(RenderTree* tree);

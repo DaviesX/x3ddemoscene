@@ -10,7 +10,7 @@ namespace usr
  * Note that: once the type of the renderer is attached(it will be attached on its creation), it cannot easily be changed. a call of renderer_retype() can change the type of the renderer, but all the settings formerly applied to that renderer will be lost.
  * \param driver Driver the type of renderer to be created.
  */
-Renderer::Renderer(Driver driver)
+Renderer::Renderer()
 {
 /* NOTE (davis#9#): renderer doesn't need init */
 //        renderer_init(&m_renderer, (RENDERER_IDR) driver);

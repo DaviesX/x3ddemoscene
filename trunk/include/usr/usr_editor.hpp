@@ -134,7 +134,7 @@ public:
         void                    magnify(int delta);
         void                    set_view_mode(ViewMode mode);
 private:
-        void                    set_idle_state(bool is_idle);
+        void                    request_idle_state(bool is_idle);
 
         class RenderRegionInt;
         class RenderRegionInt*  pimpl;
@@ -160,7 +160,11 @@ public:
         void* checkout_value(string tab_name, string value);
         void bind_callback(string signal, f_Generic callback, void *data);
 
-        Renderer* get_renderer();
+	enum RenderTreeConfigType {
+		RenderTreeInteractive,
+		RenderTreeStatic
+	};
+        RenderTree* get_render_tree(RenderTreeConfigType type) const;
 private:
         class RenderConfigInt;
         class RenderConfigInt *pimpl;

@@ -1,5 +1,6 @@
 /* editrenderregion.cpp: render region activex implementation */
 #include <usr/usr_x3d.hpp>
+#include <usr/usr_renderer.hpp>
 #include <usr/usr_projectionprobe.hpp>
 #include <usr/usr_editor.hpp>
 
@@ -16,6 +17,7 @@ public:
         ~RenderRegionInt();
 
         struct {        // Idle
+                bool		m_idle_request;
                 bool            m_is_idle;
                 f_Notify_Idle   m_idle_signal;
                 void*           m_idle_signal_data;
@@ -47,11 +49,13 @@ public:
 
         // optics properties are default to these values
         const enum ColorMode    c_ColorMode     = Color32Mode;
+	Renderer		m_renderer;
 };
 
 RenderRegionActiveX::RenderRegionInt::RenderRegionInt(OutputMethod method, void *handle, int x, int y, int w, int h)
 {
         m_handle        = handle;
+        m_idle_request  = false;
         m_is_idle       = true;
         m_is_resized    = false;
         m_method        = method;
@@ -97,11 +101,12 @@ void RenderRegionActiveX::on_adding()
         state->declare(c_RenderRegion, this);
 }
 
-void RenderRegionActiveX::set_idle_state(bool is_idle)
+void RenderRegionActiveX::request_idle_state(bool is_idle)
 {
-        wait_for_update();
-        pimpl->m_is_idle = is_idle;
-        unwait();
+//        wait_for_update();
+//        pimpl->m_is_idle = is_idle;
+//        unwait();
+        pimpl->m_idle_request = is_idle;
 }
 
 void RenderRegionActiveX::resize(int x, int y, int w, int h, bool toggle_fullscreen)
@@ -178,9 +183,13 @@ void RenderRegionActiveX::update()
         KernelEnvironment* state = get_state_buffer();
         // see if there is anything needed to be processed by the kernel
         WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use(c_WorldData);
-        if (!worlddata->has_works()) {
+        if (!worlddata->has_works() && !pimpl->m_idle_request) {
+                RenderConfigActiveX* config = (RenderConfigActiveX*) state->use(c_RenderConfig);
+                pimpl->m_renderer.update(config->get_render_tree(RenderConfigActiveX::RenderTreeInteractive));
+                worlddata->get_world().bind_render_processor(&pimpl->m_renderer);
                 pimpl->m_is_idle = true;
         } else {
+                worlddata->get_world().detach_render_processor();
                 pimpl->m_is_idle = false;
         }
         // see if there is anything to commit to the screen

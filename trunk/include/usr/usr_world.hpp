@@ -23,6 +23,7 @@ public:
 
         void bind_resource_processor(ResourceLoader* loader);
         void bind_render_processor(Renderer* renderer);
+	void detach_render_processor();
         void update();
 
 private:

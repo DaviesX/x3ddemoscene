@@ -53,14 +53,12 @@ public:
         } m_error[2];
 
         RenderTree              m_tree;
-        Renderer*               m_renderer;
         string                  c_ProbeName = "default_probe";
         string                  c_RenderContextName = "default_context";
 };
 
 RenderConfigActiveX::RenderConfigInt::RenderConfigInt()
 {
-        m_renderer = new Renderer(Renderer::Pathtracer);
         // Put a default tree onto it
         RenderOutput output("default_output", c_ProbeName);
         RenderRadiance radiance("default_radiance", RenderPipeDirectLighting);
@@ -139,7 +137,6 @@ void RenderConfigActiveX::update()
         pimpl->m_tree.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
         pimpl->m_tree.set_environment_variable(RenderEnvRenderable, pimpl->c_RenderContextName,
                                                world.get_render_aggregate()->get_core_resource());
-        pimpl->m_renderer->update(&pimpl->m_tree);
 }
 
 void RenderConfigActiveX::load ( struct serializer *s )
@@ -183,9 +180,9 @@ void RenderConfigActiveX::bind_callback ( string signal, f_Generic callback, voi
         }
 }
 
-Renderer* RenderConfigActiveX::get_renderer()
+RenderTree* RenderConfigActiveX::get_render_tree(RenderTreeConfigType type) const
 {
-        return pimpl->m_renderer;
+        return &pimpl->m_tree;
 }
 
 } // namespace usr

@@ -53,11 +53,11 @@ void WorldDataActiveX::preupdate()
 void WorldDataActiveX::update()
 {
         KernelEnvironment* state    = get_state_buffer();
-        RenderConfigActiveX* config = static_cast<RenderConfigActiveX*>(state->use(c_RenderConfig));
-        if (config) {
-                Renderer* renderer  = config->get_renderer();
-                pimpl->m_world.bind_render_processor(renderer);
-        }
+//        RenderConfigActiveX* config = static_cast<RenderConfigActiveX*>(state->use(c_RenderConfig));
+//        if (config) {
+//                Renderer* renderer  = config->get_renderer();
+//                pimpl->m_world.bind_render_processor(renderer);
+//        }
 
         if (pimpl->m_is_activated) {
                 pimpl->m_world.update();

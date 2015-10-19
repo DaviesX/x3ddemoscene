@@ -41,6 +41,11 @@ void World::bind_render_processor(Renderer* renderer)
         m_renderer = renderer;
 }
 
+void World::detach_render_processor()
+{
+        m_renderer = nullptr;
+}
+
 void World::update()
 {
         if (m_renderer) {
