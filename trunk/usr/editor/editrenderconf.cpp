@@ -52,7 +52,8 @@ public:
                 void*           d_error;
         } m_error[2];
 
-        RenderTree              m_tree;
+        RenderTree              m_static;
+        RenderTree              m_interactive;
         string                  c_ProbeName = "default_probe";
         string                  c_RenderContextName = "default_context";
 };
@@ -60,13 +61,21 @@ public:
 RenderConfigActiveX::RenderConfigInt::RenderConfigInt()
 {
         // Put a default tree onto it
-        RenderOutput output("default_output", c_ProbeName);
-        RenderRadiance radiance("default_radiance", RenderPipeDirectLighting);
-        RenderableLoader rdaloader("default_renderable_context", c_RenderContextName, RenderAggregateLinear);
-        RenderNode* root = m_tree.create_root();
-        m_tree.insert_node(root, output.get_node());
-        m_tree.insert_node(output.get_node(), radiance.get_node());
-        m_tree.insert_node(radiance.get_node(), rdaloader.get_node());
+        RenderOutput soutput("default_output", c_ProbeName);
+        RenderRadiance sradiance("default_radiance", RenderPipeDirectLighting);
+        RenderableLoader srdaloader("default_renderable_context", c_RenderContextName, RenderAggregateLinear);
+        RenderNode* root = m_static.create_root();
+        m_static.insert_node(root, soutput.get_node());
+        m_static.insert_node(soutput.get_node(), sradiance.get_node());
+        m_static.insert_node(srdaloader.get_node(), srdaloader.get_node());
+        
+        RenderOutput ioutput("default_output", c_ProbeName);
+        RenderRadiance iradiance("default_radiance", RenderPipeImageSpace);
+        RenderableLoader irdaloader("default_renderable_context", c_RenderContextName, RenderAggregateStaticBVH);
+        root = m_interactive.create_root();
+        m_interactive.insert_node(root, ioutput.get_node());
+        m_interactive.insert_node(ioutput.get_node(), iradiance.get_node());
+        m_interactive.insert_node(iradiance.get_node(), irdaloader.get_node());
 }
 
 RenderConfigActiveX::RenderConfigInt::~RenderConfigInt()
@@ -74,7 +83,7 @@ RenderConfigActiveX::RenderConfigInt::~RenderConfigInt()
 }
 
 RenderConfigActiveX::RenderConfigActiveX(string name) :
-        EditorBackendActiveX(name, sizeof(RenderConfigActiveX), EDIT_ACTIVEX_RENDER_CONFIG)
+        EditorBackendActiveX(name, sizeof(RenderConfigActiveX), EditActiveXRenderConfig)
 {
         pimpl = new RenderConfigInt();
 
@@ -133,10 +142,15 @@ void RenderConfigActiveX::update()
         swap_buf();
         unwait();
         /* update render tree */
-        pimpl->m_tree.clear_environment_variables();
-        pimpl->m_tree.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
-        pimpl->m_tree.set_environment_variable(RenderEnvRenderable, pimpl->c_RenderContextName,
-                                               world.get_render_aggregate()->get_core_resource());
+        pimpl->m_static.clear_environment_variables();
+        pimpl->m_static.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
+        pimpl->m_static.set_environment_variable(RenderEnvRenderable, pimpl->c_RenderContextName,
+                                                 world.get_render_aggregate()->get_core_resource());
+        
+        pimpl->m_interactive.clear_environment_variables();
+        pimpl->m_interactive.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
+        pimpl->m_interactive.set_environment_variable(RenderEnvRenderable, pimpl->c_RenderContextName,
+                                                      world.get_render_aggregate()->get_core_resource());
 }
 
 void RenderConfigActiveX::load ( struct serializer *s )
@@ -182,7 +196,12 @@ void RenderConfigActiveX::bind_callback ( string signal, f_Generic callback, voi
 
 RenderTree* RenderConfigActiveX::get_render_tree(RenderTreeConfigType type) const
 {
-        return &pimpl->m_tree;
+        switch (type) {
+        case RenderTreeStatic:
+                return &pimpl->m_static;
+        case RenderTreeInteractive:
+                return &pimpl->m_interactive;
+        }
 }
 
 } // namespace usr

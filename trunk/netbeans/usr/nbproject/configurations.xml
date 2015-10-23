@@ -62,6 +62,7 @@
           <itemPath>../../usr/editor/editprojectmgr.cpp</itemPath>
           <itemPath>../../usr/editor/editrenderconf.cpp</itemPath>
           <itemPath>../../usr/editor/editrenderregion.cpp</itemPath>
+          <itemPath>../../usr/editor/editrunner.cpp</itemPath>
           <itemPath>../../usr/editor/editviewcontrol.cpp</itemPath>
           <itemPath>../../usr/editor/editworlddata.cpp</itemPath>
         </logicalFolder>
@@ -226,6 +227,8 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="../../usr/editor/editrunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../../usr/editor/editviewcontrol.cpp"
             ex="false"
@@ -483,6 +486,8 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="../../usr/editor/editrunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../../usr/editor/editviewcontrol.cpp"
             ex="false"

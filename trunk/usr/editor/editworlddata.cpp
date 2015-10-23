@@ -29,7 +29,7 @@ bool WorldDataActiveX::WorldDataInt::has_works()
 }
 
 WorldDataActiveX::WorldDataActiveX(string name) :
-        EditorBackendActiveX ( name, sizeof(WorldDataActiveX), EDIT_ACTIVEX_WORLD_DATA )
+        EditorBackendActiveX ( name, sizeof(WorldDataActiveX), EditActiveXWorldData )
 {
         pimpl = new WorldDataActiveX::WorldDataInt;
 }

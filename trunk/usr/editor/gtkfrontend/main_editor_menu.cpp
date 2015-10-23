@@ -24,7 +24,7 @@ extern "C" void cornell_box_callback ( GtkMenuItem* menuitem, gpointer user_data
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
         BenchmarkActiveX* benchmark = static_cast<BenchmarkActiveX*>
-                (frontend->get_backend_editor()->find_activex( EditorBackendActiveX::EDIT_ACTIVEX_BENCHMARK, "benchmark-scene-menu-item"));
+                (frontend->get_backend_editor()->find_activex( EditorBackendActiveX::EditActiveXBenchmark, "benchmark-scene-menu-item"));
         benchmark->run_benchmark(BenchmarkActiveX::Benchmark_CornellBox);
 }
 

@@ -22,6 +22,8 @@ build/Release/GNU-Linux-x86/_ext/767442731/ptrenderer.o: \
  ../../drivers/renderer/renderer/trianglebuffer.h \
  ../../drivers/renderer/renderer/vbo.h \
  ../../drivers/renderer/renderer/colorspectrum.h \
+ ../../drivers/renderer/renderer/../shader/ptshader.c \
+ ../../drivers/renderer/renderer/../shader/ptshader.h \
  /usr/include/gtk-3.0/gtk/gtk.h /usr/include/gtk-3.0/gdk/gdk.h \
  /usr/include/gtk-3.0/gdk/gdkconfig.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
@@ -641,6 +643,10 @@ build/Release/GNU-Linux-x86/_ext/767442731/ptrenderer.o: \
 ../../drivers/renderer/renderer/vbo.h:
 
 ../../drivers/renderer/renderer/colorspectrum.h:
+
+../../drivers/renderer/renderer/../shader/ptshader.c:
+
+../../drivers/renderer/renderer/../shader/ptshader.h:
 
 /usr/include/gtk-3.0/gtk/gtk.h:
 

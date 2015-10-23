@@ -116,7 +116,7 @@ MainEditor::MainEditorInt::~MainEditorInt()
         g_signal_handler_disconnect(m_window, m_destroy_signal);
 
         if (m_frontend->is_usable()) {
-                m_frontend->get_backend_editor()->remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_REGION, c_GtkRenderRegion);
+                m_frontend->get_backend_editor()->remove_activex(EditorBackendActiveX::EditActiveXRenderRegion, c_GtkRenderRegion);
         }
 }
 

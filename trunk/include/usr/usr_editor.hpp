@@ -51,25 +51,25 @@ class EditorBackendActiveX
         friend class WorldDataActiveX;
         friend class BenchmarkActiveX;
 public:
-        enum EDIT_ACTIVEX_IDR {
-                EDIT_ACTIVEX_ENTITY_LIST,
-                EDIT_ACTIVEX_FILE_LOADER,
-                EDIT_ACTIVEX_BENCHMARK,
-                EDIT_ACTIVEX_RENDER_CONFIG,
-                EDIT_ACTIVEX_WORLD_DATA,
-                EDIT_ACTIVEX_RENDER_REGION,
-                EDIT_ACTIVEX_POWERSAVE_SWITCH,
-                EDIT_ACTIVEX_NUMBER
+        enum EditActiveXType {
+                EditActiveXEntityEditor,
+                EditActiveXBenchmark,
+                EditActiveXRenderConfig,
+                EditActiveXWorldData,
+                EditActiveXRenderRegion,
+                EditActiveXRunner,
+                EditActiveXPowersaveSwitch,
+                c_EditActiveXNumber
         };
 
-        static const int c_NumActiveXType = EDIT_ACTIVEX_NUMBER;
+        static const int c_NumActiveXType = c_EditActiveXNumber;
 
-        EditorBackendActiveX(string name, int size, EDIT_ACTIVEX_IDR type);
+        EditorBackendActiveX(string name, int size, EditActiveXType type);
         virtual ~EditorBackendActiveX ();
 
         void                    notify_add(EditorBackend *e);
         string                  get_name() const;
-        EDIT_ACTIVEX_IDR        get_type() const;
+        EditActiveXType        get_type() const;
         KernelEnvironment*      get_state_buffer() const;
         bool                    is_dirty() const;
 
@@ -84,7 +84,7 @@ private:
         string                  m_name;
         KernelEnvironment*      m_state;
         uuid_t                  m_edit_id;
-        EDIT_ACTIVEX_IDR        m_type;
+        EditActiveXType        m_type;
 
         /* front-back buffer utilities */
         int                     m_bufcount;
@@ -107,8 +107,8 @@ private:
 typedef void (*f_Notify_Idle)   (bool is_idle, EditorBackendActiveX* ax, void *data);
 typedef void (*f_Notify_Error)  (string message, EditorBackendActiveX *ax, void *data);
 
-/* activex - render region - manage the physical screen output */
-class __dlexport RenderRegionActiveX : public EditorBackendActiveX
+/* activex - render region - manage the multi-frame real-time physical screen output */
+class RenderRegionActiveX : public EditorBackendActiveX
 {
 public:
         enum ViewMode {
@@ -138,6 +138,14 @@ private:
 
         class RenderRegionInt;
         class RenderRegionInt*  pimpl;
+};
+
+/* activex - render frame - manage single frame offline/real-time output */
+class RunnerActiveX : public EditorBackendActiveX
+{
+private:
+        class RunnerInt;
+        class RunnerInt*        pimpl;
 };
 
 /* activex - render configurator - configurates the renderer */
@@ -171,9 +179,28 @@ private:
 };
 
 /* activex - world data */
-class __dlexport WorldDataActiveX : public EditorBackendActiveX
+class WorldDataActiveX : public EditorBackendActiveX
 {
 public:
+        enum ActionType {
+                ActionAddObject,
+                ActionRemoveObject,
+        };
+        
+        enum ObjectType {
+                ObjectRenderable,
+        };
+        
+        struct ActionInfo {
+                ActionType      action_type;
+                ObjectType      object_type;
+                std::string     object_id;
+                std::string     parent_id;
+        };
+        
+        typedef void (*f_Notify_Error)  (string message, WorldDataActiveX& ax, void *data);
+        typedef void (*f_Notify_Action) (ActionInfo& info, WorldDataActiveX& ax, void* data);
+        
         WorldDataActiveX(string name);
         ~WorldDataActiveX();
 
@@ -184,6 +211,8 @@ public:
         void load(struct serializer *s);        // load status from the serial sequence
         void save(struct serializer *s);        // save status to the serial sequence
 
+        void    bind_callback(string signal, f_Generic callback, void *data);
+/**@fixme: <WorldDataActiveX>: get_world is no longer viable */
         World&  get_world();
         bool    has_works();
 private:
@@ -263,8 +292,8 @@ public:
         bool save_state(string filename);
 
         void add_activex(EditorBackendActiveX *activex);
-        bool remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_IDR type, string name);
-        EditorBackendActiveX *find_activex(EditorBackendActiveX::EDIT_ACTIVEX_IDR type, string name);
+        bool remove_activex(EditorBackendActiveX::EditActiveXType type, string name);
+        EditorBackendActiveX *find_activex(EditorBackendActiveX::EditActiveXType type, string name);
 
         KernelEnvironment *get_global_state()
         {

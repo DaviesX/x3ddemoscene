@@ -16,7 +16,7 @@ public:
 };
 
 BenchmarkActiveX::BenchmarkActiveX ( string name ) :
-        EditorBackendActiveX ( name, sizeof(BenchmarkActiveX), EDIT_ACTIVEX_BENCHMARK )
+        EditorBackendActiveX ( name, sizeof(BenchmarkActiveX), EditActiveXBenchmark )
 {
         this->pimpl = new BenchmarkInt;
         for ( int i = 0; i < 2; i ++ ) {

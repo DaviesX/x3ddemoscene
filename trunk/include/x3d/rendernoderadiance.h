@@ -5,6 +5,7 @@
 #include <x3d/renderer.h>
 
 enum RenderPipeType {
+        RenderPipeNull,
         RenderPipeForward,
         RenderPipeForwardPlus,
         RenderPipeWhitted,

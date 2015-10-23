@@ -62,10 +62,10 @@ bool RendererConfig::show(bool visible)
                 frontend->get_backend_editor()->add_activex(config);
         } else {
                 EditorBackend* edit = frontend->get_backend_editor();
-                EditorBackendActiveX* config = edit->find_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_CONFIG,
+                EditorBackendActiveX* config = edit->find_activex(EditorBackendActiveX::EditActiveXRenderConfig,
                                                            cRenderConfig);
                 if (config)
-                        edit->remove_activex(EditorBackendActiveX::EDIT_ACTIVEX_RENDER_CONFIG, cRenderConfig);
+                        edit->remove_activex(EditorBackendActiveX::EditActiveXRenderConfig, cRenderConfig);
         }
         return true;
 }

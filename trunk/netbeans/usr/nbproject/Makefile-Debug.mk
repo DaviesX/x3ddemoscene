@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1548469272/editprojectmgr.o \
 	${OBJECTDIR}/_ext/1548469272/editrenderconf.o \
 	${OBJECTDIR}/_ext/1548469272/editrenderregion.o \
+	${OBJECTDIR}/_ext/1548469272/editrunner.o \
 	${OBJECTDIR}/_ext/1548469272/editviewcontrol.o \
 	${OBJECTDIR}/_ext/1548469272/editworlddata.o \
 	${OBJECTDIR}/_ext/1067377271/dynamics_editor.o \
@@ -135,6 +136,11 @@ ${OBJECTDIR}/_ext/1548469272/editrenderregion.o: ../../usr/editor/editrenderregi
 	${MKDIR} -p ${OBJECTDIR}/_ext/1548469272
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../lib -I../../include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1548469272/editrenderregion.o ../../usr/editor/editrenderregion.cpp
+
+${OBJECTDIR}/_ext/1548469272/editrunner.o: ../../usr/editor/editrunner.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1548469272
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../lib -I../../include -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1548469272/editrunner.o ../../usr/editor/editrunner.cpp
 
 ${OBJECTDIR}/_ext/1548469272/editviewcontrol.o: ../../usr/editor/editviewcontrol.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1548469272

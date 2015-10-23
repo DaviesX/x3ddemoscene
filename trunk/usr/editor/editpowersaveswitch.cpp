@@ -15,7 +15,7 @@ public:
 
 
 PowersaveSwitchActiveX::PowersaveSwitchActiveX(string name) :
-        EditorBackendActiveX(name, sizeof(PowersaveSwitchActiveX), EDIT_ACTIVEX_POWERSAVE_SWITCH)
+        EditorBackendActiveX(name, sizeof(PowersaveSwitchActiveX), EditActiveXPowersaveSwitch)
 {
         pimpl = new PowersaveSwitchActiveX::PowersaveSwitchInt;
 }

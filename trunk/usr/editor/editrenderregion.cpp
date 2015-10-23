@@ -85,7 +85,7 @@ RenderRegionActiveX::RenderRegionInt::~RenderRegionInt()
 }
 
 RenderRegionActiveX::RenderRegionActiveX(string name, OutputMethod method, void *handle, int x, int y, int w, int h) :
-        EditorBackendActiveX(name, sizeof(RenderRegionActiveX), EDIT_ACTIVEX_RENDER_REGION)
+        EditorBackendActiveX(name, sizeof(RenderRegionActiveX), EditActiveXRenderRegion)
 {
         pimpl = new RenderRegionInt(method, handle, x, y, w, h);
 }
@@ -185,7 +185,8 @@ void RenderRegionActiveX::update()
         WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use(c_WorldData);
         if (!worlddata->has_works() && !pimpl->m_idle_request) {
                 RenderConfigActiveX* config = (RenderConfigActiveX*) state->use(c_RenderConfig);
-                pimpl->m_renderer.update(config->get_render_tree(RenderConfigActiveX::RenderTreeInteractive));
+                RenderTree* interactive = config->get_render_tree(RenderConfigActiveX::RenderTreeInteractive);
+                pimpl->m_renderer.update(interactive);
                 worlddata->get_world().bind_render_processor(&pimpl->m_renderer);
                 pimpl->m_is_idle = true;
         } else {

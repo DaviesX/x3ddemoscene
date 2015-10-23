@@ -206,12 +206,12 @@ void EditorBackend::update ( void )
 
 void EditorBackend::add_activex ( EditorBackendActiveX *activex )
 {
-        EditorBackendActiveX::EDIT_ACTIVEX_IDR type = activex->get_type ();
+        EditorBackendActiveX::EditActiveXType type = activex->get_type ();
         activex->notify_add ( this );
         this->m_activex[type].push_back ( activex );
 }
 
-EditorBackendActiveX *EditorBackend::find_activex ( EditorBackendActiveX::EDIT_ACTIVEX_IDR type, string name )
+EditorBackendActiveX *EditorBackend::find_activex ( EditorBackendActiveX::EditActiveXType type, string name )
 {
         list<EditorBackendActiveX*>::iterator activex =
                 this->m_activex[type].begin ();
@@ -226,7 +226,7 @@ EditorBackendActiveX *EditorBackend::find_activex ( EditorBackendActiveX::EDIT_A
         return nullptr;
 }
 
-bool EditorBackend::remove_activex ( EditorBackendActiveX::EDIT_ACTIVEX_IDR type, string name )
+bool EditorBackend::remove_activex ( EditorBackendActiveX::EditActiveXType type, string name )
 {
         list<EditorBackendActiveX*>::iterator activex =
                 this->m_activex[type].begin ();
@@ -295,7 +295,7 @@ bool EditorBackend::save_state ( string filename )
 }
 
 /* EditorBackendActiveX */
-EditorBackendActiveX::EditorBackendActiveX ( string name, int size, EDIT_ACTIVEX_IDR type ) :
+EditorBackendActiveX::EditorBackendActiveX ( string name, int size, EditActiveXType type ) :
                 m_size (size), m_type (type)
 {
         m_name          = name;
@@ -320,7 +320,7 @@ string EditorBackendActiveX::get_name ( void ) const
         return m_name;
 }
 
-EditorBackendActiveX::EDIT_ACTIVEX_IDR EditorBackendActiveX::get_type ( void ) const
+EditorBackendActiveX::EditActiveXType EditorBackendActiveX::get_type ( void ) const
 {
         return m_type;
 }
