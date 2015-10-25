@@ -61,8 +61,8 @@
           <itemPath>../../usr/editor/editpowersaveswitch.cpp</itemPath>
           <itemPath>../../usr/editor/editprojectmgr.cpp</itemPath>
           <itemPath>../../usr/editor/editrenderconf.cpp</itemPath>
+          <itemPath>../../usr/editor/editrenderframe.cpp</itemPath>
           <itemPath>../../usr/editor/editrenderregion.cpp</itemPath>
-          <itemPath>../../usr/editor/editrunner.cpp</itemPath>
           <itemPath>../../usr/editor/editworlddata.cpp</itemPath>
         </logicalFolder>
         <itemPath>../../usr/usr_cinematicprogs.cpp</itemPath>
@@ -222,12 +222,15 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../usr/editor/editrenderregion.cpp"
+      <item path="../../usr/editor/editrenderframe.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../usr/editor/editrunner.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../../usr/editor/editrenderregion.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="../../usr/editor/editworlddata.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -476,12 +479,15 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../usr/editor/editrenderregion.cpp"
+      <item path="../../usr/editor/editrenderframe.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../usr/editor/editrunner.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../../usr/editor/editrenderregion.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="../../usr/editor/editworlddata.cpp" ex="false" tool="1" flavor2="0">
       </item>
