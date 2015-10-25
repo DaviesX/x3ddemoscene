@@ -17,6 +17,7 @@ namespace usr
 
 /* state constants */
 const string c_RenderRegion     = "render-region";
+const string c_RenderFrame      = "render-frame";
 const string c_RenderConfig     = "render-config";
 const string c_Selector         = "selector";
 const string c_Clipboard        = "clipboard";
@@ -48,6 +49,7 @@ class EditorBackendActiveX
 {
         friend class RenderRegionActiveX;
         friend class RenderConfigActiveX;
+        friend class RenderFrameActiveX;
         friend class WorldDataActiveX;
         friend class BenchmarkActiveX;
 public:
@@ -57,7 +59,7 @@ public:
                 EditActiveXRenderConfig,
                 EditActiveXWorldData,
                 EditActiveXRenderRegion,
-                EditActiveXRunner,
+                EditActiveXRenderFrame,
                 EditActiveXPowersaveSwitch,
                 c_EditActiveXNumber
         };
@@ -69,22 +71,25 @@ public:
 
         void                    notify_add(EditorBackend *e);
         string                  get_name() const;
-        EditActiveXType        get_type() const;
+        EditActiveXType         get_type() const;
         KernelEnvironment*      get_state_buffer() const;
         bool                    is_dirty() const;
+        
+        bool                    operator==(const EditorBackendActiveX& rhs);
+        bool                    operator!=(const EditorBackendActiveX& rhs);
 
-        virtual void on_adding() = 0;
-        virtual void preupdate() {};
-        virtual void update() = 0;
-        virtual void dispatch() = 0;
-        virtual void load(struct serializer *s) = 0;
-        virtual void save(struct serializer *s) = 0;
+        virtual void            on_adding() = 0;
+        virtual void            preupdate() {};
+        virtual void            update() = 0;
+        virtual void            dispatch() = 0;
+        virtual void            load(struct serializer *s) = 0;
+        virtual void            save(struct serializer *s) = 0;
 private:
         int                     m_size;
         string                  m_name;
         KernelEnvironment*      m_state;
         uuid_t                  m_edit_id;
-        EditActiveXType        m_type;
+        EditActiveXType         m_type;
 
         /* front-back buffer utilities */
         int                     m_bufcount;
@@ -133,19 +138,36 @@ public:
         void                    moveto(int x, int y);
         void                    magnify(int delta);
         void                    set_view_mode(ViewMode mode);
-private:
+        
         void                    request_idle_state(bool is_idle);
-
+private:
         class RenderRegionInt;
         class RenderRegionInt*  pimpl;
 };
 
 /* activex - render frame - manage single frame offline/real-time output */
-class RunnerActiveX : public EditorBackendActiveX
+class RenderFrameActiveX : public EditorBackendActiveX
 {
+public:
+        RenderFrameActiveX(string name);
+        ~RenderFrameActiveX();
+        
+        typedef void (*f_Notify_Error)  (std::string message, RenderFrameActiveX& ax, void *data);
+        typedef void (*f_Notify_Finish) (std::string stats, RenderFrameActiveX& ax, void* data);
+        typedef void (*f_Notify_In_Progress) (std::string stats, RenderFrameActiveX& ax, void* data);
+        
+        void    on_adding();
+        void    preupdate();
+        void    update();
+        void    dispatch();
+        void    load(struct serializer* s);
+        void    save(struct serializer* s);
+        
+        void    bind_callback(string signal, f_Generic callback, void *data);
+        bool    run_frame_renderer(bool to_run);
 private:
-        class RunnerInt;
-        class RunnerInt*        pimpl;
+        class RenderFrameInt;
+        class RenderFrameInt*        pimpl;
 };
 
 /* activex - render configurator - configurates the renderer */
@@ -170,7 +192,9 @@ public:
 
 	enum RenderTreeConfigType {
 		RenderTreeInteractive,
-		RenderTreeStatic
+		RenderTreeStatic,
+                RenderTreeBake,
+                c_NumRenderTree
 	};
         RenderTree* get_render_tree(RenderTreeConfigType type) const;
 private:
@@ -291,7 +315,7 @@ public:
         bool load_state(string filename);
         bool save_state(string filename);
 
-        void add_activex(EditorBackendActiveX *activex);
+        bool add_activex(EditorBackendActiveX *activex);
         bool remove_activex(EditorBackendActiveX::EditActiveXType type, string name);
         EditorBackendActiveX *find_activex(EditorBackendActiveX::EditActiveXType type, string name);
 

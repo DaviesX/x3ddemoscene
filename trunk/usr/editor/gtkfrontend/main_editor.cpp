@@ -22,19 +22,12 @@ public:
         GtkWidget*                              m_draw_region;
         GdkPixbuf*                              m_logo;
         GdkPixbuf*                              m_icon;
-        struct project_mgr*     proj_mgr;
-        struct entity_mgr*      ent_mgr;
-        struct entity_prop*     ent_prop;
-        struct assist_dialog*   assist_diag;
 
         gulong                                  m_logo_draw_signal;
         gulong                                  m_idle_dispatch;
         gulong                                  m_destroy_signal;
         bool                                    m_is_logo_connected;
 };
-
-static const string c_GtkRenderRegion = "gtk-main-editor-render-region";
-static const string c_GtkPowersaveSwitch = "gtk-main-editor-powersave-switch";
 
 /*
 static struct main_editor g_main_edit;
@@ -116,7 +109,8 @@ MainEditor::MainEditorInt::~MainEditorInt()
         g_signal_handler_disconnect(m_window, m_destroy_signal);
 
         if (m_frontend->is_usable()) {
-                m_frontend->get_backend_editor()->remove_activex(EditorBackendActiveX::EditActiveXRenderRegion, c_GtkRenderRegion);
+                m_frontend->get_backend_editor()->remove_activex(EditorBackendActiveX::EditActiveXRenderRegion, 
+                                                                 gtkactivex::c_BackendMainRenderRegion);
         }
 }
 
@@ -128,6 +122,11 @@ MainEditor::MainEditor(EditorGtkFrontend* frontend)
 MainEditor::~MainEditor()
 {
         delete pimpl;
+}
+
+GtkWindow* MainEditor::get_window_widget()
+{
+        return GTK_WINDOW(pimpl->m_window);
 }
 
 bool MainEditor::show(bool visible)
@@ -227,14 +226,19 @@ demo_mode:
                 int x, y;
                 int width, height;
                 widget_get_size(pimpl->m_window, pimpl->m_draw_region, &x, &y, &width, &height);
-                RenderRegionActiveX* ax_region = new RenderRegionActiveX(c_GtkRenderRegion, GtkRenderRegionOutput,
-                                                                         pimpl->m_draw_region,
-                                                                         x, y, width, height );
+                RenderRegionActiveX* ax_region = 
+                        new RenderRegionActiveX(gtkactivex::c_BackendMainRenderRegion, GtkRenderRegionOutput,
+                                                pimpl->m_draw_region, x, y, width, height );
                 ax_region->bind_callback("notify_idle", (f_Generic) idle_switch_callback, pimpl);
                 ax_region->bind_callback("notify_resize", (f_Generic) window_reize_callback, pimpl);
-                PowersaveSwitchActiveX* ax_powersave = new PowersaveSwitchActiveX(c_GtkPowersaveSwitch);
-                frontend->get_backend_editor()->add_activex(ax_region);
-                frontend->get_backend_editor()->add_activex(ax_powersave);
+                PowersaveSwitchActiveX* ax_powersave = 
+                        new PowersaveSwitchActiveX(gtkactivex::c_BackendPowersaveSwitch);
+                if (!frontend->get_backend_editor()->add_activex(ax_region)) {
+                        delete ax_region;
+                }
+                if (!frontend->get_backend_editor()->add_activex(ax_powersave)) {
+                        delete ax_powersave;
+                }
 
                 /* set dispatch function which fetches signal
                  * from core editor when gtk_main is idle

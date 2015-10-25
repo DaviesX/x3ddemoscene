@@ -17,19 +17,22 @@ public:
         World();
         ~World();
 
-        RenderAggregate* get_render_aggregate();
-        ResourceLoader* get_resource_processor();
-        Renderer* get_render_processor();
+        RenderAggregate*        get_render_aggregate();
+        ResourceLoader*         get_resource_processor(uuid_t id);
+        Renderer*               get_render_processor(uuid_t id);
 
-        void bind_resource_processor(ResourceLoader* loader);
-        void bind_render_processor(Renderer* renderer);
-	void detach_render_processor();
-        void update();
+        uuid_t                  bind_resource_processor(ResourceLoader* loader);
+        uuid_t                  bind_render_processor(Renderer* renderer);
+	bool                    detach_render_processor(uuid_t id);
+        void                    update();
 
 private:
         RenderAggregate         m_renderagg;
-        ResourceLoader*         m_resloader;
-        Renderer*               m_renderer;
+        uuid_t                  m_renderaggid = -1;
+        ResourceLoader*         m_resloader = nullptr;
+        uuid_t                  m_resloaderid = -1;
+        Renderer*               m_renderer = nullptr;
+        uuid_t                  m_rendererid = -1;
 };
 
 }// namespace usr

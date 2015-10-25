@@ -49,7 +49,8 @@ public:
 
         // optics properties are default to these values
         const enum ColorMode    c_ColorMode     = Color32Mode;
-	Renderer		m_renderer;
+        Renderer		m_renderer;
+        uuid_t                  m_rendid = -1;
 };
 
 RenderRegionActiveX::RenderRegionInt::RenderRegionInt(OutputMethod method, void *handle, int x, int y, int w, int h)
@@ -183,15 +184,15 @@ void RenderRegionActiveX::update()
         KernelEnvironment* state = get_state_buffer();
         // see if there is anything needed to be processed by the kernel
         WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use(c_WorldData);
-        if (!worlddata->has_works() && !pimpl->m_idle_request) {
+        if (worlddata->has_works() && !pimpl->m_idle_request) {
                 RenderConfigActiveX* config = (RenderConfigActiveX*) state->use(c_RenderConfig);
                 RenderTree* interactive = config->get_render_tree(RenderConfigActiveX::RenderTreeInteractive);
                 pimpl->m_renderer.update(interactive);
-                worlddata->get_world().bind_render_processor(&pimpl->m_renderer);
-                pimpl->m_is_idle = true;
-        } else {
-                worlddata->get_world().detach_render_processor();
+                pimpl->m_rendid = worlddata->get_world().bind_render_processor(&pimpl->m_renderer);
                 pimpl->m_is_idle = false;
+        } else {
+                worlddata->get_world().detach_render_processor(pimpl->m_rendid);
+                pimpl->m_is_idle = true;
         }
         // see if there is anything to commit to the screen
         RenderConfigActiveX* config = (RenderConfigActiveX*) state->use(c_RenderConfig);

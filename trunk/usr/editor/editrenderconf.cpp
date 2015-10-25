@@ -67,7 +67,7 @@ RenderConfigActiveX::RenderConfigInt::RenderConfigInt()
         RenderNode* root = m_static.create_root();
         m_static.insert_node(root, soutput.get_node());
         m_static.insert_node(soutput.get_node(), sradiance.get_node());
-        m_static.insert_node(srdaloader.get_node(), srdaloader.get_node());
+        m_static.insert_node(sradiance.get_node(), srdaloader.get_node());
         
         RenderOutput ioutput("default_output", c_ProbeName);
         RenderRadiance iradiance("default_radiance", RenderPipeImageSpace);

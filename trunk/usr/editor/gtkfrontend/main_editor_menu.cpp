@@ -14,21 +14,37 @@ public:
         ~MainEditorMenuInt();
 public:
         EditorGtkFrontend*              m_frontend;
-        GtkMenu*                        m_benchmenu;
-        GtkMenuItem*                    m_benchitem;
 
 };
 
 
-extern "C" void cornell_box_callback ( GtkMenuItem* menuitem, gpointer user_data )
+extern "C" void gtk_cornell_box_callback(GtkMenuItem* menuitem, gpointer user_data)
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
         BenchmarkActiveX* benchmark = static_cast<BenchmarkActiveX*>
-                (frontend->get_backend_editor()->find_activex( EditorBackendActiveX::EditActiveXBenchmark, "benchmark-scene-menu-item"));
+                (frontend->get_backend_editor()->find_activex(EditorBackendActiveX::EditActiveXBenchmark, 
+                                                              gtkactivex::c_BackendBenchmark));
         benchmark->run_benchmark(BenchmarkActiveX::Benchmark_CornellBox);
 }
 
-extern "C" void trigger_quit_callback(GtkWidget *widget, gpointer data)
+void x3d_render_frame_finish(std::string stats, RenderFrameActiveX& ax, void* user_data)
+{
+        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
+        GtkWindow* parent = frontend->get_main_editor()->get_window_widget();
+        message_box_info("X3d Render Frame", "Render frame has finished\nstatistics:" + stats, parent);
+}
+
+extern "C" void gtk_render_current_frame_callback(GtkMenuItem* menuitem, gpointer user_data)
+{
+        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
+        RenderFrameActiveX* renderframe_ax = static_cast<RenderFrameActiveX*>
+                (frontend->get_backend_editor()->find_activex(EditorBackendActiveX::EditActiveXRenderFrame, 
+                                                              gtkactivex::c_BackendRenderFrame));
+        renderframe_ax->run_frame_renderer(true);
+        renderframe_ax->bind_callback("notify_finish", (f_Generic) x3d_render_frame_finish, frontend);
+}
+
+extern "C" void gtk_trigger_quit_callback(GtkWidget* widget, gpointer data)
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(data);
         frontend->close();
@@ -68,46 +84,61 @@ bool MainEditorMenu::show(bool visible)
         if (!(builder = frontend->get_gtk_builder()))
                 return false;
 
-        // deal with the benchmark menu
+        // deal with the <benchmark> menu
         {
-        pimpl->m_benchmenu = (GtkMenu*) gtk_builder_get_object(builder, "benchmark-scene");
-        if (!pimpl->m_benchmenu) {
-                log_severe_err_dbg("cannot retrieve benchmark-scene menu");
-                return false;
+                GtkMenuItem* mi_load_benchmark = (GtkMenuItem*) gtk_builder_get_object(builder, "MI-LoadBenchmark");
+                if (!mi_load_benchmark) {
+                        log_severe_err("cannot retrieve MI-LoadBenchmark menu");
+                        return false;
+                }
+                GtkMenu* m_benchmark = (GtkMenu*) gtk_builder_get_object(builder, "M-BenchmarkScene");
+                if (!m_benchmark) {
+                        log_severe_err("cannot retrieve M-BenchmarkScene widget");
+                        return false;
+                }
+                // inject the benchmark menu to main menu
+                gtk_menu_item_set_submenu(mi_load_benchmark, GTK_WIDGET(m_benchmark));
+                
+                // Cornell box benchmark
+                GtkMenuItem* mi_cornell = (GtkMenuItem*) gtk_builder_get_object(builder, "MI-CornellBoxScene");
+                if (!mi_cornell) {
+                        log_severe_err("cannot retrieve MI-CornellBoxScene menu item");
+                        return false;
+                }
+                g_signal_connect(G_OBJECT(mi_cornell), "activate",
+                                 G_CALLBACK(gtk_cornell_box_callback), frontend);
         }
-        pimpl->m_benchitem = (GtkMenuItem*) gtk_builder_get_object(builder, "benchmark-scene-menu-item");
-        if (!pimpl->m_benchitem) {
-                log_severe_err_dbg("cannot retrieve benchmark-scene-menu-item widget");
-                return false;
-        }
-        // cornell box benchmark
-        GtkMenuItem* cornell_box_item = (GtkMenuItem*) gtk_builder_get_object(builder, "cornell-box-scene");
-        if (!cornell_box_item) {
-                log_severe_err_dbg ( "cannot retrieve cornell-box-scene menu item" );
-                return false;
-        }
-        g_signal_connect(G_OBJECT(cornell_box_item), "activate",
-                         G_CALLBACK(cornell_box_callback), frontend);
-        BenchmarkActiveX* benchmark = new BenchmarkActiveX("benchmark-scene-menu-item");
-        frontend->get_backend_editor()->add_activex(benchmark);
-        }
-        // deal with the close menu
+        // deal with the <Render Current Frame> menu
         {
-        GtkImageMenuItem* quit_menu = (GtkImageMenuItem*) gtk_builder_get_object(builder, "quit-menu-item");
-        if (!quit_menu) {
-                log_severe_err_dbg("cannot retrieve quit-menu-item widget");
-                return false;
+                GtkMenuItem* mi_render_current = 
+                        (GtkMenuItem*) gtk_builder_get_object(builder, "MI-RenderCurrentFrame");
+                if (!mi_render_current) {
+                        log_severe_err("cannot retrieve MI-RenderCurrentFrame menu");
+                        return false;
+                }
+                g_signal_connect(G_OBJECT(mi_render_current), "activate",
+                                 G_CALLBACK(gtk_render_current_frame_callback), frontend);
         }
-        g_signal_connect(G_OBJECT(quit_menu), "activate",
-                         G_CALLBACK(trigger_quit_callback), frontend);
+        // deal with the <close> menu
+        {
+                GtkImageMenuItem* quit_menu = (GtkImageMenuItem*) gtk_builder_get_object(builder, "MI-Quit");
+                if (!quit_menu) {
+                        log_severe_err("cannot retrieve MI-Quit widget");
+                        return false;
+                }
+                g_signal_connect(G_OBJECT(quit_menu), "activate",
+                                 G_CALLBACK(gtk_trigger_quit_callback), frontend);
         }
-
-        if (visible) {
-                // perform injection to benchmark menu
-                gtk_menu_item_set_submenu(pimpl->m_benchitem, GTK_WIDGET(pimpl->m_benchmenu));
-        } else {
-                gtk_menu_item_set_submenu(nullptr, GTK_WIDGET(pimpl->m_benchmenu));
+        // deal with ActiveX
+        BenchmarkActiveX* benchmark = new BenchmarkActiveX(gtkactivex::c_BackendBenchmark);
+        if (!frontend->get_backend_editor()->add_activex(benchmark)) {
+                delete benchmark;
         }
+        RenderFrameActiveX* rendframe_ax = new RenderFrameActiveX(gtkactivex::c_BackendRenderFrame);
+        if (!frontend->get_backend_editor()->add_activex(rendframe_ax)) {
+                delete rendframe_ax;
+        }
+        
         return true;
 }
 

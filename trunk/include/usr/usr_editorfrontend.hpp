@@ -18,6 +18,14 @@ class MainEditorMenu;
 class EntityEditor;
 class RendererConfig;
 
+namespace gtkactivex
+{
+static const string c_BackendMainRenderRegion   = "backend-render-region";
+static const string c_BackendRenderFrame        = "backend-render-frame";
+static const string c_BackendBenchmark          = "backend-benchmark";
+static const string c_BackendPowersaveSwitch    = "backend-powersave-switch";
+};
+
 /*
  * Classes' declarations
  */
@@ -32,12 +40,11 @@ public:
         EditorGtkFrontend();
         ~EditorGtkFrontend();
 
-        bool init ( int argc, char **argv,
-                    EditorBackend *editor, KernelEnvironment *env );
-        bool end_init ( EditorBackend *editor, KernelEnvironment *env );
-        bool load ( EditorBackend *editor, KernelEnvironment *env );
-        void loop ( EditorBackend *editor, KernelEnvironment *env );
-        bool free ( EditorBackend *editor, KernelEnvironment *env );
+        bool init(int argc, char **argv, EditorBackend *editor, KernelEnvironment *env);
+        bool end_init(EditorBackend *editor, KernelEnvironment *env);
+        bool load(EditorBackend *editor, KernelEnvironment *env);
+        void loop(EditorBackend *editor, KernelEnvironment *env);
+        bool free(EditorBackend *editor, KernelEnvironment *env);
 
 public:
         const string            m_glade_dir = "./etc/editor/";
@@ -79,14 +86,14 @@ class EditorPureSdlFrontend : public EditorFrontend
 {
 };
 
-bool editor_init ( int *argc, char ***argv );
-bool editor_end_init ( void );
-bool editor_load ( void );
-void editor_loop ( void *info );
-bool editor_free ( void );
+bool editor_init(int *argc, char ***argv);
+bool editor_end_init(void);
+bool editor_load(void);
+void editor_loop(void *info);
+bool editor_free(void);
 
-void *dbg_get_render_region ( void );
-void dbg_hand_image_to_display ( void *ptr, int w, int h );
+void *dbg_get_render_region(void);
+void dbg_hand_image_to_display(void *ptr, int w, int h);
 
 }
 

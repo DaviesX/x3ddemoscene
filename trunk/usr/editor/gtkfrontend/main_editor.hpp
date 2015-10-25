@@ -20,7 +20,8 @@ public:
         MainEditor(EditorGtkFrontend* frontend);
         ~MainEditor();
 
-        bool    show(bool visible);
+        bool            show(bool visible);
+        GtkWindow*      get_window_widget();
 
         class MainEditorInt;
         class MainEditorInt*    pimpl;

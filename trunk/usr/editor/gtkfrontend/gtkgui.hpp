@@ -20,18 +20,18 @@ namespace usr
 /*
  * functions' declaration
  */
-string file_chooser_open ( string default_dir );
-string file_chooser_save ( string default_dir );
-void message_box_info ( string title, string message );
-void message_box_warning ( string title, string message );
-void message_box_error ( string title, string message );
-bool message_box_question ( string title, string message );
+string file_chooser_open(string default_dir);
+string file_chooser_save(string default_dir);
+void message_box_info(string title, string message, GtkWindow* parent);
+void message_box_warning(string title, string message, GtkWindow* parent);
+void message_box_error(string title, string message, GtkWindow* parent);
+bool message_box_question(string title, string message, GtkWindow* parent);
 
-void widget_get_size ( GtkWidget* parent, GtkWidget* widget,
-                       int* x, int* y, int* width, int* height );
-void run_gtk_main ( void );
-void stop_gtk_main ( void );
-void await_gtk_main ( void );
+void widget_get_size(GtkWidget* parent, GtkWidget* widget,
+                       int* x, int* y, int* width, int* height);
+void run_gtk_main(void);
+void stop_gtk_main(void);
+void await_gtk_main(void);
 
 }// namespace usr
 

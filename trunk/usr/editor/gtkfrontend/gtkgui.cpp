@@ -296,53 +296,38 @@ string file_chooser_save ( string default_dir )
         return nullptr;
 }
 
-void message_box_info ( string title, string message )
+static gint __show_message_box(string title, string message, GtkMessageType type, GtkWindow* parent)
 {
-        GtkWidget *dialog = nullptr;
-        dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
-                                          GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
-                                          "%s", message.c_str () );
-        gtk_window_set_position ( GTK_WINDOW ( dialog ), GTK_WIN_POS_CENTER );
-        gtk_window_set_title ( GTK_WINDOW(dialog), title.c_str () );
-        gtk_dialog_run ( GTK_DIALOG ( dialog ) );
-        gtk_widget_destroy ( dialog );
+        GtkWidget* dialog = gtk_message_dialog_new(parent, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                   type, GTK_BUTTONS_CLOSE,
+                                                   "%s", message.c_str());
+        gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+        gtk_window_set_title(GTK_WINDOW(dialog), title.c_str());
+        gtk_window_set_modal(GTK_WINDOW(dialog), true);
+        gtk_window_set_transient_for(GTK_WINDOW(dialog), parent);
+        gint result = gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        return result;
 }
 
-void message_box_warning ( string title, string message )
+void message_box_info(string title, string message, GtkWindow* parent)
 {
-        GtkWidget *dialog = nullptr;
-        dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
-                                          GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
-                                          "%s", message.c_str () );
-        gtk_window_set_position ( GTK_WINDOW ( dialog ), GTK_WIN_POS_CENTER );
-        gtk_window_set_title ( GTK_WINDOW(dialog), title.c_str () );
-        gtk_dialog_run ( GTK_DIALOG ( dialog ) );
-        gtk_widget_destroy ( dialog );
+        __show_message_box(title, message, GTK_MESSAGE_INFO, parent);
 }
 
-void message_box_error ( string title, string message )
+void message_box_warning(string title, string message, GtkWindow* parent)
 {
-        GtkWidget *dialog = nullptr;
-        dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
-                                          GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-                                          "%s", message.c_str () );
-        gtk_window_set_position ( GTK_WINDOW(dialog), GTK_WIN_POS_CENTER );
-        gtk_window_set_title ( GTK_WINDOW(dialog), title.c_str () );
-        gtk_dialog_run ( GTK_DIALOG(dialog) );
-        gtk_widget_destroy ( dialog );
+        __show_message_box(title, message, GTK_MESSAGE_WARNING, parent);
 }
 
-bool message_box_question ( string title, string message )
+void message_box_error(string title, string message, GtkWindow* parent)
 {
-        GtkWidget *dialog = nullptr;
-        dialog = gtk_message_dialog_new ( nullptr, GTK_DIALOG_MODAL,
-                                          GTK_MESSAGE_QUESTION, GTK_BUTTONS_CLOSE,
-                                          "%s", message.c_str () );
-        gtk_window_set_position ( GTK_WINDOW(dialog), GTK_WIN_POS_CENTER );
-        gtk_window_set_title ( GTK_WINDOW(dialog), title.c_str () );
-        gint result = gtk_dialog_run ( GTK_DIALOG(dialog) );
-        gtk_widget_destroy ( dialog );
-        switch ( result ) {
+        __show_message_box(title, message, GTK_MESSAGE_ERROR, parent);
+}
+
+bool message_box_question(string title, string message, GtkWindow* parent)
+{
+        switch(__show_message_box(title, message, GTK_MESSAGE_QUESTION, parent)) {
         default:
         case GTK_RESPONSE_DELETE_EVENT:
         case GTK_RESPONSE_NO: {

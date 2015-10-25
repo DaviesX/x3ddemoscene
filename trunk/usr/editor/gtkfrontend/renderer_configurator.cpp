@@ -23,9 +23,11 @@ public:
 
 static const string cRenderConfig = "gtk-main-editor-render-config";
 
-static void render_config_error_callback(string message, RenderConfigActiveX *conf, void *data)
+static void render_config_error_callback(string message, RenderConfigActiveX *conf, void *user_data)
 {
-        message_box_error(cRenderConfig, message);
+        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
+        GtkWindow* parent = frontend->get_main_editor()->get_window_widget();
+        message_box_error(cRenderConfig, message, parent);
 }
 
 RendererConfig::RendererConfigInt::RendererConfigInt(EditorGtkFrontend* frontend)
@@ -58,7 +60,7 @@ bool RendererConfig::show(bool visible)
         // apply activex
         if (visible) {
                 RenderConfigActiveX* config = new RenderConfigActiveX(cRenderConfig);
-                config->bind_callback("notify_error", (f_Generic) render_config_error_callback, nullptr);
+                config->bind_callback("notify_error", (f_Generic) render_config_error_callback, frontend);
                 frontend->get_backend_editor()->add_activex(config);
         } else {
                 EditorBackend* edit = frontend->get_backend_editor();

@@ -8,8 +8,6 @@ namespace usr
 World::World() :
         m_renderagg(RenderAggregate::SimpleLinear)
 {
-        m_resloader = nullptr;
-        m_renderer = nullptr;
 }
 
 World::~World()
@@ -21,29 +19,46 @@ RenderAggregate* World::get_render_aggregate()
         return &m_renderagg;
 }
 
-ResourceLoader* World::get_resource_processor()
+ResourceLoader* World::get_resource_processor(uuid_t id)
 {
-        return m_resloader;
+        if (id == m_resloaderid) {
+                return m_resloader;
+        } else {
+                return nullptr;
+        }
 }
 
-Renderer* World::get_render_processor()
+Renderer* World::get_render_processor(uuid_t id)
 {
-        return m_renderer;
+        if (id == m_rendererid) {
+                return m_renderer;
+        } else {
+                return nullptr;
+        }
 }
 
-void World::bind_resource_processor(ResourceLoader* loader)
+uuid_t World::bind_resource_processor(ResourceLoader* loader)
 {
-        m_resloader = loader;
+        m_resloader     = loader;
+        m_resloaderid   = alg_gen_uuid();
+        return m_resloaderid;
 }
 
-void World::bind_render_processor(Renderer* renderer)
+uuid_t World::bind_render_processor(Renderer* renderer)
 {
-        m_renderer = renderer;
+        m_renderer      = renderer;
+        m_rendererid    = alg_gen_uuid();
+        return m_rendererid;
 }
 
-void World::detach_render_processor()
+bool World::detach_render_processor(uuid_t id)
 {
-        m_renderer = nullptr;
+        if (id == m_rendererid) {
+                m_renderer = nullptr;
+                return true;
+        } else {
+                return false;
+        }
 }
 
 void World::update()

@@ -204,11 +204,18 @@ void EditorBackend::update ( void )
         }
 }
 
-void EditorBackend::add_activex ( EditorBackendActiveX *activex )
+bool EditorBackend::add_activex(EditorBackendActiveX* activex)
 {
-        EditorBackendActiveX::EditActiveXType type = activex->get_type ();
-        activex->notify_add ( this );
-        this->m_activex[type].push_back ( activex );
+        EditorBackendActiveX::EditActiveXType type = activex->get_type();
+        bool found = (std::find(m_activex[type].begin(), m_activex[type].end(), activex) != m_activex[type].end());
+        if (!found) {
+                activex->notify_add(this);
+                m_activex[type].push_back(activex);
+                return true;
+        } else {
+                log_mild_err("ActiveX %s already exists in the backend editor", activex->get_name().c_str());
+                return false;
+        }
 }
 
 EditorBackendActiveX *EditorBackend::find_activex ( EditorBackendActiveX::EditActiveXType type, string name )
@@ -295,7 +302,7 @@ bool EditorBackend::save_state ( string filename )
 }
 
 /* EditorBackendActiveX */
-EditorBackendActiveX::EditorBackendActiveX ( string name, int size, EditActiveXType type ) :
+EditorBackendActiveX::EditorBackendActiveX(string name, int size, EditActiveXType type) :
                 m_size (size), m_type (type)
 {
         m_name          = name;
@@ -304,38 +311,49 @@ EditorBackendActiveX::EditorBackendActiveX ( string name, int size, EditActiveXT
         m_dirty         = false;
 };
 
-EditorBackendActiveX::~EditorBackendActiveX ()
+EditorBackendActiveX::~EditorBackendActiveX()
 {
 }
 
-void EditorBackendActiveX::notify_add ( EditorBackend *e )
+void EditorBackendActiveX::notify_add(EditorBackend *e)
 {
         m_state   = e->get_global_state ();
         m_edit_id = e->get_id ();
         on_adding ();
 }
 
-string EditorBackendActiveX::get_name ( void ) const
+string EditorBackendActiveX::get_name() const
 {
         return m_name;
 }
 
-EditorBackendActiveX::EditActiveXType EditorBackendActiveX::get_type ( void ) const
+EditorBackendActiveX::EditActiveXType EditorBackendActiveX::get_type() const
 {
         return m_type;
 }
 
-KernelEnvironment* EditorBackendActiveX::get_state_buffer ( void ) const
+KernelEnvironment* EditorBackendActiveX::get_state_buffer() const
 {
-        if ( m_state == nullptr )
-                log_severe_err_dbg ( "state buffer is empty!" );
+        if (m_state == nullptr)
+                log_severe_err_dbg("state buffer is empty!");
         return m_state;
 }
 
-bool EditorBackendActiveX::is_dirty ( void ) const
+bool EditorBackendActiveX::is_dirty() const
 {
         return m_dirty;
 }
+
+bool EditorBackendActiveX::operator==(const EditorBackendActiveX& rhs)
+{
+        return m_type == rhs.get_type() && m_name == rhs.get_name();
+}
+
+bool EditorBackendActiveX::operator!=(const EditorBackendActiveX& rhs)
+{
+        return !(*this == rhs);
+}
+
 
 /* front-back buffer utilities */
 int EditorBackendActiveX::on_front_buf ( void ) const

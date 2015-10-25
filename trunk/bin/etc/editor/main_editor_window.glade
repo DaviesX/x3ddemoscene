@@ -2,11 +2,11 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
-  <object class="GtkMenu" id="benchmark-scene">
+  <object class="GtkMenu" id="M-BenchmarkScene">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkMenuItem" id="cornell-box-scene">
+      <object class="GtkMenuItem" id="MI-CornellBoxScene">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">_Cornell Box</property>
@@ -73,7 +73,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="benchmark-scene-menu-item">
+                      <object class="GtkMenuItem" id="MI-LoadBenchmark">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Load Benchmark Scene</property>
@@ -130,7 +130,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="quit-menu-item">
+                      <object class="GtkImageMenuItem" id="MI-Quit">
                         <property name="label">gtk-quit</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
