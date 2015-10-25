@@ -243,7 +243,8 @@ demo_mode:
                 /* set dispatch function which fetches signal
                  * from core editor when gtk_main is idle
                  * also, connect the window destroy signal */
-                pimpl->m_idle_dispatch = g_idle_add(main_editor_dispatch, pimpl);
+                g_timeout_add(1000, main_editor_dispatch, pimpl);
+                // pimpl->m_idle_dispatch = g_idle_add(main_editor_dispatch, pimpl);
                 pimpl->m_destroy_signal =
                         g_signal_connect(G_OBJECT(pimpl->m_window), "destroy", G_CALLBACK(destroy_callback), pimpl);
 

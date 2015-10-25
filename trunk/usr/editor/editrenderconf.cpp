@@ -116,7 +116,6 @@ void RenderConfigActiveX::on_adding()
 
 void RenderConfigActiveX::dispatch()
 {
-        wait_for_update();
         {
                 RenderConfigInt::Error *t_error = &pimpl->m_error[on_back_buf()];
                 if (t_error->f_error) {
@@ -127,7 +126,6 @@ void RenderConfigActiveX::dispatch()
                         }
                 }
         }
-        unwait();
 }
 
 void RenderConfigActiveX::update()
@@ -185,6 +183,7 @@ void* RenderConfigActiveX::checkout_value ( string tab_name, string value )
 
 void RenderConfigActiveX::bind_callback ( string signal, f_Generic callback, void *data )
 {
+        wait_for_update();
         if ( "notify_error" == signal ) {
                 pimpl->m_error[on_front_buf()].f_error = (f_Notify_Error) callback;
                 pimpl->m_error[on_front_buf()].d_error = data;
@@ -192,6 +191,7 @@ void RenderConfigActiveX::bind_callback ( string signal, f_Generic callback, voi
                 log_mild_err_dbg ( "no such signal as: %s", signal.c_str () );
                 return ;
         }
+        unwait();
 }
 
 RenderTree* RenderConfigActiveX::get_render_tree(RenderTreeConfigType type) const

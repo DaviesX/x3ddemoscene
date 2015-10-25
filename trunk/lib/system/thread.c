@@ -1,6 +1,7 @@
 /* thread.c: parallel task management utilities all go here */
 #include <container/linkedlist.h>
 #include <system/allocator.h>
+#include <system/log.h>
 #include <system/thread.h>
 
 #define INIT_GROUP_COUNT                1
@@ -32,7 +33,7 @@ struct thread_ctx {
         bool                            is_active;
         alg_iter(struct thread_ctx*)    addr_id;
         struct work_group*              group;
-        void *(*handler) ( void *task );
+        void *(*handler)(void *task);
 #ifdef X3D_COMPILER_GCC
         pthread_t handle;
 #endif
@@ -61,27 +62,27 @@ static long g_ncores = 0;       /* platform information */
 static struct thread_pool g_thrpool;
 
 
-static bool retrieve_task ( struct work_group *group, struct thread_ctx *thread,
-                            struct thread_task **task );
-static void *thread_handler ( void *info );
+static bool retrieve_task(struct work_group *group, struct thread_ctx *thread,
+                            struct thread_task **task);
+static void *thread_handler(void *info);
 
 /* work group operations */
-static void                     workgroup_make_inactive ( struct work_group *group );
-static void                     workgroup_make_active ( int n_thread, struct work_group *group );
-static struct work_group*       create_workgroup ( void );
-static void                     free_workgroup ( struct work_group *group );
+static void                     workgroup_make_inactive(struct work_group *group);
+static void                     workgroup_make_active(int n_thread, struct work_group *group);
+static struct work_group*       create_workgroup(void);
+static void                     free_workgroup(struct work_group *group);
 
-static struct thread_ctx*       workgroup_addthread ( struct work_group *group );
-static void                     workgroup_removethread ( struct thread_ctx *thread, struct work_group *group );
-static void                     workgroup_removeallthread ( struct work_group *group );
+static struct thread_ctx*       workgroup_addthread(struct work_group *group);
+static void                     workgroup_removethread(struct thread_ctx *thread, struct work_group *group);
+static void                     workgroup_removeallthread(struct work_group *group);
 
-static struct work_group*       workgroup_new ( int n_thread, struct work_group *group );
-static void                     workgroup_remove ( struct work_group *group );
-static void                     workgroup_abandon ( struct work_group *group );
+static struct work_group*       workgroup_new(int n_thread, struct work_group *group);
+static void                     workgroup_remove(struct work_group *group);
+static void                     workgroup_abandon(struct work_group *group);
 
-static void                     workgroup_addtask ( struct thread_task *task, struct work_group *group );
-static void                     workgroup_removetask ( struct thread_task *task, struct work_group *group );
-static void                     workgroup_removealltask ( struct work_group *group );
+static void                     workgroup_addtask(struct thread_task *task, struct work_group *group);
+static void                     workgroup_removetask(struct thread_task *task, struct work_group *group);
+static void                     workgroup_removealltask(struct work_group *group);
 
 /* task operations */
 static struct thread_task*         task_create(const char* name, struct work_group* binded_group,
@@ -91,19 +92,20 @@ static void                     task_terminate(struct thread_task* self);
 static void                     task_synchronize(struct thread_task* self);
 
 /* platform specifc APIs */
-static void init_trap ( struct thread_trap *trap );
-static void trap_on_thread ( struct thread_trap *trap );
-static void remove_thread_trap ( struct thread_trap *trap );
-static void trap_on_data ( struct thread_trap *data, struct thread_trap *trap );
-static void remove_data_trap ( struct thread_trap *data );
-static void trap_on_counter ( struct thread_trap *trap );
-static void remove_counter_trap ( struct thread_trap *trap );
-static void generate_thread ( struct thread_ctx *thread );
-static void current_thread_exit ( void );
-static void join_thread ( struct thread_ctx *thread );
-static long get_cpu_corecount ( void );
+static void init_trap(struct thread_trap *trap);
+static void trap_on_thread(struct thread_trap *trap);
+static void remove_thread_trap(struct thread_trap *trap);
+static void trap_on_data(struct thread_trap *data, struct thread_trap *trap);
+static void remove_data_trap(struct thread_trap *data);
+static void trap_on_counter(struct thread_trap *trap);
+static void remove_counter_trap(struct thread_trap *trap);
+static void generate_thread(struct thread_ctx *thread);
+static void current_thread_exit(void);
+static void join_thread(struct thread_ctx *thread);
+static long get_cpu_corecount(void);
 
 #ifdef X3D_PLATFORM_POSIX
+
 static const pthread_mutex_t    c_mutex_init = PTHREAD_MUTEX_INITIALIZER;
 static const pthread_cond_t     c_cond_init = PTHREAD_COND_INITIALIZER;
 
@@ -114,129 +116,134 @@ static void init_trap(struct thread_trap *trap)
         trap->data = c_cond_init;
 }
 
-static void trap_on_thread ( struct thread_trap *trap )
+static pthread_t get_tid()
 {
-        pthread_mutex_lock ( &trap->lock );
+        return pthread_self();
 }
 
-static void remove_thread_trap ( struct thread_trap *trap )
+static void trap_on_thread(struct thread_trap *trap)
 {
-        pthread_mutex_unlock ( &trap->lock );
+        pthread_mutex_lock(&trap->lock);
 }
 
-static void trap_on_data ( struct thread_trap *data, struct thread_trap *trap )
+static void remove_thread_trap(struct thread_trap *trap)
 {
-        pthread_cond_wait ( &data->data, &trap->lock );
+        pthread_mutex_unlock(&trap->lock);
 }
 
-static void remove_data_trap ( struct thread_trap *data )
+static void trap_on_data(struct thread_trap *data, struct thread_trap *trap)
 {
-        pthread_cond_signal ( &data->data );
+        pthread_cond_wait(&data->data, &trap->lock);
 }
 
-static void trap_on_counter ( struct thread_trap *trap )
+static void remove_data_trap(struct thread_trap *data)
 {
-        sem_wait ( &trap->counter );
+        pthread_cond_signal(&data->data);
 }
 
-static void remove_counter_trap ( struct thread_trap *trap )
+static void trap_on_counter(struct thread_trap *trap)
 {
-        sem_post ( &trap->counter );
+        sem_wait(&trap->counter);
 }
 
-static void generate_thread ( struct thread_ctx *thread )
+static void remove_counter_trap(struct thread_trap *trap)
 {
-        pthread_create ( &thread->handle, nullptr, thread->handler, thread );
+        sem_post(&trap->counter);
 }
 
-static void current_thread_exit ( void )
+static void generate_thread(struct thread_ctx *thread)
 {
-        pthread_exit ( nullptr );
+        pthread_create(&thread->handle, nullptr, thread->handler, thread);
 }
 
-static void join_thread ( struct thread_ctx *thread )
+static void current_thread_exit(void)
 {
-        pthread_join ( thread->handle, nullptr );
+        pthread_exit(nullptr);
 }
 
-static long get_cpu_corecount ( void )
+static void join_thread(struct thread_ctx *thread)
 {
-        return sysconf ( _SC_NPROCESSORS_ONLN );
+        pthread_join(thread->handle, nullptr);
 }
 
-static void idle ( int milisec )
+static long get_cpu_corecount(void)
 {
-        usleep ( milisec*1000 );
+        return sysconf(_SC_NPROCESSORS_ONLN);
+}
+
+static void idle(int milisec)
+{
+        usleep(milisec*1000);
 }
 
 #endif // X3D_PLATFORM_POSIX
 
 
-static bool retrieve_task ( struct work_group *group, struct thread_ctx *thread,
-                            struct thread_task **task )
+static bool retrieve_task(struct work_group *group, struct thread_ctx *thread,
+                            struct thread_task **task)
 {
-        trap_on_thread ( &group->lock[LOCK_TASK] );
-        if ( *task != nullptr ) {
+        trap_on_thread(&group->lock[LOCK_TASK]);
+        if(*task != nullptr) {
                 (*task)->is_processed = true;
-                remove_data_trap ( &(*task)->sync_trap );
+                remove_data_trap(&(*task)->sync_trap);
                 group->n_tasks --;
         }
-        remove_thread_trap ( &group->lock[LOCK_TASK] );
+        remove_thread_trap(&group->lock[LOCK_TASK]);
 
         /* idle current thread when all tasks were executed
          * awake right after new tasks were fed in to the task queue */
-        trap_on_counter ( &group->idler );
+        trap_on_counter(&group->idler);
 
-        trap_on_thread ( &group->lock[LOCK_TASK] );
+        trap_on_thread(&group->lock[LOCK_TASK]);
         bool active = group->is_active && thread->is_active;
-        if ( active ) {
+        if(active) {
                 /* fetch new task and mark the new task as not being processed */
                 alg_iter(struct thread_task*) fetch;
-                alg_last ( llist, &group->tasks, fetch );
-                *task = alg_access ( fetch );
-                alg_pop_back ( llist, &group->tasks, fetch );
+                alg_last(llist, &group->tasks, fetch);
+                *task = alg_access(fetch);
+                alg_pop_back(llist, &group->tasks, fetch);
                 (*task)->is_waiting = false;
                 (*task)->binded_thr = thread;
         }
-        remove_thread_trap ( &group->lock[LOCK_TASK] );
+        remove_thread_trap(&group->lock[LOCK_TASK]);
         return active;
 }
 
-static void *thread_handler ( void *info )
+static void *thread_handler(void *info)
 {
         struct thread_ctx *thread = info;
         struct work_group *group = thread->group;
         struct thread_task *task = nullptr;
         /* traverse and execute the entire task queue */
-        while ( retrieve_task ( group, thread, &task ) ) {
-                task->func ( task->info );
+        while(retrieve_task(group, thread, &task)) {
+                task->func(task->info);
         }
         current_thread_exit ();
         return nullptr;
 }
 
-static void workgroup_make_inactive ( struct work_group *group )
+static void workgroup_make_inactive(struct work_group *group)
 {
         group->is_active = false;
-        init_trap ( &group->idler );
-        init_trap ( &group->lock[LOCK_SHARED] );
-        init_trap ( &group->lock[LOCK_TASK] );
-        init_trap ( &group->lock[LOCK_THREAD] );
+        init_trap(&group->idler);
+        init_trap(&group->lock[LOCK_SHARED]);
+        init_trap(&group->lock[LOCK_TASK]);
+        init_trap(&group->lock[LOCK_THREAD]);
         group->n_tasks = 0;
         group->n_threads = 0;
-        alg_init ( llist, &group->tasks, sizeof(struct thread_task*), 0 );
-        alg_init ( llist, &group->threads, sizeof(struct thread_ctx*), 0 );
+        alg_init(llist, &group->tasks, sizeof(struct thread_task*), 0);
+        alg_init(llist, &group->threads, sizeof(struct thread_ctx*), 0);
 }
 
-static void workgroup_make_active ( int n_thread, struct work_group *group )
+static void workgroup_make_active(int n_thread, struct work_group *group)
 {
         group->is_active = true;
         int i;
-        for ( i = 0; i < n_thread; i ++ )
+        for(i = 0; i < n_thread; i ++)
                 workgroup_addthread(group);
 }
 
-static void workgroup_free_active ( struct work_group *group )
+static void workgroup_free_active(struct work_group *group)
 {
         group->is_active = false;
         workgroup_removealltask(group);
@@ -250,23 +257,23 @@ static void workgroup_free_active ( struct work_group *group )
         alg_llist_flush(&group->threads);
 }
 
-static void workgroup_free_inactive ( struct work_group *group )
+static void workgroup_free_inactive(struct work_group *group)
 {
         group->is_active = false;
         alg_llist_free(&group->tasks);
         alg_llist_free(&group->threads);
 }
 
-static struct work_group *create_workgroup ( void )
+static struct work_group *create_workgroup(void)
 {
-        struct work_group *group = alloc_fix ( sizeof *group, 1 );
+        struct work_group *group = alloc_fix(sizeof *group, 1);
         group->next = nullptr;
         group->prev = nullptr;
-        workgroup_make_inactive ( group );
+        workgroup_make_inactive(group);
         return group;
 }
 
-static void free_workgroup ( struct work_group *group )
+static void free_workgroup(struct work_group *group)
 {
         while(group->next != nullptr) {
                 group = group->next;
@@ -275,7 +282,7 @@ static void free_workgroup ( struct work_group *group )
         workgroup_remove(group);
 }
 
-static struct thread_ctx *workgroup_addthread ( struct work_group *group )
+static struct thread_ctx *workgroup_addthread(struct work_group *group)
 {
         /* setup information */
         struct thread_ctx* thread = alloc_obj(thread);
@@ -284,37 +291,37 @@ static struct thread_ctx *workgroup_addthread ( struct work_group *group )
         thread->handler = thread_handler;
 
         /* add into the list */
-        trap_on_thread ( &group->lock[LOCK_THREAD] );
+        trap_on_thread(&group->lock[LOCK_THREAD]);
         alg_iter(struct thread_ctx*)    iter;
-        alg_push_back ( llist, &group->threads, thread );
-        alg_last ( llist, &group->threads, iter );
+        alg_push_back(llist, &group->threads, thread);
+        alg_last(llist, &group->threads, iter);
         thread->addr_id = iter;
         ((struct thread_ctx **) thread->addr_id)[0] = thread;
         group->n_threads ++;
-        remove_thread_trap ( &group->lock[LOCK_THREAD] );
+        remove_thread_trap(&group->lock[LOCK_THREAD]);
 
         /* run the thread */
-        generate_thread ( thread );
+        generate_thread(thread);
         return thread;
 }
 
-static void workgroup_removethread ( struct thread_ctx *thread, struct work_group *group )
+static void workgroup_removethread(struct thread_ctx *thread, struct work_group *group)
 {
         /* notify the termination of the thread,
          * then join and wait for its exit */
         thread->is_active = false;
-        join_thread ( thread );
+        join_thread(thread);
 
         /* remove it from the thread list */
-        trap_on_thread ( &group->lock[LOCK_THREAD] );
-        alg_remove ( llist, &group->threads, thread->addr_id );
+        trap_on_thread(&group->lock[LOCK_THREAD]);
+        alg_remove(llist, &group->threads, thread->addr_id);
         ((struct thread_ctx **) thread->addr_id)[0] = nullptr;
-        remove_thread_trap ( &group->lock[LOCK_THREAD] );
+        remove_thread_trap(&group->lock[LOCK_THREAD]);
 
-        free_fix ( thread );
+        free_fix(thread);
 }
 
-static void workgroup_removeallthread ( struct work_group *group )
+static void workgroup_removeallthread(struct work_group *group)
 {
         trap_on_thread(&group->lock[LOCK_THREAD]);
         alg_iter(struct thread_ctx*)    curr_pos;
@@ -322,7 +329,7 @@ static void workgroup_removeallthread ( struct work_group *group )
         alg_first(llist, &group->threads, curr_pos);
         alg_null(llist, &group->threads, end);
 
-        while ( curr_pos != end ) {
+        while(curr_pos != end) {
                 struct thread_ctx *thread = alg_access(curr_pos);
 
                 /* notify the termination of the thread,
@@ -346,66 +353,66 @@ static void workgroup_removeallthread ( struct work_group *group )
         remove_thread_trap(&group->lock[LOCK_THREAD]);
 }
 
-static struct work_group *workgroup_new ( int n_thread, struct work_group *group )
+static struct work_group *workgroup_new(int n_thread, struct work_group *group)
 {
-        if ( group->next == nullptr ) {
+        if(group->next == nullptr) {
                 group->next = alloc_obj(group->next);
                 group->next->prev = group;
                 group->next->next = nullptr;
-                workgroup_make_inactive ( group->next );
+                workgroup_make_inactive(group->next);
         }
-        if ( !group->is_active ) {
-                workgroup_make_active ( n_thread, group );
+        if(!group->is_active) {
+                workgroup_make_active(n_thread, group);
         }
         return group;
 }
 
-static void workgroup_remove ( struct work_group *group )
+static void workgroup_remove(struct work_group *group)
 {
         if (group == nullptr)
                 return ;
-        workgroup_free_active ( group );
-        workgroup_free_inactive ( group );
+        workgroup_free_active(group);
+        workgroup_free_inactive(group);
 
-        if ( group->prev != nullptr )
+        if(group->prev != nullptr)
                 group->prev->next = group->next;
 
-        if ( group->next != nullptr )
+        if(group->next != nullptr)
                 group->next->prev = group->prev;
 
-        free_fix ( group );
+        free_fix(group);
 }
 
-static void workgroup_abandon ( struct work_group *group )
+static void workgroup_abandon(struct work_group *group)
 {
-        workgroup_removealltask ( group );
+        workgroup_removealltask(group);
 
-        if ( group->prev != nullptr )
+        if(group->prev != nullptr)
                 group->prev->next = group->next;
 
-        if ( group->next != nullptr )
+        if(group->next != nullptr)
                 group->next->prev = group->prev;
 
         /* forward to the end and append the currently abandoned workgroup */
         struct work_group *curr = group;
-        while ( group->next != nullptr )
+        while(group->next != nullptr)
                 group = group->next;
         group->next = curr;
         curr->prev = group;
         curr->next = nullptr;
 }
 
-static void workgroup_addtask ( struct thread_task *task, struct work_group *group )
+static void workgroup_addtask(struct thread_task *task, struct work_group *group)
 {
-        trap_on_thread ( &group->lock[LOCK_TASK] );
-        alg_push_back ( llist, &group->tasks, task );
-        alg_last ( llist, &group->tasks, task->addr_id );
+        trap_on_thread(&group->lock[LOCK_TASK]);
+        alg_push_back(llist, &group->tasks, task);
+        alg_last(llist, &group->tasks, task->addr_id);
         group->n_tasks ++;
-        remove_counter_trap ( &group->idler );
-        remove_thread_trap ( &group->lock[LOCK_TASK] );
+        remove_counter_trap(&group->idler);
+        remove_thread_trap(&group->lock[LOCK_TASK]);
 }
 
-static void workgroup_removetask ( struct thread_task *task, struct work_group *group )
+static void workgroup_removetask(struct thread_task *task, struct work_group *group)
 {
         trap_on_thread(&group->lock[LOCK_TASK]);
         if (task->is_waiting) {
@@ -427,15 +434,15 @@ static void workgroup_removetask ( struct thread_task *task, struct work_group *
         remove_thread_trap(&group->lock[LOCK_TASK]);
 }
 
-static void workgroup_removealltask ( struct work_group *group )
+static void workgroup_removealltask(struct work_group *group)
 {
-        trap_on_thread ( &group->lock[LOCK_TASK]);
+        trap_on_thread(&group->lock[LOCK_TASK]);
         alg_iter(struct thread_task*)      curr_pos;
         alg_iter(struct thread_task*)      end;
         alg_first(llist, &group->tasks, curr_pos);
         alg_null(llist, &group->tasks, end);
 
-        while ( curr_pos != end ) {
+        while(curr_pos != end) {
                 struct thread_task *task = alg_access(curr_pos);
 
                 if (task->is_waiting) {
@@ -503,14 +510,14 @@ void thread_lib_init()
         g_ncores = get_cpu_corecount();
 
         /* initialize the lock and playaround LOL */
-        init_trap ( &g_thrpool.self_lock );
-        trap_on_thread ( &g_thrpool.self_lock );
+        init_trap(&g_thrpool.self_lock);
+        trap_on_thread(&g_thrpool.self_lock);
 
         /* pre-create certain amount of workgroups on initialization */
         g_thrpool.grouped_head = create_workgroup ();
         g_thrpool.grouped = g_thrpool.grouped_head;
         int i;
-        for ( i = 0; i < INIT_GROUP_COUNT; i ++ ) {
+        for(i = 0; i < INIT_GROUP_COUNT; i ++) {
                 workgroup_new(g_ncores, g_thrpool.grouped);
                 g_thrpool.grouped = g_thrpool.grouped->next;
         }
@@ -518,9 +525,9 @@ void thread_lib_init()
 
         /* for occupied tasks, threads are to be created on the fly */
         g_thrpool.occupied = create_workgroup ();
-        g_thrpool.occupied = workgroup_new ( 0, g_thrpool.occupied );
+        g_thrpool.occupied = workgroup_new(0, g_thrpool.occupied);
 
-        remove_thread_trap ( &g_thrpool.self_lock );
+        remove_thread_trap(&g_thrpool.self_lock);
 }
 
 void thread_lib_free()
@@ -535,32 +542,32 @@ void thread_lib_free()
         remove_thread_trap(&g_thrpool.self_lock);
 }
 
-struct work_group *thread_new_workgroup ( int n_parallel )
+struct work_group *thread_new_workgroup(int n_parallel)
 {
-        trap_on_thread ( &g_thrpool.self_lock );
+        trap_on_thread(&g_thrpool.self_lock);
         n_parallel = (n_parallel > 0) ? n_parallel : g_ncores;
         struct work_group *new_group =
-                workgroup_new ( n_parallel, g_thrpool.grouped );
+                workgroup_new(n_parallel, g_thrpool.grouped);
         g_thrpool.grouped = g_thrpool.grouped->next;
-        remove_thread_trap ( &g_thrpool.self_lock );
+        remove_thread_trap(&g_thrpool.self_lock);
         return new_group;
 }
 
-void thread_free_workgroup ( struct work_group *group )
+void thread_free_workgroup(struct work_group *group)
 {
-        trap_on_thread ( &g_thrpool.self_lock );
-        workgroup_remove ( group );
-        remove_thread_trap ( &g_thrpool.self_lock );
+        trap_on_thread(&g_thrpool.self_lock);
+        workgroup_remove(group);
+        remove_thread_trap(&g_thrpool.self_lock);
 }
 
-void thread_abandon_workgroup ( struct work_group *group )
+void thread_abandon_workgroup(struct work_group *group)
 {
-        trap_on_thread ( &g_thrpool.self_lock );
-        workgroup_abandon ( group );
-        remove_thread_trap ( &g_thrpool.self_lock );
+        trap_on_thread(&g_thrpool.self_lock);
+        workgroup_abandon(group);
+        remove_thread_trap(&g_thrpool.self_lock);
 }
 
-bool thread_is_workgroup_complete ( struct work_group *group )
+bool thread_is_workgroup_complete(struct work_group *group)
 {
         return group->n_tasks == 0;
 }
@@ -577,9 +584,9 @@ struct thread_task* thread_run_task(const char* name, f_Thread_Handler task_func
         return task;
 }
 
-void thread_task_free ( struct thread_task *task )
+void thread_task_free(struct thread_task *task)
 {
-        workgroup_removetask ( task, task->binded_group );
+        workgroup_removetask(task, task->binded_group);
 }
 
 void thread_task_abort(struct thread_task* task)
@@ -587,12 +594,12 @@ void thread_task_abort(struct thread_task* task)
         task_terminate(task);
 }
 
-bool thread_is_task_complete ( struct thread_task *task )
+bool thread_is_task_complete(struct thread_task *task)
 {
         return task->is_processed;
 }
 
-bool thread_task_quit_signal ( struct thread_task *task )
+bool thread_task_quit_signal(struct thread_task *task)
 {
         return task->quit_signal;
 }
@@ -602,42 +609,47 @@ void thread_sync_with_task(struct thread_task* task)
         task_synchronize(task);
 }
 
-void thread_block_task ( struct thread_task *task )
+void thread_block_task(struct thread_task *task)
 {
-        trap_on_thread ( &task->binded_group->lock[LOCK_SHARED] );
+        trap_on_thread(&task->binded_group->lock[LOCK_SHARED]);
 }
 
-void thread_unblock_task ( struct thread_task *task )
+void thread_unblock_task(struct thread_task *task)
 {
-        remove_thread_trap ( &task->binded_group->lock[LOCK_SHARED] );
+        remove_thread_trap(&task->binded_group->lock[LOCK_SHARED]);
 }
 
-void thread_init_trap ( struct thread_trap *trap )
+void thread_init_trap(struct thread_trap *trap)
 {
-        init_trap ( trap );
+        init_trap(trap);
+        trap->count = 0;
+        int i;
+        for (i = 0; i < 100; i ++) {
+                trap->verifier[i]       = 0;
+        }
 }
 
-void thread_trap_on_data ( struct thread_trap *data, struct thread_trap *trap )
+void thread_trap_on_data(struct thread_trap *data, struct thread_trap *trap)
 {
-        trap_on_data ( data, trap );
+        trap_on_data(data, trap);
 }
 
-void thread_untrap_data ( struct thread_trap *data )
+void thread_untrap_data(struct thread_trap *data)
 {
-        remove_data_trap ( data );
+        remove_data_trap(data);
 }
 
-void thread_trap_on_task ( struct thread_trap *trap )
+void thread_trap_on_task(struct thread_trap *trap)
 {
-        trap_on_thread ( trap );
+        trap_on_thread(trap);
 }
 
-void thread_untrap_task ( struct thread_trap *trap )
+void thread_untrap_task(struct thread_trap *trap)
 {
-        remove_thread_trap ( trap );
+        remove_thread_trap(trap);
 }
 
-void thread_task_idle ( int milisec )
+void thread_task_idle(int milisec)
 {
-        idle ( milisec );
+        idle(milisec);
 }

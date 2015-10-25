@@ -15,10 +15,13 @@ typedef void *(*f_Thread_Handler) ( void *info );
 
 struct thread_trap {
 #ifdef X3D_PLATFORM_POSIX
-        pthread_cond_t data;
+        pthread_cond_t  data;
         pthread_mutex_t lock;
-        sem_t counter;
+        sem_t           counter;
+        pthread_t       tids[100];
 #endif
+        int             verifier[100];
+        int             count;
 };
 
 

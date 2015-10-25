@@ -171,11 +171,9 @@ void RenderRegionActiveX::set_view_mode(ViewMode mode)
 
 void RenderRegionActiveX::dispatch()
 {
-        wait_for_update();
         if (pimpl->m_idle_signal) {
                 pimpl->m_idle_signal(pimpl->m_is_idle, this, pimpl->m_idle_signal_data);
         }
-        unwait();
 }
 
 void RenderRegionActiveX::update()

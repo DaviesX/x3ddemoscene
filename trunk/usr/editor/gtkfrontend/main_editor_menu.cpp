@@ -46,8 +46,10 @@ extern "C" void gtk_render_current_frame_callback(GtkMenuItem* menuitem, gpointe
 
 extern "C" void gtk_trigger_quit_callback(GtkWidget* widget, gpointer data)
 {
-        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(data);
-        frontend->close();
+        if (message_box_question("X3d demoscene", "Do you want to exit?", nullptr)) {
+                EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(data);
+                frontend->close();
+        }
 }
 
 MainEditorMenu::MainEditorMenuInt::MainEditorMenuInt(EditorGtkFrontend* frontend)

@@ -188,7 +188,7 @@ bool EditorGtkFrontend::init(int argc, char **argv, EditorBackend *editor, Kerne
         pimpl->m_project_mgr           = new ProjectManager(this);
 
         if (!pimpl->m_splash_screen->show(true)) {
-                log_mild_err_dbg ( "couldn't show splash screen" );
+                log_mild_err_dbg("couldn't show splash screen");
                 return false;
         }
 
@@ -243,7 +243,7 @@ bool EditorGtkFrontend::load(EditorBackend *editor, KernelEnvironment *env)
                 return false;
         }
         if (!pimpl->m_renderable_editor->show(true)) {
-                log_severe_err_dbg ( "couldn't load gtk renderable editor" );
+                log_severe_err_dbg("couldn't load gtk renderable editor");
                 return false;
         }
         if (!pimpl->m_menu->show(true)) {
@@ -257,7 +257,7 @@ bool EditorGtkFrontend::load(EditorBackend *editor, KernelEnvironment *env)
         return true;
 }
 
-void EditorGtkFrontend::loop ( EditorBackend *editor, KernelEnvironment *env )
+void EditorGtkFrontend::loop(EditorBackend *editor, KernelEnvironment *env)
 {
         pimpl->m_editor = editor;
         pimpl->m_env = env;
@@ -286,28 +286,45 @@ bool EditorGtkFrontend::free(EditorBackend* editor, KernelEnvironment* env)
 }
 
 /* @todo (davis#1#): implement file chooser */
-string file_chooser_open ( string default_dir )
+string file_chooser_open(string default_dir)
 {
         return nullptr;
 }
 
-string file_chooser_save ( string default_dir )
+string file_chooser_save(string default_dir)
 {
         return nullptr;
 }
 
 static gint __show_message_box(string title, string message, GtkMessageType type, GtkWindow* parent)
 {
-        GtkWidget* dialog = gtk_message_dialog_new(parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                   type, GTK_BUTTONS_CLOSE,
+        GtkDialogFlags flags;
+        GtkButtonsType buttons;
+        if (type == GTK_MESSAGE_QUESTION) {
+                flags = GTK_DIALOG_MODAL;
+                buttons = GTK_BUTTONS_YES_NO;
+        } else {
+                flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+                buttons = GTK_BUTTONS_OK;
+        }
+        GtkWidget* dialog = gtk_message_dialog_new(parent, flags,
+                                                   type, buttons,
                                                    "%s", message.c_str());
         gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
         gtk_window_set_title(GTK_WINDOW(dialog), title.c_str());
-        gtk_window_set_modal(GTK_WINDOW(dialog), true);
+        gtk_window_set_modal(GTK_WINDOW(dialog), false);
         gtk_window_set_transient_for(GTK_WINDOW(dialog), parent);
-        gint result = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
-        return result;
+        gtk_widget_show_all(dialog);
+        if (type == GTK_MESSAGE_QUESTION) {
+                gint ans = gtk_dialog_run(GTK_DIALOG (dialog));
+                gtk_widget_destroy(dialog);
+                return ans;
+        } else {
+                g_signal_connect_swapped(dialog, "response",
+                                         G_CALLBACK (gtk_widget_destroy),
+                                         dialog);
+                return 0;
+        }
 }
 
 void message_box_info(string title, string message, GtkWindow* parent)
@@ -339,28 +356,26 @@ bool message_box_question(string title, string message, GtkWindow* parent)
         }
 }
 
-void widget_get_size ( GtkWidget* parent, GtkWidget* widget,
-                       int* x, int* y, int* width, int* height )
+void widget_get_size(GtkWidget* parent, GtkWidget* widget,
+                       int* x, int* y, int* width, int* height)
 {
-        GtkAllocation *allocation = g_new0 ( GtkAllocation, 1 );
-        gtk_widget_get_allocation ( widget, allocation );
-        *width = allocation->width;
-        *height = allocation->height;
-        g_free ( allocation );
-        gtk_widget_translate_coordinates ( widget, parent,
-                                           0, 0, x, y );
+        GtkAllocation *allocation = g_new0(GtkAllocation, 1);
+        gtk_widget_get_allocation(widget, allocation);
+        *width                  = allocation->width;
+        *height                 = allocation->height;
+        g_free(allocation);
+        gtk_widget_translate_coordinates(widget, parent,
+                                           0, 0, x, y);
 }
 
 static volatile int             g_gtk_main_stack = 0;
-static x3d::thread_trap            g_atomic_check = {0};
-static x3d::thread_task*           g_gtk_main_task = nullptr;
+static x3d::thread_trap         g_atomic_check = {0};
+static x3d::thread_task*        g_gtk_main_task = nullptr;
 
-static void* do_gtk_main ( void* data )
+static void* do_gtk_main(void* data)
 {
         {
-                gdk_threads_enter ();
                 gtk_main ();
-                gdk_threads_leave ();
         }
         return nullptr;
 }
@@ -370,36 +385,36 @@ static void* do_gtk_main ( void* data )
 
 void stop_gtk_main()
 {
-        x3d::thread_trap_on_task ( &g_atomic_check );
+        x3d::thread_trap_on_task(&g_atomic_check);
         if (g_gtk_main_stack == 0) {
                 log_normal_dbg("nothing to stop");
-                x3d::thread_untrap_task ( &g_atomic_check );
+                x3d::thread_untrap_task(&g_atomic_check);
                 return ;
         }
         pop_gtk_main ();
-        if ( g_gtk_main_stack == 0 ) {
-                log_normal_dbg ( "no gtk main is running: %d", g_gtk_main_stack );
+        if(g_gtk_main_stack == 0) {
+                log_normal_dbg("no gtk main is running: %d", g_gtk_main_stack);
                 {
                         gdk_threads_enter ();
                         gtk_main_quit ();
                         gdk_threads_leave ();
-                        x3d::thread_sync_with_task ( g_gtk_main_task );
+                        x3d::thread_sync_with_task(g_gtk_main_task);
                 }
         } else {
-                log_normal_dbg ( "found %d gtk main running already",
-                                 g_gtk_main_stack );
+                log_normal_dbg("found %d gtk main running already",
+                                 g_gtk_main_stack);
         }
-        x3d::thread_untrap_task ( &g_atomic_check );
+        x3d::thread_untrap_task(&g_atomic_check);
 }
 
 void run_gtk_main()
 {
         x3d::thread_trap_on_task(&g_atomic_check);
-        if ( g_gtk_main_stack > 0 ) {
+        if(g_gtk_main_stack > 0) {
                 log_normal_dbg("found %d gtk main running already",
                                 g_gtk_main_stack);
         } else {
-                g_gtk_main_task = thread_run_task(get_function_name(), do_gtk_main, nullptr, nullptr );
+                g_gtk_main_task = thread_run_task(get_function_name(), do_gtk_main, nullptr, nullptr);
                 log_normal_dbg("starting gtk main");
         }
         push_gtk_main();
@@ -409,9 +424,9 @@ void run_gtk_main()
 void await_gtk_main()
 {
         while (g_gtk_main_stack != 0) { thread_task_idle(10); }
-        x3d::thread_trap_on_task ( &g_atomic_check );
+        x3d::thread_trap_on_task(&g_atomic_check);
         ; // do nothing
-        x3d::thread_untrap_task ( &g_atomic_check );
+        x3d::thread_untrap_task(&g_atomic_check);
 }
 
 void* dbg_get_render_region()
@@ -419,7 +434,7 @@ void* dbg_get_render_region()
         return main_editor_get_region ();
 }
 
-void dbg_hand_image_to_display ( void *ptr, int w, int h )
+void dbg_hand_image_to_display(void *ptr, int w, int h)
 {
         /*        g_comm_data.tmp_image = ptr;
                 g_comm_data.tmp_image_w = w;

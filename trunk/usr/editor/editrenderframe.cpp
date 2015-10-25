@@ -97,7 +97,6 @@ void RenderFrameActiveX::update()
 
 void RenderFrameActiveX::dispatch()
 {
-        wait_for_update();
         if (pimpl->m_has_finished && pimpl->f_notify_finish) {
                 pimpl->f_notify_finish("", *this, pimpl->f_notify_finish_data);
                 pimpl->m_has_finished = false;
@@ -113,7 +112,6 @@ void RenderFrameActiveX::dispatch()
         } else {
                 pimpl->m_errors.clear();
         }
-        unwait();
 }
 
 void RenderFrameActiveX::load(struct serializer* s)
@@ -126,6 +124,7 @@ void RenderFrameActiveX::save(struct serializer* s)
 
 void RenderFrameActiveX::bind_callback(string signal, f_Generic callback, void *data)
 {
+        wait_for_update();
         if (signal == "notify_error") {
                 pimpl->f_notify_error = (f_Notify_Error) callback;
                 pimpl->f_notify_error_data = data;
@@ -138,6 +137,7 @@ void RenderFrameActiveX::bind_callback(string signal, f_Generic callback, void *
         } else {
                 log_mild_err("No such signal as: %s", signal.c_str());
         }
+        unwait();
 }
 
 /**@todo #davis#5# <run_frame_renderer> no way to stop the rendering process */
