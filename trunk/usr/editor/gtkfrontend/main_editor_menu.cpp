@@ -1,5 +1,6 @@
 #include <usr/usr_editorfrontend.hpp>
 #include <gtk/gtk.h>
+#include <gtk-3.0/gtk/gtkdialog.h>
 #include "gtkgui.hpp"
 
 namespace x3d
@@ -15,8 +16,17 @@ public:
 public:
         EditorGtkFrontend*              m_frontend;
 
+        GtkAboutDialog*                 m_about_dialog;
 };
 
+
+void x3d_render_frame_finish(std::string stats, RenderFrameActiveX& ax, void* user_data)
+{
+        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
+        frontend->get_main_editor()->send_message_box("X3d Render Frame", 
+                                                      "Render frame has finished\nstatistics:" + stats,
+                                                      MainEditor::MessageInfo);
+}
 
 extern "C" void gtk_cornell_box_callback(GtkMenuItem* menuitem, gpointer user_data)
 {
@@ -25,13 +35,6 @@ extern "C" void gtk_cornell_box_callback(GtkMenuItem* menuitem, gpointer user_da
                 (frontend->get_backend_editor()->find_activex(EditorBackendActiveX::EditActiveXBenchmark, 
                                                               gtkactivex::c_BackendBenchmark));
         benchmark->run_benchmark(BenchmarkActiveX::Benchmark_CornellBox);
-}
-
-void x3d_render_frame_finish(std::string stats, RenderFrameActiveX& ax, void* user_data)
-{
-        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
-        GtkWindow* parent = frontend->get_main_editor()->get_window_widget();
-        message_box_info("X3d Render Frame", "Render frame has finished\nstatistics:" + stats, parent);
 }
 
 extern "C" void gtk_render_current_frame_callback(GtkMenuItem* menuitem, gpointer user_data)
@@ -44,12 +47,15 @@ extern "C" void gtk_render_current_frame_callback(GtkMenuItem* menuitem, gpointe
         renderframe_ax->bind_callback("notify_finish", (f_Generic) x3d_render_frame_finish, frontend);
 }
 
+extern "C" void gtk_help_about_callback(GtkImageMenuItem* menuitem, gpointer user_data)
+{
+        gtk_dialog_run(GTK_DIALOG(user_data));
+}
+
 extern "C" void gtk_trigger_quit_callback(GtkWidget* widget, gpointer data)
 {
-        if (message_box_question("X3d demoscene", "Do you want to exit?", nullptr)) {
-                EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(data);
-                frontend->close();
-        }
+        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(data);
+        frontend->get_main_editor()->signal_quit_event();
 }
 
 MainEditorMenu::MainEditorMenuInt::MainEditorMenuInt(EditorGtkFrontend* frontend)
@@ -120,6 +126,21 @@ bool MainEditorMenu::show(bool visible)
                 }
                 g_signal_connect(G_OBJECT(mi_render_current), "activate",
                                  G_CALLBACK(gtk_render_current_frame_callback), frontend);
+        }
+        // deal with the <help about> menu
+        {
+                pimpl->m_about_dialog = (GtkAboutDialog*) gtk_builder_get_object(builder, "AD-X3dDemoscene");
+                if (!pimpl->m_about_dialog) {
+                        log_severe_err("cannot retrieve AD-X3dDemoscene about dialog");
+                        return false;
+                }
+                GtkMenuItem* mi_help_about = (GtkMenuItem*) gtk_builder_get_object(builder, "MI-HelpAbout");
+                if (!mi_help_about) {
+                        log_severe_err("cannot retrieve MI-HelpAbout menu");
+                        return false;
+                }
+                g_signal_connect(G_OBJECT(mi_help_about), "activate",
+                                 G_CALLBACK(gtk_help_about_callback), pimpl->m_about_dialog);
         }
         // deal with the <close> menu
         {

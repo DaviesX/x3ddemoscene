@@ -22,6 +22,8 @@ namespace gtkactivex
 {
 static const string c_BackendMainRenderRegion   = "backend-render-region";
 static const string c_BackendRenderFrame        = "backend-render-frame";
+static const string c_BackendRendererConfig     = "backend-renderer-configurator";
+static const string c_BackendWorldData          = "backend-world-data";
 static const string c_BackendBenchmark          = "backend-benchmark";
 static const string c_BackendPowersaveSwitch    = "backend-powersave-switch";
 };

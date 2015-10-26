@@ -47,7 +47,6 @@
 #  define X3D_VERSION_STRING	"v 1.0 debug"
 #  pragma GCC diagnostic ignored "-Wunused-function"
 #  pragma GCC diagnostic ignored "-Wmissing-braces"
-#  pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #else
 #  define X3D_VERSION_STRING	"v 1.0"
 #  pragma GCC diagnostic ignored "-Wunused-function"

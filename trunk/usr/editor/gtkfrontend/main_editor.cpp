@@ -32,27 +32,39 @@ public:
 /*
 static struct main_editor g_main_edit;
 */
-extern "C" gboolean destroy_callback(GtkWidget *widget, gpointer data);
 extern "C" gboolean main_editor_dispatch(gpointer user_data);
 
 static void idle_switch_callback(bool is_idle, EditorBackendActiveX* ax, void *info);
 static void window_reize_callback(bool is_fullscreen, int width, int height,
                                   EditorBackendActiveX* ax, void *info);
 static void render_config_error_callback(string message, RenderConfigActiveX *conf, void *data);
-extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data);
+extern "C" gboolean gtk_display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data);
 
 
-extern "C" gboolean display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data)
+extern "C" gboolean gtk_display_logo_callback(GtkWidget *draw_region, cairo_t *cairo, gpointer data)
 {
         MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(data);
         int x, y, w, h;
         widget_get_size(pimpl->m_window, pimpl->m_draw_region, &x, &y, &w, &h);
         GdkPixbuf* scaled = gdk_pixbuf_scale_simple(pimpl->m_logo, w, h, GDK_INTERP_NEAREST);
         gdk_cairo_set_source_pixbuf(cairo, scaled, 0, 0);
-        gdk_pixbuf_unref(scaled);
+        g_object_unref(G_OBJECT(scaled));
         cairo_paint(cairo);
         cairo_fill(cairo);
         return 0;
+}
+
+extern "C" gboolean gtk_delete_callback(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+        EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(data);
+        if (frontend->get_main_editor()->send_message_box("X3d demoscene", 
+                                                          "Do you want to exit?", 
+                                                          MainEditor::MessageQuestion)) {
+                frontend->close();
+                return FALSE;
+        } else {
+                return TRUE;
+        }
 }
 
 static void idle_switch_callback(bool is_idle, EditorBackendActiveX* ax, void *info)
@@ -62,18 +74,19 @@ static void idle_switch_callback(bool is_idle, EditorBackendActiveX* ax, void *i
         if (is_idle) {
                 if (!pimpl->m_is_logo_connected) {
                         pimpl->m_logo_draw_signal =
-                                g_signal_connect(draw_area, "draw", G_CALLBACK(display_logo_callback), pimpl);
+                                g_signal_connect(draw_area, "draw", G_CALLBACK(gtk_display_logo_callback), pimpl);
                         gtk_widget_queue_draw(pimpl->m_draw_region);
                         pimpl->m_is_logo_connected = true;
                 }
         } else {
                 if (pimpl->m_is_logo_connected) {
                         g_signal_handler_disconnect(draw_area, pimpl->m_logo_draw_signal);
-                        GdkColor color;
+                        GdkRGBA color;
+                        color.alpha = 0X0;
                         color.red   = 0X0;
                         color.blue  = 0X0;
                         color.green = 0X0;
-                        gtk_widget_modify_bg(pimpl->m_draw_region, GTK_STATE_NORMAL, &color);
+                        gtk_widget_override_background_color(pimpl->m_draw_region, GTK_STATE_FLAG_NORMAL, &color);
                         pimpl->m_is_logo_connected = false;
                 }
         }
@@ -81,13 +94,6 @@ static void idle_switch_callback(bool is_idle, EditorBackendActiveX* ax, void *i
 
 static void window_reize_callback(bool is_fullscreen, int width, int height, EditorBackendActiveX* ax, void *info)
 {
-}
-
-extern "C" gboolean destroy_callback(GtkWidget *widget, gpointer data)
-{
-        MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(data);
-        pimpl->m_frontend->close();
-        return 0;
 }
 
 MainEditor::MainEditorInt::MainEditorInt(EditorGtkFrontend* frontend)
@@ -102,8 +108,8 @@ MainEditor::MainEditorInt::~MainEditorInt()
         stop_gtk_main();
         await_gtk_main();
 
-        gdk_pixbuf_unref(m_logo);
-        gdk_pixbuf_unref(m_icon);
+        g_object_unref(G_OBJECT(m_logo));
+        g_object_unref(G_OBJECT(m_icon));
         g_signal_handler_disconnect(m_draw_region, m_logo_draw_signal);
         g_signal_handler_disconnect(m_window, m_idle_dispatch);
         g_signal_handler_disconnect(m_window, m_destroy_signal);
@@ -124,9 +130,34 @@ MainEditor::~MainEditor()
         delete pimpl;
 }
 
-GtkWindow* MainEditor::get_window_widget()
+void MainEditor::set_window_title(std::string title)
 {
-        return GTK_WINDOW(pimpl->m_window);
+        std::string version = X3D_VERSION_STRING;
+        std::string real_title = "X3d Demoscene " + version + " - " + title;
+        gtk_window_set_title(GTK_WINDOW(pimpl->m_window), real_title.c_str());
+}
+
+void MainEditor::signal_quit_event()
+{
+        g_signal_emit_by_name(G_OBJECT(pimpl->m_window), "delete-event");
+}
+
+bool MainEditor::send_message_box(std::string title, std::string content, MessageType msg_type)
+{
+        switch (msg_type) {
+        default:
+        case MessageInfo:
+                message_box_info(title, content, GTK_WINDOW(pimpl->m_window));
+                break;
+        case MessageWarning:
+                message_box_warning(title, content, GTK_WINDOW(pimpl->m_window));
+                break;
+        case MessageError:
+                message_box_error(title, content, GTK_WINDOW(pimpl->m_window));
+        case MessageQuestion:
+                return message_box_question(title, content, GTK_WINDOW(pimpl->m_window));
+        }
+        return false;
 }
 
 bool MainEditor::show(bool visible)
@@ -176,11 +207,12 @@ demo_mode:
                 gtk_builder_connect_signals(pimpl->m_builder, nullptr);
 
                 /* change background color to black */
-                GdkColor color;
+                GdkRGBA color;
+                color.alpha = 0X0;
                 color.red   = 0X0;
                 color.blue  = 0X0;
                 color.green = 0X0;
-                gtk_widget_modify_bg(pimpl->m_draw_region, GTK_STATE_NORMAL, &color);
+                gtk_widget_override_background_color(pimpl->m_draw_region, GTK_STATE_FLAG_NORMAL, &color);
 
                 /* load in logo file */
                 GError *error = nullptr;
@@ -246,12 +278,13 @@ demo_mode:
                 g_timeout_add(1000, main_editor_dispatch, pimpl);
                 // pimpl->m_idle_dispatch = g_idle_add(main_editor_dispatch, pimpl);
                 pimpl->m_destroy_signal =
-                        g_signal_connect(G_OBJECT(pimpl->m_window), "destroy", G_CALLBACK(destroy_callback), pimpl);
+                        g_signal_connect(G_OBJECT(pimpl->m_window), "delete_event", 
+                                         G_CALLBACK(gtk_delete_callback), frontend);
 
                 pimpl->m_has_loaded = true;
         }
 
-        gdk_threads_enter();
+//        gdk_threads_enter();
         /* show window */
         if (visible) {
                 gtk_widget_show_all(pimpl->m_window);
@@ -259,7 +292,7 @@ demo_mode:
         } else {
                 gtk_widget_hide(pimpl->m_window);
         }
-        gdk_threads_leave();
+//        gdk_threads_leave();
         return true;
 }
 
@@ -274,7 +307,6 @@ extern "C" gboolean main_editor_dispatch(gpointer user_data)
 {
         MainEditor::MainEditorInt* pimpl = static_cast<MainEditor::MainEditorInt*>(user_data);
         pimpl->m_frontend->get_backend_editor()->dispatch_signal();
-        thread_task_idle(10);
         return true;
 }
 

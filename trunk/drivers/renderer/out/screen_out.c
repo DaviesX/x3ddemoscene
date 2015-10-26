@@ -143,10 +143,10 @@ static void free_gtk_out(struct gtk_out *out)
 
 static void gtk_out_run(struct gtk_out *out)
 {
-        gdk_threads_enter ();
+//        gdk_threads_enter ();
         out->signal_state = DRAW_SIGNAL_REMAIN;
         gtk_widget_queue_draw(out->dst_widget);
-        gdk_threads_leave ();
+//        gdk_threads_leave ();
 }
 
 static void gtk_out_retrieve ( void *data, int size, struct gtk_out *out )

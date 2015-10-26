@@ -127,7 +127,7 @@ bool SplashScreen::show(bool visible)
                 struct timer_pack* pack = (struct timer_pack*) alloc_obj(pack);
                 pack->n          = 0;
                 pack->interval   = 10;
-                pack->length     = 2000;
+                pack->length     = 3000;
                 pack->s_trans    = 1.0;
                 pack->pimpl      = pimpl;
                 g_timeout_add(pack->interval, splash_diminisher, (gpointer) pack);

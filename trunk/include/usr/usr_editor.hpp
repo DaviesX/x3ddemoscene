@@ -76,14 +76,14 @@ public:
         bool                    is_dirty() const;
         
         bool                    operator==(const EditorBackendActiveX& rhs);
-        bool                    operator!=(const EditorBackendActiveX& rhs);
-
-        virtual void            on_adding() = 0;
-        virtual void            preupdate() {};
-        virtual void            update() = 0;
-        virtual void            dispatch() = 0;
-        virtual void            load(struct serializer *s) = 0;
-        virtual void            save(struct serializer *s) = 0;
+        bool                    operator!=(const EditorBackendActiveX& rhs);       
+        
+        virtual void            on_adding() = 0;        // upon adding the activex to the editor
+        virtual void            preupdate() {};   // any activesx-independent orderless action should be taken here
+        virtual void            update() = 0;           // update for current loop
+        virtual void            dispatch() = 0;         // inform editor backends of signals
+        virtual void            load(struct serializer *s) = 0; // load status from the serial sequence
+        virtual void            save(struct serializer *s) = 0; // save status to the serial sequence
 private:
         int                     m_size;
         string                  m_name;
@@ -207,11 +207,13 @@ class WorldDataActiveX : public EditorBackendActiveX
 {
 public:
         enum ActionType {
+                ActionChangeDataSet,
                 ActionAddObject,
                 ActionRemoveObject,
         };
         
         enum ObjectType {
+                ObjectDataSet,
                 ObjectRenderable,
         };
         
@@ -219,26 +221,34 @@ public:
                 ActionType      action_type;
                 ObjectType      object_type;
                 std::string     object_id;
-                std::string     parent_id;
+                std::string     object_name;
         };
         
         typedef void (*f_Notify_Error)  (string message, WorldDataActiveX& ax, void *data);
-        typedef void (*f_Notify_Action) (ActionInfo& info, WorldDataActiveX& ax, void* data);
+        typedef void (*f_Notify_Action) (std::vector<ActionInfo>& info, WorldDataActiveX& ax, void* data);
         
-        WorldDataActiveX(string name);
+        WorldDataActiveX(std::string name);
+        WorldDataActiveX(std::string name, std::string data_set_name, std::string storage_path);
         ~WorldDataActiveX();
 
-        void on_adding();                       // upon adding the activex to the editor
-        void preupdate();                       // any activesx-independent orderless action should be taken here
-        void update();                          // update for current loop
-        void dispatch();                        // inform editor backends of signals
-        void load(struct serializer *s);        // load status from the serial sequence
-        void save(struct serializer *s);        // save status to the serial sequence
+        void            on_adding();
+        void            preupdate();
+        void            update();        
+        void            dispatch();
+        void            load(struct serializer *s);
+        void            save(struct serializer *s);
 
-        void    bind_callback(string signal, f_Generic callback, void *data);
-/**@fixme: <WorldDataActiveX>: get_world is no longer viable */
-        World&  get_world();
-        bool    has_works();
+        void            bind_callback(string signal, f_Generic callback, void *data);
+        
+        void            new_data_set(std::string data_set_name, std::string storage_path);
+        void            open_data_set(std::string storage_path);
+        void            close_data_set();
+        
+        std::string     get_data_set_name();
+        std::string     get_storage_path();
+        
+        World&          get_world();
+        bool            has_data_set();
 private:
         class WorldDataInt;
         class WorldDataInt*     pimpl;

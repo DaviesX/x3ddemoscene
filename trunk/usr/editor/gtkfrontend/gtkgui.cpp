@@ -4,6 +4,7 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_editor.hpp>
 #include <usr/usr_editorfrontend.hpp>
+#include <gtk-3.0/gdk/gdkthreads.h>
 #include "gtkgui.hpp"
 
 namespace x3d
@@ -177,7 +178,6 @@ bool EditorGtkFrontend::init(int argc, char **argv, EditorBackend *editor, Kerne
         pimpl->m_env = env;
 
         gtk_init(&argc, &argv);
-        gdk_threads_init();
 
         pimpl->m_splash_screen         = new SplashScreen(this);
         pimpl->m_main_editor           = new MainEditor(this);
@@ -374,9 +374,7 @@ static x3d::thread_task*        g_gtk_main_task = nullptr;
 
 static void* do_gtk_main(void* data)
 {
-        {
-                gtk_main ();
-        }
+        gtk_main ();
         return nullptr;
 }
 
@@ -395,9 +393,7 @@ void stop_gtk_main()
         if(g_gtk_main_stack == 0) {
                 log_normal_dbg("no gtk main is running: %d", g_gtk_main_stack);
                 {
-                        gdk_threads_enter ();
                         gtk_main_quit ();
-                        gdk_threads_leave ();
                         x3d::thread_sync_with_task(g_gtk_main_task);
                 }
         } else {

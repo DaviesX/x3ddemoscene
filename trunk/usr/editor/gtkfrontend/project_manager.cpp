@@ -12,13 +12,19 @@ class ProjectManager::ProjectManagerInt
 public:
         ProjectManagerInt(EditorGtkFrontend* frontend);
         ~ProjectManagerInt();
-public:
-        const string            c_WorldDataString;
+
         EditorGtkFrontend*      m_frontend;
+        
+        GtkLabel*               m_project_label;
+        
+        GtkTreeView*            m_project_tree;
+        GtkTreeStore*           m_project_tree_data;
+        
+        GtkTreeIter             m_rda_iter;
+        GtkTreeIter             m_rda_inst_iter;
 };
 
 ProjectManager::ProjectManagerInt::ProjectManagerInt(EditorGtkFrontend* frontend) :
-        c_WorldDataString("project-manager-data"),
         m_frontend(frontend)
 {
 }
@@ -27,7 +33,8 @@ ProjectManager::ProjectManagerInt::~ProjectManagerInt()
 {
         stop_gtk_main();
         await_gtk_main();
-
+        
+        g_object_unref(m_project_tree_data);
         m_frontend = nullptr;
 }
 
@@ -41,76 +48,11 @@ ProjectManager::~ProjectManager()
         delete pimpl;
 }
 
-enum
+enum ColumnStructure
 {
         COL_NAME,
-        COL_AGE,
         NUM_COLS
 };
-
-
-static GtkTreeModel* create_and_fill_model()
-{
-        GtkTreeStore  *store;
-        GtkTreeIter    iter;
-
-        store = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_UINT);
-
-        /* Append a row and fill in some data */
-        gtk_tree_store_append(store, &iter, NULL);
-        gtk_tree_store_set(store, &iter,
-                           COL_NAME, "Heinz El-Mann",
-                           COL_AGE, 51,
-                           -1);
-        GtkTreeIter   parent = iter;
-
-        /* append another row and fill in some data */
-        gtk_tree_store_insert(store, &iter, &parent, -1);
-        gtk_tree_store_set(store, &iter,
-                           COL_NAME, "Jane Doe",
-                           COL_AGE, 23,
-                           -1);
-
-        /* ... and a third row */
-        gtk_tree_store_append (store, &iter, &parent);
-        gtk_tree_store_set(store, &iter,
-                           COL_NAME, "Joe Bungop",
-                           COL_AGE, 91,
-                           -1);
-
-        return GTK_TREE_MODEL(store);
-}
-
-static void fill_in_tree_view_and_model(GtkTreeView* view)
-{
-        GtkCellRenderer     *renderer;
-        GtkTreeModel        *model;
-
-        /* --- Column #1 --- */
-        renderer = gtk_cell_renderer_text_new();
-        gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view),
-                                                    -1,
-                                                   "Name",
-                                                   renderer,
-                                                   "text", COL_NAME,
-                                                   NULL);
-
-        /* --- Column #2 --- */
-        renderer = gtk_cell_renderer_text_new();
-        gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view),
-                                                    -1,
-                                                    "Age",
-                                                    renderer,
-                                                    "text", COL_AGE,
-                                                    NULL);
-        model = create_and_fill_model();
-        gtk_tree_view_set_model(GTK_TREE_VIEW(view), model);
-
-        /* The tree view has acquired its own reference to the
-         *  model, so we can drop ours. That way the model will
-         *  be freed automatically when the tree view is destroyed */
-        g_object_unref(model);
-}
 
 bool ProjectManager::show(bool visible)
 {
@@ -120,15 +62,61 @@ bool ProjectManager::show(bool visible)
         GtkBuilder* builder = frontend->get_gtk_builder();
         if (!builder)
                 return false;
-        GtkTreeView* tree_view = (GtkTreeView*) gtk_builder_get_object(builder, "TV-ProjectManager");
-        if (!tree_view) {
-                log_severe_err_dbg("cannot obtain TV-ProjectManager widget");
-                return false;
+        
+        
+        // Pre-fill the tree with the categories
+        {
+                pimpl->m_project_tree = (GtkTreeView*) gtk_builder_get_object(builder, "TV-ProjectManager");
+                if (!pimpl->m_project_tree) {
+                        log_severe_err_dbg("cannot obtain TV-ProjectManager widget");
+                        return false;
+                }
+                GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+                gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(pimpl->m_project_tree),
+                                                            -1, "X3d", renderer, "text", COL_NAME, NULL);
+                gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(pimpl->m_project_tree), false);
+                // build up data
+                pimpl->m_project_tree_data = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_UINT);
+                GtkTreeIter    iter;
+                gtk_tree_store_append(pimpl->m_project_tree_data, &iter, NULL);
+                gtk_tree_store_set(pimpl->m_project_tree_data, &iter, COL_NAME, "Renderable", -1);
+                pimpl->m_rda_iter = iter;
+                gtk_tree_store_append(pimpl->m_project_tree_data, &iter, NULL);
+                gtk_tree_store_set(pimpl->m_project_tree_data, &iter, COL_NAME, "Renderable Instance", -1);
+                pimpl->m_rda_inst_iter = iter;
+
+                // writing test data to renderable node
+                iter = pimpl->m_rda_iter;
+                gtk_tree_store_insert(pimpl->m_project_tree_data, &iter, &iter, -1);
+                gtk_tree_store_set(pimpl->m_project_tree_data, &iter, COL_NAME, "r1", -1);
+                // writing test data to renderable instance node
+                iter = pimpl->m_rda_inst_iter;
+                gtk_tree_store_insert(pimpl->m_project_tree_data, &iter, &iter, -1);
+                gtk_tree_store_set(pimpl->m_project_tree_data, &iter, COL_NAME, "ri1", -1);
+
+                gtk_tree_view_set_model(GTK_TREE_VIEW(pimpl->m_project_tree), 
+                                        GTK_TREE_MODEL(pimpl->m_project_tree_data));       
         }
-        fill_in_tree_view_and_model(tree_view);
+        {
+                pimpl->m_project_label = (GtkLabel*) gtk_builder_get_object(builder, "LB-ProjectName");
+                if (!pimpl->m_project_label) {
+                        log_severe_err_dbg("cannot obtain LB-ProjectName widget");
+                        return false;
+                }
+                gtk_label_set_text(GTK_LABEL(pimpl->m_project_label), "<Invalid Project>");
+        }
 
         if (visible) {
-                frontend->get_backend_editor()->add_activex(new WorldDataActiveX(pimpl->c_WorldDataString));
+                WorldDataActiveX* worldax = new WorldDataActiveX(gtkactivex::c_BackendWorldData);
+                if (!frontend->get_backend_editor()->add_activex(worldax)) {
+                        delete worldax;
+                } else {
+                        gtk_label_set_text(GTK_LABEL(pimpl->m_project_label), 
+                                           worldax->get_data_set_name().c_str());
+                        MainEditor* mainedit = pimpl->m_frontend->get_main_editor();
+                        std::string title = worldax->get_data_set_name() + " - " + worldax->get_storage_path();
+                        mainedit->set_window_title(title);
+                }
         }
         return true;
 }

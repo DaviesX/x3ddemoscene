@@ -21,13 +21,11 @@ public:
         EditorGtkFrontend*      m_frontend;
 };
 
-static const string cRenderConfig = "gtk-main-editor-render-config";
 
 static void render_config_error_callback(string message, RenderConfigActiveX *conf, void *user_data)
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
-        GtkWindow* parent = frontend->get_main_editor()->get_window_widget();
-        message_box_error(cRenderConfig, message, parent);
+        frontend->get_main_editor()->send_message_box("X3d Renderer Configurator", message, MainEditor::MessageError);
 }
 
 RendererConfig::RendererConfigInt::RendererConfigInt(EditorGtkFrontend* frontend)
@@ -59,15 +57,11 @@ bool RendererConfig::show(bool visible)
         // load in GUI
         // apply activex
         if (visible) {
-                RenderConfigActiveX* config = new RenderConfigActiveX(cRenderConfig);
+                RenderConfigActiveX* config = new RenderConfigActiveX(gtkactivex::c_BackendRendererConfig);
                 config->bind_callback("notify_error", (f_Generic) render_config_error_callback, frontend);
-                frontend->get_backend_editor()->add_activex(config);
-        } else {
-                EditorBackend* edit = frontend->get_backend_editor();
-                EditorBackendActiveX* config = edit->find_activex(EditorBackendActiveX::EditActiveXRenderConfig,
-                                                           cRenderConfig);
-                if (config)
-                        edit->remove_activex(EditorBackendActiveX::EditActiveXRenderConfig, cRenderConfig);
+                if (!frontend->get_backend_editor()->add_activex(config)) {
+                        delete config;
+                }
         }
         return true;
 }

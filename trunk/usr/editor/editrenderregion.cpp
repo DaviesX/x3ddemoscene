@@ -182,7 +182,7 @@ void RenderRegionActiveX::update()
         KernelEnvironment* state = get_state_buffer();
         // see if there is anything needed to be processed by the kernel
         WorldDataActiveX* worlddata = (WorldDataActiveX*) state->use(c_WorldData);
-        if (worlddata->has_works() && !pimpl->m_idle_request) {
+        if (worlddata->has_data_set() && !pimpl->m_idle_request) {
                 RenderConfigActiveX* config = (RenderConfigActiveX*) state->use(c_RenderConfig);
                 RenderTree* interactive = config->get_render_tree(RenderConfigActiveX::RenderTreeInteractive);
                 pimpl->m_renderer.update(interactive);
