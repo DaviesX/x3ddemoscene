@@ -1,5 +1,6 @@
 /* log.c: All log handling functions go here */
 #include <x3d/common.h>
+#include <x3d/init.h>
 #include <container/linkedlist.h>
 #include <system/allocator.h>
 #include <system/log.h>
@@ -7,11 +8,27 @@
 
 #define MAX_MESSAGE_LENGTH		1024
 
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 const char* c_FileName          = "x3d_log";
+
+// plain text
 const char* c_NormalPrefix      = "x3d_log:";
 const char* c_MildErrPrefix     = "x3d_mild:*";
 const char* c_SevereErrPrefix   = "x3d_severe:**";
 const char* c_CritiErrPrefix    = "x3d_critical:***";
+
+// colored prefix
+const char* c_CNormalPrefix      = ANSI_COLOR_GREEN"x3d_log:"ANSI_COLOR_RESET;
+const char* c_CMildErrPrefix     = ANSI_COLOR_MAGENTA"x3d_mild:*"ANSI_COLOR_RESET;
+const char* c_CSevereErrPrefix   = ANSI_COLOR_RED"x3d_severe:**"ANSI_COLOR_RESET;
+const char* c_CCritiErrPrefix    = ANSI_COLOR_RED"x3d_critical:***"ANSI_COLOR_RESET;
 
 struct log_output {
         FILE*                   file;
@@ -44,10 +61,10 @@ bool log_init(int to_terminate)
         time(&timeT);
         struct tm* gmtTime = gmtime(&timeT);
 
-        printf("x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n",
+        printf(ANSI_COLOR_BLUE"x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n"ANSI_COLOR_RESET,
                X3D_VERSION_STRING, gmtTime->tm_hour, gmtTime->tm_min, gmtTime->tm_sec);
         if ((g_log_inst.normal_bhv | g_log_inst.mild_err_bhv | g_log_inst.severe_err_bhv | g_log_inst.criti_err_bhv) & LOG_OUTPUT_TO_FILE) {
-                if (!(g_log_inst.file = fopen(c_FileName, "w" ))) {
+                if (!(g_log_inst.file = fopen(c_FileName, "w"))) {
                         return false;
                 }
                 fprintf(g_log_inst.file, "x3drenderlibrary - %s\nx3d log start recording\t%d:%d:%d\n\n",
@@ -61,19 +78,19 @@ finished:
 }
 
 
-void log_free ( void )
+void log_free(void)
 {
         if (g_log_inst.file) {
                 fprintf(g_log_inst.file, "\nx3d log stop recording\n\n");
                 fclose(g_log_inst.file);
         }
         alg_free(llist, &g_log_inst.last_ten_errors);
-        printf("\nx3d log stop recording\n\n");
+        printf(ANSI_COLOR_BLUE"\nx3d log stop recording\n\n"ANSI_COLOR_RESET);
         zero_obj(&g_log_inst);
         g_is_init = 0;
 }
 
-#define report_log(_functionName, _message, _logState, _prefix)	\
+#define report_log(_functionName, _message, _logState, _prefix, _prefix_colored)	\
 { \
 	if (!g_is_init) { \
 		/* Initialize log reporter, if it is not */ \
@@ -106,53 +123,55 @@ void log_free ( void )
 		g_log_inst.tmp_bhv = LOG_OUTPUT_NONDEFINED; \
 	} \
 \
-	switch ( _behavior ) { \
+	switch(_behavior) { \
 	case LOG_OUTPUT_TO_CONSOLE: { \
-		printf ( "%s<%s> %s\n", (_prefix), (_functionName), (_outputMessage) ); \
+		printf("%s%s<%s>%s %s\n", \
+                       (_prefix_colored), ANSI_COLOR_CYAN, (_functionName), ANSI_COLOR_RESET, (_outputMessage)); \
 		break; \
 	} \
 \
 	case LOG_OUTPUT_TO_FILE: { \
-		fprintf ( g_log_inst.file, "%s<%s> %s\n", \
-			 (_prefix), (_functionName), (_outputMessage) ); \
+		fprintf(g_log_inst.file, "%s<%s> %s\n", \
+			 (_prefix), (_functionName), (_outputMessage)); \
 		break; \
 	} \
 \
 	case LOG_OUTPUT_TO_BOTH: { \
-		printf ( "%s<%s> %s\n", (_prefix), (_functionName), (_outputMessage) ); \
-		fprintf ( g_log_inst.file, "%s<%s> %s\n", \
-			 (_prefix), (_functionName), (_outputMessage) ); \
+		printf("%s%s<%s>%s %s\n", \
+                       (_prefix_colored), ANSI_COLOR_CYAN, (_functionName), ANSI_COLOR_RESET, (_outputMessage)); \
+		fprintf(g_log_inst.file, "%s<%s> %s\n", \
+			 (_prefix), (_functionName), (_outputMessage)); \
 		break; \
 	} \
 	} \
 \
-	free ( _outputMessage ); \
+	free(_outputMessage); \
 }
 
-void call_log_normal ( const char* functionName, const char* message, ... )
+void call_log_normal(const char* functionName, const char* message, ...)
 {
-        report_log ( functionName, message, g_log_inst.normal_bhv, c_NormalPrefix );
+        report_log(functionName, message, g_log_inst.normal_bhv, c_NormalPrefix, c_CNormalPrefix);
 }
 
-void call_log_mild_err ( const char* functionName, const char* errorMessage, ... )
+void call_log_mild_err(const char* functionName, const char* errorMessage, ...)
 {
-        report_log ( functionName, errorMessage, g_log_inst.mild_err_bhv, c_MildErrPrefix );
+        report_log(functionName, errorMessage, g_log_inst.mild_err_bhv, c_MildErrPrefix, c_CMildErrPrefix);
 }
 
-void call_log_severe_err ( const char* functionName, const char* errorMessage, ... )
+void call_log_severe_err(const char* functionName, const char* errorMessage, ...)
 {
-        report_log ( functionName, errorMessage, g_log_inst.severe_err_bhv, c_SevereErrPrefix );
+        report_log(functionName, errorMessage, g_log_inst.severe_err_bhv, c_SevereErrPrefix, c_CSevereErrPrefix);
 }
 
-void call_log_critical_err ( const char* functionName, const char* errorMessage, ... )
+void call_log_critical_err(const char* functionName, const char* errorMessage, ...)
 {
-        report_log ( functionName, errorMessage, g_log_inst.criti_err_bhv, c_CritiErrPrefix );
-        if ( g_log_inst.to_terminate ) {
-                puts ( "The program will be shutdown" );
-                if ( g_log_inst.file ) {
-                        fprintf ( g_log_inst.file, "The program will be shutdown..." );
+        report_log(functionName, errorMessage, g_log_inst.criti_err_bhv, c_CritiErrPrefix, c_CCritiErrPrefix);
+        if(g_log_inst.to_terminate) {
+                puts("The program will be shutdown");
+                if(g_log_inst.file) {
+                        fprintf(g_log_inst.file, "The program will be shutdown...");
                 }
-                abort ();
+                kernel_panic();
         }
 }
 
