@@ -30,10 +30,7 @@ ProjectManager::ProjectManagerInt::ProjectManagerInt(EditorGtkFrontend* frontend
 }
 
 ProjectManager::ProjectManagerInt::~ProjectManagerInt()
-{
-        stop_gtk_main();
-        await_gtk_main();
-        
+{ 
         g_object_unref(m_project_tree_data);
         m_frontend = nullptr;
 }

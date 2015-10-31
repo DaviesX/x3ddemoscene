@@ -71,9 +71,9 @@ public:
         MainEditorMenu*         get_main_editor_menu();
         RendererConfig*         get_renderer_config();
         EntityEditor*           get_entity_editor();
-private:
-        class EditorBackendGtkFrontendInt;
-        class EditorBackendGtkFrontendInt*     pimpl;
+public:
+        class EditorGtkFrontendInt;
+        class EditorGtkFrontendInt*     pimpl;
 };
 
 class EditorQtFrontend : public EditorFrontend

@@ -268,12 +268,14 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-io.h \
  /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-loader.h \
  /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-enum-types.h \
+ /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-autocleanups.h \
  /usr/include/pango-1.0/pango/pangocairo.h \
  /usr/include/gtk-3.0/gdk/gdkcursor.h \
  /usr/include/gtk-3.0/gdk/gdkdisplaymanager.h \
  /usr/include/gtk-3.0/gdk/gdkenumtypes.h \
  /usr/include/gtk-3.0/gdk/gdkframeclock.h \
  /usr/include/gtk-3.0/gdk/gdkframetimings.h \
+ /usr/include/gtk-3.0/gdk/gdkglcontext.h \
  /usr/include/gtk-3.0/gdk/gdkkeys.h /usr/include/gtk-3.0/gdk/gdkkeysyms.h \
  /usr/include/gtk-3.0/gdk/gdkmain.h /usr/include/gtk-3.0/gdk/gdkpango.h \
  /usr/include/gtk-3.0/gdk/gdkproperty.h \
@@ -283,6 +285,7 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gtk-3.0/gdk/gdkwindow.h \
  /usr/include/gtk-3.0/gdk/gdkthreads.h \
  /usr/include/gtk-3.0/gdk/gdkvisual.h \
+ /usr/include/gtk-3.0/gdk/gdk-autocleanup.h \
  /usr/include/gtk-3.0/gtk/gtkaboutdialog.h \
  /usr/include/gtk-3.0/gtk/gtkdialog.h \
  /usr/include/gtk-3.0/gtk/gtkwindow.h \
@@ -420,13 +423,13 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gtk-3.0/gtk/gtkgesturerotate.h \
  /usr/include/gtk-3.0/gtk/gtkgestureswipe.h \
  /usr/include/gtk-3.0/gtk/gtkgesturezoom.h \
- /usr/include/gtk-3.0/gtk/gtkgrid.h \
+ /usr/include/gtk-3.0/gtk/gtkglarea.h /usr/include/gtk-3.0/gtk/gtkgrid.h \
  /usr/include/gtk-3.0/gtk/gtkheaderbar.h \
  /usr/include/gtk-3.0/gtk/gtkicontheme.h \
  /usr/include/gtk-3.0/gtk/gtkstylecontext.h \
  /usr/include/gtk-3.0/gtk/gtkstyleprovider.h \
  /usr/include/gtk-3.0/gtk/deprecated/gtkiconfactory.h \
- /usr/include/gtk-3.0/gtk/gtkstyleproperties.h \
+ /usr/include/gtk-3.0/gtk/deprecated/gtkstyleproperties.h \
  /usr/include/gtk-3.0/gtk/gtkiconview.h \
  /usr/include/gtk-3.0/gtk/gtktooltip.h \
  /usr/include/gtk-3.0/gtk/gtkimcontextinfo.h \
@@ -447,6 +450,7 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gtk-3.0/gtk/gtktoolitem.h \
  /usr/include/gtk-3.0/gtk/gtksizegroup.h \
  /usr/include/gtk-3.0/gtk/gtkmessagedialog.h \
+ /usr/include/gtk-3.0/gtk/gtkmodelbutton.h \
  /usr/include/gtk-3.0/gtk/gtkmodules.h \
  /usr/include/gtk-3.0/gtk/gtkmountoperation.h \
  /usr/include/gtk-3.0/gtk/gtknotebook.h \
@@ -457,6 +461,7 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gtk-3.0/gtk/gtkpapersize.h \
  /usr/include/gtk-3.0/gtk/gtkpaned.h \
  /usr/include/gtk-3.0/gtk/gtkplacessidebar.h \
+ /usr/include/gtk-3.0/gtk/gtkpopovermenu.h \
  /usr/include/gtk-3.0/gtk/gtkprintcontext.h \
  /usr/include/gtk-3.0/gtk/gtkprintoperation.h \
  /usr/include/gtk-3.0/gtk/gtkprintsettings.h \
@@ -473,6 +478,7 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gtk-3.0/gtk/gtkrecentchooserdialog.h \
  /usr/include/gtk-3.0/gtk/gtkrecentchoosermenu.h \
  /usr/include/gtk-3.0/gtk/gtkrecentchooserwidget.h \
+ /usr/include/gtk-3.0/gtk/gtkrender.h \
  /usr/include/gtk-3.0/gtk/gtkrevealer.h \
  /usr/include/gtk-3.0/gtk/gtkscale.h \
  /usr/include/gtk-3.0/gtk/gtkscalebutton.h \
@@ -486,10 +492,11 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gtk-3.0/gtk/gtkseparatortoolitem.h \
  /usr/include/gtk-3.0/gtk/gtksettings.h \
  /usr/include/gtk-3.0/gtk/gtkshow.h \
+ /usr/include/gtk-3.0/gtk/gtkstacksidebar.h \
+ /usr/include/gtk-3.0/gtk/gtkstack.h \
  /usr/include/gtk-3.0/gtk/gtksizerequest.h \
  /usr/include/gtk-3.0/gtk/gtkspinbutton.h \
  /usr/include/gtk-3.0/gtk/gtkspinner.h \
- /usr/include/gtk-3.0/gtk/gtkstack.h \
  /usr/include/gtk-3.0/gtk/gtkstackswitcher.h \
  /usr/include/gtk-3.0/gtk/gtkstatusbar.h \
  /usr/include/gtk-3.0/gtk/gtkswitch.h \
@@ -551,6 +558,7 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
  /usr/include/gtk-3.0/gtk/deprecated/gtkvscale.h \
  /usr/include/gtk-3.0/gtk/deprecated/gtkvscrollbar.h \
  /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h \
+ /usr/include/gtk-3.0/gtk/gtk-autocleanups.h \
  ../../include/usr/usr_x3d.hpp ../../lib/misc.h \
  ../../include/x3d/common.h ../../lib/system/log.h \
  ../../lib/system/allocator.h ../../lib/system/thread.h \
@@ -1171,6 +1179,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 
 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-enum-types.h:
 
+/usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-autocleanups.h:
+
 /usr/include/pango-1.0/pango/pangocairo.h:
 
 /usr/include/gtk-3.0/gdk/gdkcursor.h:
@@ -1182,6 +1192,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 /usr/include/gtk-3.0/gdk/gdkframeclock.h:
 
 /usr/include/gtk-3.0/gdk/gdkframetimings.h:
+
+/usr/include/gtk-3.0/gdk/gdkglcontext.h:
 
 /usr/include/gtk-3.0/gdk/gdkkeys.h:
 
@@ -1204,6 +1216,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 /usr/include/gtk-3.0/gdk/gdkthreads.h:
 
 /usr/include/gtk-3.0/gdk/gdkvisual.h:
+
+/usr/include/gtk-3.0/gdk/gdk-autocleanup.h:
 
 /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:
 
@@ -1491,6 +1505,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 
 /usr/include/gtk-3.0/gtk/gtkgesturezoom.h:
 
+/usr/include/gtk-3.0/gtk/gtkglarea.h:
+
 /usr/include/gtk-3.0/gtk/gtkgrid.h:
 
 /usr/include/gtk-3.0/gtk/gtkheaderbar.h:
@@ -1503,7 +1519,7 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 
 /usr/include/gtk-3.0/gtk/deprecated/gtkiconfactory.h:
 
-/usr/include/gtk-3.0/gtk/gtkstyleproperties.h:
+/usr/include/gtk-3.0/gtk/deprecated/gtkstyleproperties.h:
 
 /usr/include/gtk-3.0/gtk/gtkiconview.h:
 
@@ -1547,6 +1563,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 
 /usr/include/gtk-3.0/gtk/gtkmessagedialog.h:
 
+/usr/include/gtk-3.0/gtk/gtkmodelbutton.h:
+
 /usr/include/gtk-3.0/gtk/gtkmodules.h:
 
 /usr/include/gtk-3.0/gtk/gtkmountoperation.h:
@@ -1566,6 +1584,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 /usr/include/gtk-3.0/gtk/gtkpaned.h:
 
 /usr/include/gtk-3.0/gtk/gtkplacessidebar.h:
+
+/usr/include/gtk-3.0/gtk/gtkpopovermenu.h:
 
 /usr/include/gtk-3.0/gtk/gtkprintcontext.h:
 
@@ -1599,6 +1619,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 
 /usr/include/gtk-3.0/gtk/gtkrecentchooserwidget.h:
 
+/usr/include/gtk-3.0/gtk/gtkrender.h:
+
 /usr/include/gtk-3.0/gtk/gtkrevealer.h:
 
 /usr/include/gtk-3.0/gtk/gtkscale.h:
@@ -1625,13 +1647,15 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 
 /usr/include/gtk-3.0/gtk/gtkshow.h:
 
+/usr/include/gtk-3.0/gtk/gtkstacksidebar.h:
+
+/usr/include/gtk-3.0/gtk/gtkstack.h:
+
 /usr/include/gtk-3.0/gtk/gtksizerequest.h:
 
 /usr/include/gtk-3.0/gtk/gtkspinbutton.h:
 
 /usr/include/gtk-3.0/gtk/gtkspinner.h:
-
-/usr/include/gtk-3.0/gtk/gtkstack.h:
 
 /usr/include/gtk-3.0/gtk/gtkstackswitcher.h:
 
@@ -1754,6 +1778,8 @@ build/Debug/GNU-Linux-x86/_ext/1067377271/renderable_editor.o: \
 /usr/include/gtk-3.0/gtk/deprecated/gtkvscrollbar.h:
 
 /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h:
+
+/usr/include/gtk-3.0/gtk/gtk-autocleanups.h:
 
 ../../include/usr/usr_x3d.hpp:
 

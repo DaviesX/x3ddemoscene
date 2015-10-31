@@ -18,7 +18,7 @@ struct runtime_debug g_rtdebug;
 
 
 /* unit test */
-bool debugger_init(int argc, char *argv[], struct symbol_set *symbols)
+bool debugger_init(int argc, char** argv, struct symbol_set *symbols)
 {
         struct runtime_debug *dbg = &g_rtdebug;
         dbg->argc = argc;

@@ -35,9 +35,6 @@ RendererConfig::RendererConfigInt::RendererConfigInt(EditorGtkFrontend* frontend
 
 RendererConfig::RendererConfigInt::~RendererConfigInt()
 {
-        stop_gtk_main();
-        await_gtk_main();
-
         m_frontend = nullptr;
 }
 

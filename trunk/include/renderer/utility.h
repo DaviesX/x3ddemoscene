@@ -270,7 +270,7 @@ static inline void u_aos_accumulate(struct util_aos* u_aos, int* index, int num_
                 memcpy(&t[u_aos->n_vertex], src, num_vertex);
         }
         if(format & UtilAttriUV) {
-                struct vector2d* src = va_arg(v_arg, struct vector3d*);
+                struct vector2d* src = va_arg(v_arg, struct vector2d*);
                 u_aos->aos[_AttriUV].s_data =
                         alloc_add_var(u_aos->aos[_AttriUV].s_data, num_vertex);
                 struct vector2d* uv = u_aos->aos[_AttriUV].s_data;

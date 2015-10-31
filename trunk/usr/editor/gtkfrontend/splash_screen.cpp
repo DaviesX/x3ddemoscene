@@ -31,9 +31,6 @@ SplashScreen::SplashScreenInt::SplashScreenInt(EditorGtkFrontend* frontend)
 
 SplashScreen::SplashScreenInt::~SplashScreenInt()
 {
-        stop_gtk_main();
-        await_gtk_main();
-
         m_has_loaded    = false;
         m_frontend      = nullptr;
         m_image         = nullptr;
@@ -90,6 +87,7 @@ static gboolean splash_diminisher(gpointer data)
                 gtk_widget_destroy(pack->pimpl->m_image);
                 gtk_widget_destroy(pack->pimpl->m_window);
                 pack->has_finished = true;
+                free_fix(data);
                 return FALSE;
         }
         gtk_widget_set_opacity(GTK_WIDGET(pack->pimpl->m_window), trans);
@@ -103,7 +101,7 @@ bool SplashScreen::show(bool visible)
         if (!pimpl->m_has_loaded) {
                 string filename = frontend->m_glade_dir + frontend->m_logo;
 
-                pimpl->m_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+                pimpl->m_window = gtk_window_new(GTK_WINDOW_POPUP);
                 gtk_widget_set_size_request(pimpl->m_window, 800, 600);
                 gtk_window_set_decorated(GTK_WINDOW(pimpl->m_window), FALSE);
                 gtk_window_set_position(GTK_WINDOW(pimpl->m_window), GTK_WIN_POS_CENTER_ALWAYS);
@@ -122,7 +120,6 @@ bool SplashScreen::show(bool visible)
         }
         if (visible) {
                 gtk_widget_show_all(pimpl->m_window);
-                run_gtk_main();
         } else {
                 struct timer_pack* pack = (struct timer_pack*) alloc_obj(pack);
                 pack->n          = 0;
@@ -131,9 +128,6 @@ bool SplashScreen::show(bool visible)
                 pack->s_trans    = 1.0;
                 pack->pimpl      = pimpl;
                 g_timeout_add(pack->interval, splash_diminisher, (gpointer) pack);
-                while(!pack->has_finished) thread_task_idle(1);
-                free_fix(pack);
-                stop_gtk_main();
         }
         return true;
 }
