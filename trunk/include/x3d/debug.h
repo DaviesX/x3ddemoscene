@@ -14,6 +14,7 @@ enum DebugPosition {
         DebugPTRendererPrintBenchmarkGeometry,
         DebugPTRendererExportRenderredImage,
         Debug_renderer_c_renderer_render,
+        Debug_ptrenderer_c_pt_radiance_node_compute2,
         c_NumDebugPositions
 };
 

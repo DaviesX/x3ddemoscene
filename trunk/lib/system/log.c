@@ -1,9 +1,9 @@
 /* log.c: All log handling functions go here */
 #include <x3d/common.h>
-#include <x3d/init.h>
 #include <container/linkedlist.h>
 #include <system/allocator.h>
 #include <system/log.h>
+#include <system/panic.h>
 
 
 #define MAX_MESSAGE_LENGTH		1024
@@ -171,7 +171,7 @@ void call_log_critical_err(const char* functionName, const char* errorMessage, .
                 if(g_log_inst.file) {
                         fprintf(g_log_inst.file, "The program will be shutdown...");
                 }
-                kernel_panic();
+                panic();
         }
 }
 

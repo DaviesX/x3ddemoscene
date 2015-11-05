@@ -2,6 +2,7 @@
 #include <system/allocator.h>
 #include <x3d/renderer.h>
 #include <x3d/rendertreeenvconsts.h>
+#include <x3d/rendernoderadiance.h>
 #include <renderer/proj_probe.h>
 #include <renderer/geocache.h>
 #include <renderer/out.h>
@@ -61,3 +62,137 @@ void rt_renderer_output ( struct rt_renderer* r )
 }
 
 #endif // 0
+
+
+void __public rt_renderer_system_init(struct symbol_set* symbol)
+{
+}
+
+// radiance node
+struct render_node_ex_impl* __callback rt_radiance_node_creator(struct render_node_ex* parent)
+{
+        struct rt_radiance_node* self = alloc_obj(self);
+        zero_obj(self);
+        // fill in ops for the parent
+        struct render_node_ex_ops       ops;
+        ops.f_compute           = rt_radiance_node_compute;
+        ops.f_free              = rt_radiance_node_free;
+        ops.f_get_result        = rt_radiance_node_get_result;
+        ops.f_is_compatible     = rt_radiance_node_is_compatible;
+        self->_parent.ops       = ops;
+        return (struct render_node_ex_impl*) self;
+}
+char* __implement rt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+{
+        /* It will be compatible if the radiance node is:
+         * 1. software based
+         * 2. preferred rasterizer 
+         * 3. using solid geometry model
+         * 4. with image space rendering pipeline */
+        enum RenderSpecType* spec = render_tree_retrieve_environment(tree, nullptr, RenderEnvSpec);
+        if (spec && *spec != RenderSpecSWBuiltin) {
+                return "rt_renderer: spec && *spec != RenderSpecSWBuiltin";
+        }
+        enum PreferredRendererType* renderer = render_tree_retrieve_environment(tree, nullptr, RenderEnvPreferredRenderer);
+        if (renderer && *renderer != RendererRasterizer) {
+                return "rt_renderer: renderer && *renderer != RendererRasterizer";
+        }
+        enum GeometryModelType* model = render_tree_retrieve_environment(tree, nullptr, RenderEnvGeometryModel);
+        if (model && *model != GeometryModelSolid) {
+                return "rt_renderer: model && *model != GeometryModelSolid";
+        }
+        struct render_radiance* parent = cast(parent) render_node_ex_impl_get_ex(self);
+        enum RenderPipeType pipe = render_node_radiance_get_pipe(parent);
+        if (pipe != RenderPipeImageSpace) {
+                return "rt_renderer: pipe != RenderPipeImageSpace";
+        }
+        return nullptr;
+}
+
+void __implement rt_radiance_node_compute(struct render_node_ex_impl* self,
+                                          const struct render_node_ex_impl* input[],
+                                          const struct render_node_ex_impl* output[])
+{
+        struct rt_radiance_node* node = (struct rt_radiance_node*) self;
+        u_image_free(&node->target);
+        u_image_init(&node->target, 1, UtilImgRGBRadiance, 800, 600);
+        u_image_alloc(&node->target, 0);
+}
+
+void* __implement rt_radiance_node_get_result(const struct render_node_ex_impl* self)
+{
+        return &((struct rt_radiance_node*) self)->target;
+}
+
+void __implement rt_radiance_node_free(struct render_node_ex_impl* self)
+{
+}
+
+// renderable loader node (use pt renderer's implementation)
+struct render_node_ex_impl* __callback rt_renderable_loader_node_creator(struct render_node_ex* parent)
+{
+        struct rt_renderable_loader_node* self = alloc_obj(self);
+        zero_obj(self);
+        // fill in ops for the parent
+        struct render_node_ex_ops       ops;
+        ops.f_compute           = rt_renderable_loader_node_compute;
+        ops.f_free              = rt_renderable_loader_node_free;
+        ops.f_get_result        = rt_renderable_loader_node_get_result;
+        ops.f_is_compatible     = rt_renderable_loader_node_is_compatible;
+        self->_parent.ops       = ops;
+        return (struct render_node_ex_impl*) self;
+}
+char* __implement rt_renderable_loader_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+{
+        return "rt_renderer: use pt renderer's implementation";
+}
+
+void __implement rt_renderable_loader_node_compute(struct render_node_ex_impl* self,
+                                                   const struct render_node_ex_impl* input[],
+                                                   const struct render_node_ex_impl* output[])
+{
+}
+
+void* __implement rt_renderable_loader_node_get_result(const struct render_node_ex_impl* self)
+{
+        return nullptr;
+}
+
+void __implement rt_renderable_loader_node_free(struct render_node_ex_impl* self)
+{
+}
+
+// render output node (use pt renderer's implementation)
+struct render_node_ex_impl* __callback rt_render_output_node_creator(struct render_node_ex* parent)
+{
+        struct rt_renderable_loader_node* self = alloc_obj(self);
+        zero_obj(self);
+        // fill in ops for the parent
+        struct render_node_ex_ops       ops;
+        ops.f_compute           = rt_render_output_node_compute;
+        ops.f_free              = rt_render_output_node_free;
+        ops.f_get_result        = rt_render_output_node_get_result;
+        ops.f_is_compatible     = rt_render_output_node_is_compatible;
+        self->_parent.ops       = ops;
+        return (struct render_node_ex_impl*) self;
+}
+
+char* __implement rt_render_output_node_is_compatible(struct render_node_ex_impl* self, struct render_tree* tree)
+{
+        return "rt_renderer: use pt renderer's implementation";
+}
+
+void __implement rt_render_output_node_compute(struct render_node_ex_impl* self,
+                                               const struct render_node_ex_impl* input[],
+                                               const struct render_node_ex_impl* output[])
+{
+}
+
+void* __implement rt_render_output_node_get_result(const struct render_node_ex_impl* self)
+{
+        return nullptr;
+}
+
+void __implement rt_render_output_node_free(struct render_node_ex_impl* self)
+{
+}

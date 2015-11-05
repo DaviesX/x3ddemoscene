@@ -102,7 +102,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1109276195/dynamics.o \
 	${OBJECTDIR}/_ext/1109276195/init.o \
 	${OBJECTDIR}/_ext/1109276195/modelentity.o \
-	${OBJECTDIR}/_ext/1109276195/panic.o \
 	${OBJECTDIR}/_ext/1109276195/poi.o \
 	${OBJECTDIR}/_ext/1109276195/projectionprobe.o \
 	${OBJECTDIR}/_ext/1109276195/renderable.o \
@@ -145,6 +144,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1445267685/misc.o \
 	${OBJECTDIR}/_ext/579834215/allocator.o \
 	${OBJECTDIR}/_ext/579834215/log.o \
+	${OBJECTDIR}/_ext/579834215/panic.o \
 	${OBJECTDIR}/_ext/579834215/symlib.o \
 	${OBJECTDIR}/_ext/579834215/thread.o \
 	${OBJECTDIR}/_ext/579834215/timing.o
@@ -509,11 +509,6 @@ ${OBJECTDIR}/_ext/1109276195/modelentity.o: ../../kernel/modelentity.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1109276195/modelentity.o ../../kernel/modelentity.c
 
-${OBJECTDIR}/_ext/1109276195/panic.o: ../../kernel/panic.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1109276195
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1109276195/panic.o ../../kernel/panic.c
-
 ${OBJECTDIR}/_ext/1109276195/poi.o: ../../kernel/poi.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1109276195
 	${RM} "$@.d"
@@ -723,6 +718,11 @@ ${OBJECTDIR}/_ext/579834215/log.o: ../../lib/system/log.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/579834215
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/579834215/log.o ../../lib/system/log.c
+
+${OBJECTDIR}/_ext/579834215/panic.o: ../../lib/system/panic.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/579834215
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/579834215/panic.o ../../lib/system/panic.c
 
 ${OBJECTDIR}/_ext/579834215/symlib.o: ../../lib/system/symlib.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/579834215

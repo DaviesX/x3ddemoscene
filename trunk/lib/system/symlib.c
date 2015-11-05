@@ -2,7 +2,7 @@
 #include <system/log.h>
 #include <system/symlib.h>
 #include <system/allocator.h>
-#include <x3d/init.h>
+#include <system/panic.h>
 
 
 #if defined(X3D_PLATFORM_POSIX)
@@ -76,7 +76,7 @@ static bool match_symbol ( char* str, address_t* addr, int* size, enum SYMBOL_ID
                                 errno = 0;
                                 *addr = strtoull(buf, NULL, 16);
                                 if (errno == EINVAL || errno == ERANGE) {
-                                        kernel_panic();
+                                        panic();
                                 }
 
                                 state = SIZE;

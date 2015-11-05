@@ -109,6 +109,8 @@
 #  include <stdint.h>
 #  include <stdbool.h>
 #  include <unistd.h>
+#  include <execinfo.h>
+#  include <signal.h>
 #  include <memory.h>
 #  include <string.h>
 #  include <ctype.h>

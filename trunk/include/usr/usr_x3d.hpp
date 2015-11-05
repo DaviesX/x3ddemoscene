@@ -20,6 +20,7 @@ extern "C"
 #include <system/log.h>
 #include <system/allocator.h>
 #include <system/thread.h>
+#include <system/panic.h>
 #include <codecs/serializer.h>
 #include <math/math.h>
 #include <x3d/init.h>

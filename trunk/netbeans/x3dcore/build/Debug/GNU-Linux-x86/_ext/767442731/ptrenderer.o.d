@@ -5,12 +5,14 @@ build/Debug/GNU-Linux-x86/_ext/767442731/ptrenderer.o: \
  ../../lib/math/geometry.h ../../lib/math/decimal.h ../../lib/math/fx.h \
  ../../lib/system/symlib.h ../../lib/container/arraylist.h \
  ../../lib/container/container.h ../../lib/system/allocator.h \
- ../../lib/misc.h ../../include/x3d/renderer.h \
- ../../include/x3d/rendertree.h ../../include/x3d/renderable.h \
- ../../include/x3d/rendertreeenvconsts.h \
+ ../../lib/misc.h ../../lib/system/thread.h \
+ ../../lib/container/paramset.h ../../lib/container/linkedlist.h \
+ ../../include/x3d/renderer.h ../../include/x3d/rendertree.h \
+ ../../include/x3d/renderable.h ../../include/x3d/rendertreeenvconsts.h \
  ../../include/x3d/renderableaggregaterequest.h \
- ../../include/x3d/renderableaggregate.h ../../lib/container/linkedlist.h \
- ../../include/x3d/projectionprobe.h ../../include/renderer/shader.h \
+ ../../include/x3d/renderableaggregate.h \
+ ../../include/x3d/projectionprobe.h ../../include/x3d/debug.h \
+ ../../include/renderer/shader.h \
  ../../drivers/renderer/renderer/lcrenderer.h \
  ../../drivers/renderer/renderer/ptrenderer.h \
  ../../include/x3d/rendernoderadiance.h \
@@ -610,6 +612,12 @@ build/Debug/GNU-Linux-x86/_ext/767442731/ptrenderer.o: \
 
 ../../lib/misc.h:
 
+../../lib/system/thread.h:
+
+../../lib/container/paramset.h:
+
+../../lib/container/linkedlist.h:
+
 ../../include/x3d/renderer.h:
 
 ../../include/x3d/rendertree.h:
@@ -622,9 +630,9 @@ build/Debug/GNU-Linux-x86/_ext/767442731/ptrenderer.o: \
 
 ../../include/x3d/renderableaggregate.h:
 
-../../lib/container/linkedlist.h:
-
 ../../include/x3d/projectionprobe.h:
+
+../../include/x3d/debug.h:
 
 ../../include/renderer/shader.h:
 

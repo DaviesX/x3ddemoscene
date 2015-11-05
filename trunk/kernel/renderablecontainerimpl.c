@@ -38,7 +38,8 @@ static void rdacontainer_linear_init(struct rdacontainer_linear* cont)
         rdacontainer_init(&cont->_parent, &ops);
         int i;
         for ( i = 0; i < sizeof(cont->insts)/sizeof(char*); i ++ ) {
-                cont->insts[i] = alloc_var ( sizeof(struct rda_instance*), 1 );
+                cont->insts[i] = alloc_var(sizeof(struct rda_instance*), 1);
+                cont->n_insts[i] = 0;
         }
 }
 
@@ -81,7 +82,7 @@ static struct rda_instance** rdacontainer_linear_find_frustum(struct rdacontaine
                                                                   enum RenderableType type,
                                                                   struct frustum3d* f, int* n_instance)
 {
-        /* @fixme (davis#1#): find intersection against the frustum */
+        /* @fixme (davis#3#): find intersection against the frustum */
         *n_instance = self->n_insts[type];
         return self->insts[type];
 }
@@ -90,7 +91,7 @@ static struct rda_instance** rdacontainer_linear_find_regional(struct rdacontain
                                                                   enum RenderableType type,
                                                                   struct box3d* f, int* n_instance)
 {
-        /* @fixme (davis#1#): find intersection against the regional cube */
+        /* @fixme (davis#3#): find intersection against the regional cube */
         *n_instance = self->n_insts[type];
         return self->insts[type];
 }

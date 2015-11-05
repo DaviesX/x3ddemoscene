@@ -1,10 +1,13 @@
 /* ptrenderer.c: interface of path tracing renderer go here */
 #include <math/math.h>
 #include <system/symlib.h>
+#include <system/thread.h>
+#include <container/paramset.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
 #include <x3d/renderableaggregaterequest.h>
 #include <x3d/projectionprobe.h>
+#include <x3d/debug.h>
 #include <renderer/shader.h>
 #include "lcrenderer.h"
 #include "ptrenderer.h"
@@ -417,12 +420,12 @@ static inline void rgb_hdr_radiance ( struct float_color3* x, float avg_illum,
 
 #include "../shader/ptshader.c"
 
-static void render_radiance ( struct pt_radiance_node* render_node )
+static void render_radiance(struct pt_radiance_node* render_node)
 {
         /* construct intersection packet */
         struct intersect_packet ip;
         int num_index;
-        ip.i_array = u_aos_get_index ( &render_node->aos_geo, &num_index );
+        ip.i_array = u_aos_get_index(&render_node->aos_geo, &num_index);
         ip.n_streams = render_node->n_streams;
         ip.stream = render_node->stream;
 /**@todo (davis#1#) <intersect_packet> these should be done through shader formulate context */
@@ -473,13 +476,13 @@ static void render_radiance ( struct pt_radiance_node* render_node )
         float th = height - 1;
  
         int j;
-        for ( j = 0; j < height; j ++ ) {
+        for (j = 0; j < height; j ++) {
                 printf ( "%d\n", j );
                 int i;
-                for ( i = 0; i < width; i ++ ) {
+                for (i = 0; i < width; i ++) {
                         struct float_color3 acc_rad = {0};
                         int k;
-                        for ( k = 0; k < cNumSpp; k ++ ) {
+                        for (k = 0; k < cNumSpp; k ++) {
                                 struct vector2d uv;
                                 uv.x =   2.0f*((float) i/tw + spp[k].dx) - 1.0f;
                                 uv.y = -(2.0f*((float) j/th + spp[k].dy) - 1.0f);
@@ -491,23 +494,23 @@ static void render_radiance ( struct pt_radiance_node* render_node )
 
                                 int s;
                                 for ( s = 0; s < cNumSamples; s ++ ) {
-                                        memset ( node, 0, sizeof *node );
+                                        memset(node, 0, sizeof *node);
 
                                         ip.preprobe ( );
 
                                         node->n_emit = n_rray;
                                         //test_evaluate ( &rt->tbuf, node );
-                                        evaluate_ray_tree ( node, render_node->acc_stt, &ip );
-                                        add_color3 ( &acc_rad, (struct float_color3*) &node->i_rad, &acc_rad );
+                                        evaluate_ray_tree(node, render_node->acc_stt, &ip);
+                                        add_color3(&acc_rad, (struct float_color3*) &node->i_rad, &acc_rad);
                                 }
                         }
-                        struct float_color3* dest = u_image_read ( &render_node->target, 0, i, j );
+                        struct float_color3* dest = u_image_read(&render_node->target, 0, i, j);
                         scale_color3 ( 1.0f/((float) (cNumSamples*cNumSpp)), &acc_rad, dest );
                 }
         }
 }
 
-static void render_hdr ( struct render_pass* pass )
+static void render_hdr(struct render_pass* pass)
 {
         /* hdr postprocessor */
         unsigned int width  = pass->target.width;
@@ -539,18 +542,17 @@ static void render_hdr ( struct render_pass* pass )
         }
 }
 
-static void render_output ( struct render_pass* src_pass, struct proj_probe* probe,
-                            struct util_image* target )
+static void render_output(struct util_image* src_target, struct util_image* target)
 {
         unsigned int width  = target->width;
         unsigned int height = target->height;
         int j;
-        for ( j = 0; j < height; j ++ ) {
+        for (j = 0; j < height; j ++) {
                 int i;
-                for ( i = 0; i < width; i ++ ) {
-                        struct float_color3* src = u_image_read ( &src_pass->target, 0, i, j );
-                        uint32_t* dest = u_image_read ( target, 0, i, j );
-                        *dest = rgb_radiance ( src );
+                for (i = 0; i < width; i ++) {
+                        struct float_color3* src = u_image_read(src_target, 0, i, j);
+                        uint32_t* dest = u_image_read(target, 0, i, j);
+                        *dest = rgb_radiance(src);
                 }
         }
 }
@@ -810,7 +812,7 @@ struct render_node_ex_impl* pt_radiance_node_creator(struct render_node_ex* pare
         struct pt_radiance_node* node = alloc_obj(node);
         zero_obj(node);
         // node->_parent2 = *(struct render_radiance*) parent;
-        // fill in ops
+        // fill in ops for the parent
         struct render_node_ex_ops       ops;
         ops.f_compute           = pt_radiance_node_compute;
         ops.f_free              = pt_radiance_node_free;
@@ -846,6 +848,30 @@ char* pt_radiance_node_is_compatible(struct render_node_ex_impl* self, struct re
         }
         return nullptr;
 }
+/// Test case: <pt_output_to_file_test>
+__dlexport void __callback pt_output_to_file_test_init(struct alg_var_set* envir)
+{
+}
+
+__dlexport void __callback pt_output_to_file_test_free(struct alg_var_set* envir)
+{
+}
+
+__dlexport enum DebugPosition* __callback pt_output_to_file_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        static enum DebugPosition pos[] = {
+                Debug_ptrenderer_c_pt_radiance_node_compute2
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = false;
+        return pos;
+}
+
+__dlexport void __callback pt_output_to_file_test(struct alg_var_set* envir)
+{
+}
+/// End Test case: <pt_output_to_file_test>
 
 void pt_radiance_node_compute(struct render_node_ex_impl* self,
                               const struct render_node_ex_impl* input[],
@@ -934,6 +960,8 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
         u_image_alloc(&node->target, 0);
 
         render_radiance(node);
+/* @fixme (davis#2#): <pt_renderer_update> cheated here... should be in our output */
+        render_output(&node->target, &node->target);
 }
 
 void* pt_radiance_node_get_result(const struct render_node_ex_impl* self)
@@ -1100,9 +1128,10 @@ static struct gtk_out *gtk_out_create(GtkWidget *widget,
 static void gtk_out_free(struct gtk_out *out)
 {
         while(out->signal_state == DRAW_SIGNAL_REMAIN) {
-                log_normal_dbg("Wait for DrawSignal being cleared");
+                // log_normal_dbg("Wait for DrawSignal being cleared");
+                thread_task_idle(1);
         }
-        log_normal_dbg("signal cleared == 0, clear up");
+        // log_normal_dbg("signal cleared == 0, clear up");
         g_signal_handler_disconnect(out->dst_widget, out->signal_handler);
         free_fix(out);
 }

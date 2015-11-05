@@ -41,7 +41,7 @@ int KernelEditor::on_init ( int argc, char** argv, KernelEnvironment *env )
         }
         return 0;
 fail:
-        kernel_panic();
+        panic();
         return 1;
 }
 
@@ -52,7 +52,7 @@ int KernelEditor::on_rest_init ( KernelEnvironment *env )
         }
         return 0;
 fail:
-        kernel_panic();
+        panic();
         return 1;
 }
 
@@ -86,7 +86,7 @@ int KernelEditor::on_loop_init ( KernelEnvironment *env )
         return 0;
 fail:
         free_fix ( info );
-        kernel_panic ();
+        panic ();
         return 1;
 }
 
@@ -118,7 +118,7 @@ int KernelEditor::on_free(KernelEnvironment* env)
         log_normal_dbg("the gui thread has exited safely");
         return 0;
 fail:
-        kernel_panic();
+        panic();
         return 1;
 }
 

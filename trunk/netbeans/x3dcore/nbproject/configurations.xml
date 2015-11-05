@@ -222,7 +222,6 @@
         <itemPath>../../kernel/dynamics.c</itemPath>
         <itemPath>../../kernel/init.c</itemPath>
         <itemPath>../../kernel/modelentity.c</itemPath>
-        <itemPath>../../kernel/panic.c</itemPath>
         <itemPath>../../kernel/poi.c</itemPath>
         <itemPath>../../kernel/projectionprobe.c</itemPath>
         <itemPath>../../kernel/renderable.c</itemPath>
@@ -306,6 +305,8 @@
           <itemPath>../../lib/system/allocator.h</itemPath>
           <itemPath>../../lib/system/log.c</itemPath>
           <itemPath>../../lib/system/log.h</itemPath>
+          <itemPath>../../lib/system/panic.c</itemPath>
+          <itemPath>../../lib/system/panic.h</itemPath>
           <itemPath>../../lib/system/symlib.c</itemPath>
           <itemPath>../../lib/system/symlib.h</itemPath>
           <itemPath>../../lib/system/thread.c</itemPath>
@@ -1074,8 +1075,6 @@
       </item>
       <item path="../../kernel/modelentity.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="../../kernel/panic.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="../../kernel/poi.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="../../kernel/projectionprobe.c" ex="false" tool="0" flavor2="0">
@@ -1235,6 +1234,10 @@
       <item path="../../lib/system/log.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="../../lib/system/log.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/panic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/panic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../../lib/system/symlib.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1993,8 +1996,6 @@
       </item>
       <item path="../../kernel/modelentity.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="../../kernel/panic.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="../../kernel/poi.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="../../kernel/projectionprobe.c" ex="false" tool="0" flavor2="0">
@@ -2154,6 +2155,10 @@
       <item path="../../lib/system/log.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="../../lib/system/log.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../lib/system/panic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../../lib/system/panic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../../lib/system/symlib.c" ex="false" tool="0" flavor2="0">
       </item>

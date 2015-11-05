@@ -4,6 +4,7 @@
 #include <system/thread.h>
 #include <system/log.h>
 #include <system/symlib.h>
+#include <system/panic.h>
 #include <container/paramset.h>
 #include <x3d/init.h>
 #include <x3d/debug.h>
@@ -85,7 +86,8 @@ __dlexport bool kernel_start ( void )
 {
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
-
+        
+        panic_init();
         thread_lib_init();
         if (signal->on_init != nullptr) {
                 signal->on_init(init->argc, init->argv, signal->env);

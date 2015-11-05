@@ -9,9 +9,9 @@ using namespace x3d::usr;
 extern "C" int kernel_main(int argc, char* argv[])
 {
 
-        //kernel_add_param("--test", "variable_memory_test0");
-        //kernel_add_param("--test", "variable_memory_test1");
-        //kernel_add_param("--test", "renderer_tree_test");
+        // kernel_add_param("--test", "variable_memory_test0");
+        // kernel_add_param("--test", "variable_memory_test1");
+        kernel_add_param("--test", "renderer_tree_test");
         kernel_add_param("--edit-mode", "");
 
         KernelEditor* kern_editor       = new KernelEditor();

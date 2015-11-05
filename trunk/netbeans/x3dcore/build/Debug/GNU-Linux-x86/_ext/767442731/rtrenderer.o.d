@@ -6,12 +6,14 @@ build/Debug/GNU-Linux-x86/_ext/767442731/rtrenderer.o: \
  ../../lib/math/vector.h ../../lib/math/matrix.h ../../lib/math/quat.h \
  ../../lib/math/geometry.h ../../lib/math/decimal.h ../../lib/math/fx.h \
  ../../include/x3d/rendertreeenvconsts.h \
+ ../../include/x3d/rendernoderadiance.h \
  ../../include/renderer/proj_probe.h ../../include/renderer/geocache.h \
  ../../lib/container/arraylist.h ../../lib/container/container.h \
  ../../include/renderer/geometry.h ../../include/renderer/shader.h \
  ../../include/renderer/out.h \
  ../../drivers/renderer/renderer/lcrenderer.h \
- ../../drivers/renderer/renderer/rtrenderer.h
+ ../../drivers/renderer/renderer/rtrenderer.h \
+ ../../include/renderer/utility.h ../../lib/system/log.h
 
 ../../lib/system/allocator.h:
 
@@ -41,6 +43,8 @@ build/Debug/GNU-Linux-x86/_ext/767442731/rtrenderer.o: \
 
 ../../include/x3d/rendertreeenvconsts.h:
 
+../../include/x3d/rendernoderadiance.h:
+
 ../../include/renderer/proj_probe.h:
 
 ../../include/renderer/geocache.h:
@@ -58,3 +62,7 @@ build/Debug/GNU-Linux-x86/_ext/767442731/rtrenderer.o: \
 ../../drivers/renderer/renderer/lcrenderer.h:
 
 ../../drivers/renderer/renderer/rtrenderer.h:
+
+../../include/renderer/utility.h:
+
+../../lib/system/log.h:
