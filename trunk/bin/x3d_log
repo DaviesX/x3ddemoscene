@@ -1,5 +1,5 @@
 x3drenderlibrary - v 1.0 debug
-x3d log start recording	16:49:20
+x3d log start recording	18:30:26
 
 x3d_log:<run_gtk_main> starting gtk main
 x3d_log:<symlib_load> loading file ./libx3dcore.so
@@ -2829,8 +2829,29 @@ x3d_mild:*<persprobe_set_optics> v distance is too closed to focal length, it wi
 x3d_mild:*<bind_callback> no such signal as: notify_resize
 x3d_mild:*<rda_geometry_init_from_data> pre-transform not supported yet
 x3d_log:<renderer_tree_test> renderer tree test commence
-x3d_log:<render_tree_print> Print result of tree: 66d504
+x3d_log:<render_tree_print> Print result of tree: 21681b4
 x3d_log:<__print_common> PUSH    : [name:root, type: RenderNodeRoot]
 x3d_log:<__print_common> 	INPUT: [name:default_output, type: RenderNodeOutput]
 x3d_log:<__print_common> PUSH    : [name:default_output, type: RenderNodeOutput]
-x3d_log:<__print_common>
+x3d_log:<__print_common> 	INPUT: [name:default_radiance, type: RenderNodeRadiance]
+x3d_log:<__print_common> 	OUTPUT: [name:root, type: RenderNodeRoot]
+x3d_log:<__print_common> PUSH    : [name:default_radiance, type: RenderNodeRadiance]
+x3d_log:<__print_common> 	INPUT: [name:default_renderable_context, type: RenderNodeRenderableLoader]
+x3d_log:<__print_common> 	OUTPUT: [name:default_output, type: RenderNodeOutput]
+x3d_log:<__print_common> PUSH    : [name:default_renderable_context, type: RenderNodeRenderableLoader]
+x3d_log:<__print_common> 	OUTPUT: [name:default_radiance, type: RenderNodeRadiance]
+x3d_log:<__print_common> BACKTRACK: [name:default_renderable_context, type: RenderNodeRenderableLoader]
+x3d_log:<__print_common> 	OUTPUT: [name:default_radiance, type: RenderNodeRadiance]
+x3d_log:<__print_common> BACKTRACK: [name:default_radiance, type: RenderNodeRadiance]
+x3d_log:<__print_common> 	INPUT: [name:default_renderable_context, type: RenderNodeRenderableLoader]
+x3d_log:<__print_common> 	OUTPUT: [name:default_output, type: RenderNodeOutput]
+x3d_log:<__print_common> BACKTRACK: [name:default_output, type: RenderNodeOutput]
+x3d_log:<__print_common> 	INPUT: [name:default_radiance, type: RenderNodeRadiance]
+x3d_log:<__print_common> 	OUTPUT: [name:root, type: RenderNodeRoot]
+x3d_log:<__print_common> BACKTRACK: [name:root, type: RenderNodeRoot]
+x3d_log:<__print_common> 	INPUT: [name:default_output, type: RenderNodeOutput]
+x3d_log:<debugger_invoke_internal> renderer_tree_test#1 ====> 0.000561sec
+x3d_log:<debugger_invoke_internal> renderer_tree_test#avg ====>0.000561sec
+x3d_mild:*<inc_inst> Running over instance budget: 3072
+x3d_log:<close> closing up gtk frontend
+x3d_log:<stop_gtk_main> no gtk main is running: 0

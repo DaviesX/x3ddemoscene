@@ -200,20 +200,20 @@ demo_mode:
                 pimpl->m_builder = builder;
                 gtk_builder_connect_signals(pimpl->m_builder, nullptr);
 
-                /* change background color to black */
+                /* styling background color to black */
                 GtkCssProvider* provider = gtk_css_provider_new();
                 GdkDisplay* display = gdk_display_get_default();
                 GdkScreen* screen = gdk_display_get_default_screen(display);
 
-//                gtk_style_context_add_provider_for_screen(screen,
-//                                                          GTK_STYLE_PROVIDER(provider),
-//                                                          GTK_STYLE_PROVIDER_PRIORITY_USER);
-//
-//                gtk_css_provider_load_from_data(GTK_CSS_PROVIDER(provider),
-//                                                "GtkDrawRegion {\n"
-//                                                "       background-color: black;\n"
-//                                                "}\n", -1, NULL);
-//                g_object_unref(provider);
+                gtk_style_context_add_provider_for_screen(screen,
+                                                          GTK_STYLE_PROVIDER(provider),
+                                                          GTK_STYLE_PROVIDER_PRIORITY_USER);
+                
+                gtk_css_provider_load_from_data(GTK_CSS_PROVIDER(provider),
+                                                "#main_drawing_region,GtkDrawingArea {\n"
+                                                "       background-color: black;\n"
+                                                "}\n", -1, NULL);
+                g_object_unref(provider);
 
                 /* load in logo file */
                 GError *error = nullptr;

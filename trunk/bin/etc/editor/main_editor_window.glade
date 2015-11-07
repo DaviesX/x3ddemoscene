@@ -505,6 +505,7 @@
                 </child>
                 <child>
                   <object class="GtkDrawingArea" id="DA-RenderRegion">
+                    <property name="name">main_drawing_region</property>
                     <property name="visible">True</property>
                     <property name="app_paintable">True</property>
                     <property name="can_focus">False</property>
