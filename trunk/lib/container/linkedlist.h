@@ -43,8 +43,8 @@ static inline void alg_llist_init(struct alg_llist* self, int elm_size, int init
         self->content = (int*) alloc_var ( elm_size, 1 );
         self->prev = (int*) alloc_var ( sizeof (int), 2 );
         self->next = (int*) alloc_var ( sizeof (int), 2 );
-        self->prev = (int*) alloc_expand2_var ( self->prev, 2 );
-        self->next = (int*) alloc_expand2_var ( self->next, 2 );
+        self->prev = (int*) alloc_var_expand2 ( self->prev, 2 );
+        self->next = (int*) alloc_var_expand2 ( self->next, 2 );
         self->icurr = 1;
         self->ilast = 1;
         self->head = self->prev;
@@ -65,9 +65,9 @@ static inline void alg_llist_free(struct alg_llist* self)
 
 static inline void alg_llist_flush(struct alg_llist* self)
 {
-        alloc_flush_var ( self->content );
-        alloc_flush_var ( self->next );
-        alloc_flush_var ( self->prev );
+        alloc_var_flush ( self->content );
+        alloc_var_flush ( self->next );
+        alloc_var_flush ( self->prev );
         self->icurr = 1;
         self->ilast = 1;
         self->head[0] = self->icurr;
@@ -81,10 +81,10 @@ static inline void* alg_llist_array(struct alg_llist* self)
 
 #define alg_llist_inject(_self, _data, _iter) \
 { \
-        (_self)->prev           = alloc_expand2_var((_self)->prev, (_self)->num_elm); \
+        (_self)->prev           = alloc_var_expand2((_self)->prev, (_self)->num_elm); \
         (_self)->head           = (_self)->prev; \
-        (_self)->next           = alloc_expand2_var((_self)->next, (_self)->num_elm); \
-        (_self)->content        = alloc_expand2_var((_self)->content, (_self)->num_elm); \
+        (_self)->next           = alloc_var_expand2((_self)->next, (_self)->num_elm); \
+        (_self)->content        = alloc_var_expand2((_self)->content, (_self)->num_elm); \
 \
         int _i = (_self)->icurr; \
         int _j = (_iter) - (typeof(_iter)) (_self)->content; \
@@ -109,10 +109,10 @@ static inline void* alg_llist_array(struct alg_llist* self)
 
 #define alg_llist_push_back(_self, _data) \
 { \
-        (_self)->prev           = alloc_expand2_var((_self)->prev, (_self)->num_elm); \
+        (_self)->prev           = alloc_var_expand2((_self)->prev, (_self)->num_elm); \
         (_self)->head           = (_self)->prev; \
-        (_self)->next           = alloc_expand2_var((_self)->next, (_self)->num_elm); \
-        (_self)->content        = alloc_expand2_var((_self)->content, (_self)->num_elm); \
+        (_self)->next           = alloc_var_expand2((_self)->next, (_self)->num_elm); \
+        (_self)->content        = alloc_var_expand2((_self)->content, (_self)->num_elm); \
 \
         int _i               = (_self)->icurr; \
         typeof(_data)* _dest = (typeof(_data)*) (_self)->content + _i; \
@@ -128,10 +128,10 @@ static inline void* alg_llist_array(struct alg_llist* self)
 
 #define alg_llist_push_front(_self, _data) \
 { \
-        (_self)->prev           = alloc_expand2_var((_self)->prev, (_self)->num_elm); \
+        (_self)->prev           = alloc_var_expand2((_self)->prev, (_self)->num_elm); \
         (_self)->head           = (_self)->prev; \
-        (_self)->next           = alloc_expand2_var((_self)->next, (_self)->num_elm); \
-        (_self)->content        = alloc_expand2_var((_self)->content, (_self)->num_elm); \
+        (_self)->next           = alloc_var_expand2((_self)->next, (_self)->num_elm); \
+        (_self)->content        = alloc_var_expand2((_self)->content, (_self)->num_elm); \
 \
         int _i               = (_self)->icurr; \
         typeof(_data)* _dest = (typeof(_data)*) (_self)->content + _i; \

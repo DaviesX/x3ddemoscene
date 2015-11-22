@@ -23,21 +23,22 @@ struct util_stream {
         f_Lerp_3        lerp3;
 };
 
-static inline void u_stream_init(struct util_stream* s,
-                                   char* stream, int elm_size, int elm_count,
-                                   int sub_size[], void** dest[], int n_sub,
-                                   f_Lerp_2 l2, f_Lerp_3 l3)
+static inline void u_stream_init(struct util_stream* s, char* stream, int elm_size, int elm_count,
+                                  int sub_size[], void** dest[], int n_sub,
+                                  f_Lerp_2 l2, f_Lerp_3 l3)
 {
-        s->stream = stream;
-        s->elm_size = elm_size;
-        s->elm_count = elm_count;
+        s->stream       = stream;
+        s->elm_size     = elm_size;
+        s->elm_count    = elm_count;
         int i;
         for(i = 0; i < n_sub; i ++) {
                 s->sub_size[i] = sub_size[i];
                 s->dest[i]     = dest[i];
         }
-        s->n_sub = n_sub;
-        s->copy_zone = s->cache;
+        s->lerp2        = l2;
+        s->lerp3        = l3;
+        s->n_sub        = n_sub;
+        s->copy_zone    = s->cache;
 }
 
 static inline void* u_stream_cache_mem(struct util_stream* s)
@@ -126,26 +127,29 @@ static inline void* u_stream_access(struct util_stream* s, int i)
         } \
 }
 
-static inline void u_stream_export_dest_status(struct util_stream* s, int n_streams,
-                                                 void* dest_status[])
+static inline void u_stream_store_to_buffer(struct util_stream* s, int n_streams, uint8_t* buffer)
 {
         int i;
         for(i = 0; i < n_streams; i ++) {
                 int j;
                 for(j = 0; j < s[i].n_sub; j ++) {
-                        dest_status[i + j] = *s[i].dest[j];
+                        memcpy(buffer, *s[i].dest[j], s[i].sub_size[j]);
+                        buffer += s[i].sub_size[j];
+                        // dest_status[i + j] = *s[i].dest[j];
                 }
         }
 }
 
-static inline void u_stream_import_dest_status(struct util_stream* s, int n_streams,
-                                                 void* dest_status[])
+static inline void u_stream_load_from_buffer(struct util_stream* s, int n_streams, uint8_t* buffer)
 {
         int i;
         for(i = 0; i < n_streams; i ++) {
                 int j;
                 for(j = 0; j < s[i].n_sub; j ++) {
-                        *s[i].dest[j] = dest_status[i + j];
+                        *s[i].dest[j] = buffer;
+//                        memcpy(*s[i].dest[j], buffer, s[i].sub_size[j]);
+                        buffer += s[i].sub_size[j];
+//                        *s[i].dest[j] = dest_status[i + j];
                 }
         }
 }
@@ -170,7 +174,6 @@ enum _AttriMap {
  */
 struct util_aos {
         struct {
-                struct util_stream      s;
                 void*                   s_data;
         }       aos[10];
         enum UtilAttribute      format;
@@ -181,41 +184,41 @@ struct util_aos {
         int                     n_vertex;
 };
 
-static inline void u_aos_init(struct util_aos* u_aos, enum UtilAttribute format)
+static inline void u_aos_init(struct util_aos* self, enum UtilAttribute format)
 {
-        zero_obj(u_aos);
+        zero_obj(self);
 
-        u_aos->index     = alloc_var(sizeof(int), 1);
-        u_aos->n_index   = 0;
-        u_aos->n_vertex = 0;
+        self->index     = alloc_var(sizeof(int), 1);
+        self->n_index   = 0;
+        self->n_vertex = 0;
 
         if(format & UtilAttriVertex) {
-                u_aos->aos[_AttriVertex].s_data = alloc_var(sizeof(struct point3d), 1);
-                u_aos->avail[_AttriVertex] = true;
-                u_aos->n_streams ++;
+                self->aos[_AttriVertex].s_data = alloc_var(sizeof(struct point3d), 1);
+                self->avail[_AttriVertex] = true;
+                self->n_streams ++;
         }
         if(format & UtilAttriNormal) {
-                u_aos->aos[_AttriNormal].s_data = alloc_var(sizeof(struct vector3d), 1);
-                u_aos->avail[_AttriNormal] = true;
-                u_aos->n_streams ++;
+                self->aos[_AttriNormal].s_data = alloc_var(sizeof(struct vector3d), 1);
+                self->avail[_AttriNormal] = true;
+                self->n_streams ++;
         }
         if(format & UtilAttriTangent) {
-                u_aos->aos[_AttriTangent].s_data = alloc_var(sizeof(struct vector3d), 1);
-                u_aos->avail[_AttriTangent] = true;
-                u_aos->n_streams ++;
+                self->aos[_AttriTangent].s_data = alloc_var(sizeof(struct vector3d), 1);
+                self->avail[_AttriTangent] = true;
+                self->n_streams ++;
         }
         if(format & UtilAttriUV) {
-                u_aos->aos[_AttriUV].s_data = alloc_var(sizeof(struct vector2d), 1);
-                u_aos->avail[_AttriUV] = true;
-                u_aos->n_streams ++;
+                self->aos[_AttriUV].s_data = alloc_var(sizeof(struct vector2d), 1);
+                self->avail[_AttriUV] = true;
+                self->n_streams ++;
         }
         if (format & UtilAttriMatId) {
-                u_aos->aos[_AttriMatId].s_data = alloc_var(sizeof(int), 1);
-                u_aos->avail[_AttriUV] = true;
-                u_aos->n_streams ++;
+                self->aos[_AttriMatId].s_data = alloc_var(sizeof(int), 1);
+                self->avail[_AttriMatId] = true;
+                self->n_streams ++;
         }
 
-        u_aos->format = format;
+        self->format = format;
 }
 
 static inline void u_aos_free(struct util_aos* u_aos)
@@ -232,12 +235,12 @@ static inline void u_aos_free(struct util_aos* u_aos)
 
 static inline void u_aos_flush(struct util_aos* u_aos)
 {
-        alloc_flush_var(u_aos->index);
+        alloc_var_flush(u_aos->index);
         u_aos->n_index = 0;
         u_aos->n_vertex = 0;
         int i;
         for (i = 0; i < 10; i ++) {
-                alloc_flush_var(u_aos->aos[i].s_data);
+                alloc_var_flush(u_aos->aos[i].s_data);
         }
 }
 
@@ -251,35 +254,35 @@ static inline void u_aos_accumulate(struct util_aos* u_aos, int* index, int num_
         if(format & UtilAttriVertex) {
                 struct point3d* src = va_arg(v_arg, struct point3d*);
                 u_aos->aos[_AttriVertex].s_data =
-                        alloc_add_var(u_aos->aos[_AttriVertex].s_data, num_vertex);
+                        alloc_var_add(u_aos->aos[_AttriVertex].s_data, num_vertex);
                 struct point3d* v = u_aos->aos[_AttriVertex].s_data;
-                memcpy(&v[u_aos->n_vertex], src, num_vertex);
+                memcpy(&v[u_aos->n_vertex], src, num_vertex*sizeof(*v));
         }
         if(format & UtilAttriNormal) {
                 struct vector3d* src = va_arg(v_arg, struct vector3d*);
                 u_aos->aos[_AttriNormal].s_data =
-                        alloc_add_var(u_aos->aos[_AttriNormal].s_data, num_vertex);
+                        alloc_var_add(u_aos->aos[_AttriNormal].s_data, num_vertex);
                 struct vector3d* n = u_aos->aos[_AttriNormal].s_data;
-                memcpy(&n[u_aos->n_vertex], src, num_vertex);
+                memcpy(&n[u_aos->n_vertex], src, num_vertex*sizeof(*n));
         }
         if(format & UtilAttriTangent) {
                 struct vector3d* src = va_arg(v_arg, struct vector3d*);
                 u_aos->aos[_AttriTangent].s_data =
-                        alloc_add_var(u_aos->aos[_AttriTangent].s_data, num_vertex);
+                        alloc_var_add(u_aos->aos[_AttriTangent].s_data, num_vertex);
                 struct vector3d* t = u_aos->aos[_AttriTangent].s_data;
-                memcpy(&t[u_aos->n_vertex], src, num_vertex);
+                memcpy(&t[u_aos->n_vertex], src, num_vertex*sizeof(*t));
         }
         if(format & UtilAttriUV) {
                 struct vector2d* src = va_arg(v_arg, struct vector2d*);
                 u_aos->aos[_AttriUV].s_data =
-                        alloc_add_var(u_aos->aos[_AttriUV].s_data, num_vertex);
+                        alloc_var_add(u_aos->aos[_AttriUV].s_data, num_vertex);
                 struct vector2d* uv = u_aos->aos[_AttriUV].s_data;
-                memcpy(&uv[u_aos->n_vertex], src, num_vertex);
+                memcpy(&uv[u_aos->n_vertex], src, num_vertex*sizeof(*uv));
         }
         if (format & UtilAttriMatId) {
                 // material id is set uniformly for each accumulation
                 int src = va_arg(v_arg, int);
-                u_aos->aos[_AttriMatId].s_data = alloc_add_var(u_aos->aos[_AttriMatId].s_data, num_vertex);
+                u_aos->aos[_AttriMatId].s_data = alloc_var_add(u_aos->aos[_AttriMatId].s_data, num_vertex);
                 int* matid = u_aos->aos[_AttriMatId].s_data;
                 int i;
                 for (i = u_aos->n_index; i < u_aos->n_index + num_vertex; i ++) {
@@ -290,7 +293,7 @@ static inline void u_aos_accumulate(struct util_aos* u_aos, int* index, int num_
         va_end(v_arg);
 
         /* copy indices */
-        u_aos->index = alloc_add_var(u_aos->index, num_index);
+        u_aos->index = alloc_var_add(u_aos->index, num_index);
         int* d_index = &u_aos->index[u_aos->n_index];
         int i;
         for(i = 0; i < num_index; i ++) {
@@ -345,22 +348,23 @@ struct util_linear {
         struct util_access      _parent;
 };
 
-static void u_linear_init(struct util_linear* linear,
-                            enum UtilAccessorType type,
-                            struct box3d* simlex,
-                            int n_objects)
+static void u_linear_init(struct util_linear* linear, enum UtilAccessorType type, 
+                           struct box3d* simplex, int n_objects)
 {
-        return ;
+        linear->_parent.type = type;
+        linear->_parent.simplex = simplex;
+        linear->_parent.n_objects = n_objects;
 }
 
 static void u_linear_free(struct util_linear* linear)
 {
-        return ;
+        free_fix(linear->_parent.simplex);
+        zero_obj(linear);
 }
 
 static void u_linear_build(struct util_linear* linear)
 {
-        return ;
+        return ;        // nothing is needed
 }
 
 #define u_linear_find( _acc, _data, _f_access_simplex, _f_access_real) \

@@ -66,11 +66,10 @@ struct vertex {
 struct ray_tree {
         struct vector3d         i_rad;
         struct ray3d            i_ray;
-        char                    copy_zone[64];
-        void*                   sha_input[12];
+        char                    buffer[64];
         int                     n_emit;
         int                     i_emit;
-        struct ray3d            e_ray[2];
+        struct ray3d            e_ray[4];
 };
 
 struct intersect_packet {
@@ -146,14 +145,16 @@ static bool simplex_subroutine ( int i, struct box3d* b, struct intersect_packet
 static bool find_intersect_linear ( struct util_linear* access,
                                     struct intersect_packet* ip )
 {
-        ip->has_inters = false;
+        ip->has_inters  = false;
+        ip->t           = FLOAT_MAX;
         u_linear_find ( access, ip, simplex_subroutine, real_subroutine );
         return ip->has_inters;
 }
 static bool is_visible_linear ( struct util_linear* access,
                                 struct intersect_packet* ip )
 {
-        ip->has_inters = false;
+        ip->has_inters  = false;
+        ip->t           = FLOAT_MAX;
         u_linear_find2 ( access, ip, simplex_subroutine, real_subroutine, ip->has_inters );
         return !ip->has_inters;
 }
@@ -162,7 +163,8 @@ static bool is_visible_linear ( struct util_linear* access,
 static struct box3d* construct_simplex ( struct util_stream s[], int n_stream,
                                          int* index, int num_index, int* num_simplex )
 {
-        struct box3d* simplex = alloc_fix ( sizeof(struct box3d), num_index/3 );
+        *num_simplex = num_index/3;     // just the number of triangles
+        struct box3d* simplex = alloc_fix(sizeof(struct box3d), num_index/3);
         int i;
         for ( i = 0; i < num_index; i += 3 ) {
                 struct point3d* curr_vert[3];
@@ -191,11 +193,11 @@ static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, 
         struct ray_tree* root = node;
 
         while ( true ) {
-                if ( node->n_emit == node->i_emit ) {
+                if (node->n_emit == node->i_emit) {
                         /* backtrack */
                         node --;
 
-                        if ( node == root ) {
+                        if (node == root) {
                                 add_vector3d_u ( &root->i_rad, &(node + 1)->i_rad );
                                 node->i_emit ++;
 
@@ -205,93 +207,57 @@ static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, 
                                         continue;
                                 }
                         } else {
-                                u_stream_import_dest_status ( ip->stream, ip->n_streams, node->sha_input );
-/*                                int c;
-                                for ( c = 0; c < 3; c ++ ) {
-                                        g_position[c]   = node->vert_data.position[c];
-                                        g_normal[c]     = node->vert_data.normal[c];
-                                }
-                                g_mater_id = node->vert_data.mater_ref;
-                                g_emit = node->i_ray;*/
-                                struct vector3d* rad = &(node + 1)->i_rad;
-                                struct ray3d* inci = &node->e_ray[node->i_emit];
-                                struct vector3d out_rad;
-
-                                *ip->in_radiance = rad;
-                                *ip->in_incident = inci;
-                                *ip->out_radiance = &out_rad;
+                                u_stream_load_from_buffer(ip->stream, ip->n_streams, node->buffer);
+                                struct vector3d rad             = node[1].i_rad;
+                                struct ray3d* inci              = &node->e_ray[node->i_emit];
+                                *ip->in_radiance                = &rad;
+                                *ip->in_incident                = inci;
+                                *ip->out_radiance               = &rad;
 
                                 ip->transfer();
 
-                                add_vector3d_u ( &node->i_rad, &out_rad );
+                                add_vector3d_u ( &node->i_rad, &rad );
                                 node->i_emit ++;
                                 continue;
                         }
                 }
-                struct ray3d* r = &node->e_ray[node->i_emit];
+                ip->r = &node->e_ray[node->i_emit];
                 node ++;
 
-                node->i_ray = *r;
+                node->i_ray = *ip->r;
                 node->i_emit = 0;
                 init_vector3d ( &node->i_rad );
 
                 /* trace recursive ray */
-                if ( !find_intersect_linear ( (struct util_linear*) acc, ip ) ) {
+                if ( !find_intersect_linear ( (struct util_linear*) acc, ip )) {
                         node->n_emit = 0;
                         continue;
                 }
-/*
-                struct vertex* v[3];
-                v[0] = &((struct vertex*) tbuf->vertex)[i[0]];
-                v[1] = &((struct vertex*) tbuf->vertex)[i[1]];
-                v[2] = &((struct vertex*) tbuf->vertex)[i[2]];
-
-                for ( c = 0; c < 3; c ++ ) {
-                        node->vert_data.position[c]   = v[0]->position[c]*b[0] +
-                                                        v[1]->position[c]*b[1] +
-                                                        v[2]->position[c]*b[2];
-                        node->vert_data.normal[c]     = v[0]->normal[c]*b[0] +
-                                                        v[1]->normal[c]*b[1] +
-                                                        v[2]->normal[c]*b[2];
-                }
-                node->vert_data.mater_ref             = v[0]->mater_ref;
-
-                for ( c = 0; c < 3; c ++ ) {
-                        g_position[c]   = node->vert_data.position[c];
-                        g_normal[c]     = node->vert_data.normal[c];
-                }
-                g_mater_id = node->vert_data.mater_ref;
-                g_incident = *r;*/
                 int n_rray, n_iray;
-                struct ray3d rray[10];
                 struct ray3d iray[10];
-                *ip->in_incident = r;
+                *ip->in_incident = ip->r;
                 *ip->out_illum_count = &n_iray;
                 *ip->out_recur_count = &n_rray;
-                *ip->out_recur_ray = rray;
+                *ip->out_recur_ray = node->e_ray;
                 *ip->out_illum_ray = iray;
                 u_stream_lerp3_link(ip->stream, ip->n_streams, ip->face, ip->b);
+                u_stream_store_to_buffer(ip->stream, ip->n_streams, node->buffer);
 
                 ip->sample();
 
-                int k;
-                for ( k = 0; k < n_rray; k ++ ) {
-                        node->e_ray[k] = rray[k];
-                }
                 node->n_emit = n_rray;
 
                 /* trace illumination ray, and store illumination to current node */
                 bool is_vis[1024];
                 int j;
                 for ( j = 0; j < n_iray; j ++ ) {
+                        ip->r = &iray[j];
                         is_vis[j] = is_visible_linear ( (struct util_linear*) acc, ip );
                 }
                 *ip->in_is_vis = is_vis;
                 *ip->out_radiance = &node->i_rad;
 
                 ip->illuminate();
-
-                u_stream_export_dest_status(ip->stream, ip->n_streams, node->sha_input);
         }
 }
 #if 0
@@ -420,7 +386,7 @@ static inline void rgb_hdr_radiance ( struct float_color3* x, float avg_illum,
 
 #include "../shader/ptshader.c"
 
-static void render_radiance(struct pt_radiance_node* render_node)
+static void render_radiance(struct pt_radiance_node* render_node, struct util_image* target)
 {
         /* construct intersection packet */
         struct intersect_packet ip;
@@ -450,8 +416,8 @@ static void render_radiance(struct pt_radiance_node* render_node)
         struct ray_tree         s[10] = {0};
         struct ray_tree*        node = s;
 
-        unsigned int width  = render_node->target.width;
-        unsigned int height = render_node->target.height;
+        unsigned int width  = target->width;
+        unsigned int height = target->height;
 
         struct {
                 float dx;
@@ -470,42 +436,41 @@ static void render_radiance(struct pt_radiance_node* render_node)
                 [3].dy = 1.0f/(height*2.0f)
         };
         const int cNumSamples = 16;
-        const int cNumSpp = 4;
+        const int cNumSpp = 1;
 
         float tw = width - 1;
         float th = height - 1;
  
         int j;
         for (j = 0; j < height; j ++) {
-                printf ( "%d\n", j );
+                // printf ( "%d\n", j );
                 int i;
                 for (i = 0; i < width; i ++) {
-                        struct float_color3 acc_rad = {0};
+                        struct vector3d acc_rad = {0};
                         int k;
                         for (k = 0; k < cNumSpp; k ++) {
                                 struct vector2d uv;
                                 uv.x =   2.0f*((float) i/tw + spp[k].dx) - 1.0f;
                                 uv.y = -(2.0f*((float) j/th + spp[k].dy) - 1.0f);
-                                int n_rray;
-
-                                *ip.in_uv = uv.p;
-                                *ip.out_recur_count = &n_rray;
-                                *ip.out_recur_ray = node->e_ray;
-
+   
                                 int s;
                                 for ( s = 0; s < cNumSamples; s ++ ) {
                                         memset(node, 0, sizeof *node);
+                                        int n_rray;     // buffer for the shader
+                                        *ip.in_uv = uv.p;
+                                        *ip.out_recur_count = &n_rray;
+                                        *ip.out_recur_ray = node->e_ray;
 
-                                        ip.preprobe ( );
+                                        ip.preprobe();
 
                                         node->n_emit = n_rray;
                                         //test_evaluate ( &rt->tbuf, node );
                                         evaluate_ray_tree(node, render_node->acc_stt, &ip);
-                                        add_color3(&acc_rad, (struct float_color3*) &node->i_rad, &acc_rad);
+                                        add_vector3d(&acc_rad, &node->i_rad, &acc_rad);
                                 }
                         }
-                        struct float_color3* dest = u_image_read(&render_node->target, 0, i, j);
-                        scale_color3 ( 1.0f/((float) (cNumSamples*cNumSpp)), &acc_rad, dest );
+                        struct vector3d* dest = u_image_read(target, 0, i, j);
+                        scale_vector3d(1.0f/((float) (cNumSamples*cNumSpp)), &acc_rad, dest);
                 }
         }
 }
@@ -550,250 +515,13 @@ static void render_output(struct util_image* src_target, struct util_image* targ
         for (j = 0; j < height; j ++) {
                 int i;
                 for (i = 0; i < width; i ++) {
-                        struct float_color3* src = u_image_read(src_target, 0, i, j);
-                        uint32_t* dest = u_image_read(target, 0, i, j);
+                        struct float_color3* src        = u_image_read(src_target, 0, i, j);
+                        uint32_t* dest                  = u_image_read(target, 0, i, j);
                         *dest = rgb_radiance(src);
                 }
         }
 }
-/*
-void init_ptrenderer ( struct lcrenderer_ops *ops )
-{
-        ops->lcrenderer_create = cast (ops->lcrenderer_create) create_pt_renderer;
-        ops->lcrenderer_free   = cast (ops->lcrenderer_free)   free_pt_renderer;
-        ops->lcrenderer_update = cast (ops->lcrenderer_update) pt_renderer_update;
-        ops->lcrenderer_render = cast (ops->lcrenderer_render) pt_renderer_render;
-        ops->lcrenderer_output = cast (ops->lcrenderer_output) pt_renderer_output;
-}
 
-struct pt_renderer *create_pt_renderer ( enum RENDERER_IDR type, struct proj_probe* probe )
-{
-        struct pt_renderer* t_rend = alloc_fix ( sizeof *t_rend, 1 );
-        zero_obj ( t_rend );
-        t_rend->probe = probe;
-        return t_rend;
-}
-
-void free_pt_renderer ( struct pt_renderer* r )
-{
-        zero_obj ( r );
-        free_fix ( r );
-}
-*/
-
-#if 0
-
-#define get_operand( _op, _obj ) \
-{ \
-        (_obj) = *(typeof(_obj)*) (_op); \
-        (_op) += sizeof(_obj); \
-}
-
-void pt_renderer_update ( struct render_bytecode* bytecode, struct pt_renderer* r )
-{
-        return ;
-        r->bytecode = *bytecode;
-        /* update passes */
-        r->n_passes = 0;
-        char* p_instr = r->bytecode.instr;
-        while ( true ) {
-                enum RENDER_OP op;
-                get_operand(p_instr, op);
-                switch ( op ) {
-                case RENDER_OP_NULL:
-                        {
-                        goto end_parsing_instr;
-                        }
-                case RENDER_OP_RADIANCE:
-                        {
-                        // Removed
-                        break;
-                        }
-                case RENDER_OP_COMPOSITE:
-                        {
-                        int                     dest;
-                        int                     type;
-                        int                     src;
-                        get_operand ( p_instr, dest );
-                        get_operand ( p_instr, type );
-                        get_operand ( p_instr, src );
-
-                        struct render_pass* pass = &r->pass[dest];
-                        pass->dest = dest;
-                        pass->src = src;
-                        pass->src_target = &r->pass[src].target;
-                        pass->nature = type;
-                        r->n_passes ++;
-                        break;
-                        }
-                case RENDER_OP_OUTPUT:
-                        {
-                        struct proj_probe*      probe;
-                        int                     src;
-                        get_operand ( p_instr, probe );
-                        get_operand ( p_instr, src );
-
-                        r->probe = probe;
-                        r->final_pass = src;
-                        break;
-                        }
-                default:
-                        {
-                        log_mild_err_dbg("op code not handled: %d", op);
-                        }
-                }
-        }
-end_parsing_instr:;
-        /* generate renderable request */
-        int i;
-        for ( i = 0; i < r->n_passes; i ++ ) {
-                struct render_pass* pass = &r->pass[i];
-                pass->sub_pass[RenderableGeometry] =
-                        rda_context_post_request ( pass->ctx, RenderAggregateCullNull,
-                                                   nullptr, RenderableGeometry );
-                rda_context_update ( pass->ctx );
-        }
-
-        for ( i = 0; i < r->n_passes; i ++ ) {
-                struct render_pass* pass = &r->pass[i];
-                switch ( pass->nature ) {
-                case RenderPassRadiance:
-                        {
-                        /* update renderable to aos */
-                        enum UtilAttribute attri = UtilAttriVertex | UtilAttriNormal;
-                        u_aos_free ( &pass->aos_geo );
-                        u_aos_init ( &pass->aos_geo, attri );
-                        /* - process geometries */
-                        int j;
-                        int n_rda = rda_context_get_n ( pass->ctx, pass->sub_pass[RenderableGeometry] );
-                        for ( j = 0; j < n_rda; j ++ ) {
-                                struct rda_instance* inst = rda_context_get_i ( pass->ctx, j,
-                                                                                pass->sub_pass[RenderableGeometry] );
-                                struct rda_geometry* geo  = (struct rda_geometry*) rda_instance_source ( inst );
-                                int num_index;
-                                int* index = rda_geometry_get_index ( geo, &num_index );
-                                int num_vertex;
-                                void* vertex = rda_geometry_get_vertex ( geo, &num_vertex );
-                                void* normal = rda_geometry_get_normal ( geo, &num_vertex );
-                                u_aos_accumulate ( &pass->aos_geo, index, num_index,
-                                                    num_vertex, vertex, normal );
-                        }
-                        /* update shader */
-                        void** shader_var_addr[10];
-
-                        /* generate streams */
-                        void* vertex[10];
-                        int n_vertex = u_aos_get_vertex ( &pass->aos_geo, vertex, &pass->n_streams );
-                        bool* avail = u_aos_get_availibility ( &pass->aos_geo );
-
-                        int cSizeOfStream[10] = {};
-                        f_Lerp_3 cStreamLerp3[10] = {
-                        };
-                        int k, m;
-                        for ( m = 0, k = 0; k < 10; k ++ ) {
-                                if ( avail[k] == true ) {
-                                        u_stream_init ( &pass->stream[m],
-                                                        vertex[k], cSizeOfStream[k], n_vertex,
-                                                        &cSizeOfStream[k], &shader_var_addr[m], 1,
-                                                        nullptr, cStreamLerp3[k] );
-                                        m ++;
-                                }
-                        }
-                        /* update simplex and accessor utility */
-                        struct render_pass* pass = &r->pass[i];
-                        free_simplex ( pass->simplex );
-                        u_access_free ( pass->acc_stt );
-
-                        int num_index, num_simplex;
-                        int* index = u_aos_get_index ( &pass->aos_geo, &num_index );
-                        pass->simplex = construct_simplex ( pass->stream, pass->n_streams,
-                                                            index, num_index, &num_simplex );
-                        pass->acc_stt = u_access_create ( pass->acc_type, pass->simplex, num_simplex );
-                        u_access_build ( /* pass->acc_stt */ UtilAccessorLinear );
-
-                        /* create target */
-/* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
-                        u_image_free ( &pass->target );
-                        u_image_init ( &pass->target, 1, UtilImgRGBRadiance, 800, 600 );
-                        u_image_alloc ( &pass->target, 0 );
-                        }
-                case RenderPassPostHdr:
-                        {
-                        /* create target */
-/* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
-/*                        u_image_free ( &pass->target );
-                        u_image_init ( &pass->target, 1, UtilImgRGBA32, 800, 600 );
-                        u_image_alloc ( &pass->target, 0 );*/
-                        pass->target = r->pass[pass->src].target;
-                        break;
-                        }
-                case RenderPassFinal:
-                        {
-                        /* create framebuffer */
-/* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
-                        u_image_free ( &r->framebuffer );
-                        u_image_init ( &r->framebuffer, 1, UtilImgRGBA32, 800, 600 );
-                        u_image_alloc ( &r->framebuffer, 0 );
-                        break;
-                        }
-                }
-        }
-}
-
-void pt_renderer_render ( struct pt_renderer* r )
-{
-        return ;
-        char* p_instr = r->bytecode.instr;
-        while ( true ) {
-                char op = *p_instr;
-                switch ( op ) {
-                case RENDER_OP_RADIANCE:
-                        {
-                        p_instr ++;
-                        int                     dest;
-                        struct rda_context*     ctx;
-                        enum RenderPipeType    pipeline;
-                        float                   blend;
-                        get_operand ( p_instr, dest );
-                        get_operand ( p_instr, ctx );
-                        get_operand ( p_instr, pipeline );
-                        get_operand ( p_instr, blend );
-
-                        /* construct intersect packet */
-                        struct render_pass* pass = &r->pass[dest];
-                        render_radiance ( pass );
-                        break;
-                        }
-                case RENDER_OP_COMPOSITE:
-                        {
-                        p_instr ++;
-                        int                     dest;
-                        int                     type;
-                        int                     src;
-                        get_operand ( p_instr, dest );
-                        get_operand ( p_instr, type );
-                        get_operand ( p_instr, src );
-
-                        struct render_pass* pass = &r->pass[dest];
-                        render_hdr ( pass );
-                        break;
-                        }
-                case RENDER_OP_OUTPUT:
-                        {
-                        p_instr ++;
-                        struct proj_probe*      probe;
-                        int                     src;
-                        get_operand ( p_instr, probe );
-                        get_operand ( p_instr, src );
-
-                        struct render_pass* src_pass = &r->pass[src];
-                        render_output ( src_pass, r->probe, &r->framebuffer );
-                        break;
-                        }
-                }
-        }
-}
-#endif // 0
 void pt_renderer_output ( struct pt_renderer* r )
 {
 }
@@ -870,14 +598,32 @@ __dlexport enum DebugPosition* __callback pt_output_to_file_test_pos(struct alg_
 
 __dlexport void __callback pt_output_to_file_test(struct alg_var_set* envir)
 {
+        log_normal("pt output to file test starting");
+        struct util_image* img = alg_var_set_use(envir, "target");
+        if (img == nullptr) {
+                log_normal("parameter: target not passed, test case %s cannot continue", get_function_name());
+        }
+        int width, height;
+        u_image_get_level0_dimension(img, &width, &height);
+        FILE* f = fopen("pt_output_to_file_test.ppm", "w");
+        fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
+        int i, j;
+        for (j = 0; j < height; j ++) {
+                for (i = 0; i < width; i ++) {
+                        unsigned char* px = u_image_read(img, 0, i, j);
+                        fprintf(f, "%d %d %d ", px[2], px[1], px[0]);
+                }
+        }
+        fclose(f);
+        
 }
 /// End Test case: <pt_output_to_file_test>
 
-void pt_radiance_node_compute(struct render_node_ex_impl* self,
+void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                               const struct render_node_ex_impl* input[],
                               const struct render_node_ex_impl* output[])
 {
-        struct pt_radiance_node* node = (struct pt_radiance_node*) self;
+        struct pt_radiance_node* self = (struct pt_radiance_node*) self_parent;
         // Get input node instance <renderable loader> and its context
         const int slot                                  = render_node_radiance_get_input_slot(RenderNodeRenderableLoader);
         struct pt_renderable_loader_node* rdaloader     = (struct pt_renderable_loader_node*) input[slot];
@@ -887,8 +633,8 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
                                                                                    nullptr, RenderableGeometry);
         rda_context_update(context);
         const int n                                     = rda_context_get_n(context, request_id);
-        u_aos_free(&node->aos_geo);
-        u_aos_init(&node->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatId);
+        u_aos_free(&self->aos_geo);
+        u_aos_init(&self->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatId);
         int i;
         for (i = 0; i < n; i ++) {
                 struct rda_instance* inst = rda_context_get_i(context, i, request_id);
@@ -899,13 +645,13 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
                 void* vertex    = rda_geometry_get_vertex(geometry, &num_vertex);
                 void* normal    = rda_geometry_get_normal(geometry, &num_vertex);
                 int matid       = rda_get_material_reference(&geometry->_parent);
-                u_aos_accumulate(&node->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
+                u_aos_accumulate(&self->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
         }
 
         /* generate streams */
         void* vertex[10];
-        int n_vertex = u_aos_get_vertex(&node->aos_geo, vertex, &node->n_streams);
-        bool* avail = u_aos_get_availibility(&node->aos_geo);
+        int n_vertex = u_aos_get_vertex(&self->aos_geo, vertex, &self->n_streams);
+        bool* avail = u_aos_get_availibility(&self->aos_geo);
 
         int cSizeOfStream[10] = {
                 [_AttriVertex] = sizeof(struct point3d),
@@ -914,7 +660,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
         };
         f_Lerp_3 cStreamLerp3[10] = {
                 [_AttriVertex] = (f_Lerp_3) lerp_point,
-                [_AttriVertex] = (f_Lerp_3) lerp_point,
+                [_AttriNormal] = (f_Lerp_3) lerp_point,
                 [_AttriMatId]  = (f_Lerp_3) lerp_matid
         };
         int k, m;
@@ -934,34 +680,47 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self,
                                         break;
                         }
                         
-                        u_stream_init(&node->stream[m],
+                        u_stream_init(&self->stream[m],
                                       vertex[k], cSizeOfStream[k], n_vertex,
                                       &cSizeOfStream[k], shader_var_loc, 1, nullptr, cStreamLerp3[k]);
                         m ++;
                 }
         }
         /* update simplex and accessor utility */
-        free_simplex(node->simplex);
-        u_access_free(node->acc_stt);
+        free_simplex(self->simplex);
+        u_access_free(self->acc_stt);
 
         int num_index, num_simplex;
-        int* index = u_aos_get_index(&node->aos_geo, &num_index);
-        node->simplex = construct_simplex(node->stream, node->n_streams,
+        int* index = u_aos_get_index(&self->aos_geo, &num_index);
+        self->simplex = construct_simplex(self->stream, self->n_streams,
                                           index, num_index, &num_simplex);
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
-        node->acc_type = UtilAccessorLinear;
-        node->acc_stt = u_access_create(node->acc_type, node->simplex, num_simplex);
-        u_access_build(node->acc_stt);
+        self->acc_type = UtilAccessorLinear;
+        self->acc_stt = u_access_create(self->acc_type, self->simplex, num_simplex);
+        u_access_build(self->acc_stt);
 
         /* create target */
         /* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
-        u_image_free(&node->target);
-        u_image_init(&node->target, 1, UtilImgRGBRadiance, 800, 600);
-        u_image_alloc(&node->target, 0);
+        u_image_free(&self->target);
+        u_image_init(&self->target, 1, UtilImgRGBA32, 800, 600);
+        u_image_alloc(&self->target, 0);
+        
+        struct util_image img_rad;
+        u_image_init(&img_rad, 1, UtilImgRGBRadiance, 800, 600);
+        u_image_alloc(&img_rad, 0);
 
-        render_radiance(node);
+        render_radiance(self, &img_rad);
 /* @fixme (davis#2#): <pt_renderer_update> cheated here... should be in our output */
-        render_output(&node->target, &node->target);
+        render_output(&img_rad, &self->target);
+        u_image_free(&img_rad);
+        
+        struct alg_var_set params;
+        alg_var_set_init(&params);
+        alg_var_set_declare(&params, "target", &self->target, sizeof(self->target));
+        debugger_invoke_begin();
+        debugger_invoke(Debug_ptrenderer_c_pt_radiance_node_compute2, &params);
+        debugger_invoke_end();
+        alg_var_set_free(&params);
 }
 
 void* pt_radiance_node_get_result(const struct render_node_ex_impl* self)
@@ -1174,10 +933,10 @@ void pt_render_output_node_compute(struct render_node_ex_impl* self,
                 int img_width                   = projprobe_get_width((struct projection_probe*) node->probe);
                 int img_height                  = projprobe_get_height((struct projection_probe*) node->probe);
                 enum ColorMode colormode        = projprobe_get_colormode((struct projection_probe*) node->probe);
-                struct gtk_out* goutput         = gtk_out_create(target_widget, 0, 0, img_width, img_height,
-                                                                 colormode, image_buffer);
-                gtk_out_run(goutput);
-                gtk_out_free(goutput);
+//                struct gtk_out* goutput         = gtk_out_create(target_widget, 0, 0, img_width, img_height,
+//                                                                 colormode, image_buffer);
+//                gtk_out_run(goutput);
+//                gtk_out_free(goutput);
                 break;
         }
         case GtkOpenGLOutput: {

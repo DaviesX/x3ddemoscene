@@ -109,7 +109,7 @@ struct grid_spatial *build_grid_spatial ( struct alg_list *prim_list, int extra_
                                         if ( voxel->prim_ref == nullptr ) {
                                                 voxel->prim_ref = alloc_var ( sizeof ( int ), 1 );
                                         }
-                                        voxel->prim_ref = alloc_push_var ( &i, &voxel->prim_ref );
+                                        voxel->prim_ref = alloc_var_push ( &i, &voxel->prim_ref );
                                         voxel->nprim ++;
                                 }
                         }

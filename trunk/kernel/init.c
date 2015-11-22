@@ -42,7 +42,7 @@ static void kernel_init_param(int argc, char** argv)
 {
         g_init.argc = argc;
         g_init.argv = alloc_var(sizeof(char*), argc);
-        g_init.argv = alloc_expand_var(g_init.argv, argc);
+        g_init.argv = alloc_var_expand(g_init.argv, argc);
         int i;
         for (i = 0; i < argc; i ++) {
                 g_init.argv[i] = alg_alloc_string(argv[i]);
@@ -87,7 +87,7 @@ __dlexport bool kernel_start ( void )
         struct init*   init = &g_init;
         struct signal* signal = &init->signal;
         
-        panic_init();
+        panic_init(false);
         thread_lib_init();
         if (signal->on_init != nullptr) {
                 signal->on_init(init->argc, init->argv, signal->env);
@@ -189,7 +189,7 @@ __dlexport bool kernel_is_running ( void )
 
 __dlexport void kernel_add_param(const char *option, const char *param)
 {
-        g_init.argv = alloc_add_var(g_init.argv, 2);
+        g_init.argv = alloc_var_add(g_init.argv, 2);
         int n = g_init.argc;
         g_init.argv[n + 0] = alg_alloc_string(option);
         g_init.argv[n + 1] = alg_alloc_string(param);

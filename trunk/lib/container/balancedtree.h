@@ -101,10 +101,10 @@ PseudoDef(void          alg_btree_flush(struct alg_btree* self);)
 {                                                                               \
         (_iterator) = nullptr;                                                  \
                                                                                 \
-        (_self)->node           = alloc_add_var((_self)->node, 1);              \
-        (_self)->left           = alloc_add_var((_self)->left, 1);              \
-        (_self)->right          = alloc_add_var((_self)->right, 1);               \
-        (_self)->content        = alloc_add_var((_self)->content, 1);           \
+        (_self)->node           = alloc_var_add((_self)->node, 1);              \
+        (_self)->left           = alloc_var_add((_self)->left, 1);              \
+        (_self)->right          = alloc_var_add((_self)->right, 1);               \
+        (_self)->content        = alloc_var_add((_self)->content, 1);           \
         int new_node            = (_self)->size + (_self)->n_head;              \
                                                                                 \
         int root                = (_key)%(_self)->n_head;                       \

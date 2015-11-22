@@ -36,7 +36,7 @@ void build_line2d_t ( struct point2d *p0, struct point2d *p1, float t0, float t1
 void build_line3d ( struct point3d *p0, struct point3d *p1, struct line3d *l )
 {
         copy_point3d ( p0, &l->p0 );
-        copy_point3d ( p1, &l->p1 );
+//        copy_point3d ( p1, &l->p1 );
         build_vector3d ( p0, p1, &l->v );
         float len = length_vector3d ( &l->v );
         float inv = 1.0f/len;
@@ -50,7 +50,7 @@ void build_line3d ( struct point3d *p0, struct point3d *p1, struct line3d *l )
 void build_line3d_t ( struct point3d *p0, struct point3d *p1, float t0, float t1, struct line3d *l )
 {
         copy_point3d ( p0, &l->p0 );
-        copy_point3d ( p1, &l->p1 );
+//        copy_point3d ( p1, &l->p1 );
         build_vector3d ( p0, p1, &l->v );
         float len = length_vector3d ( &l->v );
         float inv = 1.0f/len;
@@ -656,7 +656,7 @@ bool intersect_line_box3d ( struct ray3d *r, struct box3d *b, float *t0, float *
         for ( i = 0; i < 3; i ++ ) {
                 float inv = 1.0f/r->v.v[i];
                 float k0 = (b->min.p[i] - r->p0.p[i])*inv;
-                float k1 = (b->max.p[i] - r->p1.p[i])*inv;
+                float k1 = (b->max.p[i] - r->p0.p[i])*inv;
                 if ( k0 > k1 ) {
                         /* Marching toward the middle of the ray */
                         min = max ( k1, min );
@@ -686,7 +686,7 @@ bool occlude_line_box3d ( struct ray3d* r, struct box3d* b )
         for ( i = 0; i < 3; i ++ ) {
                 float inv = 1.0f/r->v.v[i];
                 float k0 = (b->min.p[i] - r->p0.p[i])*inv;
-                float k1 = (b->max.p[i] - r->p1.p[i])*inv;
+                float k1 = (b->max.p[i] - r->p0.p[i])*inv;
                 if ( k0 > k1 ) {
                         /* Marching toward the middle of the ray */
                         min = max ( k1, min );

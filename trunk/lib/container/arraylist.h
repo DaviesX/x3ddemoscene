@@ -66,12 +66,12 @@ static inline void alg_list_free(struct alg_list* self)
 
 static inline void alg_list_expand(struct alg_list* self, int count)
 {
-        self->content = alloc_expand2_var(self->content, count);
+        self->content = alloc_var_expand2(self->content, count);
 }
 
 static inline void alg_list_flush(struct alg_list* self)
 {
-        alloc_flush_var(self->content);
+        alloc_var_flush(self->content);
         self->num_elm = 0;
 }
 
@@ -81,7 +81,7 @@ static inline void alg_list_copy(struct alg_list* list0, struct alg_list* list1)
         untyped *t      = (untyped*) list1->content;
         memcpy(list1, list0, sizeof(*list1));
         list1->content  = t;
-        list1->content  = alloc_expand_var(list1->content, list0->num_elm);
+        list1->content  = alloc_var_expand(list1->content, list0->num_elm);
         memcpy(list1->content, list0->content, list0->num_elm*list0->elm_size);
 }
 
@@ -109,7 +109,7 @@ static inline void alg_list_swap(struct alg_list* list0, struct alg_list* list1)
 
 #define alg_list_push_back(_self, _data) \
 { \
-        (_self)->content        = alloc_add_var((_self)->content, sizeof(_data)); \
+        (_self)->content        = alloc_var_add((_self)->content, sizeof(_data)); \
         typeof(_data)* _dest    = (typeof(_data)*) (_self)->content + (_self)->num_elm; \
         *_dest                  = (_data); \
         (_self)->num_elm ++; \
@@ -117,7 +117,7 @@ static inline void alg_list_swap(struct alg_list* list0, struct alg_list* list1)
 
 #define alg_list_pop_back(_self, _iter) \
 { \
-        (_self)->content = alloc_dec_var((_self)->content, sizeof *(_iter)); \
+        (_self)->content = alloc_var_dec((_self)->content, sizeof *(_iter)); \
         (_self)->num_elm --; \
 }
 

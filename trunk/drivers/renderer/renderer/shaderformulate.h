@@ -114,9 +114,9 @@ bool shaform_is_compiled ( struct shader_form* shader );
 bool shaform_is_linked ( struct shader_form* shader );
 
 /* typedefs */
-typedef void (*f_Emitter) ( void );
-typedef bool (*f_Bounce) ( void );
-typedef void (*f_Transfer) ( void );
+typedef void (*f_Emitter) ();
+typedef bool (*f_Bounce) ();
+typedef void (*f_Transfer) ();
 
 
 #endif // SHADERFORMULATE_H_INCLUDED

@@ -12,7 +12,8 @@ build/Release/GNU-Linux-x86/_ext/767442731/rendererinsmod.o: \
  ../../include/x3d/rendernodeoutput.h ../../include/renderer/utility.h \
  ../../lib/system/log.h ../../lib/system/allocator.h \
  ../../drivers/renderer/renderer/raytracepipeline.h \
- ../../drivers/renderer/renderer/fbo.h
+ ../../drivers/renderer/renderer/fbo.h \
+ ../../drivers/renderer/renderer/rtrenderer.h
 
 ../../include/x3d/common.h:
 
@@ -59,3 +60,5 @@ build/Release/GNU-Linux-x86/_ext/767442731/rendererinsmod.o: \
 ../../drivers/renderer/renderer/raytracepipeline.h:
 
 ../../drivers/renderer/renderer/fbo.h:
+
+../../drivers/renderer/renderer/rtrenderer.h:

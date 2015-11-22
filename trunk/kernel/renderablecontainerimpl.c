@@ -60,7 +60,7 @@ static void rdacontainer_linear_free(struct rdacontainer_linear* cont)
 static void rdacontainer_linear_add(struct rdacontainer_linear* cont, enum RenderableType type, struct rda_instance* inst)
 {
         int n = cont->n_insts[type] ++;
-        cont->insts[type] = alloc_add_var(cont->insts[type], 1);
+        cont->insts[type] = alloc_var_add(cont->insts[type], 1);
         cont->insts[type][n] = inst;
 }
 
@@ -74,7 +74,7 @@ static void rdacontainer_linear_clear(struct rdacontainer_linear* cont)
 {
         int i;
         for ( i = 0; i < sizeof(cont->insts)/sizeof(char*); i ++ ) {
-                alloc_flush_var(cont->insts[i]);
+                alloc_var_flush(cont->insts[i]);
         }
 }
 

@@ -311,8 +311,8 @@ void stager_push_data ( void *data, int size, struct entry_record *rec )
         struct stager *stg = rec->stg;
         struct res_entry* entries = alg_array ( list, &stg->entry );
         struct res_entry* entry = &entries[rec->ientry];
-        entry->buff = alloc_add_var ( entry->buff, size );
-        untyped *curr_byte = alloc_get_var_last ( entry->buff ) - (size - 1);
+        entry->buff = alloc_var_add ( entry->buff, size );
+        untyped *curr_byte = alloc_var_get_last ( entry->buff ) - (size - 1);
         memcpy ( curr_byte, data, size );
         stg->byte_used += size;
 }
@@ -406,7 +406,7 @@ enum RES_ERROR stager_set_layer_first ( struct entry_record *rec )
         rec->rdepth = d;
         rec->byte_ori = entry->buff;
         rec->byte_curr = entry->buff;
-        rec->byte_end = alloc_get_var_last ( entry->buff );
+        rec->byte_end = alloc_var_get_last ( entry->buff );
         return RES_ERR_NORMAL;
 }
 
@@ -441,7 +441,7 @@ enum RES_ERROR stager_set_layer_next ( struct entry_record *rec )
 
         rec->byte_ori = entry->buff;
         rec->byte_curr = entry->buff;
-        rec->byte_end = alloc_get_var_last ( entry->buff ) + 1;
+        rec->byte_end = alloc_var_get_last ( entry->buff ) + 1;
         return RES_ERR_NORMAL;
 }
 
@@ -455,8 +455,8 @@ enum RES_ERROR stager_reset_layer ( struct entry_record *rec )
         if ( entry->state == RESOURCE_LOADING ) {
                 return RES_ERR_READ_BLOCKED;
         }
-        stg->byte_used -= alloc_get_var_len ( entry->buff );
-        alloc_flush_var ( entry->buff );
+        stg->byte_used -= alloc_var_get_len ( entry->buff );
+        alloc_var_flush ( entry->buff );
         return RES_ERR_NORMAL;
 }
 

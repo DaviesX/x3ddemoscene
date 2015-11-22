@@ -1852,11 +1852,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../drivers/renderer/shader/ptshader.c"
-            ex="false"
-            tool="0"
-            flavor2="0">
-      </item>
       <item path="../../drivers/renderer/shader/ptshader.h"
             ex="false"
             tool="3"

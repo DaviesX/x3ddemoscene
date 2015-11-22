@@ -23,7 +23,7 @@ struct pt_radiance_node {
         struct util_stream              stream[10];
         int                             n_streams;
         struct util_aos                 aos_geo;
-        struct util_aos                 aos_media;
+//        struct util_aos                 aos_media;
 
         struct util_image               target;
 };

@@ -66,6 +66,14 @@ static void vec3_norm ( vec3* vi )
                 vi->v[c] *= is;
 }
 
+static void vec3_norm2 ( vec3* vi, vec3* vo )
+{
+        float is = inv_sqrt ( vec3_dot ( vi, vi ) );
+        int c;
+        for ( c = 0; c < 3; c ++ )
+                vo->v[c] = vi->v[c]*is;
+}
+
 #define VAR             __dlexport
 #define IVAR            __dlexport
 #define OVAR            __dlexport

@@ -38,7 +38,7 @@ static void *gen_ordered_stream ( int count );
 static void *gen_ordered_stream ( int count )
 {
         if ( g_ordered_arr ) {
-                g_ordered_arr = alloc_expand2_var ( g_ordered_arr, count );
+                g_ordered_arr = alloc_var_expand2 ( g_ordered_arr, count );
         } else {
                 g_ordered_arr = alloc_var ( sizeof ( uint32_t ), count );
         }
@@ -118,7 +118,7 @@ void ibuffer_set_format ( enum INDEX_ELEMENT_FORMAT format, struct index_buffer 
 void vbuffer_add_vertex ( struct vertex_buffer *vbuffer )
 {
         int i = vbuffer->curr - (untyped *) vbuffer->buffer;
-        vbuffer->buffer = alloc_add_var ( vbuffer->buffer, vbuffer->attri.vertsize );
+        vbuffer->buffer = alloc_var_add ( vbuffer->buffer, vbuffer->attri.vertsize );
         vbuffer->curr = (untyped *) vbuffer->buffer + i;
         vbuffer->elm_cnt ++;
 }
@@ -126,7 +126,7 @@ void vbuffer_add_vertex ( struct vertex_buffer *vbuffer )
 void ibuffer_add_index ( struct index_buffer *ibuffer )
 {
         int i = ibuffer->curr - (untyped *) ibuffer->buffer;
-        ibuffer->buffer = alloc_add_var ( ibuffer->buffer, SizeOfIndexF[ibuffer->format] );
+        ibuffer->buffer = alloc_var_add ( ibuffer->buffer, SizeOfIndexF[ibuffer->format] );
         ibuffer->curr = (untyped *) ibuffer->buffer + i;
         ibuffer->elm_cnt ++;
 }
@@ -204,7 +204,7 @@ void vertprocessor_finalize ( struct rtcontext *cont, struct vertprocessor *vp )
         if ( !vp->cache ) {
                 vp->cache = alloc_var ( 1, vp->n_total*vp->v_out_size );
         } else {
-                vp->cache = alloc_expand2_var ( vp->cache, vp->n_total*vp->v_out_size );
+                vp->cache = alloc_var_expand2 ( vp->cache, vp->n_total*vp->v_out_size );
         }
 //	vp->clip_cache = alloc_var ( 1, 8*vp->v_out_size );
         /* set up vertex shader */
@@ -497,8 +497,8 @@ int vertprocessor_run ( struct vertprocessor *vp, enum RT_PRIMITIVE_TYPE prim_ty
         count = (prim_type == TRIANGLE_PRIMITIVE) ? (count/2) : (count);
         count = min ( count, vp->n_total - vp->n_done );
         count = count - count%prim_type;
-        alloc_flush_var ( vp->cache );
-        vp->cache = alloc_expand2_var ( vp->cache, count );
+        alloc_var_flush ( vp->cache );
+        vp->cache = alloc_var_expand2 ( vp->cache, count );
         untyped *vert_out = vp->cache;
         int i;
         for ( i = 0; i < count; i ++ ) {

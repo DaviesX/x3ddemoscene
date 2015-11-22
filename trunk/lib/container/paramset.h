@@ -45,15 +45,15 @@ void* alg_var_set_use(struct alg_var_set* set, char* name);
         while ( ++ _i < (_p)->n_ref && (eq = strcmp ( _name, (_p)->str[_i] )) ); \
         if ( eq != 0 ) { \
                 /* It does have new stuffs */ \
-                (_p)->str = alloc_add_var ( (_p)->str, 1 ); \
+                (_p)->str = alloc_var_add ( (_p)->str, 1 ); \
                 (_p)->str[(_p)->n_ref] = alloc_fix ( 1, strlen ( _name ) + 1 ); \
                 strcpy ( (_p)->str[(_p)->n_ref], _name ); \
 \
-                (_p)->ref = alloc_add_var ( (_p)->ref, 1 ); \
+                (_p)->ref = alloc_var_add ( (_p)->ref, 1 ); \
                 (_p)->ref[(_p)->n_ref] = (_p)->size; \
                 (_p)->n_ref ++; \
 \
-                (_p)->buff = alloc_add_var ( (_p)->buff, sizeof (_d) ); \
+                (_p)->buff = alloc_var_add ( (_p)->buff, sizeof (_d) ); \
                 memcpy ( &(_p)->buff[(_p)->size], &(_d), sizeof (_d) ); \
                 (_p)->size += sizeof (_d); \
         } else { \
@@ -65,7 +65,7 @@ void* alg_var_set_use(struct alg_var_set* set, char* name);
 #define push_params(_data, _p) \
 { \
         typeof (_data) _d = _data; \
-        (_p)->buff = alloc_add_var ( (_p)->buff, sizeof (_d) ); \
+        (_p)->buff = alloc_var_add ( (_p)->buff, sizeof (_d) ); \
         memcpy ( &(_p)->buff[(_p)->size], &(_d), sizeof (_d) ); \
         (_p)->size += sizeof (_d); \
 }
@@ -99,9 +99,9 @@ do { \
                 free_fix ( (_p)->str[_i] ); \
                 (_p)->str[_i] = nullptr; \
         } \
-        alloc_flush_var ( (_p)->str ); \
-        alloc_flush_var ( (_p)->ref ); \
-        alloc_flush_var ( (_p)->buff ); \
+        alloc_var_flush ( (_p)->str ); \
+        alloc_var_flush ( (_p)->ref ); \
+        alloc_var_flush ( (_p)->buff ); \
         (_p)->n_ref = 0; \
         (_p)->size = 0; \
         (_p)->curr_pos = 0; \

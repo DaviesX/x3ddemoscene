@@ -39,7 +39,7 @@ void push_prim_list_to_vibuffer ( struct alg_list *prim_list, struct pass_contex
                         *mark = start_off;
                         start_off += mesh->num_vertex;
                         nmesh ++;
-                        tmp_mesh = alloc_push_var ( mesh, tmp_mesh );
+                        tmp_mesh = alloc_var_push ( mesh, tmp_mesh );
                 }
         }
 

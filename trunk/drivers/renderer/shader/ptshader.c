@@ -35,8 +35,6 @@ IVAR float*                     g_position;               I
 IVAR float*                     g_normal;                 I
 IVAR int*                       g_mater_id;               I
 
-VAR int*                        g_nbounce;
-
 struct material {
         int                     brdf;
         float                   gloss;
@@ -112,6 +110,7 @@ UNIFORM struct material          uni_material[] = {
         [4].gloss = 0.4f
 };
 UNIFORM unsigned short           uni_xi[3] = {1, 100, 21021};
+UNIFORM int                     g_nbounce;
 
 
 static void a_easyrt_probe ( void )
@@ -136,7 +135,7 @@ static void make_illuminate_sample ( void )
 {
         int i = 0;
         int j;
-        g_n_illum = 0;
+        *g_n_illum = 0;
         int c;
         for ( j = 0; j < uni_n_point_light; j ++, i ++ ) {
                 for ( c = 0; c < 3; c ++ )
@@ -146,7 +145,7 @@ static void make_illuminate_sample ( void )
                 for ( c = 0; c < 3; c ++ )
                         g_illum[i].v.v[c] = uni_point_light[j].p[c] - g_position[c];
         }
-        g_n_illum += uni_n_point_light;
+        (*g_n_illum) += uni_n_point_light;
         for ( j = 0; j < uni_n_area_light; j ++, i ++ ) {
                 for ( c = 0; c < 3; c ++ ) {
                         g_illum[i].o.v[c] = g_position[c];
@@ -178,15 +177,16 @@ static void make_illuminate_sample ( void )
 static void mirror_sample_shader ( void )
 {
         /* reject when recursive bounce reaches 3 */
-        if (*g_nbounce ++ >= 3) {
-                g_n_recur = 0;
+        if (g_nbounce ++ >= 3) {
+                *g_n_recur = 0;
                 goto illuminate_ray;
         }
 
         int c;
 //recursive_ray:
+        ray3 t_incident;    // avoid modifying g_incident
         for ( c = 0; c < 3; c ++ )
-                (*g_incident).v.v[c] = -(*g_incident).v.v[c];
+                t_incident.v.v[c] = -(*g_incident).v.v[c];
         for ( c = 0; c < 3; c ++ )
                 g_recur[0].o.v[c] = g_position[c];
 
@@ -194,18 +194,19 @@ static void mirror_sample_shader ( void )
         float iln = 1.0f/sqrtf ( g_normal[0]*g_normal[0] +
                                  g_normal[1]*g_normal[1] +
                                  g_normal[2]*g_normal[2] );
-        float ili = 1.0f/sqrtf ( (*g_incident).v.v[0]*(*g_incident).v.v[0] +
-                                 (*g_incident).v.v[1]*(*g_incident).v.v[1] +
-                                 (*g_incident).v.v[2]*(*g_incident).v.v[2] );
+        float ili = 1.0f/sqrtf ( t_incident.v.v[0]*t_incident.v.v[0] +
+                                 t_incident.v.v[1]*t_incident.v.v[1] +
+                                 t_incident.v.v[2]*t_incident.v.v[2] );
+        float t_normal[3];
         for ( c = 0; c < 3; c ++ ) {
-                g_normal[c] *= iln;
-                (*g_incident).v.v[c] *= ili;
+                t_normal[c] = g_normal[c]*iln;
+                t_incident.v.v[c] *= ili;
         }
-        float n_dot_i = 2.0f*(g_normal[0]*(*g_incident).v.v[0] +
-                              g_normal[1]*(*g_incident).v.v[1] +
-                              g_normal[2]*(*g_incident).v.v[2]);
+        float n_dot_i = 2.0f*(t_normal[0]*t_incident.v.v[0] +
+                              t_normal[1]*t_incident.v.v[1] +
+                              t_normal[2]*t_incident.v.v[2]);
         for ( c = 0; c < 3; c ++ ) {
-                g_recur[0].v.v[c] = g_normal[c]*n_dot_i - (*g_incident).v.v[c];
+                g_recur[0].v.v[c] = t_normal[c]*n_dot_i - t_incident.v.v[c];
         }
         float ilr = 1.0f/sqrtf ( g_recur[0].v.v[0]*g_recur[0].v.v[0] +
                                  g_recur[0].v.v[1]*g_recur[0].v.v[1] +
@@ -224,15 +225,16 @@ illuminate_ray:;
 static void lambert_sample_shader ( void )
 {
         /* reject when recursive bounce reaches 3 */
-        if (*g_nbounce ++ >= 3) {
-                g_n_recur = 0;
+        if (g_nbounce ++ >= 3) {
+                *g_n_recur = 0;
                 goto illuminate_ray;
         }
 
         int c;
 //recursive_ray:
+        ray3 t_incident;    // avoid modifying g_incident
         for ( c = 0; c < 3; c ++ )
-                (*g_incident).v.v[c] = -(*g_incident).v.v[c];
+                t_incident.v.v[c] = -(*g_incident).v.v[c];
         for ( c = 0; c < 3; c ++ )
                 g_recur[0].o.v[c] = g_position[c];
 #if 1
@@ -262,16 +264,16 @@ static void lambert_sample_shader ( void )
                 g_incident.v[c] *= ili;
         }
 */
-        float u[3], v[3];
-        vec3_cross ( (vec3*) g_normal, &(*g_incident).v, (vec3*) u );
+        float u[3], v[3], t_normal[3];
+        vec3_cross ( (vec3*) g_normal, &t_incident.v, (vec3*) u );
         vec3_cross ( (vec3*) u, (vec3*) g_normal, (vec3*) v );
-        vec3_norm ( (vec3*) g_normal );
-        vec3_norm ( &(*g_incident).v );
+        vec3_norm2 ( (vec3*) g_normal, (vec3*) t_normal);
+        vec3_norm ( &t_incident.v );
         vec3_norm ( (vec3*) u );
         vec3_norm ( (vec3*) v );
         /* transform ray */
         for ( c = 0; c < 3; c ++ )
-                g_recur[0].v.v[c] = x*u[c] + y*v[c] + z*g_normal[c];
+                g_recur[0].v.v[c] = x*u[c] + y*v[c] + z*t_normal[c];
 #endif
 /*
         g_recur[0].v[0] = 2.0f*erand48 ( uni_xi ) - 1.0f;

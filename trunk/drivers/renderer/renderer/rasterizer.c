@@ -156,7 +156,7 @@ void rasterizer_finalize ( struct rtcontext *cont, struct rasterizer *rt )
         if ( !ctx->clip_cache ) {
                 ctx->clip_cache = alloc_var ( 1, vformat->size*3*3 );
         } else {
-                ctx->clip_cache = alloc_expand2_var ( ctx->clip_cache, vformat->size*3*3 );
+                ctx->clip_cache = alloc_var_expand2 ( ctx->clip_cache, vformat->size*3*3 );
         }
         ctx->draw_mode = cont->draw_mode;
         ctx->shader = cont->shader[RT_FRAGMENT_SHADER];

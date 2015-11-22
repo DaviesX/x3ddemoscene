@@ -52,15 +52,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,../x3dcore/dist/Release/GNU-Linux-x86 -L../x3dcore/dist/Release/GNU-Linux-x86 -lx3dcore -Wl,-rpath,../usr/dist/Release/GNU-Linux-x86 -L../usr/dist/Release/GNU-Linux-x86 -lusr
+LDLIBSOPTIONS=-Wl,-rpath,/home/davis/x3drenderlib-code/trunk/bin -L/home/davis/x3drenderlib-code/trunk/bin -lx3dcore -Wl,-rpath,/home/davis/x3drenderlib-code/trunk/bin -L/home/davis/x3drenderlib-code/trunk/bin -lusr
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk /home/davis/x3drenderlib-code/trunk/bin/sampleentry
 
-/home/davis/x3drenderlib-code/trunk/bin/sampleentry: ../x3dcore/dist/Release/GNU-Linux-x86/libx3dcore.so
+/home/davis/x3drenderlib-code/trunk/bin/sampleentry: /home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so
 
-/home/davis/x3drenderlib-code/trunk/bin/sampleentry: ../usr/dist/Release/GNU-Linux-x86/libusr.so
+/home/davis/x3drenderlib-code/trunk/bin/sampleentry: /home/davis/x3drenderlib-code/trunk/bin/libusr.so
 
 /home/davis/x3drenderlib-code/trunk/bin/sampleentry: ${OBJECTFILES}
 	${MKDIR} -p /home/davis/x3drenderlib-code/trunk/bin

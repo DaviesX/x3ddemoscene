@@ -374,7 +374,7 @@ void res_loader_task_free ( struct res_task *task )
 
 struct res_comp *res_comp_alloc_unit ( struct res_task *task )
 {
-        task->stg0_info = alloc_add_var ( task->stg0_info, 1 );
+        task->stg0_info = alloc_var_add ( task->stg0_info, 1 );
         struct res_comp *comp = &task->stg0_info[task->n_stg1 ++];
         comp->loader = task->loader;
         memset ( comp, 0, sizeof *comp );
@@ -504,6 +504,6 @@ void *res_comp_shrink ( void *ptr, int real_count )
         void *head = (untyped *) ptr - sizeof (void*);
         void *data;
         memcpy ( &data, &head, sizeof (void*) );
-        alloc_expand_var ( data, real_count );
+        alloc_var_expand ( data, real_count );
         return (untyped *) data + sizeof (void*);
 }

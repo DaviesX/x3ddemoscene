@@ -130,7 +130,7 @@
                             WD="../x3dcore"
                             BC="${MAKE}  -f Makefile CONF=Release"
                             CC="${MAKE}  -f Makefile CONF=Release clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libx3dcore.${CND_DLIB_EXT}">
+                            OP="/home/davis/x3drenderlib-code/trunk/bin/libx3dcore.so">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
@@ -142,7 +142,7 @@
                             WD="../usr"
                             BC="${MAKE}  -f Makefile CONF=Release"
                             CC="${MAKE}  -f Makefile CONF=Release clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libusr.${CND_DLIB_EXT}">
+                            OP="/home/davis/x3drenderlib-code/trunk/bin/libusr.so">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>

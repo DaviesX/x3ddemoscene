@@ -25,7 +25,7 @@ struct line2d {
 
 struct line3d {
         struct point3d p0;
-        struct point3d p1;
+//        struct point3d p1;
         struct vector3d v;
         float t0, t1;
 };

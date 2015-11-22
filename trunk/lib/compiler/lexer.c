@@ -73,7 +73,7 @@ void lex_code ( struct code_lexer *lex, struct sym_entry *sym_tbl )
                 } else if ( isalpha ( cch ) ) {
                         int b = 0;
                         while ( isalnum ( lex->ptr[b] ) ) {
-                                lex->tok_buf = alloc_add_var ( lex->tok_buf, 1 );
+                                lex->tok_buf = alloc_var_add ( lex->tok_buf, 1 );
                                 lex->tok_buf[b] = lex->ptr[b];
                                 b ++;
                         }
@@ -84,7 +84,7 @@ void lex_code ( struct code_lexer *lex, struct sym_entry *sym_tbl )
                         if ( p == -1 ) {
                                 p = insert_symbol ( lex->tok_buf, sym_tbl );
                         }
-                        alloc_flush_var ( lex->tok_buf );
+                        alloc_var_flush ( lex->tok_buf );
 
                         lex->tok_info.token = TOK_IDR_IDENTIFIER;
                         lex->tok_info.tok_attr = p;
