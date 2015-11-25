@@ -16,6 +16,7 @@
                 <sourceRootElem>../include/loader</sourceRootElem>
                 <sourceRootElem>../lib</sourceRootElem>
                 <sourceRootElem>../drivers</sourceRootElem>
+                <sourceRootElem>../../drivers/renderer</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

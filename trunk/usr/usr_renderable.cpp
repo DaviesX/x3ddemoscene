@@ -145,7 +145,8 @@ void GeometryRenderable::init_from_data(struct point3d* vertex, int num_vert,
                                         struct vector3d* tangent, struct point2d* uv,
                                         struct matrix4x4* transform)
 {
-        rda_geometry_init_from_data(m_geometry, vertex, num_vert, index, num_tri, normal, tangent, uv, transform);
+        rda_geometry_init_from_data(m_geometry, vertex, num_vert, index, num_tri, 
+                                    normal, tangent, uv, transform);
 }
 
 /** \brief refine the geometry.
@@ -181,6 +182,11 @@ void GeometryRenderable::update_vertex(struct point3d* vertex, int count)
 void GeometryRenderable::update_index(int* index, int count)
 {
         rda_geometry_update_index(m_geometry, index, count);
+}
+
+void GeometryRenderable::set_material_id_list(int* mater_id)
+{
+        rda_geometry_set_material_id_list(m_geometry, mater_id);
 }
 
 /** \brief change the transformation of the geometry.
@@ -244,6 +250,11 @@ struct vector3d* GeometryRenderable::get_tangent(int* num_tangent)
 struct vector2d* GeometryRenderable::get_uv(int* num_uv)
 {
         return rda_geometry_get_uv(m_geometry, num_uv);
+}
+
+int* GeometryRenderable::get_material_id_list(int* num_mater)
+{
+        return rda_geometry_get_material_id_list(m_geometry, num_mater);
 }
 
 /** \brief get the face vertex array of the geometry renderable.

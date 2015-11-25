@@ -6,7 +6,6 @@
 #include <renderer/proj_probe.h>
 #include <renderer/geocache.h>
 #include <renderer/out.h>
-#include "lcrenderer.h"
 #include "rtrenderer.h"
 
 

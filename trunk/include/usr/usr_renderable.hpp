@@ -21,7 +21,7 @@ public:
                 Geometry
         };
 
-        Renderable* create ( RenderableDesc desc, string name, bool movable );
+        Renderable* create(RenderableDesc desc, string name, bool movable);
 };
 
 /** \brief Renderable base class.
@@ -31,11 +31,11 @@ class Renderable : public CoreResource<struct renderable>
 public:
         Renderable(struct renderable* renderable);
 
-        void                    set_importance ( float importance );
-        void                    set_material ( int mater_ref );
+        void                    set_importance(float importance);
+        void                    set_material(int mater_ref);
         string                  get_name ();
         RenderableFactory::RenderableDesc get_desc ();
-        RenderableInstance*     make_instance ( struct matrix4x4* transform );
+        RenderableInstance*     make_instance(struct matrix4x4* transform);
         struct renderable*      get_core_resource();
         void                    set_core_resource(struct renderable* r);
 private:
@@ -50,20 +50,22 @@ public:
         GeometryRenderable(struct rda_geometry* geometry);
         ~GeometryRenderable();
 
-        void                    init_from_data ( struct point3d* vertex, int num_vert, int* index, int num_tri,
+        void                    init_from_data(struct point3d* vertex, int num_vert, int* index, int num_tri,
                                                  struct vector3d* normal, struct vector3d* tangent, struct point2d* uv,
-                                                 struct matrix4x4* transform );
-        void                    refine ( float iteration );
-        void                    update_vertex ( struct point3d* vertex, int count );
-        void                    update_index ( int* index, int count );
-        void                    set_transform ( struct matrix4x4 *transform );
+                                                 struct matrix4x4* transform);
+        void                    refine(float iteration);
+        void                    update_vertex(struct point3d* vertex, int count);
+        void                    update_index(int* index, int count);
+        void                    set_material_id_list(int* mater_id);
+        void                    set_transform(struct matrix4x4 *transform);
         void                    auto_generate_normal_and_tangent ();
 
-        struct point3d*         get_vertex ( int *num_vertex );
-        struct vector3d*        get_normal ( int* num_normal );
-        struct vector3d*        get_tangent ( int* num_tangent );
-        struct vector2d*        get_uv ( int* num_uv );
-        int*                    get_index ( int* num_index );
+        struct point3d*         get_vertex(int *num_vertex);
+        struct vector3d*        get_normal(int* num_normal);
+        struct vector3d*        get_tangent(int* num_tangent);
+        struct vector2d*        get_uv(int* num_uv);
+        int*                    get_material_id_list(int* num_mater);
+        int*                    get_index(int* num_index);
 private:
         struct rda_geometry*    m_geometry;
 };

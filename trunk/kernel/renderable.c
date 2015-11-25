@@ -104,6 +104,16 @@ void rda_geometry_update_index ( struct rda_geometry* geo, int* index, int count
 {
 }
 
+void rda_geometry_set_material_id_list(struct rda_geometry* self, int* mater_id)
+{
+        if (!self->mater_id) {
+                self->mater_id = alloc_var(sizeof(*self->mater_id), self->num_vertex);
+        } else {
+                self->mater_id = alloc_var_expand2(self->mater_id, self->num_vertex);
+        }
+        memcpy(self->mater_id, mater_id, self->num_vertex*sizeof(*mater_id));
+}
+
 void rda_geometry_set_transform ( struct rda_geometry* geo, struct matrix4x4 *transform )
 {
 }
@@ -134,6 +144,12 @@ struct vector2d* rda_geometry_get_uv ( struct rda_geometry* geo, int* nuv )
 {
         *nuv = geo->num_vertex;
         return geo->uv;
+}
+
+int* rda_geometry_get_material_id_list(struct rda_geometry* self, int* nmater) 
+{
+        *nmater = self->num_vertex;
+        return self->mater_id;
 }
 
 int* rda_geometry_get_index ( struct rda_geometry* geo, int* nindex )

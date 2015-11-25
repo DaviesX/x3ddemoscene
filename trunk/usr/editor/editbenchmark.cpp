@@ -67,28 +67,29 @@ static void construct_cornellbox ( RenderAggregate* aggregate )
         if ( !has_constructed ) {
                 has_constructed = true;
 
-                cornell_box_make ( &vertices, &n_vertices, &indices, &n_indices );
+                cornell_box_make(&vertices, &n_vertices, &indices, &n_indices);
 
-                point3d*  vert_arr = static_cast<point3d*>(alloc_fix ( sizeof(*vert_arr), n_vertices ));
-                vector3d* norm_arr = static_cast<vector3d*>(alloc_fix ( sizeof(*norm_arr), n_vertices ));
+                point3d*  vert_arr = static_cast<point3d*>(alloc_fix(sizeof(*vert_arr), n_vertices));
+                vector3d* norm_arr = static_cast<vector3d*>(alloc_fix(sizeof(*norm_arr), n_vertices));
+                int*      mater_id = static_cast<int*>(alloc_fix(sizeof(*mater_id), n_vertices));
                 for ( int i = 0; i < n_vertices; i ++ ) {
-                        set_point3d ( vertices[i].position[0],
-                                      vertices[i].position[1],
-                                      vertices[i].position[2],
-                                      &vert_arr[i] );
-                        set_vector3d ( vertices[i].normal[0],
-                                       vertices[i].normal[1],
-                                       vertices[i].normal[2],
-                                       &norm_arr[i] );
+                        set_point3d(vertices[i].position[0],
+                                    vertices[i].position[1],
+                                    vertices[i].position[2],
+                                    &vert_arr[i]);
+                        set_vector3d(vertices[i].normal[0],
+                                     vertices[i].normal[1],
+                                     vertices[i].normal[2],
+                                     &norm_arr[i]);
+                        mater_id[i] = vertices[i].mater_ref;
                 }
                 RenderableFactory fact;
                 GeometryRenderable* geometry = (GeometryRenderable*) fact.create(RenderableFactory::Geometry, 
 										 "cornellbox", false);
-                geometry->set_importance(1.0f);
-                geometry->set_material(0);
                 geometry->init_from_data(vert_arr, n_vertices, indices, n_indices,
-                                         norm_arr, nullptr, nullptr,
-                                         nullptr);
+                                         norm_arr, nullptr, nullptr, nullptr);
+                geometry->set_importance(1.0f);
+                geometry->set_material_id_list(mater_id);
 
                 instance = geometry->make_instance(const_cast<matrix4x4*>(&IdentityMatrix4x4));
                 aggregate->add_instance(instance);

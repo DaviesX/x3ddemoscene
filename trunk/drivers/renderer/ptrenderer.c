@@ -9,7 +9,6 @@
 #include <x3d/projectionprobe.h>
 #include <x3d/debug.h>
 #include <renderer/shader.h>
-#include "lcrenderer.h"
 #include "ptrenderer.h"
 #include "trianglebuffer.h"
 #include "vbo.h"
@@ -384,7 +383,7 @@ static inline void rgb_hdr_radiance ( struct float_color3* x, float avg_illum,
 
 }
 
-#include "../shader/ptshader.c"
+#include "./shader/ptshader.c"
 
 static void render_radiance(struct pt_radiance_node* render_node, struct util_image* target)
 {
@@ -634,7 +633,8 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         rda_context_update(context);
         const int n                                     = rda_context_get_n(context, request_id);
         u_aos_free(&self->aos_geo);
-        u_aos_init(&self->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatId);
+        // pre-check what data does the geometry has
+        u_aos_init(&self->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatIdList);
         int i;
         for (i = 0; i < n; i ++) {
                 struct rda_instance* inst = rda_context_get_i(context, i, request_id);
@@ -644,7 +644,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                 int num_vertex;
                 void* vertex    = rda_geometry_get_vertex(geometry, &num_vertex);
                 void* normal    = rda_geometry_get_normal(geometry, &num_vertex);
-                int matid       = rda_get_material_reference(&geometry->_parent);
+                int* matid      = rda_geometry_get_material_id_list(geometry, &num_vertex);
                 u_aos_accumulate(&self->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
         }
 
@@ -656,12 +656,12 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         int cSizeOfStream[10] = {
                 [_AttriVertex] = sizeof(struct point3d),
                 [_AttriNormal] = sizeof(struct vector3d),
-                [_AttriMatId]  = sizeof(int)
+                [_AttriMatIdList]  = sizeof(int)
         };
         f_Lerp_3 cStreamLerp3[10] = {
                 [_AttriVertex] = (f_Lerp_3) lerp_point,
                 [_AttriNormal] = (f_Lerp_3) lerp_point,
-                [_AttriMatId]  = (f_Lerp_3) lerp_matid
+                [_AttriMatIdList]  = (f_Lerp_3) lerp_matid
         };
         int k, m;
         for (m = 0, k = 0; k < 10; k ++) {
@@ -675,7 +675,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                                 case _AttriNormal:
                                         shader_var_loc[0] = (void**) &g_normal;
                                         break;
-                                case _AttriMatId:
+                                case _AttriMatIdList:
                                         shader_var_loc[0] = (void**) &g_mater_id;
                                         break;
                         }

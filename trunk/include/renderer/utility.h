@@ -159,7 +159,8 @@ enum UtilAttribute {
         UtilAttriNormal         = 1 << 2,
         UtilAttriTangent        = 1 << 3,
         UtilAttriUV             = 1 << 4,
-        UtilAttriMatId          = 1 << 5
+        UtilAttriMatId          = 1 << 5,
+        UtilAttriMatIdList      = 1 << 6
 };
 
 enum _AttriMap {
@@ -167,7 +168,8 @@ enum _AttriMap {
         _AttriNormal,
         _AttriTangent,
         _AttriUV,
-        _AttriMatId
+        _AttriMatId,
+        _AttriMatIdList
 };
 
 /** \brief make array-of-structure streams
@@ -215,6 +217,11 @@ static inline void u_aos_init(struct util_aos* self, enum UtilAttribute format)
         if (format & UtilAttriMatId) {
                 self->aos[_AttriMatId].s_data = alloc_var(sizeof(int), 1);
                 self->avail[_AttriMatId] = true;
+                self->n_streams ++;
+        }
+        if (format & UtilAttriMatIdList) {
+                self->aos[_AttriMatIdList].s_data = alloc_var(sizeof(int), 1);
+                self->avail[_AttriMatIdList] = true;
                 self->n_streams ++;
         }
 
@@ -288,6 +295,12 @@ static inline void u_aos_accumulate(struct util_aos* u_aos, int* index, int num_
                 for (i = u_aos->n_index; i < u_aos->n_index + num_vertex; i ++) {
                         matid[i] = src;
                 }
+        }
+        if (format & UtilAttriMatIdList) {
+                int* src = va_arg(v_arg, int*);
+                u_aos->aos[_AttriMatIdList].s_data = alloc_var_add(u_aos->aos[_AttriMatIdList].s_data, num_vertex);
+                int* matid = u_aos->aos[_AttriMatIdList].s_data;
+                memcpy(&matid[u_aos->n_vertex], src, num_vertex*sizeof(*matid));
         }
 
         va_end(v_arg);

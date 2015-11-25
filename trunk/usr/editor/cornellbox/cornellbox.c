@@ -131,13 +131,11 @@ static const struct vertex cVertices[] = {
 
 static int cIndices[1024];
 
-void cornell_box_make ( struct vertex** vertex, int* n_vertex, int** index, int* n_index )
+void cornell_box_make(struct vertex** vertex, int* n_vertex, int** index, int* n_index)
 {
         int i;
         int j;
-        for ( i = 0, j = 0;
-              i < sizeof(cVertices)/sizeof(struct vertex);
-              i += 4, j += 6 ) {
+        for ( i = 0, j = 0; i < sizeof(cVertices)/sizeof(struct vertex); i += 4, j += 6 ) {
                 cIndices[j + 0] = i + 0;
                 cIndices[j + 1] = i + 1;
                 cIndices[j + 2] = i + 2;
@@ -155,8 +153,8 @@ void cornell_box_make ( struct vertex** vertex, int* n_vertex, int** index, int*
         *n_index = j;
 }
 
-void cornell_box_free ( struct vertex* vertex, int* index )
+void cornell_box_free(struct vertex* vertex, int* index)
 {
-        free ( vertex );
-        free ( index );
+        free(vertex);
+        free(index);
 }

@@ -43,6 +43,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/248117513/pbrtmodel.o \
 	${OBJECTDIR}/_ext/248117513/rendererconf.o \
 	${OBJECTDIR}/_ext/248117513/x3dscene.o \
+	${OBJECTDIR}/_ext/263721305/arrayofstreams.o \
+	${OBJECTDIR}/_ext/263721305/arrayofstreamsogl.o \
+	${OBJECTDIR}/_ext/263721305/arrayofstreamsram.o \
+	${OBJECTDIR}/_ext/263721305/colorspectrum.o \
+	${OBJECTDIR}/_ext/263721305/compositepipeline.o \
+	${OBJECTDIR}/_ext/263721305/fbo.o \
 	${OBJECTDIR}/_ext/1186658598/bvh.o \
 	${OBJECTDIR}/_ext/1186658598/cone_shape.o \
 	${OBJECTDIR}/_ext/1186658598/cylinder_shape.o \
@@ -59,14 +65,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1186658598/sphere_shape.o \
 	${OBJECTDIR}/_ext/1186658598/trimesh_shape.o \
 	${OBJECTDIR}/_ext/1186658598/trimesh_subdivide.o \
-	${OBJECTDIR}/_ext/1118113710/light.o \
-	${OBJECTDIR}/_ext/1561355151/material.o \
-	${OBJECTDIR}/_ext/1698666324/volume.o \
+	${OBJECTDIR}/_ext/263721305/main.o \
 	${OBJECTDIR}/_ext/1746317338/binary_out.o \
 	${OBJECTDIR}/_ext/1746317338/image_out.o \
 	${OBJECTDIR}/_ext/1746317338/out.o \
 	${OBJECTDIR}/_ext/1746317338/screen_out.o \
 	${OBJECTDIR}/_ext/1746317338/stream_out.o \
+	${OBJECTDIR}/_ext/263721305/pmrenderer.o \
 	${OBJECTDIR}/_ext/1122083400/fisheye.o \
 	${OBJECTDIR}/_ext/1122083400/obj_probe.o \
 	${OBJECTDIR}/_ext/1122083400/orthogonal.o \
@@ -74,29 +79,28 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1122083400/proj_probe.o \
 	${OBJECTDIR}/_ext/1122083400/spatial_probe.o \
 	${OBJECTDIR}/_ext/1122083400/spherical.o \
-	${OBJECTDIR}/_ext/767442731/bufferedobject.o \
-	${OBJECTDIR}/_ext/767442731/colorspectrum.o \
-	${OBJECTDIR}/_ext/767442731/compositepipeline.o \
-	${OBJECTDIR}/_ext/767442731/fbo.o \
-	${OBJECTDIR}/_ext/767442731/main.o \
-	${OBJECTDIR}/_ext/767442731/pmrenderer.o \
-	${OBJECTDIR}/_ext/767442731/ptrenderer.o \
-	${OBJECTDIR}/_ext/767442731/rasterization.o \
-	${OBJECTDIR}/_ext/767442731/rasterizer.o \
-	${OBJECTDIR}/_ext/767442731/rasterpass.o \
-	${OBJECTDIR}/_ext/767442731/rasterpipeline.o \
-	${OBJECTDIR}/_ext/767442731/raytracepipeline.o \
-	${OBJECTDIR}/_ext/767442731/rendererinsmod.o \
-	${OBJECTDIR}/_ext/767442731/rendertarget.o \
-	${OBJECTDIR}/_ext/767442731/rtrenderer.o \
-	${OBJECTDIR}/_ext/767442731/shaderformulate.o \
-	${OBJECTDIR}/_ext/767442731/surface.o \
-	${OBJECTDIR}/_ext/767442731/trianglebuffer.o \
-	${OBJECTDIR}/_ext/767442731/vbo.o \
-	${OBJECTDIR}/_ext/767442731/vertexprocessor.o \
+	${OBJECTDIR}/_ext/263721305/ptrenderer.o \
+	${OBJECTDIR}/_ext/263721305/rasterization.o \
+	${OBJECTDIR}/_ext/263721305/rasterizer.o \
+	${OBJECTDIR}/_ext/263721305/rasterpass.o \
+	${OBJECTDIR}/_ext/263721305/rasterpipeline.o \
+	${OBJECTDIR}/_ext/263721305/raytracepipeline.o \
+	${OBJECTDIR}/_ext/263721305/rendererinsmod.o \
+	${OBJECTDIR}/_ext/263721305/rendertarget.o \
+	${OBJECTDIR}/_ext/263721305/rendertargetogl.o \
+	${OBJECTDIR}/_ext/263721305/rendertargetram.o \
+	${OBJECTDIR}/_ext/263721305/rtrenderer.o \
 	${OBJECTDIR}/_ext/501084237/basic_rt_shader.o \
 	${OBJECTDIR}/_ext/501084237/main.o \
 	${OBJECTDIR}/_ext/501084237/shader.o \
+	${OBJECTDIR}/_ext/263721305/shaderformulate.o \
+	${OBJECTDIR}/_ext/263721305/shadergenerator.o \
+	${OBJECTDIR}/_ext/263721305/shadergeneratorogl.o \
+	${OBJECTDIR}/_ext/263721305/shadergeneratorx64.o \
+	${OBJECTDIR}/_ext/263721305/surface.o \
+	${OBJECTDIR}/_ext/263721305/trianglebuffer.o \
+	${OBJECTDIR}/_ext/263721305/vbo.o \
+	${OBJECTDIR}/_ext/263721305/vertexprocessor.o \
 	${OBJECTDIR}/_ext/1109276195/debug.o \
 	${OBJECTDIR}/_ext/1109276195/dynamics.o \
 	${OBJECTDIR}/_ext/1109276195/init.o \
@@ -213,6 +217,36 @@ ${OBJECTDIR}/_ext/248117513/x3dscene.o: ../../drivers/loader/x3dscene.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/248117513/x3dscene.o ../../drivers/loader/x3dscene.c
 
+${OBJECTDIR}/_ext/263721305/arrayofstreams.o: ../../drivers/renderer/arrayofstreams.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/arrayofstreams.o ../../drivers/renderer/arrayofstreams.c
+
+${OBJECTDIR}/_ext/263721305/arrayofstreamsogl.o: ../../drivers/renderer/arrayofstreamsogl.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/arrayofstreamsogl.o ../../drivers/renderer/arrayofstreamsogl.c
+
+${OBJECTDIR}/_ext/263721305/arrayofstreamsram.o: ../../drivers/renderer/arrayofstreamsram.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/arrayofstreamsram.o ../../drivers/renderer/arrayofstreamsram.c
+
+${OBJECTDIR}/_ext/263721305/colorspectrum.o: ../../drivers/renderer/colorspectrum.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/colorspectrum.o ../../drivers/renderer/colorspectrum.c
+
+${OBJECTDIR}/_ext/263721305/compositepipeline.o: ../../drivers/renderer/compositepipeline.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/compositepipeline.o ../../drivers/renderer/compositepipeline.c
+
+${OBJECTDIR}/_ext/263721305/fbo.o: ../../drivers/renderer/fbo.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/fbo.o ../../drivers/renderer/fbo.c
+
 ${OBJECTDIR}/_ext/1186658598/bvh.o: ../../drivers/renderer/geometry/bvh.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1186658598
 	${RM} "$@.d"
@@ -293,20 +327,10 @@ ${OBJECTDIR}/_ext/1186658598/trimesh_subdivide.o: ../../drivers/renderer/geometr
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1186658598/trimesh_subdivide.o ../../drivers/renderer/geometry/trimesh_subdivide.c
 
-${OBJECTDIR}/_ext/1118113710/light.o: ../../drivers/renderer/light/light.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1118113710
+${OBJECTDIR}/_ext/263721305/main.o: ../../drivers/renderer/main.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1118113710/light.o ../../drivers/renderer/light/light.c
-
-${OBJECTDIR}/_ext/1561355151/material.o: ../../drivers/renderer/material/material.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1561355151
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1561355151/material.o ../../drivers/renderer/material/material.c
-
-${OBJECTDIR}/_ext/1698666324/volume.o: ../../drivers/renderer/misc/volume.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1698666324
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1698666324/volume.o ../../drivers/renderer/misc/volume.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/main.o ../../drivers/renderer/main.c
 
 ${OBJECTDIR}/_ext/1746317338/binary_out.o: ../../drivers/renderer/out/binary_out.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1746317338
@@ -332,6 +356,11 @@ ${OBJECTDIR}/_ext/1746317338/stream_out.o: ../../drivers/renderer/out/stream_out
 	${MKDIR} -p ${OBJECTDIR}/_ext/1746317338
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1746317338/stream_out.o ../../drivers/renderer/out/stream_out.c
+
+${OBJECTDIR}/_ext/263721305/pmrenderer.o: ../../drivers/renderer/pmrenderer.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/pmrenderer.o ../../drivers/renderer/pmrenderer.c
 
 ${OBJECTDIR}/_ext/1122083400/fisheye.o: ../../drivers/renderer/probe/fisheye.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1122083400
@@ -368,105 +397,60 @@ ${OBJECTDIR}/_ext/1122083400/spherical.o: ../../drivers/renderer/probe/spherical
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1122083400/spherical.o ../../drivers/renderer/probe/spherical.c
 
-${OBJECTDIR}/_ext/767442731/bufferedobject.o: ../../drivers/renderer/renderer/bufferedobject.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/ptrenderer.o: ../../drivers/renderer/ptrenderer.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/bufferedobject.o ../../drivers/renderer/renderer/bufferedobject.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/ptrenderer.o ../../drivers/renderer/ptrenderer.c
 
-${OBJECTDIR}/_ext/767442731/colorspectrum.o: ../../drivers/renderer/renderer/colorspectrum.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rasterization.o: ../../drivers/renderer/rasterization.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/colorspectrum.o ../../drivers/renderer/renderer/colorspectrum.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rasterization.o ../../drivers/renderer/rasterization.c
 
-${OBJECTDIR}/_ext/767442731/compositepipeline.o: ../../drivers/renderer/renderer/compositepipeline.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rasterizer.o: ../../drivers/renderer/rasterizer.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/compositepipeline.o ../../drivers/renderer/renderer/compositepipeline.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rasterizer.o ../../drivers/renderer/rasterizer.c
 
-${OBJECTDIR}/_ext/767442731/fbo.o: ../../drivers/renderer/renderer/fbo.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rasterpass.o: ../../drivers/renderer/rasterpass.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/fbo.o ../../drivers/renderer/renderer/fbo.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rasterpass.o ../../drivers/renderer/rasterpass.c
 
-${OBJECTDIR}/_ext/767442731/main.o: ../../drivers/renderer/renderer/main.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rasterpipeline.o: ../../drivers/renderer/rasterpipeline.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/main.o ../../drivers/renderer/renderer/main.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rasterpipeline.o ../../drivers/renderer/rasterpipeline.c
 
-${OBJECTDIR}/_ext/767442731/pmrenderer.o: ../../drivers/renderer/renderer/pmrenderer.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/raytracepipeline.o: ../../drivers/renderer/raytracepipeline.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/pmrenderer.o ../../drivers/renderer/renderer/pmrenderer.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/raytracepipeline.o ../../drivers/renderer/raytracepipeline.c
 
-${OBJECTDIR}/_ext/767442731/ptrenderer.o: ../../drivers/renderer/renderer/ptrenderer.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rendererinsmod.o: ../../drivers/renderer/rendererinsmod.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/ptrenderer.o ../../drivers/renderer/renderer/ptrenderer.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rendererinsmod.o ../../drivers/renderer/rendererinsmod.c
 
-${OBJECTDIR}/_ext/767442731/rasterization.o: ../../drivers/renderer/renderer/rasterization.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rendertarget.o: ../../drivers/renderer/rendertarget.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/rasterization.o ../../drivers/renderer/renderer/rasterization.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rendertarget.o ../../drivers/renderer/rendertarget.c
 
-${OBJECTDIR}/_ext/767442731/rasterizer.o: ../../drivers/renderer/renderer/rasterizer.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rendertargetogl.o: ../../drivers/renderer/rendertargetogl.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/rasterizer.o ../../drivers/renderer/renderer/rasterizer.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rendertargetogl.o ../../drivers/renderer/rendertargetogl.c
 
-${OBJECTDIR}/_ext/767442731/rasterpass.o: ../../drivers/renderer/renderer/rasterpass.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rendertargetram.o: ../../drivers/renderer/rendertargetram.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/rasterpass.o ../../drivers/renderer/renderer/rasterpass.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rendertargetram.o ../../drivers/renderer/rendertargetram.c
 
-${OBJECTDIR}/_ext/767442731/rasterpipeline.o: ../../drivers/renderer/renderer/rasterpipeline.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
+${OBJECTDIR}/_ext/263721305/rtrenderer.o: ../../drivers/renderer/rtrenderer.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/rasterpipeline.o ../../drivers/renderer/renderer/rasterpipeline.c
-
-${OBJECTDIR}/_ext/767442731/raytracepipeline.o: ../../drivers/renderer/renderer/raytracepipeline.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/raytracepipeline.o ../../drivers/renderer/renderer/raytracepipeline.c
-
-${OBJECTDIR}/_ext/767442731/rendererinsmod.o: ../../drivers/renderer/renderer/rendererinsmod.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/rendererinsmod.o ../../drivers/renderer/renderer/rendererinsmod.c
-
-${OBJECTDIR}/_ext/767442731/rendertarget.o: ../../drivers/renderer/renderer/rendertarget.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/rendertarget.o ../../drivers/renderer/renderer/rendertarget.c
-
-${OBJECTDIR}/_ext/767442731/rtrenderer.o: ../../drivers/renderer/renderer/rtrenderer.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/rtrenderer.o ../../drivers/renderer/renderer/rtrenderer.c
-
-${OBJECTDIR}/_ext/767442731/shaderformulate.o: ../../drivers/renderer/renderer/shaderformulate.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/shaderformulate.o ../../drivers/renderer/renderer/shaderformulate.c
-
-${OBJECTDIR}/_ext/767442731/surface.o: ../../drivers/renderer/renderer/surface.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/surface.o ../../drivers/renderer/renderer/surface.c
-
-${OBJECTDIR}/_ext/767442731/trianglebuffer.o: ../../drivers/renderer/renderer/trianglebuffer.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/trianglebuffer.o ../../drivers/renderer/renderer/trianglebuffer.c
-
-${OBJECTDIR}/_ext/767442731/vbo.o: ../../drivers/renderer/renderer/vbo.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/vbo.o ../../drivers/renderer/renderer/vbo.c
-
-${OBJECTDIR}/_ext/767442731/vertexprocessor.o: ../../drivers/renderer/renderer/vertexprocessor.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/767442731
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/767442731/vertexprocessor.o ../../drivers/renderer/renderer/vertexprocessor.c
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/rtrenderer.o ../../drivers/renderer/rtrenderer.c
 
 ${OBJECTDIR}/_ext/501084237/basic_rt_shader.o: ../../drivers/renderer/shader/basic_rt_shader.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/501084237
@@ -482,6 +466,46 @@ ${OBJECTDIR}/_ext/501084237/shader.o: ../../drivers/renderer/shader/shader.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/501084237
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/501084237/shader.o ../../drivers/renderer/shader/shader.c
+
+${OBJECTDIR}/_ext/263721305/shaderformulate.o: ../../drivers/renderer/shaderformulate.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/shaderformulate.o ../../drivers/renderer/shaderformulate.c
+
+${OBJECTDIR}/_ext/263721305/shadergenerator.o: ../../drivers/renderer/shadergenerator.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/shadergenerator.o ../../drivers/renderer/shadergenerator.c
+
+${OBJECTDIR}/_ext/263721305/shadergeneratorogl.o: ../../drivers/renderer/shadergeneratorogl.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/shadergeneratorogl.o ../../drivers/renderer/shadergeneratorogl.c
+
+${OBJECTDIR}/_ext/263721305/shadergeneratorx64.o: ../../drivers/renderer/shadergeneratorx64.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/shadergeneratorx64.o ../../drivers/renderer/shadergeneratorx64.c
+
+${OBJECTDIR}/_ext/263721305/surface.o: ../../drivers/renderer/surface.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/surface.o ../../drivers/renderer/surface.c
+
+${OBJECTDIR}/_ext/263721305/trianglebuffer.o: ../../drivers/renderer/trianglebuffer.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/trianglebuffer.o ../../drivers/renderer/trianglebuffer.c
+
+${OBJECTDIR}/_ext/263721305/vbo.o: ../../drivers/renderer/vbo.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/vbo.o ../../drivers/renderer/vbo.c
+
+${OBJECTDIR}/_ext/263721305/vertexprocessor.o: ../../drivers/renderer/vertexprocessor.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/263721305
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DX3D_COMPILER_GCC -DX3D_PLATFORM_POSIX -I../../include -I../../lib -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/263721305/vertexprocessor.o ../../drivers/renderer/vertexprocessor.c
 
 ${OBJECTDIR}/_ext/1109276195/debug.o: ../../kernel/debug.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1109276195

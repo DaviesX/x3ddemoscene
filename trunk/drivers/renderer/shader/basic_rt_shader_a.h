@@ -3,8 +3,8 @@
 
 
 #include <math/math.h>
-#include "../renderer/colorspectrum.h"
-#include "../renderer/surface.h"
+#include "../colorspectrum.h"
+#include "../surface.h"
 
 
 /* uniforms */
