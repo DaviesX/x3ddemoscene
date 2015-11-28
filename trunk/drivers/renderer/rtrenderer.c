@@ -1,7 +1,7 @@
 /* rt_renderer.c: interface of rasterizer renderer goes here */
 #include <system/allocator.h>
 #include <x3d/renderer.h>
-#include <x3d/rendertreeenvconsts.h>
+#include <x3d/renderenvconsts.h>
 #include <x3d/rendernoderadiance.h>
 #include <renderer/proj_probe.h>
 #include <renderer/geocache.h>
