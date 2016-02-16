@@ -3,7 +3,7 @@
 
 
 #include <x3d/renderable.h>
-#include <x3d/rendertreeenvconsts.h>
+#include <x3d/renderenvconsts.h>
 
 /*
  * forward declaration's

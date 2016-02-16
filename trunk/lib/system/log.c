@@ -189,3 +189,32 @@ void log_set_behavior(int bhv)
 void log_guard_frequency_for_next_message(int min_interval)
 {
 }
+
+// Test Cases:
+#include <container/paramset.h>
+#include <x3d/debug.h>
+// variable_memory_test0
+__dlexport void __callback                  log_report_test_init(struct alg_var_set* envir) {}
+__dlexport void __callback                  log_report_test_free(struct alg_var_set* envir) {}
+__dlexport enum DebugPosition* __callback   log_report_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        static enum DebugPosition pos[] = {
+                Debug_KernelStart
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = true;
+        return pos;
+}
+__dlexport void __callback                  log_report_test(struct alg_var_set* envir)
+{
+        /* Test the error report code in log.h/c */
+        log_init(false);
+        log_normal("This is a normal message");
+        log_mild_err("This is a mild error message");
+        log_severe_err("This is a severe error message");
+        log_critical_err("This is a critical error message");
+        int para = 10, para1 = 15;
+        log_set_behavior(LOG_OUTPUT_TO_FILE);
+        log_normal("There are two numbers: %d %d", para, para1);
+}

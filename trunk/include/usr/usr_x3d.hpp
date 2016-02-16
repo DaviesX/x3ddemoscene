@@ -33,7 +33,7 @@ extern "C"
 #include <x3d/rendernodehdr.h>
 #include <x3d/rendernoderadiance.h>
 #include <x3d/rendernoderdaloader.h>
-#include <x3d/rendertreeenvconsts.h>
+#include <x3d/renderenvconsts.h>
 }
 
 namespace usr

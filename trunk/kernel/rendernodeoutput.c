@@ -1,7 +1,7 @@
 #include <system/allocator.h>
 #include <x3d/rendertree.h>
 #include <x3d/rendernodeoutput.h>
-#include <x3d/rendertreeenvconsts.h>
+#include <x3d/renderenvconsts.h>
 
 
 static bool render_node_output_free(struct render_node* self)

@@ -89,9 +89,7 @@ __dlexport bool kernel_start ( void )
         
         panic_init(false);
         thread_lib_init();
-        if (signal->on_init != nullptr) {
-                signal->on_init(init->argc, init->argv, signal->env);
-        }
+        
 
         if (!log_init(true)) {
                 return false;
@@ -112,8 +110,11 @@ __dlexport bool kernel_start ( void )
         struct alg_var_set params;
         alg_var_set_init(&params);
         debugger_invoke_begin();
-                debugger_invoke(Debug_KernelStart, &params);
-
+        debugger_invoke(Debug_KernelStart, &params);
+                
+        if (signal->on_init != nullptr) {
+                signal->on_init(init->argc, init->argv, signal->env);
+        }
         rest_init ();
 
         debugger_invoke_end();
