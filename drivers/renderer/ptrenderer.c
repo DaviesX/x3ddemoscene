@@ -65,7 +65,7 @@ struct vertex {
 struct ray_tree {
         struct vector3d         i_rad;
         struct ray3d            i_ray;
-        char                    buffer[64];
+        uint8_t                 buffer[64];
         int                     n_emit;
         int                     i_emit;
         struct ray3d            e_ray[4];
@@ -439,7 +439,7 @@ static void render_radiance(struct pt_radiance_node* render_node, struct util_im
 
         float tw = width - 1;
         float th = height - 1;
- 
+
         int j;
         for (j = 0; j < height; j ++) {
                 // printf ( "%d\n", j );
@@ -451,7 +451,7 @@ static void render_radiance(struct pt_radiance_node* render_node, struct util_im
                                 struct vector2d uv;
                                 uv.x =   2.0f*((float) i/tw + spp[k].dx) - 1.0f;
                                 uv.y = -(2.0f*((float) j/th + spp[k].dy) - 1.0f);
-   
+
                                 int s;
                                 for ( s = 0; s < cNumSamples; s ++ ) {
                                         memset(node, 0, sizeof *node);
@@ -614,7 +614,7 @@ __dlexport void __callback pt_output_to_file_test(struct alg_var_set* envir)
                 }
         }
         fclose(f);
-        
+
 }
 /// End Test case: <pt_output_to_file_test>
 
@@ -628,7 +628,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         struct pt_renderable_loader_node* rdaloader     = (struct pt_renderable_loader_node*) input[slot];
         struct rda_context* context                     = rdaloader->_parent.ops.f_get_result(&rdaloader->_parent);
         // Get geometry data
-        uuid_t request_id                               = rda_context_post_request(context, RenderAggregateCullCube, 
+        uuid_t request_id                               = rda_context_post_request(context, RenderAggregateCullCube,
                                                                                    nullptr, RenderableGeometry);
         rda_context_update(context);
         const int n                                     = rda_context_get_n(context, request_id);
@@ -679,7 +679,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                                         shader_var_loc[0] = (void**) &g_mater_id;
                                         break;
                         }
-                        
+
                         u_stream_init(&self->stream[m],
                                       vertex[k], cSizeOfStream[k], n_vertex,
                                       &cSizeOfStream[k], shader_var_loc, 1, nullptr, cStreamLerp3[k]);
@@ -704,7 +704,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         u_image_free(&self->target);
         u_image_init(&self->target, 1, UtilImgRGBA32, 800, 600);
         u_image_alloc(&self->target, 0);
-        
+
         struct util_image img_rad;
         u_image_init(&img_rad, 1, UtilImgRGBRadiance, 800, 600);
         u_image_alloc(&img_rad, 0);
@@ -713,7 +713,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
 /* @fixme (davis#2#): <pt_renderer_update> cheated here... should be in our output */
         render_output(&img_rad, &self->target);
         u_image_free(&img_rad);
-        
+
         struct alg_var_set params;
         alg_var_set_init(&params);
         alg_var_set_declare(&params, "target", &self->target, sizeof(self->target));
@@ -933,10 +933,10 @@ void pt_render_output_node_compute(struct render_node_ex_impl* self,
                 int img_width                   = projprobe_get_width((struct projection_probe*) node->probe);
                 int img_height                  = projprobe_get_height((struct projection_probe*) node->probe);
                 enum ColorMode colormode        = projprobe_get_colormode((struct projection_probe*) node->probe);
-//                struct gtk_out* goutput         = gtk_out_create(target_widget, 0, 0, img_width, img_height,
-//                                                                 colormode, image_buffer);
-//                gtk_out_run(goutput);
-//                gtk_out_free(goutput);
+                struct gtk_out* goutput         = gtk_out_create(target_widget, 0, 0, img_width, img_height,
+                                                                 colormode, image_buffer);
+                gtk_out_run(goutput);
+                gtk_out_free(goutput);
                 break;
         }
         case GtkOpenGLOutput: {

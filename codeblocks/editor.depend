@@ -1,0 +1,176 @@
+# depslib dependency file v1.0
+1458405148 source:/home/davis/x3ddemoscene-code/external/editor/main.cpp
+	<stdio.h>
+	<usr/usr_x3d.hpp>
+	<usr/usr_kernel.hpp>
+	<usr/usr_editor.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_x3d.hpp
+	<string>
+	<algorithm>
+	<set>
+	<list>
+	<vector>
+	<misc.h>
+	<x3d/common.h>
+	<system/log.h>
+	<system/allocator.h>
+	<system/thread.h>
+	<system/panic.h>
+	<codecs/serializer.h>
+	<math/math.h>
+	<x3d/init.h>
+	<x3d/projectionprobe.h>
+	<x3d/renderer.h>
+	<x3d/renderable.h>
+	<x3d/renderableaggregate.h>
+	<x3d/rendernodeoutput.h>
+	<x3d/rendernodelayer.h>
+	<x3d/rendernodehdr.h>
+	<x3d/rendernoderadiance.h>
+	<x3d/rendernoderdaloader.h>
+	<x3d/renderenvconsts.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/misc.h
+	<stdint.h>
+	<stdbool.h>
+	<stdlib.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/common.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdint.h>
+	<stdbool.h>
+	<unistd.h>
+	<execinfo.h>
+	<signal.h>
+	<memory.h>
+	<string.h>
+	<ctype.h>
+	<assert.h>
+	<math.h>
+	<pthread.h>
+	<semaphore.h>
+	<limits.h>
+	<time.h>
+	<errno.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/system/log.h
+	<x3d/common.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/system/allocator.h
+	<x3d/common.h>
+	<misc.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/system/thread.h
+	<x3d/common.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/system/panic.h
+
+1455996146 /home/davis/x3ddemoscene-code/lib/codecs/serializer.h
+	<misc.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/math/math.h
+	"vector.h"
+	"matrix.h"
+	"quat.h"
+	"geometry.h"
+	"decimal.h"
+	"fx.h"
+
+1455996146 /home/davis/x3ddemoscene-code/lib/math/vector.h
+
+1455996146 /home/davis/x3ddemoscene-code/lib/math/matrix.h
+	<x3d/common.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/math/quat.h
+
+1455996146 /home/davis/x3ddemoscene-code/lib/math/geometry.h
+
+1455996146 /home/davis/x3ddemoscene-code/lib/math/decimal.h
+
+1455996146 /home/davis/x3ddemoscene-code/lib/math/fx.h
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/init.h
+	<misc.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/projectionprobe.h
+	<math/math.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/renderer.h
+	<misc.h>
+	<x3d/common.h>
+	<x3d/rendertree.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendertree.h
+	<x3d/renderable.h>
+	<x3d/renderenvconsts.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/renderable.h
+	<misc.h>
+	<x3d/common.h>
+	<math/math.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/renderenvconsts.h
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/renderableaggregate.h
+	<container/linkedlist.h>
+	<x3d/renderable.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/container/linkedlist.h
+	<container/container.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/container/container.h
+	<x3d/common.h>
+	<system/allocator.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendernodeoutput.h
+	<x3d/rendertree.h>
+	<x3d/renderer.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendernodelayer.h
+	<x3d/renderer.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendernodehdr.h
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendernoderadiance.h
+	<x3d/renderer.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendernoderdaloader.h
+	<x3d/renderer.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_kernel.hpp
+	<usr/usr_x3d.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_editor.hpp
+	<usr/usr_x3d.hpp>
+	<usr/usr_kernel.hpp>
+	<usr/usr_renderer.hpp>
+	<usr/usr_projectionprobe.hpp>
+	<usr/usr_world.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_renderer.hpp
+	<usr/usr_x3d.hpp>
+	<usr/usr_renderaggregate.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_renderaggregate.hpp
+	<usr/usr_x3d.hpp>
+	<usr/usr_renderable.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_renderable.hpp
+	<usr/usr_x3d.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_projectionprobe.hpp
+	<usr/usr_x3d.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_world.hpp
+	<usr/usr_renderaggregate.hpp>
+	<usr/usr_resourceloader.hpp>
+	<usr/usr_renderer.hpp>
+
+1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_resourceloader.hpp
+

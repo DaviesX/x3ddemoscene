@@ -19,12 +19,12 @@ struct {                        \
  */
 #define list_iter_begin(_self, _list)         \
 {                                               \
-        (_self)->pos = (_list)->head[0];       \
+        (_self)->pos = (_list)->nodes[0].next;       \
 }
 
 #define list_iter_next(_self, _list)                          \
 {                                                               \
-        (_self)->pos    = (_list)->next[(_self)->pos];         \
+        (_self)->pos    = (_list)->nodes[(_self)->pos].next;         \
 }
 
 #define list_iter_prev(_self, _iter)                           \
@@ -33,10 +33,10 @@ struct {                        \
 }
 
 #define list_iter_has_value(_self, _list)                      \
-        ((_list)->next[(_self)->pos] != (_list)->icurr)
+        ((_list)->nodes[(_self)->pos].next != (_list)->last_mem)
 
 #define list_iter_deref(_self, _list)                         \
-        ((_list)->content[(_self)->pos])
+        ((_list)->nodes[(_self)->pos].value)
 
 #define list_for_each(_self, _elm, CODE)                       \
 {                                                               \
@@ -62,7 +62,7 @@ struct {                        \
         }      *nodes;          \
         int     trailer;        \
         int     num_mem;        \
-        int     last_mem:       \
+        int     last_mem;       \
         int     num_elm;        \
 }
 
@@ -72,7 +72,7 @@ struct {                        \
 #define list_init(_self, _init_count)                                                   \
 {                                                                                       \
         (_self)->nodes          = alloc_var(sizeof(*(_self)->nodes), 1 + (_init_count));\
-        (_self)->node[0].next   = NIL;                                                  \
+        (_self)->nodes[0].next  = NIL;                                                  \
         (_self)->trailer        = 0;                                                    \
         (_self)->num_mem        = 1;                                                    \
         (_self)->last_mem       = 0;                                                    \
@@ -81,14 +81,14 @@ struct {                        \
 
 #define list_free(_self)                \
 {                                       \
-        free_var((_self)->node);        \
+        free_var((_self)->nodes);       \
         zero_obj((_self));              \
 }
 
 #define list_flush(_self)                               \
 {                                                       \
         alloc_var_flush((_self)->nodes);                \
-        (_self)->node[0].next   = NIL;                  \
+        (_self)->nodes[0].next   = NIL;                 \
         (_self)->num_mem      = 1;                      \
         (_self)->last_mem      = 1;                     \
         (_self)->num_elm        = 0;                    \
@@ -117,8 +117,8 @@ struct {                        \
 
 #define __list_free_node(_self, _pos)                                           \
 {                                                                               \
-        // link to the back of the trailer and point it to the last_mem         \
-        // move the last_mem to here                                            \
+        /* link to the back of the trailer and point it to the last_mem */      \
+        /* move the last_mem to here */                                         \
         (_self)->nodes[(_self)->trailer].next = _pos;                           \
         (_self)->nodes[_pos].next = (_self)->last_mem;                          \
         (_self)->last_mem = _pos;                                               \
@@ -208,6 +208,6 @@ struct {                        \
 }
 
 #define list_size(_self)              ((_self)->num_elm)
-             
+
 
 #endif	// DEQUE_H_INCLUDED

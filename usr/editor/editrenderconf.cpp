@@ -68,7 +68,7 @@ RenderConfigActiveX::RenderConfigInt::RenderConfigInt()
         m_static.insert_node(root, soutput.get_node());
         m_static.insert_node(soutput.get_node(), sradiance.get_node());
         m_static.insert_node(sradiance.get_node(), srdaloader.get_node());
-        
+
         RenderOutput ioutput("default_output", c_ProbeName);
         RenderRadiance iradiance("default_radiance", RenderPipeImageSpace);
         RenderableLoader irdaloader("default_renderable_context", c_RenderContextName, RenderAggregateStaticBVH);
@@ -144,7 +144,7 @@ void RenderConfigActiveX::update()
         pimpl->m_static.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
         pimpl->m_static.set_environment_variable(RenderEnvRenderable, pimpl->c_RenderContextName,
                                                  world.get_render_aggregate()->get_core_resource());
-        
+
         pimpl->m_interactive.clear_environment_variables();
         pimpl->m_interactive.set_environment_variable(RenderEnvProbe, pimpl->c_ProbeName, probe->get_core_resource());
         pimpl->m_interactive.set_environment_variable(RenderEnvRenderable, pimpl->c_RenderContextName,
@@ -201,6 +201,8 @@ RenderTree* RenderConfigActiveX::get_render_tree(RenderTreeConfigType type) cons
                 return &pimpl->m_static;
         case RenderTreeInteractive:
                 return &pimpl->m_interactive;
+        default:
+                return nullptr;
         }
 }
 

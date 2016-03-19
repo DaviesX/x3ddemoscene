@@ -74,10 +74,10 @@ static void vec3_norm2 ( vec3* vi, vec3* vo )
                 vo->v[c] = vi->v[c]*is;
 }
 
-#define VAR             __dlexport
-#define IVAR            __dlexport
-#define OVAR            __dlexport
-#define UNIFORM         __dlexport
+#define VAR             static
+#define IVAR            static
+#define OVAR            static
+#define UNIFORM         static
 #define I
 #define O
 

@@ -22,6 +22,10 @@ struct raytrace_pipeline* raytpipe_factory_new(enum RenderSpecType spec)
                 log_mild_err("OpenGl pipeline not supported yet");
                 return nullptr;
         }
+        default: {
+                log_mild_err("Unknown hardware spec - %d", spec);
+                return nullptr;
+        }
         }
 }
 

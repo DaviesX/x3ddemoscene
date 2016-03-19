@@ -41,24 +41,24 @@ static list_iter_t get_random_iterator(list_t* list, int length)
 __dlexport void __callback                  list_correctness_test(struct alg_var_set* envir)
 {
         bool failed = false;
-        
+
         list_t list;
         list_init(&list, 1);
-        
+
         const int n = 10;
         int array[n];
         int i;
         for (i = 0; i < n; i ++) {
                 array[i] = rand() % n;
         }
-        
+
         // Test push back
         log_normal("testing push back");
         for (i = 0; i < n; i ++) {
                 list_push_back(&list, array[i]);
         }
         i = 0;
-        list_t iterator;
+        list_iter_t iterator;
         list_iter_begin(&iterator, &list);
         while (list_iter_has_value(&iterator, &list)) {
                 int e = list_iter_deref(&iterator, &list);
@@ -121,8 +121,8 @@ __dlexport void __callback                  list_correctness_test(struct alg_var
                 list_iter_next(&iterator, &list);
         }
         // Test removal
-        list_free(&list); 
-        
+        list_free(&list);
+
         if (!failed) {
                 log_normal("list passed all tests");
         } else {
