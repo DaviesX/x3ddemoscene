@@ -2,83 +2,20 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="../lib/system/panic.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/container/stack.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="205" topLine="0" />
+			<Cursor1 position="8117" topLine="185" />
 		</Cursor>
-		<Folding>
-			<Collapse line="30" />
-		</Folding>
 	</File>
-	<File name="../lib/container/list.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/container/deque.h" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="890" topLine="100" />
+			<Cursor1 position="13749" topLine="59" />
 		</Cursor>
-		<Folding>
-			<Collapse line="11" />
-		</Folding>
 	</File>
 	<File name="../lib/container/list.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="11488" topLine="149" />
+			<Cursor1 position="11488" topLine="81" />
 		</Cursor>
-	</File>
-	<File name="../lib/misc.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/balancedtree.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="10480" topLine="88" />
-		</Cursor>
-	</File>
-	<File name="../lib/system/log.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="641" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../lib/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="27" />
-		</Cursor>
-		<Folding>
-			<Collapse line="31" />
-			<Collapse line="51" />
-			<Collapse line="71" />
-			<Collapse line="111" />
-			<Collapse line="133" />
-			<Collapse line="150" />
-			<Collapse line="172" />
-			<Collapse line="196" />
-		</Folding>
-	</File>
-	<File name="../lib/container/arraylist.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="149" />
-		</Cursor>
-	</File>
-	<File name="../kernel/debug.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5287" topLine="111" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/staging.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="37" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/array.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="9" />
-		</Cursor>
-		<Folding>
-			<Collapse line="0" />
-			<Collapse line="36" />
-			<Collapse line="39" />
-			<Collapse line="66" />
-			<Collapse line="74" />
-		</Folding>
 	</File>
 	<File name="../lib/container/staging.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -120,6 +57,127 @@
 			<Collapse line="463" />
 			<Collapse line="468" />
 			<Collapse line="474" />
+		</Folding>
+	</File>
+	<File name="../lib/misc.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/array.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="9" />
+		</Cursor>
+		<Folding>
+			<Collapse line="0" />
+			<Collapse line="36" />
+			<Collapse line="39" />
+			<Collapse line="66" />
+			<Collapse line="74" />
+		</Folding>
+	</File>
+	<File name="../kernel/debug.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5287" topLine="111" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/staging.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="37" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/stack.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2193" topLine="32" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/balancedtree.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10480" topLine="88" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/deque.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2930" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="11" />
+			<Collapse line="21" />
+		</Folding>
+	</File>
+	<File name="../lib/system/log.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="641" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../lib/system/allocator.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2962" topLine="57" />
+		</Cursor>
+		<Folding>
+			<Collapse line="11" />
+			<Collapse line="16" />
+			<Collapse line="23" />
+			<Collapse line="26" />
+			<Collapse line="37" />
+			<Collapse line="48" />
+			<Collapse line="65" />
+			<Collapse line="71" />
+			<Collapse line="90" />
+			<Collapse line="101" />
+			<Collapse line="122" />
+			<Collapse line="150" />
+			<Collapse line="164" />
+			<Collapse line="176" />
+			<Collapse line="185" />
+			<Collapse line="195" />
+			<Collapse line="205" />
+			<Collapse line="214" />
+			<Collapse line="221" />
+			<Collapse line="228" />
+			<Collapse line="234" />
+			<Collapse line="242" />
+			<Collapse line="247" />
+			<Collapse line="259" />
+			<Collapse line="269" />
+			<Collapse line="284" />
+			<Collapse line="288" />
+		</Folding>
+	</File>
+	<File name="../lib/container/list.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="890" topLine="100" />
+		</Cursor>
+		<Folding>
+			<Collapse line="11" />
+		</Folding>
+	</File>
+	<File name="../lib/container/arraylist.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="149" />
+		</Cursor>
+	</File>
+	<File name="../lib/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="27" />
+		</Cursor>
+		<Folding>
+			<Collapse line="31" />
+			<Collapse line="51" />
+			<Collapse line="71" />
+			<Collapse line="111" />
+			<Collapse line="133" />
+			<Collapse line="150" />
+			<Collapse line="172" />
+			<Collapse line="196" />
+		</Folding>
+	</File>
+	<File name="../lib/system/panic.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="205" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="30" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>

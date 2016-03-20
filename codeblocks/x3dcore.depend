@@ -174,8 +174,9 @@
 	"shape_common.h"
 	"bvh.h"
 
-1455996146 /home/davis/x3ddemoscene-code/lib/container/stack.h
+1458461721 /home/davis/x3ddemoscene-code/lib/container/stack.h
 	<container/container.h>
+	<system/allocator.h>
 
 1455996146 /home/davis/x3ddemoscene-code/lib/container/quicksort.h
 	<container/container.h>
@@ -3748,4 +3749,18 @@
 	<system/thread.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/system/timing.c
+
+1458461556 source:/home/davis/x3ddemoscene-code/lib/container/stack.c
+	<container/stack.h>
+	<container/paramset.h>
+	<system/log.h>
+	<x3d/debug.h>
+
+1458506088 source:/home/davis/x3ddemoscene-code/lib/container/deque.c
+	<container/deque.h>
+	<container/paramset.h>
+	<system/log.h>
+	<x3d/debug.h>
+
+1458506252 /home/davis/x3ddemoscene-code/lib/container/deque.h
 

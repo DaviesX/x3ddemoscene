@@ -477,6 +477,10 @@
 		<Unit filename="../lib/container/arraylist.h" />
 		<Unit filename="../lib/container/balancedtree.h" />
 		<Unit filename="../lib/container/container.h" />
+		<Unit filename="../lib/container/deque.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../lib/container/deque.h" />
 		<Unit filename="../lib/container/hashmap.h" />
 		<Unit filename="../lib/container/linkedlist.h" />
 		<Unit filename="../lib/container/list.c">
@@ -487,15 +491,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/container/paramset.h" />
-		<Unit filename="../lib/container/queue.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/container/queue.h" />
 		<Unit filename="../lib/container/quicksort.h" />
 		<Unit filename="../lib/container/set.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/container/set.h" />
+		<Unit filename="../lib/container/stack.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../lib/container/stack.h" />
 		<Unit filename="../lib/container/staging.c">
 			<Option compilerVar="CC" />

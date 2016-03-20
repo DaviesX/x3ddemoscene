@@ -9,11 +9,11 @@
   <line>Memcheck, a memory error detector</line>
   <line>Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.</line>
   <line>Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info</line>
-  <line>Command: /home/davis/x3ddemoscene-code/codeblocks/../bin/editor </line>
+  <line>Command: /home/davis/x3ddemoscene-code/codeblocks/../bin/editor  </line>
 </preamble>
 
-<pid>28788</pid>
-<ppid>2987</ppid>
+<pid>8122</pid>
+<ppid>3754</ppid>
 <tool>memcheck</tool>
 
 <args>
@@ -27,590 +27,23 @@
   <argv>
     <exe>/home/davis/x3ddemoscene-code/codeblocks/../bin/editor</exe>
     <arg></arg>
+    <arg></arg>
   </argv>
 </args>
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.160 </time>
+  <time>00:00:00:00.146 </time>
 </status>
-
-<error>
-  <unique>0x0</unique>
-  <tid>1</tid>
-  <kind>UninitCondition</kind>
-  <what>Conditional jump or move depends on uninitialised value(s)</what>
-  <stack>
-    <frame>
-      <ip>0x59437A0</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vfprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>vfprintf.c</file>
-      <line>1641</line>
-    </frame>
-    <frame>
-      <ip>0x596DC92</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vasprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/libio</dir>
-      <file>vasprintf.c</file>
-      <line>62</line>
-    </frame>
-    <frame>
-      <ip>0x4E86E43</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>call_log_normal</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
-      <file>log.c</file>
-      <line>153</line>
-    </frame>
-    <frame>
-      <ip>0x4E73334</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>141</line>
-    </frame>
-    <frame>
-      <ip>0x4E69B2A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>debugger_invoke_internal</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>debug.c</file>
-      <line>131</line>
-    </frame>
-    <frame>
-      <ip>0x4E69F8A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>kernel_start</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>113</line>
-    </frame>
-    <frame>
-      <ip>0x514860C</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
-      <fn>x3d::usr::Kernel::run()</fn>
-      <dir>/home/davis/x3ddemoscene-code/usr</dir>
-      <file>usr_kernel.cpp</file>
-      <line>110</line>
-    </frame>
-    <frame>
-      <ip>0x400F80</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/editor</obj>
-      <fn>kernel_main</fn>
-      <dir>/home/davis/x3ddemoscene-code/external/editor</dir>
-      <file>main.cpp</file>
-      <line>27</line>
-    </frame>
-    <frame>
-      <ip>0x4E69E47</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>main</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>80</line>
-    </frame>
-  </stack>
-  <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
-  <stack>
-    <frame>
-      <ip>0x4E723FA</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>46</line>
-    </frame>
-  </stack>
-</error>
-
-<error>
-  <unique>0x1</unique>
-  <tid>1</tid>
-  <kind>UninitValue</kind>
-  <what>Use of uninitialised value of size 8</what>
-  <stack>
-    <frame>
-      <ip>0x593F77B</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>_itoa_word</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>_itoa.c</file>
-      <line>179</line>
-    </frame>
-    <frame>
-      <ip>0x5943A88</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vfprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>vfprintf.c</file>
-      <line>1641</line>
-    </frame>
-    <frame>
-      <ip>0x596DC92</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vasprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/libio</dir>
-      <file>vasprintf.c</file>
-      <line>62</line>
-    </frame>
-    <frame>
-      <ip>0x4E86E43</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>call_log_normal</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
-      <file>log.c</file>
-      <line>153</line>
-    </frame>
-    <frame>
-      <ip>0x4E73334</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>141</line>
-    </frame>
-    <frame>
-      <ip>0x4E69B2A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>debugger_invoke_internal</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>debug.c</file>
-      <line>131</line>
-    </frame>
-    <frame>
-      <ip>0x4E69F8A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>kernel_start</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>113</line>
-    </frame>
-    <frame>
-      <ip>0x514860C</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
-      <fn>x3d::usr::Kernel::run()</fn>
-      <dir>/home/davis/x3ddemoscene-code/usr</dir>
-      <file>usr_kernel.cpp</file>
-      <line>110</line>
-    </frame>
-    <frame>
-      <ip>0x400F80</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/editor</obj>
-      <fn>kernel_main</fn>
-      <dir>/home/davis/x3ddemoscene-code/external/editor</dir>
-      <file>main.cpp</file>
-      <line>27</line>
-    </frame>
-    <frame>
-      <ip>0x4E69E47</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>main</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>80</line>
-    </frame>
-  </stack>
-  <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
-  <stack>
-    <frame>
-      <ip>0x4E723FA</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>46</line>
-    </frame>
-  </stack>
-</error>
-
-<error>
-  <unique>0x2</unique>
-  <tid>1</tid>
-  <kind>UninitCondition</kind>
-  <what>Conditional jump or move depends on uninitialised value(s)</what>
-  <stack>
-    <frame>
-      <ip>0x593F785</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>_itoa_word</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>_itoa.c</file>
-      <line>179</line>
-    </frame>
-    <frame>
-      <ip>0x5943A88</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vfprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>vfprintf.c</file>
-      <line>1641</line>
-    </frame>
-    <frame>
-      <ip>0x596DC92</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vasprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/libio</dir>
-      <file>vasprintf.c</file>
-      <line>62</line>
-    </frame>
-    <frame>
-      <ip>0x4E86E43</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>call_log_normal</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
-      <file>log.c</file>
-      <line>153</line>
-    </frame>
-    <frame>
-      <ip>0x4E73334</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>141</line>
-    </frame>
-    <frame>
-      <ip>0x4E69B2A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>debugger_invoke_internal</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>debug.c</file>
-      <line>131</line>
-    </frame>
-    <frame>
-      <ip>0x4E69F8A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>kernel_start</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>113</line>
-    </frame>
-    <frame>
-      <ip>0x514860C</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
-      <fn>x3d::usr::Kernel::run()</fn>
-      <dir>/home/davis/x3ddemoscene-code/usr</dir>
-      <file>usr_kernel.cpp</file>
-      <line>110</line>
-    </frame>
-    <frame>
-      <ip>0x400F80</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/editor</obj>
-      <fn>kernel_main</fn>
-      <dir>/home/davis/x3ddemoscene-code/external/editor</dir>
-      <file>main.cpp</file>
-      <line>27</line>
-    </frame>
-    <frame>
-      <ip>0x4E69E47</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>main</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>80</line>
-    </frame>
-  </stack>
-  <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
-  <stack>
-    <frame>
-      <ip>0x4E723FA</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>46</line>
-    </frame>
-  </stack>
-</error>
-
-<error>
-  <unique>0x11</unique>
-  <tid>1</tid>
-  <kind>UninitCondition</kind>
-  <what>Conditional jump or move depends on uninitialised value(s)</what>
-  <stack>
-    <frame>
-      <ip>0x5943AF9</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vfprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>vfprintf.c</file>
-      <line>1641</line>
-    </frame>
-    <frame>
-      <ip>0x596DC92</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vasprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/libio</dir>
-      <file>vasprintf.c</file>
-      <line>62</line>
-    </frame>
-    <frame>
-      <ip>0x4E86E43</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>call_log_normal</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
-      <file>log.c</file>
-      <line>153</line>
-    </frame>
-    <frame>
-      <ip>0x4E73334</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>141</line>
-    </frame>
-    <frame>
-      <ip>0x4E69B2A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>debugger_invoke_internal</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>debug.c</file>
-      <line>131</line>
-    </frame>
-    <frame>
-      <ip>0x4E69F8A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>kernel_start</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>113</line>
-    </frame>
-    <frame>
-      <ip>0x514860C</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
-      <fn>x3d::usr::Kernel::run()</fn>
-      <dir>/home/davis/x3ddemoscene-code/usr</dir>
-      <file>usr_kernel.cpp</file>
-      <line>110</line>
-    </frame>
-    <frame>
-      <ip>0x400F80</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/editor</obj>
-      <fn>kernel_main</fn>
-      <dir>/home/davis/x3ddemoscene-code/external/editor</dir>
-      <file>main.cpp</file>
-      <line>27</line>
-    </frame>
-    <frame>
-      <ip>0x4E69E47</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>main</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>80</line>
-    </frame>
-  </stack>
-  <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
-  <stack>
-    <frame>
-      <ip>0x4E723FA</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>46</line>
-    </frame>
-  </stack>
-</error>
-
-<error>
-  <unique>0x12</unique>
-  <tid>1</tid>
-  <kind>UninitCondition</kind>
-  <what>Conditional jump or move depends on uninitialised value(s)</what>
-  <stack>
-    <frame>
-      <ip>0x594387A</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vfprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>vfprintf.c</file>
-      <line>1641</line>
-    </frame>
-    <frame>
-      <ip>0x596DC92</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vasprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/libio</dir>
-      <file>vasprintf.c</file>
-      <line>62</line>
-    </frame>
-    <frame>
-      <ip>0x4E86E43</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>call_log_normal</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
-      <file>log.c</file>
-      <line>153</line>
-    </frame>
-    <frame>
-      <ip>0x4E73334</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>141</line>
-    </frame>
-    <frame>
-      <ip>0x4E69B2A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>debugger_invoke_internal</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>debug.c</file>
-      <line>131</line>
-    </frame>
-    <frame>
-      <ip>0x4E69F8A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>kernel_start</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>113</line>
-    </frame>
-    <frame>
-      <ip>0x514860C</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
-      <fn>x3d::usr::Kernel::run()</fn>
-      <dir>/home/davis/x3ddemoscene-code/usr</dir>
-      <file>usr_kernel.cpp</file>
-      <line>110</line>
-    </frame>
-    <frame>
-      <ip>0x400F80</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/editor</obj>
-      <fn>kernel_main</fn>
-      <dir>/home/davis/x3ddemoscene-code/external/editor</dir>
-      <file>main.cpp</file>
-      <line>27</line>
-    </frame>
-    <frame>
-      <ip>0x4E69E47</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>main</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>80</line>
-    </frame>
-  </stack>
-  <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
-  <stack>
-    <frame>
-      <ip>0x4E723FA</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>46</line>
-    </frame>
-  </stack>
-</error>
-
-<error>
-  <unique>0x13</unique>
-  <tid>1</tid>
-  <kind>UninitCondition</kind>
-  <what>Conditional jump or move depends on uninitialised value(s)</what>
-  <stack>
-    <frame>
-      <ip>0x594390A</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vfprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/stdio-common</dir>
-      <file>vfprintf.c</file>
-      <line>1641</line>
-    </frame>
-    <frame>
-      <ip>0x596DC92</ip>
-      <obj>/lib/x86_64-linux-gnu/libc-2.21.so</obj>
-      <fn>vasprintf</fn>
-      <dir>/build/glibc-uCRKup/glibc-2.21/libio</dir>
-      <file>vasprintf.c</file>
-      <line>62</line>
-    </frame>
-    <frame>
-      <ip>0x4E86E43</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>call_log_normal</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
-      <file>log.c</file>
-      <line>153</line>
-    </frame>
-    <frame>
-      <ip>0x4E73334</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>141</line>
-    </frame>
-    <frame>
-      <ip>0x4E69B2A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>debugger_invoke_internal</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>debug.c</file>
-      <line>131</line>
-    </frame>
-    <frame>
-      <ip>0x4E69F8A</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>kernel_start</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>113</line>
-    </frame>
-    <frame>
-      <ip>0x514860C</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
-      <fn>x3d::usr::Kernel::run()</fn>
-      <dir>/home/davis/x3ddemoscene-code/usr</dir>
-      <file>usr_kernel.cpp</file>
-      <line>110</line>
-    </frame>
-    <frame>
-      <ip>0x400F80</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/editor</obj>
-      <fn>kernel_main</fn>
-      <dir>/home/davis/x3ddemoscene-code/external/editor</dir>
-      <file>main.cpp</file>
-      <line>27</line>
-    </frame>
-    <frame>
-      <ip>0x4E69E47</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>main</fn>
-      <dir>/home/davis/x3ddemoscene-code/kernel</dir>
-      <file>init.c</file>
-      <line>80</line>
-    </frame>
-  </stack>
-  <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
-  <stack>
-    <frame>
-      <ip>0x4E723FA</ip>
-      <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
-      <fn>list_correctness_test</fn>
-      <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
-      <file>list.c</file>
-      <line>46</line>
-    </frame>
-  </stack>
-</error>
 
 
 <status>
   <state>FINISHED</state>
-  <time>00:00:00:04.708 </time>
+  <time>00:00:00:05.193 </time>
 </status>
 
 <error>
-  <unique>0x3b</unique>
+  <unique>0x9</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -625,7 +58,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -633,7 +66,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -641,7 +74,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E73637</ip>
+      <ip>0x4E74306</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -649,7 +82,7 @@
       <line>25</line>
     </frame>
     <frame>
-      <ip>0x4E692EC</ip>
+      <ip>0x4E693CC</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -657,7 +90,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -665,7 +98,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -681,7 +114,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -692,7 +125,7 @@
 </error>
 
 <error>
-  <unique>0x3c</unique>
+  <unique>0xa</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -707,7 +140,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -715,7 +148,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -723,7 +156,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E85966</ip>
+      <ip>0x4E86635</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_alloc_string</fn>
       <dir>/home/davis/x3ddemoscene-code/lib</dir>
@@ -731,7 +164,7 @@
       <line>392</line>
     </frame>
     <frame>
-      <ip>0x4E7370A</ip>
+      <ip>0x4E743D9</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -739,7 +172,7 @@
       <line>34</line>
     </frame>
     <frame>
-      <ip>0x4E692EC</ip>
+      <ip>0x4E693CC</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -747,7 +180,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -755,7 +188,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -771,7 +204,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -782,7 +215,7 @@
 </error>
 
 <error>
-  <unique>0x3d</unique>
+  <unique>0xb</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -797,7 +230,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -805,7 +238,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -813,7 +246,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E85966</ip>
+      <ip>0x4E86635</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_alloc_string</fn>
       <dir>/home/davis/x3ddemoscene-code/lib</dir>
@@ -821,7 +254,7 @@
       <line>392</line>
     </frame>
     <frame>
-      <ip>0x4E7370A</ip>
+      <ip>0x4E743D9</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -829,7 +262,7 @@
       <line>34</line>
     </frame>
     <frame>
-      <ip>0x4E69312</ip>
+      <ip>0x4E693F2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -837,7 +270,7 @@
       <line>28</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -845,7 +278,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -861,7 +294,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -872,7 +305,7 @@
 </error>
 
 <error>
-  <unique>0x3e</unique>
+  <unique>0xc</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -887,7 +320,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -895,7 +328,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -903,7 +336,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E73637</ip>
+      <ip>0x4E74306</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -911,7 +344,7 @@
       <line>25</line>
     </frame>
     <frame>
-      <ip>0x4E69312</ip>
+      <ip>0x4E693F2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -919,7 +352,7 @@
       <line>28</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -927,7 +360,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -943,7 +376,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -954,7 +387,7 @@
 </error>
 
 <error>
-  <unique>0x41</unique>
+  <unique>0xf</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -969,7 +402,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -977,7 +410,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -985,7 +418,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E85966</ip>
+      <ip>0x4E86635</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_alloc_string</fn>
       <dir>/home/davis/x3ddemoscene-code/lib</dir>
@@ -993,7 +426,7 @@
       <line>392</line>
     </frame>
     <frame>
-      <ip>0x4E8AFF3</ip>
+      <ip>0x4E8BCC2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>task_create</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1001,7 +434,7 @@
       <line>473</line>
     </frame>
     <frame>
-      <ip>0x4E8B3E0</ip>
+      <ip>0x4E8C0AF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1009,7 +442,7 @@
       <line>582</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -1017,7 +450,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -1025,7 +458,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1033,7 +466,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -1049,7 +482,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1060,7 +493,7 @@
 </error>
 
 <error>
-  <unique>0x95</unique>
+  <unique>0x63</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1075,25 +508,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692F522</ip>
+      <ip>0x6930522</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691330B</ip>
+      <ip>0x691430B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1125,7 +558,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1137,7 +570,7 @@
 </error>
 
 <error>
-  <unique>0x96</unique>
+  <unique>0x64</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1157,25 +590,25 @@
       <fn>realloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9767</ip>
+      <ip>0x73AA767</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_realloc</fn>
     </frame>
     <frame>
-      <ip>0x692F406</ip>
+      <ip>0x6930406</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691330B</ip>
+      <ip>0x691430B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1207,7 +640,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1216,7 +649,7 @@
 </error>
 
 <error>
-  <unique>0x97</unique>
+  <unique>0x65</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1231,25 +664,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692F522</ip>
+      <ip>0x6930522</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6913371</ip>
+      <ip>0x6914371</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1281,7 +714,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1293,7 +726,7 @@
 </error>
 
 <error>
-  <unique>0x98</unique>
+  <unique>0x66</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1313,25 +746,25 @@
       <fn>realloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9767</ip>
+      <ip>0x73AA767</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_realloc</fn>
     </frame>
     <frame>
-      <ip>0x692F406</ip>
+      <ip>0x6930406</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6913371</ip>
+      <ip>0x6914371</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1363,7 +796,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1372,7 +805,7 @@
 </error>
 
 <error>
-  <unique>0x99</unique>
+  <unique>0x67</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1387,25 +820,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692F522</ip>
+      <ip>0x6930522</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691CB04</ip>
+      <ip>0x691DB04</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D181</ip>
+      <ip>0x690E181</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1437,7 +870,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1449,7 +882,7 @@
 </error>
 
 <error>
-  <unique>0x9a</unique>
+  <unique>0x68</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1469,25 +902,25 @@
       <fn>realloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9767</ip>
+      <ip>0x73AA767</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_realloc</fn>
     </frame>
     <frame>
-      <ip>0x692F406</ip>
+      <ip>0x6930406</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691CB04</ip>
+      <ip>0x691DB04</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D181</ip>
+      <ip>0x690E181</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1519,7 +952,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1528,7 +961,7 @@
 </error>
 
 <error>
-  <unique>0x9b</unique>
+  <unique>0x69</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1543,25 +976,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692F522</ip>
+      <ip>0x6930522</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6917C1B</ip>
+      <ip>0x6918C1B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D186</ip>
+      <ip>0x690E186</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1593,7 +1026,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1605,7 +1038,7 @@
 </error>
 
 <error>
-  <unique>0x9c</unique>
+  <unique>0x6a</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1625,25 +1058,25 @@
       <fn>realloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9767</ip>
+      <ip>0x73AA767</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_realloc</fn>
     </frame>
     <frame>
-      <ip>0x692F406</ip>
+      <ip>0x6930406</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F90</ip>
+      <ip>0x6934F90</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6917C1B</ip>
+      <ip>0x6918C1B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D186</ip>
+      <ip>0x690E186</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -1675,7 +1108,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -1684,7 +1117,7 @@
 </error>
 
 <error>
-  <unique>0x9e</unique>
+  <unique>0x6c</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1699,7 +1132,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1707,7 +1140,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85F60</ip>
+      <ip>0x4E86C2F</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1715,7 +1148,7 @@
       <line>109</line>
     </frame>
     <frame>
-      <ip>0x4E897D3</ip>
+      <ip>0x4E8A4A2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_llist_init</fn>
       <dir>/home/davis/x3ddemoscene-code/codeblocks/../lib/container</dir>
@@ -1723,7 +1156,7 @@
       <line>43</line>
     </frame>
     <frame>
-      <ip>0x4E89F45</ip>
+      <ip>0x4E8AC14</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_inactive</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1731,7 +1164,7 @@
       <line>234</line>
     </frame>
     <frame>
-      <ip>0x4E8A0AF</ip>
+      <ip>0x4E8AD7E</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>create_workgroup</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1739,7 +1172,7 @@
       <line>272</line>
     </frame>
     <frame>
-      <ip>0x4E8B19C</ip>
+      <ip>0x4E8BE6B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1747,7 +1180,7 @@
       <line>517</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1755,7 +1188,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -1771,7 +1204,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1782,7 +1215,7 @@
 </error>
 
 <error>
-  <unique>0x9f</unique>
+  <unique>0x6d</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1797,7 +1230,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1805,7 +1238,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85F60</ip>
+      <ip>0x4E86C2F</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1813,7 +1246,7 @@
       <line>109</line>
     </frame>
     <frame>
-      <ip>0x4E897EC</ip>
+      <ip>0x4E8A4BB</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_llist_init</fn>
       <dir>/home/davis/x3ddemoscene-code/codeblocks/../lib/container</dir>
@@ -1821,7 +1254,7 @@
       <line>44</line>
     </frame>
     <frame>
-      <ip>0x4E89F45</ip>
+      <ip>0x4E8AC14</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_inactive</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1829,7 +1262,7 @@
       <line>234</line>
     </frame>
     <frame>
-      <ip>0x4E8A0AF</ip>
+      <ip>0x4E8AD7E</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>create_workgroup</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1837,7 +1270,7 @@
       <line>272</line>
     </frame>
     <frame>
-      <ip>0x4E8B19C</ip>
+      <ip>0x4E8BE6B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1845,7 +1278,7 @@
       <line>517</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1853,7 +1286,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -1869,7 +1302,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1880,7 +1313,7 @@
 </error>
 
 <error>
-  <unique>0xa0</unique>
+  <unique>0x6e</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1895,7 +1328,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1903,7 +1336,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85F60</ip>
+      <ip>0x4E86C2F</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1911,7 +1344,7 @@
       <line>109</line>
     </frame>
     <frame>
-      <ip>0x4E89806</ip>
+      <ip>0x4E8A4D5</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_llist_init</fn>
       <dir>/home/davis/x3ddemoscene-code/codeblocks/../lib/container</dir>
@@ -1919,7 +1352,7 @@
       <line>45</line>
     </frame>
     <frame>
-      <ip>0x4E89F45</ip>
+      <ip>0x4E8AC14</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_inactive</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1927,7 +1360,7 @@
       <line>234</line>
     </frame>
     <frame>
-      <ip>0x4E8A0AF</ip>
+      <ip>0x4E8AD7E</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>create_workgroup</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1935,7 +1368,7 @@
       <line>272</line>
     </frame>
     <frame>
-      <ip>0x4E8B19C</ip>
+      <ip>0x4E8BE6B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -1943,7 +1376,7 @@
       <line>517</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1951,7 +1384,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -1967,7 +1400,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -1978,7 +1411,7 @@
 </error>
 
 <error>
-  <unique>0xa1</unique>
+  <unique>0x6f</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -1993,7 +1426,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2001,7 +1434,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2009,7 +1442,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E85966</ip>
+      <ip>0x4E86635</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_alloc_string</fn>
       <dir>/home/davis/x3ddemoscene-code/lib</dir>
@@ -2017,7 +1450,7 @@
       <line>392</line>
     </frame>
     <frame>
-      <ip>0x4E88F05</ip>
+      <ip>0x4E89BD4</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>symlib_load</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2025,7 +1458,7 @@
       <line>397</line>
     </frame>
     <frame>
-      <ip>0x4E69EF4</ip>
+      <ip>0x4E69FD4</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2033,7 +1466,7 @@
       <line>98</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2049,7 +1482,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2060,7 +1493,7 @@
 </error>
 
 <error>
-  <unique>0xae</unique>
+  <unique>0x7c</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -2075,7 +1508,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2083,7 +1516,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2091,7 +1524,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E85966</ip>
+      <ip>0x4E86635</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_alloc_string</fn>
       <dir>/home/davis/x3ddemoscene-code/lib</dir>
@@ -2099,7 +1532,7 @@
       <line>392</line>
     </frame>
     <frame>
-      <ip>0x4E7370A</ip>
+      <ip>0x4E743D9</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -2107,7 +1540,7 @@
       <line>34</line>
     </frame>
     <frame>
-      <ip>0x4E69338</ip>
+      <ip>0x4E69418</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2115,7 +1548,7 @@
       <line>29</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2123,7 +1556,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2139,7 +1572,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2150,7 +1583,7 @@
 </error>
 
 <error>
-  <unique>0xb4</unique>
+  <unique>0x82</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2165,17 +1598,17 @@
       <fn>operator new(unsigned long)</fn>
     </frame>
     <frame>
-      <ip>0x547FA9C</ip>
+      <ip>0x5480A9C</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21</obj>
       <fn>void std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;::_M_construct&lt;char const*&gt;(char const*, char const*, std::forward_iterator_tag)</fn>
     </frame>
     <frame>
-      <ip>0x547FBFB</ip>
+      <ip>0x5480BFB</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21</obj>
       <fn>std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;::basic_string(char const*, std::allocator&lt;char&gt; const&amp;)</fn>
     </frame>
     <frame>
-      <ip>0x5135844</ip>
+      <ip>0x5136844</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::KernelEditor()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -2191,7 +1624,7 @@
       <line>21</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2202,12 +1635,12 @@
 </error>
 
 <error>
-  <unique>0xb5</unique>
+  <unique>0x83</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
-    <text>26 bytes in 1 blocks are definitely lost in loss record 132 of 332</text>
-    <leakedbytes>26</leakedbytes>
+    <text>27 bytes in 1 blocks are definitely lost in loss record 132 of 332</text>
+    <leakedbytes>27</leakedbytes>
     <leakedblocks>1</leakedblocks>
   </xwhat>
   <stack>
@@ -2217,7 +1650,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2225,7 +1658,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2233,7 +1666,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E85966</ip>
+      <ip>0x4E86635</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_alloc_string</fn>
       <dir>/home/davis/x3ddemoscene-code/lib</dir>
@@ -2241,7 +1674,7 @@
       <line>392</line>
     </frame>
     <frame>
-      <ip>0x4E69659</ip>
+      <ip>0x4E69739</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2249,7 +1682,7 @@
       <line>75</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2257,7 +1690,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2273,7 +1706,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2284,7 +1717,7 @@
 </error>
 
 <error>
-  <unique>0xb7</unique>
+  <unique>0x85</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2299,7 +1732,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2307,7 +1740,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2315,7 +1748,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x5135D32</ip>
+      <ip>0x5136D32</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -2323,7 +1756,7 @@
       <line>75</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2331,7 +1764,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2339,7 +1772,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2355,7 +1788,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2366,7 +1799,7 @@
 </error>
 
 <error>
-  <unique>0xc3</unique>
+  <unique>0x91</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2381,7 +1814,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2389,7 +1822,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2397,7 +1830,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2405,7 +1838,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A188</ip>
+      <ip>0x4E8AE57</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2413,7 +1846,7 @@
       <line>296</line>
     </frame>
     <frame>
-      <ip>0x4E89F8D</ip>
+      <ip>0x4E8AC5C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_active</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2421,7 +1854,7 @@
       <line>243</line>
     </frame>
     <frame>
-      <ip>0x4E8A7F6</ip>
+      <ip>0x4E8B4C5</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_new</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2429,7 +1862,7 @@
       <line>365</line>
     </frame>
     <frame>
-      <ip>0x4E8B1D2</ip>
+      <ip>0x4E8BEA1</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2437,7 +1870,7 @@
       <line>521</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2445,7 +1878,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2461,7 +1894,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2472,7 +1905,7 @@
 </error>
 
 <error>
-  <unique>0xc4</unique>
+  <unique>0x92</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2487,7 +1920,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2495,7 +1928,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2503,7 +1936,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2511,7 +1944,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A1BE</ip>
+      <ip>0x4E8AE8D</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2519,7 +1952,7 @@
       <line>296</line>
     </frame>
     <frame>
-      <ip>0x4E89F8D</ip>
+      <ip>0x4E8AC5C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_active</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2527,7 +1960,7 @@
       <line>243</line>
     </frame>
     <frame>
-      <ip>0x4E8A7F6</ip>
+      <ip>0x4E8B4C5</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_new</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2535,7 +1968,7 @@
       <line>365</line>
     </frame>
     <frame>
-      <ip>0x4E8B1D2</ip>
+      <ip>0x4E8BEA1</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2543,7 +1976,7 @@
       <line>521</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2551,7 +1984,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2567,7 +2000,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2578,7 +2011,7 @@
 </error>
 
 <error>
-  <unique>0xc5</unique>
+  <unique>0x93</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2593,7 +2026,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2601,7 +2034,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2609,7 +2042,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2617,7 +2050,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E73729</ip>
+      <ip>0x4E743F8</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -2625,7 +2058,7 @@
       <line>35</line>
     </frame>
     <frame>
-      <ip>0x4E692EC</ip>
+      <ip>0x4E693CC</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2633,7 +2066,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2641,7 +2074,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2657,7 +2090,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2668,7 +2101,7 @@
 </error>
 
 <error>
-  <unique>0xc6</unique>
+  <unique>0x94</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2683,7 +2116,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2691,7 +2124,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2699,7 +2132,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2707,7 +2140,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E7375F</ip>
+      <ip>0x4E7442E</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -2715,7 +2148,7 @@
       <line>35</line>
     </frame>
     <frame>
-      <ip>0x4E692EC</ip>
+      <ip>0x4E693CC</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2723,7 +2156,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2731,7 +2164,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2747,7 +2180,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2758,7 +2191,7 @@
 </error>
 
 <error>
-  <unique>0xc7</unique>
+  <unique>0x95</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2773,7 +2206,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2781,7 +2214,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2789,7 +2222,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2797,7 +2230,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A188</ip>
+      <ip>0x4E8AE57</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2805,7 +2238,7 @@
       <line>296</line>
     </frame>
     <frame>
-      <ip>0x4E8B3C8</ip>
+      <ip>0x4E8C097</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2813,7 +2246,7 @@
       <line>580</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -2821,7 +2254,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2829,7 +2262,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2837,7 +2270,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2853,7 +2286,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2864,7 +2297,7 @@
 </error>
 
 <error>
-  <unique>0xc8</unique>
+  <unique>0x96</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2879,7 +2312,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2887,7 +2320,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2895,7 +2328,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2903,7 +2336,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A1BE</ip>
+      <ip>0x4E8AE8D</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2911,7 +2344,7 @@
       <line>296</line>
     </frame>
     <frame>
-      <ip>0x4E8B3C8</ip>
+      <ip>0x4E8C097</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2919,7 +2352,7 @@
       <line>580</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -2927,7 +2360,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2935,7 +2368,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2943,7 +2376,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -2959,7 +2392,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -2970,7 +2403,7 @@
 </error>
 
 <error>
-  <unique>0xc9</unique>
+  <unique>0x97</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -2985,7 +2418,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -2993,7 +2426,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3001,7 +2434,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3009,7 +2442,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A9A6</ip>
+      <ip>0x4E8B675</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addtask</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3017,7 +2450,7 @@
       <line>408</line>
     </frame>
     <frame>
-      <ip>0x4E8B3F7</ip>
+      <ip>0x4E8C0C6</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3025,7 +2458,7 @@
       <line>583</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -3033,7 +2466,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3041,7 +2474,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3049,7 +2482,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3065,7 +2498,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3076,7 +2509,7 @@
 </error>
 
 <error>
-  <unique>0xca</unique>
+  <unique>0x98</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3091,7 +2524,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3099,7 +2532,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3107,7 +2540,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3115,7 +2548,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A9DC</ip>
+      <ip>0x4E8B6AB</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addtask</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3123,7 +2556,7 @@
       <line>408</line>
     </frame>
     <frame>
-      <ip>0x4E8B3F7</ip>
+      <ip>0x4E8C0C6</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3131,7 +2564,7 @@
       <line>583</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -3139,7 +2572,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3147,7 +2580,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3155,7 +2588,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3171,7 +2604,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3182,7 +2615,7 @@
 </error>
 
 <error>
-  <unique>0xe4</unique>
+  <unique>0xb2</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3197,7 +2630,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3205,7 +2638,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3213,7 +2646,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E8A11F</ip>
+      <ip>0x4E8ADEE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3221,7 +2654,7 @@
       <line>288</line>
     </frame>
     <frame>
-      <ip>0x4E8B3C8</ip>
+      <ip>0x4E8C097</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3229,7 +2662,7 @@
       <line>580</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -3237,7 +2670,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3245,7 +2678,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3253,7 +2686,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3269,7 +2702,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3280,7 +2713,7 @@
 </error>
 
 <error>
-  <unique>0xe8</unique>
+  <unique>0xb6</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3295,7 +2728,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3303,7 +2736,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3311,7 +2744,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3319,7 +2752,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A1E4</ip>
+      <ip>0x4E8AEB3</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3327,7 +2760,7 @@
       <line>296</line>
     </frame>
     <frame>
-      <ip>0x4E89F8D</ip>
+      <ip>0x4E8AC5C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_active</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3335,7 +2768,7 @@
       <line>243</line>
     </frame>
     <frame>
-      <ip>0x4E8A7F6</ip>
+      <ip>0x4E8B4C5</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_new</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3343,7 +2776,7 @@
       <line>365</line>
     </frame>
     <frame>
-      <ip>0x4E8B1D2</ip>
+      <ip>0x4E8BEA1</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3351,7 +2784,7 @@
       <line>521</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3359,7 +2792,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3375,7 +2808,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3386,7 +2819,7 @@
 </error>
 
 <error>
-  <unique>0xe9</unique>
+  <unique>0xb7</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3401,7 +2834,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3409,7 +2842,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3417,7 +2850,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3425,7 +2858,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8A1E4</ip>
+      <ip>0x4E8AEB3</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3433,7 +2866,7 @@
       <line>296</line>
     </frame>
     <frame>
-      <ip>0x4E8B3C8</ip>
+      <ip>0x4E8C097</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3441,7 +2874,7 @@
       <line>580</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -3449,7 +2882,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3457,7 +2890,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3465,7 +2898,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3481,7 +2914,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3492,7 +2925,7 @@
 </error>
 
 <error>
-  <unique>0xea</unique>
+  <unique>0xb8</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3507,7 +2940,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3515,7 +2948,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3523,7 +2956,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3531,7 +2964,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E8AA02</ip>
+      <ip>0x4E8B6D1</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addtask</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3539,7 +2972,7 @@
       <line>408</line>
     </frame>
     <frame>
-      <ip>0x4E8B3F7</ip>
+      <ip>0x4E8C0C6</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -3547,7 +2980,7 @@
       <line>583</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -3555,7 +2988,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3563,7 +2996,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3571,7 +3004,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -3587,7 +3020,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -3598,7 +3031,7 @@
 </error>
 
 <error>
-  <unique>0x148</unique>
+  <unique>0x116</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3613,20 +3046,20 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692EA59</ip>
+      <ip>0x692FA59</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x692EB43</ip>
+      <ip>0x692FB43</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D0AA</ip>
+      <ip>0x690E0AA</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -3658,7 +3091,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -3666,11 +3099,14 @@
     <frame>
       <ip>0xFFF0006B5</ip>
     </frame>
+    <frame>
+      <ip>0xFFF0006B6</ip>
+    </frame>
   </stack>
 </error>
 
 <error>
-  <unique>0x149</unique>
+  <unique>0x117</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3685,29 +3121,29 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692EA59</ip>
+      <ip>0x692FA59</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x692EB43</ip>
+      <ip>0x692FB43</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F82</ip>
+      <ip>0x6934F82</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691330B</ip>
+      <ip>0x691430B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -3739,7 +3175,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -3748,7 +3184,7 @@
 </error>
 
 <error>
-  <unique>0x14a</unique>
+  <unique>0x118</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3763,29 +3199,29 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692EA59</ip>
+      <ip>0x692FA59</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x692EB43</ip>
+      <ip>0x692FB43</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F82</ip>
+      <ip>0x6934F82</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6913371</ip>
+      <ip>0x6914371</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -3817,7 +3253,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -3826,7 +3262,7 @@
 </error>
 
 <error>
-  <unique>0x14b</unique>
+  <unique>0x119</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3841,29 +3277,29 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692EA59</ip>
+      <ip>0x692FA59</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x692EB43</ip>
+      <ip>0x692FB43</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F82</ip>
+      <ip>0x6934F82</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691CB04</ip>
+      <ip>0x691DB04</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D181</ip>
+      <ip>0x690E181</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -3895,7 +3331,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -3904,7 +3340,7 @@
 </error>
 
 <error>
-  <unique>0x14c</unique>
+  <unique>0x11a</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3919,29 +3355,29 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692EA59</ip>
+      <ip>0x692FA59</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x692EB43</ip>
+      <ip>0x692FB43</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933F82</ip>
+      <ip>0x6934F82</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6917C1B</ip>
+      <ip>0x6918C1B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D186</ip>
+      <ip>0x690E186</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -3973,7 +3409,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -3982,7 +3418,7 @@
 </error>
 
 <error>
-  <unique>0x14d</unique>
+  <unique>0x11b</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -3997,7 +3433,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4005,7 +3441,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4013,7 +3449,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E863FF</ip>
+      <ip>0x4E870CE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_expand2</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4021,7 +3457,7 @@
       <line>199</line>
     </frame>
     <frame>
-      <ip>0x4E73784</ip>
+      <ip>0x4E74453</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -4029,7 +3465,7 @@
       <line>35</line>
     </frame>
     <frame>
-      <ip>0x4E692EC</ip>
+      <ip>0x4E693CC</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4037,7 +3473,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4045,7 +3481,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4061,7 +3497,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4072,7 +3508,7 @@
 </error>
 
 <error>
-  <unique>0x14e</unique>
+  <unique>0x11c</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4087,7 +3523,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4095,7 +3531,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4103,7 +3539,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E69347</ip>
+      <ip>0x4E69427</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4111,7 +3547,7 @@
       <line>30</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4119,7 +3555,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4135,7 +3571,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4146,7 +3582,7 @@
 </error>
 
 <error>
-  <unique>0x150</unique>
+  <unique>0x11e</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4161,25 +3597,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692FDFF</ip>
+      <ip>0x6930DFF</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933FE0</ip>
+      <ip>0x6934FE0</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691330B</ip>
+      <ip>0x691430B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -4211,7 +3647,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -4223,7 +3659,7 @@
 </error>
 
 <error>
-  <unique>0x151</unique>
+  <unique>0x11f</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4238,25 +3674,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692FDFF</ip>
+      <ip>0x6930DFF</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933FE0</ip>
+      <ip>0x6934FE0</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6913371</ip>
+      <ip>0x6914371</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D177</ip>
+      <ip>0x690E177</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -4288,7 +3724,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -4300,7 +3736,7 @@
 </error>
 
 <error>
-  <unique>0x152</unique>
+  <unique>0x120</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4315,25 +3751,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692FBD6</ip>
+      <ip>0x6930BD6</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933FE0</ip>
+      <ip>0x6934FE0</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x691CB04</ip>
+      <ip>0x691DB04</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D181</ip>
+      <ip>0x690E181</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -4365,7 +3801,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -4377,7 +3813,7 @@
 </error>
 
 <error>
-  <unique>0x153</unique>
+  <unique>0x121</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4392,25 +3828,25 @@
       <fn>calloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9700</ip>
+      <ip>0x73AA700</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_malloc0</fn>
     </frame>
     <frame>
-      <ip>0x692FBD6</ip>
+      <ip>0x6930BD6</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x6933FE0</ip>
+      <ip>0x6934FE0</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_fundamental</fn>
     </frame>
     <frame>
-      <ip>0x6917C1B</ip>
+      <ip>0x6918C1B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D186</ip>
+      <ip>0x690E186</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -4442,7 +3878,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -4454,7 +3890,7 @@
 </error>
 
 <error>
-  <unique>0x154</unique>
+  <unique>0x122</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4477,7 +3913,7 @@
       <line>21</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4488,7 +3924,7 @@
 </error>
 
 <error>
-  <unique>0x156</unique>
+  <unique>0x124</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4503,7 +3939,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4511,7 +3947,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4519,7 +3955,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E8A11F</ip>
+      <ip>0x4E8ADEE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4527,7 +3963,7 @@
       <line>288</line>
     </frame>
     <frame>
-      <ip>0x4E89F8D</ip>
+      <ip>0x4E8AC5C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_active</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4535,7 +3971,7 @@
       <line>243</line>
     </frame>
     <frame>
-      <ip>0x4E8A7F6</ip>
+      <ip>0x4E8B4C5</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_new</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4543,7 +3979,7 @@
       <line>365</line>
     </frame>
     <frame>
-      <ip>0x4E8B1D2</ip>
+      <ip>0x4E8BEA1</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4551,7 +3987,7 @@
       <line>521</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4559,7 +3995,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4575,7 +4011,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4586,7 +4022,7 @@
 </error>
 
 <error>
-  <unique>0x158</unique>
+  <unique>0x126</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4601,30 +4037,30 @@
       <fn>realloc</fn>
     </frame>
     <frame>
-      <ip>0x73A9767</ip>
+      <ip>0x73AA767</ip>
       <obj>/lib/x86_64-linux-gnu/libglib-2.0.so.0.4706.0</obj>
       <fn>g_realloc</fn>
     </frame>
     <frame>
-      <ip>0x692E9D8</ip>
+      <ip>0x692F9D8</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x69342CC</ip>
+      <ip>0x69352CC</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_type_register_static</fn>
     </frame>
     <frame>
-      <ip>0x691E799</ip>
+      <ip>0x691F799</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
       <fn>g_param_type_register_static</fn>
     </frame>
     <frame>
-      <ip>0x6920AFB</ip>
+      <ip>0x6921AFB</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
-      <ip>0x690D18B</ip>
+      <ip>0x690E18B</ip>
       <obj>/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.4706.0</obj>
     </frame>
     <frame>
@@ -4656,7 +4092,7 @@
       <obj>/lib/x86_64-linux-gnu/ld-2.21.so</obj>
     </frame>
     <frame>
-      <ip>0x1</ip>
+      <ip>0x2</ip>
     </frame>
     <frame>
       <ip>0xFFF00067E</ip>
@@ -4665,7 +4101,7 @@
 </error>
 
 <error>
-  <unique>0x162</unique>
+  <unique>0x130</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -4680,7 +4116,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4688,7 +4124,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85F60</ip>
+      <ip>0x4E86C2F</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4696,7 +4132,7 @@
       <line>109</line>
     </frame>
     <frame>
-      <ip>0x4E69232</ip>
+      <ip>0x4E69312</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_list_init</fn>
       <dir>/home/davis/x3ddemoscene-code/codeblocks/../lib/container</dir>
@@ -4704,7 +4140,7 @@
       <line>55</line>
     </frame>
     <frame>
-      <ip>0x4E6938E</ip>
+      <ip>0x4E6946E</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4712,7 +4148,7 @@
       <line>33</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4720,7 +4156,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4736,7 +4172,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4747,7 +4183,7 @@
 </error>
 
 <error>
-  <unique>0x163</unique>
+  <unique>0x131</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4778,7 +4214,7 @@
       <line>544</line>
     </frame>
     <frame>
-      <ip>0x954F092</ip>
+      <ip>0x9550092</ip>
       <obj>/lib/x86_64-linux-gnu/libpthread-2.21.so</obj>
       <fn>allocate_stack</fn>
       <dir>/build/glibc-uCRKup/glibc-2.21/nptl</dir>
@@ -4786,7 +4222,7 @@
       <line>588</line>
     </frame>
     <frame>
-      <ip>0x954F092</ip>
+      <ip>0x9550092</ip>
       <obj>/lib/x86_64-linux-gnu/libpthread-2.21.so</obj>
       <fn>pthread_create@@GLIBC_2.2.5</fn>
       <dir>/build/glibc-uCRKup/glibc-2.21/nptl</dir>
@@ -4794,7 +4230,7 @@
       <line>537</line>
     </frame>
     <frame>
-      <ip>0x4E89B2E</ip>
+      <ip>0x4E8A7FD</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>generate_thread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4802,7 +4238,7 @@
       <line>156</line>
     </frame>
     <frame>
-      <ip>0x4E8A345</ip>
+      <ip>0x4E8B014</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4810,7 +4246,7 @@
       <line>304</line>
     </frame>
     <frame>
-      <ip>0x4E8B3C8</ip>
+      <ip>0x4E8C097</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4818,7 +4254,7 @@
       <line>580</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -4826,7 +4262,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4834,7 +4270,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4842,7 +4278,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4858,7 +4294,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4869,7 +4305,7 @@
 </error>
 
 <error>
-  <unique>0x167</unique>
+  <unique>0x135</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4884,7 +4320,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4892,7 +4328,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4900,7 +4336,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E8AFCD</ip>
+      <ip>0x4E8BC9C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>task_create</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4908,7 +4344,7 @@
       <line>472</line>
     </frame>
     <frame>
-      <ip>0x4E8B3E0</ip>
+      <ip>0x4E8C0AF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_run_task</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -4916,7 +4352,7 @@
       <line>582</line>
     </frame>
     <frame>
-      <ip>0x5135DB2</ip>
+      <ip>0x5136DB2</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::KernelEditor::on_loop_init(x3d::usr::KernelEnvironment*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr/editor</dir>
@@ -4924,7 +4360,7 @@
       <line>85</line>
     </frame>
     <frame>
-      <ip>0x5148204</ip>
+      <ip>0x5149204</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>on_loop_init(void*)</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4932,7 +4368,7 @@
       <line>38</line>
     </frame>
     <frame>
-      <ip>0x4E6A098</ip>
+      <ip>0x4E6A178</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_loop</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4940,7 +4376,7 @@
       <line>147</line>
     </frame>
     <frame>
-      <ip>0x5148627</ip>
+      <ip>0x5149627</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -4956,7 +4392,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -4967,7 +4403,7 @@
 </error>
 
 <error>
-  <unique>0x170</unique>
+  <unique>0x13e</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -4998,7 +4434,7 @@
       <line>544</line>
     </frame>
     <frame>
-      <ip>0x954F092</ip>
+      <ip>0x9550092</ip>
       <obj>/lib/x86_64-linux-gnu/libpthread-2.21.so</obj>
       <fn>allocate_stack</fn>
       <dir>/build/glibc-uCRKup/glibc-2.21/nptl</dir>
@@ -5006,7 +4442,7 @@
       <line>588</line>
     </frame>
     <frame>
-      <ip>0x954F092</ip>
+      <ip>0x9550092</ip>
       <obj>/lib/x86_64-linux-gnu/libpthread-2.21.so</obj>
       <fn>pthread_create@@GLIBC_2.2.5</fn>
       <dir>/build/glibc-uCRKup/glibc-2.21/nptl</dir>
@@ -5014,7 +4450,7 @@
       <line>537</line>
     </frame>
     <frame>
-      <ip>0x4E89B2E</ip>
+      <ip>0x4E8A7FD</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>generate_thread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5022,7 +4458,7 @@
       <line>156</line>
     </frame>
     <frame>
-      <ip>0x4E8A345</ip>
+      <ip>0x4E8B014</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_addthread</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5030,7 +4466,7 @@
       <line>304</line>
     </frame>
     <frame>
-      <ip>0x4E89F8D</ip>
+      <ip>0x4E8AC5C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_make_active</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5038,7 +4474,7 @@
       <line>243</line>
     </frame>
     <frame>
-      <ip>0x4E8A7F6</ip>
+      <ip>0x4E8B4C5</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_new</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5046,7 +4482,7 @@
       <line>365</line>
     </frame>
     <frame>
-      <ip>0x4E8B1D2</ip>
+      <ip>0x4E8BEA1</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5054,7 +4490,7 @@
       <line>521</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5062,7 +4498,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5078,7 +4514,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5089,7 +4525,7 @@
 </error>
 
 <error>
-  <unique>0x172</unique>
+  <unique>0x140</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -5104,7 +4540,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5112,7 +4548,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5120,7 +4556,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E8A081</ip>
+      <ip>0x4E8AD50</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>create_workgroup</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5128,7 +4564,7 @@
       <line>269</line>
     </frame>
     <frame>
-      <ip>0x4E8B19C</ip>
+      <ip>0x4E8BE6B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5136,7 +4572,7 @@
       <line>517</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5144,7 +4580,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5160,7 +4596,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5171,7 +4607,7 @@
 </error>
 
 <error>
-  <unique>0x173</unique>
+  <unique>0x141</unique>
   <tid>1</tid>
   <kind>Leak_PossiblyLost</kind>
   <xwhat>
@@ -5186,7 +4622,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5194,7 +4630,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5202,7 +4638,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E8A081</ip>
+      <ip>0x4E8AD50</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>create_workgroup</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5210,7 +4646,7 @@
       <line>269</line>
     </frame>
     <frame>
-      <ip>0x4E8B204</ip>
+      <ip>0x4E8BED3</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5218,7 +4654,7 @@
       <line>527</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5226,7 +4662,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5242,7 +4678,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5253,7 +4689,7 @@
 </error>
 
 <error>
-  <unique>0x174</unique>
+  <unique>0x142</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -5268,7 +4704,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5276,7 +4712,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5284,7 +4720,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E8A76D</ip>
+      <ip>0x4E8B43C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_new</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5292,7 +4728,7 @@
       <line>359</line>
     </frame>
     <frame>
-      <ip>0x4E8B1D2</ip>
+      <ip>0x4E8BEA1</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5300,7 +4736,7 @@
       <line>521</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5308,7 +4744,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5324,7 +4760,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5335,7 +4771,7 @@
 </error>
 
 <error>
-  <unique>0x175</unique>
+  <unique>0x143</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -5350,7 +4786,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5358,7 +4794,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5366,7 +4802,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E8A76D</ip>
+      <ip>0x4E8B43C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>workgroup_new</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5374,7 +4810,7 @@
       <line>359</line>
     </frame>
     <frame>
-      <ip>0x4E8B21F</ip>
+      <ip>0x4E8BEEE</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>thread_lib_init</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5382,7 +4818,7 @@
       <line>528</line>
     </frame>
     <frame>
-      <ip>0x4E69E9B</ip>
+      <ip>0x4E69F7B</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5390,7 +4826,7 @@
       <line>91</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5406,7 +4842,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5417,7 +4853,7 @@
 </error>
 
 <error>
-  <unique>0x177</unique>
+  <unique>0x145</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -5432,7 +4868,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5440,7 +4876,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E86094</ip>
+      <ip>0x4E86D63</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__change_size_var</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5448,7 +4884,7 @@
       <line>134</line>
     </frame>
     <frame>
-      <ip>0x4E861F9</ip>
+      <ip>0x4E86EC8</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_var_add</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5456,7 +4892,7 @@
       <line>158</line>
     </frame>
     <frame>
-      <ip>0x4E69797</ip>
+      <ip>0x4E69877</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5464,7 +4900,7 @@
       <line>88</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5472,7 +4908,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5488,7 +4924,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5499,13 +4935,13 @@
 </error>
 
 <error>
-  <unique>0x179</unique>
+  <unique>0x147</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
-    <text>63,743 bytes in 2,908 blocks are definitely lost in loss record 328 of 332</text>
-    <leakedbytes>63743</leakedbytes>
-    <leakedblocks>2908</leakedblocks>
+    <text>64,030 bytes in 2,919 blocks are definitely lost in loss record 328 of 332</text>
+    <leakedbytes>64030</leakedbytes>
+    <leakedblocks>2919</leakedblocks>
   </xwhat>
   <stack>
     <frame>
@@ -5514,7 +4950,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5522,7 +4958,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5530,7 +4966,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E85966</ip>
+      <ip>0x4E86635</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_alloc_string</fn>
       <dir>/home/davis/x3ddemoscene-code/lib</dir>
@@ -5538,7 +4974,7 @@
       <line>392</line>
     </frame>
     <frame>
-      <ip>0x4E88286</ip>
+      <ip>0x4E88F55</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>match_symbol</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5546,7 +4982,7 @@
       <line>180</line>
     </frame>
     <frame>
-      <ip>0x4E887AB</ip>
+      <ip>0x4E8947A</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>dump</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5554,7 +4990,7 @@
       <line>292</line>
     </frame>
     <frame>
-      <ip>0x4E88F36</ip>
+      <ip>0x4E89C05</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>symlib_load</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5562,7 +4998,7 @@
       <line>401</line>
     </frame>
     <frame>
-      <ip>0x4E69EF4</ip>
+      <ip>0x4E69FD4</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5570,7 +5006,7 @@
       <line>98</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5586,7 +5022,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5597,7 +5033,7 @@
 </error>
 
 <error>
-  <unique>0x17d</unique>
+  <unique>0x14b</unique>
   <tid>1</tid>
   <kind>Leak_DefinitelyLost</kind>
   <xwhat>
@@ -5612,7 +5048,7 @@
       <fn>malloc</fn>
     </frame>
     <frame>
-      <ip>0x4E85D41</ip>
+      <ip>0x4E86A10</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>__insane_malloc</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5620,7 +5056,7 @@
       <line>60</line>
     </frame>
     <frame>
-      <ip>0x4E85DF0</ip>
+      <ip>0x4E86ABF</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alloc_fix</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/system</dir>
@@ -5628,7 +5064,7 @@
       <line>81</line>
     </frame>
     <frame>
-      <ip>0x4E73637</ip>
+      <ip>0x4E74306</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>alg_var_set_declare</fn>
       <dir>/home/davis/x3ddemoscene-code/lib/container</dir>
@@ -5636,7 +5072,7 @@
       <line>25</line>
     </frame>
     <frame>
-      <ip>0x4E69338</ip>
+      <ip>0x4E69418</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>debugger_init</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5644,7 +5080,7 @@
       <line>29</line>
     </frame>
     <frame>
-      <ip>0x4E69F25</ip>
+      <ip>0x4E6A005</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>kernel_start</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5652,7 +5088,7 @@
       <line>101</line>
     </frame>
     <frame>
-      <ip>0x514860C</ip>
+      <ip>0x514960C</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libusr.so</obj>
       <fn>x3d::usr::Kernel::run()</fn>
       <dir>/home/davis/x3ddemoscene-code/usr</dir>
@@ -5668,7 +5104,7 @@
       <line>27</line>
     </frame>
     <frame>
-      <ip>0x4E69E47</ip>
+      <ip>0x4E69F27</ip>
       <obj>/home/davis/x3ddemoscene-code/bin/libx3dcore.so</obj>
       <fn>main</fn>
       <dir>/home/davis/x3ddemoscene-code/kernel</dir>
@@ -5679,30 +5115,6 @@
 </error>
 
 <errorcounts>
-  <pair>
-    <count>4</count>
-    <unique>0x13</unique>
-  </pair>
-  <pair>
-    <count>4</count>
-    <unique>0x12</unique>
-  </pair>
-  <pair>
-    <count>4</count>
-    <unique>0x11</unique>
-  </pair>
-  <pair>
-    <count>17</count>
-    <unique>0x2</unique>
-  </pair>
-  <pair>
-    <count>17</count>
-    <unique>0x1</unique>
-  </pair>
-  <pair>
-    <count>4</count>
-    <unique>0x0</unique>
-  </pair>
 </errorcounts>
 
 <suppcounts>
