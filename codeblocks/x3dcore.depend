@@ -3617,13 +3617,13 @@
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/container/array.c
 
-1458399732 source:/home/davis/x3ddemoscene-code/lib/container/list.c
+1458460358 source:/home/davis/x3ddemoscene-code/lib/container/list.c
 	<container/list.h>
 	<container/paramset.h>
 	<system/log.h>
 	<x3d/debug.h>
 
-1458399859 /home/davis/x3ddemoscene-code/lib/container/list.h
+1458461100 /home/davis/x3ddemoscene-code/lib/container/list.h
 	<system/allocator.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/container/map.c
@@ -3729,8 +3729,9 @@
 	<container/paramset.h>
 	<x3d/debug.h>
 
-1455996146 source:/home/davis/x3ddemoscene-code/lib/system/panic.c
+1458431912 source:/home/davis/x3ddemoscene-code/lib/system/panic.c
 	<x3d/common.h>
+	<system/log.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/system/symlib.c
 	<misc.h>

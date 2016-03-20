@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1458405148 source:/home/davis/x3ddemoscene-code/external/editor/main.cpp
+1458444344 source:/home/davis/x3ddemoscene-code/external/editor/main.cpp
 	<stdio.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_editor.hpp>
+	<list>
 
 1455996146 /home/davis/x3ddemoscene-code/include/usr/usr_x3d.hpp
 	<string>

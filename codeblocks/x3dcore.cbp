@@ -15,7 +15,6 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-g" />
-					<Add option="-g1" />
 					<Add option="-Werror" />
 				</Compiler>
 			</Target>
@@ -479,20 +478,11 @@
 		<Unit filename="../lib/container/balancedtree.h" />
 		<Unit filename="../lib/container/container.h" />
 		<Unit filename="../lib/container/hashmap.h" />
-		<Unit filename="../lib/container/hashmapstatic.h" />
 		<Unit filename="../lib/container/linkedlist.h" />
 		<Unit filename="../lib/container/list.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/container/list.h" />
-		<Unit filename="../lib/container/map.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/container/map.h" />
-		<Unit filename="../lib/container/multimap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/container/multimap.h" />
 		<Unit filename="../lib/container/paramset.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -511,10 +501,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/container/staging.h" />
-		<Unit filename="../lib/container/tree.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/container/tree.h" />
 		<Unit filename="../lib/main.c">
 			<Option compilerVar="CC" />
 		</Unit>

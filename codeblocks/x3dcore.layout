@@ -2,13 +2,124 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="../lib/container/list.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/system/panic.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1881" topLine="36" />
+			<Cursor1 position="205" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="30" />
+		</Folding>
+	</File>
+	<File name="../lib/container/list.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="890" topLine="100" />
 		</Cursor>
 		<Folding>
 			<Collapse line="11" />
-			<Collapse line="25" />
+		</Folding>
+	</File>
+	<File name="../lib/container/list.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11488" topLine="149" />
+		</Cursor>
+	</File>
+	<File name="../lib/misc.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/balancedtree.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10480" topLine="88" />
+		</Cursor>
+	</File>
+	<File name="../lib/system/log.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="641" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../lib/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="27" />
+		</Cursor>
+		<Folding>
+			<Collapse line="31" />
+			<Collapse line="51" />
+			<Collapse line="71" />
+			<Collapse line="111" />
+			<Collapse line="133" />
+			<Collapse line="150" />
+			<Collapse line="172" />
+			<Collapse line="196" />
+		</Folding>
+	</File>
+	<File name="../lib/container/arraylist.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="149" />
+		</Cursor>
+	</File>
+	<File name="../kernel/debug.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5287" topLine="111" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/staging.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="37" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/array.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="9" />
+		</Cursor>
+		<Folding>
+			<Collapse line="0" />
+			<Collapse line="36" />
+			<Collapse line="39" />
+			<Collapse line="66" />
+			<Collapse line="74" />
+		</Folding>
+	</File>
+	<File name="../lib/container/staging.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="111" />
+		</Cursor>
+		<Folding>
+			<Collapse line="21" />
+			<Collapse line="27" />
+			<Collapse line="36" />
+			<Collapse line="50" />
+			<Collapse line="87" />
+			<Collapse line="95" />
+			<Collapse line="109" />
+			<Collapse line="117" />
+			<Collapse line="125" />
+			<Collapse line="146" />
+			<Collapse line="151" />
+			<Collapse line="169" />
+			<Collapse line="176" />
+			<Collapse line="183" />
+			<Collapse line="192" />
+			<Collapse line="206" />
+			<Collapse line="219" />
+			<Collapse line="223" />
+			<Collapse line="226" />
+			<Collapse line="230" />
+			<Collapse line="285" />
+			<Collapse line="288" />
+			<Collapse line="308" />
+			<Collapse line="321" />
+			<Collapse line="330" />
+			<Collapse line="335" />
+			<Collapse line="338" />
+			<Collapse line="344" />
+			<Collapse line="349" />
+			<Collapse line="355" />
+			<Collapse line="414" />
+			<Collapse line="448" />
+			<Collapse line="463" />
+			<Collapse line="468" />
+			<Collapse line="474" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>

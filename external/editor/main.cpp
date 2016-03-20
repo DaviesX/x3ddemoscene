@@ -2,6 +2,7 @@
 #include <usr/usr_x3d.hpp>
 #include <usr/usr_kernel.hpp>
 #include <usr/usr_editor.hpp>
+#include <list>
 
 using namespace x3d;
 using namespace x3d::usr;
