@@ -164,7 +164,7 @@
 	<x3d/common.h>
 	"fbo.h"
 
-1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/geometry/bvh.c
+1458590338 source:/home/davis/x3ddemoscene-code/drivers/renderer/geometry/bvh.c
 	<container/arraylist.h>
 	<container/stack.h>
 	<container/quicksort.h>
@@ -174,8 +174,7 @@
 	"shape_common.h"
 	"bvh.h"
 
-1458506661 /home/davis/x3ddemoscene-code/lib/container/stack.h
-	<container/container.h>
+1458590657 /home/davis/x3ddemoscene-code/lib/container/stack.h
 	<system/allocator.h>
 
 1455996146 /home/davis/x3ddemoscene-code/lib/container/quicksort.h
@@ -3344,7 +3343,7 @@
 	<renderer/shader_lib.h>
 	"rtshader.h"
 
-1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/shaderformulate.c
+1458590405 source:/home/davis/x3ddemoscene-code/drivers/renderer/shaderformulate.c
 	<misc.h>
 	<container/stack.h>
 	<math/math.h>
@@ -3532,7 +3531,7 @@
 	<x3d/rendertree.h>
 	<x3d/rendernoderdaloader.h>
 
-1455996146 source:/home/davis/x3ddemoscene-code/kernel/rendertree.c
+1458590338 source:/home/davis/x3ddemoscene-code/kernel/rendertree.c
 	<misc.h>
 	<container/stack.h>
 	<container/arraylist.h>
@@ -3602,7 +3601,7 @@
 	<container/paramset.h>
 	<compiler/compiler.h>
 
-1455996146 source:/home/davis/x3ddemoscene-code/lib/compiler/parser.c
+1458590093 source:/home/davis/x3ddemoscene-code/lib/compiler/parser.c
 	<x3d/common.h>
 	<container/stack.h>
 	<system/allocator.h>
@@ -3622,7 +3621,7 @@
 	<system/log.h>
 	<x3d/debug.h>
 
-1458460358 source:/home/davis/x3ddemoscene-code/lib/container/list.c
+1458589359 source:/home/davis/x3ddemoscene-code/lib/container/list.c
 	<container/list.h>
 	<container/paramset.h>
 	<system/log.h>
@@ -3764,13 +3763,13 @@
 	<system/log.h>
 	<x3d/debug.h>
 
-1458506088 source:/home/davis/x3ddemoscene-code/lib/container/deque.c
+1458589348 source:/home/davis/x3ddemoscene-code/lib/container/deque.c
 	<container/deque.h>
 	<container/paramset.h>
 	<system/log.h>
 	<x3d/debug.h>
 
-1458506252 /home/davis/x3ddemoscene-code/lib/container/deque.h
+1458589465 /home/davis/x3ddemoscene-code/lib/container/deque.h
 
 1458535225 /home/davis/x3ddemoscene-code/lib/container/array.h
 	<system/allocator.h>

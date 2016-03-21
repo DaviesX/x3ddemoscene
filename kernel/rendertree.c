@@ -307,16 +307,16 @@ static struct render_node* next_input(int* c_ibranch, struct render_node* node)
 
 bool render_tree_visit(struct render_tree* tree, struct render_tree_visitor* visitor)
 {
-        declare_stack(stack, 128*sizeof(struct render_node*));
-        init_stack(&stack);
+        lstack_templ(128*sizeof(struct render_node*)) stack;
+        lstack_init(&stack);
         struct render_node*     c_node = tree->node_tree;
         int                     c_ibranch = 0;
 
         begin_tree_traversal(r0);
         if (c_node == nullptr/* || is_empty_input(&c_ibranch, c_node)*/) {
                 backtrack_tree_branch(&stack, r0,
-                                      pop_stack(&stack, c_ibranch);
-                                      pop_stack(&stack, c_node);
+                                      lstack_pop(&stack, c_ibranch);
+                                      lstack_pop(&stack, c_node);
                                       if (visitor->backtrack) {
                                               if (c_node == nullptr) {
                                                       log_critical_err_dbg("encounter nullptr node during traversal. logical error!");
@@ -328,8 +328,8 @@ bool render_tree_visit(struct render_tree* tree, struct render_tree_visitor* vis
                 enter_tree_branch(if (visitor->this_node) {
                                           visitor->this_node(c_node, c_node->input, c_node->output, visitor->dataptr);
                                   }
-                                  push_stack(&stack, c_node);
-                                  push_stack(&stack, c_ibranch);
+                                  lstack_push(&stack, c_node);
+                                  lstack_push(&stack, c_ibranch);
                                   c_node = first_input(&c_ibranch, c_node););
         }
         end_tree_traversal(r0);
@@ -407,7 +407,7 @@ static const char* c_NodeTypeToString[] = {
         "RenderNodeOutput",
 };
 
-static void __print_common(struct render_node* node, struct render_node* input[], struct render_node* output[], 
+static void __print_common(struct render_node* node, struct render_node* input[], struct render_node* output[],
                            const char* prefix)
 {
         log_normal_dbg("%s: [name:%s, type: %s]", prefix,

@@ -48,8 +48,8 @@ void parse_code ( char *code, struct code_parser *parser, struct sym_entry *sym_
 
 void parse_exp ( struct code_parser *parser, struct sym_entry *sym_tbl )
 {
-        declare_stack ( opr_stack, 128 );
-        init_stack ( &opr_stack );
+        lstack_templ(128) opr_stack;
+        lstack_init ( &opr_stack );
         struct internal_data *data = parser->data;
 
         while ( 1 ) {
@@ -66,28 +66,28 @@ void parse_exp ( struct code_parser *parser, struct sym_entry *sym_tbl )
                 case TOK_IDR_SUB:
                 case TOK_IDR_MUL:
                 case TOK_IDR_DIV: {
-                        if ( check_stack ( &opr_stack ) ) {
+                        if (!lstack_is_empty(&opr_stack)) {
                                 struct op_info top_opr;
                                 struct op_info curr_opr;
                                 struct token_info top_tok;
-                                get_stack_last ( &opr_stack, top_tok );
+                                lstack_back ( &opr_stack, top_tok );
                                 get_op_info_lexer ( &data->next_tok, &curr_opr );
                                 get_op_info_lexer ( &top_tok, &top_opr );
                                 if ( curr_opr.prio <= top_opr.prio ) {
-                                        pop_stack ( &opr_stack, top_tok );
+                                        lstack_pop ( &opr_stack, top_tok );
                                         emit_postfix ( &top_tok, &parser->em );
                                 }
                         }
-                        push_stack ( &opr_stack, data->next_tok );
+                        lstack_push ( &opr_stack, data->next_tok );
                         break;
                 }
                 case TOK_IDR_BEGIN_PARENT: {
                         break;
                 }
                 case TOK_IDR_END_STAT: {
-                        while ( check_stack ( &opr_stack ) ) {
+                        while (!lstack_is_empty(&opr_stack)) {
                                 struct token_info top_tok;
-                                pop_stack ( &opr_stack, top_tok );
+                                lstack_pop ( &opr_stack, top_tok );
                                 emit_postfix ( &top_tok, &parser->em );
                         }
                         return ;

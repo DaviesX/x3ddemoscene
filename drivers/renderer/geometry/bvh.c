@@ -153,7 +153,7 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
         int split_pos = start_pos;
         int end_pos = alg_list_n ( prim_list );
         *num_nodes = 0;
-        declare_stack ( stack, TREE_DEPTH*4*sizeof (int) );
+        lstack_templ(TREE_DEPTH*4*sizeof(int)) stack;
 
         /*
          * Construction of the initial bvh tree
@@ -176,9 +176,9 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
         int num_prim = end_pos - start_pos;
         if ( num_prim <= 1 ) {
                 backtrack_tree_branch ( &stack, TT0,
-                                        pop_stack ( &stack, end_pos );
-                                        pop_stack ( &stack, split_pos );
-                                        pop_stack ( &stack, ichild );
+                                        lstack_pop ( &stack, end_pos );
+                                        lstack_pop ( &stack, split_pos );
+                                        lstack_pop ( &stack, ichild );
                                         start_pos = split_pos;
                                         ichild ++;
                                       );
@@ -220,10 +220,10 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
                 alg_split_byvalue ( &bounds[start_pos], end_pos - start_pos, &vol_mid,
                                     part_by_mid_point, &split_pos );
                 enter_tree_branch (
-                        push_stack ( &stack, curr_node );
-                        push_stack ( &stack, ichild );
-                        push_stack ( &stack, split_pos );
-                        push_stack ( &stack, end_pos );
+                        lstack_push ( &stack, curr_node );
+                        lstack_push ( &stack, ichild );
+                        lstack_push ( &stack, split_pos );
+                        lstack_push ( &stack, end_pos );
                         end_pos = split_pos;
                         ichild = 0;	/* Enter left child */
                 );
@@ -238,10 +238,10 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
                 alg_split_byindex ( &bounds[start_pos], end_pos - start_pos, split_pos,
                                     &vol_mid, part_by_mid_prim );
                 enter_tree_branch (
-                        push_stack ( &stack, curr_node );
-                        push_stack ( &stack, ichild );
-                        push_stack ( &stack, split_pos );
-                        push_stack ( &stack, end_pos );
+                        lstack_push ( &stack, curr_node );
+                        lstack_push ( &stack, ichild );
+                        lstack_push ( &stack, split_pos );
+                        lstack_push ( &stack, end_pos );
                         end_pos = split_pos;
                         ichild = 0;	/* Enter left child */
                 );
@@ -259,10 +259,10 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
                         alg_split_byindex ( &bounds[start_pos], end_pos - start_pos, split_pos,
                                             &vol_mid, part_by_mid_prim );
                         enter_tree_branch (
-                                push_stack ( &stack, curr_node );
-                                push_stack ( &stack, ichild );
-                                push_stack ( &stack, split_pos );
-                                push_stack ( &stack, end_pos );
+                                lstack_push ( &stack, curr_node );
+                                lstack_push ( &stack, ichild );
+                                lstack_push ( &stack, split_pos );
+                                lstack_push ( &stack, end_pos );
                                 end_pos = split_pos;
                                 ichild = 0;	/* Enter left child */
                         );
@@ -362,10 +362,10 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
                                 alg_split_byvalue ( &bounds[start_pos], end_pos - start_pos, &vol_mid,
                                                     part_by_mid_point, &split_pos );
                                 enter_tree_branch (
-                                        push_stack ( &stack, curr_node );
-                                        push_stack ( &stack, ichild );
-                                        push_stack ( &stack, split_pos );
-                                        push_stack ( &stack, end_pos );
+                                        lstack_push ( &stack, curr_node );
+                                        lstack_push ( &stack, ichild );
+                                        lstack_push ( &stack, split_pos );
+                                        lstack_push ( &stack, end_pos );
                                         end_pos = split_pos;
                                         ichild = 0;	/* Enter left child */
                                 );
@@ -374,10 +374,10 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
                                 create_initial_node ( &scale, axis, num_prim, start_pos, ichild,
                                                       num_nodes, curr_node );
                                 backtrack_tree_branch ( &stack, TT0,
-                                                        pop_stack ( &stack, end_pos );
-                                                        pop_stack ( &stack, split_pos );
-                                                        pop_stack ( &stack, ichild );
-                                                        pop_stack ( &stack, curr_node );
+                                                        lstack_pop ( &stack, end_pos );
+                                                        lstack_pop ( &stack, split_pos );
+                                                        lstack_pop ( &stack, ichild );
+                                                        lstack_pop ( &stack, curr_node );
                                                         start_pos = split_pos;
                                                         ichild ++;
                                                         curr_node = curr_node->child[ichild];
@@ -404,8 +404,8 @@ static struct initial_tree *build_initial_tree ( struct alg_list *prim_list, int
 
 static void free_initial_tree ( struct initial_tree *tree )
 {
-        declare_stack ( stack, TREE_DEPTH*4*sizeof (int) );
-        init_stack ( &stack );
+        lstack_templ(TREE_DEPTH*4*sizeof(int)) stack;
+        lstack_init ( &stack );
         struct initial_tree *curr_node = tree;
         int ichild = 0;
 
@@ -414,8 +414,8 @@ static void free_initial_tree ( struct initial_tree *tree )
         if ( curr_node == nullptr || ichild < TREE_MAX_CHILDS ) {
                 struct initial_tree *tmp;
                 backtrack_tree_branch ( &stack, TT0,
-                                        pop_stack ( &stack, ichild );
-                                        pop_stack ( &stack, curr_node );
+                                        lstack_pop ( &stack, ichild );
+                                        lstack_pop ( &stack, curr_node );
                                         ichild ++;
                                         tmp = (ichild >= TREE_MAX_CHILDS) ? curr_node : nullptr;
                                         curr_node = curr_node->child[ichild];
@@ -423,8 +423,8 @@ static void free_initial_tree ( struct initial_tree *tree )
                                       );
         }
         enter_tree_branch (
-                push_stack ( &stack, curr_node );
-                push_stack ( &stack, ichild );
+                lstack_push ( &stack, curr_node );
+                lstack_push ( &stack, ichild );
                 ichild = 0;
                 curr_node = curr_node->child[ichild];
         );

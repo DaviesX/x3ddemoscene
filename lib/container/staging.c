@@ -41,7 +41,7 @@ struct entry_record {
         uint32_t layer_hash;
         int ientry;			/* linked-list offset */
         uint16_t uid;
-        declare_stack ( rec_stack, 128 );
+        lstack_templ(128) rec_stack;
         untyped *byte_ori;		/* memory zone of the dest entry, for _READ-ONLY_ */
         untyped *byte_curr;
         untyped *byte_end;
@@ -277,7 +277,7 @@ int stager_begin_entry ( char *name, struct entry_record *rec )
 
         rec->uid = root_uid;
         rec->ientry = i;
-        push_stack ( &rec->rec_stack, i );
+        lstack_push ( &rec->rec_stack, i );
         assert ( rec->rdepth >= 0 );
         rec->rdepth ++;
         return rec->rdepth;
@@ -293,7 +293,7 @@ void stager_end_entry ( int rdepth, struct entry_record *rec )
         struct stager *stg = rec->stg;
 
         int ientry;
-        pop_stack ( &rec->rec_stack, ientry );
+        lstack_pop ( &rec->rec_stack, ientry );
         struct res_entry* entries = alg_array ( list, &stg->entry );
         struct res_entry* entry = &entries[ientry];
         entry->state = RESOURCE_LOADED;
@@ -322,7 +322,7 @@ struct entry_record *create_entry_record ( struct stager *stg )
 {
         struct entry_record *rec = alloc_fix ( sizeof ( *rec ), 1 );
         memset ( rec, 0, sizeof ( *rec ) );
-        init_stack ( &rec->rec_stack );
+        lstack_init ( &rec->rec_stack );
         rec->stg = stg;
         return rec;
 }

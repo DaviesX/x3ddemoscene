@@ -159,12 +159,12 @@ static int find_var_name ( char* qualifier, char* name, char* tname, char** pos 
         }
         char* code = *pos;
         char* marker;
-        declare_stack ( stack, 20*sizeof(int) );
+        lstack_templ(20*sizeof(int)) stack;
         int state;
 reset:
         marker = *pos;
         state = 0;
-        init_stack ( &stack );
+        lstack_init(&stack);
 
         while ( *code != '\0' ) {
                 switch ( state ) {
@@ -172,16 +172,16 @@ reset:
                         if ( *code == ' ' ) {
                                 code ++;
                         } else {
-                                if ( stack_is_empty ( &stack ) )
+                                if ( lstack_is_empty ( &stack ) )
                                         state = 1;
                                 else
-                                        pop_stack ( &stack, state );
+                                        lstack_pop ( &stack, state );
                         }
                         break;
                 case 1: /* to match qualifier */
                         if ( !strncmp ( code, qualifier, strlen(qualifier) ) ) {
                                 state = 2;
-                                push_stack ( &stack, state );
+                                lstack_push ( &stack, state );
                                 state = 0;
 
                                 code += strlen ( qualifier );
@@ -209,7 +209,7 @@ reset:
                                 strncpy ( tname, marker, code - marker );
 
                                 state = 4;
-                                push_stack ( &stack, state );
+                                lstack_push ( &stack, state );
                                 state = 0;
                         } else
                                 code ++;
