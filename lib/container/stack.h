@@ -12,13 +12,13 @@
         goto TRAVERSE_BEGIN_##_id;                                                        \
         TRAVERSE_END_##_id: /* ends */;                                                   \
 }
-#define enter_tree_branch(_enter_code)                                                  \
+#define enter_tree_branch(_enter_code)                                                    \
 {                                                                                         \
         _enter_code                                                                       \
 }
-#define backtrack_tree_branch(_stack, _id, _backtrack_code)                             \
+#define backtrack_tree_branch(_stack, _id, _backtrack_code)                               \
 {                                                                                         \
-        if ((_stack)->stack_ptr == (untyped *) (_stack)) {                              \
+        if ((_stack)->stack_ptr == (untyped *) (_stack)) {                                \
                 goto TRAVERSE_END_##_id;                                                  \
         } else {                                                                          \
                 _backtrack_code                                                           \
@@ -31,9 +31,9 @@
  * <lstack> decl
  * a lightweight stack datatype which uses real stack space.
  */
-#define lstack_templ(S)	                                                  \
+#define lstack_templ(S)	                                                                  \
         struct {                                                                          \
-                untyped stack[S];                                                     \
+                untyped stack[S];                                                         \
                 untyped *stack_ptr;                                                       \
         }
 
@@ -41,39 +41,39 @@
  * <lstack> public
  */
 #define lstack_init(_self)                    ((_self)->stack_ptr = (_self)->stack)
-#define lstack_push(_self, _a)                                                          \
+#define lstack_push(_self, _a)                                                            \
 {                                                                                         \
-        *(typeof(_a)*) (_self)->stack_ptr = _a;                                        \
-        (_self)->stack_ptr += sizeof(_a);                                             \
-        assert((_self)->stack_ptr <= (_self)->stack + sizeof((_self)->stack));   \
+        *(typeof(_a)*) (_self)->stack_ptr = _a;                                           \
+        (_self)->stack_ptr += sizeof(_a);                                                 \
+        assert((_self)->stack_ptr <= (_self)->stack + sizeof((_self)->stack));            \
 }
 
-#define lstack_pop(_self, _a)                                                           \
+#define lstack_pop(_self, _a)                                                             \
 {                                                                                         \
-        (_self)->stack_ptr -= sizeof(_a);                                             \
-        assert((_self)->stack_ptr >= (_self)->stack);                                \
-        _a = *(typeof(_a)*) (_self)->stack_ptr;                                        \
+        (_self)->stack_ptr -= sizeof(_a);                                                 \
+        assert((_self)->stack_ptr >= (_self)->stack);                                     \
+        _a = *(typeof(_a)*) (_self)->stack_ptr;                                           \
 }
 
 #define lstack_is_empty(_self)                  ((_self)->stack_ptr == (_self)->stack)
 #define lstack_ptr(_self)                       ((void*)(_self)->stack_ptr)
-#define lstack_push_ptr(_self, _ptr)                                                    \
+#define lstack_push_ptr(_self, _ptr)                                                      \
 {                                                                                         \
-        ((_self)->stack_ptr += sizeof *(_ptr));                                          \
-        assert((_self)->stack_ptr <= (_self)->stack + sizeof((_self)->stack));   \
+        ((_self)->stack_ptr += sizeof *(_ptr));                                           \
+        assert((_self)->stack_ptr <= (_self)->stack + sizeof((_self)->stack));            \
 }
 
-#define lstack_pop_ptr(_self, _ptr)                                                     \
+#define lstack_pop_ptr(_self, _ptr)                                                       \
 {                                                                                         \
-        (_ptr) = (typeof(_ptr)) (_self)->stack_ptr;                                      \
-        assert((_self)->stack_ptr >= (_self)->stack);                                \
-        (_self)->stack_ptr -= sizeof *(_ptr);                                            \
+        (_ptr) = (typeof(_ptr)) (_self)->stack_ptr;                                       \
+        assert((_self)->stack_ptr >= (_self)->stack);                                     \
+        (_self)->stack_ptr -= sizeof *(_ptr);                                             \
 }
 
-#define lstack_back(_self, _a)                                                      \
+#define lstack_back(_self, _a)                                                            \
 {                                                                                         \
-        untyped* t = (_self)->stack_ptr - sizeof (_a);                                 \
-        _a = *(typeof(_a)*) t;                                                          \
+        untyped* t = (_self)->stack_ptr - sizeof (_a);                                    \
+        _a = *(typeof(_a)*) t;                                                            \
 }
 
 
