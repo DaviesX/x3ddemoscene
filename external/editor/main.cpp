@@ -15,8 +15,11 @@ extern "C" int kernel_main(int argc, char* argv[])
         // kernel_add_param("--test", "renderer_tree_test");
         // kernel_add_param("--test", "pt_output_to_file_test");
         // kernel_add_param("--test", "deque_correctness_test");
-        kernel_add_param("--test", "stack_correctness_test");
+        // kernel_add_param("--test", "stack_correctness_test");
         // kernel_add_param("--test", "list_correctness_test");
+        // kernel_add_param("--test", "array_sort_correctness_test");
+        kernel_add_param("--test", "array_sort_performance_test");
+
         kernel_add_param("--edit-mode", "");
 
         KernelEditor* kern_editor       = new KernelEditor();

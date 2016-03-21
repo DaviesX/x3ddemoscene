@@ -3616,7 +3616,11 @@
 	<x3d/common.h>
 	"symbol.h"
 
-1455996146 source:/home/davis/x3ddemoscene-code/lib/container/array.c
+1458534833 source:/home/davis/x3ddemoscene-code/lib/container/array.c
+	<container/array.h>
+	<container/paramset.h>
+	<system/log.h>
+	<x3d/debug.h>
 
 1458460358 source:/home/davis/x3ddemoscene-code/lib/container/list.c
 	<container/list.h>
@@ -3644,7 +3648,11 @@
 1455996146 /home/davis/x3ddemoscene-code/lib/container/queue.h
 	<system/allocator.h>
 
-1455996146 source:/home/davis/x3ddemoscene-code/lib/container/set.c
+1458526520 source:/home/davis/x3ddemoscene-code/lib/container/set.c
+	<container/set.h>
+	<container/paramset.h>
+	<system/log.h>
+	<x3d/debug.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/container/staging.c
 	<misc.h>
@@ -3750,7 +3758,7 @@
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/system/timing.c
 
-1458461556 source:/home/davis/x3ddemoscene-code/lib/container/stack.c
+1458506850 source:/home/davis/x3ddemoscene-code/lib/container/stack.c
 	<container/stack.h>
 	<container/paramset.h>
 	<system/log.h>
@@ -3763,4 +3771,9 @@
 	<x3d/debug.h>
 
 1458506252 /home/davis/x3ddemoscene-code/lib/container/deque.h
+
+1458535225 /home/davis/x3ddemoscene-code/lib/container/array.h
+	<system/allocator.h>
+
+1455996146 /home/davis/x3ddemoscene-code/lib/container/set.h
 

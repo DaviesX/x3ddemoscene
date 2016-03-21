@@ -504,10 +504,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/container/staging.h" />
-		<Unit filename="../lib/main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/main.h" />
 		<Unit filename="../lib/math/decimal.c">
 			<Option compilerVar="CC" />
 		</Unit>
