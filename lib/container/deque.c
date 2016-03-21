@@ -5,7 +5,7 @@
 
 
 // Test Cases:
-// variable_memory_test0
+// deque correctness test
 __dlexport void __callback                  deque_correctness_test_init(struct alg_var_set* envir) {}
 __dlexport void __callback                  deque_correctness_test_free(struct alg_var_set* envir) {}
 __dlexport enum DebugPosition* __callback   deque_correctness_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)

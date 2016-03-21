@@ -36,7 +36,7 @@ struct {                                                                        
 
 #define deque_expand(_self, _count)                                                                          \
 {                                                                                                            \
-        __ensure_capacity((_self)->values, _count);                                                          \
+        __deque_ensure_capacity((_self)->values, _count);                                                          \
 }
 
 #define deque_flush(_self)                                                                                   \
@@ -56,7 +56,7 @@ struct {                                                                        
         (_self)->rear = (_to_copy)->rear;                                                                    \
 }
 
-#define __swap(_x, _y)                                                                                       \
+#define __deque_swap(_x, _y)                                                                                       \
 {                                                                                                            \
         typeof(_x) _t = (_x);                                                                                \
         (_x) = (_y);                                                                                         \
@@ -66,25 +66,25 @@ struct {                                                                        
 /* swaps the self's pointer respectively */
 #define deque_swap(_self, _to_swap)                                                                          \
 {                                                                                                            \
-        __swap((_self)->values, (_to_swap)->values);                                                         \
-        __swap((_self)->num_elm, (_to_swap)->num_elm);                                                       \
-        __swap((_self)->rear, (_to_swap)->rear);                                                             \
-        __swap((_self)->front, (_to_swap)->front);                                                           \
+        __deque_swap((_self)->values, (_to_swap)->values);                                                         \
+        __deque_swap((_self)->num_elm, (_to_swap)->num_elm);                                                       \
+        __deque_swap((_self)->rear, (_to_swap)->rear);                                                             \
+        __deque_swap((_self)->front, (_to_swap)->front);                                                           \
 }
 
-#define __max(a, b)  (((a) > (b)) ? (a) : (b))
+#define __deque_max(a, b)  (((a) > (b)) ? (a) : (b))
 
-#define __pos(__i, __cap)    ((__i) >= (__cap) ? (__i) - (__cap) : (__i))
+#define __deque_pos(__i, __cap)    ((__i) >= (__cap) ? (__i) - (__cap) : (__i))
 
-#define __ensure_capacity(_self, _elm_count)                                                                 \
+#define __deque_ensure_capacity(_self, _elm_count)                                                                 \
 {                                                                                                            \
         if ((_elm_count) + 2 > (_self)->mem_capacity) {                                                      \
-                int _new_cap = __max((_self)->mem_capacity*2, _elm_count + 2);                               \
+                int _new_cap = __deque_max((_self)->mem_capacity*2, _elm_count + 2);                               \
                 typeof((_self)->values) _tmp = alloc_fix(sizeof(*(_self)->values), _new_cap);                \
                                                                                                              \
                 int _i;                                                                                      \
                 for (_i = 1; _i <= (_self)->num_elm; _i ++) {                                                \
-                        _tmp[_i] = (_self)->values[__pos((_self)->front + _i, (_self)->mem_capacity)];       \
+                        _tmp[_i] = (_self)->values[__deque_pos((_self)->front + _i, (_self)->mem_capacity)];       \
                 }                                                                                            \
                 free_fix((_self)->values);                                                                   \
                                                                                                              \
@@ -97,24 +97,24 @@ struct {                                                                        
 
 #define deque_push_back(_self, _data)                                                                        \
 {                                                                                                            \
-        __ensure_capacity(_self, (_self)->num_elm + 1);                                                      \
+        __deque_ensure_capacity(_self, (_self)->num_elm + 1);                                                      \
         (_self)->values[(_self)->rear] = (_data);                                                            \
-        (_self)->rear = __pos((_self)->rear + 1, (_self)->mem_capacity);                                     \
+        (_self)->rear = __deque_pos((_self)->rear + 1, (_self)->mem_capacity);                                     \
         (_self)->num_elm ++;                                                                                 \
 }
 
 #define deque_push_front(_self, _data)                                                                       \
 {                                                                                                            \
-        __ensure_capacity(_self, (_self)->num_elm + 1);                                                      \
+        __deque_ensure_capacity(_self, (_self)->num_elm + 1);                                                      \
         (_self)->values[(_self)->front] = (_data);                                                           \
-        (_self)->front = __pos((_self)->front + (_self)->mem_capacity - 1, (_self)->mem_capacity);           \
+        (_self)->front = __deque_pos((_self)->front + (_self)->mem_capacity - 1, (_self)->mem_capacity);           \
         (_self)->num_elm ++;                                                                                 \
 }
 
 #define deque_pop_front(_self)                                                                               \
 {                                                                                                            \
         if ((_self)->num_elm > 0) {                                                                          \
-                (_self)->front = __pos((_self)->front + 1, (_self)->mem_capacity);                           \
+                (_self)->front = __deque_pos((_self)->front + 1, (_self)->mem_capacity);                           \
                 (_self)->num_elm --;                                                                         \
         }                                                                                                    \
 }
@@ -122,19 +122,19 @@ struct {                                                                        
 #define deque_pop_back(_self)                                                                                \
 {                                                                                                            \
         if ((_self)->num_elm > 0) {                                                                          \
-                (_self)->rear = __pos((_self)->rear + (_self)->mem_capacity - 1, (_self)->mem_capacity);     \
+                (_self)->rear = __deque_pos((_self)->rear + (_self)->mem_capacity - 1, (_self)->mem_capacity);     \
                 (_self)->num_elm --;                                                                         \
         }                                                                                                    \
 }
 
 #define deque_front(_self, _data)                                                                            \
 {                                                                                                            \
-        (_data) = (_self)->values[__pos((_self)->front + 1, (_self)->mem_capacity)];                         \
+        (_data) = (_self)->values[__deque_pos((_self)->front + 1, (_self)->mem_capacity)];                         \
 }
 
 #define deque_back(_self, _data)                                                                             \
 {                                                                                                            \
-        (_data) = (_self)->values[__pos((_self)->rear + (_self)->mem_capacity - 1, (_self)->mem_capacity)];  \
+        (_data) = (_self)->values[__deque_pos((_self)->rear + (_self)->mem_capacity - 1, (_self)->mem_capacity)];  \
 }
 
 #define deque_size(_self)                ((_self)->num_elm)
@@ -173,7 +173,7 @@ struct {                                                                        
         ((_self)->i > 0)
 
 #define deque_iter_deref(_self, _deque)                                                                      \
-        ((_deque)->values[__pos((_deque)->front + (_self)->i, (_deque)->mem_capacity)])
+        ((_deque)->values[__deque_pos((_deque)->front + (_self)->i, (_deque)->mem_capacity)])
 
 #define deque_for_each(_self, _elm, CODE)                                                                    \
 {                                                                                                            \
