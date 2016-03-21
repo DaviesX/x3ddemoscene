@@ -111,68 +111,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../drivers/renderer/fbo.h" />
-		<Unit filename="../drivers/renderer/geometry/bvh.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/bvh.h" />
-		<Unit filename="../drivers/renderer/geometry/cone_shape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/cone_shape.h" />
-		<Unit filename="../drivers/renderer/geometry/cylinder_shape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/cylinder_shape.h" />
-		<Unit filename="../drivers/renderer/geometry/disk_shape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/disk_shape.h" />
-		<Unit filename="../drivers/renderer/geometry/geocache.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/geometry.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/grid.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/grid.h" />
-		<Unit filename="../drivers/renderer/geometry/hyperboloid_shape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/hyperboloid_shape.h" />
-		<Unit filename="../drivers/renderer/geometry/kdtree.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/kdtree.h" />
-		<Unit filename="../drivers/renderer/geometry/main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/main.h" />
-		<Unit filename="../drivers/renderer/geometry/octree.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/octree.h" />
-		<Unit filename="../drivers/renderer/geometry/paraboloid_shape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/paraboloid_shape.h" />
-		<Unit filename="../drivers/renderer/geometry/primitive_parition.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/shape_common.h" />
-		<Unit filename="../drivers/renderer/geometry/sphere_shape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/sphere_shape.h" />
-		<Unit filename="../drivers/renderer/geometry/trimesh_shape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/trimesh_shape.h" />
-		<Unit filename="../drivers/renderer/geometry/trimesh_subdivide.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/geometry/trimesh_subdivide.h" />
 		<Unit filename="../drivers/renderer/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
