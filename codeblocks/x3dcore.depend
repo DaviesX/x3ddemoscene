@@ -3616,7 +3616,7 @@
 	<x3d/common.h>
 	"symbol.h"
 
-1458534833 source:/home/davis/x3ddemoscene-code/lib/container/array.c
+1458535701 source:/home/davis/x3ddemoscene-code/lib/container/array.c
 	<container/array.h>
 	<container/paramset.h>
 	<system/log.h>
@@ -3628,7 +3628,7 @@
 	<system/log.h>
 	<x3d/debug.h>
 
-1458461100 /home/davis/x3ddemoscene-code/lib/container/list.h
+1458537022 /home/davis/x3ddemoscene-code/lib/container/list.h
 	<system/allocator.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/container/map.c
@@ -3648,7 +3648,7 @@
 1455996146 /home/davis/x3ddemoscene-code/lib/container/queue.h
 	<system/allocator.h>
 
-1458526520 source:/home/davis/x3ddemoscene-code/lib/container/set.c
+1458588503 source:/home/davis/x3ddemoscene-code/lib/container/set.c
 	<container/set.h>
 	<container/paramset.h>
 	<system/log.h>
@@ -3775,5 +3775,6 @@
 1458535225 /home/davis/x3ddemoscene-code/lib/container/array.h
 	<system/allocator.h>
 
-1455996146 /home/davis/x3ddemoscene-code/lib/container/set.h
+1458588942 /home/davis/x3ddemoscene-code/lib/container/set.h
+	<math/math.h>
 

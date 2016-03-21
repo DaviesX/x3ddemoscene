@@ -1,5 +1,5 @@
-#ifndef DEQUE_H_INCLUDED
-#define DEQUE_H_INCLUDED
+#ifndef LIST_H_INCLUDED
+#define LIST_H_INCLUDED
 
 #include <system/allocator.h>
 
@@ -219,4 +219,4 @@ struct {                                                                        
 #define list_size(_self)              ((_self)->num_elm)
 
 
-#endif	// DEQUE_H_INCLUDED
+#endif	// LIST_H_INCLUDED
