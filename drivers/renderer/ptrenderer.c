@@ -390,7 +390,7 @@ static void render_radiance(struct pt_radiance_node* render_node, struct util_im
         /* construct intersection packet */
         struct intersect_packet ip;
         int num_index;
-        ip.i_array = u_aos_get_index(&render_node->aos_geo, &num_index);
+        ip.i_array = u_aos_get_indices(&render_node->aos_geo, &num_index);
         ip.n_streams = render_node->n_streams;
         ip.stream = render_node->stream;
 /**@todo (davis#1#) <intersect_packet> these should be done through shader formulate context */
@@ -650,7 +650,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
 
         /* generate streams */
         void* vertex[10];
-        int n_vertex = u_aos_get_vertex(&self->aos_geo, vertex, &self->n_streams);
+        int n_vertex = u_aos_get_vertices(&self->aos_geo, vertex, &self->n_streams);
         bool* avail = u_aos_get_availibility(&self->aos_geo);
 
         int cSizeOfStream[10] = {
@@ -691,7 +691,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         u_access_free(self->acc_stt);
 
         int num_index, num_simplex;
-        int* index = u_aos_get_index(&self->aos_geo, &num_index);
+        int* index = u_aos_get_indices(&self->aos_geo, &num_index);
         self->simplex = construct_simplex(self->stream, self->n_streams,
                                           index, num_index, &num_simplex);
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */

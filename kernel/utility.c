@@ -135,7 +135,7 @@ void u_aos_accumulate(struct util_aos* self, int* index, int num_index, int num_
         self->n_vertex += num_vertex;
 }
 
-int u_aos_get_vertex(struct util_aos* self, void* vertex[], int* n_streams)
+int u_aos_get_vertices(struct util_aos* self, void* vertex[], int* n_streams)
 {
         int i;
         for(i = 0; i < 10; i ++) {
@@ -145,7 +145,7 @@ int u_aos_get_vertex(struct util_aos* self, void* vertex[], int* n_streams)
         return self->n_vertex;
 }
 
-void* u_aos_get_index(struct util_aos* self, int* n_index)
+void* u_aos_get_indices(struct util_aos* self, int* n_index)
 {
         *n_index = self->n_index;
         return self->index;

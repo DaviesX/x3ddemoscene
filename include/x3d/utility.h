@@ -155,6 +155,7 @@ static inline void u_stream_load_from_buffer(struct util_stream* s, int n_stream
         }
 }
 
+
 enum UtilAttribute {
         UtilAttriVertex         = 1 << 1,
         UtilAttriNormal         = 1 << 2,
@@ -195,8 +196,8 @@ void    u_aos_init(struct util_aos* self, enum UtilAttribute format);
 void    u_aos_free(struct util_aos* self);
 void    u_aos_flush(struct util_aos* self);
 void    u_aos_accumulate(struct util_aos* self, int* index, int num_index, int num_vertex, ...);
-int     u_aos_get_vertex(struct util_aos* self, void* vertex[], int* n_streams);
-void*   u_aos_get_index(struct util_aos* self, int* n_index);
+int     u_aos_get_vertices(struct util_aos* self, void* vertex[], int* n_streams);
+void*   u_aos_get_indices(struct util_aos* self, int* n_index);
 bool*   u_aos_get_availibility(struct util_aos* self);
 
 #define u_aos_vertex_at(_self, _i) \
