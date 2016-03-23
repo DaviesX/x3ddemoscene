@@ -2,6 +2,9 @@
 #include <x3d/raytracer.h>
 
 
+/*
+ * <raytracer> public
+ */
 void raytracer_init(struct raytracer* self,
                     struct util_aos* aos,
                     struct util_access* acc)

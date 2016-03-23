@@ -10,10 +10,11 @@
 #include <x3d/debug.h>
 #include <renderer/shader.h>
 #include "ptrenderer.h"
+#include "pathtracerimpl.h"
 #include "trianglebuffer.h"
 #include "vbo.h"
 #include "fbo.h"
-#include "colorspectrum.h"
+#include <x3d/colorspectrum.h>
 
 struct rda_context;
 
@@ -23,44 +24,32 @@ enum RenderPassNature {
         RenderPassFinal
 };
 
-struct render_pass {
-        enum RenderPassNature   nature;
-        int                     src;
-        int                     dest;
-        float                   dest_blend;
-        enum RenderPipeType     pipe;
-        int                     sub_pass[10];
-        int                     n_subpass;
-        struct rda_context*     ctx;
-        struct box3d*           simplex;
-        enum UtilAccessorType   acc_type;
-        struct util_access*     acc_stt;
-        struct util_stream      stream[10];
-        int                     n_streams;
-        struct util_aos         aos_geo;
-        struct util_aos         aos_media;
-        struct util_image*      src_target;
-        struct util_image       target;
-};
-
-/** \brief path tracing renderer belongs to the category of
- * single-radiant-pass renderer. So data can be collborated inside here.
- */
-struct pt_renderer {
-        struct render_bytecode  bytecode;
-        struct render_pass      pass[10];
-        int                     n_passes;
-        struct proj_probe*      probe;
-        struct util_image       framebuffer;
-        int                     final_pass;
-};
+//struct render_pass {
+//        enum RenderPassNature   nature;
+//        int                     src;
+//        int                     dest;
+//        float                   dest_blend;
+//        enum RenderPipeType     pipe;
+//        int                     sub_pass[10];
+//        int                     n_subpass;
+//        struct rda_context*     ctx;
+//        struct box3d*           simplex;
+//        enum UtilAccessorType   acc_type;
+//        struct util_access*     acc_stt;
+//        struct util_stream      stream[10];
+//        int                     n_streams;
+//        struct util_aos         aos_geo;
+//        struct util_aos         aos_media;
+//        struct util_image*      src_target;
+//        struct util_image       target;
+//};
 
 
-struct vertex {
-        float   position[3];
-        float   normal[3];
-        int     mater_ref;
-};
+//struct vertex {
+//        float   position[3];
+//        float   normal[3];
+//        int     mater_ref;
+//};
 
 struct ray_tree {
         struct vector3d         i_rad;
@@ -473,38 +462,38 @@ static void render_radiance(struct pt_radiance_node* render_node, struct util_im
                 }
         }
 }
-
-static void render_hdr(struct render_pass* pass)
-{
-        /* hdr postprocessor */
-        unsigned int width  = pass->target.width;
-        unsigned int height = pass->target.height;
-
-        double exporsure = 0.0;
-        int b = 0;
-        int j;
-        for ( j = 0; j < height; j ++ ) {
-                int i;
-                for ( i = 0; i < width; i ++ ) {
-                        struct float_color3* dest = u_image_read ( pass->src_target, 0, i, j );
-                        double k = exp_illuminance ( dest );
-                        if ( *(int64_t*)&k != -2251799813685248 )
-                                exporsure += k;
-                        else b ++;
-                }
-        }
-        exporsure /= (double) height;
-        exporsure /= (double) width;
-        exporsure = exp ( exporsure );
-        for ( j = 0; j < height; j ++ ) {
-                int i;
-                for ( i = 0; i < width; i ++ ) {
-                        struct float_color3* src = u_image_read ( pass->src_target, 0, i, j );
-                        struct float_color3* dest = u_image_read ( &pass->target, 0, i, j );
-                        rgb_hdr_radiance ( src, exporsure, dest );
-                }
-        }
-}
+//
+//static void render_hdr(struct render_pass* pass)
+//{
+//        /* hdr postprocessor */
+//        unsigned int width  = pass->target.width;
+//        unsigned int height = pass->target.height;
+//
+//        double exporsure = 0.0;
+//        int b = 0;
+//        int j;
+//        for ( j = 0; j < height; j ++ ) {
+//                int i;
+//                for ( i = 0; i < width; i ++ ) {
+//                        struct float_color3* dest = u_image_read ( pass->src_target, 0, i, j );
+//                        double k = exp_illuminance ( dest );
+//                        if ( *(int64_t*)&k != -2251799813685248 )
+//                                exporsure += k;
+//                        else b ++;
+//                }
+//        }
+//        exporsure /= (double) height;
+//        exporsure /= (double) width;
+//        exporsure = exp ( exporsure );
+//        for ( j = 0; j < height; j ++ ) {
+//                int i;
+//                for ( i = 0; i < width; i ++ ) {
+//                        struct float_color3* src = u_image_read ( pass->src_target, 0, i, j );
+//                        struct float_color3* dest = u_image_read ( &pass->target, 0, i, j );
+//                        rgb_hdr_radiance ( src, exporsure, dest );
+//                }
+//        }
+//}
 
 static void render_output(struct util_image* src_target, struct util_image* target)
 {
@@ -519,10 +508,6 @@ static void render_output(struct util_image* src_target, struct util_image* targ
                         *dest = rgb_radiance(src);
                 }
         }
-}
-
-void pt_renderer_output ( struct pt_renderer* r )
-{
 }
 
 
@@ -648,54 +633,15 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                 u_aos_accumulate(&self->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
         }
 
-        /* generate streams */
-        void* vertex[10];
-        int n_vertex = u_aos_get_vertices(&self->aos_geo, vertex, &self->n_streams);
-        bool* avail = u_aos_get_availibility(&self->aos_geo);
-
-        int cSizeOfStream[10] = {
-                [_AttriVertex] = sizeof(struct point3d),
-                [_AttriNormal] = sizeof(struct vector3d),
-                [_AttriMatIdList]  = sizeof(int)
-        };
-        f_Lerp_3 cStreamLerp3[10] = {
-                [_AttriVertex] = (f_Lerp_3) lerp_point,
-                [_AttriNormal] = (f_Lerp_3) lerp_point,
-                [_AttriMatIdList]  = (f_Lerp_3) lerp_matid
-        };
-        int k, m;
-        for (m = 0, k = 0; k < 10; k ++) {
-                if (avail[k] == true) {
-                        /* @fixme (davis#1#): <ptrenderer> shader should be more elegant */
-                        void** shader_var_loc[1] = {nullptr};
-                        switch(k) {
-                                case _AttriVertex:
-                                        shader_var_loc[0] = (void**) &g_position;
-                                        break;
-                                case _AttriNormal:
-                                        shader_var_loc[0] = (void**) &g_normal;
-                                        break;
-                                case _AttriMatIdList:
-                                        shader_var_loc[0] = (void**) &g_mater_id;
-                                        break;
-                        }
-
-                        u_stream_init(&self->stream[m],
-                                      vertex[k], cSizeOfStream[k], n_vertex,
-                                      &cSizeOfStream[k], shader_var_loc, 1, nullptr, cStreamLerp3[k]);
-                        m ++;
-                }
-        }
-        /* update simplex and accessor utility */
+        /* update simplex and accessor */
         free_simplex(self->simplex);
         u_access_free(self->acc_stt);
 
         int num_index, num_simplex;
-        int* index = u_aos_get_indices(&self->aos_geo, &num_index);
+        int* indices = u_aos_get_indices(&self->aos_geo, &num_index);
         self->simplex = construct_simplex(self->stream, self->n_streams,
-                                          index, num_index, &num_simplex);
+                                          indices, num_index, &num_simplex);
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
-        self->acc_type = UtilAccessorLinear;
         struct util_linear li_stt;
         u_linear_init(&li_stt, self->simplex, num_simplex);
         u_access_build(self->acc_stt);
@@ -711,7 +657,11 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         u_image_init(&img_rad, 1, UtilImgRGBRadiance, 800, 600);
         u_image_alloc(&img_rad, 0);
 
-        render_radiance(self, &img_rad);
+        // render_radiance(self, &img_rad);
+        struct pathtracer pt;
+        pathtracer_init(&pt);
+        pathtracer_render(&pt, &self->aos_geo, self->acc_stt, &img_rad);
+        pathtracer_free(&pt);
 /* @fixme (davis#2#): <pt_renderer_update> cheated here... should be in our output */
         render_output(&img_rad, &self->target);
         u_image_free(&img_rad);

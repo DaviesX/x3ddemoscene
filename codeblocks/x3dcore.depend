@@ -291,7 +291,7 @@
 
 1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/geometry/trimesh_subdivide.h
 
-1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/main.c
+1458757007 source:/home/davis/x3ddemoscene-code/drivers/renderer/main.c
 	<x3d/common.h>
 	<container/paramset.h>
 	<system/log.h>
@@ -303,7 +303,7 @@
 	"rasterization.h"
 	<math/math.h>
 	"vibuffer.h"
-	"colorspectrum.h"
+	<x3d/colorspectrum.h>
 	"surface.h"
 	<renderer/shader.h>
 	<renderer/out.h>
@@ -3141,7 +3141,7 @@
 
 1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/spherical.c
 
-1458685953 source:/home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.c
+1458757029 source:/home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.c
 	<math/math.h>
 	<system/symlib.h>
 	<system/thread.h>
@@ -3153,10 +3153,11 @@
 	<x3d/debug.h>
 	<renderer/shader.h>
 	"ptrenderer.h"
+	"pathtracerimpl.h"
 	"trianglebuffer.h"
 	"vbo.h"
 	"fbo.h"
-	"colorspectrum.h"
+	<x3d/colorspectrum.h>
 	"./shader/ptshader.c"
 	<gtk/gtk.h>
 
@@ -3173,13 +3174,12 @@
 1455996146 /home/davis/x3ddemoscene-code/include/x3d/projectionprobe.h
 	<math/math.h>
 
-1458613918 /home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.h
+1458707177 /home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.h
 	<x3d/renderer.h>
 	<x3d/rendernoderadiance.h>
 	<x3d/rendernoderdaloader.h>
 	<x3d/rendernodeoutput.h>
 	<x3d/utility.h>
-	"raytracepipeline.h"
 
 1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendernoderadiance.h
 	<x3d/renderer.h>
@@ -3319,9 +3319,9 @@
 
 1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/shader/rtshader.h
 
-1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader_a.h
+1458757042 /home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader_a.h
 	<math/math.h>
-	"../colorspectrum.h"
+	<x3d/colorspectrum.h>
 	"../surface.h"
 
 1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader_so.h
@@ -3388,10 +3388,10 @@
 	"shadergenerator.h"
 	"shadergeneratorx64.h"
 
-1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/surface.c
+1458757055 source:/home/davis/x3ddemoscene-code/drivers/renderer/surface.c
 	<system/allocator.h>
 	"surface.h"
-	"colorspectrum.h"
+	<x3d/colorspectrum.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/trianglebuffer.c
 	<system/allocator.h>
@@ -3688,7 +3688,7 @@
 	"math.h"
 	"fx.h"
 
-1455996146 source:/home/davis/x3ddemoscene-code/lib/math/geometry.c
+1458713311 source:/home/davis/x3ddemoscene-code/lib/math/geometry.c
 	"math.h"
 	"vector.h"
 	"matrix.h"
@@ -3777,16 +3777,45 @@
 1458588942 /home/davis/x3ddemoscene-code/lib/container/set.h
 	<math/math.h>
 
-1458696757 /home/davis/x3ddemoscene-code/include/x3d/utility.h
+1458748229 /home/davis/x3ddemoscene-code/include/x3d/utility.h
 	<system/log.h>
 	<system/allocator.h>
 	<math/math.h>
 
-1458693587 source:/home/davis/x3ddemoscene-code/kernel/raytracer.c
+1458756782 source:/home/davis/x3ddemoscene-code/kernel/raytracer.c
 	<math/math.h>
 	<x3d/raytracer.h>
 
-1458693224 /home/davis/x3ddemoscene-code/include/x3d/raytracer.h
+1458756749 /home/davis/x3ddemoscene-code/include/x3d/raytracer.h
 	<x3d/utility.h>
+	<x3d/bsdf.h>
 	<math/math.h>
+
+1458696772 source:/home/davis/x3ddemoscene-code/kernel/utility.c
+	<x3d/utility.h>
+
+1458757018 source:/home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.c
+	<math/math.h>
+	<x3d/raytracer.h>
+	<x3d/colorspectrum.h>
+	"pathtracerimpl.h"
+
+1458710127 /home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.h
+	<x3d/utility.h>
+
+1458757897 /home/davis/x3ddemoscene-code/include/x3d/bsdf.h
+	<math/math.h>
+	<x3d/colorspectrum.h>
+
+1455996146 /home/davis/x3ddemoscene-code/include/x3d/colorspectrum.h
+	<math/math.h>
+
+1458757903 source:/home/davis/x3ddemoscene-code/kernel/bsdf.c
+	<math/math.h>
+	<x3d/bsdf.h>
+
+1458756945 source:/home/davis/x3ddemoscene-code/kernel/colorspectrum.c
+	<math.h>
+	<math/math.h>
+	<x3d/colorspectrum.h>
 

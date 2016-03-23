@@ -203,6 +203,12 @@ bool*   u_aos_get_availibility(struct util_aos* self);
 #define u_aos_vertex_at(_self, _i) \
         ((struct point3d*) (_self)->aos[_AttriVertex].s_data + (_i))
 
+#define u_aos_normal_at(_self, _i) \
+        ((struct vector3d*) (_self)->aos[_AttriNormal].s_data + (_i))
+
+#define u_aos_material_id_at(_self, _i) \
+        ((int*) (_self)->aos[_AttriMatId].s_data + (_i))
+
 #define u_aos_index_at(_self, _i) \
         ((_self)->index + (_i))
 

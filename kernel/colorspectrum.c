@@ -1,6 +1,6 @@
 #include <math.h>
 #include <math/math.h>
-#include "colorspectrum.h"
+#include <x3d/colorspectrum.h>
 
 
 /*

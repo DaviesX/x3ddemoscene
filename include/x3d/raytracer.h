@@ -2,7 +2,9 @@
 #define RAYTRACER_H_INCLUDED
 
 #include <x3d/utility.h>
+#include <x3d/bsdf.h>
 #include <math/math.h>
+
 
 /*
  * <tintersect> decl
@@ -11,7 +13,8 @@
 struct tintersect {
         int*            face;
         struct point3d  barycent;
-        float           t;
+        float           bias;
+        struct hitgeom  geom;
 };
 
 /*

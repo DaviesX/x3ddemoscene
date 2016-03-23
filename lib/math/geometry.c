@@ -59,7 +59,8 @@ void build_line3d_t ( struct point3d *p0, struct point3d *p1, float t0, float t1
         l->v.z *= inv;
         float j0 = 0.0f;
         float j1 = len;
-        int_interval ( t0, t1, j0, j1, l->t0, l->t1 );
+        l->t0 = max(j0, t0);
+        l->t1 = max(j1, t1);
 }
 
 void build_plane3d ( struct vector3d *n, struct point3d *p, struct plane3d *plane )

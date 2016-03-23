@@ -97,10 +97,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../drivers/renderer/arrayofstreamsram.h" />
-		<Unit filename="../drivers/renderer/colorspectrum.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/colorspectrum.h" />
 		<Unit filename="../drivers/renderer/compositepipeline.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -134,6 +130,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../drivers/renderer/out/stream_out.h" />
+		<Unit filename="../drivers/renderer/pathtracerimpl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../drivers/renderer/pathtracerimpl.h" />
 		<Unit filename="../drivers/renderer/pmrenderer.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -183,14 +183,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../drivers/renderer/rasterpipeline.h" />
-		<Unit filename="../drivers/renderer/raytracepipeline.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/raytracepipeline.h" />
-		<Unit filename="../drivers/renderer/raytracepipelinex64.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/raytracepipelinex64.h" />
 		<Unit filename="../drivers/renderer/rendererinsmod.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -294,10 +286,13 @@
 		<Unit filename="../include/usr/usr_world.hpp" />
 		<Unit filename="../include/usr/usr_worldentity.hpp" />
 		<Unit filename="../include/usr/usr_x3d.hpp" />
+		<Unit filename="../include/x3d/bsdf.h" />
+		<Unit filename="../include/x3d/colorspectrum.h" />
 		<Unit filename="../include/x3d/common.h" />
 		<Unit filename="../include/x3d/debug.h" />
 		<Unit filename="../include/x3d/dynamics.h" />
 		<Unit filename="../include/x3d/init.h" />
+		<Unit filename="../include/x3d/material.h" />
 		<Unit filename="../include/x3d/modelentity.h" />
 		<Unit filename="../include/x3d/poi.h" />
 		<Unit filename="../include/x3d/projectionprobe.h" />
@@ -318,6 +313,12 @@
 		<Unit filename="../include/x3d/resloader.h" />
 		<Unit filename="../include/x3d/strategy.h" />
 		<Unit filename="../include/x3d/utility.h" />
+		<Unit filename="../kernel/bsdf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../kernel/colorspectrum.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../kernel/debug.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -325,6 +326,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../kernel/material.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/modelentity.c">

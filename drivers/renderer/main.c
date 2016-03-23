@@ -116,7 +116,7 @@ static void dbg_rasterizer_add_all ( void )
 #include "rasterization.h"
 #include <math/math.h>
 #include "vibuffer.h"
-#include "colorspectrum.h"
+#include <x3d/colorspectrum.h>
 #include "surface.h"
 #include <renderer/shader.h>
 #include <renderer/out.h>
