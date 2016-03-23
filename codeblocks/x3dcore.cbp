@@ -279,7 +279,6 @@
 		<Unit filename="../include/renderer/shader.h" />
 		<Unit filename="../include/renderer/shader_lib.h" />
 		<Unit filename="../include/renderer/spatial_probe.h" />
-		<Unit filename="../include/renderer/utility.h" />
 		<Unit filename="../include/renderer/volume.h" />
 		<Unit filename="../include/usr/usr_cinematicprogs.hpp" />
 		<Unit filename="../include/usr/usr_editor.hpp" />
@@ -302,6 +301,7 @@
 		<Unit filename="../include/x3d/modelentity.h" />
 		<Unit filename="../include/x3d/poi.h" />
 		<Unit filename="../include/x3d/projectionprobe.h" />
+		<Unit filename="../include/x3d/raytracer.h" />
 		<Unit filename="../include/x3d/renderable.h" />
 		<Unit filename="../include/x3d/renderableaggregate.h" />
 		<Unit filename="../include/x3d/renderableaggregaterequest.h" />
@@ -317,6 +317,7 @@
 		<Unit filename="../include/x3d/rendertree.h" />
 		<Unit filename="../include/x3d/resloader.h" />
 		<Unit filename="../include/x3d/strategy.h" />
+		<Unit filename="../include/x3d/utility.h" />
 		<Unit filename="../kernel/debug.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -333,6 +334,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/projectionprobe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../kernel/raytracer.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/renderable.c">

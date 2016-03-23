@@ -3,7 +3,7 @@
 
 
 #include <x3d/renderer.h>
-#include <renderer/utility.h>
+#include <x3d/utility.h>
 
 struct proj_probe;
 struct render_out;

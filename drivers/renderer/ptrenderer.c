@@ -154,7 +154,7 @@ static bool is_visible_linear ( struct util_linear* access,
 {
         ip->has_inters  = false;
         ip->t           = FLOAT_MAX;
-        u_linear_find2 ( access, ip, simplex_subroutine, real_subroutine, ip->has_inters );
+        u_linear_find2(access, ip, simplex_subroutine, real_subroutine);
         return !ip->has_inters;
 }
 

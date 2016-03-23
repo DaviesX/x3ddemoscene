@@ -4,6 +4,7 @@
 
 #include <system/log.h>
 #include <system/allocator.h>
+#include <math/math.h>
 
 typedef void (*f_Lerp_2)(void* x[2], float t, void* xo);
 typedef void (*f_Lerp_3)(void* x[3], float t[3], void* xo);
@@ -109,22 +110,22 @@ static inline void* u_stream_access(struct util_stream* s, int i)
         return s->stream + i*s->elm_size;
 }
 
-#define u_stream_lerp2( _s, _n_stream,  _code) \
-{ \
-        int _i_stream; \
-        for(_i_stream = 0; _i_stream < _n_stream; _i_stream ++) { \
-                f_Lerp_2 _f_lerp2 = (_s)[_i_stream].lerp2; \
-                _code \
-        } \
+#define u_stream_lerp2( _s, _n_stream,  _code)                                       \
+{                                                                                    \
+        int _i_stream;                                                               \
+        for(_i_stream = 0; _i_stream < _n_stream; _i_stream ++) {                    \
+                f_Lerp_2 _f_lerp2 = (_s)[_i_stream].lerp2;                           \
+                _code                                                                \
+        }                                                                            \
 }
 
-#define u_stream_lerp3( _s, _n_stream,  _code) \
-{ \
-        int _i_stream; \
-        for(_i_stream = 0; _i_stream < _n_stream; _i_stream ++) { \
-                f_Lerp_3 _f_lerp3 = (_s)[_i_stream].lerp3; \
-                _code \
-        } \
+#define u_stream_lerp3( _s, _n_stream,  _code)                                       \
+{                                                                                    \
+        int _i_stream;                                                               \
+        for(_i_stream = 0; _i_stream < _n_stream; _i_stream ++) {                    \
+                f_Lerp_3 _f_lerp3 = (_s)[_i_stream].lerp3;                           \
+                _code                                                                \
+        }                                                                            \
 }
 
 static inline void u_stream_store_to_buffer(struct util_stream* s, int n_streams, uint8_t* buffer)
@@ -327,6 +328,12 @@ static inline int u_aos_get_vertex(struct util_aos* u_aos, void* vertex[], int* 
         return u_aos->n_vertex;
 }
 
+#define u_aos_vertex_at(_self, _i) \
+        ((struct point3d*) (_self)->aos[_AttriVertex].s_data + (_i))
+
+#define u_aos_index_at(_self, _i) \
+        ((_self)->index + (_i))
+
 static inline void* u_aos_get_index(struct util_aos* u_aos, int* n_index)
 {
         *n_index = u_aos->n_index;
@@ -361,7 +368,7 @@ struct util_linear {
         struct util_access      _parent;
 };
 
-static void u_linear_init(struct util_linear* linear, enum UtilAccessorType type, 
+static void u_linear_init(struct util_linear* linear, enum UtilAccessorType type,
                            struct box3d* simplex, int n_objects)
 {
         linear->_parent.type = type;
@@ -380,29 +387,25 @@ static void u_linear_build(struct util_linear* linear)
         return ;        // nothing is needed
 }
 
-#define u_linear_find( _acc, _data, _f_access_simplex, _f_access_real) \
-{ \
-        struct util_access* _p = &(_acc)->_parent; \
-        int _i; \
-        for(_i = 0; _i < _p->n_objects; _i ++) { \
-                if(!_f_access_simplex(_i, &_p->simplex[_i], _data)) \
-                        continue; \
-                _f_access_real(_i, _data); \
-        } \
+#define u_linear_find(_self, _data, f_Access_Simplex, f_Access_Accurate)             \
+{                                                                                    \
+        struct util_access* _p = &(_self)->_parent;                                  \
+        int _i;                                                                      \
+        for(_i = 0; _i < _p->n_objects; _i ++) {                                     \
+                if(!f_Access_Simplex(_i, &_p->simplex[_i], _data))                  \
+                        continue;                                                    \
+                f_Access_Accurate(_i, _data);                                           \
+        }                                                                            \
 }
 
-#define u_linear_find2( _acc, _data, _f_access_simplex, _f_access_real, _has_found) \
-{ \
-        struct util_access* _p = &(_acc)->_parent; \
-        int _i; \
-        for(_i = 0; _i < _p->n_objects; _i ++) { \
-                if(!_f_access_simplex(_i, &_p->simplex[_i], _data)) \
-                        continue; \
-                if(_f_access_real(_i, _data)) { \
-                        _has_found = true; \
-                        break; \
-                } \
-        } \
+#define u_linear_find2(_self, _data, f_Accesss_Simplex, f_Acesss_Accurate)  \
+{                                                                                    \
+        struct util_access* _p = &(_self)->_parent;                                   \
+        int _i;                                                                      \
+        for(_i = 0; _i < _p->n_objects; _i ++) {                                     \
+                if(f_Accesss_Simplex(_i, &_p->simplex[_i], _data) && f_Acesss_Accurate(_i, _data))                  \
+                        break;                                                    \
+        }                                                                            \
 }
 
 /** \brief bvh subdivide access utility
@@ -463,37 +466,28 @@ static inline void u_access_build(struct util_access* acc)
         }
 }
 
-static inline void u_access_find(struct util_access* acc, void* data,
-                                   const f_Access_Simplex f_Simplex,
-                                   const f_Access_Real f_Real)
-{
-        switch(acc->type) {
-        case UtilAccessorLinear:
-                u_linear_find((struct util_linear*) acc, data,
-                                f_Simplex, f_Real);
-                break;
-        case UtilAccessorBvh:
-                break;
-        }
+#define u_access_find(_self, _data, f_Access_Simplex, f_Access_Accurate) \
+{\
+        switch((_self)->type) {\
+        case UtilAccessorLinear:\
+                u_linear_find((struct util_linear*) (_self), _data, f_Access_Simplex, f_Access_Accurate);\
+                break;\
+        case UtilAccessorBvh:\
+                break;\
+        }\
 }
 
-static inline bool u_access_find2(struct util_access* acc, void* data,
-                                    const f_Access_Simplex f_Simplex,
-                                    const f_Access_Real f_Real)
-{
-        switch(acc->type) {
-        case UtilAccessorLinear:
-                {
-                bool has_found = false;
-                u_linear_find2((struct util_linear*) acc, data,
-                                 f_Simplex, f_Real, has_found);
-                return has_found;
-                }
-        case UtilAccessorBvh:
-                {
-                return false;
-                }
-        }
+#define u_access_find2(_self, _data, f_Access_Simplex, f_Access_Accurate) \
+{ \
+        switch((_self)->type) { \
+        case UtilAccessorLinear: { \
+                u_linear_find2((struct util_linear*) (_self), _data, f_Access_Simplex, f_Access_Accurate); \
+                break; \
+        } \
+        case UtilAccessorBvh: { \
+                break; \
+        } \
+        } \
 }
 
 

@@ -6,7 +6,7 @@
 #include <x3d/rendernoderadiance.h>
 #include <x3d/rendernoderdaloader.h>
 #include <x3d/rendernodeoutput.h>
-#include <renderer/utility.h>
+#include <x3d/utility.h>
 #include "raytracepipeline.h"
 
 /*

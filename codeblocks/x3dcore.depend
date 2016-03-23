@@ -3141,7 +3141,7 @@
 
 1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/spherical.c
 
-1458403431 source:/home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.c
+1458685953 source:/home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.c
 	<math/math.h>
 	<system/symlib.h>
 	<system/thread.h>
@@ -3173,12 +3173,12 @@
 1455996146 /home/davis/x3ddemoscene-code/include/x3d/projectionprobe.h
 	<math/math.h>
 
-1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.h
+1458613918 /home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.h
 	<x3d/renderer.h>
 	<x3d/rendernoderadiance.h>
 	<x3d/rendernoderdaloader.h>
 	<x3d/rendernodeoutput.h>
-	<renderer/utility.h>
+	<x3d/utility.h>
 	"raytracepipeline.h"
 
 1455996146 /home/davis/x3ddemoscene-code/include/x3d/rendernoderadiance.h
@@ -3287,9 +3287,9 @@
 1455996146 /home/davis/x3ddemoscene-code/include/renderer/rendererinsmod.h
 	<x3d/renderer.h>
 
-1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/rtrenderer.h
+1458613923 /home/davis/x3ddemoscene-code/drivers/renderer/rtrenderer.h
 	<x3d/renderer.h>
-	<renderer/utility.h>
+	<x3d/utility.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendertarget.c
 
@@ -3775,5 +3775,18 @@
 	<system/allocator.h>
 
 1458588942 /home/davis/x3ddemoscene-code/lib/container/set.h
+	<math/math.h>
+
+1458691730 /home/davis/x3ddemoscene-code/include/x3d/utility.h
+	<system/log.h>
+	<system/allocator.h>
+	<math/math.h>
+
+1458693587 source:/home/davis/x3ddemoscene-code/kernel/raytracer.c
+	<math/math.h>
+	<x3d/raytracer.h>
+
+1458693224 /home/davis/x3ddemoscene-code/include/x3d/raytracer.h
+	<x3d/utility.h>
 	<math/math.h>
 
