@@ -380,6 +380,9 @@
 		<Unit filename="../kernel/strategy.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../kernel/utility.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../lib/codecs/serializer.c">
 			<Option compilerVar="CC" />
 		</Unit>

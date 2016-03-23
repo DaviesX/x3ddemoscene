@@ -3777,7 +3777,7 @@
 1458588942 /home/davis/x3ddemoscene-code/lib/container/set.h
 	<math/math.h>
 
-1458691730 /home/davis/x3ddemoscene-code/include/x3d/utility.h
+1458696288 /home/davis/x3ddemoscene-code/include/x3d/utility.h
 	<system/log.h>
 	<system/allocator.h>
 	<math/math.h>

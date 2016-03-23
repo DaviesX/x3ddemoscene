@@ -173,7 +173,9 @@ enum _AttriMap {
         _AttriMatIdList
 };
 
-/** \brief make array-of-structure streams
+/*
+ * <util_aos> decl
+ * array-of-structure streams.
  */
 struct util_aos {
         struct {
@@ -186,147 +188,16 @@ struct util_aos {
         int                     n_index;
         int                     n_vertex;
 };
-
-static inline void u_aos_init(struct util_aos* self, enum UtilAttribute format)
-{
-        zero_obj(self);
-
-        self->index     = alloc_var(sizeof(int), 1);
-        self->n_index   = 0;
-        self->n_vertex = 0;
-
-        if(format & UtilAttriVertex) {
-                self->aos[_AttriVertex].s_data = alloc_var(sizeof(struct point3d), 1);
-                self->avail[_AttriVertex] = true;
-                self->n_streams ++;
-        }
-        if(format & UtilAttriNormal) {
-                self->aos[_AttriNormal].s_data = alloc_var(sizeof(struct vector3d), 1);
-                self->avail[_AttriNormal] = true;
-                self->n_streams ++;
-        }
-        if(format & UtilAttriTangent) {
-                self->aos[_AttriTangent].s_data = alloc_var(sizeof(struct vector3d), 1);
-                self->avail[_AttriTangent] = true;
-                self->n_streams ++;
-        }
-        if(format & UtilAttriUV) {
-                self->aos[_AttriUV].s_data = alloc_var(sizeof(struct vector2d), 1);
-                self->avail[_AttriUV] = true;
-                self->n_streams ++;
-        }
-        if (format & UtilAttriMatId) {
-                self->aos[_AttriMatId].s_data = alloc_var(sizeof(int), 1);
-                self->avail[_AttriMatId] = true;
-                self->n_streams ++;
-        }
-        if (format & UtilAttriMatIdList) {
-                self->aos[_AttriMatIdList].s_data = alloc_var(sizeof(int), 1);
-                self->avail[_AttriMatIdList] = true;
-                self->n_streams ++;
-        }
-
-        self->format = format;
-}
-
-static inline void u_aos_free(struct util_aos* u_aos)
-{
-        free_var(u_aos->index);
-        u_aos->n_index = 0;
-        u_aos->n_vertex = 0;
-        int i;
-        for (i = 0; i < 10; i ++) {
-                free_var(u_aos->aos[i].s_data);
-        }
-        zero_obj(u_aos);
-}
-
-static inline void u_aos_flush(struct util_aos* u_aos)
-{
-        alloc_var_flush(u_aos->index);
-        u_aos->n_index = 0;
-        u_aos->n_vertex = 0;
-        int i;
-        for (i = 0; i < 10; i ++) {
-                alloc_var_flush(u_aos->aos[i].s_data);
-        }
-}
-
-static inline void u_aos_accumulate(struct util_aos* u_aos, int* index, int num_index, int num_vertex, ...)
-{
-        /* copy vertex attributes */
-        va_list v_arg;
-        va_start(v_arg, num_vertex);
-
-        enum UtilAttribute format = u_aos->format;
-        if(format & UtilAttriVertex) {
-                struct point3d* src = va_arg(v_arg, struct point3d*);
-                u_aos->aos[_AttriVertex].s_data =
-                        alloc_var_add(u_aos->aos[_AttriVertex].s_data, num_vertex);
-                struct point3d* v = u_aos->aos[_AttriVertex].s_data;
-                memcpy(&v[u_aos->n_vertex], src, num_vertex*sizeof(*v));
-        }
-        if(format & UtilAttriNormal) {
-                struct vector3d* src = va_arg(v_arg, struct vector3d*);
-                u_aos->aos[_AttriNormal].s_data =
-                        alloc_var_add(u_aos->aos[_AttriNormal].s_data, num_vertex);
-                struct vector3d* n = u_aos->aos[_AttriNormal].s_data;
-                memcpy(&n[u_aos->n_vertex], src, num_vertex*sizeof(*n));
-        }
-        if(format & UtilAttriTangent) {
-                struct vector3d* src = va_arg(v_arg, struct vector3d*);
-                u_aos->aos[_AttriTangent].s_data =
-                        alloc_var_add(u_aos->aos[_AttriTangent].s_data, num_vertex);
-                struct vector3d* t = u_aos->aos[_AttriTangent].s_data;
-                memcpy(&t[u_aos->n_vertex], src, num_vertex*sizeof(*t));
-        }
-        if(format & UtilAttriUV) {
-                struct vector2d* src = va_arg(v_arg, struct vector2d*);
-                u_aos->aos[_AttriUV].s_data =
-                        alloc_var_add(u_aos->aos[_AttriUV].s_data, num_vertex);
-                struct vector2d* uv = u_aos->aos[_AttriUV].s_data;
-                memcpy(&uv[u_aos->n_vertex], src, num_vertex*sizeof(*uv));
-        }
-        if (format & UtilAttriMatId) {
-                // material id is set uniformly for each accumulation
-                int src = va_arg(v_arg, int);
-                u_aos->aos[_AttriMatId].s_data = alloc_var_add(u_aos->aos[_AttriMatId].s_data, num_vertex);
-                int* matid = u_aos->aos[_AttriMatId].s_data;
-                int i;
-                for (i = u_aos->n_index; i < u_aos->n_index + num_vertex; i ++) {
-                        matid[i] = src;
-                }
-        }
-        if (format & UtilAttriMatIdList) {
-                int* src = va_arg(v_arg, int*);
-                u_aos->aos[_AttriMatIdList].s_data = alloc_var_add(u_aos->aos[_AttriMatIdList].s_data, num_vertex);
-                int* matid = u_aos->aos[_AttriMatIdList].s_data;
-                memcpy(&matid[u_aos->n_vertex], src, num_vertex*sizeof(*matid));
-        }
-
-        va_end(v_arg);
-
-        /* copy indices */
-        u_aos->index = alloc_var_add(u_aos->index, num_index);
-        int* d_index = &u_aos->index[u_aos->n_index];
-        int i;
-        for(i = 0; i < num_index; i ++) {
-                d_index[i] = index[i] + u_aos->n_vertex;
-        }
-
-        u_aos->n_index += num_index;
-        u_aos->n_vertex += num_vertex;
-}
-
-static inline int u_aos_get_vertex(struct util_aos* u_aos, void* vertex[], int* n_streams)
-{
-        int i;
-        for(i = 0; i < 10; i ++) {
-                vertex[i] = u_aos->aos[i].s_data;
-        }
-        *n_streams = u_aos->n_streams;
-        return u_aos->n_vertex;
-}
+/*
+ * <util_aos> public
+ */
+void    u_aos_init(struct util_aos* self, enum UtilAttribute format);
+void    u_aos_free(struct util_aos* self);
+void    u_aos_flush(struct util_aos* self);
+void    u_aos_accumulate(struct util_aos* self, int* index, int num_index, int num_vertex, ...);
+int     u_aos_get_vertex(struct util_aos* self, void* vertex[], int* n_streams);
+void*   u_aos_get_index(struct util_aos* self, int* n_index);
+bool*   u_aos_get_availibility(struct util_aos* self);
 
 #define u_aos_vertex_at(_self, _i) \
         ((struct point3d*) (_self)->aos[_AttriVertex].s_data + (_i))
@@ -334,17 +205,9 @@ static inline int u_aos_get_vertex(struct util_aos* u_aos, void* vertex[], int* 
 #define u_aos_index_at(_self, _i) \
         ((_self)->index + (_i))
 
-static inline void* u_aos_get_index(struct util_aos* u_aos, int* n_index)
-{
-        *n_index = u_aos->n_index;
-        return u_aos->index;
-}
 
-static inline bool* u_aos_get_availibility(struct util_aos* u_aos)
-{
-        return u_aos->avail;
-}
 
+struct util_access;
 
 enum UtilAccessorType {
         UtilAccessorLinear,
@@ -354,117 +217,28 @@ enum UtilAccessorType {
 typedef bool (*f_Access_Simplex)(int i, struct box3d* simplex, void* data);
 typedef bool (*f_Access_Real)(int i, void* data);
 
-/** \brief access utility
+typedef void (*f_Util_Access_Build) (struct util_access* self);
+typedef void (*f_Util_Access_Free) (struct util_access* self);
+/*
+ * <util_access> decl
+ * provide various ways to access spatial objects.
  */
 struct util_access {
         enum UtilAccessorType   type;
+        f_Util_Access_Build     f_build;
+        f_Util_Access_Build     f_free;
         struct box3d*           simplex;
         int                     n_objects;
 };
-
-/** \brief linear access utility
+/*
+ * <util_access> public
  */
-struct util_linear {
-        struct util_access      _parent;
-};
-
-static void u_linear_init(struct util_linear* linear, enum UtilAccessorType type,
-                           struct box3d* simplex, int n_objects)
-{
-        linear->_parent.type = type;
-        linear->_parent.simplex = simplex;
-        linear->_parent.n_objects = n_objects;
-}
-
-static void u_linear_free(struct util_linear* linear)
-{
-        free_fix(linear->_parent.simplex);
-        zero_obj(linear);
-}
-
-static void u_linear_build(struct util_linear* linear)
-{
-        return ;        // nothing is needed
-}
-
-#define u_linear_find(_self, _data, f_Access_Simplex, f_Access_Accurate)             \
-{                                                                                    \
-        struct util_access* _p = &(_self)->_parent;                                  \
-        int _i;                                                                      \
-        for(_i = 0; _i < _p->n_objects; _i ++) {                                     \
-                if(!f_Access_Simplex(_i, &_p->simplex[_i], _data))                  \
-                        continue;                                                    \
-                f_Access_Accurate(_i, _data);                                           \
-        }                                                                            \
-}
-
-#define u_linear_find2(_self, _data, f_Accesss_Simplex, f_Acesss_Accurate)  \
-{                                                                                    \
-        struct util_access* _p = &(_self)->_parent;                                   \
-        int _i;                                                                      \
-        for(_i = 0; _i < _p->n_objects; _i ++) {                                     \
-                if(f_Accesss_Simplex(_i, &_p->simplex[_i], _data) && f_Acesss_Accurate(_i, _data))                  \
-                        break;                                                    \
-        }                                                                            \
-}
-
-/** \brief bvh subdivide access utility
- */
-struct util_bvh {
-};
-
-/* utitl_access */
-static inline struct util_access* u_access_create (
-        enum UtilAccessorType type, struct box3d* simlex, int n_objects)
-{
-        switch(type) {
-        case UtilAccessorLinear:
-                {
-                struct util_linear* l = alloc_obj(l);
-                u_linear_init(l, type, simlex, n_objects);
-                return (struct util_access*) l;
-                }
-        case UtilAccessorBvh:
-                {
-                return nullptr;
-                }
-        default:
-                {
-                log_mild_err_dbg("failed to find such accessor type as %d", type);
-                return nullptr;
-                }
-        }
-}
-
-static inline void u_access_free(struct util_access* acc)
-{
-	if (acc == nullptr) {
-		return ;
-	}
-        switch(acc->type) {
-        case UtilAccessorLinear:
-                {
-                u_linear_free((struct util_linear*) acc);
-                free_fix(acc);
-                break;
-                }
-        case UtilAccessorBvh:
-                {
-                break;
-                }
-        }
-}
-
-static inline void u_access_build(struct util_access* acc)
-{
-        switch(acc->type) {
-        case UtilAccessorLinear:
-                u_linear_build((struct util_linear*) acc);
-                break;
-        case UtilAccessorBvh:
-                break;
-        }
-}
+void            u_access_init(struct util_access* self, enum UtilAccessorType type,
+                              f_Util_Access_Build f_build, f_Util_Access_Free f_free);
+void            u_access_set_objects(struct util_access* self, struct box3d* simplex, int n_objects);
+struct box3d*   u_access_get_objects(struct util_access* self, int* n_objects);
+void            u_access_free(struct util_access* self);
+void            u_access_build(struct util_access* self);
 
 #define u_access_find(_self, _data, f_Access_Simplex, f_Access_Accurate) \
 {\
@@ -489,6 +263,49 @@ static inline void u_access_build(struct util_access* acc)
         } \
         } \
 }
+
+/*
+ * <util_linear> decl
+ * provides a linaer time access of the spatial objects.
+ */
+struct util_linear {
+        struct util_access      _parent;
+};
+/*
+ * <util_linear> public
+ */
+void u_linear_init(struct util_linear* self, struct box3d* simplex, int n_objects);
+void u_linear_free(struct util_linear* self);
+void u_linear_build(struct util_linear* linear);
+
+#define u_linear_find(_self, _data, f_Access_Simplex, f_Access_Accurate)             \
+{                                                                                    \
+        struct util_access* _p = &(_self)->_parent;                                  \
+        int _i;                                                                      \
+        for(_i = 0; _i < _p->n_objects; _i ++) {                                     \
+                if(!f_Access_Simplex(_i, &_p->simplex[_i], _data))                  \
+                        continue;                                                    \
+                f_Access_Accurate(_i, _data);                                           \
+        }                                                                            \
+}
+
+#define u_linear_find2(_self, _data, f_Accesss_Simplex, f_Acesss_Accurate)  \
+{                                                                                    \
+        struct util_access* _p = &(_self)->_parent;                                   \
+        int _i;                                                                      \
+        for(_i = 0; _i < _p->n_objects; _i ++) {                                     \
+                if(f_Accesss_Simplex(_i, &_p->simplex[_i], _data) && f_Acesss_Accurate(_i, _data))                  \
+                        break;                                                    \
+        }                                                                            \
+}
+
+/*
+ * <util_bvh> decl
+ * provides a O(log n) time access of the spatial objects through bvh subdivide.
+ */
+struct util_bvh {
+};
+
 
 
 enum UtilImageFormat {

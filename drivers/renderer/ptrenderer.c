@@ -696,8 +696,10 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                                           index, num_index, &num_simplex);
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
         self->acc_type = UtilAccessorLinear;
-        self->acc_stt = u_access_create(self->acc_type, self->simplex, num_simplex);
+        struct util_linear li_stt;
+        u_linear_init(&li_stt, self->simplex, num_simplex);
         u_access_build(self->acc_stt);
+        self->acc_stt = &li_stt._parent;
 
         /* create target */
         /* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
