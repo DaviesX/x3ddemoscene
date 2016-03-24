@@ -3794,14 +3794,16 @@
 1458696772 source:/home/davis/x3ddemoscene-code/kernel/utility.c
 	<x3d/utility.h>
 
-1458757018 source:/home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.c
+1458843838 source:/home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.c
 	<math/math.h>
 	<x3d/raytracer.h>
+	<x3d/bsdf.h>
 	<x3d/colorspectrum.h>
 	"pathtracerimpl.h"
 
-1458710127 /home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.h
+1458760915 /home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.h
 	<x3d/utility.h>
+	<x3d/light.h>
 
 1458757897 /home/davis/x3ddemoscene-code/include/x3d/bsdf.h
 	<math/math.h>
@@ -3818,4 +3820,19 @@
 	<math.h>
 	<math/math.h>
 	<x3d/colorspectrum.h>
+
+1458758729 source:/home/davis/x3ddemoscene-code/kernel/material.c
+	<x3d/material.h>
+
+1458759083 /home/davis/x3ddemoscene-code/include/x3d/material.h
+	<x3d/bsdf.h>
+	<x3d/colorspectrum.h>
+
+1458844068 /home/davis/x3ddemoscene-code/include/x3d/light.h
+	<math/math.h>
+	<x3d/colorspectrum.h>
+
+1458843877 source:/home/davis/x3ddemoscene-code/kernel/light.c
+	<x3d/colorspectrum.h>
+	<x3d/light.h>
 

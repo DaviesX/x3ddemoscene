@@ -2,167 +2,127 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="../drivers/renderer/pathtracerimpl.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/container/hashmap.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="474" topLine="0" />
+			<Cursor1 position="244" topLine="193" />
+		</Cursor>
+	</File>
+	<File name="../drivers/renderer/rtrenderer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="103" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../kernel/renderable.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3735" topLine="34" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="16" />
+			<Collapse line="27" />
+			<Collapse line="39" />
+			<Collapse line="50" />
+			<Collapse line="56" />
+			<Collapse line="66" />
+			<Collapse line="95" />
+			<Collapse line="99" />
+			<Collapse line="103" />
+			<Collapse line="117" />
+			<Collapse line="121" />
+			<Collapse line="125" />
+			<Collapse line="131" />
+			<Collapse line="137" />
+			<Collapse line="143" />
+			<Collapse line="155" />
+			<Collapse line="161" />
+			<Collapse line="174" />
+			<Collapse line="186" />
+			<Collapse line="191" />
+			<Collapse line="221" />
+			<Collapse line="229" />
+			<Collapse line="235" />
+			<Collapse line="240" />
+			<Collapse line="245" />
+			<Collapse line="250" />
+			<Collapse line="255" />
+			<Collapse line="260" />
+			<Collapse line="273" />
+			<Collapse line="279" />
+		</Folding>
+	</File>
+	<File name="../lib/container/linkedlist.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="214" />
+		</Cursor>
+	</File>
+	<File name="../drivers/renderer/pathtracerimpl.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="663" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="0" />
 		</Folding>
 	</File>
-	<File name="../drivers/renderer/shader/basic_rt_shader_a.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/container/deque.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="137" topLine="0" />
+			<Cursor1 position="12782" topLine="152" />
 		</Cursor>
 	</File>
-	<File name="../include/x3d/renderableaggregate.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/container/list.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="288" topLine="12" />
-		</Cursor>
-	</File>
-	<File name="../lib/math/geometry.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="626" topLine="21" />
-		</Cursor>
-	</File>
-	<File name="../include/x3d/utility.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7190" topLine="183" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/staging.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5110" topLine="280" />
-		</Cursor>
-	</File>
-	<File name="../kernel/colorspectrum.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="25542" topLine="22" />
+			<Cursor1 position="148" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="5" />
-			<Collapse line="10" />
-			<Collapse line="16" />
-			<Collapse line="22" />
-			<Collapse line="29" />
-			<Collapse line="35" />
+			<Collapse line="25" />
 			<Collapse line="41" />
-			<Collapse line="48" />
-			<Collapse line="170" />
-			<Collapse line="292" />
-			<Collapse line="414" />
-			<Collapse line="459" />
-			<Collapse line="467" />
-			<Collapse line="474" />
-			<Collapse line="482" />
-			<Collapse line="489" />
-			<Collapse line="496" />
-			<Collapse line="503" />
-			<Collapse line="510" />
-			<Collapse line="517" />
-			<Collapse line="524" />
-			<Collapse line="532" />
-			<Collapse line="539" />
-			<Collapse line="547" />
-			<Collapse line="554" />
-			<Collapse line="560" />
-			<Collapse line="566" />
-			<Collapse line="574" />
-			<Collapse line="581" />
 		</Folding>
 	</File>
-	<File name="../kernel/rendertree.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../kernel/light.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="10561" topLine="271" />
+			<Cursor1 position="170" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="308" />
+			<Collapse line="3" />
 		</Folding>
 	</File>
-	<File name="../drivers/renderer/shaderformulate.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../kernel/projectionprobe.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5015" topLine="77" />
+			<Cursor1 position="76" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="12" />
-			<Collapse line="22" />
-			<Collapse line="27" />
-			<Collapse line="33" />
-			<Collapse line="44" />
-			<Collapse line="49" />
-			<Collapse line="54" />
-			<Collapse line="59" />
-			<Collapse line="62" />
-			<Collapse line="76" />
-			<Collapse line="82" />
-			<Collapse line="88" />
-			<Collapse line="93" />
-			<Collapse line="110" />
-			<Collapse line="124" />
-			<Collapse line="142" />
+			<Collapse line="18" />
+			<Collapse line="34" />
+			<Collapse line="45" />
+			<Collapse line="60" />
+			<Collapse line="70" />
+			<Collapse line="75" />
+			<Collapse line="80" />
+			<Collapse line="85" />
+			<Collapse line="91" />
+			<Collapse line="98" />
+			<Collapse line="103" />
+			<Collapse line="108" />
+			<Collapse line="113" />
+			<Collapse line="118" />
+			<Collapse line="123" />
+			<Collapse line="127" />
+			<Collapse line="131" />
+			<Collapse line="135" />
+			<Collapse line="139" />
+			<Collapse line="143" />
 			<Collapse line="147" />
-			<Collapse line="243" />
-			<Collapse line="250" />
-			<Collapse line="293" />
-			<Collapse line="306" />
-			<Collapse line="312" />
-			<Collapse line="318" />
-			<Collapse line="325" />
-			<Collapse line="330" />
-			<Collapse line="337" />
-			<Collapse line="344" />
-			<Collapse line="357" />
-			<Collapse line="369" />
-			<Collapse line="377" />
-			<Collapse line="387" />
-			<Collapse line="410" />
-			<Collapse line="554" />
-			<Collapse line="559" />
-			<Collapse line="564" />
-		</Folding>
-	</File>
-	<File name="../include/renderer/out.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="32" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/stack.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="150" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../drivers/renderer/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4060" topLine="108" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/deque.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="150" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="11" />
-			<Collapse line="21" />
-		</Folding>
-	</File>
-	<File name="../lib/compiler/parser.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3311" topLine="55" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/staging.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="118" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../kernel/debug.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5287" topLine="22" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-			<Collapse line="21" />
-			<Collapse line="101" />
+			<Collapse line="153" />
+			<Collapse line="164" />
+			<Collapse line="169" />
+			<Collapse line="177" />
+			<Collapse line="184" />
+			<Collapse line="189" />
+			<Collapse line="214" />
+			<Collapse line="225" />
+			<Collapse line="231" />
+			<Collapse line="266" />
+			<Collapse line="273" />
+			<Collapse line="279" />
 		</Folding>
 	</File>
 	<File name="../kernel/resloader.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -208,244 +168,6 @@
 			<Cursor1 position="406" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="../drivers/renderer/surface.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="135" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-			<Collapse line="13" />
-			<Collapse line="62" />
-			<Collapse line="97" />
-			<Collapse line="111" />
-			<Collapse line="117" />
-			<Collapse line="122" />
-			<Collapse line="129" />
-			<Collapse line="136" />
-			<Collapse line="144" />
-			<Collapse line="152" />
-			<Collapse line="157" />
-			<Collapse line="162" />
-			<Collapse line="167" />
-			<Collapse line="172" />
-			<Collapse line="188" />
-			<Collapse line="195" />
-			<Collapse line="200" />
-			<Collapse line="205" />
-			<Collapse line="210" />
-			<Collapse line="215" />
-			<Collapse line="220" />
-			<Collapse line="226" />
-			<Collapse line="231" />
-			<Collapse line="236" />
-			<Collapse line="241" />
-			<Collapse line="246" />
-			<Collapse line="251" />
-			<Collapse line="256" />
-			<Collapse line="261" />
-			<Collapse line="266" />
-			<Collapse line="273" />
-			<Collapse line="278" />
-			<Collapse line="283" />
-			<Collapse line="288" />
-			<Collapse line="295" />
-			<Collapse line="300" />
-			<Collapse line="305" />
-			<Collapse line="310" />
-			<Collapse line="315" />
-			<Collapse line="320" />
-		</Folding>
-	</File>
-	<File name="../lib/container/paramset.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="132" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../kernel/projectionprobe.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="76" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="18" />
-			<Collapse line="34" />
-			<Collapse line="45" />
-			<Collapse line="60" />
-			<Collapse line="70" />
-			<Collapse line="75" />
-			<Collapse line="80" />
-			<Collapse line="85" />
-			<Collapse line="91" />
-			<Collapse line="98" />
-			<Collapse line="103" />
-			<Collapse line="108" />
-			<Collapse line="113" />
-			<Collapse line="118" />
-			<Collapse line="123" />
-			<Collapse line="127" />
-			<Collapse line="131" />
-			<Collapse line="135" />
-			<Collapse line="139" />
-			<Collapse line="143" />
-			<Collapse line="147" />
-			<Collapse line="153" />
-			<Collapse line="164" />
-			<Collapse line="169" />
-			<Collapse line="177" />
-			<Collapse line="184" />
-			<Collapse line="189" />
-			<Collapse line="214" />
-			<Collapse line="225" />
-			<Collapse line="231" />
-			<Collapse line="266" />
-			<Collapse line="273" />
-			<Collapse line="279" />
-		</Folding>
-	</File>
-	<File name="../lib/container/deque.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="12782" topLine="152" />
-		</Cursor>
-	</File>
-	<File name="../include/x3d/raytracer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="572" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/linkedlist.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="214" />
-		</Cursor>
-	</File>
-	<File name="../include/renderer/geometry.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="74" />
-		</Cursor>
-	</File>
-	<File name="../drivers/renderer/ptrenderer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="579" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="0" />
-		</Folding>
-	</File>
-	<File name="../lib/system/panic.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="205" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="30" />
-		</Folding>
-	</File>
-	<File name="../drivers/renderer/rtrenderer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="103" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../kernel/raytracer.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2609" topLine="36" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-			<Collapse line="75" />
-		</Folding>
-	</File>
-	<File name="../kernel/renderable.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3735" topLine="34" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-			<Collapse line="16" />
-			<Collapse line="27" />
-			<Collapse line="39" />
-			<Collapse line="50" />
-			<Collapse line="56" />
-			<Collapse line="66" />
-			<Collapse line="95" />
-			<Collapse line="99" />
-			<Collapse line="103" />
-			<Collapse line="117" />
-			<Collapse line="121" />
-			<Collapse line="125" />
-			<Collapse line="131" />
-			<Collapse line="137" />
-			<Collapse line="143" />
-			<Collapse line="155" />
-			<Collapse line="161" />
-			<Collapse line="174" />
-			<Collapse line="186" />
-			<Collapse line="191" />
-			<Collapse line="221" />
-			<Collapse line="229" />
-			<Collapse line="235" />
-			<Collapse line="240" />
-			<Collapse line="245" />
-			<Collapse line="250" />
-			<Collapse line="255" />
-			<Collapse line="260" />
-			<Collapse line="273" />
-			<Collapse line="279" />
-		</Folding>
-	</File>
-	<File name="../lib/container/balancedtree.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="10480" topLine="88" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/array.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="13632" topLine="21" />
-		</Cursor>
-	</File>
-	<File name="../include/x3d/renderableaggregaterequest.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="368" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/list.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="10702" topLine="184" />
-		</Cursor>
-	</File>
-	<File name="../include/renderer/geocache.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="26" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/hashmap.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="244" topLine="193" />
-		</Cursor>
-	</File>
-	<File name="../lib/system/log.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="641" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/set.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="17639" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="0" />
-		</Folding>
-	</File>
-	<File name="../kernel/bsdf.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="242" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-			<Collapse line="13" />
-		</Folding>
-	</File>
-	<File name="../lib/container/set.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4631" topLine="113" />
-		</Cursor>
-	</File>
 	<File name="../kernel/utility.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2176" topLine="52" />
@@ -454,6 +176,133 @@
 			<Collapse line="159" />
 			<Collapse line="199" />
 			<Collapse line="207" />
+		</Folding>
+	</File>
+	<File name="../lib/system/allocator.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="379" topLine="15" />
+		</Cursor>
+		<Folding>
+			<Collapse line="58" />
+			<Collapse line="132" />
+			<Collapse line="154" />
+		</Folding>
+	</File>
+	<File name="../include/x3d/renderableaggregate.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="288" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="../lib/misc.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/staging.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5110" topLine="280" />
+		</Cursor>
+	</File>
+	<File name="../lib/system/log.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="641" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../include/renderer/proj_probe.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1698" topLine="28" />
+		</Cursor>
+	</File>
+	<File name="../kernel/rendertree.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10561" topLine="271" />
+		</Cursor>
+		<Folding>
+			<Collapse line="308" />
+		</Folding>
+	</File>
+	<File name="../include/x3d/material.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="127" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../kernel/colorspectrum.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="25542" topLine="22" />
+		</Cursor>
+		<Folding>
+			<Collapse line="5" />
+			<Collapse line="10" />
+			<Collapse line="16" />
+			<Collapse line="22" />
+			<Collapse line="29" />
+			<Collapse line="35" />
+			<Collapse line="41" />
+			<Collapse line="48" />
+			<Collapse line="170" />
+			<Collapse line="292" />
+			<Collapse line="414" />
+			<Collapse line="459" />
+			<Collapse line="467" />
+			<Collapse line="474" />
+			<Collapse line="482" />
+			<Collapse line="489" />
+			<Collapse line="496" />
+			<Collapse line="503" />
+			<Collapse line="510" />
+			<Collapse line="517" />
+			<Collapse line="524" />
+			<Collapse line="532" />
+			<Collapse line="539" />
+			<Collapse line="547" />
+			<Collapse line="554" />
+			<Collapse line="560" />
+			<Collapse line="566" />
+			<Collapse line="574" />
+			<Collapse line="581" />
+		</Folding>
+	</File>
+	<File name="../lib/container/paramset.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="132" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/array.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13632" topLine="21" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/staging.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="118" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../include/x3d/projectionprobe.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="499" topLine="13" />
+		</Cursor>
+	</File>
+	<File name="../lib/math/geometry.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1837" topLine="30" />
+		</Cursor>
+		<Folding>
+			<Collapse line="36" />
+		</Folding>
+	</File>
+	<File name="../lib/container/balancedtree.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10480" topLine="88" />
+		</Cursor>
+	</File>
+	<File name="../kernel/debug.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5287" topLine="22" />
+		</Cursor>
+		<Folding>
+			<Collapse line="8" />
+			<Collapse line="21" />
+			<Collapse line="101" />
 		</Folding>
 	</File>
 	<File name="../lib/container/array.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -465,25 +314,132 @@
 			<Collapse line="61" />
 		</Folding>
 	</File>
-	<File name="../kernel/renderableaggregaterequest.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../kernel/raytracer.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1761" topLine="0" />
+			<Cursor1 position="2609" topLine="36" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="75" />
+		</Folding>
+	</File>
+	<File name="../include/x3d/raytracer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="572" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../lib/system/allocator.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2209" topLine="68" />
+		</Cursor>
+	</File>
+	<File name="../include/x3d/light.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="185" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../drivers/renderer/main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4060" topLine="108" />
+		</Cursor>
+	</File>
+	<File name="../drivers/renderer/shader/basic_rt_shader_a.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="137" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/stack.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="150" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../lib/math/geometry.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="626" topLine="21" />
+		</Cursor>
+	</File>
+	<File name="../drivers/renderer/ptrenderer.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="579" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="0" />
+		</Folding>
+	</File>
+	<File name="../drivers/renderer/pathtracerimpl.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1862" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="11" />
+			<Collapse line="21" />
+			<Collapse line="26" />
+			<Collapse line="30" />
+			<Collapse line="33" />
+			<Collapse line="42" />
+			<Collapse line="68" />
+			<Collapse line="90" />
+		</Folding>
+	</File>
+	<File name="../include/x3d/utility.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7190" topLine="183" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/list.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10702" topLine="184" />
+		</Cursor>
+	</File>
+	<File name="../include/renderer/out.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="32" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/set.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4631" topLine="113" />
+		</Cursor>
+	</File>
+	<File name="../include/x3d/renderableaggregaterequest.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="368" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../include/renderer/geometry.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="74" />
+		</Cursor>
+	</File>
+	<File name="../kernel/bsdf.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="242" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="8" />
-			<Collapse line="20" />
-			<Collapse line="32" />
-			<Collapse line="37" />
+			<Collapse line="13" />
 		</Folding>
 	</File>
-	<File name="../include/x3d/projectionprobe.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/container/stack.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="499" topLine="13" />
+			<Cursor1 position="11722" topLine="0" />
 		</Cursor>
+		<Folding>
+			<Collapse line="0" />
+		</Folding>
 	</File>
-	<File name="../include/renderer/proj_probe.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/container/deque.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1698" topLine="28" />
+			<Cursor1 position="150" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="11" />
+			<Collapse line="21" />
+		</Folding>
+	</File>
+	<File name="../include/renderer/geocache.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="26" />
 		</Cursor>
 	</File>
 	<File name="../include/x3d/bsdf.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -491,14 +447,23 @@
 			<Cursor1 position="1188" topLine="32" />
 		</Cursor>
 	</File>
-	<File name="../lib/container/list.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../include/x3d/renderable.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="148" topLine="0" />
+			<Cursor1 position="2123" topLine="53" />
+		</Cursor>
+	</File>
+	<File name="../lib/container/set.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="17639" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="25" />
-			<Collapse line="41" />
+			<Collapse line="0" />
 		</Folding>
+	</File>
+	<File name="../lib/compiler/parser.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3311" topLine="55" />
+		</Cursor>
 	</File>
 	<File name="../drivers/renderer/ptrenderer.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -593,55 +558,113 @@
 			<Collapse line="906" />
 		</Folding>
 	</File>
-	<File name="../include/x3d/material.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../lib/system/panic.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="127" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../lib/math/geometry.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1837" topLine="30" />
+			<Cursor1 position="205" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="36" />
+			<Collapse line="30" />
 		</Folding>
 	</File>
-	<File name="../lib/system/allocator.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../drivers/renderer/surface.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="379" topLine="15" />
+			<Cursor1 position="135" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="58" />
-			<Collapse line="132" />
-			<Collapse line="154" />
+			<Collapse line="6" />
+			<Collapse line="13" />
+			<Collapse line="62" />
+			<Collapse line="97" />
+			<Collapse line="111" />
+			<Collapse line="117" />
+			<Collapse line="122" />
+			<Collapse line="129" />
+			<Collapse line="136" />
+			<Collapse line="144" />
+			<Collapse line="152" />
+			<Collapse line="157" />
+			<Collapse line="162" />
+			<Collapse line="167" />
+			<Collapse line="172" />
+			<Collapse line="188" />
+			<Collapse line="195" />
+			<Collapse line="200" />
+			<Collapse line="205" />
+			<Collapse line="210" />
+			<Collapse line="215" />
+			<Collapse line="220" />
+			<Collapse line="226" />
+			<Collapse line="231" />
+			<Collapse line="236" />
+			<Collapse line="241" />
+			<Collapse line="246" />
+			<Collapse line="251" />
+			<Collapse line="256" />
+			<Collapse line="261" />
+			<Collapse line="266" />
+			<Collapse line="273" />
+			<Collapse line="278" />
+			<Collapse line="283" />
+			<Collapse line="288" />
+			<Collapse line="295" />
+			<Collapse line="300" />
+			<Collapse line="305" />
+			<Collapse line="310" />
+			<Collapse line="315" />
+			<Collapse line="320" />
 		</Folding>
 	</File>
-	<File name="../drivers/renderer/pathtracerimpl.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../kernel/renderableaggregaterequest.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="446" topLine="63" />
-		</Cursor>
-	</File>
-	<File name="../lib/misc.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="../lib/system/allocator.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2209" topLine="68" />
-		</Cursor>
-	</File>
-	<File name="../include/x3d/renderable.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2123" topLine="53" />
-		</Cursor>
-	</File>
-	<File name="../lib/container/stack.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="11722" topLine="0" />
+			<Cursor1 position="1761" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="0" />
+			<Collapse line="8" />
+			<Collapse line="20" />
+			<Collapse line="32" />
+			<Collapse line="37" />
+		</Folding>
+	</File>
+	<File name="../drivers/renderer/shaderformulate.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5015" topLine="77" />
+		</Cursor>
+		<Folding>
+			<Collapse line="12" />
+			<Collapse line="22" />
+			<Collapse line="27" />
+			<Collapse line="33" />
+			<Collapse line="44" />
+			<Collapse line="49" />
+			<Collapse line="54" />
+			<Collapse line="59" />
+			<Collapse line="62" />
+			<Collapse line="76" />
+			<Collapse line="82" />
+			<Collapse line="88" />
+			<Collapse line="93" />
+			<Collapse line="110" />
+			<Collapse line="124" />
+			<Collapse line="142" />
+			<Collapse line="147" />
+			<Collapse line="243" />
+			<Collapse line="250" />
+			<Collapse line="293" />
+			<Collapse line="306" />
+			<Collapse line="312" />
+			<Collapse line="318" />
+			<Collapse line="325" />
+			<Collapse line="330" />
+			<Collapse line="337" />
+			<Collapse line="344" />
+			<Collapse line="357" />
+			<Collapse line="369" />
+			<Collapse line="377" />
+			<Collapse line="387" />
+			<Collapse line="410" />
+			<Collapse line="554" />
+			<Collapse line="559" />
+			<Collapse line="564" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>

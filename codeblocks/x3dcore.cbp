@@ -292,6 +292,7 @@
 		<Unit filename="../include/x3d/debug.h" />
 		<Unit filename="../include/x3d/dynamics.h" />
 		<Unit filename="../include/x3d/init.h" />
+		<Unit filename="../include/x3d/light.h" />
 		<Unit filename="../include/x3d/material.h" />
 		<Unit filename="../include/x3d/modelentity.h" />
 		<Unit filename="../include/x3d/poi.h" />
@@ -326,6 +327,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../kernel/light.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/material.c">

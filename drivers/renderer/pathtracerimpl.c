@@ -10,6 +10,8 @@
  */
 void pathtracer_init(struct pathtracer* self)
 {
+        zero_obj(self);
+        pathtracer_set_sample_count(self, 1);
 }
 
 void pathtracer_free(struct pathtracer* self)
@@ -21,17 +23,40 @@ void pathtracer_set_sample_count(struct pathtracer* self, int sample_count)
         self->sample_count = sample_count;
 }
 
+void pathtracer_set_lights(struct pathtracer* self, struct light* lights, int n_light)
+{
+}
+
+void pathtracer_set_geometries(struct pathtracer* self, struct util_aos* aos, struct util_access* acc)
+{
+}
+
 struct tracer_data {
         struct util_aos*        aos;
+        struct light**          lights;
+        int                     n_lights;
+        float                   plight;
         struct raytracer        rt;
         int                     depth;
 };
 
+static void __pathtracer_data_init(struct tracer_data* self, struct util_aos* aos,
+                                   struct light** lights, int n_lights, struct raytracer* rt)
+{
+        self->aos = aos;
+        self->lights = lights;
+        self->n_lights = n_lights;
+        self->plight = (float) 1.0f/n_lights;
+        self->rt = *rt;
+        self->depth = 0;
+}
+
 static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, struct float_color3* li)
 {
+        init_color3(0.0f, li);
+
         struct tintersect inters;
-        if (data->depth >= 5 || !raytracer_tintersect(&data->rt, ray, &inters)) {
-                init_color3(0.0f, li);
+        if (data->depth ++ > 4 || !raytracer_tintersect(&data->rt, ray, &inters)) {
                 return;
         }
         const int c_NumBranchedSample = 4;
@@ -40,7 +65,19 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
         struct bsdf_model bsdf;
         bsdf_model_set_sample_count(&bsdf, c_NumBranchedSample);
 
-        init_color3(0.0, li);
+        // compute direct lighting
+        int i;
+        for (i = 0; i < data->n_lights; i ++) {
+                struct ray3d illumray;
+                struct float_color3 inten;
+                light_sample_at2(data->lights[i], &inters.geom.p, &illumray, &inten);
+                if (is_color_black(&inten) || raytracer_occlusion(&data->rt, &illumray)) {
+                        // 0 intensity or shadowed
+                        continue;
+                }
+                bsdf_model_integrate(&bsdf, &inters.geom, ray, &illumray, &inten, li);
+        }
+
         int n;
         for (n = 0; n < c_NumBranchedSample; n ++) {
                 struct ray3d reflected;
@@ -51,8 +88,7 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
         }
 }
 
-static void __pathtracer_compute_at(struct util_aos* aos, struct util_access* acc,
-                                    float x, float y, int n, struct float_color3* fn)
+static void __pathtracer_compute_at(struct pathtracer* self, float x, float y, int n, struct float_color3* fn)
 {
         // simply trace a single ray
         struct ray3d initial;
@@ -61,12 +97,10 @@ static void __pathtracer_compute_at(struct util_aos* aos, struct util_access* ac
         build_line3d_t(&p0, &p1, 1.0f, FLOAT_MAX, &initial);
 
         struct raytracer rt;
-        raytracer_init(&rt, aos, acc);
+        raytracer_init(&rt, self->aos, self->acc);
 
         struct tracer_data data;
-        data.aos = aos;
-        data.depth = 0;
-        data.rt = rt;
+        __pathtracer_data_init(&data, self->aos, self->lights, self->n_lights, &rt);
         __pathtracer_trace_at(&data, &initial, fn);
 
         raytracer_free(&rt);
@@ -88,7 +122,7 @@ void pathtracer_render(struct pathtracer* self, struct util_aos* aos, struct uti
                         int n;
                         for (n = 0; n < self->sample_count; n ++) {
                                 struct float_color3 fn;
-                                __pathtracer_compute_at(aos, acc, x, y, n, &fn);
+                                __pathtracer_compute_at(self, x, y, n, &fn);
                                 add_color3(&expected, &fn, &expected);
                         }
                         float p = (float) 1.0f/self->sample_count;
