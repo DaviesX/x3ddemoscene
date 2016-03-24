@@ -19,9 +19,8 @@ struct bsdf_model;
 struct hitgeom;
 
 enum SampleType {
-        DiffuseSample,
-        GlossySample,
-        MixSample
+        LambertSample,
+        MirrorSample
 };
 
 typedef void (*f_BSDF_Sample) (struct bsdf_model* self, struct hitgeom* geom,
