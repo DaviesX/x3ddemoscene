@@ -1,7 +1,8 @@
 #ifndef RAYTRACER_H_INCLUDED
 #define RAYTRACER_H_INCLUDED
 
-#include <x3d/utility.h>
+#include <x3d/geomcache.h>
+#include <x3d/spatialaccess.h>
 #include <x3d/bsdf.h>
 #include <math/math.h>
 

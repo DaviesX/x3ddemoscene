@@ -7,6 +7,8 @@
 #include <x3d/rendernoderdaloader.h>
 #include <x3d/rendernodeoutput.h>
 #include <x3d/utility.h>
+#include <x3d/spatialaccess.h>
+#include <x3d/geomcache.h>
 
 /*
  * structures
