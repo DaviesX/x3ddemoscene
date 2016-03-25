@@ -12,7 +12,6 @@ typedef struct bsdf_model* (*f_Material_BSDF) (struct material* self);
  * <material> decl
  */
 struct material {
-        enum SampleType         sampt;
         struct float_color3     refl;
         struct float_color3     roughness;
 };

@@ -4,4 +4,3 @@ bin/sym-libx3dcore.so
 bin/editor
 bin/libusr.so
 bin/libx3dcore.so
-codeblocks/*

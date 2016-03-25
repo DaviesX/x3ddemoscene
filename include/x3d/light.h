@@ -29,5 +29,47 @@ void light_free(struct light* self);
 void light_sample_at(struct light* self, struct point3d* p, struct vector3d* n, struct float_color3* i);
 void light_sample_at2(struct light* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i);
 
+/*
+ * <light_point> decl
+ * define a point light source without having a concrete geometry.
+ * It is possible that the light source can have zero or non-zero radius.
+ */
+struct light_point {
+        struct light            _parent;
+        struct float_color3     i;
+        struct point3d          p;
+        float                   radius;
+};
+/*
+ * <light_point> public
+ */
+struct light_point* light_point_create(struct float_color3* flux, struct point3d* p, float radius);
+void light_point_free(struct light_point* self);
+void light_point_sample_at(struct light_point* self, struct point3d* p, struct vector3d* n, struct float_color3* i);
+void light_point_sample_at2(struct light_point* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i);
+
+/*
+ * <light_rectangular> decl
+ * define a single side rectangular light source without having a concrete geometry.
+ * It is possible that the light source can have zero or non-zero area.
+ */
+struct light_rectangular {
+        struct light            _parent;
+        struct float_color3     irrad;
+        struct plane3d          plane;
+        struct point3d          p0;
+        struct point3d          p1;
+        struct point3d          p2;
+        struct point3d          p3;
+};
+/*
+ * <light_rectangular> public
+ */
+struct light_rectangular* light_rect_create(struct float_color3* flux,
+                struct point3d* p0, struct point3d* p1, struct point3d* p2, struct point3d* p3);
+void light_rect_free(struct light_rectangular* self);
+void light_rect_sample_at(struct light_rectangular* self, struct point3d* p, struct vector3d* n, struct float_color3* i);
+void light_rect_sample_at2(struct light_rectangular* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i);
+
 
 #endif // LIGHT_H_INCLUDED
