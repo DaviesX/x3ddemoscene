@@ -63,9 +63,9 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
 
         // @fixme needed to extract from material
         struct bsdf_model bsdf;
-        bsdf_model_set_sample_count(&bsdf, c_NumBranchedSample);
 
         // compute direct lighting
+        bsdf_model_set_sample_count(&bsdf, data->n_lights);
         int i;
         for (i = 0; i < data->n_lights; i ++) {
                 struct ray3d illumray;
@@ -78,6 +78,7 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
                 bsdf_model_integrate(&bsdf, &inters.geom, ray, &illumray, &inten, li);
         }
 
+        bsdf_model_set_sample_count(&bsdf, c_NumBranchedSample);
         int n;
         for (n = 0; n < c_NumBranchedSample; n ++) {
                 struct ray3d reflected;
