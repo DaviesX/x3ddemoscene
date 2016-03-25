@@ -294,7 +294,6 @@
 		<Unit filename="../include/x3d/geomcache.h" />
 		<Unit filename="../include/x3d/init.h" />
 		<Unit filename="../include/x3d/light.h" />
-		<Unit filename="../include/x3d/material.h" />
 		<Unit filename="../include/x3d/modelentity.h" />
 		<Unit filename="../include/x3d/poi.h" />
 		<Unit filename="../include/x3d/projectionprobe.h" />
@@ -335,9 +334,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/light.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../kernel/material.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/modelentity.c">
