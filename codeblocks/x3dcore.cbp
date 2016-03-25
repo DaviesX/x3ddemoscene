@@ -291,6 +291,7 @@
 		<Unit filename="../include/x3d/common.h" />
 		<Unit filename="../include/x3d/debug.h" />
 		<Unit filename="../include/x3d/dynamics.h" />
+		<Unit filename="../include/x3d/geomcache.h" />
 		<Unit filename="../include/x3d/init.h" />
 		<Unit filename="../include/x3d/light.h" />
 		<Unit filename="../include/x3d/material.h" />
@@ -312,6 +313,7 @@
 		<Unit filename="../include/x3d/rendernoderdaloader.h" />
 		<Unit filename="../include/x3d/rendertree.h" />
 		<Unit filename="../include/x3d/resloader.h" />
+		<Unit filename="../include/x3d/spatialaccess.h" />
 		<Unit filename="../include/x3d/strategy.h" />
 		<Unit filename="../include/x3d/utility.h" />
 		<Unit filename="../kernel/bsdf.c">
@@ -324,6 +326,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/dynamics.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../kernel/geomcache.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/init.c">
@@ -385,10 +390,10 @@
 		<Unit filename="../kernel/resloader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../kernel/strategy.c">
+		<Unit filename="../kernel/spatialaccess.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../kernel/utility.c">
+		<Unit filename="../kernel/strategy.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/codecs/serializer.c">
