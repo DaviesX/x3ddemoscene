@@ -7,7 +7,7 @@
  */
 void raytracer_init(struct raytracer* self,
                     struct geomcache* aos,
-                    struct util_access* acc)
+                    struct spatial_access* acc)
 {
         self->acc = *acc;
         self->aos = *aos;

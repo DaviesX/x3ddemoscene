@@ -27,7 +27,7 @@ void pathtracer_set_lights(struct pathtracer* self, struct light* lights, int n_
 {
 }
 
-void pathtracer_set_geometries(struct pathtracer* self, struct geomcache* aos, struct util_access* acc)
+void pathtracer_set_geometries(struct pathtracer* self, struct geomcache* aos, struct spatial_access* acc)
 {
 }
 
@@ -109,7 +109,7 @@ static void __pathtracer_compute_at(struct pathtracer* self, float x, float y, i
         raytracer_free(&rt);
 }
 
-void pathtracer_render(struct pathtracer* self, struct geomcache* aos, struct util_access* acc, struct util_image* target)
+void pathtracer_render(struct pathtracer* self, struct geomcache* aos, struct spatial_access* acc, struct util_image* target)
 {
         int w, h;
         u_image_get_level0_dimension(target, &w, &h);

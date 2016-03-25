@@ -22,7 +22,7 @@ enum _AttriMap {
 };
 
 /*
- * <util_aos> decl
+ * <geomcache> decl
  * array-of-structure streams.
  */
 struct geomcache {

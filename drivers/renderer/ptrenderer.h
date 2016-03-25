@@ -18,7 +18,7 @@ struct pt_radiance_node {
         struct pathtrace_pipeline*      pipeline;
 
         struct box3d*                   simplex;
-        struct util_access*             acc_stt;
+        struct spatial_access*             acc_stt;
         struct util_stream              stream[10];
         int                             n_streams;
         struct geomcache                 aos_geo;

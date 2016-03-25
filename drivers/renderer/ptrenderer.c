@@ -130,7 +130,7 @@ static bool simplex_subroutine ( int i, struct box3d* b, struct intersect_packet
         return occlude_line_box3d ( ip->r, b );
 }
 /* intersection caller */
-static bool find_intersect_linear ( struct util_linear* access,
+static bool find_intersect_linear ( struct spatial_linear* access,
                                     struct intersect_packet* ip )
 {
         ip->has_inters  = false;
@@ -138,7 +138,7 @@ static bool find_intersect_linear ( struct util_linear* access,
         u_linear_find ( access, ip, simplex_subroutine, real_subroutine );
         return ip->has_inters;
 }
-static bool is_visible_linear ( struct util_linear* access,
+static bool is_visible_linear ( struct spatial_linear* access,
                                 struct intersect_packet* ip )
 {
         ip->has_inters  = false;
@@ -176,7 +176,7 @@ static void free_simplex ( struct box3d* b )
         free_fix ( b );
 }
 
-static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, struct intersect_packet* ip )
+static void evaluate_ray_tree ( struct ray_tree* node, struct spatial_access* acc, struct intersect_packet* ip )
 {
         struct ray_tree* root = node;
 
@@ -217,7 +217,7 @@ static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, 
                 init_vector3d ( &node->i_rad );
 
                 /* trace recursive ray */
-                if ( !find_intersect_linear ( (struct util_linear*) acc, ip )) {
+                if ( !find_intersect_linear ( (struct spatial_linear*) acc, ip )) {
                         node->n_emit = 0;
                         continue;
                 }
@@ -240,7 +240,7 @@ static void evaluate_ray_tree ( struct ray_tree* node, struct util_access* acc, 
                 int j;
                 for ( j = 0; j < n_iray; j ++ ) {
                         ip->r = &iray[j];
-                        is_vis[j] = is_visible_linear ( (struct util_linear*) acc, ip );
+                        is_vis[j] = is_visible_linear ( (struct spatial_linear*) acc, ip );
                 }
                 *ip->in_is_vis = is_vis;
                 *ip->out_radiance = &node->i_rad;
@@ -642,7 +642,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         self->simplex = construct_simplex(self->stream, self->n_streams,
                                           indices, num_index, &num_simplex);
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
-        struct util_linear li_stt;
+        struct spatial_linear li_stt;
         u_linear_init(&li_stt, self->simplex, num_simplex);
         u_access_build(self->acc_stt);
         self->acc_stt = &li_stt._parent;
