@@ -72,6 +72,7 @@ void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, f
         self->v.x *= inv;
         self->v.y *= inv;
         self->v.z *= inv;
+        self->inv_len2 = inv*inv;
         self->t0 = t0;
         self->t1 = t1;
 }
@@ -79,6 +80,11 @@ void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, f
 float ray3d_length(struct ray3d* self)
 {
         return self->len;
+}
+
+float ray3d_inv_length2(struct ray3d* self)
+{
+        return self->inv_len2;
 }
 
 void ray3d_direction(struct ray3d* self, struct vector3d* v)
@@ -315,6 +321,15 @@ void build_triangle3d ( struct point3d *p0, struct point3d *p1, struct point3d *
         copy_point3d ( p0, &tri->v[0] );
         copy_point3d ( p1, &tri->v[1] );
         copy_point3d ( p2, &tri->v[2] );
+}
+
+void triangle3d_normal(struct triangle3d* self, struct vector3d* n)
+{
+        struct vector3d u, v;
+        build_vector3d(&self->v[0], &self->v[1], &u);
+        build_vector3d(&self->v[0], &self->v[2], &v);
+        cross_vector3d(&u, &v, n);
+        normalize_vector3d_u(n);
 }
 
 void build_triangle4d ( struct point3d *p0, struct point3d *p1, struct point3d *p2, struct triangle4d *tri )

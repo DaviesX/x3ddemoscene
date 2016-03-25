@@ -29,6 +29,7 @@ struct line3d {
         struct vector3d v;
         float t0, t1;
         float len;
+        float inv_len2;
 };
 #define ray3d     line3d
 
@@ -252,7 +253,10 @@ void vector_to_spherical3d ( struct vector3d *v, struct spherical3d *s );
 
 void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1);
 float ray3d_length(struct ray3d* self);
+float ray3d_inv_length2(struct ray3d* self);
 void ray3d_direction(struct ray3d* self, struct vector3d* v);
+
+void triangle3d_normal(struct triangle3d* self, struct vector3d* n);
 
 /* Unary operations */
 #define union_box3d_u( _b0, _b1 )			(union_box3d ( _b0, _b1, _b0 ))
