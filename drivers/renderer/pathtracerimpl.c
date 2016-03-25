@@ -23,12 +23,16 @@ void pathtracer_set_sample_count(struct pathtracer* self, int sample_count)
         self->sample_count = sample_count;
 }
 
-void pathtracer_set_lights(struct pathtracer* self, struct light* lights, int n_light)
+void pathtracer_set_lights(struct pathtracer* self, struct light** lights, int n_lights)
 {
+        self->lights = lights;
+        self->n_lights = n_lights;
 }
 
 void pathtracer_set_geometries(struct pathtracer* self, struct geomcache* aos, struct spatial_access* acc)
 {
+        self->aos = aos;
+        self->acc = acc;
 }
 
 struct tracer_data {
