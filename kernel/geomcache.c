@@ -34,14 +34,9 @@ void geomcache_init(struct geomcache* self, enum UtilAttribute format)
                 self->avail[_AttriUV] = true;
                 self->n_streams ++;
         }
-        if (format & UtilAttriMatId) {
+        if (format & UtilAttriMatId || format & UtilAttriMatIdList) {
                 self->aos[_AttriMatId].s_data = alloc_var(sizeof(int), 1);
                 self->avail[_AttriMatId] = true;
-                self->n_streams ++;
-        }
-        if (format & UtilAttriMatIdList) {
-                self->aos[_AttriMatIdList].s_data = alloc_var(sizeof(int), 1);
-                self->avail[_AttriMatIdList] = true;
                 self->n_streams ++;
         }
 
@@ -118,8 +113,8 @@ void geomcache_accumulate(struct geomcache* self, int* index, int num_index, int
         }
         if (format & UtilAttriMatIdList) {
                 int* src = va_arg(v_arg, int*);
-                self->aos[_AttriMatIdList].s_data = alloc_var_add(self->aos[_AttriMatIdList].s_data, num_vertex);
-                int* matid = self->aos[_AttriMatIdList].s_data;
+                self->aos[_AttriMatId].s_data = alloc_var_add(self->aos[_AttriMatId].s_data, num_vertex);
+                int* matid = self->aos[_AttriMatId].s_data;
                 memcpy(&matid[self->n_vertex], src, num_vertex*sizeof(*matid));
         }
 

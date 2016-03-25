@@ -17,8 +17,7 @@ enum _AttriMap {
         _AttriNormal,
         _AttriTangent,
         _AttriUV,
-        _AttriMatId,
-        _AttriMatIdList
+        _AttriMatId
 };
 
 /*
@@ -55,6 +54,9 @@ bool*   geomcache_get_availibility(struct geomcache* self);
 
 #define geomcache_has_uv(_self) \
         ((_self)->avail[_AttriUV])
+
+#define geomcache_has_material_id(_self) \
+        ((_self)->avail[_AttriMatId])
 
 #define geomcache_vertex_at(_self, _i) \
         ((struct point3d*) (_self)->aos[_AttriVertex].s_data + (_i))

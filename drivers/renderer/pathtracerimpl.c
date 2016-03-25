@@ -35,22 +35,31 @@ void pathtracer_set_geometries(struct pathtracer* self, struct geomcache* aos, s
         self->acc = acc;
 }
 
+void pathtracer_set_bsdfs(struct pathtracer* self, struct bsdf_model** bsdfs, int n_bsdfs)
+{
+        self->bsdfs = bsdfs;
+        self->n_bsdfs = n_bsdfs;
+}
+
 struct tracer_data {
         struct geomcache*        aos;
         struct light**          lights;
         int                     n_lights;
-        float                   plight;
+        struct bsdf_model**     bsdfs;
+        int                     n_bsdfs;
         struct raytracer        rt;
         int                     depth;
 };
 
 static void __pathtracer_data_init(struct tracer_data* self, struct geomcache* aos,
-                                   struct light** lights, int n_lights, struct raytracer* rt)
+                                   struct light** lights, int n_lights,
+                                   struct bsdf_model** bsdfs, int n_bsdfs, struct raytracer* rt)
 {
         self->aos = aos;
         self->lights = lights;
         self->n_lights = n_lights;
-        self->plight = (float) 1.0f/n_lights;
+        self->bsdfs = bsdfs;
+        self->n_bsdfs = n_bsdfs;
         self->rt = *rt;
         self->depth = 0;
 }
@@ -65,13 +74,16 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
         }
         const int c_NumBranchedSample = 4;
 
-        // @fixme needed to extract from material
-        struct bsdf_model bsdf;
-        bsdf_model_set_hitgeom(&bsdf, &inters.geom);
-        bsdf_model_set_incident(&bsdf, ray);
+        int mater_id = 0;
+        if (geomcache_has_material_id(data->aos)) {
+                mater_id = *geomcache_material_id_at(data->aos, inters.face[0]);
+        }
+        struct bsdf_model* bsdf = data->bsdfs[mater_id];
+        bsdf_model_set_hitgeom(bsdf, &inters.geom);
+        bsdf_model_set_incident(bsdf, ray);
 
         // compute direct lighting
-        bsdf_model_set_sample_count(&bsdf, data->n_lights);
+        bsdf_model_set_sample_count(bsdf, data->n_lights);
         int i;
         for (i = 0; i < data->n_lights; i ++) {
                 struct ray3d illumray;
@@ -81,17 +93,17 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
                         // 0 intensity or shadowed
                         continue;
                 }
-                bsdf_model_integrate(&bsdf, &illumray, &inten, li);
+                bsdf_model_integrate(bsdf, &illumray, &inten, li);
         }
 
-        bsdf_model_set_sample_count(&bsdf, c_NumBranchedSample);
+        bsdf_model_set_sample_count(bsdf, c_NumBranchedSample);
         int n;
         for (n = 0; n < c_NumBranchedSample; n ++) {
                 struct ray3d reflected;
-                bsdf_model_sample(&bsdf, &reflected);
+                bsdf_model_sample(bsdf, &reflected);
                 struct float_color3 lo;
                 __pathtracer_trace_at(data, &reflected, &lo);
-                bsdf_model_integrate(&bsdf, &reflected, &lo, li);
+                bsdf_model_integrate(bsdf, &reflected, &lo, li);
         }
 }
 
@@ -107,7 +119,9 @@ static void __pathtracer_compute_at(struct pathtracer* self, float x, float y, i
         raytracer_init(&rt, self->aos, self->acc);
 
         struct tracer_data data;
-        __pathtracer_data_init(&data, self->aos, self->lights, self->n_lights, &rt);
+        __pathtracer_data_init(&data, self->aos,
+                               self->lights, self->n_lights,
+                               self->bsdfs, self->n_bsdfs, &rt);
         __pathtracer_trace_at(&data, &initial, fn);
 
         raytracer_free(&rt);
