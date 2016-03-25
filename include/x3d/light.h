@@ -36,8 +36,8 @@ void light_sample_at2(struct light* self, struct point3d* p0, struct ray3d* illu
  */
 struct light_point {
         struct light            _parent;
-        struct float_color3     i;
-        struct point3d          p;
+        struct float_color3     inten;
+        struct point3d          center;
         float                   radius;
 };
 /*

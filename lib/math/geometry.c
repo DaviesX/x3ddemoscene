@@ -63,6 +63,29 @@ void build_line3d_t ( struct point3d *p0, struct point3d *p1, float t0, float t1
         l->t1 = max(j1, t1);
 }
 
+void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1)
+{
+        self->p0 = *p0;
+        vector3d_comps(self->v.v[i] = p1->p[i] - p0->p[i]);
+        self->len = length_vector3d(&self->v);
+        float inv = 1.0f/self->len;
+        self->v.x *= inv;
+        self->v.y *= inv;
+        self->v.z *= inv;
+        self->t0 = t0;
+        self->t1 = t1;
+}
+
+float ray3d_length(struct ray3d* self)
+{
+        return self->len;
+}
+
+void ray3d_direction(struct ray3d* self, struct vector3d* v)
+{
+        *v = self->v;
+}
+
 void build_plane3d ( struct vector3d *n, struct point3d *p, struct plane3d *plane )
 {
         copy_vector3d ( n, &plane->n );
