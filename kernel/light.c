@@ -24,9 +24,9 @@ void light_sample_at(struct light* self, struct point3d* p, struct vector3d* n, 
         self->f_sample(self, p, n, i);
 }
 
-void light_sample_at2(struct light* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i)
+float light_sample_at2(struct light* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i)
 {
-        self->f_sample2(self, p0, illumray, i);
+        return self->f_sample2(self, p0, illumray, i);
 }
 
 
@@ -65,7 +65,7 @@ void light_point_sample_at(struct light_point* self, struct point3d* p, struct v
         *i = self->inten;
 }
 
-void light_point_sample_at2(struct light_point* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i)
+float light_point_sample_at2(struct light_point* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i)
 {
         // imagine we are sampling on a sphere
         struct spherical3d sp;
@@ -84,8 +84,10 @@ void light_point_sample_at2(struct light_point* self, struct point3d* p0, struct
                 // P(get hit) = (PI*r^2)/(2*PI*dist^2)
                 float p = self->half_r2*ray3d_inv_length2(illumray);
                 scale_color3(cos*p, &self->inten, i);
+                return p;
         } else {
                 init_color3(0.0f, i);
+                return 0.0f;
         }
 }
 
@@ -140,7 +142,7 @@ void light_rect_sample_at(struct light_rectangular* self, struct point3d* p, str
         *i = self->inten;
 }
 
-void light_rect_sample_at2(struct light_rectangular* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i)
+float light_rect_sample_at2(struct light_rectangular* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i)
 {
         float b[4];
         __random_barycentric(b);
@@ -156,7 +158,9 @@ void light_rect_sample_at2(struct light_rectangular* self, struct point3d* p0, s
                 // P(get hit) = A*cos(t)/(2*PI*dist^2)
                 float p = self->area*cos/(2.0f*M_PI)*ray3d_inv_length2(illumray);
                 scale_color3(cos*p, &self->inten, i);
+                return p;
         } else {
                 init_color3(0.0f, i);
+                return 0.0f;
         }
 }
