@@ -25,6 +25,7 @@ struct float_color3 {
         union {
                 float rgb[3];
                 float xyz[3];
+                float c[3];
                 struct {
                         float r;
                         float g;
@@ -79,6 +80,14 @@ void clamp_color ( struct float_color3 *c, float l, float h, struct float_color3
 void xyz_to_rgb ( struct float_color3 *xyz, struct float_color3 *rgb );
 void rgb_to_xyz ( struct float_color3 *rgb, struct float_color3 *xyz );
 void color3_to_color4 ( struct float_color3 *c3, struct float_color4 *c4 );
+
+#define color3_comps(_CODE)             \
+{                                       \
+        int i;                          \
+        for (i = 0; i < 3; i ++) {      \
+                _CODE;                  \
+        }                               \
+}
 
 
 #endif // COLORSPECTRUM_H_INCLUDED

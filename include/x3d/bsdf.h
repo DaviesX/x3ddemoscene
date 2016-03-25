@@ -58,11 +58,12 @@ void    bsdf_model_integrate(struct bsdf_model* self, struct ray3d* reflected,
  */
 struct bsdf_lambert {
         struct bsdf_model       _parent;
+        struct float_color3     r;
 };
 /*
  * <bsdf_lambert> public
  */
-struct bsdf_lambert* bsdf_lambert_create();
+struct bsdf_lambert* bsdf_lambert_create(struct float_color3* r);
 void    bsdf_lambert_sample(struct bsdf_lambert* self, struct ray3d* reflected);
 void    bsdf_lambert_integrate(struct bsdf_lambert* self, struct ray3d* reflected,
                                struct float_color3* lo, struct float_color3* li);
@@ -73,11 +74,12 @@ void    bsdf_lambert_free(struct bsdf_lambert* self);
  */
 struct bsdf_mirror {
         struct bsdf_model       _parent;
+        struct float_color3     r;
 };
 /*
  * <bsdf_mirror> public
  */
-struct bsdf_mirror* bsdf_mirror_create();
+struct bsdf_mirror* bsdf_mirror_create(struct float_color3* r);
 void    bsdf_mirror_sample(struct bsdf_mirror* self, struct ray3d* reflected);
 void    bsdf_mirror_integrate(struct bsdf_mirror* self, struct ray3d* reflected,
                               struct float_color3* lo, struct float_color3* li);

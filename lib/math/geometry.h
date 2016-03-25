@@ -252,6 +252,8 @@ void vector_to_spherical3d_n ( struct vector3d *v, struct spherical3d *s );
 void vector_to_spherical3d ( struct vector3d *v, struct spherical3d *s );
 
 void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1);
+void ray3d_build_t2(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1);
+void ray3d_build_t3(struct ray3d *self, struct point3d *p0, struct vector3d* v, float t0, float t1);
 float ray3d_length(struct ray3d* self);
 float ray3d_inv_length2(struct ray3d* self);
 void ray3d_direction(struct ray3d* self, struct vector3d* v);
