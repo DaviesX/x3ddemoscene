@@ -6,7 +6,7 @@
 /*
  * <util_aos> public
  */
-void u_aos_init(struct util_aos* self, enum UtilAttribute format)
+void geomcache_init(struct geomcache* self, enum UtilAttribute format)
 {
         zero_obj(self);
 
@@ -48,7 +48,7 @@ void u_aos_init(struct util_aos* self, enum UtilAttribute format)
         self->format = format;
 }
 
-void u_aos_free(struct util_aos* self)
+void geomcache_free(struct geomcache* self)
 {
         free_var(self->index);
         self->n_index = 0;
@@ -60,7 +60,7 @@ void u_aos_free(struct util_aos* self)
         zero_obj(self);
 }
 
-void u_aos_flush(struct util_aos* self)
+void geomcache_flush(struct geomcache* self)
 {
         alloc_var_flush(self->index);
         self->n_index = 0;
@@ -71,7 +71,7 @@ void u_aos_flush(struct util_aos* self)
         }
 }
 
-void u_aos_accumulate(struct util_aos* self, int* index, int num_index, int num_vertex, ...)
+void geomcache_accumulate(struct geomcache* self, int* index, int num_index, int num_vertex, ...)
 {
         /* copy vertex attributes */
         va_list v_arg;
@@ -137,7 +137,7 @@ void u_aos_accumulate(struct util_aos* self, int* index, int num_index, int num_
         self->n_vertex += num_vertex;
 }
 
-int u_aos_get_vertices(struct util_aos* self, void* vertex[], int* n_streams)
+int geomcache_get_vertices(struct geomcache* self, void* vertex[], int* n_streams)
 {
         int i;
         for(i = 0; i < 10; i ++) {
@@ -147,13 +147,13 @@ int u_aos_get_vertices(struct util_aos* self, void* vertex[], int* n_streams)
         return self->n_vertex;
 }
 
-void* u_aos_get_indices(struct util_aos* self, int* n_index)
+void* geomcache_get_indices(struct geomcache* self, int* n_index)
 {
         *n_index = self->n_index;
         return self->index;
 }
 
-bool* u_aos_get_availibility(struct util_aos* self)
+bool* geomcache_get_availibility(struct geomcache* self)
 {
         return self->avail;
 }

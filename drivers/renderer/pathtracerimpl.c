@@ -27,12 +27,12 @@ void pathtracer_set_lights(struct pathtracer* self, struct light* lights, int n_
 {
 }
 
-void pathtracer_set_geometries(struct pathtracer* self, struct util_aos* aos, struct util_access* acc)
+void pathtracer_set_geometries(struct pathtracer* self, struct geomcache* aos, struct util_access* acc)
 {
 }
 
 struct tracer_data {
-        struct util_aos*        aos;
+        struct geomcache*        aos;
         struct light**          lights;
         int                     n_lights;
         float                   plight;
@@ -40,7 +40,7 @@ struct tracer_data {
         int                     depth;
 };
 
-static void __pathtracer_data_init(struct tracer_data* self, struct util_aos* aos,
+static void __pathtracer_data_init(struct tracer_data* self, struct geomcache* aos,
                                    struct light** lights, int n_lights, struct raytracer* rt)
 {
         self->aos = aos;
@@ -109,7 +109,7 @@ static void __pathtracer_compute_at(struct pathtracer* self, float x, float y, i
         raytracer_free(&rt);
 }
 
-void pathtracer_render(struct pathtracer* self, struct util_aos* aos, struct util_access* acc, struct util_image* target)
+void pathtracer_render(struct pathtracer* self, struct geomcache* aos, struct util_access* acc, struct util_image* target)
 {
         int w, h;
         u_image_get_level0_dimension(target, &w, &h);

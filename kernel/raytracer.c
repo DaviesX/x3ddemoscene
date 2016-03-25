@@ -6,7 +6,7 @@
  * <raytracer> public
  */
 void raytracer_init(struct raytracer* self,
-                    struct util_aos* aos,
+                    struct geomcache* aos,
                     struct util_access* acc)
 {
         self->acc = *acc;
@@ -20,7 +20,7 @@ void raytracer_free(struct raytracer* self)
 
 struct tintersect_data {
         struct tintersect*      inters;
-        struct util_aos*        aos;
+        struct geomcache*        aos;
         struct ray3d*           ray;
         float                   t_hit;
         int                     i;
@@ -33,10 +33,10 @@ static bool __raytracer_simplex(int i, struct box3d* simplex, struct tintersect_
 
 static bool __raytracer_triangle_tintersect(int i, struct tintersect_data* data)
 {
-        int* face = u_aos_index_at(data->aos, i);
-        struct point3d* p0 = u_aos_vertex_at(data->aos, face[0]);
-        struct point3d* p1 = u_aos_vertex_at(data->aos, face[1]);
-        struct point3d* p2 = u_aos_vertex_at(data->aos, face[2]);
+        int* face = geomcache_index_at(data->aos, i);
+        struct point3d* p0 = geomcache_vertex_at(data->aos, face[0]);
+        struct point3d* p1 = geomcache_vertex_at(data->aos, face[1]);
+        struct point3d* p2 = geomcache_vertex_at(data->aos, face[2]);
         float bias, t;
         struct point3d b;
         if (!intersect_ray_triangle3d(data->ray, p0, p1, p2, (float*) &b, &t, &bias))
@@ -51,10 +51,10 @@ static bool __raytracer_triangle_tintersect(int i, struct tintersect_data* data)
 
 static bool __raytracer_triangle_occlude(int i, struct tintersect_data* data)
 {
-        int* face = u_aos_index_at(data->aos, i);
-        struct point3d* p0 = u_aos_vertex_at(data->aos, face[0]);
-        struct point3d* p1 = u_aos_vertex_at(data->aos, face[1]);
-        struct point3d* p2 = u_aos_vertex_at(data->aos, face[2]);
+        int* face = geomcache_index_at(data->aos, i);
+        struct point3d* p0 = geomcache_vertex_at(data->aos, face[0]);
+        struct point3d* p1 = geomcache_vertex_at(data->aos, face[1]);
+        struct point3d* p2 = geomcache_vertex_at(data->aos, face[2]);
         float bias, t;
         struct point3d b;
         return intersect_ray_triangle3d(data->ray, p0, p1, p2, (float*) &b, &t, &bias);
@@ -76,26 +76,26 @@ bool raytracer_tintersect(struct raytracer* self, struct ray3d* ray, struct tint
                 struct vector3d *n0, *n1, *n2;
                 struct vector2d *t0, *t1, *t2;
 
-                p0 = u_aos_vertex_at(&self->aos, inters->face[0]);
-                p1 = u_aos_vertex_at(&self->aos, inters->face[1]);
-                p2 = u_aos_vertex_at(&self->aos, inters->face[2]);
+                p0 = geomcache_vertex_at(&self->aos, inters->face[0]);
+                p1 = geomcache_vertex_at(&self->aos, inters->face[1]);
+                p2 = geomcache_vertex_at(&self->aos, inters->face[2]);
                 struct point3d p;
                 point3d_comps(p.p[i] = p0->p[i]*inters->barycent.v[0] +
                                        p1->p[i]*inters->barycent.v[1] +
                                        p2->p[i]*inters->barycent.v[2]);
 
-                n0 = u_aos_normal_at(&self->aos, inters->face[0]);
-                n1 = u_aos_normal_at(&self->aos, inters->face[1]);
-                n2 = u_aos_normal_at(&self->aos, inters->face[2]);
+                n0 = geomcache_normal_at(&self->aos, inters->face[0]);
+                n1 = geomcache_normal_at(&self->aos, inters->face[1]);
+                n2 = geomcache_normal_at(&self->aos, inters->face[2]);
                 struct vector3d n;
                 vector3d_comps(n.v[i] = n0->v[i]*inters->barycent.v[0] +
                                         n1->v[i]*inters->barycent.v[1] +
                                         n2->v[i]*inters->barycent.v[2]);
 
-                if (u_aos_has_uv(&self->aos)) {
-                        t0 = u_aos_uv_at(&self->aos, inters->face[0]);
-                        t1 = u_aos_uv_at(&self->aos, inters->face[1]);
-                        t2 = u_aos_uv_at(&self->aos, inters->face[2]);
+                if (geomcache_has_uv(&self->aos)) {
+                        t0 = geomcache_uv_at(&self->aos, inters->face[0]);
+                        t1 = geomcache_uv_at(&self->aos, inters->face[1]);
+                        t2 = geomcache_uv_at(&self->aos, inters->face[2]);
 
                         struct vector2d uv;
                         vector2d_comps(uv.v[i] = t0->v[i]*inters->barycent.v[0] +

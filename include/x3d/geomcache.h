@@ -25,7 +25,7 @@ enum _AttriMap {
  * <util_aos> decl
  * array-of-structure streams.
  */
-struct util_aos {
+struct geomcache {
         struct {
                 void*                   s_data;
         }       aos[10];
@@ -39,36 +39,36 @@ struct util_aos {
 /*
  * <util_aos> public
  */
-void    u_aos_init(struct util_aos* self, enum UtilAttribute format);
-void    u_aos_free(struct util_aos* self);
-void    u_aos_flush(struct util_aos* self);
-void    u_aos_accumulate(struct util_aos* self, int* index, int num_index, int num_vertex, ...);
-int     u_aos_get_vertices(struct util_aos* self, void* vertex[], int* n_streams);
-void*   u_aos_get_indices(struct util_aos* self, int* n_index);
-bool*   u_aos_get_availibility(struct util_aos* self);
+void    geomcache_init(struct geomcache* self, enum UtilAttribute format);
+void    geomcache_free(struct geomcache* self);
+void    geomcache_flush(struct geomcache* self);
+void    geomcache_accumulate(struct geomcache* self, int* index, int num_index, int num_vertex, ...);
+int     geomcache_get_vertices(struct geomcache* self, void* vertex[], int* n_streams);
+void*   geomcache_get_indices(struct geomcache* self, int* n_index);
+bool*   geomcache_get_availibility(struct geomcache* self);
 
-#define u_aos_has_vertex(_self) \
+#define geomcache_has_vertex(_self) \
         ((_self)->avail[_AttriVertex])
 
-#define u_aos_has_normal(_self) \
+#define geomcache_has_normal(_self) \
         ((_self)->avail[_AttriNormal])
 
-#define u_aos_has_uv(_self) \
+#define geomcache_has_uv(_self) \
         ((_self)->avail[_AttriUV])
 
-#define u_aos_vertex_at(_self, _i) \
+#define geomcache_vertex_at(_self, _i) \
         ((struct point3d*) (_self)->aos[_AttriVertex].s_data + (_i))
 
-#define u_aos_normal_at(_self, _i) \
+#define geomcache_normal_at(_self, _i) \
         ((struct vector3d*) (_self)->aos[_AttriNormal].s_data + (_i))
 
-#define u_aos_uv_at(_self, _i) \
+#define geomcache_uv_at(_self, _i) \
         ((struct vector2d*) (_self)->aos[_AttriUV].s_data + (_i))
 
-#define u_aos_material_id_at(_self, _i) \
+#define geomcache_material_id_at(_self, _i) \
         ((int*) (_self)->aos[_AttriMatId].s_data + (_i))
 
-#define u_aos_index_at(_self, _i) \
+#define geomcache_index_at(_self, _i) \
         ((_self)->index + (_i))
 
 

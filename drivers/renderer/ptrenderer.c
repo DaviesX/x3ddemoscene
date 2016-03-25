@@ -379,7 +379,7 @@ static void render_radiance(struct pt_radiance_node* render_node, struct util_im
         /* construct intersection packet */
         struct intersect_packet ip;
         int num_index;
-        ip.i_array = u_aos_get_indices(&render_node->aos_geo, &num_index);
+        ip.i_array = geomcache_get_indices(&render_node->aos_geo, &num_index);
         ip.n_streams = render_node->n_streams;
         ip.stream = render_node->stream;
 /**@todo (davis#1#) <intersect_packet> these should be done through shader formulate context */
@@ -617,9 +617,9 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                                                                                    nullptr, RenderableGeometry);
         rda_context_update(context);
         const int n                                     = rda_context_get_n(context, request_id);
-        u_aos_free(&self->aos_geo);
+        geomcache_free(&self->aos_geo);
         // pre-check what data does the geometry has
-        u_aos_init(&self->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatIdList);
+        geomcache_init(&self->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatIdList);
         int i;
         for (i = 0; i < n; i ++) {
                 struct rda_instance* inst = rda_context_get_i(context, i, request_id);
@@ -630,7 +630,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                 void* vertex    = rda_geometry_get_vertex(geometry, &num_vertex);
                 void* normal    = rda_geometry_get_normal(geometry, &num_vertex);
                 int* matid      = rda_geometry_get_material_id_list(geometry, &num_vertex);
-                u_aos_accumulate(&self->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
+                geomcache_accumulate(&self->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
         }
 
         /* update simplex and accessor */
@@ -638,7 +638,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         u_access_free(self->acc_stt);
 
         int num_index, num_simplex;
-        int* indices = u_aos_get_indices(&self->aos_geo, &num_index);
+        int* indices = geomcache_get_indices(&self->aos_geo, &num_index);
         self->simplex = construct_simplex(self->stream, self->n_streams,
                                           indices, num_index, &num_simplex);
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
