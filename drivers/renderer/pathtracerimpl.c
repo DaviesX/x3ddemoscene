@@ -63,6 +63,8 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
 
         // @fixme needed to extract from material
         struct bsdf_model bsdf;
+        bsdf_model_set_hitgeom(&bsdf, &inters.geom);
+        bsdf_model_set_incident(&bsdf, ray);
 
         // compute direct lighting
         bsdf_model_set_sample_count(&bsdf, data->n_lights);
@@ -75,17 +77,17 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
                         // 0 intensity or shadowed
                         continue;
                 }
-                bsdf_model_integrate(&bsdf, &inters.geom, ray, &illumray, &inten, li);
+                bsdf_model_integrate(&bsdf, &illumray, &inten, li);
         }
 
         bsdf_model_set_sample_count(&bsdf, c_NumBranchedSample);
         int n;
         for (n = 0; n < c_NumBranchedSample; n ++) {
                 struct ray3d reflected;
-                bsdf_model_sample(&bsdf, &inters.geom, ray, &reflected);
+                bsdf_model_sample(&bsdf, &reflected);
                 struct float_color3 lo;
                 __pathtracer_trace_at(data, &reflected, &lo);
-                bsdf_model_integrate(&bsdf, &inters.geom, ray, &reflected, &lo, li);
+                bsdf_model_integrate(&bsdf, &reflected, &lo, li);
         }
 }
 
