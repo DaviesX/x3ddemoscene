@@ -200,11 +200,23 @@ int     u_aos_get_vertices(struct util_aos* self, void* vertex[], int* n_streams
 void*   u_aos_get_indices(struct util_aos* self, int* n_index);
 bool*   u_aos_get_availibility(struct util_aos* self);
 
+#define u_aos_has_vertex(_self) \
+        ((_self)->avail[_AttriVertex])
+
+#define u_aos_has_normal(_self) \
+        ((_self)->avail[_AttriNormal])
+
+#define u_aos_has_uv(_self) \
+        ((_self)->avail[_AttriUV])
+
 #define u_aos_vertex_at(_self, _i) \
         ((struct point3d*) (_self)->aos[_AttriVertex].s_data + (_i))
 
 #define u_aos_normal_at(_self, _i) \
         ((struct vector3d*) (_self)->aos[_AttriNormal].s_data + (_i))
+
+#define u_aos_uv_at(_self, _i) \
+        ((struct vector2d*) (_self)->aos[_AttriUV].s_data + (_i))
 
 #define u_aos_material_id_at(_self, _i) \
         ((int*) (_self)->aos[_AttriMatId].s_data + (_i))

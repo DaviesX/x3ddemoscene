@@ -282,4 +282,31 @@ void print_vector4d ( struct vector4d *v );
 #define clear_point4d			clear_vector4d
 
 
+#define vector4d_comps(_CODE)           \
+{                                       \
+        int i;                          \
+        for (i = 0; i < 4; i ++) {      \
+                _CODE;                  \
+        }                               \
+}
+#define vector3d_comps(_CODE)           \
+{                                       \
+        int i;                          \
+        for (i = 0; i < 3; i ++) {      \
+                _CODE;                  \
+        }                               \
+}
+#define vector2d_comps(_CODE)           \
+{                                       \
+        int i;                          \
+        for (i = 0; i < 2; i ++) {      \
+                _CODE;                  \
+        }                               \
+}
+
+#define point2d_comps                   vector2d_comps
+#define point3d_comps                   vector3d_comps
+#define point4d_comps                   vector4d_comps
+
+
 #endif // X3DVECTOR_H_INCLUDED

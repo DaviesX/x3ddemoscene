@@ -69,7 +69,47 @@ bool raytracer_tintersect(struct raytracer* self, struct ray3d* ray, struct tint
         data.t_hit = FLOAT_MAX;
 
         u_access_find(&self->acc, &data, __raytracer_simplex, __raytracer_triangle_tintersect);
-        return data.t_hit < FLOAT_MAX;
+
+        if (data.t_hit < FLOAT_MAX) {
+                // initialize hitgeom when intersection if found
+                struct point3d* p0, *p1, *p2;
+                struct vector3d *n0, *n1, *n2;
+                struct vector2d *t0, *t1, *t2;
+
+                p0 = u_aos_vertex_at(&self->aos, inters->face[0]);
+                p1 = u_aos_vertex_at(&self->aos, inters->face[1]);
+                p2 = u_aos_vertex_at(&self->aos, inters->face[2]);
+                struct point3d p;
+                point3d_comps(p.p[i] = p0->p[i]*inters->barycent.v[0] +
+                                       p1->p[i]*inters->barycent.v[1] +
+                                       p2->p[i]*inters->barycent.v[2]);
+
+                n0 = u_aos_normal_at(&self->aos, inters->face[0]);
+                n1 = u_aos_normal_at(&self->aos, inters->face[1]);
+                n2 = u_aos_normal_at(&self->aos, inters->face[2]);
+                struct vector3d n;
+                vector3d_comps(n.v[i] = n0->v[i]*inters->barycent.v[0] +
+                                        n1->v[i]*inters->barycent.v[1] +
+                                        n2->v[i]*inters->barycent.v[2]);
+
+                if (u_aos_has_uv(&self->aos)) {
+                        t0 = u_aos_uv_at(&self->aos, inters->face[0]);
+                        t1 = u_aos_uv_at(&self->aos, inters->face[1]);
+                        t2 = u_aos_uv_at(&self->aos, inters->face[2]);
+
+                        struct vector2d uv;
+                        vector2d_comps(uv.v[i] = t0->v[i]*inters->barycent.v[0] +
+                                                 t1->v[i]*inters->barycent.v[1] +
+                                                 t2->v[i]*inters->barycent.v[2]);
+
+                        hitgeom_init(&inters->geom, &p, &n, &uv);
+                } else {
+                        hitgeom_init(&inters->geom, &p, &n, nullptr);
+                }
+                return true;
+        } else {
+                return false;
+        }
 }
 
 bool raytracer_occlusion(struct raytracer* self, struct ray3d* ray)
