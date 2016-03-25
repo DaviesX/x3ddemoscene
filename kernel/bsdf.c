@@ -4,6 +4,20 @@
 
 
 /*
+ * <hitgeom> public
+ */
+void hitgeom_init(struct hitgeom* self, struct point3d* p, struct vector3d* n, struct vector2d* uv)
+{
+        self->p = *p;
+        self->n = *n;
+        if (uv) {
+                self->uv = *uv;
+        } else {
+                init_vector2d(&self->uv);
+        }
+}
+
+/*
  * <bsdf_model> public
  */
 void bsdf_model_init(struct bsdf_model* self, f_BSDF_Sample f_sample, f_BSDF_Li f_li, f_BSDF_Free f_free)

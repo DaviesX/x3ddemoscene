@@ -14,6 +14,10 @@ struct hitgeom {
         struct vector3d n;
         struct vector2d uv;
 };
+/*
+ * <hitgeom> public
+ */
+void hitgeom_init(struct hitgeom* self, struct point3d* p, struct vector3d* n, struct vector2d* uv);
 
 struct bsdf_model;
 struct hitgeom;
