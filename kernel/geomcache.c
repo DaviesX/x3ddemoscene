@@ -136,6 +136,23 @@ void geomcache_accumulate(struct geomcache* self, int* index, int num_index, int
         self->n_vertex += num_vertex;
 }
 
+struct box3d* geomcache_export_simplexes(struct geomcache* self, int* n_objects)
+{
+        *n_objects = geomcache_num_index(self)/3;
+        struct box3d* simplexes = alloc_fix(sizeof(struct box3d), *n_objects);
+        int i;
+        for (i = 0; i < *n_objects; i ++) {
+                init_box3d(&simplexes[i]);
+                int* face = &self->index[i*3];
+                int j;
+                for (j = 0; j < 3; j ++) {
+                        struct point3d* p = geomcache_vertex_at(self, face[j]);
+                        union_box3d_pu(&simplexes[i], p);
+                }
+        }
+        return simplexes;
+}
+
 int geomcache_get_vertices(struct geomcache* self, void* vertex[], int* n_streams)
 {
         int i;
@@ -160,11 +177,6 @@ bool* geomcache_get_availibility(struct geomcache* self)
 /*
  * <geomcache> test cases
  */
-#define RED     0
-#define GREEN   1
-#define BLUE    2
-#define WHITE   3
-#define MIRROR  4
 struct vertex {
         float   position[3];
         float   normal[3];
@@ -320,7 +332,7 @@ struct geomcache* geomcache_build_test_sample()
         // prepare normals
         struct vector3d* normals = alloc_fix(sizeof(struct vector3d), n_vertices);
         for (j = 0; j < n_vertices; j ++) {
-                vector3d_comps(normals[j].p[i] = cVertices[j].normal[i]);
+                vector3d_comps(normals[j].v[i] = cVertices[j].normal[i]);
         }
         // prepare material references
         int* mater_refs = alloc_fix(sizeof(int), n_vertices);
@@ -329,7 +341,7 @@ struct geomcache* geomcache_build_test_sample()
         }
 
         struct geomcache* gc = alloc_obj(gc);
-        geomcache_init(gc, UtilAttriVertex | UtilAttriNormal | UtilAttriMatId);
+        geomcache_init(gc, UtilAttriVertex | UtilAttriNormal | UtilAttriMatIdList);
         geomcache_accumulate(gc, cIndices, n_indices, n_vertices, vertices, normals, mater_refs);
 
         free_fix(vertices);

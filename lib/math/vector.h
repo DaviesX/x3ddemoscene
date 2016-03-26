@@ -174,8 +174,9 @@ float cos_vector2d ( struct vector2d *v0, struct vector2d *v1 );
 float cos_vector3d ( struct vector3d *v0, struct vector3d *v1 );
 float cos_vector4d ( struct vector4d *v0, struct vector4d *v1 );
 
-void reflect_vector2d ( struct vector2d *normal, struct vector2d *incident, struct vector2d *vec_refl );
-void reflect_vector3d ( struct vector3d *normal, struct vector3d *incident, struct vector3d *vec_refl );
+void reflect_vector2d(struct vector2d *normal, struct vector2d *incident, struct vector2d *vec_refl);
+void reflect_vector3d(struct vector3d *normal, struct vector3d *incident, struct vector3d *vec_refl);
+void reflect_vector3d_r(struct vector3d *normal, struct vector3d *incident, struct vector3d *vec_refl);
 void reflect_vector4d ( struct vector4d *normal, struct vector4d *incident, struct vector4d *vec_refl );
 void reflect_cos_vector2d ( float cos, struct vector2d *normal,
                             struct vector2d *incident, struct vector2d *vec_refl );

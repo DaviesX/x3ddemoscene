@@ -405,10 +405,19 @@ void reflect_vector2d ( struct vector2d *normal, struct vector2d *incident, stru
 
 void reflect_vector3d ( struct vector3d *normal, struct vector3d *incident, struct vector3d *vec_refl )
 {
-        float n_dot_i = 2.0f*dot_vector3d ( normal, incident );
+        float n_dot_i = 2.0f*dot_vector3d(normal, incident);
         vec_refl->x = normal->x*n_dot_i - incident->x;
         vec_refl->y = normal->y*n_dot_i - incident->y;
         vec_refl->z = normal->z*n_dot_i - incident->z;
+}
+
+// assuming the incident vector is reversed
+void reflect_vector3d_r(struct vector3d *normal, struct vector3d *incident, struct vector3d *vec_refl)
+{
+        float n_dot_i = 2.0f*dot_vector3d(normal, incident);
+        vec_refl->x = incident->x - normal->x*n_dot_i;
+        vec_refl->y = incident->y - normal->y*n_dot_i;
+        vec_refl->z = incident->z - normal->z*n_dot_i;
 }
 
 void reflect_vector4d ( struct vector4d *normal, struct vector4d *incident, struct vector4d *vec_refl )

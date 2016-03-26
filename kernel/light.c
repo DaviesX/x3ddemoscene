@@ -43,7 +43,7 @@ struct light_point* light_point_create(struct float_color3* flux, struct point3d
         scale_color3(1/(2.0*M_PI*4.0*M_PI*radius*radius), flux, &self->inten);  // intensity at a point in any direction
         self->center = *p;
         self->radius = radius;
-        self->half_r2 = radius*radius/2.0f;
+        self->half_r2 = max(1.0f, radius*radius/2.0f);
         self->flux = *flux;
         return self;
 }
@@ -57,7 +57,7 @@ void light_point_sample_at(struct light_point* self, struct point3d* p, struct v
         // imagine we are sampling on a sphere
         struct spherical3d sp;
         sp.the = uniform0_1()*M_PI;
-        sp.phi = uniform0_1()*M_PI - M_PI_2;
+        sp.phi = uniform0_1()*2*M_PI;
         sp.r = 1.0f;
         spherical_to_vector3d(&sp, n);
         scale_vector3d(self->radius, n, p);
@@ -70,14 +70,14 @@ float light_point_sample_at2(struct light_point* self, struct point3d* p0, struc
         // imagine we are sampling on a sphere
         struct spherical3d sp;
         sp.the = uniform0_1()*M_PI;
-        sp.phi = uniform0_1()*M_PI - M_PI_2;
+        sp.phi = uniform0_1()*2*M_PI;
         sp.r = 1.0f;
         struct point3d p;
         struct vector3d n;
         spherical_to_vector3d(&sp, &n);
         scale_vector3d(self->radius, &n, &p);
         add_point3d_u(&p, &self->center);
-        ray3d_build_t(illumray, p0, &p, 0.0, FLOAT_MAX);
+        ray3d_build_t(illumray, p0, &p, 0.0);
 
         float cos = -1.0*dot_vector3d(&n, &illumray->v);        // the ray is inverted
         if (cos > 0.0f) {
@@ -151,7 +151,7 @@ float light_rect_sample_at2(struct light_rectangular* self, struct point3d* p0, 
                                self->p1.p[i]*b[1] +
                                self->p2.p[i]*b[2] +
                                self->p3.p[i]*b[3]);
-        ray3d_build_t(illumray, p0, &p, 0.0, FLOAT_MAX);
+        ray3d_build_t(illumray, p0, &p, 0.0);
 
         float cos = -1.0*dot_vector3d(&self->n, &illumray->v);  // the ray is inverted
         if (cos > 0.0f) {

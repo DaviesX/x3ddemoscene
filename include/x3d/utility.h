@@ -5,6 +5,7 @@
 #include <system/log.h>
 #include <system/allocator.h>
 #include <math/math.h>
+#include <x3d/colorspectrum.h>
 
 typedef void (*f_Lerp_2)(void* x[2], float t, void* xo);
 typedef void (*f_Lerp_3)(void* x[3], float t[3], void* xo);
@@ -239,6 +240,40 @@ static inline void u_image_get_level0_dimension(struct util_image* img, int* wid
 {
         *width  = img->width;
         *height = img->height;
+}
+
+static inline void u_image_export_to_file(struct util_image* self, FILE* file)
+{
+        int width, height;
+        u_image_get_level0_dimension(self, &width, &height);
+        fprintf(file, "P3\n%d %d\n%d\n", width, height, 255);
+        int i, j;
+        for (j = 0; j < height; j ++) {
+                for (i = 0; i < width; i ++) {
+                        switch (self->format) {
+                        case UtilImgRGB24: {
+                                unsigned char* px = u_image_read(self, 0, i, j);
+                                fprintf(file, "%d %d %d ", px[2], px[1], px[0]);
+                                break;
+                        }
+                        case UtilImgRGBA32: {
+                                unsigned char* px = u_image_read(self, 0, i, j);
+                                fprintf(file, "%d %d %d ", px[2], px[1], px[0]);
+                                break;
+                        }
+                        case UtilImgRGBRadiance: {
+                                struct float_color3* px = u_image_read(self, 0, i, j);
+                                int r, g, b;
+                                r = clamp(px->r*255, 0, 255);
+                                g = clamp(px->g*255, 0, 255);
+                                b = clamp(px->b*255, 0, 255);
+                                fprintf(file, "%d %d %d ", r, g, b);
+                                break;
+                        }
+                        }
+                }
+        }
+        fclose(file);
 }
 
 

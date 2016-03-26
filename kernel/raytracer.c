@@ -35,13 +35,13 @@ static bool __raytracer_simplex(int i, struct box3d* simplex, struct tintersect_
 
 static bool __raytracer_triangle_tintersect(int i, struct tintersect_data* data)
 {
-        int* face = geomcache_index_at(data->aos, i);
+        int* face = geomcache_index_at(data->aos, i*3);
         struct point3d* p0 = geomcache_vertex_at(data->aos, face[0]);
         struct point3d* p1 = geomcache_vertex_at(data->aos, face[1]);
         struct point3d* p2 = geomcache_vertex_at(data->aos, face[2]);
         float bias, t;
         struct point3d b;
-        if (!intersect_ray_triangle3d(data->ray, p0, p1, p2, (float*) &b, &t, &bias))
+        if (!intersect_ray_triangle3d(data->ray, p0, p1, p2, b.v, &t, &bias))
                 return false;
         if (t < data->t_hit) {
                 data->t_hit = t;
@@ -53,13 +53,13 @@ static bool __raytracer_triangle_tintersect(int i, struct tintersect_data* data)
 
 static bool __raytracer_triangle_occlude(int i, struct tintersect_data* data)
 {
-        int* face = geomcache_index_at(data->aos, i);
+        int* face = geomcache_index_at(data->aos, i*3);
         struct point3d* p0 = geomcache_vertex_at(data->aos, face[0]);
         struct point3d* p1 = geomcache_vertex_at(data->aos, face[1]);
         struct point3d* p2 = geomcache_vertex_at(data->aos, face[2]);
-        float bias, t;
+        float bias;
         struct point3d b;
-        return intersect_ray_triangle3d(data->ray, p0, p1, p2, (float*) &b, &t, &bias);
+        return intersect_ray_triangle3d(data->ray, p0, p1, p2, (float*) &b, &data->t_hit, &bias);
 }
 
 bool raytracer_tintersect(struct raytracer* self, struct ray3d* ray, struct tintersect* inters)
@@ -93,6 +93,7 @@ bool raytracer_tintersect(struct raytracer* self, struct ray3d* ray, struct tint
                 vector3d_comps(n.v[i] = n0->v[i]*inters->barycent.v[0] +
                                         n1->v[i]*inters->barycent.v[1] +
                                         n2->v[i]*inters->barycent.v[2]);
+                normalize_vector3d_u(&n);
 
                 if (geomcache_has_uv(&self->aos)) {
                         t0 = geomcache_uv_at(&self->aos, inters->face[0]);
@@ -216,7 +217,7 @@ enum DebugPosition* raytracer_test_pos(struct alg_var_set* envir, int* n_pos, in
 void raytracer_test(struct alg_var_set* envir)
 {
         const int c_NumTriangleSample = 100;
-        const int c_NumIntersectionSample = 10;
+        const int c_NumIntersectionSample = 100;
 
         int i;
         for (i = 0; i < c_NumTriangleSample; i ++) {
@@ -242,7 +243,7 @@ void raytracer_test(struct alg_var_set* envir)
                         point3d_comps(p1.p[i] = tri.v[0].p[i]*bary[0] +
                                                 tri.v[1].p[i]*bary[1] +
                                                 tri.v[2].p[i]*bary[2]);
-                        ray3d_build_t(&ray, &p0, &p1, 0.0f, FLOAT_MAX);
+                        ray3d_build_t(&ray, &p0, &p1, 0.0f);
 
                         struct tintersect inters;
                         if (!raytracer_tintersect(&rt, &ray, &inters)) {

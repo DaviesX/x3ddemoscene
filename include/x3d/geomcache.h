@@ -42,9 +42,16 @@ void    geomcache_init(struct geomcache* self, enum UtilAttribute format);
 void    geomcache_free(struct geomcache* self);
 void    geomcache_flush(struct geomcache* self);
 void    geomcache_accumulate(struct geomcache* self, int* index, int num_index, int num_vertex, ...);
+struct box3d* geomcache_export_simplexes(struct geomcache* self, int* n_objects);
 int     geomcache_get_vertices(struct geomcache* self, void* vertex[], int* n_streams);
 void*   geomcache_get_indices(struct geomcache* self, int* n_index);
 bool*   geomcache_get_availibility(struct geomcache* self);
+
+#define geomcache_num_index(_self) \
+        ((_self)->n_index)
+
+#define geomcache_num_vertex(_self) \
+        ((_self)->n_vertex)
 
 #define geomcache_has_vertex(_self) \
         ((_self)->avail[_AttriVertex])
@@ -59,19 +66,29 @@ bool*   geomcache_get_availibility(struct geomcache* self);
         ((_self)->avail[_AttriMatId])
 
 #define geomcache_vertex_at(_self, _i) \
-        ((struct point3d*) (_self)->aos[_AttriVertex].s_data + (_i))
+        (((struct point3d*) (_self)->aos[_AttriVertex].s_data) + (_i))
 
 #define geomcache_normal_at(_self, _i) \
-        ((struct vector3d*) (_self)->aos[_AttriNormal].s_data + (_i))
+        (((struct vector3d*) (_self)->aos[_AttriNormal].s_data) + (_i))
 
 #define geomcache_uv_at(_self, _i) \
-        ((struct vector2d*) (_self)->aos[_AttriUV].s_data + (_i))
+        (((struct vector2d*) (_self)->aos[_AttriUV].s_data) + (_i))
 
 #define geomcache_material_id_at(_self, _i) \
-        ((int*) (_self)->aos[_AttriMatId].s_data + (_i))
+        (((int*) (_self)->aos[_AttriMatId].s_data) + (_i))
 
 #define geomcache_index_at(_self, _i) \
         ((_self)->index + (_i))
+
+
+/*
+ * <geomcache> tests
+ */
+#define RED     0
+#define GREEN   1
+#define BLUE    2
+#define WHITE   3
+#define MIRROR  4
 
 struct geomcache* geomcache_build_test_sample();
 

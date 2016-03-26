@@ -76,14 +76,22 @@ struct bsdf_lambert* bsdf_lambert_create(struct float_color3* r)
 
 void bsdf_lambert_sample(struct bsdf_lambert* self, struct ray3d* reflected)
 {
+        // construct a random vector over the hemisphere in standard basis
         struct spherical3d sp;
-        sp.the = uniform0_1()*M_PI;
-        sp.phi = uniform0_1()*M_PI - M_PI_2;
+        sp.the = uniform0_1()*M_PI_2;
+        sp.phi = uniform0_1()*2.0f*M_PI;
         sp.r = 1.0f;
-        struct vector3d n;
-        spherical_to_vector3d(&sp, &n);
-
-        ray3d_build_t3(reflected, &self->_parent.geom->p, &n, 0.0f, FLOAT_MAX);
+        struct vector3d d;
+        spherical_to_vector3d(&sp, &d);
+        // construct a basis S at the intersection, where normal points upward
+        struct vector3d u, v, n;
+        n = self->_parent.geom->n;
+        cross_vector3d(&n, &self->_parent.incident->v, &u);
+        cross_vector3d(&u, &n, &v);
+        // transform from standard basis to basis S
+        struct vector3d r;
+        vector3d_comps(r.v[i] = d.x*u.v[i] + d.y*v.v[i] + d.z*n.v[i]);
+        ray3d_build_t3(reflected, &self->_parent.geom->p, &r, 0.0f, FLOAT_MAX);
 }
 
 void bsdf_lambert_integrate(struct bsdf_lambert* self, struct ray3d* reflected,
@@ -120,8 +128,7 @@ struct bsdf_mirror* bsdf_mirror_create(struct float_color3* r)
 void bsdf_mirror_sample(struct bsdf_mirror* self, struct ray3d* reflected)
 {
         struct vector3d refl;
-        reflect_vector3d(&self->_parent.geom->n, &self->_parent.incident->v, &refl);
-
+        reflect_vector3d_r(&self->_parent.geom->n, &self->_parent.incident->v, &refl);
         ray3d_build_t3(reflected, &self->_parent.geom->p, &refl, 0.0f, FLOAT_MAX);
 }
 

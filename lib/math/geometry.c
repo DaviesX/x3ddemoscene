@@ -63,7 +63,7 @@ void build_line3d_t ( struct point3d *p0, struct point3d *p1, float t0, float t1
         l->t1 = max(j1, t1);
 }
 
-void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1)
+void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0)
 {
         self->p0 = *p0;
         vector3d_comps(self->v.v[i] = p1->p[i] - p0->p[i]);
@@ -74,7 +74,7 @@ void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, f
         self->v.z *= inv;
         self->inv_len2 = inv*inv;
         self->t0 = max(t0, EPSILON_E4);
-        self->t1 = t1;
+        self->t1 = self->len + EPSILON_E4;
 }
 
 void ray3d_build_t2(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1)
@@ -659,37 +659,37 @@ bool intersect_ray_triangle3d ( struct ray3d* l,
          * -Vx*t + b1*(P1x - P0x) + b2*(P2x - P0x) = Pr0x - P0x
          * Substitution: va = P1 - P0, vb = P2 - P0, vc = Pr0 - P0 */
         struct vector3d va, vb, vc;
-        build_vector3d ( v0, v1, &va );
-        build_vector3d ( v0, v2, &vb );
-        build_vector3d ( v0, &l->p0, &vc );
+        vector3d_comps(va.v[i] = v1->p[i] - v0->p[i]);
+        vector3d_comps(vb.v[i] = v2->p[i] - v0->p[i]);
+        vector3d_comps(vc.v[i] = l->p0.p[i] - v0->p[i]);
 
         /* Solve for t, b1, b2, where
          * 0 <= b0 <= 1 and 0 <= b1 <= 1 and 0 <= b2 <= 1
          * or, b1 + b2 <= 1 and 0 <= b1 <= 1 and b2 => 0
          * which means that the intersect is within the triangle */
         struct vector3d e1, e2;
-        cross_vector3d ( &l->v, &vb, &e2 );
+        cross_vector3d(&l->v, &vb, &e2);
 
-        float det = dot_vector3d ( &va, &e2 );
-        if ( det == 0.0f ) {
+        float det = dot_vector3d(&va, &e2);
+        if (det == 0.0f) {
                 return false;
         }
 
         float inv = 1.0f/det;
-        float b1 = dot_vector3d ( &vc, &e2 )*inv;
-        if ( b1 < 0.0f || b1 > 1.0f ) {
+        float b1 = dot_vector3d(&vc, &e2)*inv;
+        if (b1 < 0.0f || b1 > 1.0f) {
                 return false;
         }
 
-        cross_vector3d ( &vc, &va, &e1 );
-        float b2 = dot_vector3d ( &l->v, &e1 )*inv;
-        if ( b2 < 0.0f || b1 + b2 > 1.0f ) {
+        cross_vector3d(&vc, &va, &e1);
+        float b2 = dot_vector3d(&l->v, &e1)*inv;
+        if (b2 < 0.0f || b1 + b2 > 1.0f) {
                 return false;
         }
 
         // Within the ray ?
-        float t0 = dot_vector3d ( &vb, &e1 )*inv;
-        if ( !in_interval ( t0, l->t0, l->t1 ) ) {
+        float t0 = dot_vector3d(&vb, &e1)*inv;
+        if (!in_interval(t0, l->t0, l->t1)) {
                 return false;
         }
 

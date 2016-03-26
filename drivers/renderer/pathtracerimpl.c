@@ -2,6 +2,7 @@
 #include <x3d/raytracer.h>
 #include <x3d/bsdf.h>
 #include <x3d/colorspectrum.h>
+#include <x3d/debug.h>
 #include "pathtracerimpl.h"
 
 
@@ -67,7 +68,6 @@ static void __pathtracer_data_init(struct tracer_data* self, struct geomcache* a
 static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, struct float_color3* li)
 {
         init_color3(0.0f, li);
-
         struct tintersect inters;
         if (data->depth ++ > 4 || !raytracer_tintersect(&data->rt, ray, &inters)) {
                 return;
@@ -107,13 +107,14 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
         }
 }
 
-static void __pathtracer_compute_at(struct pathtracer* self, float x, float y, int n, struct float_color3* fn)
+static void __pathtracer_integrate_at(struct pathtracer* self, float x, float y, int n, struct float_color3* fn)
 {
         // simply trace a single ray
         struct ray3d initial;
-        struct point3d p0 = {0.0f, 0.0f, 0.0f};
-        struct point3d p1 = {x, y, 1.0f};
-        build_line3d_t(&p0, &p1, 1.0f, FLOAT_MAX, &initial);
+        struct point3d p0 = {278.0f, 273.0f, -800.0f};
+        struct vector3d v = {x*0.025f, y*0.025f, 0.035f*2.0f};
+        normalize_vector3d_u(&v);
+        ray3d_build_t3(&initial, &p0, &v, 1.0f, FLOAT_MAX);
 
         struct raytracer rt;
         raytracer_init(&rt, self->aos, self->acc);
@@ -122,12 +123,15 @@ static void __pathtracer_compute_at(struct pathtracer* self, float x, float y, i
         __pathtracer_data_init(&data, self->aos,
                                self->lights, self->n_lights,
                                self->bsdfs, self->n_bsdfs, &rt);
-        __pathtracer_trace_at(&data, &initial, fn);
+        struct float_color3 samp;
+        __pathtracer_trace_at(&data, &initial, &samp);
+        float p = 1.0f/n;
+        color3_comps(fn->c[i] += p*samp.c[i]);
 
         raytracer_free(&rt);
 }
 
-void pathtracer_render(struct pathtracer* self, struct geomcache* aos, struct spatial_access* acc, struct util_image* target)
+void pathtracer_render(struct pathtracer* self, struct util_image* target)
 {
         int w, h;
         u_image_get_level0_dimension(target, &w, &h);
@@ -135,22 +139,90 @@ void pathtracer_render(struct pathtracer* self, struct geomcache* aos, struct sp
         int i, j;
         for (j = 0; j < h; j ++) {
                 for (i = 0; i < w; i ++) {
-                        float x = (float) i/(w - 1);
-                        float y = (float) j/(h - 1);
+                        float x =   2.0f*(float) i/(w - 1) - 1.0f;
+                        float y = -(2.0f*(float) j/(h - 1) - 1.0f);
 
                         struct float_color3 expected;
                         init_color3(0.0f, &expected);
                         int n;
                         for (n = 0; n < self->sample_count; n ++) {
-                                struct float_color3 fn;
-                                __pathtracer_compute_at(self, x, y, n, &fn);
-                                add_color3(&expected, &fn, &expected);
+                                __pathtracer_integrate_at(self, x, y, self->sample_count, &expected);
                         }
-                        float p = (float) 1.0f/self->sample_count;
-                        scale_color3(p, &expected, &expected);
 
                         struct float_color3* px = u_image_read(target, 0, i, j);
                         *px = expected;
                 }
         }
+}
+
+/*
+ * <pathtracer> test cases
+ */
+void pathtracer_test_init(struct alg_var_set* envir) {};
+void pathtracer_test_free(struct alg_var_set* envir) {};
+enum DebugPosition* pathtracer_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        static enum DebugPosition pos[] = {
+                Debug_KernelStart
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = true;
+        return pos;
+}
+void pathtracer_test(struct alg_var_set* envir)
+{
+        struct geomcache* gc = geomcache_build_test_sample();
+        struct spatial_linear acc;
+        int n_objects;
+        struct box3d* simplexes = geomcache_export_simplexes(gc, &n_objects);
+        u_linear_init(&acc, simplexes, n_objects);
+        u_linear_build(&acc);
+
+        struct bsdf_model* maters[10];
+        struct float_color3 r_white = {1.0f, 0.94f, 0.701176471f};
+        struct float_color3 r_red = {1.0f, 0.0f, 0.0f};
+        struct float_color3 r_green = {0.0f, 1.0f, 0.0f};
+        struct float_color3 r_perfect = {0.8f, 0.8f, 0.8f};
+        maters[WHITE]  = &bsdf_lambert_create(&r_white)->_parent;
+        maters[RED]    = &bsdf_lambert_create(&r_red)->_parent;
+        maters[GREEN]  = &bsdf_lambert_create(&r_green)->_parent;
+        maters[MIRROR] = &bsdf_mirror_create(&r_perfect)->_parent;
+
+        struct light* lights[10];
+        struct point3d p = {275.0f, 544.8f, 249.5f};
+        struct float_color3 flux = {40000000.0f, 40000000.0f, 40000000.0f};
+        lights[0] = &light_point_create(&flux, &p, 5.0f)->_parent;
+
+        struct pathtracer pt;
+        pathtracer_init(&pt);
+        pathtracer_set_geometries(&pt, gc, &acc._parent);
+        pathtracer_set_bsdfs(&pt, maters, 5);
+        pathtracer_set_lights(&pt, lights, 1);
+
+        struct util_image target;
+        u_image_init(&target, 1, UtilImgRGBRadiance, 800, 600);
+        u_image_alloc(&target, 0);
+        pathtracer_set_sample_count(&pt, 64);
+        pathtracer_render(&pt, &target);
+
+        bsdf_model_free(maters[WHITE]);
+        bsdf_model_free(maters[RED]);
+        bsdf_model_free(maters[GREEN]);
+        bsdf_model_free(maters[MIRROR]);
+        free_fix(maters[WHITE]);
+        free_fix(maters[RED]);
+        free_fix(maters[GREEN]);
+        free_fix(maters[MIRROR]);
+
+        light_free(lights[0]);
+        free_fix(lights[0]);
+
+        u_image_export_to_file(&target, fopen("pathtracer-test-result.ppm", "w"));
+        u_image_free(&target);
+
+        geomcache_free(gc);
+        free_fix(gc);
+
+        u_access_free(&acc._parent);
 }

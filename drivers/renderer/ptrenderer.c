@@ -660,7 +660,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         // render_radiance(self, &img_rad);
         struct pathtracer pt;
         pathtracer_init(&pt);
-        pathtracer_render(&pt, &self->aos_geo, self->acc_stt, &img_rad);
+        pathtracer_render(&pt, &img_rad);
         pathtracer_free(&pt);
 /* @fixme (davis#2#): <pt_renderer_update> cheated here... should be in our output */
         render_output(&img_rad, &self->target);
