@@ -14,7 +14,7 @@
 #define EPSILON_E5 		(float)(1E-5)
 #define EPSILON_E6 		(float)(1E-6)
 #define EPSILON_E7 		(float)(1E-7)
-#define DEFAULT_PRECISION	(float)(1E-10)
+#define DEFAULT_PRECISION	(float)(1E-4)
 #define FLOAT_MAX    		(float)(3.402823466E+38)
 #define FLOAT_INFINITE		0X7F000000
 #define FLOAT_NAN		0X7F000003
@@ -55,6 +55,7 @@
 #define deg_to_rad( _d )		((_d)*PI/180.0f)
 #define rand_range( _min, _max )	((_min) + (rand ()%((_max) - (_min) + 1)))
 #define fcmp_abs( _a, _b )		((fabs ( (_a) - (_b) ) < DEFAULT_PRECISION) ? 1 : 0)
+#define fcmp_absp(_a, _b, _p)		((fabs((_a) - (_b)) < (_p)) ? 1 : 0)
 #define fcmp_rel_l( _a, _b )		((fabs ( (_a) - (_b) )/(_a) < DEFAULT_PRECISION || fabs ( (_a) - (_b))/(_b) < DEFAULT_PRECISION) ? 1 : 0)
 #define fcmp_rel_s( _a, _b )		((fabs ( (_a) - (_b) )/(_a) < DEFAULT_PRECISION && fabs ( (_a) - (_b) )/(_b) < DEFAULT_PRECISION) ? 1 : 0)
 #define fcmp_one( _a, _b )		((fabs ( (_a) - (_b) ) < 1.0f) ? 1 : 0)

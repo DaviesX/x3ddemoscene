@@ -35,6 +35,7 @@ float arctan2f(float y, float x);
 }
 
 #define uniform0_1()                    ((double) rand()/RAND_MAX)
+#define uniform0_1e()                   ((double) rand()/((double)RAND_MAX + 1))
 
 
 #endif // FX_H_INCLUDED
