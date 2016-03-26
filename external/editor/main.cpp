@@ -20,7 +20,8 @@ extern "C" int kernel_main(int argc, char* argv[])
         // kernel_add_param("--test", "array_sort_correctness_test");
         // kernel_add_param("--test", "array_sort_performance_test");
         // kernel_add_param("--test", "set_correctness_test");
-        kernel_add_param("--test", "set_performance_test");
+        // kernel_add_param("--test", "set_performance_test");
+        kernel_add_param("--test", "geomcache_test");
 
         kernel_add_param("--edit-mode", "");
 

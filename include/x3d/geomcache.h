@@ -73,5 +73,7 @@ bool*   geomcache_get_availibility(struct geomcache* self);
 #define geomcache_index_at(_self, _i) \
         ((_self)->index + (_i))
 
+struct geomcache* geomcache_build_test_sample();
+
 
 #endif // GEOMCACHE_H_INCLUDED

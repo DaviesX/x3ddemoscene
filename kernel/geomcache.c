@@ -1,5 +1,7 @@
 #include <system/allocator.h>
+#include <system/log.h>
 #include <math/math.h>
+#include <x3d/debug.h>
 #include <x3d/geomcache.h>
 
 
@@ -45,6 +47,8 @@ void geomcache_init(struct geomcache* self, enum UtilAttribute format)
 
 void geomcache_free(struct geomcache* self)
 {
+        if (self == nullptr) return;
+
         free_var(self->index);
         self->n_index = 0;
         self->n_vertex = 0;
@@ -151,4 +155,208 @@ void* geomcache_get_indices(struct geomcache* self, int* n_index)
 bool* geomcache_get_availibility(struct geomcache* self)
 {
         return self->avail;
+}
+
+/*
+ * <geomcache> test cases
+ */
+#define RED     0
+#define GREEN   1
+#define BLUE    2
+#define WHITE   3
+#define MIRROR  4
+struct vertex {
+        float   position[3];
+        float   normal[3];
+        int     mater_ref;
+};
+static const struct vertex cVertices[] = {
+        /* Floor */
+        [0].position    = {552.8f, 0.0f, 0.0f},
+        [0].normal      = {0.0f, 1.0f, 0.0f},
+        [0].mater_ref   = WHITE,
+        [1].position    = {0.0f, 0.0f, 0.0f},
+        [1].normal      = {0.0f, 1.0f, 0.0f},
+        [1].mater_ref   = WHITE,
+        [2].position    = {0.0f, 0.0f, 559.2f},
+        [2].normal      = {0.0f, 1.0f, 0.0f},
+        [2].mater_ref   = WHITE,
+        [3].position    = {549.6f, 0.0f, 559.2f},
+        [3].normal      = {0.0f, 1.0f, 0.0f},
+        [3].mater_ref   = WHITE,
+
+        /* Ceiling */
+        [4].position    = {556.0f, 548.8f, 0.0f},
+        [4].normal      = {0.0f, -1.0f, 0.0f},
+        [4].mater_ref   = WHITE,
+        [5].position    = {556.0f, 548.8f, 559.2f},
+        [5].normal      = {0.0f, -1.0f, 0.0f},
+        [5].mater_ref   = WHITE,
+        [6].position    = {0.0f, 548.8f, 559.2f},
+        [6].normal      = {0.0f, -1.0f, 0.0f},
+        [6].mater_ref   = WHITE,
+        [7].position    = {0.0f, 548.8f, 0.0f},
+        [7].normal      = {0.0f, -1.0f, 0.0f},
+        [7].mater_ref   = WHITE,
+
+        /* Back wall */
+        [8].position    = {549.6f, 0.0f, 559.2f},
+        [8].normal      = {0.0f, 0.0f, -1.0f},
+        [8].mater_ref   = WHITE,
+        [9].position    = {0.0f, 0.0f, 559.2f},
+        [9].normal      = {0.0f, 0.0f, -1.0f},
+        [9].mater_ref   = WHITE,
+        [10].position   = {0.0f, 548.8f, 559.2f},
+        [10].normal     = {0.0f, 0.0f, -1.0f},
+        [10].mater_ref  = WHITE,
+        [11].position   = {556.0f, 548.8f, 559.2f},
+        [11].normal     = {0.0f, 0.0f, -1.0f},
+        [11].mater_ref  = WHITE,
+
+        /* Left wall */
+        [12].position   = {0.0f, 0.0f, 559.2f},
+        [12].normal     = {1.0f, 0.0f, 0.0f},
+        [12].mater_ref  = GREEN,
+        [13].position   = {0.0f, 0.0f, 0.0f},
+        [13].normal     = {1.0f, 0.0f, 0.0f},
+        [13].mater_ref  = GREEN,
+        [14].position   = {0.0f, 548.8f, 0.0f},
+        [14].normal     = {1.0f, 0.0f, 0.0f},
+        [14].mater_ref  = GREEN,
+        [15].position   = {0.0f, 548.8f, 559.2f},
+        [15].normal     = {1.0f, 0.0f, 0.0f},
+        [15].mater_ref  = GREEN,
+        /* Right wall */
+        [16].position   = {552.8f, 0.0f, 0.0f},
+        [16].normal     = {-1.0f, 0.0f, 0.0f},
+        [16].mater_ref  = RED,
+        [17].position   = {549.6f, 0.0f, 559.2f},
+        [17].normal     = {-1.0f, 0.0f, 0.0f},
+        [17].mater_ref  = RED,
+        [18].position   = {556.0f, 548.8f, 559.2f},
+        [18].normal     = {-1.0f, 0.0f, 0.0f},
+        [18].mater_ref  = RED,
+        [19].position   = {556.0f, 548.8f, 0.0f},
+        [19].normal     = {-1.0f, 0.0f, 0.0f},
+        [19].mater_ref  = RED,
+
+        /* Short block */
+        [20].position   = {130.0f, 165.0f, 65.0f},
+        [20].normal     = {0.0f, 1.0f, 0.0f},
+        [20].mater_ref  = MIRROR,
+        [21].position   = {82.0f, 165.0f, 225.0f},
+        [21].normal     = {0.0f, 1.0f, 0.0f},
+        [21].mater_ref  = MIRROR,
+        [22].position   = {240.0f, 165.0f, 272.0f},
+        [22].normal     = {0.0f, 1.0f, 0.0f},
+        [22].mater_ref  = MIRROR,
+        [23].position   = {290.0f, 165.0f, 114.0f},
+        [23].normal     = {0.0f, 1.0f, 0.0f},
+        [23].mater_ref  = MIRROR,
+
+        [24].position   = {290.0f, 0.0f, 114.0},
+        [24].normal     = {0.953400, 0.000000, 0.301709},
+        [24].mater_ref  = MIRROR,
+        [25].position   = {290.0f, 165.0f, 114.0f},
+        [25].normal     = {0.953400, 0.000000, 0.301709},
+        [25].mater_ref  = MIRROR,
+        [26].position   = {240.0f, 165.0f, 272.0f},
+        [26].normal     = {0.953400, 0.000000, 0.301709},
+        [26].mater_ref  = MIRROR,
+        [27].position   = {240.0f, 0.0f, 272.0f},
+        [27].normal     = {0.953400, 0.000000, 0.301709},
+        [27].mater_ref  = MIRROR,
+
+        [28].position   = {130.0f, 0.0f, 65.0f},
+        [28].normal     = {0.292826, 0.000000, -0.956166},
+        [28].mater_ref  = MIRROR,
+        [29].position   = {130.0f, 165.0f, 65.0f},
+        [29].normal     = {0.292826, 0.000000, -0.956166},
+        [29].mater_ref  = MIRROR,
+        [30].position   = {290.0f, 165.0f, 114.0f},
+        [30].normal     = {0.292826, 0.000000, -0.956166},
+        [30].mater_ref  = MIRROR,
+        [31].position   = {290.0f, 0.0f, 114.0f},
+        [31].normal     = {0.292826, 0.000000, -0.956166},
+        [31].mater_ref  = MIRROR,
+
+        [32].position   = {82.0f, 0.0f, 225.0f},
+        [32].normal     = {-0.957826, 0.000000, -0.287348},
+        [32].mater_ref  = MIRROR,
+        [33].position   = {82.0f, 165.0f, 225.0f},
+        [33].normal     = {-0.957826, 0.000000, -0.287348},
+        [33].mater_ref  = MIRROR,
+        [34].position   = {130.0f, 165.0f, 65.0f},
+        [34].normal     = {-0.957826, 0.000000, -0.287348},
+        [34].mater_ref  = MIRROR,
+        [35].position   = {130.0f, 0.0f, 65.0f},
+        [35].normal     = {-0.957826, 0.000000, -0.287348},
+        [35].mater_ref  = MIRROR
+        /* Tall block */
+};
+static int cIndices[1024];
+
+struct geomcache* geomcache_build_test_sample()
+{
+        int n_vertices = sizeof(cVertices)/sizeof(struct vertex);
+
+        // prepare indices
+        int i, j;
+        for (i = 0, j = 0; i < n_vertices; i += 4, j += 6) {
+                cIndices[j + 0] = i + 0;
+                cIndices[j + 1] = i + 1;
+                cIndices[j + 2] = i + 2;
+                cIndices[j + 3] = i + 0;
+                cIndices[j + 4] = i + 2;
+                cIndices[j + 5] = i + 3;
+        }
+        int n_indices = j;
+
+        // prepare vertices
+        struct point3d* vertices = alloc_fix(sizeof(struct point3d), n_vertices);
+        for (j = 0; j < n_vertices; j ++) {
+                point3d_comps(vertices[j].p[i] = cVertices[j].position[i]);
+        }
+        // prepare normals
+        struct vector3d* normals = alloc_fix(sizeof(struct vector3d), n_vertices);
+        for (j = 0; j < n_vertices; j ++) {
+                vector3d_comps(normals[j].p[i] = cVertices[j].normal[i]);
+        }
+        // prepare material references
+        int* mater_refs = alloc_fix(sizeof(int), n_vertices);
+        for (j = 0; j < n_vertices; j ++) {
+                mater_refs[j] = cVertices[j].mater_ref;
+        }
+
+        struct geomcache* gc = alloc_obj(gc);
+        geomcache_init(gc, UtilAttriVertex | UtilAttriNormal | UtilAttriMatId);
+        geomcache_accumulate(gc, cIndices, n_indices, n_vertices, vertices, normals, mater_refs);
+
+        free_fix(vertices);
+        free_fix(normals);
+        free_fix(mater_refs);
+
+        return gc;
+}
+
+void geomcache_test_init(struct alg_var_set* envir) {};
+void geomcache_test_free(struct alg_var_set* envir) {};
+enum DebugPosition* geomcache_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        static enum DebugPosition pos[] = {
+                Debug_KernelStart
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = true;
+        return pos;
+}
+void geomcache_test(struct alg_var_set* envir)
+{
+        struct geomcache* gc = geomcache_build_test_sample();
+        if (!gc) {
+                log_severe_err("failed to build geomcache sample");
+        }
+        geomcache_free(gc);
+        free_fix(gc);
 }
