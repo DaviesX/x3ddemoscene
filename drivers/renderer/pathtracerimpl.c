@@ -156,6 +156,91 @@ void pathtracer_render(struct pathtracer* self, struct util_image* target)
 /*
  * <pathtracer> test cases
  */
+// hdr functions
+static uint32_t __gamma_rgb_radiance(struct float_color3* x)
+{
+        float post_rad[3];
+        color3_comps(post_rad[i] = clamp(powf(x->c[i], 1.0f/2.2f), 0.0f, 1.0f));
+
+        return ((uint8_t) (0XFF) << 24) | \
+               ((uint8_t)(post_rad[0]*255.0f) << 16) | \
+               ((uint8_t)(post_rad[1]*255.0f) << 8) | \
+               ((uint8_t)(post_rad[2]*255.0f) << 0);
+}
+
+static double __log_illuminance(struct float_color3* x)
+{
+        double illu = 0.3f*x->rgb[0] + 0.6f*x->rgb[1] + 0.1f*x->rgb[2];
+        return log(illu + 1.25);
+}
+
+/* from: http://filmicgames.com/archives/75, Filmic HDR */
+static const float A = 0.15f;
+static const float B = 0.50f;
+static const float C = 0.10f;
+static const float D = 0.20f;
+static const float E = 0.02f;
+static const float F = 0.30f;
+static const struct float_color3 W = {11.2f, 11.2f, 11.2f};
+
+static void __inv_filimc_curve(struct float_color3* x, struct float_color3* t)
+{
+        color3_comps(t->c[i] = 1.0f/(((x->c[i]*(A*x->c[i] + C*B) + D*E)/(x->c[i]*(A*x->c[i] + 1*B) + D*F)) - E/F));
+}
+
+static void __filmic_curve(struct float_color3* x, struct float_color3* t)
+{
+        color3_comps(t->c[i] = ((x->c[i]*(A*x->c[i] + C*B) + D*E)/(x->c[i]*(A*x->c[i] + 1*B) + D*F)) - E/F);
+}
+
+static void __hdr_rgb_radiance(struct float_color3* x, float avg_illum, struct float_color3* reexp)
+{
+        const float exp_bias = 5.0f;
+        struct float_color3 r;
+        color3_comps(r.c[i] = x->c[i]*exp_bias*avg_illum);
+
+        struct float_color3 c;
+        struct float_color3 white_scale;
+        __filmic_curve(&r, &c);
+        __inv_filimc_curve((struct float_color3*) &W, &white_scale);
+
+        mul_color3(&c, &white_scale, &r);
+        *reexp = r;
+}
+
+static double __compute_geometric_average_illuminance(struct util_image* radiances)
+{
+        int j, i, w, h;
+        u_image_get_level0_dimension(radiances, &w, &h);
+        double log_sum = 0.0;
+        for (j = 0; j < h; j ++) {
+                for (i = 0; i < w; i ++) {
+                        struct float_color3* px = u_image_read(radiances, 0, i, j);
+                        double log_illum = __log_illuminance(px);
+                        log_sum += log_illum;
+                }
+        }
+        return exp(1.0f/(w*h)*log_sum);
+}
+
+static void __evaluate_hdr_target(struct util_image* radiances, struct util_image* hdr)
+{
+        double exposure = __compute_geometric_average_illuminance(radiances);
+
+        int j, i, w, h;
+        u_image_get_level0_dimension(radiances, &w, &h);
+        for (j = 0; j < h; j ++) {
+                for (i = 0; i < w; i ++) {
+                        struct float_color3* px = u_image_read(radiances, 0, i, j);
+                        uint32_t *hdrpx = u_image_read(hdr, 0, i, j);
+
+                        struct float_color3 rgb;
+                        __hdr_rgb_radiance(px, exposure, &rgb);
+                        *hdrpx = __gamma_rgb_radiance(&rgb);
+                }
+        }
+}
+
 void pathtracer_test_init(struct alg_var_set* envir) {};
 void pathtracer_test_free(struct alg_var_set* envir) {};
 enum DebugPosition* pathtracer_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
@@ -187,7 +272,7 @@ void pathtracer_test(struct alg_var_set* envir)
         maters[GREEN]  = &bsdf_lambert_create(&r_green)->_parent;
         maters[MIRROR] = &bsdf_mirror_create(&r_perfect)->_parent;
 
-        const float c_PowerScale = 20.0f;
+        const float c_PowerScale = 15.0f;
         struct light* lights[10];
         struct point3d p = {275.0f*c_Proportion, 350.0f*c_Proportion, 249.5f*c_Proportion};
         struct float_color3 flux = {245.0f*c_PowerScale, 191.0f*c_PowerScale, 129.0f*c_PowerScale};
@@ -199,10 +284,12 @@ void pathtracer_test(struct alg_var_set* envir)
         pathtracer_set_bsdfs(&pt, maters, 5);
         pathtracer_set_lights(&pt, lights, 1);
 
+        // radiance target
+        const int w = 1024, h = 768;
         struct util_image target;
-        u_image_init(&target, 1, UtilImgRGBRadiance, 800, 600);
+        u_image_init(&target, 1, UtilImgRGBRadiance, w, h);
         u_image_alloc(&target, 0);
-        pathtracer_set_sample_count(&pt, 1024);
+        pathtracer_set_sample_count(&pt, 1280);
         pathtracer_render(&pt, &target);
 
         bsdf_model_free(maters[WHITE]);
@@ -217,7 +304,14 @@ void pathtracer_test(struct alg_var_set* envir)
         light_free(lights[0]);
         free_fix(lights[0]);
 
-        u_image_export_to_file(&target, fopen("pathtracer-test-result.ppm", "w"));
+        // hdr target
+        struct util_image hdr;
+        u_image_init(&hdr, 1, UtilImgRGBA32, w, h);
+        u_image_alloc(&hdr, 0);
+        __evaluate_hdr_target(&target, &hdr);
+
+        // output image
+        u_image_export_to_file(&hdr, fopen("pathtracer-test-result.ppm", "w"));
         u_image_free(&target);
 
         geomcache_free(gc);
