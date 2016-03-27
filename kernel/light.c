@@ -43,7 +43,7 @@ struct light_point* light_point_create(struct float_color3* flux, struct point3d
         scale_color3(1/(2.0*M_PI*4.0*M_PI*radius*radius), flux, &self->inten);  // intensity at a point in any direction
         self->center = *p;
         self->radius = radius;
-        self->half_r2 = max(1.0f, radius*radius/2.0f);
+        self->half_r2 = max(EPSILON_E2, radius*radius);
         self->flux = *flux;
         return self;
 }
@@ -110,7 +110,7 @@ struct light_rectangular* light_rect_create(struct float_color3* flux,
         build_triangle3d(p0, p1, p2, &tri);
         triangle3d_normal(&tri, &self->n);
         self->area = surface_area_triangle3d(&tri);
-        scale_color3(1/(self->area*2*M_PI), flux, &self->inten);
+        scale_color3(1/(self->area*M_PI), flux, &self->inten);
         self->flux = *flux;
         return self;
 }

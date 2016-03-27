@@ -72,7 +72,7 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
         if (data->depth ++ > 4 || !raytracer_tintersect(&data->rt, ray, &inters)) {
                 return;
         }
-        const int c_NumBranchedSample = 4;
+        const int c_NumBranchedSample = 1;
 
         int mater_id = 0;
         if (geomcache_has_material_id(data->aos)) {
@@ -111,7 +111,7 @@ static void __pathtracer_integrate_at(struct pathtracer* self, float x, float y,
 {
         // simply trace a single ray
         struct ray3d initial;
-        struct point3d p0 = {278.0f, 273.0f, -800.0f};
+        struct point3d p0 = {278.0f*c_Proportion, 273.0f*c_Proportion, -800.0f*c_Proportion};
         struct vector3d v = {x*0.025f, y*0.025f, 0.035f*2.0f};
         normalize_vector3d_u(&v);
         ray3d_build_t3(&initial, &p0, &v, 1.0f, FLOAT_MAX);
@@ -189,10 +189,11 @@ void pathtracer_test(struct alg_var_set* envir)
         maters[GREEN]  = &bsdf_lambert_create(&r_green)->_parent;
         maters[MIRROR] = &bsdf_mirror_create(&r_perfect)->_parent;
 
+        const float c_PowerScale = 20.0f;
         struct light* lights[10];
-        struct point3d p = {275.0f, 544.8f, 249.5f};
-        struct float_color3 flux = {40000000.0f, 40000000.0f, 40000000.0f};
-        lights[0] = &light_point_create(&flux, &p, 5.0f)->_parent;
+        struct point3d p = {275.0f*c_Proportion, 300.0f*c_Proportion, 249.5f*c_Proportion};
+        struct float_color3 flux = {245.0f*c_PowerScale, 191.0f*c_PowerScale, 129.0f*c_PowerScale};
+        lights[0] = &light_point_create(&flux, &p, 10.0f*c_Proportion)->_parent;
 
         struct pathtracer pt;
         pathtracer_init(&pt);

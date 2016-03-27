@@ -327,7 +327,7 @@ struct geomcache* geomcache_build_test_sample()
         // prepare vertices
         struct point3d* vertices = alloc_fix(sizeof(struct point3d), n_vertices);
         for (j = 0; j < n_vertices; j ++) {
-                point3d_comps(vertices[j].p[i] = cVertices[j].position[i]);
+                point3d_comps(vertices[j].p[i] = cVertices[j].position[i]*c_Proportion);
         }
         // prepare normals
         struct vector3d* normals = alloc_fix(sizeof(struct vector3d), n_vertices);

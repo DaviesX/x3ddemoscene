@@ -90,6 +90,8 @@ bool*   geomcache_get_availibility(struct geomcache* self);
 #define WHITE   3
 #define MIRROR  4
 
+static const float c_Proportion = 1.0f/60.0f;
+
 struct geomcache* geomcache_build_test_sample();
 
 
