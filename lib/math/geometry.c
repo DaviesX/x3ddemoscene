@@ -74,18 +74,18 @@ void ray3d_build_t(struct ray3d *self, struct point3d *p0, struct point3d *p1, f
         self->v.z *= inv;
         self->inv_len2 = inv*inv;
         self->t0 = max(t0, EPSILON_E4);
-        self->t1 = self->len + EPSILON_E4;
+        self->t1 = self->len;
 }
-
-void ray3d_build_t2(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1)
-{
-        self->p0 = *p0;
-        vector3d_comps(self->v.v[i] = p1->p[i] - p0->p[i]);
-        self->len = 1.0f;
-        self->inv_len2 = 1.0f;
-        self->t0 = max(t0, EPSILON_E4);
-        self->t1 = t1;
-}
+//
+//void ray3d_build_t2(struct ray3d *self, struct point3d *p0, struct point3d *p1, float t0, float t1)
+//{
+//        self->p0 = *p0;
+//        vector3d_comps(self->v.v[i] = p1->p[i] - p0->p[i]);
+//        self->len = 1.0f;
+//        self->inv_len2 = 1.0f;
+//        self->t0 = max(t0, EPSILON_E4);
+//        self->t1 = t1;
+//}
 
 void ray3d_build_t3(struct ray3d *self, struct point3d *p0, struct vector3d* v, float t0, float t1)
 {

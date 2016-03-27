@@ -79,11 +79,9 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
                 mater_id = *geomcache_material_id_at(data->aos, inters.face[0]);
         }
         struct bsdf_model* bsdf = data->bsdfs[mater_id];
-        bsdf_model_set_hitgeom(bsdf, &inters.geom);
-        bsdf_model_set_incident(bsdf, ray);
 
         // compute direct lighting
-        bsdf_model_set_sample_count(bsdf, data->n_lights);
+        struct float_color3 le = {0.0f, 0.0f, 0.0f};
         int i;
         for (i = 0; i < data->n_lights; i ++) {
                 struct ray3d illumray;
@@ -93,18 +91,18 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
                         // 0 intensity or shadowed
                         continue;
                 }
-                bsdf_model_integrate(bsdf, &illumray, &inten, li);
+                bsdf_model_integrate(bsdf, &inters.geom, ray, &illumray, &inten, &le);
         }
 
-        bsdf_model_set_sample_count(bsdf, c_NumBranchedSample);
         int n;
         for (n = 0; n < c_NumBranchedSample; n ++) {
                 struct ray3d reflected;
-                bsdf_model_sample(bsdf, &reflected);
+                bsdf_model_sample(bsdf, &inters.geom, ray, &reflected);
                 struct float_color3 lo;
                 __pathtracer_trace_at(data, &reflected, &lo);
-                bsdf_model_integrate(bsdf, &reflected, &lo, li);
+                bsdf_model_integrate(bsdf, &inters.geom, ray, &reflected, &lo, li);
         }
+        color3_comps(li->c[i] = li->c[i]/c_NumBranchedSample + le.c[i]/data->n_lights);
 }
 
 static void __pathtracer_integrate_at(struct pathtracer* self, float x, float y, int n, struct float_color3* fn)
@@ -191,7 +189,7 @@ void pathtracer_test(struct alg_var_set* envir)
 
         const float c_PowerScale = 20.0f;
         struct light* lights[10];
-        struct point3d p = {275.0f*c_Proportion, 300.0f*c_Proportion, 249.5f*c_Proportion};
+        struct point3d p = {275.0f*c_Proportion, 350.0f*c_Proportion, 249.5f*c_Proportion};
         struct float_color3 flux = {245.0f*c_PowerScale, 191.0f*c_PowerScale, 129.0f*c_PowerScale};
         lights[0] = &light_point_create(&flux, &p, 10.0f*c_Proportion)->_parent;
 
@@ -204,7 +202,7 @@ void pathtracer_test(struct alg_var_set* envir)
         struct util_image target;
         u_image_init(&target, 1, UtilImgRGBRadiance, 800, 600);
         u_image_alloc(&target, 0);
-        pathtracer_set_sample_count(&pt, 64);
+        pathtracer_set_sample_count(&pt, 1024);
         pathtracer_render(&pt, &target);
 
         bsdf_model_free(maters[WHITE]);

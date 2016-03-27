@@ -40,10 +40,11 @@ struct light_point* light_point_create(struct float_color3* flux, struct point3d
                    (f_Light_Sample_At)  light_point_sample_at,
                    (f_Light_Sample_At2) light_point_sample_at2,
                    (f_Light_Free)       light_point_free);
+        radius = max(EPSILON_E2, radius);
         scale_color3(1/(2.0*M_PI*4.0*M_PI*radius*radius), flux, &self->inten);  // intensity at a point in any direction
         self->center = *p;
         self->radius = radius;
-        self->half_r2 = max(EPSILON_E2, radius*radius);
+        self->half_r2 = radius*radius;
         self->flux = *flux;
         return self;
 }
@@ -71,10 +72,9 @@ float light_point_sample_at2(struct light_point* self, struct point3d* p0, struc
         struct spherical3d sp;
         sp.the = uniform0_1()*M_PI;
         sp.phi = uniform0_1()*2*M_PI;
-        sp.r = 1.0f;
         struct point3d p;
         struct vector3d n;
-        spherical_to_vector3d(&sp, &n);
+        spherical_to_vector3d_n(&sp, &n);
         scale_vector3d(self->radius, &n, &p);
         add_point3d_u(&p, &self->center);
         ray3d_build_t(illumray, p0, &p, 0.0);
