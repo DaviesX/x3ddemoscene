@@ -303,8 +303,74 @@ static const struct vertex cVertices[] = {
         [34].mater_ref  = MIRROR,
         [35].position   = {130.0f, 0.0f, 65.0f},
         [35].normal     = {-0.957826, 0.000000, -0.287348},
-        [35].mater_ref  = MIRROR
+        [35].mater_ref  = MIRROR,
         /* Tall block */
+        [36].position = {423.0, 330.0, 247.0},
+        [36].normal     = {0.0f, 1.0f, 0.0f},
+        [36].mater_ref   = WHITE,
+        [37].position = {265.0, 330.0, 296.0},
+        [37].normal     = {0.0f, 1.0f, 0.0f},
+        [37].mater_ref   = WHITE,
+        [38].position = {314.0, 330.0, 456.0},
+        [38].normal     = {0.0f, 1.0f, 0.0f},
+        [38].mater_ref   = WHITE,
+        [39].position = {472.0, 330.0, 406.0},
+        [39].normal     = {0.0f, 1.0f, 0.0f},
+        [39].mater_ref   = WHITE,
+        // right
+        [40].position = {423.0,   0.0, 247.0},
+        [40].normal     = {0.955600, 0.0, 0.294500},
+        [40].mater_ref   = WHITE,
+        [41].position = {423.0, 330.0, 247.0},
+        [41].normal     = {0.955600, 0.0, 0.294500},
+        [41].mater_ref   = WHITE,
+        [42].position = {472.0, 330.0, 406.0},
+        [42].normal     = {0.955600, 0.0, 0.294500},
+        [42].mater_ref   = WHITE,
+        [43].position = {472.0,   0.0, 406.0},
+        [43].normal     = {0.955600, 0.0, 0.294500},
+        [43].mater_ref   = WHITE,
+
+        // back
+        [44].position = {472.0,   0.0, 406.0},
+        [44].normal     = {0.294500, 0.0, 0.955600},
+        [44].mater_ref   = WHITE,
+        [45].position = {472.0, 330.0, 406.0},
+        [45].normal     = {0.294500, 0.0, 0.955600},
+        [45].mater_ref   = WHITE,
+        [46].position = {314.0, 330.0, 456.0},
+        [46].normal     = {0.294500, 0.0, 0.955600},
+        [46].mater_ref   = WHITE,
+        [47].position = {314.0,   0.0, 456.0},
+        [47].normal     = {0.294500, 0.0, 0.955600},
+        [47].mater_ref   = WHITE,
+
+        [48].position = {314.0,   0.0, 456.0},
+        [48].normal     = {-0.955600, 0.000800, -0.296200},
+        [48].mater_ref   = WHITE,
+        [49].position = {314.0, 330.0, 456.0},
+        [49].normal     = {-0.955600, 0.000800, -0.296200},
+        [49].mater_ref   = WHITE,
+        [50].position = {265.0, 330.0, 296.0},
+        [50].normal     = {-0.955600, 0.000800, -0.296200},
+        [50].mater_ref   = WHITE,
+        [51].position = {265.0,   0.0, 296.0},
+        [51].normal     = {-0.955600, 0.000800, -0.296200},
+        [51].mater_ref   = WHITE,
+
+        // front
+        [52].position = {265.0,   0.0, 296.0},
+        [52].normal     = {-0.296200, 0.0, -0.955100},
+        [52].mater_ref   = WHITE,
+        [53].position = {265.0, 330.0, 296.0},
+        [53].normal     = {-0.296200, 0.0, -0.955100},
+        [53].mater_ref   = WHITE,
+        [54].position = {423.0, 330.0, 247.0},
+        [54].normal     = {-0.296200, 0.0, -0.955100},
+        [54].mater_ref   = WHITE,
+        [55].position = {423.0,   0.0, 247.0},
+        [55].normal     = {-0.296200, 0.0, -0.955100},
+        [55].mater_ref   = WHITE,
 };
 static int cIndices[1024];
 
@@ -334,6 +400,16 @@ struct geomcache* geomcache_build_test_sample()
         for (j = 0; j < n_vertices; j ++) {
                 vector3d_comps(normals[j].v[i] = cVertices[j].normal[i]);
         }
+//        for (j = 0; j < n_indices/3; j ++) {
+//                int* face = &cIndices[j*3];
+//                struct triangle3d tri;
+//                build_triangle3d(&vertices[face[j + 0]], &vertices[face[j + 1]], &vertices[face[j + 2]], &tri);
+//                struct vector3d n;
+//                triangle3d_normal(&tri, &n);
+//                normals[face[j + 0]] = n;
+//                normals[face[j + 1]] = n;
+//                normals[face[j + 2]] = n;
+//        }
         // prepare material references
         int* mater_refs = alloc_fix(sizeof(int), n_vertices);
         for (j = 0; j < n_vertices; j ++) {
