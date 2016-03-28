@@ -3,11 +3,11 @@
 
 
 #include <container/linkedlist.h>
+#include <container/set.h>
 #include <x3d/renderable.h>
+#include <x3d/light.h>
+#include <x3d/bsdf.h>
 
-struct renderable;
-struct light;
-struct bsdf_model;
 
 struct rda_request {
         uuid_t                  id;
@@ -31,12 +31,9 @@ struct rdacontainer;
 struct rda_context {
         struct rdacontainer*            container;              // will handle instances
 
-        d_alg_llist(struct renderable*) rdalist;
-        int                             num_renderable;
-        struct bsdf_model**             bsdfs;
-        int                             n_bsdfs;
-        struct light**                  lights;
-        int                             n_lights;
+        set_templ(struct renderable*, void*)    rdas;
+        set_templ(struct bsdf_model*, void*)    bsdfs;
+        set_templ(struct light*, void*)         lights;
 
         struct rda_request              request[128];
         int                             n_request;
@@ -61,8 +58,9 @@ int                     rda_context_get_renderable_count(struct rda_context* ctx
 
 void                    rda_context_add_light(struct rda_context* self, struct light* light);
 void                    rda_context_add_material(struct rda_context* self, struct bsdf_model* bsdf);
-struct bsdf_model**     rda_context_get_materials(struct rda_context* self, int *n_materials);
-struct light**          rda_context_get_lights(struct rda_context* self, int* n_lights);
-
+setptr(struct bsdf_model*)*     rda_context_get_materials(struct rda_context* self);
+struct bsdf_model**             rda_context_get_materials2(struct rda_context* self, int* n_materials);
+setptr(struct light*)*          rda_context_get_lights(struct rda_context* self);
+struct light**                  rda_context_get_lights2(struct rda_context* self, int* n_lights);
 
 #endif // RENDERABLEAGGREGATE_H_INCLUDED

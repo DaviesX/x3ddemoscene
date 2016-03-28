@@ -5,6 +5,8 @@
 #include <container/paramset.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
+#include <x3d/bsdf.h>
+#include <x3d/light.h>
 #include <x3d/renderableaggregaterequest.h>
 #include <x3d/projectionprobe.h>
 #include <x3d/debug.h>
@@ -136,11 +138,11 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
 
         // prepare material data
         int n_materials;
-        struct bsdf_model** materials = rda_context_get_materials(context, &n_materials);
+        struct bsdf_model** materials = rda_context_get_materials2(context, &n_materials);
 
         // prepare illuminance data
         int n_lights;
-        struct light** lights = rda_context_get_lights(context, &n_lights);
+        struct light** lights = rda_context_get_lights2(context, &n_lights);
 
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
         // create spatial accessor

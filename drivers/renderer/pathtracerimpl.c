@@ -267,16 +267,16 @@ void pathtracer_test(struct alg_var_set* envir)
         struct float_color3 r_red = {1.0f, 0.0f, 0.0f};
         struct float_color3 r_green = {0.0f, 1.0f, 0.0f};
         struct float_color3 r_perfect = {0.8f, 0.8f, 0.8f};
-        maters[WHITE]  = &bsdf_lambert_create(&r_white)->_parent;
-        maters[RED]    = &bsdf_lambert_create(&r_red)->_parent;
-        maters[GREEN]  = &bsdf_lambert_create(&r_green)->_parent;
-        maters[MIRROR] = &bsdf_mirror_create(&r_perfect)->_parent;
+        maters[WHITE]  = &bsdf_lambert_create("white", &r_white)->_parent;
+        maters[RED]    = &bsdf_lambert_create("red", &r_red)->_parent;
+        maters[GREEN]  = &bsdf_lambert_create("green", &r_green)->_parent;
+        maters[MIRROR] = &bsdf_mirror_create("perfect", &r_perfect)->_parent;
 
         const float c_PowerScale = 15.0f;
         struct light* lights[10];
         struct point3d p = {275.0f*c_Proportion, 350.0f*c_Proportion, 249.5f*c_Proportion};
         struct float_color3 flux = {245.0f*c_PowerScale, 191.0f*c_PowerScale, 129.0f*c_PowerScale};
-        lights[0] = &light_point_create(&flux, &p, 10.0f*c_Proportion)->_parent;
+        lights[0] = &light_point_create("test_light0", &flux, &p, 10.0f*c_Proportion)->_parent;
 
         struct pathtracer pt;
         pathtracer_init(&pt);

@@ -18,14 +18,18 @@ struct light {
         f_Light_Sample_At       f_sample;
         f_Light_Sample_At2      f_sample2;
         f_Light_Free            f_free;
+        char*                   name;
 };
 /*
  * <light> public
  */
-void light_init(struct light* self, f_Light_Sample_At f_sample,
+void light_init(struct light* self,
+                const char* name,
+                f_Light_Sample_At f_sample,
                 f_Light_Sample_At2 f_sample2,
                 f_Light_Free f_free);
 void light_free(struct light* self);
+const char* light_get_name(struct light* self);
 void light_sample_at(struct light* self, struct point3d* p, struct vector3d* n, struct float_color3* i);
 float light_sample_at2(struct light* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i);
 
@@ -45,7 +49,7 @@ struct light_point {
 /*
  * <light_point> public
  */
-struct light_point* light_point_create(struct float_color3* flux, struct point3d* p, float radius);
+struct light_point* light_point_create(const char* name, struct float_color3* flux, struct point3d* p, float radius);
 void light_point_free(struct light_point* self);
 void light_point_sample_at(struct light_point* self, struct point3d* p, struct vector3d* n, struct float_color3* i);
 float light_point_sample_at2(struct light_point* self, struct point3d* p0, struct ray3d* illumray, struct float_color3* i);
@@ -69,7 +73,7 @@ struct light_rectangular {
 /*
  * <light_rectangular> public
  */
-struct light_rectangular* light_rect_create(struct float_color3* flux,
+struct light_rectangular* light_rect_create(const char* name, struct float_color3* flux,
                 struct point3d* p0, struct point3d* p1, struct point3d* p2, struct point3d* p3);
 void light_rect_free(struct light_rectangular* self);
 void light_rect_sample_at(struct light_rectangular* self, struct point3d* p, struct vector3d* n, struct float_color3* i);

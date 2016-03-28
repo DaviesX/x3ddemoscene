@@ -36,12 +36,15 @@ struct bsdf_model {
         f_BSDF_Sample   f_sample;
         f_BSDF_Li       f_li;
         f_BSDF_Free     f_free;
+        char*           name;
 };
 /*
  * <bsdf_model> public
  */
-void    bsdf_model_init(struct bsdf_model* self, f_BSDF_Sample f_sample, f_BSDF_Li f_li, f_BSDF_Free f_free);
+void    bsdf_model_init(struct bsdf_model* self, const char* name,
+                        f_BSDF_Sample f_sample, f_BSDF_Li f_li, f_BSDF_Free f_free);
 void    bsdf_model_free(struct bsdf_model* self);
+const char* bsdf_model_get_name(struct bsdf_model* self);
 void    bsdf_model_sample(struct bsdf_model* self, struct hitgeom* geom, struct ray3d* incident, struct ray3d* reflected);
 void    bsdf_model_integrate(struct bsdf_model* self, struct hitgeom* geom, struct ray3d* incident, struct ray3d* reflected,
                              struct float_color3* lo, struct float_color3* li);
@@ -56,7 +59,7 @@ struct bsdf_lambert {
 /*
  * <bsdf_lambert> public
  */
-struct bsdf_lambert* bsdf_lambert_create(struct float_color3* r);
+struct bsdf_lambert* bsdf_lambert_create(const char* name, struct float_color3* r);
 void    bsdf_lambert_sample(struct bsdf_lambert* self, struct hitgeom* geom, struct ray3d* incident, struct ray3d* reflected);
 void    bsdf_lambert_integrate(struct bsdf_lambert* self, struct hitgeom* geom, struct ray3d* incident, struct ray3d* reflected,
                                struct float_color3* lo, struct float_color3* li);
@@ -72,7 +75,7 @@ struct bsdf_mirror {
 /*
  * <bsdf_mirror> public
  */
-struct bsdf_mirror* bsdf_mirror_create(struct float_color3* r);
+struct bsdf_mirror* bsdf_mirror_create(const char* name, struct float_color3* r);
 void    bsdf_mirror_sample(struct bsdf_mirror* self, struct hitgeom* geom, struct ray3d* incident, struct ray3d* reflected);
 void    bsdf_mirror_integrate(struct bsdf_mirror* self, struct hitgeom* geom, struct ray3d* incident, struct ray3d* reflected,
                               struct float_color3* lo, struct float_color3* li);

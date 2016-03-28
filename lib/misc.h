@@ -21,12 +21,12 @@ typedef void            (*f_Generic)();
 
 int             alg_match_pattern(const char* cstr, const char* format, ...);
 
-uint32_t        alg_hash_str0(char* str);
-uint32_t        alg_hash_str1(char* str);
-uint32_t        alg_hash_str2(char* str);
-uint32_t        alg_hash_str3(char* str);
-uint32_t        alg_hash_str4(char* str);
-uuid_t          alg_hash_str_uuid(char* str);
+uint32_t        alg_hash_str0(const char* str);
+uint32_t        alg_hash_str1(const char* str);
+uint32_t        alg_hash_str2(const char* str);
+uint32_t        alg_hash_str3(const char* str);
+uint32_t        alg_hash_str4(const char* str);
+uuid_t          alg_hash_str_uuid(const char* str);
 
 char*           alg_str_simplify(char* str);
 bool            alg_match_suffix(char* str, char* suffix);

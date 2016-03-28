@@ -151,7 +151,7 @@ uint32_t gen_layer_name_hash ( char *name )
 uint32_t gen_layer_hash ( struct res_name *name )
 {
         uint32_t hash = 0;
-        typedef uint32_t (*hash_func) ( char *str );
+        typedef uint32_t (*hash_func) (const char *str);
         const hash_func str_hash[4] = {
                 alg_hash_str0,
                 alg_hash_str1,

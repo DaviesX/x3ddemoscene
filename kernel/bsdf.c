@@ -20,17 +20,25 @@ void hitgeom_init(struct hitgeom* self, struct point3d* p, struct vector3d* n, s
 /*
  * <bsdf_model> public
  */
-void bsdf_model_init(struct bsdf_model* self, f_BSDF_Sample f_sample, f_BSDF_Li f_li, f_BSDF_Free f_free)
+void bsdf_model_init(struct bsdf_model* self, const char* name,
+                     f_BSDF_Sample f_sample, f_BSDF_Li f_li, f_BSDF_Free f_free)
 {
         zero_obj(self);
         self->f_sample = f_sample;
         self->f_li = f_li;
         self->f_free = f_free;
+        self->name = alg_alloc_string(name);
 }
 
 void bsdf_model_free(struct bsdf_model* self)
 {
         self->f_free(self);
+        free_fix(self->name);
+}
+
+const char* bsdf_model_get_name(struct bsdf_model* self)
+{
+        return self->name;
 }
 
 void bsdf_model_sample(struct bsdf_model* self, struct hitgeom* geom, struct ray3d* incident, struct ray3d* reflected)
@@ -47,10 +55,10 @@ void bsdf_model_integrate(struct bsdf_model* self, struct hitgeom* geom, struct 
 /*
  * <bsdf_lambert> public
  */
-struct bsdf_lambert* bsdf_lambert_create(struct float_color3* r)
+struct bsdf_lambert* bsdf_lambert_create(const char* name, struct float_color3* r)
 {
         struct bsdf_lambert* self = alloc_obj(self);
-        bsdf_model_init(&self->_parent,
+        bsdf_model_init(&self->_parent, name,
                         (f_BSDF_Sample) bsdf_lambert_sample,
                         (f_BSDF_Li)     bsdf_lambert_integrate,
                         (f_BSDF_Free)   bsdf_lambert_free);
@@ -95,10 +103,10 @@ void bsdf_lambert_free(struct bsdf_lambert* self)
 /*
  * <bsdf_mirror> public
  */
-struct bsdf_mirror* bsdf_mirror_create(struct float_color3* r)
+struct bsdf_mirror* bsdf_mirror_create(const char* name, struct float_color3* r)
 {
         struct bsdf_mirror* self = alloc_obj(self);
-        bsdf_model_init(&self->_parent,
+        bsdf_model_init(&self->_parent, name,
                         (f_BSDF_Sample) bsdf_mirror_sample,
                         (f_BSDF_Li)     bsdf_mirror_integrate,
                         (f_BSDF_Free)   bsdf_mirror_free);

@@ -3,6 +3,8 @@
 
 #include <math/math.h>
 
+#define setptr(T)          struct __set
+
 #define int_hash(_x)    (0x9e370001*(_x))
 
 #define NIL     -1
@@ -96,6 +98,11 @@ struct {                                                                        
         (_self)->recycled = alloc_var(sizeof(int), 1);                                                     \
         (_self)->num_recyc = 0;                                                                            \
                                                                                                            \
+        (_self)->data = (_data);                                                                           \
+}
+
+#define set_reset_data(_self, _data)                                                                       \
+{                                                                                                          \
         (_self)->data = (_data);                                                                           \
 }
 
@@ -208,7 +215,7 @@ struct {                                                                        
 #define set_iter_deref(_self, _set)                                                                        \
         ((_set)->chunk[(_self)->pos].value)
 
-#define deque_for_each(_self, _elm, CODE)                                                                  \
+#define set_for_each(_self, _elm, CODE)                                                                    \
 {                                                                                                          \
         set_iter_templ(typeof(*(_self)->values)) _iterator;                                                \
         set_iter_begin(&_iterator, _self);                                                                 \

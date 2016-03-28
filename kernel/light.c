@@ -7,16 +7,25 @@
 /*
  * <light> public
  */
-void light_init(struct light* self, f_Light_Sample_At f_sample, f_Light_Sample_At2 f_sample2, f_Light_Free f_free)
+void light_init(struct light* self, const char* name,
+                f_Light_Sample_At f_sample, f_Light_Sample_At2 f_sample2, f_Light_Free f_free)
 {
+        self->name = alg_alloc_string("");
         self->f_sample = f_sample;
         self->f_sample2 = f_sample2;
         self->f_free = f_free;
+        self->name = alg_alloc_string(name);
 }
 
 void light_free(struct light* self)
 {
         self->f_free(self);
+        free_fix(self->name);
+}
+
+const char* light_get_name(struct light* self)
+{
+        return self->name;
 }
 
 void light_sample_at(struct light* self, struct point3d* p, struct vector3d* n, struct float_color3* i)
@@ -33,10 +42,10 @@ float light_sample_at2(struct light* self, struct point3d* p0, struct ray3d* ill
 /*
  * <light_point> public
  */
-struct light_point* light_point_create(struct float_color3* flux, struct point3d* p, float radius)
+struct light_point* light_point_create(const char* name, struct float_color3* flux, struct point3d* p, float radius)
 {
         struct light_point* self = alloc_obj(self);
-        light_init(&self->_parent,
+        light_init(&self->_parent, name,
                    (f_Light_Sample_At)  light_point_sample_at,
                    (f_Light_Sample_At2) light_point_sample_at2,
                    (f_Light_Free)       light_point_free);
@@ -94,11 +103,11 @@ float light_point_sample_at2(struct light_point* self, struct point3d* p0, struc
 /*
  * <light_rectangular> public
  */
-struct light_rectangular* light_rect_create(struct float_color3* flux,
+struct light_rectangular* light_rect_create(const char* name, struct float_color3* flux,
                 struct point3d* p0, struct point3d* p1, struct point3d* p2, struct point3d* p3)
 {
         struct light_rectangular* self = alloc_obj(self);
-        light_init(&self->_parent,
+        light_init(&self->_parent, name,
                    (f_Light_Sample_At)  light_rect_sample_at,
                    (f_Light_Sample_At2) light_rect_sample_at2,
                    (f_Light_Free)       light_rect_free);

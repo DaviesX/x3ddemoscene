@@ -273,20 +273,20 @@ FUNCTION_FAILED:
 }
 
 /* a series of string hashing functions */
-uint32_t alg_hash_str0 ( char *str )
+uint32_t alg_hash_str0(const char* str)
 {
         uint32_t hash = 0;
-        while ( *str != 0 ) {
+        while (*str != 0) {
                 hash += 33*(*str);
                 str ++;
         }
         return hash;
 }
 
-uint32_t alg_hash_str1 ( char *str )
+uint32_t alg_hash_str1(const char *str)
 {
         uint32_t hash = 0;
-        while ( *str ) {
+        while (*str) {
                 hash += *str;
                 hash += (hash << 10);
                 hash ^= (hash >> 6);
@@ -298,7 +298,7 @@ uint32_t alg_hash_str1 ( char *str )
         return hash;
 }
 
-uint32_t alg_hash_str2 ( char *str )
+uint32_t alg_hash_str2(const char *str)
 {
         uint64_t hash = 0xcbf29ce484222325;
         while ( *str != 0 ) {
@@ -309,7 +309,7 @@ uint32_t alg_hash_str2 ( char *str )
         return (uint32_t) ((hash >> 32) ^ hash);
 }
 
-uint32_t alg_hash_str3 ( char *str )
+uint32_t alg_hash_str3(const char *str)
 {
         uint32_t hash = 0;
         while ( *str ) {
@@ -319,7 +319,7 @@ uint32_t alg_hash_str3 ( char *str )
         return hash;
 }
 
-uint32_t alg_hash_str4 ( char *str )
+uint32_t alg_hash_str4(const char *str)
 {
         uint32_t seed = 131; // 31 131 1313 13131 131313 etc..
         uint32_t hash = 0;
@@ -330,7 +330,7 @@ uint32_t alg_hash_str4 ( char *str )
         return hash;
 }
 
-uuid_t alg_hash_str_uuid ( char *str )
+uuid_t alg_hash_str_uuid(const char *str)
 {
         uint64_t hash = 0xcbf29ce484222325;
         while ( *str != 0 ) {
@@ -341,7 +341,7 @@ uuid_t alg_hash_str_uuid ( char *str )
         return (uuid_t) hash;
 }
 
-char* alg_str_simplify ( char* str )
+char* alg_str_simplify(char* str)
 {
         char* t = str;
         char* dest = str;
