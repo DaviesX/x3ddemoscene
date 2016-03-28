@@ -212,10 +212,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../drivers/renderer/shader/main.h" />
-		<Unit filename="../drivers/renderer/shader/ptshader.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../drivers/renderer/shader/ptshader.h" />
 		<Unit filename="../drivers/renderer/shader/rtshader.h" />
 		<Unit filename="../drivers/renderer/shader/shader.c">
 			<Option compilerVar="CC" />
