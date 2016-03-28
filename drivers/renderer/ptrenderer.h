@@ -15,14 +15,6 @@
  */
 struct pt_radiance_node {
         struct render_node_ex_impl      _parent;
-        struct pathtrace_pipeline*      pipeline;
-
-        struct box3d*                   simplex;
-        struct spatial_access*             acc_stt;
-        struct util_stream              stream[10];
-        int                             n_streams;
-        struct geomcache                 aos_geo;
-
         struct util_image               target;
 };
 

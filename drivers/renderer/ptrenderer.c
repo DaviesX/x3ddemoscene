@@ -18,506 +18,6 @@
 
 struct rda_context;
 
-enum RenderPassNature {
-        RenderPassRadiance,
-        RenderPassPostHdr,
-        RenderPassFinal
-};
-
-//struct render_pass {
-//        enum RenderPassNature   nature;
-//        int                     src;
-//        int                     dest;
-//        float                   dest_blend;
-//        enum RenderPipeType     pipe;
-//        int                     sub_pass[10];
-//        int                     n_subpass;
-//        struct rda_context*     ctx;
-//        struct box3d*           simplex;
-//        enum UtilAccessorType   acc_type;
-//        struct util_access*     acc_stt;
-//        struct util_stream      stream[10];
-//        int                     n_streams;
-//        struct util_aos         aos_geo;
-//        struct util_aos         aos_media;
-//        struct util_image*      src_target;
-//        struct util_image       target;
-//};
-
-
-//struct vertex {
-//        float   position[3];
-//        float   normal[3];
-//        int     mater_ref;
-//};
-
-struct ray_tree {
-        struct vector3d         i_rad;
-        struct ray3d            i_ray;
-        uint8_t                 buffer[64];
-        int                     n_emit;
-        int                     i_emit;
-        struct ray3d            e_ray[4];
-};
-
-struct intersect_packet {
-        /* writable */
-        bool    has_inters;
-        int     face[3];
-        float   b[3];
-        float   bias;
-        float   t;
-        /* readable */
-        struct util_stream*     stream;
-        int                     n_streams;
-        int*                    i_array;
-        struct ray3d*           r;
-        /* built-in shader variables */
-        void**                  in_uv;
-        void**                  in_radiance;
-        void**                  out_radiance;
-        void**                  in_incident;
-        void**                  out_recur_count;
-        void**                  out_illum_count;
-        void**                  out_recur_ray;
-        void**                  out_illum_ray;
-        void**                  in_is_vis;
-        /* shader stages */
-        void (*preprobe) ( void );
-        void (*sample) ( void );
-        void (*illuminate) ( void );
-        void (*transfer) ( void );
-        void (*postprobe) ( void );
-};
-
-// lerp utility functions
-static void lerp_point(struct point3d* p[3], float t[3], struct point3d* xo)
-{
-        int i;
-        for (i = 0; i < 3; i ++) {
-                xo->p[i] = p[0]->p[i]*t[0] + p[1]->p[i]*t[1] + p[2]->p[i]*t[2];
-        }
-}
-
-static void lerp_matid(int* p[3], float t[3], int* xo)
-{
-        *xo = *p[0];
-}
-
-/* intersection callee */
-static bool real_subroutine ( int i, struct intersect_packet* ip )
-{
-        float k;
-        int t = i*3;
-        struct point3d* p[3];
-        p[0] = u_stream_access ( &ip->stream[0], ip->i_array[t + 0] );
-        p[1] = u_stream_access ( &ip->stream[0], ip->i_array[t + 1] );
-        p[2] = u_stream_access ( &ip->stream[0], ip->i_array[t + 2] );
-        if ( intersect_ray_triangle3d ( ip->r, p[0], p[1], p[2],
-                                        ip->b, &k, &ip->bias ) &&
-             k < ip->t ) {
-                ip->face[0] = ip->i_array[t + 0];
-                ip->face[1] = ip->i_array[t + 1];
-                ip->face[2] = ip->i_array[t + 2];
-                ip->t = k;
-                ip->has_inters = true;
-                return true;
-        } else
-                return false;
-}
-static bool simplex_subroutine ( int i, struct box3d* b, struct intersect_packet* ip )
-{
-        return occlude_line_box3d ( ip->r, b );
-}
-/* intersection caller */
-static bool find_intersect_linear ( struct spatial_linear* access,
-                                    struct intersect_packet* ip )
-{
-        ip->has_inters  = false;
-        ip->t           = FLOAT_MAX;
-        u_linear_find ( access, ip, simplex_subroutine, real_subroutine );
-        return ip->has_inters;
-}
-static bool is_visible_linear ( struct spatial_linear* access,
-                                struct intersect_packet* ip )
-{
-        ip->has_inters  = false;
-        ip->t           = FLOAT_MAX;
-        u_linear_find2(access, ip, simplex_subroutine, real_subroutine);
-        return !ip->has_inters;
-}
-
-
-static struct box3d* construct_simplex ( struct util_stream s[], int n_stream,
-                                         int* index, int num_index, int* num_simplex )
-{
-        *num_simplex = num_index/3;     // just the number of triangles
-        struct box3d* simplex = alloc_fix(sizeof(struct box3d), num_index/3);
-        int i;
-        for ( i = 0; i < num_index; i += 3 ) {
-                struct point3d* curr_vert[3];
-                int j;
-                for ( j = 0; j < 3; j ++ ) {
-                        curr_vert[j] = u_stream_access ( &s[0], index[i + j] );
-                }
-                struct box3d box;
-                init_box3d ( &box );
-                int k;
-                for ( k = 0; k < 3; k ++ ) {
-                        union_box3d_pu ( &box, curr_vert[k] );
-                }
-                simplex[i/3] = box;
-        }
-        return simplex;
-}
-
-static void free_simplex ( struct box3d* b )
-{
-        free_fix ( b );
-}
-
-static void evaluate_ray_tree ( struct ray_tree* node, struct spatial_access* acc, struct intersect_packet* ip )
-{
-        struct ray_tree* root = node;
-
-        while ( true ) {
-                if (node->n_emit == node->i_emit) {
-                        /* backtrack */
-                        node --;
-
-                        if (node == root) {
-                                add_vector3d_u ( &root->i_rad, &(node + 1)->i_rad );
-                                node->i_emit ++;
-
-                                if ( root->i_emit == root->n_emit ) {
-                                        break;
-                                } else {
-                                        continue;
-                                }
-                        } else {
-                                u_stream_load_from_buffer(ip->stream, ip->n_streams, node->buffer);
-                                struct vector3d rad             = node[1].i_rad;
-                                struct ray3d* inci              = &node->e_ray[node->i_emit];
-                                *ip->in_radiance                = &rad;
-                                *ip->in_incident                = inci;
-                                *ip->out_radiance               = &rad;
-
-                                ip->transfer();
-
-                                add_vector3d_u ( &node->i_rad, &rad );
-                                node->i_emit ++;
-                                continue;
-                        }
-                }
-                ip->r = &node->e_ray[node->i_emit];
-                node ++;
-
-                node->i_ray = *ip->r;
-                node->i_emit = 0;
-                init_vector3d ( &node->i_rad );
-
-                /* trace recursive ray */
-                if ( !find_intersect_linear ( (struct spatial_linear*) acc, ip )) {
-                        node->n_emit = 0;
-                        continue;
-                }
-                int n_rray, n_iray;
-                struct ray3d iray[10];
-                *ip->in_incident = ip->r;
-                *ip->out_illum_count = &n_iray;
-                *ip->out_recur_count = &n_rray;
-                *ip->out_recur_ray = node->e_ray;
-                *ip->out_illum_ray = iray;
-                u_stream_lerp3_link(ip->stream, ip->n_streams, ip->face, ip->b);
-                u_stream_store_to_buffer(ip->stream, ip->n_streams, node->buffer);
-
-                ip->sample();
-
-                node->n_emit = n_rray;
-
-                /* trace illumination ray, and store illumination to current node */
-                bool is_vis[1024];
-                int j;
-                for ( j = 0; j < n_iray; j ++ ) {
-                        ip->r = &iray[j];
-                        is_vis[j] = is_visible_linear ( (struct spatial_linear*) acc, ip );
-                }
-                *ip->in_is_vis = is_vis;
-                *ip->out_radiance = &node->i_rad;
-
-                ip->illuminate();
-        }
-}
-#if 0
-void test_evaluate ( struct triangle_buffer* tbuf, struct ray_tree* node )
-{
-        int     i[3];
-        float   b[3];
-        if ( tbuf_intersect_linear ( tbuf, &node->e_ray[0], i, b ) ) {
-                struct vertex* v[3];
-                v[0] = &((struct vertex*) tbuf->vertex)[i[0]];
-                v[1] = &((struct vertex*) tbuf->vertex)[i[1]];
-                v[2] = &((struct vertex*) tbuf->vertex)[i[2]];
-                int c;
-                for ( c = 0; c < 3; c ++ ) {
-                        node->vert_data.position[c]   = v[0]->position[c]*b[0] +
-                                                        v[1]->position[c]*b[1] +
-                                                        v[2]->position[c]*b[2];
-                        node->vert_data.normal[c]     = v[0]->normal[c]*b[0] +
-                                                        v[1]->normal[c]*b[1] +
-                                                        v[2]->normal[c]*b[2];
-                }
-                node->vert_data.mater_ref             = v[0]->mater_ref;
-
-                for ( c = 0; c < 3; c ++ ) {
-                        g_position[c]   = node->vert_data.position[c];
-                        g_normal[c]     = node->vert_data.normal[c];
-                }
-                g_mater_id = node->vert_data.mater_ref;
-//                transfer_shader ();
-//                g_incident = *r;
-                g_nbounce = 5;
-//                mirror_sample_shader ( );
-
-                int k;
-                for ( k = 0; k < g_n_recur; k ++ ) {
-                        node->e_ray[k] = g_recur[k];
-                }
-                node->n_emit = g_n_recur;
-
-                /* trace illumination ray */
-                int j;
-                for ( j = 0; j < g_n_illum; j ++ ) {
-                        g_is_vis[j] = tbuf_visible_linear ( tbuf, &g_illum[j] );
-                }
-//                illuminate_shader ( );
-
-//                int c;
-                for ( c = 0; c < 3; c ++ )
-                        node->i_rad.c[c] = g_position[c]/800.0f;
-//                node->i_rad = g_radiance;
-        } else {
-                int c;
-                for ( c = 0; c < 3; c ++ )
-                        node->i_rad.c[c] = 0.0f;
-        }
-}
-#endif // 0
-/*
-#define rgb_radiance( x )               ((uint8_t) (0XFF) << 24) | \
-                                        ((uint8_t)(CLAMP((x)->c[0], 0.0f, 1.0f)*255.0f) << 16) | \
-                                        ((uint8_t)(CLAMP((x)->c[1], 0.0f, 1.0f)*255.0f) << 8) | \
-                                        ((uint8_t)(CLAMP((x)->c[2], 0.0f, 1.0f)*255.0f) << 0) */
-static inline uint32_t rgb_radiance ( struct float_color3* x )
-{
-        float post_rad[3];
-        post_rad[0] = clamp ( powf ( x->rgb[0], 1.0f/2.2f ), 0.0f, 1.0f );
-        post_rad[1] = clamp ( powf ( x->rgb[1], 1.0f/2.2f ), 0.0f, 1.0f );
-        post_rad[2] = clamp ( powf ( x->rgb[2], 1.0f/2.2f ), 0.0f, 1.0f );
-
-        return ((uint8_t) (0XFF) << 24) | \
-               ((uint8_t)(post_rad[0]*255.0f) << 16) | \
-               ((uint8_t)(post_rad[1]*255.0f) << 8) | \
-               ((uint8_t)(post_rad[2]*255.0f) << 0);
-}
-
-static inline double exp_illuminance ( struct float_color3* x )
-{
-        double illu = 0.3f*x->rgb[0] + 0.6f*x->rgb[1] + 0.1f*x->rgb[2];
-        return log ( illu + 1.25 );
-}
-
-/* from: http://filmicgames.com/archives/75, Filmic HDR */
-static const float A = 0.15f;
-static const float B = 0.50f;
-static const float C = 0.10f;
-static const float D = 0.20f;
-static const float E = 0.02f;
-static const float F = 0.30f;
-static const struct float_color3 W = {11.2f, 11.2f, 11.2f};
-
-static void inv_filimc_curve ( struct float_color3* x, struct float_color3* t )
-{
-        int i;
-        for ( i = 0; i < 3; i ++ )
-                t->rgb[i] = 1.0f/(((x->rgb[i]*(A*x->rgb[i] + C*B) + D*E)/
-                                   (x->rgb[i]*(A*x->rgb[i] + 1*B) + D*F)) - E/F);
-}
-
-static void filmic_curve ( struct float_color3* x, struct float_color3* t )
-{
-        int i;
-        for ( i = 0; i < 3; i ++ )
-                t->rgb[i] = ((x->rgb[i]*(A*x->rgb[i] + C*B) + D*E)/
-                             (x->rgb[i]*(A*x->rgb[i] + 1*B) + D*F)) - E/F;
-}
-
-static inline void rgb_hdr_radiance ( struct float_color3* x, float avg_illum,
-                                      struct float_color3* reexp )
-{
-        const float exp_bias = 5.0f;
-        struct float_color3 r;
-        int i;
-        for ( i = 0; i < 3; i ++ ) {
-                r.rgb[i] = x->rgb[i]*exp_bias*avg_illum;
-        }
-
-        struct float_color3 c;
-        struct float_color3 white_scale;
-        filmic_curve ( &r, &c );
-        inv_filimc_curve ( (struct float_color3*) &W, &white_scale );
-
-        mul_color3 ( &c, &white_scale, &r );
-        *reexp = r;
-
-}
-
-#include "./shader/ptshader.c"
-
-static void render_radiance(struct pt_radiance_node* render_node, struct util_image* target)
-{
-        /* construct intersection packet */
-        struct intersect_packet ip;
-        int num_index;
-        ip.i_array = geomcache_get_indices(&render_node->aos_geo, &num_index);
-        ip.n_streams = render_node->n_streams;
-        ip.stream = render_node->stream;
-/**@todo (davis#1#) <intersect_packet> these should be done through shader formulate context */
-        ip.in_uv                = (void**) &g_uv;
-        ip.in_radiance          = (void**) &g_radiance;
-        ip.in_incident          = (void**) &g_incident;
-        ip.in_is_vis            = (void**) &g_is_vis;
-        ip.out_illum_count      = (void**) &g_n_illum;
-        ip.out_illum_ray        = (void**) &g_illum;
-        ip.out_radiance         = (void**) &g_radiance;
-        ip.out_recur_count      = (void**) &g_n_recur;
-        ip.out_recur_ray        = (void**) &g_recur;
-        ip.preprobe             = a_easyrt_probe;
-        ip.sample               = a_easyrt_sample;
-        ip.illuminate           = a_easyrt_illuminate;
-        ip.transfer             = a_easyrt_transfer;
-        ip.postprobe            = nullptr;
-        /* gives temporary buffering */
-        ray3 illum_rays[1024];
-        *ip.out_illum_ray = illum_rays;
-
-        struct ray_tree         s[10] = {0};
-        struct ray_tree*        node = s;
-
-        unsigned int width  = target->width;
-        unsigned int height = target->height;
-
-        struct {
-                float dx;
-                float dy;
-        } spp[4] = {
-                [0].dx = 0.0f,
-                [0].dy = 0.0f,
-                //
-                [1].dx = 1.0f/(width*2.0f),
-                [1].dy = 0.0f,
-                //
-                [2].dx = 0.0f,
-                [2].dy = 1.0f/(height*2.0f),
-                //
-                [3].dx = 1.0f/(width*2.0f),
-                [3].dy = 1.0f/(height*2.0f)
-        };
-        const int cNumSamples = 16;
-        const int cNumSpp = 1;
-
-        float tw = width - 1;
-        float th = height - 1;
-
-        int j;
-        for (j = 0; j < height; j ++) {
-                // printf ( "%d\n", j );
-                int i;
-                for (i = 0; i < width; i ++) {
-                        struct vector3d acc_rad = {0};
-                        int k;
-                        for (k = 0; k < cNumSpp; k ++) {
-                                struct vector2d uv;
-                                uv.x =   2.0f*((float) i/tw + spp[k].dx) - 1.0f;
-                                uv.y = -(2.0f*((float) j/th + spp[k].dy) - 1.0f);
-
-                                int s;
-                                for ( s = 0; s < cNumSamples; s ++ ) {
-                                        memset(node, 0, sizeof *node);
-                                        int n_rray;     // buffer for the shader
-                                        *ip.in_uv = uv.p;
-                                        *ip.out_recur_count = &n_rray;
-                                        *ip.out_recur_ray = node->e_ray;
-
-                                        ip.preprobe();
-
-                                        node->n_emit = n_rray;
-                                        //test_evaluate ( &rt->tbuf, node );
-                                        evaluate_ray_tree(node, render_node->acc_stt, &ip);
-                                        add_vector3d(&acc_rad, &node->i_rad, &acc_rad);
-                                }
-                        }
-                        struct vector3d* dest = u_image_read(target, 0, i, j);
-                        scale_vector3d(1.0f/((float) (cNumSamples*cNumSpp)), &acc_rad, dest);
-                }
-        }
-}
-//
-//static void render_hdr(struct render_pass* pass)
-//{
-//        /* hdr postprocessor */
-//        unsigned int width  = pass->target.width;
-//        unsigned int height = pass->target.height;
-//
-//        double exporsure = 0.0;
-//        int b = 0;
-//        int j;
-//        for ( j = 0; j < height; j ++ ) {
-//                int i;
-//                for ( i = 0; i < width; i ++ ) {
-//                        struct float_color3* dest = u_image_read ( pass->src_target, 0, i, j );
-//                        double k = exp_illuminance ( dest );
-//                        if ( *(int64_t*)&k != -2251799813685248 )
-//                                exporsure += k;
-//                        else b ++;
-//                }
-//        }
-//        exporsure /= (double) height;
-//        exporsure /= (double) width;
-//        exporsure = exp ( exporsure );
-//        for ( j = 0; j < height; j ++ ) {
-//                int i;
-//                for ( i = 0; i < width; i ++ ) {
-//                        struct float_color3* src = u_image_read ( pass->src_target, 0, i, j );
-//                        struct float_color3* dest = u_image_read ( &pass->target, 0, i, j );
-//                        rgb_hdr_radiance ( src, exporsure, dest );
-//                }
-//        }
-//}
-
-static void render_output(struct util_image* src_target, struct util_image* target)
-{
-        unsigned int width  = target->width;
-        unsigned int height = target->height;
-        int j;
-        for (j = 0; j < height; j ++) {
-                int i;
-                for (i = 0; i < width; i ++) {
-                        struct float_color3* src        = u_image_read(src_target, 0, i, j);
-                        uint32_t* dest                  = u_image_read(target, 0, i, j);
-                        *dest = rgb_radiance(src);
-                }
-        }
-}
-
-
-void pt_renderer_system_init(struct symbol_set* symbols)
-{
-        init_shader_library();
-//        shader_var_addr[_AttriVertex] = symlib_ret_variable(symbols, "g_position", nullptr);
-//        shader_var_addr[_AttriNormal] = symlib_ret_variable(symbols, "g_normal", nullptr);
-}
-
 // radiance node
 struct render_node_ex_impl* pt_radiance_node_creator(struct render_node_ex* parent)
 {
@@ -617,9 +117,10 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                                                                                    nullptr, RenderableGeometry);
         rda_context_update(context);
         const int n                                     = rda_context_get_n(context, request_id);
-        geomcache_free(&self->aos_geo);
-        // pre-check what data does the geometry has
-        geomcache_init(&self->aos_geo, UtilAttriVertex | UtilAttriNormal | UtilAttriMatIdList);
+
+        // prepare geometric data into geometry cache
+        struct geomcache gc;
+        geomcache_init(&gc, UtilAttriVertex | UtilAttriNormal | UtilAttriMatIdList);
         int i;
         for (i = 0; i < n; i ++) {
                 struct rda_instance* inst = rda_context_get_i(context, i, request_id);
@@ -630,49 +131,44 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
                 void* vertex    = rda_geometry_get_vertex(geometry, &num_vertex);
                 void* normal    = rda_geometry_get_normal(geometry, &num_vertex);
                 int* matid      = rda_geometry_get_material_id_list(geometry, &num_vertex);
-                geomcache_accumulate(&self->aos_geo, index, num_index, num_vertex, vertex, normal, matid);
+                geomcache_accumulate(&gc, index, num_index, num_vertex, vertex, normal, matid);
         }
 
-        /* update simplex and accessor */
-        free_simplex(self->simplex);
-        u_access_free(self->acc_stt);
+        // prepare material data
+        int n_materials;
+        struct bsdf_model** materials = rda_context_get_materials(context, &n_materials);
 
-        int num_index, num_simplex;
-        int* indices = geomcache_get_indices(&self->aos_geo, &num_index);
-        self->simplex = construct_simplex(self->stream, self->n_streams,
-                                          indices, num_index, &num_simplex);
+        // prepare illuminance data
+        int n_lights;
+        struct light** lights = rda_context_get_lights(context, &n_lights);
+
         /* @fixme (davis#9#): <pt_radiance_node_compute> hard coded acc_type */
-        struct spatial_linear li_stt;
-        u_linear_init(&li_stt, self->simplex, num_simplex);
-        u_access_build(self->acc_stt);
-        self->acc_stt = &li_stt._parent;
+        // create spatial accessor
+        int n_objects;
+        struct box3d* simplexes = geomcache_export_simplexes(&gc, &n_objects);
+        struct spatial_linear li_acc;
+        u_linear_init(&li_acc, simplexes, n_objects);
+        u_access_build(&li_acc._parent);
 
-        /* create target */
+        /* create targets */
         /* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
-        u_image_free(&self->target);
-        u_image_init(&self->target, 1, UtilImgRGBA32, 800, 600);
-        u_image_alloc(&self->target, 0);
+        struct util_image radiance_target;
+        u_image_init(&radiance_target, 1, UtilImgRGBRadiance, 800, 600);
+        u_image_alloc(&radiance_target, 0);
 
-        struct util_image img_rad;
-        u_image_init(&img_rad, 1, UtilImgRGBRadiance, 800, 600);
-        u_image_alloc(&img_rad, 0);
-
-        // render_radiance(self, &img_rad);
+        // render radiance
         struct pathtracer pt;
         pathtracer_init(&pt);
-        pathtracer_render(&pt, &img_rad);
-        pathtracer_free(&pt);
-/* @fixme (davis#2#): <pt_renderer_update> cheated here... should be in our output */
-        render_output(&img_rad, &self->target);
-        u_image_free(&img_rad);
 
-        struct alg_var_set params;
-        alg_var_set_init(&params);
-        alg_var_set_declare(&params, "target", &self->target, sizeof(self->target));
-        debugger_invoke_begin();
-        debugger_invoke(Debug_ptrenderer_c_pt_radiance_node_compute2, &params);
-        debugger_invoke_end();
-        alg_var_set_free(&params);
+        pathtracer_set_bsdfs(&pt, materials, n_materials);
+        pathtracer_set_lights(&pt, lights, n_lights);
+        pathtracer_set_geometries(&pt, &gc, &li_acc._parent);
+
+        pathtracer_render(&pt, &radiance_target);
+        pathtracer_free(&pt);
+
+        u_image_free(&self->target);
+        self->target = radiance_target;
 }
 
 void* pt_radiance_node_get_result(const struct render_node_ex_impl* self)
