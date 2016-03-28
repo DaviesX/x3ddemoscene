@@ -1,6 +1,7 @@
 #include <math/math.h>
 #include <x3d/raytracer.h>
 #include <x3d/bsdf.h>
+#include <x3d/projectionprobe.h>
 #include <x3d/colorspectrum.h>
 #include <x3d/debug.h>
 #include "pathtracerimpl.h"
@@ -40,6 +41,11 @@ void pathtracer_set_bsdfs(struct pathtracer* self, struct bsdf_model** bsdfs, in
 {
         self->bsdfs = bsdfs;
         self->n_bsdfs = n_bsdfs;
+}
+
+void pathtracer_set_projection_probe(struct pathtracer* self, struct projection_probe* probe)
+{
+        self->probe = probe;
 }
 
 struct tracer_data {
@@ -105,14 +111,15 @@ static void __pathtracer_trace_at(struct tracer_data* data, struct ray3d* ray, s
         color3_comps(li->c[i] = li->c[i]/c_NumBranchedSample + le.c[i]/data->n_lights);
 }
 
-static void __pathtracer_integrate_at(struct pathtracer* self, float x, float y, int n, struct float_color3* fn)
+static void __pathtracer_integrate_at(struct pathtracer* self, int i, int j, int n, struct float_color3* fn)
 {
         // simply trace a single ray
         struct ray3d initial;
-        struct point3d p0 = {278.0f*c_Proportion, 273.0f*c_Proportion, -800.0f*c_Proportion};
-        struct vector3d v = {x*0.025f, y*0.025f, 0.035f*2.0f};
-        normalize_vector3d_u(&v);
-        ray3d_build_t3(&initial, &p0, &v, 1.0f, FLOAT_MAX);
+        projprobe_sample_at(self->probe, i, j, &initial);
+//        struct point3d p0 = {278.0f*c_Proportion, 273.0f*c_Proportion, -800.0f*c_Proportion};
+//        struct vector3d v = {x*0.025f, y*0.025f, 0.035f*2.0f};
+//        normalize_vector3d_u(&v);
+//        ray3d_build_t3(&initial, &p0, &v, 1.0f, FLOAT_MAX);
 
         struct raytracer rt;
         raytracer_init(&rt, self->aos, self->acc);
@@ -137,14 +144,11 @@ void pathtracer_render(struct pathtracer* self, struct util_image* target)
         int i, j;
         for (j = 0; j < h; j ++) {
                 for (i = 0; i < w; i ++) {
-                        float x =   2.0f*(float) i/(w - 1) - 1.0f;
-                        float y = -(2.0f*(float) j/(h - 1) - 1.0f);
-
                         struct float_color3 expected;
                         init_color3(0.0f, &expected);
                         int n;
                         for (n = 0; n < self->sample_count; n ++) {
-                                __pathtracer_integrate_at(self, x, y, self->sample_count, &expected);
+                                __pathtracer_integrate_at(self, i, j, self->sample_count, &expected);
                         }
 
                         struct float_color3* px = u_image_read(target, 0, i, j);
@@ -278,18 +282,29 @@ void pathtracer_test(struct alg_var_set* envir)
         struct float_color3 flux = {245.0f*c_PowerScale, 191.0f*c_PowerScale, 129.0f*c_PowerScale};
         lights[0] = &light_point_create("test_light0", &flux, &p, 10.0f*c_Proportion)->_parent;
 
+        const int w = 800, h = 600;
+        struct perspective_probe* probe = persprobe_create(PPMImageOutput, nullptr);
+        struct vector3d up = {0.0f, 1.0f, 0.0f};
+        struct point3d p0 = {278*c_Proportion, 273*c_Proportion, -800*c_Proportion};
+        struct vector3d dir = {0.0, 0.0, 1.0f};
+        projprobe_set_position(&probe->_parent, &p0);
+        projprobe_set_output_format(&probe->_parent, w, h, Color32Mode);
+        persprobe_set_direction(probe, &up, &dir);
+        persprobe_set_range(probe, 1.0f, 1.0f, FLOAT_MAX);
+        persprobe_set_optics(probe, 35, 0.035897436f, 0.0f);
+
         struct pathtracer pt;
         pathtracer_init(&pt);
         pathtracer_set_geometries(&pt, gc, &acc._parent);
         pathtracer_set_bsdfs(&pt, maters, 5);
         pathtracer_set_lights(&pt, lights, 1);
+        pathtracer_set_projection_probe(&pt, &probe->_parent);
 
         // radiance target
-        const int w = 1024, h = 768;
         struct util_image target;
         u_image_init(&target, 1, UtilImgRGBRadiance, w, h);
         u_image_alloc(&target, 0);
-        pathtracer_set_sample_count(&pt, 1280);
+        pathtracer_set_sample_count(&pt, 64);
         pathtracer_render(&pt, &target);
 
         bsdf_model_free(maters[WHITE]);

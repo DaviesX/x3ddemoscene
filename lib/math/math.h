@@ -85,10 +85,10 @@
 #define fcube( _x )			((_x)*(_x)*(_x))
 #define fquad( _x )			((_x)*(_x)*(_x)*(_x))
 
-#define mm_to_unit( _x )		((_x)*1e-2f)
-#define cm_to_unit( _x )		((_x)*1e-1f)
-#define dm_to_unit( _x )		((_x)*1.0f)
-#define m_to_unit( _x )			((_x)*1e+1f)
+#define mm_to_unit( _x )		((_x)*1e-3f)
+#define cm_to_unit( _x )		((_x)*1e-2f)
+#define dm_to_unit( _x )		((_x)*1e-1f)
+#define m_to_unit( _x )			((_x))
 
 #define align2( _x )		((_x) + 2 - 1) & ~(2 - 1))
 #define align4( _x )		((_x) + 4 - 1) & ~(4 - 1))

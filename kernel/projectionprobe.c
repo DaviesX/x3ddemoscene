@@ -3,46 +3,13 @@
 #include <x3d/projectionprobe.h>
 
 
-struct projection_probe {
-        int                     type;
-        int                     w, h;
-        int                     color_mode;
-        int                     output_method;
-        void*                   target_screen;
-        bool                    is_fullscreen;
-        struct point3d          backup_pos;
-        struct vector3d         backup_u, backup_v, backup_n;
-        struct point3d          pos;
-        struct vector3d         u, v, n;
-};
-
-struct perspective_probe {
-        struct projection_probe _parent;
-
-        float                   f_dist, u_dist, v_dist;
-        float                   apert;
-        float                   plate_ratio;
-        float                   nz, fz;
-        float                   tan_hfov;
-
-        struct matrix4x4        t_view;
-        struct matrix4x4        t_proj;
-        struct matrix4x4        inv_t_view;
-        struct matrix4x4        inv_t_proj;
-        struct matrix4x4        t_inv_all;
-};
-
-struct orthogonal_probe {
-        struct projection_probe _parent;
-};
-
-
 static void persprobe_update(struct perspective_probe* self);
 static void persprobe_free(struct perspective_probe* self);
 
 /* probe parent */
 static void projprobe_init(struct projection_probe* self,
-                           enum ProjectionProbeType type, enum OutputMethod method, void* target_screen)
+                           enum ProjectionProbeType type, enum OutputMethod method, void* target_screen,
+                           f_Sample_At f_sample)
 {
         self->type              = type;
         self->output_method     = method;
@@ -55,6 +22,7 @@ static void projprobe_init(struct projection_probe* self,
         set_vector3d(0.0f, 0.0f, 1.0f, &self->u);
         set_vector3d(0.0f, 1.0f, 0.0f, &self->v);
         set_vector3d(1.0f, 0.0f, 0.0f, &self->n);
+        self->f_sample = f_sample;
 }
 
 void projprobe_free(struct projection_probe* self)
@@ -173,11 +141,17 @@ void projprobe_get_base(struct projection_probe* self, struct vector3d* u, struc
         *n = self->n;
 }
 
+void projprobe_sample_at(struct projection_probe* self, int i, int j, struct ray3d* ray)
+{
+        self->f_sample(self, i, j, ray);
+}
+
 /* perspective probe */
 struct perspective_probe* persprobe_create(enum OutputMethod method, void* target_screen)
 {
         struct perspective_probe *self = alloc_obj(self);
-        projprobe_init((struct projection_probe*) self, PerspectiveProbe, method, target_screen);
+        projprobe_init(&self->_parent, PerspectiveProbe, method, target_screen,
+                       (f_Sample_At) persprobe_sample_at);
         return self;
 }
 
@@ -275,10 +249,30 @@ void persprobe_clone(struct perspective_probe* self, struct perspective_probe* p
         *probe = *self;
 }
 
+void persprobe_sample_at(struct perspective_probe* self, int i, int j, struct ray3d* ray)
+{
+        struct point3d p0;
+        projprobe_get_position(&self->_parent, &p0);
+
+        float x = (float) i/(projprobe_get_width(&self->_parent) - 1) - 0.5f;
+        float y = 0.5f - (float) j/(projprobe_get_height(&self->_parent) - 1);
+
+        struct vector3d v = {x, y/self->plate_ratio, self->v_dist};
+        float len = length_vector3d(&v);
+        vector3d_comps(v.v[i] = v.v[i]/len);
+        ray3d_build_t3(ray, &p0, &v, len, FLOAT_MAX);
+}
+
 /* orthogonal probe */
 struct orthogonal_probe* orthoprobe_create(enum OutputMethod method, void* target_screen)
 {
         struct orthogonal_probe* self = alloc_obj(self);
-        projprobe_init((struct projection_probe*) self, OrthogonalProbe, method, target_screen);
+        projprobe_init(&self->_parent, OrthogonalProbe, method, target_screen,
+                       (f_Sample_At) orthoprobe_sample_at);
         return self;
+}
+
+void orthoprobe_sample_at(struct orthogonal_probe* self, int i, int j, struct ray3d* ray)
+{
+        log_critical_err("not implemenetd yet");
 }
