@@ -289,7 +289,7 @@
 		<Unit filename="../include/x3d/display.h" />
 		<Unit filename="../include/x3d/dynamics.h" />
 		<Unit filename="../include/x3d/geomcache.h" />
-		<Unit filename="../include/x3d/hostimage.h" />
+		<Unit filename="../include/x3d/image.h" />
 		<Unit filename="../include/x3d/init.h" />
 		<Unit filename="../include/x3d/light.h" />
 		<Unit filename="../include/x3d/modelentity.h" />
@@ -331,7 +331,7 @@
 		<Unit filename="../kernel/geomcache.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../kernel/hostimage.c">
+		<Unit filename="../kernel/image.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../kernel/init.c">

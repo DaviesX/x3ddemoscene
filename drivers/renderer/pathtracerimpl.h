@@ -6,7 +6,7 @@
 #include <x3d/bsdf.h>
 #include <x3d/light.h>
 #include <x3d/projectionprobe.h>
-#include <x3d/hostimage.h>
+#include <x3d/image.h>
 
 /*
  * <pathtracer> decl

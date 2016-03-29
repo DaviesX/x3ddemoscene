@@ -6,7 +6,7 @@
 #include <x3d/rendernoderadiance.h>
 #include <x3d/rendernoderdaloader.h>
 #include <x3d/rendernodeoutput.h>
-#include <x3d/hostimage.h>
+#include <x3d/image.h>
 #include <x3d/spatialaccess.h>
 #include <x3d/geomcache.h>
 

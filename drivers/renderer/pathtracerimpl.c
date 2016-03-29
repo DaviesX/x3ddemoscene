@@ -1,6 +1,8 @@
 #include <math/math.h>
 #include <x3d/raytracer.h>
 #include <x3d/bsdf.h>
+#include <x3d/image.h>
+#include <x3d/display.h>
 #include <x3d/projectionprobe.h>
 #include <x3d/colorspectrum.h>
 #include <x3d/debug.h>
@@ -283,12 +285,12 @@ void pathtracer_test(struct alg_var_set* envir)
         lights[0] = &light_point_create("test_light0", &flux, &p, 10.0f*c_Proportion)->_parent;
 
         const int w = 800, h = 600;
-        struct perspective_probe* probe = persprobe_create(PPMImageOutput, nullptr);
+        struct display* display = &display_image_file_create(nullptr)->_parent;
+        struct perspective_probe* probe = persprobe_create(display, w, h);
         struct vector3d up = {0.0f, 1.0f, 0.0f};
         struct point3d p0 = {278*c_Proportion, 273*c_Proportion, -800*c_Proportion};
         struct vector3d dir = {0.0, 0.0, 1.0f};
         projprobe_set_position(&probe->_parent, &p0);
-        projprobe_set_output_format(&probe->_parent, w, h, Color32Mode);
         persprobe_set_direction(probe, &up, &dir);
         persprobe_set_range(probe, 1.0f, 1.0f, FLOAT_MAX);
         persprobe_set_optics(probe, 35, 0.035897436f, 0.0f);
@@ -302,7 +304,7 @@ void pathtracer_test(struct alg_var_set* envir)
 
         // radiance target
         struct host_image target;
-        hostimg_init(&target, 1, UtilImgRGBRadiance, w, h);
+        hostimg_init(&target, 1, ColorHDR96Mode, w, h);
         hostimg_alloc(&target, 0);
         pathtracer_set_sample_count(&pt, 64);
         pathtracer_render(&pt, &target);
@@ -321,7 +323,7 @@ void pathtracer_test(struct alg_var_set* envir)
 
         // hdr target
         struct host_image hdr;
-        hostimg_init(&hdr, 1, UtilImgRGBA32, w, h);
+        hostimg_init(&hdr, 1, Color24Mode, w, h);
         hostimg_alloc(&hdr, 0);
         __evaluate_hdr_target(&target, &hdr);
 

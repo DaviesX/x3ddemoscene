@@ -114,7 +114,7 @@ void __implement rt_radiance_node_compute(struct render_node_ex_impl* self,
 {
         struct rt_radiance_node* node = (struct rt_radiance_node*) self;
         hostimg_free(&node->target);
-        hostimg_init(&node->target, 1, UtilImgRGBRadiance, 800, 600);
+        hostimg_init(&node->target, 1, ColorHDR32Mode, 800, 600);
         hostimg_alloc(&node->target, 0);
 }
 

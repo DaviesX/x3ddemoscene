@@ -156,7 +156,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         /* create targets */
         /* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
         struct host_image radiance_target;
-        hostimg_init(&radiance_target, 1, UtilImgRGBRadiance, 800, 600);
+        hostimg_init(&radiance_target, 1, ColorHDR96Mode, 800, 600);
         hostimg_alloc(&radiance_target, 0);
 
         // render radiance
@@ -253,21 +253,21 @@ char* pt_render_output_node_is_compatible(struct render_node_ex_impl* self, stru
         struct pt_render_output_node* node      = cast(node) self;
         struct render_output* parent            = cast(parent) render_node_ex_impl_get_ex(self);
         const char* probe_name                  = render_node_output_get_probe(parent);
-        struct perspective_probe* probe = render_tree_retrieve_environment(tree, probe_name, RenderEnvProbe);
+        struct perspective_probe* probe         = render_tree_retrieve_environment(tree, probe_name, RenderEnvProbe);
         if (!probe) {
                 return "pt_renderer: !probe";
         }
         if (PerspectiveProbe != projprobe_get_type((struct projection_probe*) probe)) {
                 return "pt_renderer: PerspectiveProbe != projprobe_get_type((struct projection_probe*) probe)";
         }
-        switch (projprobe_get_output_method((struct projection_probe*) probe)) {
-        case GtkRenderRegionOutput:
-                break;
-        case GtkOpenGLOutput:
-                break;
-        default:
-                return "pt_renderer: invalid output method";
-        }
+//        switch (projprobe_get_output_method((struct projection_probe*) probe)) {
+//        case GtkRenderRegionOutput:
+//                break;
+//        case GtkOpenGLOutput:
+//                break;
+//        default:
+//                return "pt_renderer: invalid output method";
+//        }
         node->probe = probe;
         return nullptr;
 }
@@ -375,26 +375,28 @@ void pt_render_output_node_compute(struct render_node_ex_impl* self,
         struct pt_render_output_node* node = cast(node) self;
 
         const struct render_node_ex_impl* image_node    = input[render_node_output_get_input_slot()];
-        struct host_image* input_image                  = image_node->ops.f_get_result(image_node);
+        struct host_image* input_image = image_node->ops.f_get_result(image_node);
+        struct display* display = projprobe_get_display(&node->probe->_parent);
+        display_host_image(display, input_image);
 
-        switch (projprobe_get_output_method((struct projection_probe*) node->probe)) {
-        case GtkRenderRegionOutput: {
-                void* image_buffer              = hostimg_read(input_image, 0, 0, 0);
-                GtkWidget* target_widget        = projprobe_get_target_screen((struct projection_probe*) node->probe);
-                int img_width                   = projprobe_get_width((struct projection_probe*) node->probe);
-                int img_height                  = projprobe_get_height((struct projection_probe*) node->probe);
-                enum ColorMode colormode        = projprobe_get_colormode((struct projection_probe*) node->probe);
-                struct gtk_out* goutput         = gtk_out_create(target_widget, 0, 0, img_width, img_height,
-                                                                 colormode, image_buffer);
-                gtk_out_run(goutput);
-                gtk_out_free(goutput);
-                break;
-        }
-        case GtkOpenGLOutput: {
-/* @fixme (davis#9#): <pt_render_out_node_compute> add OpenGL support */
-                break;
-        }
-        }
+//        switch (projprobe_get_output_method((struct projection_probe*) node->probe)) {
+//        case GtkRenderRegionOutput: {
+//                void* image_buffer              = hostimg_read(input_image, 0, 0, 0);
+//                GtkWidget* target_widget        = projprobe_get_target_screen((struct projection_probe*) node->probe);
+//                int img_width                   = projprobe_get_width((struct projection_probe*) node->probe);
+//                int img_height                  = projprobe_get_height((struct projection_probe*) node->probe);
+//                enum ColorMode colormode        = projprobe_get_colormode((struct projection_probe*) node->probe);
+//                struct gtk_out* goutput         = gtk_out_create(target_widget, 0, 0, img_width, img_height,
+//                                                                 colormode, image_buffer);
+//                gtk_out_run(goutput);
+//                gtk_out_free(goutput);
+//                break;
+//        }
+//        case GtkOpenGLOutput: {
+///* @fixme (davis#9#): <pt_render_out_node_compute> add OpenGL support */
+//                break;
+//        }
+//        }
 }
 
 void* pt_render_output_node_get_result(const struct render_node_ex_impl* self)
