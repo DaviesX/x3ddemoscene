@@ -7,65 +7,30 @@ static void persprobe_update(struct perspective_probe* self);
 static void persprobe_free(struct perspective_probe* self);
 
 /* probe parent */
-static void projprobe_init(struct projection_probe* self,
-                           enum ProjectionProbeType type, enum OutputMethod method, void* target_screen,
-                           f_Sample_At f_sample)
+void projprobe_init(struct projection_probe* self, enum ProjectionProbeType type,
+                    struct display* display, int xres, int yres,
+                    f_Projprobe_Sample_At f_sample, f_Projprobe_Free f_free)
 {
         self->type              = type;
-        self->output_method     = method;
-        self->target_screen     = target_screen;
-        self->w                 = 0;
-        self->h                 = 0;
-        self->is_fullscreen     = false;
-        self->color_mode        = Color32Mode;
+        self->w                 = xres;
+        self->h                 = yres;
         set_point3d(0.0f, 0.0f, 0.0f, &self->pos);
         set_vector3d(0.0f, 0.0f, 1.0f, &self->u);
         set_vector3d(0.0f, 1.0f, 0.0f, &self->v);
         set_vector3d(1.0f, 0.0f, 0.0f, &self->n);
+        self->display = display;
         self->f_sample = f_sample;
+        self->f_free = f_free;
 }
 
 void projprobe_free(struct projection_probe* self)
 {
-        switch(self->type) {
-        case PerspectiveProbe:
-                persprobe_free((struct perspective_probe*) self);
-                break;
-        }
-        free_fix(self);
+        self->f_free(self);
 }
 
 enum ProjectionProbeType projprobe_get_type(struct projection_probe* self)
 {
         return self->type;
-}
-
-int projprobe_get_output_method(struct projection_probe* self)
-{
-        return self->output_method;
-}
-
-void* projprobe_get_target_screen(struct projection_probe* self)
-{
-        return self->target_screen;
-}
-
-void projprobe_set_output_method(struct projection_probe* self, enum OutputMethod method, void* target_screen)
-{
-        self->output_method = method;
-        self->target_screen = target_screen;
-}
-
-void projprobe_set_output_format(struct projection_probe* self, int width, int height, enum ColorMode mode)
-{
-        self->w                 = width;
-        self->h                 = height;
-        self->color_mode        = mode;
-}
-
-void projprobe_toggle_fullscreen(struct projection_probe* self, bool on)
-{
-        self->is_fullscreen = on;
 }
 
 int projprobe_get_width(struct projection_probe* self)
@@ -76,16 +41,6 @@ int projprobe_get_width(struct projection_probe* self)
 int projprobe_get_height(struct projection_probe* self)
 {
         return self->h;
-}
-
-enum ColorMode projprobe_get_colormode(struct projection_probe* self)
-{
-        return self->color_mode;
-}
-
-bool projprobe_is_fullscreen(struct projection_probe* self)
-{
-        return self->is_fullscreen;
 }
 
 void projprobe_rotate(struct projection_probe* self, float x, float y, float z)
@@ -146,12 +101,18 @@ void projprobe_sample_at(struct projection_probe* self, int i, int j, struct ray
         self->f_sample(self, i, j, ray);
 }
 
+struct display* projprobe_get_display(struct projection_probe* self)
+{
+        return self->display;
+}
+
 /* perspective probe */
-struct perspective_probe* persprobe_create(enum OutputMethod method, void* target_screen)
+struct perspective_probe* persprobe_create(struct display* display, int xres, int yres)
 {
         struct perspective_probe *self = alloc_obj(self);
-        projprobe_init(&self->_parent, PerspectiveProbe, method, target_screen,
-                       (f_Sample_At) persprobe_sample_at);
+        projprobe_init(&self->_parent, PerspectiveProbe, display, xres, yres,
+                       (f_Projprobe_Sample_At) persprobe_sample_at,
+                       (f_Projprobe_Free) persprobe_free);
         return self;
 }
 
@@ -264,12 +225,17 @@ void persprobe_sample_at(struct perspective_probe* self, int i, int j, struct ra
 }
 
 /* orthogonal probe */
-struct orthogonal_probe* orthoprobe_create(enum OutputMethod method, void* target_screen)
+struct orthogonal_probe* orthoprobe_create(struct display* display, int xres, int yres)
 {
         struct orthogonal_probe* self = alloc_obj(self);
-        projprobe_init(&self->_parent, OrthogonalProbe, method, target_screen,
-                       (f_Sample_At) orthoprobe_sample_at);
+        projprobe_init(&self->_parent, OrthogonalProbe, display, xres, yres,
+                       (f_Projprobe_Sample_At) orthoprobe_sample_at,
+                       (f_Projprobe_Free) orthoprobe_free);
         return self;
+}
+
+void orthoprobe_free(struct orthogonal_probe* self)
+{
 }
 
 void orthoprobe_sample_at(struct orthogonal_probe* self, int i, int j, struct ray3d* ray)
