@@ -1,7 +1,7 @@
 #ifndef DISPLAY_H_INCLUDED
 #define DISPLAY_H_INCLUDED
 
-#include <x3d/hostimage.h>
+#include <x3d/image.h>
 
 struct display;
 
@@ -37,6 +37,20 @@ struct display_gtk_host {
 struct display_gtk_host* display_gtk_host_create(GtkWidget* widget);
 void display_gtk_host_free(struct display_gtk_host* self);
 void display_gtk_host_display_image(struct display_gtk_host* self, struct host_image* image);
+
+/*
+ * <display_image_file> decl
+ */
+struct display_image_file {
+        struct display  _parent;
+        FILE*           file;
+};
+/*
+ * <display_image_file> public
+ */
+struct display_image_file* display_image_file_create(FILE* file);
+void display_image_file_free(struct display_image_file* self);
+void display_image_file_display(struct display_image_file* self, struct host_image* image);
 
 
 #endif // DISPLAY_H_INCLUDED
