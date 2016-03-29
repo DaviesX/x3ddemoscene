@@ -85,7 +85,7 @@ char* __implement rt_radiance_node_is_compatible(struct render_node_ex_impl* sel
 {
         /* It will be compatible if the radiance node is:
          * 1. software based
-         * 2. preferred rasterizer 
+         * 2. preferred rasterizer
          * 3. using solid geometry model
          * 4. with image space rendering pipeline */
         enum RenderSpecType* spec = render_tree_retrieve_environment(tree, nullptr, RenderEnvSpec);
@@ -113,9 +113,9 @@ void __implement rt_radiance_node_compute(struct render_node_ex_impl* self,
                                           const struct render_node_ex_impl* output[])
 {
         struct rt_radiance_node* node = (struct rt_radiance_node*) self;
-        u_image_free(&node->target);
-        u_image_init(&node->target, 1, UtilImgRGBRadiance, 800, 600);
-        u_image_alloc(&node->target, 0);
+        hostimg_free(&node->target);
+        hostimg_init(&node->target, 1, UtilImgRGBRadiance, 800, 600);
+        hostimg_alloc(&node->target, 0);
 }
 
 void* __implement rt_radiance_node_get_result(const struct render_node_ex_impl* self)

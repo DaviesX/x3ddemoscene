@@ -3,7 +3,7 @@
 
 
 #include <x3d/renderer.h>
-#include <x3d/utility.h>
+#include <x3d/hostimage.h>
 
 struct proj_probe;
 struct render_out;
@@ -25,7 +25,7 @@ void rt_renderer_output ( struct rt_renderer* r );
 
 struct rt_radiance_node {
         struct render_node_ex_impl      _parent;
-        struct util_image               target;
+        struct host_image               target;
 };
 
 struct rt_renderable_loader_node {

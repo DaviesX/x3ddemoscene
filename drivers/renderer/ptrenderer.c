@@ -2,6 +2,7 @@
 #include <math/math.h>
 #include <system/symlib.h>
 #include <system/thread.h>
+#include <system/log.h>
 #include <container/paramset.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>
@@ -85,18 +86,18 @@ __dlexport enum DebugPosition* __callback pt_output_to_file_test_pos(struct alg_
 __dlexport void __callback pt_output_to_file_test(struct alg_var_set* envir)
 {
         log_normal("pt output to file test starting");
-        struct util_image* img = alg_var_set_use(envir, "target");
+        struct host_image* img = alg_var_set_use(envir, "target");
         if (img == nullptr) {
                 log_normal("parameter: target not passed, test case %s cannot continue", get_function_name());
         }
         int width, height;
-        u_image_get_level0_dimension(img, &width, &height);
+        hostimg_get_level0_dimension(img, &width, &height);
         FILE* f = fopen("pt_output_to_file_test.ppm", "w");
         fprintf(f, "P3\n%d %d\n%d\n", width, height, 255);
         int i, j;
         for (j = 0; j < height; j ++) {
                 for (i = 0; i < width; i ++) {
-                        unsigned char* px = u_image_read(img, 0, i, j);
+                        unsigned char* px = hostimg_read(img, 0, i, j);
                         fprintf(f, "%d %d %d ", px[2], px[1], px[0]);
                 }
         }
@@ -154,9 +155,9 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
 
         /* create targets */
         /* @fixme (davis#2#): <pt_renderer_update> use projective probe to determine the render target of a radiance pass */
-        struct util_image radiance_target;
-        u_image_init(&radiance_target, 1, UtilImgRGBRadiance, 800, 600);
-        u_image_alloc(&radiance_target, 0);
+        struct host_image radiance_target;
+        hostimg_init(&radiance_target, 1, UtilImgRGBRadiance, 800, 600);
+        hostimg_alloc(&radiance_target, 0);
 
         // render radiance
         struct pathtracer pt;
@@ -169,7 +170,7 @@ void pt_radiance_node_compute(struct render_node_ex_impl* self_parent,
         pathtracer_render(&pt, &radiance_target);
         pathtracer_free(&pt);
 
-        u_image_free(&self->target);
+        hostimg_free(&self->target);
         self->target = radiance_target;
 }
 
@@ -374,11 +375,11 @@ void pt_render_output_node_compute(struct render_node_ex_impl* self,
         struct pt_render_output_node* node = cast(node) self;
 
         const struct render_node_ex_impl* image_node    = input[render_node_output_get_input_slot()];
-        struct util_image* input_image                  = image_node->ops.f_get_result(image_node);
+        struct host_image* input_image                  = image_node->ops.f_get_result(image_node);
 
         switch (projprobe_get_output_method((struct projection_probe*) node->probe)) {
         case GtkRenderRegionOutput: {
-                void* image_buffer              = u_image_read(input_image, 0, 0, 0);
+                void* image_buffer              = hostimg_read(input_image, 0, 0, 0);
                 GtkWidget* target_widget        = projprobe_get_target_screen((struct projection_probe*) node->probe);
                 int img_width                   = projprobe_get_width((struct projection_probe*) node->probe);
                 int img_height                  = projprobe_get_height((struct projection_probe*) node->probe);

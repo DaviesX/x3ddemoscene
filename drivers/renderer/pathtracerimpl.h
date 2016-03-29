@@ -6,7 +6,7 @@
 #include <x3d/bsdf.h>
 #include <x3d/light.h>
 #include <x3d/projectionprobe.h>
-#include <x3d/utility.h>
+#include <x3d/hostimage.h>
 
 /*
  * <pathtracer> decl
@@ -32,7 +32,7 @@ void pathtracer_set_lights(struct pathtracer* self, struct light** lights, int n
 void pathtracer_set_geometries(struct pathtracer* self, struct geomcache* aos, struct spatial_access* acc);
 void pathtracer_set_bsdfs(struct pathtracer* self, struct bsdf_model** bsdfs, int n_bsdfs);
 void pathtracer_set_projection_probe(struct pathtracer* self, struct projection_probe* probe);
-void pathtracer_render(struct pathtracer* self, struct util_image* target);
+void pathtracer_render(struct pathtracer* self, struct host_image* target);
 
 
 #endif // PATHTRACERIMPL_H_INCLUDED

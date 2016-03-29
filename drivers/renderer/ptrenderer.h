@@ -6,7 +6,7 @@
 #include <x3d/rendernoderadiance.h>
 #include <x3d/rendernoderdaloader.h>
 #include <x3d/rendernodeoutput.h>
-#include <x3d/utility.h>
+#include <x3d/hostimage.h>
 #include <x3d/spatialaccess.h>
 #include <x3d/geomcache.h>
 
@@ -15,7 +15,7 @@
  */
 struct pt_radiance_node {
         struct render_node_ex_impl      _parent;
-        struct util_image               target;
+        struct host_image               target;
 };
 
 struct pt_renderable_loader_node {

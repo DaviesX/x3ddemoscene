@@ -136,10 +136,10 @@ static void __pathtracer_integrate_at(struct pathtracer* self, int i, int j, int
         raytracer_free(&rt);
 }
 
-void pathtracer_render(struct pathtracer* self, struct util_image* target)
+void pathtracer_render(struct pathtracer* self, struct host_image* target)
 {
         int w, h;
-        u_image_get_level0_dimension(target, &w, &h);
+        hostimg_get_level0_dimension(target, &w, &h);
         if (w < 2 || h < 2) return;
         int i, j;
         for (j = 0; j < h; j ++) {
@@ -151,7 +151,7 @@ void pathtracer_render(struct pathtracer* self, struct util_image* target)
                                 __pathtracer_integrate_at(self, i, j, self->sample_count, &expected);
                         }
 
-                        struct float_color3* px = u_image_read(target, 0, i, j);
+                        struct float_color3* px = hostimg_read(target, 0, i, j);
                         *px = expected;
                 }
         }
@@ -212,14 +212,14 @@ static void __hdr_rgb_radiance(struct float_color3* x, float avg_illum, struct f
         *reexp = r;
 }
 
-static double __compute_geometric_average_illuminance(struct util_image* radiances)
+static double __compute_geometric_average_illuminance(struct host_image* radiances)
 {
         int j, i, w, h;
-        u_image_get_level0_dimension(radiances, &w, &h);
+        hostimg_get_level0_dimension(radiances, &w, &h);
         double log_sum = 0.0;
         for (j = 0; j < h; j ++) {
                 for (i = 0; i < w; i ++) {
-                        struct float_color3* px = u_image_read(radiances, 0, i, j);
+                        struct float_color3* px = hostimg_read(radiances, 0, i, j);
                         double log_illum = __log_illuminance(px);
                         log_sum += log_illum;
                 }
@@ -227,16 +227,16 @@ static double __compute_geometric_average_illuminance(struct util_image* radianc
         return exp(1.0f/(w*h)*log_sum);
 }
 
-static void __evaluate_hdr_target(struct util_image* radiances, struct util_image* hdr)
+static void __evaluate_hdr_target(struct host_image* radiances, struct host_image* hdr)
 {
         double exposure = __compute_geometric_average_illuminance(radiances);
 
         int j, i, w, h;
-        u_image_get_level0_dimension(radiances, &w, &h);
+        hostimg_get_level0_dimension(radiances, &w, &h);
         for (j = 0; j < h; j ++) {
                 for (i = 0; i < w; i ++) {
-                        struct float_color3* px = u_image_read(radiances, 0, i, j);
-                        uint32_t *hdrpx = u_image_read(hdr, 0, i, j);
+                        struct float_color3* px = hostimg_read(radiances, 0, i, j);
+                        uint32_t *hdrpx = hostimg_read(hdr, 0, i, j);
 
                         struct float_color3 rgb;
                         __hdr_rgb_radiance(px, exposure, &rgb);
@@ -301,9 +301,9 @@ void pathtracer_test(struct alg_var_set* envir)
         pathtracer_set_projection_probe(&pt, &probe->_parent);
 
         // radiance target
-        struct util_image target;
-        u_image_init(&target, 1, UtilImgRGBRadiance, w, h);
-        u_image_alloc(&target, 0);
+        struct host_image target;
+        hostimg_init(&target, 1, UtilImgRGBRadiance, w, h);
+        hostimg_alloc(&target, 0);
         pathtracer_set_sample_count(&pt, 64);
         pathtracer_render(&pt, &target);
 
@@ -320,14 +320,14 @@ void pathtracer_test(struct alg_var_set* envir)
         free_fix(lights[0]);
 
         // hdr target
-        struct util_image hdr;
-        u_image_init(&hdr, 1, UtilImgRGBA32, w, h);
-        u_image_alloc(&hdr, 0);
+        struct host_image hdr;
+        hostimg_init(&hdr, 1, UtilImgRGBA32, w, h);
+        hostimg_alloc(&hdr, 0);
         __evaluate_hdr_target(&target, &hdr);
 
         // output image
-        u_image_export_to_file(&hdr, fopen("pathtracer-test-result.ppm", "w"));
-        u_image_free(&target);
+        hostimg_export_to_file(&hdr, fopen("pathtracer-test-result.ppm", "w"));
+        hostimg_free(&target);
 
         geomcache_free(gc);
         free_fix(gc);

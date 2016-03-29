@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <system/allocator.h>
 #include <x3d/display.h>
 
 
@@ -16,7 +17,7 @@ void display_free(struct display* self)
         self->f_free(self);
 }
 
-void display_host_image(struct display* self, struct util_image* image)
+void display_host_image(struct display* self, struct host_image* image)
 {
         self->f_display_host(self, image);
 }
@@ -35,6 +36,6 @@ void display_gtk_host_free(struct display_gtk_host* self)
 {
 }
 
-void display_gtk_host_display_image(struct display_gtk_host* self, struct util_image* image)
+void display_gtk_host_display_image(struct display_gtk_host* self, struct host_image* image)
 {
 }
