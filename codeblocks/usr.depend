@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/cornellbox/cornellbox.c
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/cornellbox/cornellbox.c
 	<stdlib.h>
 	<system/allocator.h>
 	"cornellbox.h"
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/allocator.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/allocator.h
 	<x3d/common.h>
 	<misc.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/common.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/common.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -31,25 +31,25 @@
 	<sys/types.h>
 	<sys/wait.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/misc.h
+1459319777 /home/davis/x3ddemoscene-code/lib/misc.h
 	<stdint.h>
 	<stdbool.h>
 	<stdlib.h>
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/cornellbox/cornellbox.h
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/cornellbox/cornellbox.h
 	<x3d/common.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editassetlist.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editassetlist.cpp
 	<usr/usr_editor.hpp>
 
-1459317351 /home/davis/x3ddemoscene-code/include/usr/usr_editor.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_editor.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_renderer.hpp>
 	<usr/usr_projectionprobe.hpp>
 	<usr/usr_world.hpp>
 
-1459313210 /home/davis/x3ddemoscene-code/include/usr/usr_x3d.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_x3d.hpp
 	<string>
 	<algorithm>
 	<set>
@@ -76,18 +76,18 @@
 	<x3d/rendernoderdaloader.h>
 	<x3d/renderenvconsts.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/log.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/log.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/thread.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/thread.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/panic.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/panic.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/codecs/serializer.h
+1459319777 /home/davis/x3ddemoscene-code/lib/codecs/serializer.h
 	<misc.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/math.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/math.h
 	"vector.h"
 	"matrix.h"
 	"quat.h"
@@ -95,141 +95,141 @@
 	"decimal.h"
 	"fx.h"
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/vector.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/vector.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/matrix.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/matrix.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/quat.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/quat.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/geometry.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/geometry.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/decimal.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/decimal.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/fx.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/fx.h
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/init.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/init.h
 	<misc.h>
 
-1459294474 /home/davis/x3ddemoscene-code/include/x3d/projectionprobe.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/projectionprobe.h
 	<math/math.h>
 	<x3d/display.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderer.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderer.h
 	<misc.h>
 	<x3d/common.h>
 	<x3d/rendertree.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendertree.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendertree.h
 	<x3d/renderable.h>
 	<x3d/renderenvconsts.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderable.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderable.h
 	<misc.h>
 	<x3d/common.h>
 	<math/math.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderenvconsts.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderenvconsts.h
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderableaggregate.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderableaggregate.h
 	<container/linkedlist.h>
 	<container/set.h>
 	<x3d/renderable.h>
 	<x3d/light.h>
 	<x3d/bsdf.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/linkedlist.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/linkedlist.h
 	<container/container.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/container.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/container.h
 	<x3d/common.h>
 	<system/allocator.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernodeoutput.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernodeoutput.h
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernodelayer.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernodelayer.h
 	<x3d/renderer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernodehdr.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernodehdr.h
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernoderadiance.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernoderadiance.h
 	<x3d/renderer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernoderdaloader.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernoderdaloader.h
 	<x3d/renderer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/usr/usr_kernel.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_kernel.hpp
 	<usr/usr_x3d.hpp>
 
-1459230055 /home/davis/x3ddemoscene-code/include/usr/usr_renderer.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_renderer.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_renderaggregate.hpp>
 
-1459230055 /home/davis/x3ddemoscene-code/include/usr/usr_renderaggregate.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_renderaggregate.hpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_renderable.hpp>
 
-1459230055 /home/davis/x3ddemoscene-code/include/usr/usr_renderable.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_renderable.hpp
 	<usr/usr_x3d.hpp>
 
-1459317892 /home/davis/x3ddemoscene-code/include/usr/usr_projectionprobe.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_projectionprobe.hpp
 	<usr/usr_x3d.hpp>
 
-1459230055 /home/davis/x3ddemoscene-code/include/usr/usr_world.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_world.hpp
 	<usr/usr_renderaggregate.hpp>
 	<usr/usr_resourceloader.hpp>
 	<usr/usr_renderer.hpp>
 
-1459230055 /home/davis/x3ddemoscene-code/include/usr/usr_resourceloader.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_resourceloader.hpp
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editbenchmark.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editbenchmark.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_kernel.hpp>
 	<usr/usr_renderable.hpp>
 	"./cornellbox/cornellbox.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editentityproperty.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editentityproperty.cpp
 	<usr/usr_editor.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editor.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editor.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 
-1459230055 /home/davis/x3ddemoscene-code/include/usr/usr_editorfrontend.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_editorfrontend.hpp
 	<usr/usr_editor.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editpowersaveswitch.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editpowersaveswitch.cpp
 	<usr/usr_editor.hpp>
 	<system/thread.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editprojectmgr.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editprojectmgr.cpp
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editrenderconf.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editrenderconf.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_renderaggregate.hpp>
 	<usr/usr_renderer.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editrenderframe.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editrenderframe.cpp
 	<usr/usr_editor.hpp>
 
-1459317420 source:/home/davis/x3ddemoscene-code/usr/editor/editrenderregion.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editrenderregion.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_display.hpp>
 	<usr/usr_renderer.hpp>
 	<usr/usr_projectionprobe.hpp>
 	<usr/usr_editor.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/editworlddata.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/editworlddata.cpp
 	<usr/usr_editor.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/dynamics_editor.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/dynamics_editor.cpp
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/entity_editor.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/entity_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editorfrontend.hpp>
@@ -2969,7 +2969,7 @@
 
 1457961299 /usr/include/gtk-3.0/gtk/gtk-autocleanups.h
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/gtkgui.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/gtkgui.hpp
 	<gtk/gtk.h>
 	<usr/usr_editorfrontend.hpp>
 	"splash_screen.hpp"
@@ -2981,24 +2981,24 @@
 	"renderable_editor.hpp"
 	"dynamics_editor.hpp"
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/splash_screen.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/splash_screen.hpp
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor.hpp
 	<usr/usr_editorfrontend.hpp>
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor_menu.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor_menu.hpp
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/project_manager.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/project_manager.hpp
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/entity_editor.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/entity_editor.hpp
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderer_configurator.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderer_configurator.hpp
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderable_editor.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderable_editor.hpp
 
-1459230055 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/dynamics_editor.hpp
+1459319777 /home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/dynamics_editor.hpp
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/gtkgui.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/gtkgui.cpp
 	<string>
 	<gtk/gtk.h>
 	<gdk/gdk.h>
@@ -3009,7 +3009,7 @@
 	<gtk-3.0/gdk/gdkthreads.h>
 	"gtkgui.hpp"
 
-1459317521 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
@@ -3017,24 +3017,24 @@
 	"gtkgui.hpp"
 	<system/thread.h>
 
-1459317794 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor_menu.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/main_editor_menu.cpp
 	<usr/usr_editorfrontend.hpp>
 	<gtk/gtk.h>
 	<gtk-3.0/gtk/gtkdialog.h>
 	"gtkgui.hpp"
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/project_manager.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/project_manager.cpp
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderable_editor.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderable_editor.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
 	<usr/usr_editorfrontend.hpp>
 	"gtkgui.hpp"
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderer_configurator.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/renderer_configurator.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
@@ -3043,7 +3043,7 @@
 	"renderer_configurator.hpp"
 	"main_editor.hpp"
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/splash_screen.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/editor/gtkfrontend/splash_screen.cpp
 	<gtk/gtk.h>
 	<usr/usr_x3d.hpp>
 	<usr/usr_editor.hpp>
@@ -3051,59 +3051,59 @@
 	"gtkgui.hpp"
 	<gtk/gtk.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_cinematicprogs.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_cinematicprogs.cpp
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_entityprogs.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_entityprogs.cpp
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_kernel.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_kernel.cpp
 	<usr/usr_kernel.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_missionprogs.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_missionprogs.cpp
 
-1459317929 source:/home/davis/x3ddemoscene-code/usr/usr_projectionprobe.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_projectionprobe.cpp
 	<usr/usr_display.hpp>
 	<usr/usr_projectionprobe.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_renderable.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_renderable.cpp
 	<usr/usr_x3d.hpp>
 	<usr/usr_renderable.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_renderaggregate.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_renderaggregate.cpp
 	<usr/usr_renderable.hpp>
 	<usr/usr_renderaggregate.hpp>
 	<usr/usr_x3d.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_renderer.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_renderer.cpp
 	<usr/usr_renderer.hpp>
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_resourceloader.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_resourceloader.cpp
 
-1459230055 source:/home/davis/x3ddemoscene-code/usr/usr_world.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_world.cpp
 	<usr/usr_world.hpp>
 
-1459317732 /home/davis/x3ddemoscene-code/include/x3d/display.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/display.h
 	<x3d/image.h>
 
-1459292581 /home/davis/x3ddemoscene-code/include/x3d/image.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/image.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/set.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/set.h
 	<math/math.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/light.h
-	<math/math.h>
-	<x3d/colorspectrum.h>
-
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/colorspectrum.h
-	<math/math.h>
-
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/bsdf.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/light.h
 	<math/math.h>
 	<x3d/colorspectrum.h>
 
-1459317853 /home/davis/x3ddemoscene-code/include/usr/usr_display.hpp
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/colorspectrum.h
+	<math/math.h>
+
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/bsdf.h
+	<math/math.h>
+	<x3d/colorspectrum.h>
+
+1459319777 /home/davis/x3ddemoscene-code/include/usr/usr_display.hpp
 	<usr/usr_x3d.hpp>
 
-1459317874 source:/home/davis/x3ddemoscene-code/usr/usr_display.cpp
+1459319777 source:/home/davis/x3ddemoscene-code/usr/usr_display.cpp
 	<usr/usr_display.hpp>
 

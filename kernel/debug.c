@@ -124,11 +124,11 @@ bool debugger_invoke_internal(enum DebugPosition pos, struct alg_var_set* params
         for (i = 0; i < alg_n(list, &dbg->test_case[pos]); i ++) {
                 struct unit_test* ut = &tests[i];
                 if (ut->counted == 0) {
-                        ut->ut_init(params);
+                        ut->ut_init(&dbg->dbg_env);
                 }
                 if (ut->counted ++ < ut->num_run) {
                         ut->begin_time = clock();
-                        ut->ut_run(params);
+                        ut->ut_run(&dbg->dbg_env);
                         ut->end_time = clock();
                         float time_used = (float) (ut->end_time - ut->begin_time)/CLOCKS_PER_SEC;
                         ut->avg_time += time_used;
@@ -137,7 +137,7 @@ bool debugger_invoke_internal(enum DebugPosition pos, struct alg_var_set* params
                         }
                 }
                 if (ut->counted == ut->num_run) {
-                        ut->ut_free(params);
+                        ut->ut_free(&dbg->dbg_env);
                         ut->avg_time /= ut->num_run;
                         log_normal("%s#avg ====>%fsec", ut->test_name, ut->avg_time);
                 }

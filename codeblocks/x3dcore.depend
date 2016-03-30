@@ -1,23 +1,23 @@
 # depslib dependency file v1.0
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/fbxmodel.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/fbxmodel.c
 	<container/staging.h>
 	<system/log.h>
 	"fbxmodel.h"
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/staging.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/staging.h
 	<container/hashmap.h>
 	<container/arraylist.h>
 	<system/allocator.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/hashmap.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/hashmap.h
 	<container/container.h>
 	<math/math.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/container.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/container.h
 	<x3d/common.h>
 	<system/allocator.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/common.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/common.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -40,16 +40,16 @@
 	<sys/types.h>
 	<sys/wait.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/allocator.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/allocator.h
 	<x3d/common.h>
 	<misc.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/misc.h
+1459319777 /home/davis/x3ddemoscene-code/lib/misc.h
 	<stdint.h>
 	<stdbool.h>
 	<stdlib.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/math.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/math.h
 	"vector.h"
 	"matrix.h"
 	"quat.h"
@@ -57,42 +57,42 @@
 	"decimal.h"
 	"fx.h"
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/vector.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/vector.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/matrix.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/matrix.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/quat.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/quat.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/geometry.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/geometry.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/decimal.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/decimal.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/fx.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/fx.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/arraylist.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/arraylist.h
 	<container/container.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/log.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/log.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/loader/fbxmodel.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/loader/fbxmodel.h
 	<x3d/resloader.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/resloader.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/resloader.h
 	<container/staging.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/imageloader.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/imageloader.c
 	"imageloader.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/loader/imageloader.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/loader/imageloader.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/main.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/main.c
 	"main.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/loader/main.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/loader/main.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/modelloader.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/modelloader.c
 	<container/staging.h>
 	<misc.h>
 	<system/log.h>
@@ -103,18 +103,18 @@
 	"pbrtmodel.h"
 	"fbxmodel.h"
 
-1459230055 /home/davis/x3ddemoscene-code/include/loader/modelloader.h
+1459319777 /home/davis/x3ddemoscene-code/include/loader/modelloader.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/loader/modelloader.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/loader/modelloader.h
 	<container/staging.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/loader/objmodel.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/loader/objmodel.h
 	<x3d/resloader.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/loader/pbrtmodel.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/loader/pbrtmodel.h
 	<x3d/resloader.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/objmodel.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/objmodel.c
 	<misc.h>
 	<math/math.h>
 	<container/staging.h>
@@ -123,26 +123,26 @@
 	"modelloader.h"
 	"objmodel.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/pbrtmodel.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/pbrtmodel.c
 	<container/staging.h>
 	<system/log.h>
 	"pbrtmodel.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/rendererconf.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/rendererconf.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/loader/x3dscene.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/loader/x3dscene.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreams.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreams.c
 	"arrayofstreams.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreams.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreams.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreamsogl.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreamsogl.c
 	"arrayofstreamsogl.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreamsogl.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreamsogl.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreamsram.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/arrayofstreamsram.c
 
 1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/colorspectrum.c
 	<math.h>
@@ -152,15 +152,15 @@
 1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/colorspectrum.h
 	<math/math.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/compositepipeline.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/compositepipeline.c
 	"compositepipeline.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/compositepipeline.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/compositepipeline.h
 	"fbo.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/fbo.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/fbo.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/fbo.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/fbo.c
 	<x3d/common.h>
 	"fbo.h"
 
@@ -174,13 +174,13 @@
 	"shape_common.h"
 	"bvh.h"
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/stack.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/stack.h
 	<system/allocator.h>
 
 1455996146 /home/davis/x3ddemoscene-code/lib/container/quicksort.h
 	<container/container.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/renderer/geometry.h
+1459319777 /home/davis/x3ddemoscene-code/include/renderer/geometry.h
 	<renderer/shader.h>
 	<math/math.h>
 	"cylinder_shape.h"
@@ -189,7 +189,7 @@
 	"paraboloid_shape.h"
 	"sphere_shape.h"
 
-1459230055 /home/davis/x3ddemoscene-code/include/renderer/shader.h
+1459319777 /home/davis/x3ddemoscene-code/include/renderer/shader.h
 	<x3d/common.h>
 
 1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/geometry/shape_common.h
@@ -213,28 +213,28 @@
 	<renderer/geocache.h>
 	"shape_common.h"
 
-1459230055 /home/davis/x3ddemoscene-code/include/renderer/geocache.h
+1459319777 /home/davis/x3ddemoscene-code/include/renderer/geocache.h
 	<misc.h>
 	<container/arraylist.h>
 	<x3d/common.h>
 	<x3d/renderer.h>
 	<renderer/geometry.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderer.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderer.h
 	<misc.h>
 	<x3d/common.h>
 	<x3d/rendertree.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendertree.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendertree.h
 	<x3d/renderable.h>
 	<x3d/renderenvconsts.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderable.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderable.h
 	<misc.h>
 	<x3d/common.h>
 	<math/math.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderenvconsts.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderenvconsts.h
 
 1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/geometry/geometry.c
 	<misc.h>
@@ -291,7 +291,7 @@
 
 1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/geometry/trimesh_subdivide.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/main.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/main.c
 	<x3d/common.h>
 	<container/paramset.h>
 	<system/log.h>
@@ -308,40 +308,40 @@
 	<renderer/shader.h>
 	<renderer/out.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/paramset.h
+1459368667 /home/davis/x3ddemoscene-code/lib/container/paramset.h
 	<container/container.h>
 	<container/linkedlist.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/linkedlist.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/linkedlist.h
 	<container/container.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/debug.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/debug.h
 	<x3d/common.h>
 	<system/symlib.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/symlib.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/symlib.h
 	<container/arraylist.h>
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/main.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/main.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/dbg_vertex_processor.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/dbg_vertex_processor.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/rasterization.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/rasterization.h
 	<math/math.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/vibuffer.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/vibuffer.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/surface.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/surface.h
 	<misc.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/renderer/out.h
+1459319777 /home/davis/x3ddemoscene-code/include/renderer/out.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/binary_out.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/binary_out.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/image_out.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/image_out.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/out.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/out.c
 	<x3d/common.h>
 	<renderer/out.h>
 	"screen_out.h"
@@ -349,15 +349,15 @@
 	"stream_out.h"
 	"binary_out.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/out/screen_out.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/out/screen_out.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/out/image_out.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/out/image_out.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/out/stream_out.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/out/stream_out.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/out/binary_out.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/out/binary_out.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/screen_out.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/screen_out.c
 	<system/log.h>
 	<math/math.h>
 	<renderer/out.h>
@@ -3099,30 +3099,30 @@
 
 1457961299 /usr/include/gtk-3.0/gtk/gtk-autocleanups.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/stream_out.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/out/stream_out.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/pmrenderer.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/pmrenderer.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/fisheye.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/fisheye.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/obj_probe.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/obj_probe.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/orthogonal.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/orthogonal.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/perspective.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/perspective.c
 	<container/paramset.h>
 	<renderer/proj_probe.h>
 	<math/math.h>
 	<system/allocator.h>
 	"perspective.h"
 
-1459230055 /home/davis/x3ddemoscene-code/include/renderer/proj_probe.h
+1459319777 /home/davis/x3ddemoscene-code/include/renderer/proj_probe.h
 	<math/math.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/probe/perspective.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/probe/perspective.h
 	<math/math.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/proj_probe.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/proj_probe.c
 	<misc.h>
 	<math/math.h>
 	<renderer/proj_probe.h>
@@ -3131,17 +3131,17 @@
 	"fisheye.h"
 	"spherical.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/probe/orthogonal.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/probe/orthogonal.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/probe/fisheye.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/probe/fisheye.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/probe/spherical.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/probe/spherical.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/spatial_probe.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/spatial_probe.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/spherical.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/probe/spherical.c
 
-1459292969 source:/home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.c
 	<math/math.h>
 	<system/symlib.h>
 	<system/thread.h>
@@ -3163,24 +3163,24 @@
 	<x3d/colorspectrum.h>
 	<gtk/gtk.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/thread.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/thread.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderableaggregaterequest.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderableaggregaterequest.h
 	<x3d/renderableaggregate.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/renderableaggregate.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/renderableaggregate.h
 	<container/linkedlist.h>
 	<container/set.h>
 	<x3d/renderable.h>
 	<x3d/light.h>
 	<x3d/bsdf.h>
 
-1459294474 /home/davis/x3ddemoscene-code/include/x3d/projectionprobe.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/projectionprobe.h
 	<math/math.h>
 	<x3d/display.h>
 
-1459292643 /home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/ptrenderer.h
 	<x3d/renderer.h>
 	<x3d/rendernoderadiance.h>
 	<x3d/rendernoderdaloader.h>
@@ -3189,13 +3189,13 @@
 	<x3d/spatialaccess.h>
 	<x3d/geomcache.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernoderadiance.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernoderadiance.h
 	<x3d/renderer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernoderdaloader.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernoderdaloader.h
 	<x3d/renderer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernodeoutput.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernodeoutput.h
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
 
@@ -3209,18 +3209,18 @@
 	"shadergenerator.h"
 	"rendertarget.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shadergenerator.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shadergenerator.h
 	<stdbool.h>
 	<x3d/renderenvconsts.h>
 
 1455996146 /home/davis/x3ddemoscene-code/drivers/renderer/rendertarget.h
 	<x3d/renderenvconsts.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/trianglebuffer.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/trianglebuffer.h
 	<container/arraylist.h>
 	<math/math.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/vbo.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/vbo.h
 
 1458403424 /home/davis/x3ddemoscene-code/drivers/renderer/shader/ptshader.c
 	"ptshader.h"
@@ -3229,23 +3229,23 @@
 	<x3d/common.h>
 	<math/math.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterization.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterization.c
 	<system/log.h>
 	<system/allocator.h>
 	"rasterization.h"
 	"vertexprocessor.h"
 	"rasterizer.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/vertexprocessor.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/vertexprocessor.h
 	<x3d/common.h>
 	<math/math.h>
 	"rasterization.h"
 	"vibuffer.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/rasterizer.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/rasterizer.h
 	"rasterization.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterizer.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterizer.c
 	<x3d/common.h>
 	<math/math.h>
 	<renderer/shader.h>
@@ -3256,17 +3256,17 @@
 	"vertattri_lerp.h"
 	"surface.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/vertattri_lerp.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/vertattri_lerp.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterpass.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterpass.c
 	"rasterpass.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/rasterpass.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/rasterpass.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterpipeline.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rasterpipeline.c
 	"rasterpipeline.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/rasterpipeline.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/rasterpipeline.h
 	<x3d/renderable.h>
 	"fbo.h"
 
@@ -3284,7 +3284,7 @@
 1455996146 source:/home/davis/x3ddemoscene-code/drivers/renderer/raytracepipelinex64.c
 	"raytracepipelinex64.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendererinsmod.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendererinsmod.c
 	<x3d/common.h>
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
@@ -3292,20 +3292,20 @@
 	"ptrenderer.h"
 	"rtrenderer.h"
 
-1459230055 /home/davis/x3ddemoscene-code/include/renderer/rendererinsmod.h
+1459319777 /home/davis/x3ddemoscene-code/include/renderer/rendererinsmod.h
 	<x3d/renderer.h>
 
-1459292974 /home/davis/x3ddemoscene-code/drivers/renderer/rtrenderer.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/rtrenderer.h
 	<x3d/renderer.h>
 	<x3d/image.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendertarget.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendertarget.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendertargetogl.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendertargetogl.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendertargetram.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rendertargetram.c
 
-1459293018 source:/home/davis/x3ddemoscene-code/drivers/renderer/rtrenderer.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/rtrenderer.c
 	<system/allocator.h>
 	<x3d/renderer.h>
 	<x3d/renderenvconsts.h>
@@ -3315,35 +3315,35 @@
 	<renderer/out.h>
 	"rtrenderer.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader.c
 	<renderer/shader.h>
 	<renderer/shader_lib.h>
 	"rtshader.h"
 	"basic_rt_shader_a.h"
 	"basic_rt_shader_so.h"
 
-1459230055 /home/davis/x3ddemoscene-code/include/renderer/shader_lib.h
+1459319777 /home/davis/x3ddemoscene-code/include/renderer/shader_lib.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shader/rtshader.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shader/rtshader.h
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader_a.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader_a.h
 	<math/math.h>
 	<x3d/colorspectrum.h>
 	"../surface.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader_so.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shader/basic_rt_shader_so.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shader/main.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shader/main.c
 	"main.h"
 	<renderer/shader.h>
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shader/main.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shader/main.h
 
 1458403424 source:/home/davis/x3ddemoscene-code/drivers/renderer/shader/ptshader.c
 	"ptshader.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shader/shader.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shader/shader.c
 	<math/math.h>
 	<system/log.h>
 	<system/allocator.h>
@@ -3351,7 +3351,7 @@
 	<renderer/shader_lib.h>
 	"rtshader.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shaderformulate.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shaderformulate.c
 	<misc.h>
 	<container/stack.h>
 	<math/math.h>
@@ -3361,11 +3361,11 @@
 	<x3d/common.h>
 	"shaderformulate.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shaderformulate.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shaderformulate.h
 	<container/hashmap.h>
 	<x3d/common.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergenerator.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergenerator.c
 	<stdarg.h>
 	<system/allocator.h>
 	<system/log.h>
@@ -3374,45 +3374,45 @@
 	"shadergeneratorx64.h"
 	"shadergeneratorogl.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorstatic.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorstatic.h
 	"shadergenerator.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorx64.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorx64.h
 	"shadergenerator.h"
 
-1459230055 /home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorogl.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorogl.h
 	"shadergenerator.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorogl.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorogl.c
 	"shadergenerator.h"
 	"shadergeneratorogl.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorstatic.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorstatic.c
 	<stdbool.h>
 	"shadergenerator.h"
 	"shadergeneratorstatic.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorx64.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/shadergeneratorx64.c
 	"shadergenerator.h"
 	"shadergeneratorx64.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/surface.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/surface.c
 	<system/allocator.h>
 	"surface.h"
 	<x3d/colorspectrum.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/trianglebuffer.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/trianglebuffer.c
 	<system/allocator.h>
 	<system/log.h>
 	"trianglebuffer.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/vbo.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/vbo.c
 	<system/log.h>
 	<x3d/common.h>
 	<system/allocator.h>
 	"vbo.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/drivers/renderer/vertexprocessor.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/vertexprocessor.c
 	<system/log.h>
 	<system/allocator.h>
 	<renderer/shader.h>
@@ -3422,7 +3422,7 @@
 	"vertattri_lerp.h"
 	"dbg_vertex_processor.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/debug.c
+1459368812 source:/home/davis/x3ddemoscene-code/kernel/debug.c
 	<misc.h>
 	<container/paramset.h>
 	<system/allocator.h>
@@ -3430,12 +3430,12 @@
 	<system/log.h>
 	<x3d/debug.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/dynamics.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/dynamics.c
 	<x3d/dynamics.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/dynamics.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/dynamics.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/init.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/init.c
 	<misc.h>
 	<x3d/common.h>
 	<math/math.h>
@@ -3449,33 +3449,33 @@
 	<x3d/resloader.h>
 	<x3d/renderer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/system/panic.h
+1459319777 /home/davis/x3ddemoscene-code/lib/system/panic.h
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/init.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/init.h
 	<misc.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/modelentity.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/modelentity.c
 	<x3d/modelentity.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/modelentity.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/modelentity.h
 	<math/math.h>
 	<x3d/resloader.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/poi.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/poi.c
 
-1459294474 source:/home/davis/x3ddemoscene-code/kernel/projectionprobe.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/projectionprobe.c
 	<system/allocator.h>
 	<system/log.h>
 	<x3d/projectionprobe.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/renderable.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/renderable.c
 	<misc.h>
 	<math/math.h>
 	<system/log.h>
 	<system/allocator.h>
 	<x3d/renderable.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/renderableaggregate.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/renderableaggregate.c
 	<misc.h>
 	<system/log.h>
 	<container/set.h>
@@ -3486,24 +3486,24 @@
 	<x3d/renderableaggregaterequest.h>
 	"renderablecontainerimpl.h"
 
-1459230055 /home/davis/x3ddemoscene-code/kernel/renderablecontainerimpl.h
+1459319777 /home/davis/x3ddemoscene-code/kernel/renderablecontainerimpl.h
 	<container/linkedlist.h>
 	<x3d/renderable.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/renderableaggregaterequest.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/renderableaggregaterequest.c
 	<system/log.h>
 	<system/allocator.h>
 	<x3d/renderableaggregaterequest.h>
 	"renderablecontainerimpl.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/renderablecontainerimpl.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/renderablecontainerimpl.c
 	<math/math.h>
 	<system/log.h>
 	<system/allocator.h>
 	<container/linkedlist.h>
 	"renderablecontainerimpl.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/renderer.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/renderer.c
 	<system/log.h>
 	<system/symlib.h>
 	<container/paramset.h>
@@ -3512,39 +3512,39 @@
 	<renderer/rendererinsmod.h>
 	"rendernodedummyimpl.h"
 
-1459230055 /home/davis/x3ddemoscene-code/kernel/rendernodedummyimpl.h
+1459319777 /home/davis/x3ddemoscene-code/kernel/rendernodedummyimpl.h
 	<x3d/rendertree.h>
 	<x3d/renderer.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/rendernodehdr.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/rendernodehdr.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/rendernodelayer.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/rendernodelayer.c
 	<system/allocator.h>
 	<x3d/rendertree.h>
 	<x3d/rendernodelayer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/rendernodelayer.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/rendernodelayer.h
 	<x3d/renderer.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/rendernodeoutput.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/rendernodeoutput.c
 	<system/allocator.h>
 	<x3d/rendertree.h>
 	<x3d/rendernodeoutput.h>
 	<x3d/renderenvconsts.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/rendernoderadiance.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/rendernoderadiance.c
 	<system/allocator.h>
 	<system/log.h>
 	<x3d/rendertree.h>
 	<x3d/rendernoderadiance.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/rendernoderdaloader.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/rendernoderdaloader.c
 	<system/allocator.h>
 	<system/log.h>
 	<x3d/rendertree.h>
 	<x3d/rendernoderdaloader.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/rendertree.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/rendertree.c
 	<misc.h>
 	<container/stack.h>
 	<container/arraylist.h>
@@ -3552,7 +3552,7 @@
 	<system/log.h>
 	<x3d/rendertree.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/resloader.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/resloader.c
 	<system/allocator.h>
 	<system/log.h>
 	<system/thread.h>
@@ -3562,59 +3562,59 @@
 	<x3d/modelentity.h>
 	<loader/modelloader.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/strategy.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/strategy.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/codecs/serializer.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/codecs/serializer.c
 	<misc.h>
 	<system/allocator.h>
 	<codecs/serializer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/codecs/serializer.h
+1459319777 /home/davis/x3ddemoscene-code/lib/codecs/serializer.h
 	<misc.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/compiler/compiler.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/compiler/compiler.c
 	<system/allocator.h>
 	<compiler/compiler.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/compiler/compiler.h
+1459319777 /home/davis/x3ddemoscene-code/lib/compiler/compiler.h
 	"symbol.h"
 	"error.h"
 	"emitter.h"
 	"lexer.h"
 	"parser.h"
 
-1459230055 /home/davis/x3ddemoscene-code/lib/compiler/symbol.h
+1459319777 /home/davis/x3ddemoscene-code/lib/compiler/symbol.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/compiler/error.h
+1459319777 /home/davis/x3ddemoscene-code/lib/compiler/error.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/compiler/emitter.h
+1459319777 /home/davis/x3ddemoscene-code/lib/compiler/emitter.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/compiler/lexer.h
+1459319777 /home/davis/x3ddemoscene-code/lib/compiler/lexer.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/compiler/parser.h
+1459319777 /home/davis/x3ddemoscene-code/lib/compiler/parser.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/compiler/emitter.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/compiler/emitter.c
 	<x3d/common.h>
 	<system/allocator.h>
 	"symbol.h"
 	"lexer.h"
 	"emitter.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/compiler/error.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/compiler/error.c
 	"error.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/compiler/lexer.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/compiler/lexer.c
 	<x3d/common.h>
 	<system/allocator.h>
 	"symbol.h"
 	"lexer.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/compiler/main.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/compiler/main.c
 	<x3d/common.h>
 	<container/paramset.h>
 	<compiler/compiler.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/compiler/parser.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/compiler/parser.c
 	<x3d/common.h>
 	<container/stack.h>
 	<system/allocator.h>
@@ -3624,30 +3624,30 @@
 	"lexer.h"
 	"parser.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/compiler/symbol.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/compiler/symbol.c
 	<x3d/common.h>
 	"symbol.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/container/array.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/container/array.c
 	<container/array.h>
 	<container/paramset.h>
 	<system/log.h>
 	<x3d/debug.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/container/list.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/container/list.c
 	<container/list.h>
 	<container/paramset.h>
 	<system/log.h>
 	<x3d/debug.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/list.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/list.h
 	<system/allocator.h>
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/container/map.c
 
 1455996146 source:/home/davis/x3ddemoscene-code/lib/container/multimap.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/container/paramset.c
+1459368780 source:/home/davis/x3ddemoscene-code/lib/container/paramset.c
 	<misc.h>
 	<container/paramset.h>
 
@@ -3660,13 +3660,13 @@
 1455996146 /home/davis/x3ddemoscene-code/lib/container/queue.h
 	<system/allocator.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/container/set.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/container/set.c
 	<container/set.h>
 	<container/paramset.h>
 	<system/log.h>
 	<x3d/debug.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/container/staging.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/container/staging.c
 	<misc.h>
 	<container/stack.h>
 	<container/hashmap.h>
@@ -3691,49 +3691,49 @@
 
 1455996146 /home/davis/x3ddemoscene-code/lib/main.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/math/decimal.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/math/decimal.c
 	<x3d/common.h>
 	<math.h>
 	<stdlib.h>
 	"decimal.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/math/fx.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/math/fx.c
 	"math.h"
 	"fx.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/math/geometry.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/math/geometry.c
 	"math.h"
 	"vector.h"
 	"matrix.h"
 	"geometry.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/math/main.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/math/main.c
 	<math/math.h>
 	"main.h"
 
-1459230055 /home/davis/x3ddemoscene-code/lib/math/main.h
+1459319777 /home/davis/x3ddemoscene-code/lib/math/main.h
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/math/matrix.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/math/matrix.c
 	"math.h"
 	"vector.h"
 	"matrix.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/math/quat.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/math/quat.c
 	"vector.h"
 	"quat.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/math/vector.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/math/vector.c
 	<math.h>
 	<system/log.h>
 	"vector.h"
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/misc.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/misc.c
 	<system/thread.h>
 	<system/allocator.h>
 	<math/math.h>
 	<misc.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/system/allocator.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/system/allocator.c
 	<x3d/common.h>
 	<misc.h>
 	<system/log.h>
@@ -3741,7 +3741,7 @@
 	<container/paramset.h>
 	<x3d/debug.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/system/log.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/system/log.c
 	<x3d/common.h>
 	<container/linkedlist.h>
 	<system/allocator.h>
@@ -3750,11 +3750,11 @@
 	<container/paramset.h>
 	<x3d/debug.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/system/panic.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/system/panic.c
 	<x3d/common.h>
 	<system/log.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/system/symlib.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/system/symlib.c
 	<misc.h>
 	<system/log.h>
 	<system/symlib.h>
@@ -3762,32 +3762,32 @@
 	<system/panic.h>
 	<dlfcn.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/system/thread.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/system/thread.c
 	<container/linkedlist.h>
 	<system/allocator.h>
 	<system/log.h>
 	<system/thread.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/system/timing.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/system/timing.c
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/container/stack.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/container/stack.c
 	<container/stack.h>
 	<container/paramset.h>
 	<system/log.h>
 	<x3d/debug.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/lib/container/deque.c
+1459319777 source:/home/davis/x3ddemoscene-code/lib/container/deque.c
 	<container/deque.h>
 	<container/paramset.h>
 	<system/log.h>
 	<x3d/debug.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/deque.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/deque.h
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/array.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/array.h
 	<system/allocator.h>
 
-1459230055 /home/davis/x3ddemoscene-code/lib/container/set.h
+1459319777 /home/davis/x3ddemoscene-code/lib/container/set.h
 	<math/math.h>
 
 1458748229 /home/davis/x3ddemoscene-code/include/x3d/utility.h
@@ -3795,13 +3795,13 @@
 	<system/allocator.h>
 	<math/math.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/raytracer.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/raytracer.c
 	<math/math.h>
 	<system/log.h>
 	<x3d/debug.h>
 	<x3d/raytracer.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/raytracer.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/raytracer.h
 	<x3d/geomcache.h>
 	<x3d/spatialaccess.h>
 	<x3d/bsdf.h>
@@ -3810,7 +3810,7 @@
 1458696772 source:/home/davis/x3ddemoscene-code/kernel/utility.c
 	<x3d/utility.h>
 
-1459294389 source:/home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.c
+1459319777 source:/home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.c
 	<math/math.h>
 	<x3d/raytracer.h>
 	<x3d/bsdf.h>
@@ -3821,7 +3821,7 @@
 	<x3d/debug.h>
 	"pathtracerimpl.h"
 
-1459292072 /home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.h
+1459319777 /home/davis/x3ddemoscene-code/drivers/renderer/pathtracerimpl.h
 	<x3d/geomcache.h>
 	<x3d/spatialaccess.h>
 	<x3d/bsdf.h>
@@ -3829,19 +3829,19 @@
 	<x3d/projectionprobe.h>
 	<x3d/image.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/bsdf.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/bsdf.h
 	<math/math.h>
 	<x3d/colorspectrum.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/colorspectrum.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/colorspectrum.h
 	<math/math.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/bsdf.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/bsdf.c
 	<math/math.h>
 	<system/allocator.h>
 	<x3d/bsdf.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/colorspectrum.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/colorspectrum.c
 	<math.h>
 	<math/math.h>
 	<x3d/colorspectrum.h>
@@ -3853,51 +3853,52 @@
 	<x3d/bsdf.h>
 	<x3d/colorspectrum.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/light.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/light.h
 	<math/math.h>
 	<x3d/colorspectrum.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/light.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/light.c
 	<math/math.h>
 	<system/allocator.h>
 	<x3d/colorspectrum.h>
 	<x3d/light.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/geomcache.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/geomcache.h
 	<x3d/common.h>
 
-1459230055 /home/davis/x3ddemoscene-code/include/x3d/spatialaccess.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/spatialaccess.h
 	<math/math.h>
 
-1459292581 /home/davis/x3ddemoscene-code/include/x3d/image.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/image.h
 	<x3d/common.h>
 
-1459317732 /home/davis/x3ddemoscene-code/include/x3d/display.h
+1459319777 /home/davis/x3ddemoscene-code/include/x3d/display.h
 	<x3d/image.h>
 
-1459295365 source:/home/davis/x3ddemoscene-code/kernel/display.c
+1459376310 source:/home/davis/x3ddemoscene-code/kernel/display.c
 	<gtk/gtk.h>
 	<system/log.h>
 	<system/allocator.h>
 	<system/thread.h>
+	<container/paramset.h>
 	<x3d/debug.h>
 	<x3d/display.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/geomcache.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/geomcache.c
 	<system/allocator.h>
 	<system/log.h>
 	<math/math.h>
 	<x3d/debug.h>
 	<x3d/geomcache.h>
 
-1459293268 source:/home/davis/x3ddemoscene-code/kernel/image.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/image.c
 	<math/math.h>
 	<system/log.h>
 	<system/allocator.h>
 	<x3d/colorspectrum.h>
 	<x3d/image.h>
 
-1459230055 source:/home/davis/x3ddemoscene-code/kernel/spatialaccess.c
+1459319777 source:/home/davis/x3ddemoscene-code/kernel/spatialaccess.c
 	<system/allocator.h>
 	<x3d/spatialaccess.h>
 

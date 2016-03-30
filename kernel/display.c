@@ -2,6 +2,7 @@
 #include <system/log.h>
 #include <system/allocator.h>
 #include <system/thread.h>
+#include <container/paramset.h>
 #include <x3d/debug.h>
 #include <x3d/display.h>
 
@@ -48,7 +49,6 @@ typedef gboolean (*f_GTK_Display_Callback) (struct _GtkWidget *widget, struct _c
 struct gtk_out {
         f_GTK_Display_Callback  display_callback;
         int                     signal_handler;
-        int                     signal_state;
         struct _GtkWidget*      dst_widget;
         enum _cairo_format      format;
         void*                   src_surface;
@@ -57,82 +57,74 @@ struct gtk_out {
         int                     stride;
 };
 
-#define DRAW_SIGNAL_REMAIN	1
-#define DRAW_SIGNAL_NONE	0
+static struct gtk_out *__gtk_out_create(GtkWidget *widget,
+                                        int x, int y, int width, int height,
+                                        enum ColorMode format, void* src_surface);
+static void __gtk_out_free(struct gtk_out* out);
+static void __gtk_out_run(struct gtk_out* out);
 
-static gboolean display_callback(struct _GtkWidget *widget, struct _cairo *cairo, gpointer data);
 
+static gboolean __display_callback(GtkWidget* widget, cairo_t* cairo, gpointer data)
+{
+        struct gtk_out* out = data;
+        struct _cairo_surface* co_surface = cairo_image_surface_create_for_data(
+                                out->src_surface, out->format, out->width, out->height, out->stride);
+        cairo_set_source_surface(cairo, co_surface, out->x, out->y);
+        cairo_paint(cairo);
+        cairo_surface_destroy(co_surface);
 
-static struct gtk_out *gtk_out_create(GtkWidget *widget,
-                                      int x, int y, int width, int height,
-                                      enum ColorMode format, void* src_surface)
+        __gtk_out_free(out);
+        return false;
+}
+
+static gboolean __idle_callback(gpointer data)
+{
+        struct gtk_out* out = (struct gtk_out*) data;
+        gtk_widget_queue_draw(out->dst_widget);
+        return false;
+}
+
+static struct gtk_out *__gtk_out_create(GtkWidget *widget,
+                                        int x, int y, int width, int height,
+                                        enum ColorMode format, void* src_surface)
 {
         struct gtk_out *out = alloc_fix(sizeof *out, 1);
         memset(out, 0, sizeof *out);
 
         switch(format) {
-        case Color8Mode: {
+        case Color8Mode:
                 out->format = CAIRO_FORMAT_A1;
-                out->stride = 1;
                 break;
-        }
-        case Color16AMode: {
+        case Color16AMode:
                 out->format = CAIRO_FORMAT_RGB16_565;
-                out->stride = 2;
                 break;
-        }
-        case Color24Mode: {
+        case Color24Mode:
                 out->format = CAIRO_FORMAT_RGB24;
-                out->stride = 3;
                 break;
-        }
-        case Color32Mode: {
+        case Color32Mode:
                 out->format = CAIRO_FORMAT_ARGB32;
-                out->stride = 4;
                 break;
-        }
-        default: {
+        default:
                 log_severe_err_dbg("color format is not supported by the api");
                 return nullptr;
         }
-        }
-        out->display_callback   = display_callback;
+        out->stride             = cairo_format_stride_for_width(out->format, out->width);
+        out->display_callback   = __display_callback;
         out->dst_widget         = widget;
-        out->signal_handler     = g_signal_connect(widget, "draw", G_CALLBACK(display_callback), out);
-        out->signal_state       = DRAW_SIGNAL_NONE;
+        out->signal_handler     = g_signal_connect(widget, "draw", G_CALLBACK(__display_callback), out);
         out->src_surface        = src_surface;
         return out;
 }
 
-static void gtk_out_free(struct gtk_out *out)
+static void __gtk_out_free(struct gtk_out* out)
 {
-        while(out->signal_state == DRAW_SIGNAL_REMAIN) {
-                log_normal_dbg("Wait for DrawSignal being cleared");
-                thread_task_idle(1);
-        }
-        log_normal_dbg("signal cleared == 0, clear up");
         g_signal_handler_disconnect(out->dst_widget, out->signal_handler);
         free_fix(out);
 }
 
-static void gtk_out_run(struct gtk_out *out)
+static void __gtk_out_run(struct gtk_out* out)
 {
-        out->signal_state = DRAW_SIGNAL_REMAIN;
-        gtk_widget_queue_draw(out->dst_widget);
-}
-
-static gboolean display_callback(struct _GtkWidget *widget,
-                                 struct _cairo *cairo, gpointer data)
-{
-        struct gtk_out *out = data;
-        struct _cairo_surface *co_surface =
-                cairo_image_surface_create_for_data(out->src_surface,
-                                out->format, out->width, out->height, out->stride);
-        cairo_set_source_surface(cairo, co_surface, out->x, out->y);
-        cairo_paint(cairo);
-        cairo_surface_destroy(co_surface);
-        out->signal_state = DRAW_SIGNAL_NONE;
-        return 0;
+        g_idle_add(__idle_callback, out);
 }
 
 void display_gtk_host_display_image(struct display_gtk_host* self, struct host_image* image)
@@ -140,9 +132,8 @@ void display_gtk_host_display_image(struct display_gtk_host* self, struct host_i
         int w, h, stride, pix_size;
         enum ColorMode cmode;
         void* data = hostimg_export_level0(image, &cmode, &w, &h, &stride, &pix_size);
-        struct gtk_out* out = gtk_out_create(self->widget, 0, 0, w, h, cmode, data);
-        gtk_out_run(out);
-        gtk_out_free(out);
+        struct gtk_out* out = __gtk_out_create(self->widget, 0, 0, w, h, cmode, data);
+        __gtk_out_run(out);
 }
 
 /*
@@ -172,7 +163,7 @@ void display_image_file_display(struct display_image_file* self, struct host_ima
  * <display_gtk_host> test cases
  */
 void display_gtk_host_test_init(struct alg_var_set* envir) {};
-void display_gtk_host_test_test_free(struct alg_var_set* envir) {};
+void display_gtk_host_test_free(struct alg_var_set* envir) {};
 enum DebugPosition* display_gtk_host_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
 {
         static enum DebugPosition pos[] = {
@@ -185,4 +176,34 @@ enum DebugPosition* display_gtk_host_test_pos(struct alg_var_set* envir, int* n_
 }
 void display_gtk_host_test(struct alg_var_set* envir)
 {
+        int argc = *(int*) alg_var_set_use(envir, "argc");
+        char** argv = *(char***) alg_var_set_use(envir, "argv");
+
+        const int c_Width = 800, c_Height = 600;
+
+        gtk_init(&argc, &argv);
+        // create a gtk window
+        GtkWidget *window;
+        window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        GtkWidget* boxcont = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+        gtk_container_add(GTK_CONTAINER(window), boxcont);
+
+        GtkWidget* area = gtk_drawing_area_new();
+        gtk_widget_set_size_request(area, c_Width, c_Height);
+        gtk_box_set_center_widget(GTK_BOX(boxcont), area);
+
+        gtk_widget_show_all(window);
+        g_signal_connect(window, "destroy", gtk_main_quit, nullptr);
+        // create a host image
+        struct host_image image;
+        hostimg_init(&image, 1, Color24Mode, c_Width, c_Height);
+        hostimg_alloc(&image, 0);
+        // create gtk host display
+        struct display_gtk_host* gtkhost = display_gtk_host_create(area);
+        display_gtk_host_display_image(gtkhost, &image);
+
+        gtk_main();
+
+        display_gtk_host_free(gtkhost);
+        hostimg_free(&image);
 }

@@ -55,3 +55,7 @@ void* alg_var_set_use(struct alg_var_set* self, char* name)
         }
 #undef cmp_name
 }
+
+void alg_var_set_union(struct alg_var_set* self, struct alg_var_set* var_set)
+{
+}

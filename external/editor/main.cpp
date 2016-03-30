@@ -23,7 +23,8 @@ extern "C" int kernel_main(int argc, char* argv[])
         // kernel_add_param("--test", "set_performance_test");
         // kernel_add_param("--test", "geomcache_test");
         // kernel_add_param("--test", "raytracer_test");
-        kernel_add_param("--test", "pathtracer_test");
+        // kernel_add_param("--test", "pathtracer_test");
+        kernel_add_param("--test", "display_gtk_host_test");
 
         kernel_add_param("--edit-mode", "");
 

@@ -25,6 +25,7 @@ void alg_var_set_free(struct alg_var_set* set);
 void alg_var_set_declare(struct alg_var_set* self, char* name, void* data, int size);
 void alg_var_set_undeclare(struct alg_var_set* self, char* name);
 void* alg_var_set_use(struct alg_var_set* set, char* name);
+void alg_var_set_union(struct alg_var_set* self, struct alg_var_set* var_set);
 
 
 #define init_named_params(_p) \
