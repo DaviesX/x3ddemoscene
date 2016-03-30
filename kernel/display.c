@@ -2,6 +2,7 @@
 #include <system/log.h>
 #include <system/allocator.h>
 #include <system/thread.h>
+#include <x3d/debug.h>
 #include <x3d/display.h>
 
 
@@ -106,20 +107,18 @@ static struct gtk_out *gtk_out_create(GtkWidget *widget,
 static void gtk_out_free(struct gtk_out *out)
 {
         while(out->signal_state == DRAW_SIGNAL_REMAIN) {
-                // log_normal_dbg("Wait for DrawSignal being cleared");
+                log_normal_dbg("Wait for DrawSignal being cleared");
                 thread_task_idle(1);
         }
-        // log_normal_dbg("signal cleared == 0, clear up");
+        log_normal_dbg("signal cleared == 0, clear up");
         g_signal_handler_disconnect(out->dst_widget, out->signal_handler);
         free_fix(out);
 }
 
 static void gtk_out_run(struct gtk_out *out)
 {
-//        gdk_threads_enter ();
         out->signal_state = DRAW_SIGNAL_REMAIN;
         gtk_widget_queue_draw(out->dst_widget);
-//        gdk_threads_leave ();
 }
 
 static gboolean display_callback(struct _GtkWidget *widget,
@@ -165,5 +164,25 @@ void display_image_file_free(struct display_image_file* self)
 }
 
 void display_image_file_display(struct display_image_file* self, struct host_image* image)
+{
+}
+
+
+/*
+ * <display_gtk_host> test cases
+ */
+void display_gtk_host_test_init(struct alg_var_set* envir) {};
+void display_gtk_host_test_test_free(struct alg_var_set* envir) {};
+enum DebugPosition* display_gtk_host_test_pos(struct alg_var_set* envir, int* n_pos, int* num_run, bool* is_skipped)
+{
+        static enum DebugPosition pos[] = {
+                Debug_KernelStart
+        };
+        *n_pos = sizeof(pos)/sizeof(enum DebugPosition);
+        *num_run = 1;
+        *is_skipped = true;
+        return pos;
+}
+void display_gtk_host_test(struct alg_var_set* envir)
 {
 }

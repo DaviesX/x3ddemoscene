@@ -55,6 +55,7 @@
 			<Add option="`pkg-config gtk+-3.0 --libs`" />
 		</Linker>
 		<Unit filename="../include/usr/usr_cinematicprogs.hpp" />
+		<Unit filename="../include/usr/usr_display.hpp" />
 		<Unit filename="../include/usr/usr_editor.hpp" />
 		<Unit filename="../include/usr/usr_editorfrontend.hpp" />
 		<Unit filename="../include/usr/usr_entityprogs.hpp" />
@@ -101,6 +102,7 @@
 		<Unit filename="../usr/editor/gtkfrontend/splash_screen.cpp" />
 		<Unit filename="../usr/editor/gtkfrontend/splash_screen.hpp" />
 		<Unit filename="../usr/usr_cinematicprogs.cpp" />
+		<Unit filename="../usr/usr_display.cpp" />
 		<Unit filename="../usr/usr_entityprogs.cpp" />
 		<Unit filename="../usr/usr_kernel.cpp" />
 		<Unit filename="../usr/usr_missionprogs.cpp" />

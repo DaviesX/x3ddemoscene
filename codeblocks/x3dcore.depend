@@ -3463,7 +3463,7 @@
 
 1459230055 source:/home/davis/x3ddemoscene-code/kernel/poi.c
 
-1455996146 source:/home/davis/x3ddemoscene-code/kernel/projectionprobe.c
+1459294474 source:/home/davis/x3ddemoscene-code/kernel/projectionprobe.c
 	<system/allocator.h>
 	<system/log.h>
 	<x3d/projectionprobe.h>
@@ -3872,14 +3872,15 @@
 1459292581 /home/davis/x3ddemoscene-code/include/x3d/image.h
 	<x3d/common.h>
 
-1459294153 /home/davis/x3ddemoscene-code/include/x3d/display.h
+1459317732 /home/davis/x3ddemoscene-code/include/x3d/display.h
 	<x3d/image.h>
 
-1459294403 source:/home/davis/x3ddemoscene-code/kernel/display.c
+1459295365 source:/home/davis/x3ddemoscene-code/kernel/display.c
 	<gtk/gtk.h>
 	<system/log.h>
 	<system/allocator.h>
 	<system/thread.h>
+	<x3d/debug.h>
 	<x3d/display.h>
 
 1459230055 source:/home/davis/x3ddemoscene-code/kernel/geomcache.c
