@@ -67,7 +67,7 @@ static void __gtk_out_run(struct gtk_out* out);
 static gboolean __display_callback(GtkWidget* widget, cairo_t* cairo, gpointer data)
 {
         struct gtk_out* out = data;
-        struct _cairo_surface* co_surface = cairo_image_surface_create_for_data(
+        cairo_surface_t* co_surface = cairo_image_surface_create_for_data(
                                 out->src_surface, out->format, out->width, out->height, out->stride);
         cairo_set_source_surface(cairo, co_surface, out->x, out->y);
         cairo_paint(cairo);
@@ -108,6 +108,8 @@ static struct gtk_out *__gtk_out_create(GtkWidget *widget,
                 log_severe_err_dbg("color format is not supported by the api");
                 return nullptr;
         }
+        out->width              = width;
+        out->height             = height;
         out->stride             = cairo_format_stride_for_width(out->format, out->width);
         out->display_callback   = __display_callback;
         out->dst_widget         = widget;
@@ -198,6 +200,15 @@ void display_gtk_host_test(struct alg_var_set* envir)
         struct host_image image;
         hostimg_init(&image, 1, Color24Mode, c_Width, c_Height);
         hostimg_alloc(&image, 0);
+        int i, j;
+        for (j = 0; j < c_Height; j ++) {
+                for (i = 0; i < c_Width; i ++) {
+                        uint8_t* pix = hostimg_read(&image, 0, i, j);
+                        pix[0] = 0;
+                        pix[1] = 0;
+                        pix[2] = 0;
+                }
+        }
         // create gtk host display
         struct display_gtk_host* gtkhost = display_gtk_host_create(area);
         display_gtk_host_display_image(gtkhost, &image);
