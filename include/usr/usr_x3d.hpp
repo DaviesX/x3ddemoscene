@@ -24,6 +24,7 @@ extern "C"
 #include <codecs/serializer.h>
 #include <math/math.h>
 #include <x3d/init.h>
+#include <x3d/display.h>
 #include <x3d/projectionprobe.h>
 #include <x3d/renderer.h>
 #include <x3d/renderable.h>

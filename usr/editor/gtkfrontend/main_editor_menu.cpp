@@ -23,7 +23,7 @@ public:
 void x3d_render_frame_finish(std::string stats, RenderFrameActiveX& ax, void* user_data)
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
-        frontend->get_main_editor()->send_message_box("X3d Render Frame", 
+        frontend->get_main_editor()->send_message_box("X3d Render Frame",
                                                       "Render frame has finished\nstatistics:" + stats,
                                                       MainEditor::MessageInfo);
 }
@@ -32,7 +32,7 @@ extern "C" void gtk_cornell_box_callback(GtkMenuItem* menuitem, gpointer user_da
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
         BenchmarkActiveX* benchmark = static_cast<BenchmarkActiveX*>
-                (frontend->get_backend_editor()->find_activex(EditorBackendActiveX::EditActiveXBenchmark, 
+                (frontend->get_backend_editor()->find_activex(EditorBackendActiveX::EditActiveXBenchmark,
                                                               gtkactivex::c_BackendBenchmark));
         benchmark->run_benchmark(BenchmarkActiveX::Benchmark_CornellBox);
 }
@@ -41,7 +41,7 @@ extern "C" void gtk_render_current_frame_callback(GtkMenuItem* menuitem, gpointe
 {
         EditorGtkFrontend* frontend = static_cast<EditorGtkFrontend*>(user_data);
         RenderFrameActiveX* renderframe_ax = static_cast<RenderFrameActiveX*>
-                (frontend->get_backend_editor()->find_activex(EditorBackendActiveX::EditActiveXRenderFrame, 
+                (frontend->get_backend_editor()->find_activex(EditorBackendActiveX::EditActiveXRenderFrame,
                                                               gtkactivex::c_BackendRenderFrame));
         renderframe_ax->run_frame_renderer(true);
         renderframe_ax->bind_callback("notify_finish", (f_Generic) x3d_render_frame_finish, frontend);
@@ -102,8 +102,8 @@ bool MainEditorMenu::show(bool visible)
                         return false;
                 }
                 // inject the benchmark menu to main menu
-                gtk_menu_item_set_submenu(mi_load_benchmark, GTK_WIDGET(m_benchmark));
-                
+                gtk_menu_item_set_submenu(mi_load_benchmark, (::GtkWidget*) m_benchmark);
+
                 // Cornell box benchmark
                 GtkMenuItem* mi_cornell = (GtkMenuItem*) gtk_builder_get_object(builder, "MI-CornellBoxScene");
                 if (!mi_cornell) {
@@ -115,7 +115,7 @@ bool MainEditorMenu::show(bool visible)
         }
         // deal with the <Render Current Frame> menu
         {
-                GtkMenuItem* mi_render_current = 
+                GtkMenuItem* mi_render_current =
                         (GtkMenuItem*) gtk_builder_get_object(builder, "MI-RenderCurrentFrame");
                 if (!mi_render_current) {
                         log_severe_err("cannot retrieve MI-RenderCurrentFrame menu");
@@ -158,7 +158,7 @@ bool MainEditorMenu::show(bool visible)
         if (!frontend->get_backend_editor()->add_activex(rendframe_ax)) {
                 delete rendframe_ax;
         }
-        
+
         return true;
 }
 

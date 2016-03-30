@@ -1,3 +1,4 @@
+#include <usr/usr_display.hpp>
 #include <usr/usr_projectionprobe.hpp>
 
 
@@ -7,33 +8,14 @@ namespace usr
 {
 
 /* ProjectionProbe */
-ProjectionProbe::ProjectionProbe(struct projection_probe* probe,
-                                 enum OutputMethod method, void* target_screen,
-                                 int width, int height, ColorMode colormode)
+ProjectionProbe::ProjectionProbe(struct projection_probe* probe)
 {
         m_probe = probe;
-        projprobe_set_output_method(m_probe, method, target_screen);
-        projprobe_set_output_format(m_probe, width, height, colormode);
 }
 
 ProjectionProbe::~ProjectionProbe()
 {
         projprobe_free(m_probe);
-}
-
-void ProjectionProbe::set_output_method(enum OutputMethod method, void* target_screen)
-{
-        projprobe_set_output_method(m_probe, method, target_screen);
-}
-
-void ProjectionProbe::set_output_format(int width, int height, ColorMode colormode)
-{
-        projprobe_set_output_format(m_probe, width, height, colormode);
-}
-
-void ProjectionProbe::toggle_fullscreen(bool is_fullscreen)
-{
-        projprobe_toggle_fullscreen(m_probe, is_fullscreen);
 }
 
 void ProjectionProbe::set_position(struct point3d* p)
@@ -82,12 +64,11 @@ struct projection_probe* ProjectionProbe::get_core_resource()
 }
 
 /* PerspectiveProbe */
-PerspectiveProbe::PerspectiveProbe(enum OutputMethod method, void* target_screen, int width, int height, ColorMode colormode) :
-        ProjectionProbe((struct projection_probe*) (persprobe_create(method, target_screen)),
-                        method, target_screen, width, height, colormode)
+PerspectiveProbe::PerspectiveProbe(Display* display, int xres, int yres) :
+        ProjectionProbe(&persprobe_create(display->get_core_resource(), xres, yres)->_parent)
 {
-        m_probe = (struct perspective_probe*) ((ProjectionProbe*) (this))->m_probe;
-        persprobe_set_range(m_probe, width, height, 2000.0f);
+        m_probe = (struct perspective_probe*) (static_cast<ProjectionProbe*> (this))->m_probe;
+        persprobe_set_range(m_probe, xres, yres, 2000.0f);
         persprobe_set_optics(m_probe, 35.0f, 200.0f, 35.0f/8.0f);
 }
 
@@ -112,9 +93,8 @@ void PerspectiveProbe::set_range(float x, float y, float z)
 }
 
 /* OrthogonalProbe*/
-OrthogonalProbe::OrthogonalProbe(enum OutputMethod method, void* target_screen, int width, int height, ColorMode colormode) :
-        ProjectionProbe((struct projection_probe*) orthoprobe_create(method, target_screen),
-                        method, target_screen, width, height, colormode)
+OrthogonalProbe::OrthogonalProbe(Display* display, int xres, int yres) :
+        ProjectionProbe(&orthoprobe_create(display->get_core_resource(), xres, yres)->_parent)
 {
 }
 

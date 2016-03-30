@@ -208,7 +208,7 @@ demo_mode:
                 gtk_style_context_add_provider_for_screen(screen,
                                                           GTK_STYLE_PROVIDER(provider),
                                                           GTK_STYLE_PROVIDER_PRIORITY_USER);
-                
+
                 gtk_css_provider_load_from_data(GTK_CSS_PROVIDER(provider),
                                                 "#main_drawing_region,GtkDrawingArea {\n"
                                                 "       background-color: black;\n"
@@ -260,7 +260,7 @@ demo_mode:
                 int width, height;
                 widget_get_size(pimpl->m_window, pimpl->m_draw_region, &x, &y, &width, &height);
                 RenderRegionActiveX* ax_region =
-                        new RenderRegionActiveX(gtkactivex::c_BackendMainRenderRegion, GtkRenderRegionOutput,
+                        new RenderRegionActiveX(gtkactivex::c_BackendMainRenderRegion,
                                                 pimpl->m_draw_region, x, y, width, height);
                 ax_region->bind_callback("notify_idle", (f_Generic) idle_switch_callback, pimpl);
                 ax_region->bind_callback("notify_resize", (f_Generic) window_reize_callback, pimpl);

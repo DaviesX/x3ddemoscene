@@ -1,5 +1,6 @@
 /* editrenderregion.cpp: render region activex implementation */
 #include <usr/usr_x3d.hpp>
+#include <usr/usr_display.hpp>
 #include <usr/usr_renderer.hpp>
 #include <usr/usr_projectionprobe.hpp>
 #include <usr/usr_editor.hpp>
@@ -13,7 +14,7 @@ namespace usr
 class RenderRegionActiveX::RenderRegionInt
 {
 public:
-        RenderRegionInt(OutputMethod method, void *handle, int x, int y, int w, int h);
+        RenderRegionInt(void *handle, int x, int y, int w, int h);
         ~RenderRegionInt();
 
         struct {        // Idle
@@ -32,8 +33,8 @@ public:
 
 
         struct {        // ViewControl
+                Display*                m_display;
                 void*                   m_handle;
-                int                     m_method;
                 int                     m_cursor_x0;
                 int                     m_cursor_y0;
                 int                     m_cursor_x1;
@@ -53,17 +54,17 @@ public:
         uuid_t                  m_rendid = -1;
 };
 
-RenderRegionActiveX::RenderRegionInt::RenderRegionInt(OutputMethod method, void *handle, int x, int y, int w, int h)
+RenderRegionActiveX::RenderRegionInt::RenderRegionInt(void *handle, int x, int y, int w, int h)
 {
         m_handle        = handle;
         m_idle_request  = false;
         m_is_idle       = true;
         m_is_resized    = false;
-        m_method        = method;
         set_point3d(0.0f, 0.0f, 0.0f, &m_viewpoint);
-        m_persp         = new PerspectiveProbe(method, handle, w, h, c_ColorMode);
-/* @fixme (davis#9#): <RenderRegionActiveX> orthogonal probe not supported yet */
-        m_orth          = new OrthogonalProbe(method, handle, w, h, c_ColorMode);;
+/* @fixme (davis#9#): <RenderRegionActiveX> forced gtk display, should be more generic */
+        m_display       = new DisplayGtkHost((GtkWidget*) handle);
+        m_persp         = new PerspectiveProbe(m_display, w, h);
+        m_orth          = new OrthogonalProbe(m_display, w, h);;
 
         m_is_idle               = true;
         m_idle_signal           = nullptr;
@@ -74,7 +75,6 @@ RenderRegionActiveX::RenderRegionInt::RenderRegionInt(OutputMethod method, void 
         m_is_resized            = false;
         m_is_fullscreen         = false;
 
-        m_persp->toggle_fullscreen(false);
         m_probe                 = m_persp;
 }
 
@@ -82,13 +82,14 @@ RenderRegionActiveX::RenderRegionInt::~RenderRegionInt()
 {
         delete m_persp;
         delete m_orth;
+        delete m_display;
         zero_obj(this);
 }
 
-RenderRegionActiveX::RenderRegionActiveX(string name, OutputMethod method, void *handle, int x, int y, int w, int h) :
+RenderRegionActiveX::RenderRegionActiveX(string name, void *handle, int x, int y, int w, int h) :
         EditorBackendActiveX(name, sizeof(RenderRegionActiveX), EditActiveXRenderRegion)
 {
-        pimpl = new RenderRegionInt(method, handle, x, y, w, h);
+        pimpl = new RenderRegionInt(handle, x, y, w, h);
 }
 
 RenderRegionActiveX::~RenderRegionActiveX()
@@ -200,8 +201,9 @@ void RenderRegionActiveX::update()
         }
         // any request to change the state of the screen
         if (pimpl->m_is_resized) {
-                pimpl->m_persp->set_output_format(pimpl->m_width, pimpl->m_height, pimpl->c_ColorMode);
-                pimpl->m_persp->toggle_fullscreen(pimpl->m_is_fullscreen);
+                // @fixme: should be done to the display
+//                pimpl->m_persp->set_output_format(pimpl->m_width, pimpl->m_height, pimpl->c_ColorMode);
+//                pimpl->m_persp->toggle_fullscreen(pimpl->m_is_fullscreen);
                 pimpl->m_is_resized = false;
         }
         // set position and direction

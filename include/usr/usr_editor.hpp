@@ -74,10 +74,10 @@ public:
         EditActiveXType         get_type() const;
         KernelEnvironment*      get_state_buffer() const;
         bool                    is_dirty() const;
-        
+
         bool                    operator==(const EditorBackendActiveX& rhs);
-        bool                    operator!=(const EditorBackendActiveX& rhs);       
-        
+        bool                    operator!=(const EditorBackendActiveX& rhs);
+
         virtual void            on_adding() = 0;        // upon adding the activex to the editor
         virtual void            preupdate() {};   // any activesx-independent orderless action should be taken here
         virtual void            update() = 0;           // update for current loop
@@ -122,7 +122,7 @@ public:
                 QuadOrthogonalViewMode
         };
 
-        RenderRegionActiveX(string name, OutputMethod method, void* handle, int x, int y, int w, int h);
+        RenderRegionActiveX(string name, void* handle, int x, int y, int w, int h);
         ~RenderRegionActiveX();
 
         void                    on_adding();
@@ -138,7 +138,7 @@ public:
         void                    moveto(int x, int y);
         void                    magnify(int delta);
         void                    set_view_mode(ViewMode mode);
-        
+
         void                    request_idle_state(bool is_idle);
 private:
         class RenderRegionInt;
@@ -151,18 +151,18 @@ class RenderFrameActiveX : public EditorBackendActiveX
 public:
         RenderFrameActiveX(string name);
         ~RenderFrameActiveX();
-        
+
         typedef void (*f_Notify_Error)  (std::string message, RenderFrameActiveX& ax, void *data);
         typedef void (*f_Notify_Finish) (std::string stats, RenderFrameActiveX& ax, void* data);
         typedef void (*f_Notify_In_Progress) (std::string stats, RenderFrameActiveX& ax, void* data);
-        
+
         void    on_adding();
         void    preupdate();
         void    update();
         void    dispatch();
         void    load(struct serializer* s);
         void    save(struct serializer* s);
-        
+
         void    bind_callback(string signal, f_Generic callback, void *data);
         bool    run_frame_renderer(bool to_run);
 private:
@@ -211,42 +211,42 @@ public:
                 ActionAddObject,
                 ActionRemoveObject,
         };
-        
+
         enum ObjectType {
                 ObjectDataSet,
                 ObjectRenderable,
         };
-        
+
         struct ActionInfo {
                 ActionType      action_type;
                 ObjectType      object_type;
                 std::string     object_id;
                 std::string     object_name;
         };
-        
+
         typedef void (*f_Notify_Error)  (string message, WorldDataActiveX& ax, void *data);
         typedef void (*f_Notify_Action) (std::vector<ActionInfo>& info, WorldDataActiveX& ax, void* data);
-        
+
         WorldDataActiveX(std::string name);
         WorldDataActiveX(std::string name, std::string data_set_name, std::string storage_path);
         ~WorldDataActiveX();
 
         void            on_adding();
         void            preupdate();
-        void            update();        
+        void            update();
         void            dispatch();
         void            load(struct serializer *s);
         void            save(struct serializer *s);
 
         void            bind_callback(string signal, f_Generic callback, void *data);
-        
+
         void            new_data_set(std::string data_set_name, std::string storage_path);
         void            open_data_set(std::string storage_path);
         void            close_data_set();
-        
+
         std::string     get_data_set_name();
         std::string     get_storage_path();
-        
+
         World&          get_world();
         bool            has_data_set();
 private:
