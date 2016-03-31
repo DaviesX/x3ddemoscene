@@ -499,6 +499,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/system/allocator.h" />
+		<Unit filename="../lib/system/filesystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../lib/system/filesystem.h" />
 		<Unit filename="../lib/system/log.c">
 			<Option compilerVar="CC" />
 		</Unit>
