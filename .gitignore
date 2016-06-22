@@ -1,4 +1,7 @@
 *.o
+codeblocks/*.xml
+codeblocks/*.layout
+codeblocks/*.depend
 bin/x3d_log
 bin/sym-libx3dcore.so
 bin/editor
