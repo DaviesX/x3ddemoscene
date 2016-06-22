@@ -110,6 +110,7 @@ struct {                                                                        
 {                                                                                                          \
         free_var((_self)->chunk);                                                                          \
         free_var((_self)->bins);                                                                           \
+        free_var((_self)->recycled);                                                                       \
 }
 
 #define set_flush(_self)                                                                                   \
